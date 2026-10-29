@@ -8,9 +8,10 @@ their open questions or replace `docs/DESIGN_DECISIONS.md`.
 
 ## Version control status
 
-There is no Git repository in this folder. No branches or commits have been
-created. Entries below describe work sessions, not Git commits. If commits are
-explicitly authorized later, record their actual hashes and scope here.
+Git was initialized locally on 2026-10-28 at the author's request, on branch
+`main`, with no remote yet. Commit `e81ec92` holds the project as found that day,
+before any Assignment 5 work. Entries dated before 2026-10-28 describe work
+sessions, not Git commits. Later entries name their commits.
 
 ## 2026-10-18 — Requests and approvals
 
@@ -845,3 +846,33 @@ result. Unfinished checks remain marked unfinished.
   Sketchfab viewers in the author's browser for inspection (cockpit, wireframe,
   exterior). Nothing downloaded; the use and contact decision is pending the
   author's review.
+
+### 2026-10-28 — Game changed for the final; Assignment 5 continues here
+
+- **Author:** "we changed our game for final and we are using this only from now
+  on"; "we will use the new folder to continue our assignment". Recorded as:
+  *Blackridge: No Way Back* is now the author's course game, and this folder is
+  the only working project from Assignment 5 onward.
+- **Earlier assignments:** the author confirmed that Assignments 2–4 were built
+  on a different game. The course asks for a change of game to be declared, so
+  the Assignment 5 submission note will answer "Changed games since Assignment
+  2" with yes and point to a matching entry in `FRICTIONAL.md`, the course's
+  honest log. That file is separate from this development record.
+- **Name:** the author calls this file "frequency.md"; as on 2026-10-19 it is
+  taken to mean `fractional.md`, since no `frequency.md` exists.
+- **Assignment 5 received:** "Shaders, Materials, and the Godot Shading
+  Language", submitted as git tag `a5`. Claude explained the brief against the
+  current project and recorded its ownership rule. The author hand-writes both
+  shaders, the hint-experiment shader, the colour line and hand-computed
+  predictions in `CHANGE-BRIEF.md`, and `LANGUAGE-NOTES.md`. Agents never edit
+  `game/shaders/`. Claude drafts `CLAUDE.md` and writes the test wrapper,
+  driver, tests and material audit.
+- **Version control:** the author approved Git setup and a repo-only identity
+  ("Yes, set my identity"). Claude initialized Git and committed the project as
+  found (`e81ec92`). This entry and the test wrapper follow as separate commits.
+  Nothing has been pushed, and the GitHub `walker-` repository does not exist yet.
+- **Baseline:** both Godot suites ran through `scripts/run-test.sh` at 60 fps.
+  `first_drive_regression.gd` passed 64/64 and `first_drive_integration.gd`
+  passed 29/29, both exiting 0. Each prints an engine "resources still in use at
+  exit" error at shutdown. This was there before Assignment 5 and is not a SHADER
+  or SCRIPT ERROR. The Python art check `check_first_drive_art.py` passed 133/133.
