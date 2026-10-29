@@ -1,0 +1,30 @@
+frames on disk: 1200 (expected 1200)
+raw take: /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/take_b_driver_window_raw_mjpeg.mov holds the 1200 JPEG frames byte-identically (framemd5)
+encode: ffmpeg -i /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/take_b_driver_window_raw_mjpeg.mov -vf scale=in_color_matrix=bt601:in_range=full:flags=accurate_rnd+full_chroma_int,format=rgb24,scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,format=yuv420p,setparams=color_primaries=bt709:color_trc=bt709:colorspace=bt709:range=tv -c:v libx264 -crf 14 -preset slow -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv -r 60 -an -movflags +faststart /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/take_b_driver_window.mp4
+codec_name=h264
+width=3840
+height=2400
+pix_fmt=yuv420p
+color_range=tv
+color_space=bt709
+color_transfer=bt709
+color_primaries=bt709
+r_frame_rate=60/1
+avg_frame_rate=60/1
+nb_read_frames=1200
+duration=20.000000
+streams: video 
+frame     0: mean |mp4 - jpg| = 0.559, 99.9th percentile = 5
+frame   119: mean |mp4 - jpg| = 0.562, 99.9th percentile = 5
+frame   120: mean |mp4 - jpg| = 0.583, 99.9th percentile = 6
+frame   180: mean |mp4 - jpg| = 0.592, 99.9th percentile = 6
+frame   239: mean |mp4 - jpg| = 0.580, 99.9th percentile = 6
+frame   240: mean |mp4 - jpg| = 0.580, 99.9th percentile = 6
+frame   600: mean |mp4 - jpg| = 0.524, 99.9th percentile = 5
+frame   659: mean |mp4 - jpg| = 0.525, 99.9th percentile = 5
+frame   660: mean |mp4 - jpg| = 0.528, 99.9th percentile = 5
+frame   720: mean |mp4 - jpg| = 0.563, 99.9th percentile = 5
+frame   779: mean |mp4 - jpg| = 0.568, 99.9th percentile = 6
+frame  1199: mean |mp4 - jpg| = 0.525, 99.9th percentile = 5
+VERIFY PASS: take_b_driver_window.mp4 3840x2400, 1200 frames at 60/1
+removed /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/frames_take_b_driver_window (identical JPEG data kept in /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/take_b_driver_window_raw_mjpeg.mov)

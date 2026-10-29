@@ -1,0 +1,90 @@
+{
+  "mp4": "take_a_headlights.mp4",
+  "width": 3840,
+  "height": 2400,
+  "frames": 1560,
+  "fps": "60/1",
+  "samples": [
+    {
+      "frame": 0,
+      "mean_abs_diff": 0.559,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 120,
+      "mean_abs_diff": 0.562,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 179,
+      "mean_abs_diff": 0.541,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 180,
+      "mean_abs_diff": 0.543,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 190,
+      "mean_abs_diff": 0.574,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 200,
+      "mean_abs_diff": 0.57,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 509,
+      "mean_abs_diff": 0.539,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 510,
+      "mean_abs_diff": 0.619,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 517,
+      "mean_abs_diff": 0.531,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 524,
+      "mean_abs_diff": 0.514,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 720,
+      "mean_abs_diff": 0.52,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 726,
+      "mean_abs_diff": 0.542,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 727,
+      "mean_abs_diff": 0.525,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 731,
+      "mean_abs_diff": 0.516,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 780,
+      "mean_abs_diff": 0.546,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 1559,
+      "mean_abs_diff": 0.526,
+      "p99_9_abs_diff": 5.0
+    }
+  ],
+  "failures": []
+}

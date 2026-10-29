@@ -1,0 +1,22 @@
+{
+  "blocked_physical_input": {},
+  "checks": 10,
+  "failed": 0,
+  "failures": [],
+  "passed": true,
+  "resumed_at": 3,
+  "save_ms_total": 8066,
+  "saved_clip_frames": 30,
+  "saved_stills": [
+    "selftest_hud_3840x2400.png",
+    "selftest_paused_ts1_a.png",
+    "selftest_paused_ts1_b.png",
+    "selftest_paused_ts0_a.png",
+    "selftest_paused_ts0_b.png",
+    "selftest_same_frame_edit.png"
+  ],
+  "switch_frames": [
+    61
+  ],
+  "take": "selftest"
+}

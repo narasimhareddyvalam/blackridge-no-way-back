@@ -1,0 +1,30 @@
+date: 2026-10-29T20:08:24Z
+command: /Applications/Godot.app/Contents/MacOS/Godot --path /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture --fixed-fps 60 --audio-driver Dummy --quit-after 2400 --script res://capture_drivers/take_a_headlights.gd -- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: Game starts paused at its start menu (input disabled)
+PASS: Real Escape press began the drive on frame 3
+PASS: Physics settled before recording (y stable for 60 frames)
+PASS: Saved still cockpit_hero_4k.png at 3840x2400 (process frame 300)
+PASS: The game handled the four L presses on process frames [360, 690, 900, 907] (expected [360, 690, 900, 907])
+PASS: Before the first press: headlights on, night_amount 1.0 (amber) on every frame
+PASS: Off-fade 1 -> 0 took 21 frames = 0.3500 s (spec 0.35 s +/- 1 frame)
+PASS: Lights off: night_amount holds 0.0 (mint-white) until the second press
+PASS: On-fade 0 -> 1 took 15 frames = 0.2500 s (spec 0.25 s +/- 1 frame)
+PASS: Lights on: night_amount holds 1.0 until the double tap
+PASS: Double tap: fading out for 7 frames, turned at 0.666667 (expected 0.666667)
+PASS: Reversal continues from the current value: first step +0.066667 (one fade-in step 0.066667)
+PASS: Rise from 0.6667 to 1.0 took 5 frames = 0.0833 s (expected 0.0833 s +/- 1 frame)
+PASS: After the reversal: headlights on, night_amount 1.0 to the end of the clip
+PASS: No jump: largest per-frame change 0.066667 <= one fade-in step 0.066667
+PASS: The cluster ShaderMaterial's night_amount equals NightDimming.night_amount every frame
+PASS: Saved 1560 of 1560 clip frames
+PASS: Saved the hero still (clip frame 120)
+PASS: No driving action was held on any frame (0 frames)
+PASS: Van stayed stationary while recording (max drift 0.000000 m, max |speed| 0.000000)
+CAPTURE RESULT take_a_headlights: 20/20 checks passed
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+runner: godot exit status 0, wall time 118 s
+runner: PASS take_a_headlights

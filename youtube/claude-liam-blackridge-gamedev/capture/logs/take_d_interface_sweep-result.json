@@ -1,0 +1,39 @@
+{
+  "blocked_physical_input": {
+    "InputEventMouseMotion": 93,
+    "InputEventPanGesture": 6
+  },
+  "checks": 54,
+  "failed": 0,
+  "failures": [],
+  "freeze_process_frame": 187,
+  "passed": true,
+  "save_ms_total": 26785,
+  "saved_clip_frames": 0,
+  "saved_stills": [
+    "sweep_fog_amount_min.png",
+    "sweep_fog_amount_default.png",
+    "sweep_fog_amount_max.png",
+    "sweep_fog_opacity_min.png",
+    "sweep_fog_opacity_default.png",
+    "sweep_fog_opacity_max.png",
+    "sweep_clear_center_min.png",
+    "sweep_clear_center_default.png",
+    "sweep_clear_center_max.png",
+    "sweep_edge_softness_min.png",
+    "sweep_edge_softness_default.png",
+    "sweep_edge_softness_max.png",
+    "sweep_normal_strength_min.png",
+    "sweep_normal_strength_default.png",
+    "sweep_normal_strength_max.png",
+    "sweep_texture_scale_min.png",
+    "sweep_texture_scale_default.png",
+    "sweep_texture_scale_max.png",
+    "sweep_fog_tint_min.png",
+    "sweep_fog_tint_default.png",
+    "sweep_fog_tint_max.png"
+  ],
+  "shots": 21,
+  "take": "take_d_interface_sweep",
+  "world_fog": "on (game state)"
+}

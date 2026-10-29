@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: Game starts paused at its start menu
+PASS: Escape action press reached the HUD through the rig: unpaused on frame 3
+PASS: Saved still selftest_hud_3840x2400.png at 3840x2400 (process frame 60)
+PASS: headlights_on is false on frame 61
+PASS: One press toggled once (switch_operated x1 at [61])
+PASS: Saved still selftest_paused_ts1_a.png at 3840x2400 (process frame 112)
+PASS: Saved still selftest_paused_ts1_b.png at 3840x2400 (process frame 172)
+PASS: Saved still selftest_paused_ts0_a.png at 3840x2400 (process frame 175)
+PASS: Saved still selftest_paused_ts0_b.png at 3840x2400 (process frame 235)
+PASS: Saved still selftest_same_frame_edit.png at 3840x2400 (process frame 236)
+CAPTURE RESULT selftest: 10/10 checks passed

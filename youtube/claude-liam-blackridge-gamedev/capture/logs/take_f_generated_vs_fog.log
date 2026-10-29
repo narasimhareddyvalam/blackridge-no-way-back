@@ -1,0 +1,11 @@
+date: 2026-10-29T20:22:31Z
+command: /Applications/Godot.app/Contents/MacOS/Godot --path /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture --fixed-fps 60 --audio-driver Dummy --always-on-top --quit-after 200 --script res://capture_drivers/take_f_generated_vs_fog.gd -- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: Left quad uses res://shaders/standard_generated.gdshader and it parses
+PASS: Right quad uses light_fog.tres with fog_amount 1.0 (runtime only)
+PASS: Saved still generated_vs_fog_4k.png at 3840x2160 (process frame 30)
+CAPTURE RESULT take_f_generated_vs_fog: 3/3 checks passed
+runner: godot exit status 0, wall time 2 s
+runner: PASS take_f_generated_vs_fog

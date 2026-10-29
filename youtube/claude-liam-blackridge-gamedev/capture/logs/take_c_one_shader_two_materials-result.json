@@ -1,0 +1,30 @@
+{
+  "blocked_physical_input": {
+    "InputEventMouseMotion": 73
+  },
+  "checks": 36,
+  "edit_clip_frame": 120,
+  "failed": 0,
+  "failures": [],
+  "freeze_process_frame": 187,
+  "heavy_fog_instance_id": -9223371997226989990,
+  "light_fog_instance_id": -9223371997461871011,
+  "material_edit_start": 197,
+  "original_line": "ALBEDO = color_sample * fog_tint.rgb;",
+  "passed": true,
+  "replacement_line": "ALBEDO = vec3(1.0, 0.35, 0.2);",
+  "save_ms_total": 50614,
+  "saved_clip_frames": 840,
+  "saved_stills": [
+    "fog_baseline.png",
+    "world_fog_off.png",
+    "world_fog_on.png",
+    "material_edit_before.png",
+    "material_edit_after.png",
+    "shader_edit_before.png",
+    "shader_edit_after.png"
+  ],
+  "shader_edit_start": 627,
+  "shared_shader_instance_id": -9223371998619498935,
+  "take": "take_c_one_shader_two_materials"
+}

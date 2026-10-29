@@ -1,0 +1,46 @@
+date: 2026-10-29T20:17:15Z
+command: /Applications/Godot.app/Contents/MacOS/Godot --path /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture --fixed-fps 60 --audio-driver Dummy --always-on-top --quit-after 2000 --script res://capture_drivers/take_c_one_shader_two_materials.gd -- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: light_fog and heavy_fog are different ShaderMaterial objects (ids -9223371997461871011 / -9223371997226989990)
+PASS: Windshield overlay uses light_fog.tres; driver-window overlay uses heavy_fog.tres
+PASS: Both materials share one Shader object: res://shaders/foggy_windshield.gdshader (id -9223371998619498935)
+PASS: Loaded Shader code equals the file on disk and contains the original line once
+PASS: Game starts paused at its start menu (input disabled)
+PASS: Real Escape press began the drive on frame 3
+PASS: Two real V presses (handled on frames [151, 161]) switched the wipers off
+PASS: Wipers parked at angle -0.90 (stationary for 10 frames)
+PASS: World fog is on in the game's own state
+PASS: Saved still fog_baseline.png at 3840x2400 (process frame 189)
+PASS: Saved still world_fog_off.png at 3840x2400 (process frame 191)
+PASS: Saved still world_fog_on.png at 3840x2400 (process frame 193)
+PASS: Saved still material_edit_before.png at 3840x2400 (process frame 316)
+PASS: Saved still material_edit_after.png at 3840x2400 (process frame 317)
+PASS: heavy_fog values unchanged during the material edit: { "fog_amount": 0.75, "fog_opacity": 0.6, "clear_center": 0.35, "edge_softness": 0.25, "normal_strength": 0.5, "texture_scale": 1.0, "fog_tint": (0.82, 0.87, 0.9, 1.0), "fog_color": "res://assets/textures/windshield/fog_color.png", "fog_normal": "res://assets/textures/windshield/fog_normal.png", "fog_data": "res://assets/textures/windshield/fog_data.png" }
+PASS: light_fog restored to its .tres values
+PASS: Saved still shader_edit_before.png at 3840x2400 (process frame 746)
+PASS: In-memory edit replaced exactly one line and the shader still compiles (10 uniforms)
+PASS: Saved still shader_edit_after.png at 3840x2400 (process frame 747)
+PASS: material_edit: light_fog fog_amount 0.25 for clip frames 0-119, 1.0 for 120-419
+PASS: material_edit: heavy_fog fog_amount stayed 0.75 on every frame
+PASS: shader_edit: original code for clip frames 0-119, edited for 120-419
+PASS: Shader code restored in memory after the clip
+PASS: foggy_windshield.gdshader on disk is unchanged
+PASS: heavy_fog values unchanged at the end: { "fog_amount": 0.75, "fog_opacity": 0.6, "clear_center": 0.35, "edge_softness": 0.25, "normal_strength": 0.5, "texture_scale": 1.0, "fog_tint": (0.82, 0.87, 0.9, 1.0), "fog_color": "res://assets/textures/windshield/fog_color.png", "fog_normal": "res://assets/textures/windshield/fog_normal.png", "fog_data": "res://assets/textures/windshield/fog_data.png" }
+PASS: light_fog values equal its .tres values at the end
+PASS: Saved 840 of 840 clip frames
+PASS: Saved still fog_baseline.png
+PASS: Saved still world_fog_off.png
+PASS: Saved still world_fog_on.png
+PASS: Saved still material_edit_before.png
+PASS: Saved still material_edit_after.png
+PASS: Saved still shader_edit_before.png
+PASS: Saved still shader_edit_after.png
+PASS: No driving action was held on any frame (0 frames)
+PASS: Van stayed stationary while recording (max drift 0.000000 m, max |speed| 0.000000)
+CAPTURE RESULT take_c_one_shader_two_materials: 36/36 checks passed
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+runner: godot exit status 0, wall time 78 s
+runner: PASS take_c_one_shader_two_materials

@@ -1,0 +1,4 @@
+renderer=gl_compatibility driver=opengl3 adapter=Apple M4 image=3840x2160 file=hint_compatibility_4k.png
+AsColor: band 1 at (1470, 675) = (64, 64, 64) [9x9 min (64, 64, 64) max (64, 64, 64)]; band 2 at (1920, 675) = (128, 128, 128) [9x9 min (128, 128, 128) max (128, 128, 128)]; band 3 at (2370, 675) = (192, 192, 192) [9x9 min (192, 192, 192) max (192, 192, 192)]
+AsData: band 1 at (1470, 1485) = (64, 64, 64) [9x9 min (64, 64, 64) max (64, 64, 64)]; band 2 at (1920, 1485) = (128, 128, 128) [9x9 min (128, 128, 128) max (128, 128, 128)]; band 3 at (2370, 1485) = (192, 192, 192) [9x9 min (192, 192, 192) max (192, 192, 192)]
+earlier measurement (lower resolution): AsColor 64/128/192, AsData 64/128/192 (1280x800 window, evidence/captures)

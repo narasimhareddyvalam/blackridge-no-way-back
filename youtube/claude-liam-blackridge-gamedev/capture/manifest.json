@@ -1,0 +1,2514 @@
+{
+  "generated_utc": "2026-10-29T20:40:09Z",
+  "documentation": "capture/CAPTURE.md",
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf",
+  "renderers": {
+    "gl_compatibility": "OpenGL API 4.1 Metal - Compatibility - Apple M4 (all takes; the project's renderer)",
+    "forward_plus": "Metal 4.0 - Forward+ - Apple M4 (take E comparison only)"
+  },
+  "capture_method": "offline render into a SubViewport (3840x2400 cockpit, 3840x2160 test scenes) at --fixed-fps 60; Movie Maker probe gave 1280x800 only",
+  "real_time_fps_claim": false,
+  "source_snapshot": {
+    "description": "Isolated copy of the repository's game/ folder (cp -Rp, including .godot/) at /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture/",
+    "repository_commit": "25c78737db54c6e9977cddb365fb7518b48833a4",
+    "repository_game_status": "git status --porcelain -- game: empty (before and after)",
+    "files_hashed": 385,
+    "file_list_sha256": "420ca4e6610f4c39d8b54e71ba5b3953130494532bd83223743e4bd318976524",
+    "file_lists": [
+      "capture/logs/snapshot/repo_game_before.sha256",
+      "capture/logs/snapshot/copy_game_initial.sha256",
+      "capture/logs/snapshot/repo_game_after.sha256",
+      "capture/logs/snapshot/copy_game_final.sha256"
+    ],
+    "copy_changes": [
+      "project.godot: application/config/use_custom_user_dir=true and custom_user_dir_name=\"blackridge_capture_copy\" (separate user://)",
+      "project.godot: [editor] movie_writer/mjpeg_quality=0.95 (no such key in 4.7.2, no effect; Movie Maker used only for the probes)",
+      "capture_drivers/: copies of capture/scripts/*.gd"
+    ],
+    "copy_changes_diff": "capture/logs/snapshot/copy_project_godot.diff",
+    "shaders_and_materials_in_copy": "byte-identical to the repository after all takes"
+  },
+  "takes": {
+    "A": {
+      "driver_script": "capture/scripts/take_a_headlights.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_a_headlights-inputs.jsonl",
+      "result": "capture/logs/take_a_headlights-result.json",
+      "engine_log": "capture/logs/take_a_headlights.log",
+      "frames_csv": "capture/take_a_headlights-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ]
+    },
+    "B": {
+      "driver_script": "capture/scripts/take_b_driver_window.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_b_driver_window-inputs.jsonl",
+      "result": "capture/logs/take_b_driver_window-result.json",
+      "engine_log": "capture/logs/take_b_driver_window.log",
+      "frames_csv": "capture/take_b_driver_window-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ]
+    },
+    "C": {
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json"
+    },
+    "C2": {
+      "driver_script": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "rig_revision": "capture/scripts/capture_rig.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "result": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "engine_log": "capture/logs/take_c2_shader_edit_visible.log",
+      "frames_csv": "capture/take_c2_shader_edit_visible-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/region_change_shares.json"
+    },
+    "D": {
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    "E-compatibility": {
+      "driver_script": "capture/scripts/take_e_hint.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_e_hint_gl_compatibility-inputs.jsonl",
+      "result": "capture/logs/take_e_hint_gl_compatibility-result.json",
+      "engine_log": "capture/logs/take_e_hint_gl_compatibility.log"
+    },
+    "E-forward_plus": {
+      "driver_script": "capture/scripts/take_e_hint.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_e_hint_forward_plus-inputs.jsonl",
+      "result": "capture/logs/take_e_hint_forward_plus-result.json",
+      "engine_log": "capture/logs/take_e_hint_forward_plus.log"
+    },
+    "F": {
+      "driver_script": "capture/scripts/take_f_generated_vs_fog.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_f_generated_vs_fog-inputs.jsonl",
+      "result": "capture/logs/take_f_generated_vs_fog-result.json",
+      "engine_log": "capture/logs/take_f_generated_vs_fog.log",
+      "parameters": "capture/logs/generated_vs_fog_parameters.json"
+    }
+  },
+  "not_from_this_capture": {
+    "capture/sweep_diff.txt": "not produced by these capture drivers; written by another process (the reel build), modified 2026-10-29 16:25 local time; not hashed here",
+    "capture/take_a_headlights_keyframes.png": "not produced by these capture drivers; written by another process (the reel build), modified 2026-10-29 16:18 local time; not hashed here",
+    "capture/take_b_driver_window_keyframes.png": "not produced by these capture drivers; written by another process (the reel build), modified 2026-10-29 16:29 local time; not hashed here"
+  },
+  "files": [
+    {
+      "path": "capture/material_edit.mp4",
+      "sha256": "17b27598ed0f9df3d6451bc352f7be7cc2a2d0a7ff68c3107771b6bfd2458876",
+      "bytes": 2110994,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "final clip",
+      "take": "C",
+      "method": "scripted-input",
+      "timeline": "light_fog fog_amount 0.25 -> 1.0 at 2.000 s (clip frame 120); paused, time_scale 0",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "color": {
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709",
+        "color_range": "tv"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "raw_take": "capture/raw/material_edit_raw_mjpeg.mov",
+      "render": "offline, --fixed-fps 60 (not a real-time FPS claim)"
+    },
+    {
+      "path": "capture/raw/material_edit_raw_mjpeg.mov",
+      "sha256": "33eed0b00e3a179a20ded1404f84625bd63f4c2790d2ffa4033c3c79d19f8574",
+      "bytes": 378012127,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "raw take (MJPEG, quality 0.95 JPEG frames, byte-identical to the rendered frames)",
+      "take": "C",
+      "method": "scripted-input",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "encoded_to": "capture/material_edit.mp4"
+    },
+    {
+      "path": "capture/raw/probe/probe_3840x2160_screen1.avi",
+      "sha256": "099b02a22aba60d2810a2e77a825d117299df6ff631bb2c4bdc8c4dc54160219",
+      "bytes": 11986082,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "Movie Maker resolution probe (not used in the film)",
+      "take": "probe",
+      "method": "scripted",
+      "driver_script": "capture/scripts/probe_resolution.gd",
+      "width": 1280,
+      "height": 800,
+      "fps": 60.0,
+      "frames": 120,
+      "duration_s": 2.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 1,
+      "engine_log": "capture/logs/probe/probe_3840x2160_screen1.log"
+    },
+    {
+      "path": "capture/raw/probe/probe_3840x2400.avi",
+      "sha256": "abd7198b4fb1b845ea804a20907e36b5512f380103f34b7abeedf9425afadd13",
+      "bytes": 11769436,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "Movie Maker resolution probe (not used in the film)",
+      "take": "probe",
+      "method": "scripted",
+      "driver_script": "capture/scripts/probe_resolution.gd",
+      "width": 1280,
+      "height": 800,
+      "fps": 60.0,
+      "frames": 120,
+      "duration_s": 2.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 1,
+      "engine_log": "capture/logs/probe/probe_3840x2400.log"
+    },
+    {
+      "path": "capture/raw/shader_edit_raw_mjpeg.mov",
+      "sha256": "1bcaf02566eef5c679d415f0dca447ded4445cab0c109593e3ebbaff6ca95bf4",
+      "bytes": 371747527,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "raw take (MJPEG, quality 0.95 JPEG frames, byte-identical to the rendered frames)",
+      "take": "C",
+      "method": "scripted-input",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "encoded_to": "capture/shader_edit.mp4"
+    },
+    {
+      "path": "capture/raw/shader_edit_visible_raw_mjpeg.mov",
+      "sha256": "fdb5299108170fb8968de0acd9d2ff425e86dc728a2f635787c7322f499a9d92",
+      "bytes": 380199607,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "raw take (MJPEG, quality 0.95 JPEG frames, byte-identical to the rendered frames)",
+      "take": "C2",
+      "method": "scripted-input",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "rig_revision": "capture/scripts/capture_rig.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "result": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "engine_log": "capture/logs/take_c2_shader_edit_visible.log",
+      "frames_csv": "capture/take_c2_shader_edit_visible-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/region_change_shares.json",
+      "encoded_to": "capture/shader_edit_visible.mp4"
+    },
+    {
+      "path": "capture/raw/take_a_headlights_raw_mjpeg.mov",
+      "sha256": "9d0228cb0d49307dc10585941b4e5446be4d4f00473ff889f2666235dbee420d",
+      "bytes": 1385238839,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "raw take (MJPEG, quality 0.95 JPEG frames, byte-identical to the rendered frames)",
+      "take": "A",
+      "method": "scripted-input",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 1560,
+      "duration_s": 26.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_a_headlights.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_a_headlights-inputs.jsonl",
+      "result": "capture/logs/take_a_headlights-result.json",
+      "engine_log": "capture/logs/take_a_headlights.log",
+      "frames_csv": "capture/take_a_headlights-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ],
+      "encoded_to": "capture/take_a_headlights.mp4"
+    },
+    {
+      "path": "capture/raw/take_b_driver_window_raw_mjpeg.mov",
+      "sha256": "43e3ed7b9bf5654385e32d8ca065abf395e7a81380167c8c97eb4a172257d450",
+      "bytes": 1082100084,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "raw take (MJPEG, quality 0.95 JPEG frames, byte-identical to the rendered frames)",
+      "take": "B",
+      "method": "scripted-input",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 1200,
+      "duration_s": 20.0,
+      "codec": "mjpeg",
+      "pix_fmt": "yuvj420p",
+      "color": {
+        "color_space": "bt470bg",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "pc"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_b_driver_window.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_b_driver_window-inputs.jsonl",
+      "result": "capture/logs/take_b_driver_window-result.json",
+      "engine_log": "capture/logs/take_b_driver_window.log",
+      "frames_csv": "capture/take_b_driver_window-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ],
+      "encoded_to": "capture/take_b_driver_window.mp4"
+    },
+    {
+      "path": "capture/shader_edit.mp4",
+      "sha256": "a1198235402630cd7e09a01f41c1b002be2fbaabfdaab5d92c8847e7f6b42577",
+      "bytes": 2150651,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "final clip",
+      "take": "C",
+      "method": "scripted-input",
+      "timeline": "shared Shader line replaced in memory at 2.000 s (clip frame 120); light_fog at .tres values",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "color": {
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709",
+        "color_range": "tv"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "raw_take": "capture/raw/shader_edit_raw_mjpeg.mov",
+      "render": "offline, --fixed-fps 60 (not a real-time FPS claim)"
+    },
+    {
+      "path": "capture/shader_edit_visible.mp4",
+      "sha256": "fca0c0672ae2b2473a8d84c8a7703667f8c5e8c63bbd4c765027bace025d93d4",
+      "bytes": 2463507,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "final clip",
+      "take": "C2",
+      "method": "scripted-input",
+      "timeline": "light_fog fog_amount 1.0 set before recording (disclosed); shared Shader line replaced in memory at 2.000 s (clip frame 120)",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 420,
+      "duration_s": 7.0,
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "color": {
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709",
+        "color_range": "tv"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "rig_revision": "capture/scripts/capture_rig.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "result": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "engine_log": "capture/logs/take_c2_shader_edit_visible.log",
+      "frames_csv": "capture/take_c2_shader_edit_visible-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/region_change_shares.json",
+      "raw_take": "capture/raw/shader_edit_visible_raw_mjpeg.mov",
+      "render": "offline, --fixed-fps 60 (not a real-time FPS claim)"
+    },
+    {
+      "path": "capture/take_a_headlights.mp4",
+      "sha256": "4fa9b4ac877c86a70527a081bcdee727a0a3cea67f75468026486811c7e4914e",
+      "bytes": 16359398,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "final clip",
+      "take": "A",
+      "method": "scripted-input",
+      "timeline": "L (headlights action) handled at 3.000, 8.500, 12.000 and 12.117 s; off-fade ends 3.333 s, on-fade ends 8.733 s, reversal back at 12.183 s",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 1560,
+      "duration_s": 26.0,
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "color": {
+        "color_space": "bt709",
+        "color_primaries": null,
+        "color_transfer": null,
+        "color_range": "tv"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_a_headlights.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_a_headlights-inputs.jsonl",
+      "result": "capture/logs/take_a_headlights-result.json",
+      "engine_log": "capture/logs/take_a_headlights.log",
+      "frames_csv": "capture/take_a_headlights-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ],
+      "raw_take": "capture/raw/take_a_headlights_raw_mjpeg.mov",
+      "render": "offline, --fixed-fps 60 (not a real-time FPS claim)",
+      "note": "encoded before setparams was added; matrix bt709 and range tv are tagged, primaries/transfer read unknown; pixels verified"
+    },
+    {
+      "path": "capture/take_b_driver_window.mp4",
+      "sha256": "233f6db53896430cbc1192faa12249ee1dd81747df445ebb0ad779293677c750",
+      "bytes": 14973345,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "clip",
+      "role": "final clip",
+      "take": "B",
+      "method": "scripted-input",
+      "timeline": "J (window_left action) handled at 2.000 s (fully open 3.983 s) and 11.000 s (closed 12.983 s)",
+      "width": 3840,
+      "height": 2400,
+      "fps": 60.0,
+      "frames": 1200,
+      "duration_s": 20.0,
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "color": {
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709",
+        "color_range": "tv"
+      },
+      "audio_streams": 0,
+      "driver_script": "capture/scripts/take_b_driver_window.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_b_driver_window-inputs.jsonl",
+      "result": "capture/logs/take_b_driver_window-result.json",
+      "engine_log": "capture/logs/take_b_driver_window.log",
+      "frames_csv": "capture/take_b_driver_window-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ],
+      "raw_take": "capture/raw/take_b_driver_window_raw_mjpeg.mov",
+      "render": "offline, --fixed-fps 60 (not a real-time FPS claim)"
+    },
+    {
+      "path": "capture/cockpit_hero_4k.png",
+      "sha256": "8a724a5d0048cc40779c6f514212992b700f6cbc0950141817293d0049b6bb23",
+      "bytes": 3989493,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "G (from A)",
+      "method": "scripted",
+      "what": "take A clip frame 120, t = 2.000 s, headlights on",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_a_headlights.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "runner": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "input_log": "capture/take_a_headlights-inputs.jsonl",
+      "result": "capture/logs/take_a_headlights-result.json",
+      "engine_log": "capture/logs/take_a_headlights.log",
+      "frames_csv": "capture/take_a_headlights-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd"
+      ],
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/fog_baseline.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "both overlays at their .tres values, world fog on",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/generated_vs_fog_4k.png",
+      "sha256": "9092c7adde70851fb207a742d3f870a32300de7d8cc5013d625993edecea2cf8",
+      "bytes": 1419765,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "F",
+      "method": "scripted",
+      "what": "standard_generated.gdshader (left) vs light_fog.tres with fog_amount 1.0 (right), test scene",
+      "width": 3840,
+      "height": 2160,
+      "driver_script": "capture/scripts/take_f_generated_vs_fog.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_f_generated_vs_fog-inputs.jsonl",
+      "result": "capture/logs/take_f_generated_vs_fog-result.json",
+      "engine_log": "capture/logs/take_f_generated_vs_fog.log",
+      "parameters": "capture/logs/generated_vs_fog_parameters.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/hint_compatibility_4k.png",
+      "sha256": "ccaa5dcd5d831cf4d504d7fed8d00b09626619ccc7628e438b982e73aa4c8f76",
+      "bytes": 124837,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "E-compatibility",
+      "method": "scripted",
+      "what": "hint experiment, gl_compatibility",
+      "width": 3840,
+      "height": 2160,
+      "driver_script": "capture/scripts/take_e_hint.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_e_hint_gl_compatibility-inputs.jsonl",
+      "result": "capture/logs/take_e_hint_gl_compatibility-result.json",
+      "engine_log": "capture/logs/take_e_hint_gl_compatibility.log",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/hint_forward_plus_4k.png",
+      "sha256": "8da1f100f67a9a6da82c87cc54b7849a4ee6f69cdf94a942e6ce62ee04b70763",
+      "bytes": 127310,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "E-forward_plus",
+      "method": "scripted",
+      "what": "hint experiment, forward_plus comparison",
+      "width": 3840,
+      "height": 2160,
+      "driver_script": "capture/scripts/take_e_hint.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_e_hint_forward_plus-inputs.jsonl",
+      "result": "capture/logs/take_e_hint_forward_plus-result.json",
+      "engine_log": "capture/logs/take_e_hint_forward_plus.log",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/material_edit_after.png",
+      "sha256": "f4fb349bf34915f87216049d110e99969fb185c1ba0b7230cafbcc35c456dedf",
+      "bytes": 4493737,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "material_edit clip frame 120 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/material_edit_before.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "material_edit clip frame 119 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/shader_edit_after.png",
+      "sha256": "12041eb88c9b71e16daffb2006f89eab00bdd922c8924ce65598c0225992de99",
+      "bytes": 4049079,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "shader_edit clip frame 120 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/shader_edit_before.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "shader_edit clip frame 119 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/shader_edit_visible_after.png",
+      "sha256": "778f28055188716584a78cbed24b50f62e3875162ea26da6b4f0c1431c242f04",
+      "bytes": 4515388,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C2",
+      "method": "scripted",
+      "what": "shader_edit_visible clip frame 120 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "rig_revision": "capture/scripts/capture_rig.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "result": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "engine_log": "capture/logs/take_c2_shader_edit_visible.log",
+      "frames_csv": "capture/take_c2_shader_edit_visible-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/region_change_shares.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/shader_edit_visible_before.png",
+      "sha256": "f4fb349bf34915f87216049d110e99969fb185c1ba0b7230cafbcc35c456dedf",
+      "bytes": 4493737,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C2",
+      "method": "scripted",
+      "what": "shader_edit_visible clip frame 119 (lossless)",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "rig_revision": "capture/scripts/capture_rig.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "result": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "engine_log": "capture/logs/take_c2_shader_edit_visible.log",
+      "frames_csv": "capture/take_c2_shader_edit_visible-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/region_change_shares.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/sweep_clear_center_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "clear_center",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_clear_center_max.png",
+      "sha256": "ea6eb29f8ef17d13bf6731413f031c41c06b351d2425de31b92ba26187c4c204",
+      "bytes": 4029521,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "clear_center",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_clear_center_min.png",
+      "sha256": "0b7a18802084879f62f12f442d3f19919bfd90cfc5d2ede36e8481aca8433cd8",
+      "bytes": 4141881,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "clear_center",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_edge_softness_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "edge_softness",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_edge_softness_max.png",
+      "sha256": "de307df57aa5ce4aba0b24089ffc9c5c3f07a933cc716a8b8027910810a674ea",
+      "bytes": 4051060,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "edge_softness",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_edge_softness_min.png",
+      "sha256": "a8ddc2d2a950d72a47edfb598c29432a72614efe1ddf42f64767ea2b2280204a",
+      "bytes": 4031124,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "edge_softness",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_amount_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_amount",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_amount_max.png",
+      "sha256": "f4fb349bf34915f87216049d110e99969fb185c1ba0b7230cafbcc35c456dedf",
+      "bytes": 4493737,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_amount",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_amount_min.png",
+      "sha256": "1b85ed70d3c369c54415e557d6206ce608cd36cbcda16d07a52f2970c80fef8a",
+      "bytes": 4029180,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_amount",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_opacity_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_opacity",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_opacity_max.png",
+      "sha256": "91ccf8f34e696c9b2cf966b4021c7a5172e6d3ed53f38325ce26973d6b6207fa",
+      "bytes": 4044483,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_opacity",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_opacity_min.png",
+      "sha256": "1b85ed70d3c369c54415e557d6206ce608cd36cbcda16d07a52f2970c80fef8a",
+      "bytes": 4029180,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_opacity",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_tint_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_tint",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_tint_max.png",
+      "sha256": "a3bef95c2657eb9cd28a01969616e36479cad518c1579cc95b7271ae37105694",
+      "bytes": 4041777,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_tint",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_fog_tint_min.png",
+      "sha256": "93659ffe52c208ffc43677f7502fa9cbd6edc8fa74bc2f6d597e56b67376bfc9",
+      "bytes": 4046891,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "fog_tint",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_normal_strength_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "normal_strength",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_normal_strength_max.png",
+      "sha256": "b188284a19d71bfabcab0b061cb6ea34d3a6a143bc97c886a5fb2b00f1092467",
+      "bytes": 4038270,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "normal_strength",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_normal_strength_min.png",
+      "sha256": "e419bd9d1aa7b8ca2a8f8cf6fc1525cde531392f40729f2b7a559c7220714f4e",
+      "bytes": 4037549,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "normal_strength",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_texture_scale_default.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "texture_scale",
+      "value_label": "default",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_texture_scale_max.png",
+      "sha256": "c4611f4474764df50d1dfb9972bbfc894913baeba99273cddab943628dea326b",
+      "bytes": 4039328,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "texture_scale",
+      "value_label": "max",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/sweep_texture_scale_min.png",
+      "sha256": "6a408e2acf89a1c0c35d696527b86dac9d52c9d621dc243e9b0d903a2ac0595c",
+      "bytes": 4033028,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "interface sweep",
+      "take": "D",
+      "method": "scripted",
+      "uniform": "texture_scale",
+      "value_label": "min",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_d_interface_sweep.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_d_interface_sweep-inputs.jsonl",
+      "result": "capture/logs/take_d_interface_sweep-result.json",
+      "engine_log": "capture/logs/take_d_interface_sweep.log",
+      "frames_csv": "capture/take_d_interface_sweep-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_d.json"
+    },
+    {
+      "path": "capture/world_fog_off.png",
+      "sha256": "579e40b1028e14788b12510f90d57b93b29427985b7d4c677d6ce15c91d79aca",
+      "bytes": 4345599,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "Environment.fog_enabled = false at runtime only",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/world_fog_on.png",
+      "sha256": "31d437f167631b3d25068450f0b6e9986511ad1b6fd8781eeaa398b88500e5bc",
+      "bytes": 4037679,
+      "source_snapshot": "isolated copy of game/ at commit 25c78737db54 (385 files byte-identical to the repository; see source_snapshot)",
+      "kind": "still",
+      "role": "still",
+      "take": "C",
+      "method": "scripted",
+      "what": "world fog on again; pixel-identical to fog_baseline.png",
+      "width": 3840,
+      "height": 2400,
+      "driver_script": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "rig_revision": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "runner": "capture/scripts/run_take.sh",
+      "input_log": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "result": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "engine_log": "capture/logs/take_c_one_shader_two_materials.log",
+      "frames_csv": "capture/take_c_one_shader_two_materials-frames.csv",
+      "shared_scripts": [
+        "capture/scripts/game_take.gd",
+        "capture/scripts/fog_take.gd"
+      ],
+      "analysis": "capture/logs/analysis_take_c.json",
+      "render": "offline, --fixed-fps 60"
+    },
+    {
+      "path": "capture/CAPTURE.md",
+      "sha256": "84506e32e8dd154615e4e19b8f5c518aea378ed291518e58c5a6b3e9dacf81d4",
+      "bytes": 32252,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/hint_samples_4k.txt",
+      "sha256": "3bdac6cca123bd67a2a7b9df537a9aa19c16fd43f02882cd3b475313a12db643",
+      "bytes": 1937,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/analysis_take_c.json",
+      "sha256": "506bf52266eb2029470d216b61b7237b362acdebbbf0a5600418923059ec411e",
+      "bytes": 984,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/analysis_take_d.json",
+      "sha256": "07108603b034427185e0ac92bb6237bbb7b525e05044a2959b2c0bebca6c2562",
+      "bytes": 2308,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/encode_material_edit.log",
+      "sha256": "1ddb2a20099b072c05ce25de74da70c7e81f25315582aedd97019e3dfacf262d",
+      "bytes": 1884,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/encode_shader_edit.log",
+      "sha256": "dc9e95080aa898f15b596c0e5a6aa76b6c0502e59fb9e385b6ee368a353b9407",
+      "bytes": 1872,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/encode_shader_edit_visible.log",
+      "sha256": "ed552485cb7e7197e17c9bf123941bd705865425d0ade2e9af9e03326c2b82cd",
+      "bytes": 1920,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/encode_take_a_headlights.log",
+      "sha256": "eeb0dfcc5a7dfb34abe4c44d046fc4a0daaf8f02e79ca3e3340163398789518f",
+      "bytes": 2454,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/encode_take_b_driver_window.log",
+      "sha256": "60e6694c3e516ba2a69c1b977b61abd76fc7d02538a4662d7cfbec0d696117b3",
+      "bytes": 2298,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c2_shader_edit_visible-frames.csv",
+      "sha256": "ce5a5a7a2b5e8061dcd4dd075d55548c9ed6409d61e52036c2977b42b55f8416",
+      "bytes": 6373,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c2_shader_edit_visible-inputs.jsonl",
+      "sha256": "9d8bb2507567c3826bf049c9a38a6403dbb5799edbe164f9dbd618892c8726b1",
+      "bytes": 10699,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c2_shader_edit_visible.log",
+      "sha256": "0262bb385c21d3350a6fecaf07370cff12615d282f2a1f02e9b4132c0650dce9",
+      "bytes": 2208,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c_one_shader_two_materials-frames.csv",
+      "sha256": "ed404b3af7aac8794cf75b3a4ce5f95d8ae4ed9c9125e9c2f03fa893103c36fe",
+      "bytes": 87339,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c_one_shader_two_materials-inputs.jsonl",
+      "sha256": "63482fc9c3a9d8229e30b3b5cef7e045d6743f0075e896643e23232c6ed7016a",
+      "bytes": 20146,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/failed_runs/run1_take_c_one_shader_two_materials.log",
+      "sha256": "b6a2ec0143092b837e56cb908033ab7d773f54a1493c077af34bb88b47d667d7",
+      "bytes": 3912,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/generated_vs_fog_parameters.json",
+      "sha256": "0547a85510f86ef689d3a5c721ba926e202a9c7f513e5802e8f6d36b0af8424e",
+      "bytes": 2424,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/hint_samples_forward_plus.txt",
+      "sha256": "9106760c2006555943d7ed312852c78f3cb5ec9eaa2a9be54fedef075a783e97",
+      "bytes": 754,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/hint_samples_gl_compatibility.txt",
+      "sha256": "8731628fbc3ac0fce486fa9e8e9bf7cd2e9d0a6f2d983cd08e7fecb0e820515c",
+      "bytes": 742,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/pack_material_edit.out",
+      "sha256": "27a54be3ddba19356872447bfff1226de40e9518446cb847f3036ada3a1f9fd1",
+      "bytes": 1896,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/pack_shader_edit.out",
+      "sha256": "96ab2bb840569bad8eb6d05234383cfda370fcd7d066d7dce01ce6723a40faee",
+      "bytes": 1884,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/pack_shader_edit_visible.out",
+      "sha256": "14e29a39d2821a847afcbe87d2f4b789f9cc90744630492388d521754190b107",
+      "bytes": 1932,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/pack_take_a.out",
+      "sha256": "aa0c34aa6891d537ecc5844c3ba5183ec1ce29ec8a679e2c6787b7cab58d8499",
+      "bytes": 2466,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/pack_take_b.out",
+      "sha256": "0e98dc2fe681746a77a6639fb91369f027dc88fd6f17ebe91d566b5c2882116b",
+      "bytes": 2310,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/movie_maker_ffprobe.txt",
+      "sha256": "43ca9d0652a9ef79ba27ee212e531427416e5896ff980eab8f7adf136be93ed6",
+      "bytes": 98,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/probe_3840x2160_screen1.log",
+      "sha256": "003a7db51e580db78e3aae373fb94d6073c56ee6ebf2ef070088e27db5cd6297",
+      "bytes": 1539,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/probe_3840x2400.log",
+      "sha256": "13eb2d12d8a10434c4ce8fef721a9ee0b1dbf4ec6156a18fc7f2556b91fd4939",
+      "bytes": 1531,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/rig_selftest-inputs.jsonl",
+      "sha256": "1aae5d581f08f0f442b523c9e4d8f59863b596e06e00ca4ea54b03d5a9295b64",
+      "bytes": 7513,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/rig_selftest-result.json",
+      "sha256": "4b55137d7104e5d2b811328749dfa9ed82b3c93dfd13e818e8b3f7592588060d",
+      "bytes": 454,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/rig_selftest.log",
+      "sha256": "4cb9c130fdf3e4df51bdfa7c98a63261cc13a59eee8852139c9be67bf4f82303",
+      "bytes": 881,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/probe/rig_selftest_pixel_diffs.txt",
+      "sha256": "452aa11e9b45d3cf4830202672bd345961787f0521868eb3a40fad3d3f90693f",
+      "bytes": 412,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/region_change_shares.json",
+      "sha256": "f2a2c25c68ceaf19e1a8e679fc6a667371cad9172a796f8d11e3483996d81a99",
+      "bytes": 2911,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/copy_game_final.sha256",
+      "sha256": "6b9499fc561ca3c95b2f5e419bad893b395e3e1a444d7b32cd14af4c02fc80f2",
+      "bytes": 58905,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/copy_game_initial.sha256",
+      "sha256": "420ca4e6610f4c39d8b54e71ba5b3953130494532bd83223743e4bd318976524",
+      "bytes": 57642,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/copy_headless_import.log",
+      "sha256": "0e9619b3491283555b643b1bdec015bda2ac1c8f308977064c61eb06e57c665d",
+      "bytes": 1347,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/copy_project_godot.diff",
+      "sha256": "400a3f72340e8f18d7cb24a0992297b3e67922af6fc8bb5c4afa12564e396a39",
+      "bytes": 162,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/repo_game_after.sha256",
+      "sha256": "420ca4e6610f4c39d8b54e71ba5b3953130494532bd83223743e4bd318976524",
+      "bytes": 57642,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/snapshot/repo_game_before.sha256",
+      "sha256": "420ca4e6610f4c39d8b54e71ba5b3953130494532bd83223743e4bd318976524",
+      "bytes": 57642,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_a_headlights-result.json",
+      "sha256": "00e1c94794453b0e9a98dae05f5b6120d1377a5cf0eff29ab76ab2078bda6693",
+      "bytes": 598,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_a_headlights.log",
+      "sha256": "9c39991dc0a992994997a6941ab367418cb6fd99bdb5b44844ccb19eedf3de44",
+      "bytes": 2338,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_b_driver_window-result.json",
+      "sha256": "428cc8c4650ffdb6d4db2b119bbf8c31eb94b8e9e297450073a85c2688401c9f",
+      "bytes": 600,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_b_driver_window.log",
+      "sha256": "239eb6bf0652925f61718db4311c635335f7b00321962b8fe5ae348f9f6f0a7d",
+      "bytes": 1778,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c2_shader_edit_visible-overlay-masks.json",
+      "sha256": "984f19a24e8fdc32f8c9bd056827d32984ef5643d071b1888a8c76d83cba66f4",
+      "bytes": 544,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c2_shader_edit_visible-result.json",
+      "sha256": "e358cdfb2e6df3a7782176f99275c233aa06dca1ab33b6bacea48a8ee0d98404",
+      "bytes": 820,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c2_shader_edit_visible.log",
+      "sha256": "b5c5f6041194013c90c3c0d11d55770997b174d8cb6d33f94abd48d517f0c188",
+      "bytes": 3766,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c_one_shader_two_materials-overlay-masks.json",
+      "sha256": "984f19a24e8fdc32f8c9bd056827d32984ef5643d071b1888a8c76d83cba66f4",
+      "bytes": 544,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c_one_shader_two_materials-result.json",
+      "sha256": "c82ab07202adc4db55bba50b30e776c1d5f0e87e1d2f806fab08678b54aeb98c",
+      "bytes": 837,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_c_one_shader_two_materials.log",
+      "sha256": "35b661ba17246c8a3311beb74e91407e330df78a86f578d23c8ea41a4b39d2c8",
+      "bytes": 3927,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_d_interface_sweep-overlay-masks.json",
+      "sha256": "984f19a24e8fdc32f8c9bd056827d32984ef5643d071b1888a8c76d83cba66f4",
+      "bytes": 544,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_d_interface_sweep-result.json",
+      "sha256": "bc4607f12ba3e8b5bb64daae3383b9d3c0b112bd38bfee6c680e2c0640e74d3e",
+      "bytes": 1096,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_d_interface_sweep.log",
+      "sha256": "44bd07d3dbd5e391e8b5e2332b35e2d2f934ced06c716d507a35dd9c6537054a",
+      "bytes": 5518,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_e_hint_forward_plus-result.json",
+      "sha256": "15c2ac7e46e11100429bc2783e57e19e328cdb94fada280b3e1654c6ea1fa36a",
+      "bytes": 666,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_e_hint_forward_plus.log",
+      "sha256": "e079bcf7708a97ec2a25e50b589a37c52a178239ab65be69507d3c9f531e18fa",
+      "bytes": 1750,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_e_hint_gl_compatibility-result.json",
+      "sha256": "3360dbc0c51c4980add8093083dcbf6b7a8aa5f25cef5dd8c346446de604f242",
+      "bytes": 672,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_e_hint_gl_compatibility.log",
+      "sha256": "827faad2754b56b98ce161a8af5bc172d2f5e999788d4e413835c6219bdd55b1",
+      "bytes": 1726,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_f_generated_vs_fog-result.json",
+      "sha256": "5ba75535e7d9d288c2d4da6ab43b0cf27c7ef5f5b6b9d456d169ccda8d6b8e3f",
+      "bytes": 2824,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/take_f_generated_vs_fog.log",
+      "sha256": "9c4a4f4a09151787f67b091bb18a95efdf36e354cc3baf61814fa0691fd04fe0",
+      "bytes": 983,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/verify_material_edit.json",
+      "sha256": "138406f0e5d4001ffc90ea90f4bbc9f6669e7548bea9b721374a74fbf30178f1",
+      "bytes": 682,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit.json",
+      "sha256": "667bcadec01d13738050124fc6d5620102db5110db986d3ac768f4ae071d6973",
+      "bytes": 679,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible.json",
+      "sha256": "6b3258cb1f6dbd95fc2e8e8a98781f4705dbead19bcf38858bca2c67bb746e4c",
+      "bytes": 687,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/verify_take_a_headlights.json",
+      "sha256": "956781bac2725b4dd5fc9d3bfb3a7154f1d95551f57b33a578c42f2ecdcb8e1f",
+      "bytes": 1596,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window.json",
+      "sha256": "1af95c36875bd68f3719d58cec958f0cfb5dd6aec17e9059ffe3f1b861d8b272",
+      "bytes": 1235,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_a_headlights-frames.csv",
+      "sha256": "4bb683bba81a8758d0e4208f2ae4f2ab1b24cc9fff36e80d87841415c5489954",
+      "bytes": 222968,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_a_headlights-inputs.jsonl",
+      "sha256": "bc6891c554e57e06ee0364732a1c18667f54f49be2cacfa71d42bba41a96c357",
+      "bytes": 13542,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_b_driver_window-frames.csv",
+      "sha256": "51b2e78835fd4b34f8ea072853c5934b457b3669eeb94ab3f51c8e9e32a80f6c",
+      "bytes": 227702,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_b_driver_window-inputs.jsonl",
+      "sha256": "98c4e82b8d6ed04668bf0e3de87e4100c81fdd840a6c9896960900f45af1bbbb",
+      "bytes": 9936,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_c2_shader_edit_visible-frames.csv",
+      "sha256": "0c0f87308cc59da30ae50e6297d590a32d946c92e8505d08acf09e810ac0f04a",
+      "bytes": 45035,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_c2_shader_edit_visible-inputs.jsonl",
+      "sha256": "89fa1d01f0445d69642cb8573dedac7f29b55250204ac7711661bb893ea4a788",
+      "bytes": 17073,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_c_one_shader_two_materials-frames.csv",
+      "sha256": "ed404b3af7aac8794cf75b3a4ce5f95d8ae4ed9c9125e9c2f03fa893103c36fe",
+      "bytes": 87339,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_c_one_shader_two_materials-inputs.jsonl",
+      "sha256": "d9ba521ee6a788bf5b69d04026dbfe5b80321f48a3220fb63684da7c7d6b03fb",
+      "bytes": 21038,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_d_interface_sweep-frames.csv",
+      "sha256": "a229a3c5c01d77fd2f3ba14b5deece171db0dbe4737c3b29c96c05553b1ed7a0",
+      "bytes": 4100,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_d_interface_sweep-inputs.jsonl",
+      "sha256": "1d1b73b2dad91386efb040efd521ba1f5466ebfec0ec1a53f613793742ab081f",
+      "bytes": 25582,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_e_hint_forward_plus-inputs.jsonl",
+      "sha256": "d7c9b18641a9c87685b20b3a79aa644ce10d116edc314218137a8f8474b52117",
+      "bytes": 2635,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_e_hint_gl_compatibility-inputs.jsonl",
+      "sha256": "f7c6d25558b706da6b7d205e8017b0c8381c5754b696edc67d147b7337208f64",
+      "bytes": 2636,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/take_f_generated_vs_fog-inputs.jsonl",
+      "sha256": "5dd897d9bbf258d22a38bd7e532842706e52e9446cc9161ff465053d6baea0f4",
+      "bytes": 6199,
+      "kind": "log",
+      "role": "log, data or documentation"
+    },
+    {
+      "path": "capture/logs/diff_material_edit.png",
+      "sha256": "9d8a0f6f8d02cd5876ef1ce790ce4b7d41a0b144a3720935d2469451d66106a9",
+      "bytes": 27269,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_shader_edit.png",
+      "sha256": "44959f69f3bcecd158908b383f7e382f91b65e6e04f1a69470223a8ef124007e",
+      "bytes": 32929,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_clear_center_max.png",
+      "sha256": "4c20cfed23c013afa9f8d2f79c5fb05193612143b1dce5efca2b7985b3ddea3f",
+      "bytes": 10127,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_clear_center_min.png",
+      "sha256": "a2138764f89312f3ff8e193f2299013a4db06326599e68268510e5df774affbd",
+      "bytes": 15686,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_edge_softness_max.png",
+      "sha256": "cc43acdf7a868dece5ce12e1c8ebfb9e7546de53f5efd55bcac9ed10a4f42659",
+      "bytes": 21366,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_edge_softness_min.png",
+      "sha256": "f4450d2a80e297703e6312d1de52848f5318fa0ff39351a7b331a28b14dafcc7",
+      "bytes": 10573,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_amount_max.png",
+      "sha256": "9d8a0f6f8d02cd5876ef1ce790ce4b7d41a0b144a3720935d2469451d66106a9",
+      "bytes": 27269,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_amount_min.png",
+      "sha256": "08a43e1f0780301f7b5da73f3c087b604be83f7ca514b643093eac283a471d7c",
+      "bytes": 10066,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_opacity_max.png",
+      "sha256": "397b22b0981f27801577ca1ee4c85b24564353fc54543e368ee1ce7e016b994c",
+      "bytes": 11164,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_opacity_min.png",
+      "sha256": "08a43e1f0780301f7b5da73f3c087b604be83f7ca514b643093eac283a471d7c",
+      "bytes": 10066,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_tint_max.png",
+      "sha256": "e39093e29201233aa0fb3e27725519bdce178b8563a6aaeb9d3be10a770c37c9",
+      "bytes": 11493,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_fog_tint_min.png",
+      "sha256": "38b1e69430337482c3da23578e90d40d24b12a83846e3b5411b619f0e45ff097",
+      "bytes": 8704,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_normal_strength_max.png",
+      "sha256": "c9d3cfc88d30ef5074ddff9d94fa3a69078624b77d776c4ecebe2cf11db526db",
+      "bytes": 7657,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_normal_strength_min.png",
+      "sha256": "e6bfb1cefdd096fa271d06076a3b861c88dfe6586014fb05c5df599dc3dce049",
+      "bytes": 5646,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_texture_scale_max.png",
+      "sha256": "03a2f44bdb0954af02f97ac468b7f4a7cf77799e4bcea854ece40f5d12cd5da3",
+      "bytes": 11582,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/diff_sweep_texture_scale_min.png",
+      "sha256": "18c9ec1e2b3542cdf0f252c02429491ffb32bae790cc7c7d1684e0adbe0d5591",
+      "bytes": 11365,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00000.png",
+      "sha256": "6c8f371c926c416f7f42399f87cc8ae492e323fa75a01e54ff4991532ed25911",
+      "bytes": 643628,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00119.png",
+      "sha256": "3d0060ad73de10b192f800a88672daec1c5d6f71a24281e17880c7205baa67b4",
+      "bytes": 643728,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00120.png",
+      "sha256": "43b183c64f487689ca0b3527e6ecc430474c11cae964f0af85efb49e3ceda795",
+      "bytes": 672016,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00210.png",
+      "sha256": "b62ac7d8bd94ff472d2c5f14dc73135f37c605d5b606f4a141fb0a77508cde24",
+      "bytes": 672149,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00300.png",
+      "sha256": "cb9cf33f7ee65b09d8463b3455f50316d847b6f7daf3a6c4c86b3a43fef2e57f",
+      "bytes": 677098,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_material_edit/mp4_frame_00419.png",
+      "sha256": "fdd4569c5ad4847c9825f8eb68b2d7bf372c064f4e57c927bb2c807e902e9d66",
+      "bytes": 677079,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00000.png",
+      "sha256": "6c8f371c926c416f7f42399f87cc8ae492e323fa75a01e54ff4991532ed25911",
+      "bytes": 643628,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00119.png",
+      "sha256": "fe01a6d3156d0f2989cd9336f78b7b126281c1ff480e0a3b6ad03a352a61dc1a",
+      "bytes": 643796,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00120.png",
+      "sha256": "ba501caeb444031e8e847b7472268f4157d495e9a8b24de707244b9765a227d2",
+      "bytes": 670519,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00210.png",
+      "sha256": "16805ed13132f426542c94000f192d8d7cd569b2affcb2b20ac875177c6b61d9",
+      "bytes": 670569,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00300.png",
+      "sha256": "f553b977f46f28e9b9469e160e54d6307a033bc0dab1c7c32b32ac61ce9b4cb4",
+      "bytes": 674669,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit/mp4_frame_00419.png",
+      "sha256": "6941990cd2c9a86aa2018bbc6aafd63a8f390f70ec3a91d4b5a4e50ec38c0686",
+      "bytes": 674630,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00000.png",
+      "sha256": "cd88588aec9f931b76f9d914e2c79893d617cec74b5cd2f2ab4dc2edfae936fb",
+      "bytes": 671815,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00119.png",
+      "sha256": "e674a0577049fe03d6f1ab93db53bbd10fbecb2091df1fcb38bdc856c06e0f0c",
+      "bytes": 672480,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00120.png",
+      "sha256": "8222790a47de0dd5eb5c7ada85e8094aa3161dd67eeddaa5fa3fee59bea7af1a",
+      "bytes": 740289,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00210.png",
+      "sha256": "20e23d5971a99f59be4fd9c87e411c75f5144316afbcccfe07993953939156dd",
+      "bytes": 740647,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00300.png",
+      "sha256": "8021773b5976cda5df30c8e7229e2d54912eca8184c46c6fed19f0f3d29ba667",
+      "bytes": 746039,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_shader_edit_visible/mp4_frame_00419.png",
+      "sha256": "4a969413c38b0e73bc7727e204fb387acff0dc1c99318ad8a7d9bbd9bb452822",
+      "bytes": 745953,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00000.png",
+      "sha256": "4d0effc493f9c438e39285fff686c75329a085858a4818ab260b453639258b80",
+      "bytes": 627185,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00119.png",
+      "sha256": "a270a0fb0f1fc7f63bcc35da3299dcce7835e31c0a7c917fe76aab6ce562f6c3",
+      "bytes": 635093,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00120.png",
+      "sha256": "22d1a8129f61c4212633830661d9be278fac3177eb636a9406d10d038f576de5",
+      "bytes": 636042,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00180.png",
+      "sha256": "4acf4c4fa2f336f12403da69edede75121c376b5485c58158ee016c56a824ee1",
+      "bytes": 632610,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00239.png",
+      "sha256": "087d67bcab20fb1c8a720bcf56aaa0961ab6500fbbb008ac44902b5fd899b2ec",
+      "bytes": 634378,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00240.png",
+      "sha256": "61a7d3644b57f6d445d53e0e38fd9e42cf1ce8c982d9ce9c846e4a45e520307d",
+      "bytes": 634073,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00600.png",
+      "sha256": "b6a5f64bc5bc7507fd198700a68bc842dc62820232cd0ee2d9bdc39934cdfc9e",
+      "bytes": 641536,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00659.png",
+      "sha256": "3b726dc93294b79f49b003ccb9f85a106e6577f1ec3da4065a2a5aecc1803f59",
+      "bytes": 642443,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00660.png",
+      "sha256": "a4312af8f9e61b8de540a9ad0a96b3e785867fc22a0ef0ea1984fe3d86b160fc",
+      "bytes": 643386,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00720.png",
+      "sha256": "7bbb0d1f68bf21d62295e470e07fca5c34814b231ce3611d66f54ce76a139964",
+      "bytes": 640993,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_00779.png",
+      "sha256": "e452d26b3046303845f0f4b3fd2971c9f0f6df5f1f2d7347e97cf3b0700173f1",
+      "bytes": 638755,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/logs/verify_take_b_driver_window/mp4_frame_01199.png",
+      "sha256": "0e246f49316b253bf534c9f59f44bc4057fb36de72b77d072db0f45e70d190b9",
+      "bytes": 638183,
+      "kind": "analysis image",
+      "width": 1280,
+      "height": 800,
+      "role": "difference map or verification preview, not footage"
+    },
+    {
+      "path": "capture/scripts/analyze_fog.py",
+      "sha256": "de9689ef5288d1c40a4863932193e09bd9c54f4ecf8ab2bbc26058c148120320",
+      "bytes": 7444,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/build_manifest.py",
+      "sha256": "6e47cbb1ac1dceb89dcc7f5d60321c1848019f00974c292d696c28f7d3326f5f",
+      "bytes": 14112,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/capture_rig.gd",
+      "sha256": "dc61665b3107ef243385ea6367a2313660b531da5adb872e77c6103ab102d326",
+      "bytes": 10653,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/extract_frames.py",
+      "sha256": "161efafc8afb1d22180b07b473709d0957f9637fa56b1bcd1ddacf61b6088d6d",
+      "bytes": 1340,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/fog_take.gd",
+      "sha256": "43db1a82cc127c519a9c79cec3c5f860f0ab47205232465e07be02f514502610",
+      "bytes": 6235,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/game_take.gd",
+      "sha256": "c2166c5055a8a750c900436a41531d73415f7447737086c95698da449ac8c3c5",
+      "bytes": 4822,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/history/capture_rig.rev1_takes_A_B.gd",
+      "sha256": "7b4a370fe634b3977662e6c573db561334de1735d7525ed7725e15ab852aa1a0",
+      "bytes": 9355,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/history/capture_rig.rev2_takes_C_D_E_F.gd",
+      "sha256": "b7a6a932230a3c6436aae1fcac6557f7f96547aaccb344a0e24e0ab7a205ea82",
+      "bytes": 9927,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/history/pack_and_encode.rev1_take_A.sh",
+      "sha256": "1d2fa3d578d014e1f55ebf6719148a9b5fd28f7b1a7b5f89f11c455c0220c72f",
+      "bytes": 3346,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/history/run_take.rev1_takes_A_B.sh",
+      "sha256": "b0f29533ef1c28138a5323a0b4bf3d53b82ce108171b731ebf3bfc54afee68df",
+      "bytes": 1789,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/measure_regions.py",
+      "sha256": "9690f0849f4ccab42533db50af63baed454670649165b1c1bddbcd93e607f28f",
+      "bytes": 3278,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/pack_and_encode.sh",
+      "sha256": "8d1e3ad5582c6b04dfeb761ae8f0041417082be1e3d4b37a1591f7cd236b6372",
+      "bytes": 3435,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/probe_resolution.gd",
+      "sha256": "5f5bf24d3ae5f03fc588b875237b1a10228025635cf1b30af78dc78cbcb9691f",
+      "bytes": 1220,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/rig_selftest.gd",
+      "sha256": "97e003e2aeed459d0483e5978c2620cbb233aa6dd21213fa679fdb2d879badb5",
+      "bytes": 3224,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/run_take.sh",
+      "sha256": "548ef22ac96f5bf3f7af0aea3019d88e5aba4fef6fb04b5b03e18979ad61b7a3",
+      "bytes": 1905,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_a_headlights.gd",
+      "sha256": "737adf146df23dc80af4b9db9c1706e7c2d40adaca9935ac4d593b0035937394",
+      "bytes": 6672,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_b_driver_window.gd",
+      "sha256": "c4826420da612a3294fbd87864a8c84f68785e266252061d6e1785a08f3cebdf",
+      "bytes": 5603,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_c2_shader_edit_visible.gd",
+      "sha256": "4951272ba71316d82f71f99dee6ea5d75b38126946149a72932b5dfb3af1187d",
+      "bytes": 6764,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_c_one_shader_two_materials.gd",
+      "sha256": "c1c43ad5cdb964fa52861983b87ced562d35d1ccdf9a366d544b028dc4ce2d9b",
+      "bytes": 8009,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_d_interface_sweep.gd",
+      "sha256": "59896df5507862017aafcc78f2b4b7824848686ebd1f70ab44f7228c888b62d7",
+      "bytes": 3787,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_e_hint.gd",
+      "sha256": "30295419279bc9db60a3172f8985c2100c88dec7332ca89b87de039b2d74bac6",
+      "bytes": 4216,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/take_f_generated_vs_fog.gd",
+      "sha256": "2bc7ec857b4e1db8701874f24a668fc0dba43b7fd927d3a4a2fb5c5f70859947",
+      "bytes": 7056,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    },
+    {
+      "path": "capture/scripts/verify_clip.py",
+      "sha256": "9dceae82eb4318055554e6aa9ea050c00e8cdf3205be6adc834386a3f244d232",
+      "bytes": 4147,
+      "kind": "script",
+      "role": "capture driver or tool (part of the evidence)"
+    }
+  ]
+}

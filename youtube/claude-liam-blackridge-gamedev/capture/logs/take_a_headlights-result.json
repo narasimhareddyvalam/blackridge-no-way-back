@@ -1,0 +1,32 @@
+{
+  "blocked_physical_input": {},
+  "checks": 20,
+  "clip_frames": 1560,
+  "failed": 0,
+  "failures": [],
+  "hero_clip_frame": 120,
+  "off_fade_end_clip_frame": 200,
+  "on_fade_end_clip_frame": 524,
+  "passed": true,
+  "press_clip_frames": [
+    180,
+    510,
+    720,
+    727
+  ],
+  "record_start_process_frame": 180,
+  "reversal_back_clip_frame": 731,
+  "reversal_low": 0.666666666666666,
+  "save_ms_total": 76955,
+  "saved_clip_frames": 1560,
+  "saved_stills": [
+    "cockpit_hero_4k.png"
+  ],
+  "switch_process_frames": [
+    360,
+    690,
+    900,
+    907
+  ],
+  "take": "take_a_headlights"
+}

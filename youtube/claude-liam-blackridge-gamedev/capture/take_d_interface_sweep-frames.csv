@@ -1,0 +1,64 @@
+process_frame,event,uniform,label,value,light_fog_value_now,heavy_fog_amount,file
+189,set,fog_amount,min,0.0,0.0,0.75,
+190,capture,fog_amount,min,0.0,0.0,0.75,sweep_fog_amount_min.png
+191,restore,fog_amount,tres,0.25,0.25,0.75,
+192,set,fog_amount,default,0.25,0.25,0.75,
+193,capture,fog_amount,default,0.25,0.25,0.75,sweep_fog_amount_default.png
+194,restore,fog_amount,tres,0.25,0.25,0.75,
+195,set,fog_amount,max,1.0,1.0,0.75,
+196,capture,fog_amount,max,1.0,1.0,0.75,sweep_fog_amount_max.png
+197,restore,fog_amount,tres,0.25,0.25,0.75,
+198,set,fog_opacity,min,0.0,0.0,0.75,
+199,capture,fog_opacity,min,0.0,0.0,0.75,sweep_fog_opacity_min.png
+200,restore,fog_opacity,tres,0.45,0.45,0.75,
+201,set,fog_opacity,default,0.45,0.45,0.75,
+202,capture,fog_opacity,default,0.45,0.45,0.75,sweep_fog_opacity_default.png
+203,restore,fog_opacity,tres,0.45,0.45,0.75,
+204,set,fog_opacity,max,1.0,1.0,0.75,
+205,capture,fog_opacity,max,1.0,1.0,0.75,sweep_fog_opacity_max.png
+206,restore,fog_opacity,tres,0.45,0.45,0.75,
+207,set,clear_center,min,0.0,0.0,0.75,
+208,capture,clear_center,min,0.0,0.0,0.75,sweep_clear_center_min.png
+209,restore,clear_center,tres,0.65,0.65,0.75,
+210,set,clear_center,default,0.65,0.65,0.75,
+211,capture,clear_center,default,0.65,0.65,0.75,sweep_clear_center_default.png
+212,restore,clear_center,tres,0.65,0.65,0.75,
+213,set,clear_center,max,0.9,0.9,0.75,
+214,capture,clear_center,max,0.9,0.9,0.75,sweep_clear_center_max.png
+215,restore,clear_center,tres,0.65,0.65,0.75,
+216,set,edge_softness,min,0.01,0.01,0.75,
+217,capture,edge_softness,min,0.01,0.01,0.75,sweep_edge_softness_min.png
+218,restore,edge_softness,tres,0.2,0.2,0.75,
+219,set,edge_softness,default,0.2,0.2,0.75,
+220,capture,edge_softness,default,0.2,0.2,0.75,sweep_edge_softness_default.png
+221,restore,edge_softness,tres,0.2,0.2,0.75,
+222,set,edge_softness,max,0.5,0.5,0.75,
+223,capture,edge_softness,max,0.5,0.5,0.75,sweep_edge_softness_max.png
+224,restore,edge_softness,tres,0.2,0.2,0.75,
+225,set,normal_strength,min,0.0,0.0,0.75,
+226,capture,normal_strength,min,0.0,0.0,0.75,sweep_normal_strength_min.png
+227,restore,normal_strength,tres,0.5,0.5,0.75,
+228,set,normal_strength,default,0.5,0.5,0.75,
+229,capture,normal_strength,default,0.5,0.5,0.75,sweep_normal_strength_default.png
+230,restore,normal_strength,tres,0.5,0.5,0.75,
+231,set,normal_strength,max,2.0,2.0,0.75,
+232,capture,normal_strength,max,2.0,2.0,0.75,sweep_normal_strength_max.png
+233,restore,normal_strength,tres,0.5,0.5,0.75,
+234,set,texture_scale,min,0.5,0.5,0.75,
+235,capture,texture_scale,min,0.5,0.5,0.75,sweep_texture_scale_min.png
+236,restore,texture_scale,tres,1.0,1.0,0.75,
+237,set,texture_scale,default,1.0,1.0,0.75,
+238,capture,texture_scale,default,1.0,1.0,0.75,sweep_texture_scale_default.png
+239,restore,texture_scale,tres,1.0,1.0,0.75,
+240,set,texture_scale,max,4.0,4.0,0.75,
+241,capture,texture_scale,max,4.0,4.0,0.75,sweep_texture_scale_max.png
+242,restore,texture_scale,tres,1.0,1.0,0.75,
+243,set,fog_tint,min,Color(0.0 0.0 0.0 1.0),Color(0.0 0.0 0.0 1.0),0.75,
+244,capture,fog_tint,min,Color(0.0 0.0 0.0 1.0),Color(0.0 0.0 0.0 1.0),0.75,sweep_fog_tint_min.png
+245,restore,fog_tint,tres,Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),0.75,
+246,set,fog_tint,default,Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),0.75,
+247,capture,fog_tint,default,Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),0.75,sweep_fog_tint_default.png
+248,restore,fog_tint,tres,Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),0.75,
+249,set,fog_tint,max,Color(1.0 1.0 1.0 1.0),Color(1.0 1.0 1.0 1.0),0.75,
+250,capture,fog_tint,max,Color(1.0 1.0 1.0 1.0),Color(1.0 1.0 1.0 1.0),0.75,sweep_fog_tint_max.png
+251,restore,fog_tint,tres,Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0),0.75,

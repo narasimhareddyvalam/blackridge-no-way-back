@@ -1,0 +1,23 @@
+date: 2026-10-29T20:11:41Z
+command: /Applications/Godot.app/Contents/MacOS/Godot --path /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture --fixed-fps 60 --audio-driver Dummy --quit-after 2000 --script res://capture_drivers/take_b_driver_window.gd -- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: Game starts paused at its start menu (input disabled)
+PASS: Real Escape press began the drive on frame 3
+PASS: Physics settled before recording (y stable for 60 frames)
+PASS: Heavy-fog overlay is a child of the driver's window pane
+PASS: The game handled both J presses on process frames [300, 840] (expected [300, 840])
+PASS: Window starts closed: pane at y = 2.1200 m in the van frame
+PASS: Pane starts moving on the J frame (clip frame 120)
+PASS: J lowers the pane by 0.8800 m in the van's frame (expected 0.88), fully open at clip frame 239 (t=3.983 s)
+PASS: Heavy-fog overlay moves with the pane: dropped 0.8800 m
+PASS: Overlay offset from the pane is constant on every frame (max change 0.0000000 m)
+PASS: Window stays open until the second J press
+PASS: Second J press raises it again: closed at clip frame 779 (t=12.983 s), holds to the end
+PASS: Saved 1200 of 1200 clip frames
+PASS: No driving action was held on any frame (0 frames)
+PASS: Van stayed stationary while recording (max drift 0.000000 m, max |speed| 0.000000)
+CAPTURE RESULT take_b_driver_window: 15/15 checks passed
+runner: godot exit status 0, wall time 114 s
+runner: PASS take_b_driver_window

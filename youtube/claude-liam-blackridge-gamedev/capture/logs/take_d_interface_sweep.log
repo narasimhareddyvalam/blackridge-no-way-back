@@ -1,0 +1,64 @@
+date: 2026-10-29T20:20:40Z
+command: /Applications/Godot.app/Contents/MacOS/Godot --path /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/blackridge-capture --fixed-fps 60 --audio-driver Dummy --always-on-top --quit-after 1000 --script res://capture_drivers/take_d_interface_sweep.gd -- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+PASS: light_fog and heavy_fog are different ShaderMaterial objects (ids -9223371997461871011 / -9223371997226989990)
+PASS: Windshield overlay uses light_fog.tres; driver-window overlay uses heavy_fog.tres
+PASS: Both materials share one Shader object: res://shaders/foggy_windshield.gdshader (id -9223371998619498935)
+PASS: Game starts paused at its start menu (input disabled)
+PASS: Real Escape press began the drive on frame 3
+PASS: Two real V presses (handled on frames [151, 161]) switched the wipers off
+PASS: Wipers parked at angle -0.90 (stationary for 10 frames)
+PASS: fog_amount = 0.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_amount_min.png at 3840x2400 (process frame 190)
+PASS: fog_amount = 0.25 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_amount_default.png at 3840x2400 (process frame 193)
+PASS: fog_amount = 1.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_amount_max.png at 3840x2400 (process frame 196)
+PASS: fog_opacity = 0.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_opacity_min.png at 3840x2400 (process frame 199)
+PASS: fog_opacity = 0.45 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_opacity_default.png at 3840x2400 (process frame 202)
+PASS: fog_opacity = 1.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_opacity_max.png at 3840x2400 (process frame 205)
+PASS: clear_center = 0.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_clear_center_min.png at 3840x2400 (process frame 208)
+PASS: clear_center = 0.65 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_clear_center_default.png at 3840x2400 (process frame 211)
+PASS: clear_center = 0.9 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_clear_center_max.png at 3840x2400 (process frame 214)
+PASS: edge_softness = 0.01 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_edge_softness_min.png at 3840x2400 (process frame 217)
+PASS: edge_softness = 0.2 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_edge_softness_default.png at 3840x2400 (process frame 220)
+PASS: edge_softness = 0.5 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_edge_softness_max.png at 3840x2400 (process frame 223)
+PASS: normal_strength = 0.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_normal_strength_min.png at 3840x2400 (process frame 226)
+PASS: normal_strength = 0.5 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_normal_strength_default.png at 3840x2400 (process frame 229)
+PASS: normal_strength = 2.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_normal_strength_max.png at 3840x2400 (process frame 232)
+PASS: texture_scale = 0.5 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_texture_scale_min.png at 3840x2400 (process frame 235)
+PASS: texture_scale = 1.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_texture_scale_default.png at 3840x2400 (process frame 238)
+PASS: texture_scale = 4.0 with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_texture_scale_max.png at 3840x2400 (process frame 241)
+PASS: fog_tint = Color(0.0 0.0 0.0 1.0) with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_tint_min.png at 3840x2400 (process frame 244)
+PASS: fog_tint = Color(0.81999999284744 0.87000000476837 0.89999997615814 1.0) with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_tint_default.png at 3840x2400 (process frame 247)
+PASS: fog_tint = Color(1.0 1.0 1.0 1.0) with every other light_fog uniform at its .tres value
+PASS: Saved still sweep_fog_tint_max.png at 3840x2400 (process frame 250)
+PASS: Saved 21 of 21 sweep stills
+PASS: light_fog restored to its .tres values
+PASS: heavy_fog values unchanged through the whole sweep: { "fog_amount": 0.75, "fog_opacity": 0.6, "clear_center": 0.35, "edge_softness": 0.25, "normal_strength": 0.5, "texture_scale": 1.0, "fog_tint": (0.82, 0.87, 0.9, 1.0), "fog_color": "res://assets/textures/windshield/fog_color.png", "fog_normal": "res://assets/textures/windshield/fog_normal.png", "fog_data": "res://assets/textures/windshield/fog_data.png" }
+PASS: No driving action was held on any frame (0 frames)
+PASS: Van stayed stationary while recording (max drift 0.000000 m, max |speed| 0.000000)
+CAPTURE RESULT take_d_interface_sweep: 54/54 checks passed
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+runner: godot exit status 0, wall time 35 s
+runner: PASS take_d_interface_sweep

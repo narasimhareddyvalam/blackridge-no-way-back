@@ -1,0 +1,25 @@
+frames on disk: 420 (expected 420)
+raw take: /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/shader_edit_raw_mjpeg.mov holds the 420 JPEG frames byte-identically (framemd5)
+encode: ffmpeg -i /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/shader_edit_raw_mjpeg.mov -vf scale=in_color_matrix=bt601:in_range=full:flags=accurate_rnd+full_chroma_int,format=rgb24,scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,format=yuv420p,setparams=color_primaries=bt709:color_trc=bt709:colorspace=bt709:range=tv -c:v libx264 -crf 14 -preset slow -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv -r 60 -an -movflags +faststart /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/shader_edit.mp4
+codec_name=h264
+width=3840
+height=2400
+pix_fmt=yuv420p
+color_range=tv
+color_space=bt709
+color_transfer=bt709
+color_primaries=bt709
+r_frame_rate=60/1
+avg_frame_rate=60/1
+nb_read_frames=420
+duration=7.000000
+streams: video 
+frame     0: mean |mp4 - jpg| = 0.511, 99.9th percentile = 4
+frame   119: mean |mp4 - jpg| = 0.510, 99.9th percentile = 4
+frame   120: mean |mp4 - jpg| = 0.512, 99.9th percentile = 4
+frame   210: mean |mp4 - jpg| = 0.511, 99.9th percentile = 4
+frame   300: mean |mp4 - jpg| = 0.476, 99.9th percentile = 3
+frame   419: mean |mp4 - jpg| = 0.476, 99.9th percentile = 3
+VERIFY PASS: shader_edit.mp4 3840x2400, 420 frames at 60/1
+removed /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/frames_shader_edit (identical JPEG data kept in /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/capture/raw/shader_edit_raw_mjpeg.mov)
+pack exit 0

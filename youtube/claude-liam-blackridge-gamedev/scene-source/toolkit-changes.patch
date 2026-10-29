@@ -1,0 +1,108 @@
+diff --git a/runtime/remotion/src/Root.tsx b/runtime/remotion/src/Root.tsx
+index b8b80af..0f40b76 100644
+--- a/runtime/remotion/src/Root.tsx
++++ b/runtime/remotion/src/Root.tsx
+@@ -3,6 +3,7 @@ import {Composition, Folder} from 'remotion';
+ import {WalkerGodotSetup, walkerGodotSetupSchema} from './scenes/WalkerGodotSetup';
+ import {GodotDevWorkbench, godotDevWorkbenchSchema} from './scenes/GodotDevWorkbench';
+ import {GodotDesignBoard, godotDesignBoardSchema} from './scenes/GodotDesignBoard';
++import {GodotEngineEvidence, godotEngineEvidenceSchema} from './scenes/GodotEngineEvidence';
+ import {GodotDesignFigure, godotDesignFigureSchema} from './scenes/GodotDesignFigure';
+ import {BarChart, barChartSchema} from './scenes/BarChart';
+ import {OutroSeries, outroSeriesSchema} from './scenes/OutroSeries';
+@@ -4083,6 +4084,16 @@ export const RemotionRoot: React.FC = () => {
+           schema={godotDevWorkbenchSchema}
+           defaultProps={godotDevWorkbenchSchema.parse({mode:'code',title:'Inspect the Game',project:'Godot project',source:'Supply verified source excerpts'})}
+           calculateMetadata={({props})=>({durationInFrames:Math.ceil(props.durationSeconds*30)})}/>
++        <Composition id="GodotEngineEvidence" component={GodotEngineEvidence}
++          durationInFrames={450} fps={30} width={1920} height={1080}
++          schema={godotEngineEvidenceSchema}
++          defaultProps={godotEngineEvidenceSchema.parse({title:'Engine Evidence',label:'Supply actual engine captures',layout:'cards',cards:[{label:'No evidence supplied',text:'Pass real capture paths and recorded values.'}]})}
++          calculateMetadata={({props})=>({durationInFrames:Math.ceil(props.durationSeconds*30)})}/>
++        <Composition id="GodotEngineEvidence916" component={GodotEngineEvidence}
++          durationInFrames={450} fps={30} width={1080} height={1920}
++          schema={godotEngineEvidenceSchema}
++          defaultProps={godotEngineEvidenceSchema.parse({title:'Engine Evidence',label:'Supply actual engine captures',layout:'cards',cards:[{label:'No evidence supplied',text:'Pass real capture paths and recorded values.'}]})}
++          calculateMetadata={({props})=>({durationInFrames:Math.ceil(props.durationSeconds*30)})}/>
+         <Composition id="WalkerGodotSetup" component={WalkerGodotSetup}
+           durationInFrames={360} fps={24} width={1920} height={1080}
+           schema={walkerGodotSetupSchema}
+diff --git a/runtime/remotion/src/scenes/GodotDevWorkbench.tsx b/runtime/remotion/src/scenes/GodotDevWorkbench.tsx
+index 7ec498c..bd40c7f 100644
+--- a/runtime/remotion/src/scenes/GodotDevWorkbench.tsx
++++ b/runtime/remotion/src/scenes/GodotDevWorkbench.tsx
+@@ -20,18 +20,20 @@ export const godotDevWorkbenchSchema=z.object({
+   cues:z.array(z.object({at:z.number().nonnegative(),line:z.number().int().positive(),label:z.string()})).default([]),
+   image:z.string().default(''),imageLabel:z.string().default(''),
+   output:z.array(z.string()).default([]), durationSeconds:z.number().positive().default(15),
++  /** Tighter page margins so a complete short file fits at reading size (default off: layout unchanged). */
++  dense:z.boolean().default(false),
+ });
+ export type GodotDevWorkbenchProps=z.infer<typeof godotDevWorkbenchSchema>;
+ 
+ const colors={bg:'#202531',dock:'#2b3240',bar:'#343d4d',text:'#edf1f7',muted:'#bec8d7',blue:'#8bc7f3',line:'#354052',mark:'#455a71'};
+ function syntax(line:string){
+-  const bits=line.split(/("[^"\n]*"|'[^'\n]*'|#[^\n]*|\b(?:func|var|const|if|elif|else|return|for|in|extends|enum|true|false|and|or|not|await|class_name)\b|@export|\b\d+(?:\.\d+)?\b)/g);
+-  return bits.map((s,i)=><span key={i} style={{color:s.startsWith('#')?'#bac5bc':/^['"]/.test(s)?'#ece0a1':/^\d/.test(s)?'#aee7d1':/^(func|var|const|if|elif|else|return|for|in|extends|enum|true|false|and|or|not|await|@export)$/.test(s)?'#f39bce':colors.text}}>{s}</span>);
++  const bits=line.split(/("[^"\n]*"|'[^'\n]*'|#[^\n]*|\/\/[^\n]*|\b(?:func|var|const|if|elif|else|return|for|in|extends|enum|true|false|and|or|not|await|class_name)\b|@export|\b\d+(?:\.\d+)?\b)/g);
++  return bits.map((s,i)=><span key={i} style={{color:s.startsWith('#')||s.startsWith('//')?'#bac5bc':/^['"]/.test(s)?'#ece0a1':/^\d/.test(s)?'#aee7d1':/^(func|var|const|if|elif|else|return|for|in|extends|enum|true|false|and|or|not|await|@export)$/.test(s)?'#f39bce':colors.text}}>{s}</span>);
+ }
+ 
+ export const GodotDevWorkbench:React.FC<GodotDevWorkbenchProps>=(p)=>{
+  const {width,height,fps}=useVideoConfig(),frame=useCurrentFrame(),t=frame/fps,portrait=height>width;
+- const pad=width*.055,bodyTop=height*.16,bodyBottom=height*.12;
++ const pad=width*.055,bodyTop=height*(p.dense?.125:.16),bodyBottom=height*(p.dense?.105:.12);
+  const current=[...p.cues].reverse().find(c=>t>=c.at);
+  const panel={background:colors.bg,border:`2px solid ${colors.line}`,minWidth:0};
+  const heading={fontFamily:F.ui,fontSize:24,padding:'15px 20px',background:colors.bar,color:colors.text};
+@@ -69,7 +71,7 @@ export const GodotDevWorkbench:React.FC<GodotDevWorkbenchProps>=(p)=>{
+     <div style={{color:colors.muted,fontSize:21}}>{p.output.join(' · ')}</div>
+    </div>
+   </div>
+-  <div style={{position:'absolute',left:pad,bottom:portrait?height*.048+60:height*.048,maxWidth:portrait?width*.88:width*.72,fontSize:23,lineHeight:1.25,color:C.INK_SOFT,overflowWrap:'anywhere'}}>{p.source}</div>
+-  <div style={{position:'absolute',right:pad,bottom:portrait?height*.035:height*.048,fontFamily:F.serif,fontSize:28,color:C.INK}}>@NikBearBrown</div>
++  <div style={{position:'absolute',left:pad,bottom:portrait?height*.048+60:height*.065,maxWidth:portrait?width*.88:width*.72,fontSize:23,lineHeight:1.25,color:C.INK_SOFT,overflowWrap:'anywhere'}}>{p.source}</div>
++  <div style={{position:'absolute',right:pad,bottom:portrait?height*.035:height*.065,fontFamily:F.serif,fontSize:28,color:C.INK}}>@NikBearBrown</div>
+  </AbsoluteFill>;
+ };
+diff --git a/runtime/scripts/type_check.py b/runtime/scripts/type_check.py
+index b34bc89..ab2dd3c 100644
+--- a/runtime/scripts/type_check.py
++++ b/runtime/scripts/type_check.py
+@@ -354,6 +354,14 @@ DARK_BACKGROUND_MARK_PATTERNS = {
+     # treat dark ribbon band pixels as "ink text". This is a false positive — all visible
+     # pixels are ribbon band fills or grain filter output, never typography.
+     "BrutalistRibbon", "BrutalistRibbon916",
++    # GodotDesignFigure: its figure slot holds a real screenshot or painting; dark regions
++    # inside that image (a night window, an editor panel) are image content, not display
++    # typography — the same reasoning that already exempts it from §8.1 min-size above.
++    # Its own captions, labels and cards still face every other check.
++    "GodotDesignFigure", "GodotDesignFigure916",
++    # GodotEngineEvidence: media slots hold real engine captures (night cockpit, a cluster
++    # dimmed toward black at night_amount 2.0); dark regions inside them are image content.
++    "GodotEngineEvidence", "GodotEngineEvidence916",
+ }
+ 
+ # §8.6b — scenes where box-border blobs are falsely detected as text runs that overlap
+@@ -363,6 +371,9 @@ DARK_BACKGROUND_MARK_PATTERNS = {
+ # ~9-11× is below the 15× flat-bar filter → detected as a text blob → false overlap.
+ # These are design-correct layouts, not real readability bugs.
+ BBOX_OVERLAP_EXEMPT_PATTERNS = {
++    "GodotEngineEvidence", "GodotEngineEvidence916",  # media slots are real engine captures
++    "GodotDesignFigure", "GodotDesignFigure916",  # figure slot is a real image: shapes inside a
++                             # painting or screenshot are image content, not overlapping labels
+     "B03_ClusterTopology",   # AICR tier cards: INK border frame ≠ text run; labels inside by design
+     "B02_GPUNodeTable",      # AICR GPU node table: INK header box border ≠ text run; headers inside by design
+     "B03_HookMechanism",     # simple-hooks: flow-diagram nodes (RoundedRectangle + interior label); design-correct
+@@ -586,6 +597,11 @@ HAND_DRAWN_PATTERNS = {
+     # (HUD text at capture size) or a design diagram supplied by the reel. That text is image
+     # pixel content, not designed typography; the chips/title/status around it stay checked.
+     "GodotDesignFigure", "GodotDesignFigure916",
++    # GodotEngineEvidence: the visible-result half of a godot-gamedev code/result pair; its
++    # media slots carry real engine captures (game HUD text at capture size, a deliberately
++    # dimmed instrument cluster). Same reasoning as GodotDesignFigure above: image pixel
++    # content, not designed typography. Its own title, chips, captions and cards stay checked.
++    "GodotEngineEvidence", "GodotEngineEvidence916",
+     # Figure-gallery / comparison Manim scenes load real bitmap images that may contain
+     # embedded text at sub-floor sizes. That text is image pixel content, not designed
+     # typography — skip §8.1 for the same reason as hand-drawn hachure strokes.

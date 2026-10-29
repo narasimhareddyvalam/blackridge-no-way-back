@@ -1,0 +1,50 @@
+{
+  "blocked_physical_input": {},
+  "centres": {
+    "AsColor": [
+      [
+        64,
+        64,
+        64
+      ],
+      [
+        128,
+        128,
+        128
+      ],
+      [
+        192,
+        192,
+        192
+      ]
+    ],
+    "AsData": [
+      [
+        64,
+        64,
+        64
+      ],
+      [
+        128,
+        128,
+        128
+      ],
+      [
+        192,
+        192,
+        192
+      ]
+    ]
+  },
+  "checks": 4,
+  "failed": 0,
+  "failures": [],
+  "passed": true,
+  "renderer": "gl_compatibility",
+  "save_ms_total": 122,
+  "saved_clip_frames": 0,
+  "saved_stills": [
+    "hint_compatibility_4k.png"
+  ],
+  "take": "take_e_hint_gl_compatibility"
+}

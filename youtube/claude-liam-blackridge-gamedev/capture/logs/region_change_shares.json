@@ -1,0 +1,134 @@
+{
+  "regions": {
+    "windshield_x1300-3840_y0-1377": {
+      "rows": [
+        0,
+        1377
+      ],
+      "columns": [
+        1300,
+        3840
+      ]
+    },
+    "driver_window_x0-1250_y350-1500": {
+      "rows": [
+        350,
+        1500
+      ],
+      "columns": [
+        0,
+        1250
+      ]
+    }
+  },
+  "pairs": {
+    "take_c_shader_edit (light_fog at .tres values)": {
+      "before": "shader_edit_before.png",
+      "after": "shader_edit_after.png",
+      "windshield_x1300-3840_y0-1377": {
+        "pixels": 3497580,
+        "changed_gt_0_pct": 0.03,
+        "changed_gt_6_pct": 0.0,
+        "max_level_change": 1,
+        "mean_rgb_before": [
+          36.2,
+          51.7,
+          62.5
+        ],
+        "mean_rgb_after": [
+          36.2,
+          51.7,
+          62.5
+        ]
+      },
+      "driver_window_x0-1250_y350-1500": {
+        "pixels": 1437500,
+        "changed_gt_0_pct": 54.9,
+        "changed_gt_6_pct": 37.66,
+        "max_level_change": 43,
+        "mean_rgb_before": [
+          29.9,
+          43.3,
+          52.1
+        ],
+        "mean_rgb_after": [
+          32.7,
+          38.8,
+          45.1
+        ]
+      }
+    },
+    "take_c2_shader_edit_visible (light_fog fog_amount 1.0)": {
+      "before": "shader_edit_visible_before.png",
+      "after": "shader_edit_visible_after.png",
+      "windshield_x1300-3840_y0-1377": {
+        "pixels": 3497580,
+        "changed_gt_0_pct": 46.25,
+        "changed_gt_6_pct": 31.87,
+        "max_level_change": 37,
+        "mean_rgb_before": [
+          38.9,
+          54.6,
+          65.5
+        ],
+        "mean_rgb_after": [
+          40.9,
+          51.3,
+          60.5
+        ]
+      },
+      "driver_window_x0-1250_y350-1500": {
+        "pixels": 1437500,
+        "changed_gt_0_pct": 56.06,
+        "changed_gt_6_pct": 40.58,
+        "max_level_change": 43,
+        "mean_rgb_before": [
+          30.1,
+          43.5,
+          52.3
+        ],
+        "mean_rgb_after": [
+          33.1,
+          38.7,
+          44.9
+        ]
+      }
+    },
+    "take_c_material_edit (light_fog fog_amount 0.25 -> 1.0)": {
+      "before": "material_edit_before.png",
+      "after": "material_edit_after.png",
+      "windshield_x1300-3840_y0-1377": {
+        "pixels": 3497580,
+        "changed_gt_0_pct": 45.74,
+        "changed_gt_6_pct": 19.66,
+        "max_level_change": 34,
+        "mean_rgb_before": [
+          36.2,
+          51.7,
+          62.5
+        ],
+        "mean_rgb_after": [
+          38.9,
+          54.6,
+          65.5
+        ]
+      },
+      "driver_window_x0-1250_y350-1500": {
+        "pixels": 1437500,
+        "changed_gt_0_pct": 3.34,
+        "changed_gt_6_pct": 1.04,
+        "max_level_change": 27,
+        "mean_rgb_before": [
+          29.9,
+          43.3,
+          52.1
+        ],
+        "mean_rgb_after": [
+          30.1,
+          43.5,
+          52.3
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+15a16,17
+> config/use_custom_user_dir=true
+> config/custom_user_dir_name="blackridge_capture_copy"
+126a129,132
+> 
+> [editor]
+> 
+> movie_writer/mjpeg_quality=0.95

@@ -1,0 +1,40 @@
+{
+  "masks_px": {
+    "heavy_fog_driver_window": 1870855,
+    "light_fog_windshield": 4080117
+  },
+  "baseline_vs_world_fog_on_changed_px": 0,
+  "baseline_vs_world_fog_off_changed_px": 7339347,
+  "material_edit": {
+    "changed_total": 1737239,
+    "inside_windshield_mask": 1737239,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0,
+    "before_equals_baseline_px": 0
+  },
+  "shader_edit": {
+    "changed_total": 1288075,
+    "inside_windshield_mask": 62348,
+    "inside_driver_window_mask": 1225727,
+    "outside_both_masks": 0,
+    "before_equals_baseline_px": 0,
+    "mean_rgb_of_changed_px_after": [
+      39.0,
+      41.4,
+      47.2
+    ]
+  },
+  "material_edit_jpeg_frames": {
+    "frames": 420,
+    "distinct_before_edit": 1,
+    "distinct_after_edit": 1,
+    "before_equals_after": false
+  },
+  "shader_edit_jpeg_frames": {
+    "frames": 420,
+    "distinct_before_edit": 1,
+    "distinct_after_edit": 1,
+    "before_equals_after": false
+  },
+  "failures": []
+}

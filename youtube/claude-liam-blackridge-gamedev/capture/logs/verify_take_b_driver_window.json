@@ -1,0 +1,70 @@
+{
+  "mp4": "take_b_driver_window.mp4",
+  "width": 3840,
+  "height": 2400,
+  "frames": 1200,
+  "fps": "60/1",
+  "samples": [
+    {
+      "frame": 0,
+      "mean_abs_diff": 0.559,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 119,
+      "mean_abs_diff": 0.562,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 120,
+      "mean_abs_diff": 0.583,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 180,
+      "mean_abs_diff": 0.592,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 239,
+      "mean_abs_diff": 0.58,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 240,
+      "mean_abs_diff": 0.58,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 600,
+      "mean_abs_diff": 0.524,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 659,
+      "mean_abs_diff": 0.525,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 660,
+      "mean_abs_diff": 0.528,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 720,
+      "mean_abs_diff": 0.563,
+      "p99_9_abs_diff": 5.0
+    },
+    {
+      "frame": 779,
+      "mean_abs_diff": 0.568,
+      "p99_9_abs_diff": 6.0
+    },
+    {
+      "frame": 1199,
+      "mean_abs_diff": 0.525,
+      "p99_9_abs_diff": 5.0
+    }
+  ],
+  "failures": []
+}

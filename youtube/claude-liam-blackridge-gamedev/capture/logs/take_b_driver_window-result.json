@@ -1,0 +1,27 @@
+{
+  "blocked_physical_input": {},
+  "checks": 15,
+  "clip_frames": 1200,
+  "closed_again_clip_frame": 779,
+  "closed_y_van_frame": 2.11999988555908,
+  "drop_m": 0.879999876022339,
+  "failed": 0,
+  "failures": [],
+  "fully_open_clip_frame": 239,
+  "lowest_y_van_frame": 1.24000000953674,
+  "overlay_drop_m": 0.879999876022339,
+  "passed": true,
+  "press_clip_frames": [
+    120,
+    660
+  ],
+  "record_start_process_frame": 180,
+  "save_ms_total": 78551,
+  "saved_clip_frames": 1200,
+  "saved_stills": [],
+  "take": "take_b_driver_window",
+  "window_operated_process_frames": [
+    300,
+    840
+  ]
+}

@@ -1,0 +1,12 @@
+# Film media stays out of Git: MP4/MP3/AVI files go to the course media storage.
+# Their SHA-256 hashes are recorded in capture/manifest.json, gamedev-evidence.json and SOURCES.md.
+mp3/*.mp3
+media/
+exports/
+capture/raw/
+*.mp4
+*.mov
+*.avi
+_qc/frames/
+_qc/pilot/
+.remotion-*/

@@ -1,0 +1,9108 @@
+{
+  "fps": 30,
+  "beats": {
+    "B00": [
+      {
+        "text": "Namaste.",
+        "startFrame": 16,
+        "endFrame": 16
+      },
+      {
+        "text": "This",
+        "startFrame": 16,
+        "endFrame": 19
+      },
+      {
+        "text": "is",
+        "startFrame": 19,
+        "endFrame": 26
+      },
+      {
+        "text": "Liam,",
+        "startFrame": 26,
+        "endFrame": 34
+      },
+      {
+        "text": "in",
+        "startFrame": 34,
+        "endFrame": 42
+      },
+      {
+        "text": "for",
+        "startFrame": 50,
+        "endFrame": 58
+      },
+      {
+        "text": "Bear.",
+        "startFrame": 59,
+        "endFrame": 66
+      },
+      {
+        "text": "This",
+        "startFrame": 67,
+        "endFrame": 70
+      },
+      {
+        "text": "is",
+        "startFrame": 70,
+        "endFrame": 75
+      },
+      {
+        "text": "Blackridge:",
+        "startFrame": 86,
+        "endFrame": 96
+      },
+      {
+        "text": "No",
+        "startFrame": 97,
+        "endFrame": 100
+      },
+      {
+        "text": "Way",
+        "startFrame": 100,
+        "endFrame": 106
+      },
+      {
+        "text": "Back,",
+        "startFrame": 106,
+        "endFrame": 113
+      },
+      {
+        "text": "a",
+        "startFrame": 113,
+        "endFrame": 119
+      },
+      {
+        "text": "narrative",
+        "startFrame": 119,
+        "endFrame": 130
+      },
+      {
+        "text": "crime",
+        "startFrame": 130,
+        "endFrame": 141
+      },
+      {
+        "text": "game",
+        "startFrame": 141,
+        "endFrame": 151
+      },
+      {
+        "text": "where",
+        "startFrame": 151,
+        "endFrame": 155
+      },
+      {
+        "text": "you",
+        "startFrame": 155,
+        "endFrame": 159
+      },
+      {
+        "text": "drive",
+        "startFrame": 159,
+        "endFrame": 166
+      },
+      {
+        "text": "freight",
+        "startFrame": 166,
+        "endFrame": 176
+      },
+      {
+        "text": "through",
+        "startFrame": 176,
+        "endFrame": 184
+      },
+      {
+        "text": "a",
+        "startFrame": 184,
+        "endFrame": 187
+      },
+      {
+        "text": "rainy",
+        "startFrame": 187,
+        "endFrame": 195
+      },
+      {
+        "text": "industrial",
+        "startFrame": 195,
+        "endFrame": 211
+      },
+      {
+        "text": "town",
+        "startFrame": 211,
+        "endFrame": 222
+      },
+      {
+        "text": "at",
+        "startFrame": 222,
+        "endFrame": 226
+      },
+      {
+        "text": "night,",
+        "startFrame": 226,
+        "endFrame": 233
+      },
+      {
+        "text": "built",
+        "startFrame": 233,
+        "endFrame": 241
+      },
+      {
+        "text": "in",
+        "startFrame": 241,
+        "endFrame": 248
+      },
+      {
+        "text": "Godot.",
+        "startFrame": 248,
+        "endFrame": 262
+      },
+      {
+        "text": "The",
+        "startFrame": 274,
+        "endFrame": 277
+      },
+      {
+        "text": "prompt",
+        "startFrame": 277,
+        "endFrame": 283
+      },
+      {
+        "text": "on",
+        "startFrame": 283,
+        "endFrame": 290
+      },
+      {
+        "text": "screen",
+        "startFrame": 290,
+        "endFrame": 299
+      },
+      {
+        "text": "is",
+        "startFrame": 299,
+        "endFrame": 305
+      },
+      {
+        "text": "a",
+        "startFrame": 305,
+        "endFrame": 308
+      },
+      {
+        "text": "reconstruction;",
+        "startFrame": 308,
+        "endFrame": 325
+      },
+      {
+        "text": "the",
+        "startFrame": 337,
+        "endFrame": 338
+      },
+      {
+        "text": "real",
+        "startFrame": 338,
+        "endFrame": 344
+      },
+      {
+        "text": "work",
+        "startFrame": 344,
+        "endFrame": 352
+      },
+      {
+        "text": "started",
+        "startFrame": 352,
+        "endFrame": 362
+      },
+      {
+        "text": "from",
+        "startFrame": 362,
+        "endFrame": 370
+      },
+      {
+        "text": "a",
+        "startFrame": 370,
+        "endFrame": 373
+      },
+      {
+        "text": "written",
+        "startFrame": 373,
+        "endFrame": 378
+      },
+      {
+        "text": "brief.",
+        "startFrame": 378,
+        "endFrame": 388
+      },
+      {
+        "text": "Let's",
+        "startFrame": 399,
+        "endFrame": 404
+      },
+      {
+        "text": "take",
+        "startFrame": 404,
+        "endFrame": 407
+      },
+      {
+        "text": "apart",
+        "startFrame": 407,
+        "endFrame": 415
+      },
+      {
+        "text": "the",
+        "startFrame": 415,
+        "endFrame": 420
+      },
+      {
+        "text": "two",
+        "startFrame": 420,
+        "endFrame": 426
+      },
+      {
+        "text": "shaders",
+        "startFrame": 426,
+        "endFrame": 439
+      },
+      {
+        "text": "this",
+        "startFrame": 439,
+        "endFrame": 445
+      },
+      {
+        "text": "build",
+        "startFrame": 445,
+        "endFrame": 454
+      },
+      {
+        "text": "added,",
+        "startFrame": 454,
+        "endFrame": 465
+      },
+      {
+        "text": "and",
+        "startFrame": 465,
+        "endFrame": 473
+      },
+      {
+        "text": "how",
+        "startFrame": 473,
+        "endFrame": 479
+      },
+      {
+        "text": "each",
+        "startFrame": 479,
+        "endFrame": 485
+      },
+      {
+        "text": "one",
+        "startFrame": 485,
+        "endFrame": 489
+      },
+      {
+        "text": "was",
+        "startFrame": 489,
+        "endFrame": 493
+      },
+      {
+        "text": "checked.",
+        "startFrame": 493,
+        "endFrame": 504
+      }
+    ],
+    "B01": [
+      {
+        "text": "Shaders",
+        "startFrame": 18,
+        "endFrame": 35
+      },
+      {
+        "text": "are",
+        "startFrame": 35,
+        "endFrame": 41
+      },
+      {
+        "text": "rules",
+        "startFrame": 41,
+        "endFrame": 48
+      },
+      {
+        "text": "you",
+        "startFrame": 48,
+        "endFrame": 56
+      },
+      {
+        "text": "can",
+        "startFrame": 56,
+        "endFrame": 60
+      },
+      {
+        "text": "test.",
+        "startFrame": 60,
+        "endFrame": 72
+      },
+      {
+        "text": "In",
+        "startFrame": 82,
+        "endFrame": 85
+      },
+      {
+        "text": "Blackridge,",
+        "startFrame": 95,
+        "endFrame": 105
+      },
+      {
+        "text": "the",
+        "startFrame": 106,
+        "endFrame": 106
+      },
+      {
+        "text": "dashboard",
+        "startFrame": 106,
+        "endFrame": 118
+      },
+      {
+        "text": "dims",
+        "startFrame": 118,
+        "endFrame": 133
+      },
+      {
+        "text": "when",
+        "startFrame": 133,
+        "endFrame": 136
+      },
+      {
+        "text": "the",
+        "startFrame": 136,
+        "endFrame": 139
+      },
+      {
+        "text": "headlights",
+        "startFrame": 139,
+        "endFrame": 148
+      },
+      {
+        "text": "are",
+        "startFrame": 148,
+        "endFrame": 155
+      },
+      {
+        "text": "on,",
+        "startFrame": 155,
+        "endFrame": 164
+      },
+      {
+        "text": "and",
+        "startFrame": 164,
+        "endFrame": 172
+      },
+      {
+        "text": "the",
+        "startFrame": 172,
+        "endFrame": 175
+      },
+      {
+        "text": "windows",
+        "startFrame": 175,
+        "endFrame": 183
+      },
+      {
+        "text": "fog",
+        "startFrame": 183,
+        "endFrame": 193
+      },
+      {
+        "text": "from",
+        "startFrame": 193,
+        "endFrame": 202
+      },
+      {
+        "text": "texture",
+        "startFrame": 202,
+        "endFrame": 214
+      },
+      {
+        "text": "maps.",
+        "startFrame": 214,
+        "endFrame": 223
+      },
+      {
+        "text": "Every",
+        "startFrame": 243,
+        "endFrame": 250
+      },
+      {
+        "text": "number",
+        "startFrame": 250,
+        "endFrame": 260
+      },
+      {
+        "text": "was",
+        "startFrame": 260,
+        "endFrame": 266
+      },
+      {
+        "text": "predicted",
+        "startFrame": 266,
+        "endFrame": 277
+      },
+      {
+        "text": "by",
+        "startFrame": 277,
+        "endFrame": 284
+      },
+      {
+        "text": "hand",
+        "startFrame": 284,
+        "endFrame": 293
+      },
+      {
+        "text": "first,",
+        "startFrame": 293,
+        "endFrame": 307
+      },
+      {
+        "text": "then",
+        "startFrame": 311,
+        "endFrame": 315
+      },
+      {
+        "text": "measured",
+        "startFrame": 316,
+        "endFrame": 326
+      },
+      {
+        "text": "in",
+        "startFrame": 326,
+        "endFrame": 332
+      },
+      {
+        "text": "the",
+        "startFrame": 332,
+        "endFrame": 336
+      },
+      {
+        "text": "engine.",
+        "startFrame": 336,
+        "endFrame": 346
+      }
+    ],
+    "B02": [
+      {
+        "text": "Blackridge",
+        "startFrame": 11,
+        "endFrame": 11
+      },
+      {
+        "text": "already",
+        "startFrame": 11,
+        "endFrame": 20
+      },
+      {
+        "text": "had",
+        "startFrame": 20,
+        "endFrame": 26
+      },
+      {
+        "text": "the",
+        "startFrame": 26,
+        "endFrame": 31
+      },
+      {
+        "text": "van,",
+        "startFrame": 31,
+        "endFrame": 38
+      },
+      {
+        "text": "the",
+        "startFrame": 44,
+        "endFrame": 46
+      },
+      {
+        "text": "district",
+        "startFrame": 46,
+        "endFrame": 56
+      },
+      {
+        "text": "and",
+        "startFrame": 56,
+        "endFrame": 62
+      },
+      {
+        "text": "the",
+        "startFrame": 62,
+        "endFrame": 65
+      },
+      {
+        "text": "driving.",
+        "startFrame": 65,
+        "endFrame": 77
+      },
+      {
+        "text": "This",
+        "startFrame": 90,
+        "endFrame": 95
+      },
+      {
+        "text": "build",
+        "startFrame": 95,
+        "endFrame": 104
+      },
+      {
+        "text": "adds",
+        "startFrame": 104,
+        "endFrame": 109
+      },
+      {
+        "text": "four",
+        "startFrame": 109,
+        "endFrame": 116
+      },
+      {
+        "text": "pieces:",
+        "startFrame": 116,
+        "endFrame": 128
+      },
+      {
+        "text": "a",
+        "startFrame": 136,
+        "endFrame": 139
+      },
+      {
+        "text": "shader",
+        "startFrame": 139,
+        "endFrame": 148
+      },
+      {
+        "text": "whose",
+        "startFrame": 148,
+        "endFrame": 153
+      },
+      {
+        "text": "colour",
+        "startFrame": 158,
+        "endFrame": 162
+      },
+      {
+        "text": "comes",
+        "startFrame": 162,
+        "endFrame": 170
+      },
+      {
+        "text": "from",
+        "startFrame": 170,
+        "endFrame": 176
+      },
+      {
+        "text": "the",
+        "startFrame": 176,
+        "endFrame": 181
+      },
+      {
+        "text": "van's",
+        "startFrame": 181,
+        "endFrame": 193
+      },
+      {
+        "text": "state,",
+        "startFrame": 193,
+        "endFrame": 197
+      },
+      {
+        "text": "a",
+        "startFrame": 205,
+        "endFrame": 206
+      },
+      {
+        "text": "textured",
+        "startFrame": 206,
+        "endFrame": 217
+      },
+      {
+        "text": "shader",
+        "startFrame": 217,
+        "endFrame": 232
+      },
+      {
+        "text": "shared",
+        "startFrame": 232,
+        "endFrame": 239
+      },
+      {
+        "text": "by",
+        "startFrame": 239,
+        "endFrame": 247
+      },
+      {
+        "text": "two",
+        "startFrame": 247,
+        "endFrame": 253
+      },
+      {
+        "text": "materials,",
+        "startFrame": 253,
+        "endFrame": 267
+      },
+      {
+        "text": "an",
+        "startFrame": 276,
+        "endFrame": 278
+      },
+      {
+        "text": "experiment",
+        "startFrame": 278,
+        "endFrame": 292
+      },
+      {
+        "text": "on",
+        "startFrame": 292,
+        "endFrame": 298
+      },
+      {
+        "text": "what",
+        "startFrame": 298,
+        "endFrame": 302
+      },
+      {
+        "text": "texture",
+        "startFrame": 302,
+        "endFrame": 313
+      },
+      {
+        "text": "hints",
+        "startFrame": 313,
+        "endFrame": 322
+      },
+      {
+        "text": "do",
+        "startFrame": 326,
+        "endFrame": 328
+      },
+      {
+        "text": "to",
+        "startFrame": 329,
+        "endFrame": 332
+      },
+      {
+        "text": "the",
+        "startFrame": 332,
+        "endFrame": 335
+      },
+      {
+        "text": "numbers,",
+        "startFrame": 335,
+        "endFrame": 343
+      },
+      {
+        "text": "and",
+        "startFrame": 343,
+        "endFrame": 350
+      },
+      {
+        "text": "a",
+        "startFrame": 350,
+        "endFrame": 353
+      },
+      {
+        "text": "close",
+        "startFrame": 353,
+        "endFrame": 358
+      },
+      {
+        "text": "reading",
+        "startFrame": 358,
+        "endFrame": 366
+      },
+      {
+        "text": "of",
+        "startFrame": 366,
+        "endFrame": 373
+      },
+      {
+        "text": "the",
+        "startFrame": 373,
+        "endFrame": 376
+      },
+      {
+        "text": "shader",
+        "startFrame": 376,
+        "endFrame": 385
+      },
+      {
+        "text": "Godot",
+        "startFrame": 385,
+        "endFrame": 396
+      },
+      {
+        "text": "generates",
+        "startFrame": 396,
+        "endFrame": 410
+      },
+      {
+        "text": "itself.",
+        "startFrame": 410,
+        "endFrame": 423
+      },
+      {
+        "text": "The",
+        "startFrame": 441,
+        "endFrame": 446
+      },
+      {
+        "text": "game",
+        "startFrame": 446,
+        "endFrame": 452
+      },
+      {
+        "text": "runs",
+        "startFrame": 452,
+        "endFrame": 460
+      },
+      {
+        "text": "Godot",
+        "startFrame": 460,
+        "endFrame": 474
+      },
+      {
+        "text": "four",
+        "startFrame": 481,
+        "endFrame": 487
+      },
+      {
+        "text": "point",
+        "startFrame": 488,
+        "endFrame": 495
+      },
+      {
+        "text": "seven",
+        "startFrame": 495,
+        "endFrame": 502
+      },
+      {
+        "text": "point",
+        "startFrame": 502,
+        "endFrame": 509
+      },
+      {
+        "text": "two,",
+        "startFrame": 510,
+        "endFrame": 516
+      },
+      {
+        "text": "on",
+        "startFrame": 517,
+        "endFrame": 523
+      },
+      {
+        "text": "the",
+        "startFrame": 523,
+        "endFrame": 526
+      },
+      {
+        "text": "Compatibility",
+        "startFrame": 526,
+        "endFrame": 539
+      },
+      {
+        "text": "renderer.",
+        "startFrame": 539,
+        "endFrame": 559
+      },
+      {
+        "text": "Remember",
+        "startFrame": 568,
+        "endFrame": 576
+      },
+      {
+        "text": "that.",
+        "startFrame": 576,
+        "endFrame": 584
+      }
+    ],
+    "B03": [
+      {
+        "text": "Before",
+        "startFrame": 0,
+        "endFrame": 6
+      },
+      {
+        "text": "any",
+        "startFrame": 6,
+        "endFrame": 12
+      },
+      {
+        "text": "shader",
+        "startFrame": 12,
+        "endFrame": 22
+      },
+      {
+        "text": "code,",
+        "startFrame": 22,
+        "endFrame": 30
+      },
+      {
+        "text": "a",
+        "startFrame": 32,
+        "endFrame": 34
+      },
+      {
+        "text": "written",
+        "startFrame": 34,
+        "endFrame": 39
+      },
+      {
+        "text": "brief",
+        "startFrame": 39,
+        "endFrame": 47
+      },
+      {
+        "text": "fixed",
+        "startFrame": 47,
+        "endFrame": 58
+      },
+      {
+        "text": "the",
+        "startFrame": 58,
+        "endFrame": 61
+      },
+      {
+        "text": "contract:",
+        "startFrame": 61,
+        "endFrame": 75
+      },
+      {
+        "text": "the",
+        "startFrame": 85,
+        "endFrame": 87
+      },
+      {
+        "text": "exact",
+        "startFrame": 87,
+        "endFrame": 95
+      },
+      {
+        "text": "colour",
+        "startFrame": 100,
+        "endFrame": 105
+      },
+      {
+        "text": "line,",
+        "startFrame": 106,
+        "endFrame": 115
+      },
+      {
+        "text": "three",
+        "startFrame": 119,
+        "endFrame": 123
+      },
+      {
+        "text": "uniforms,",
+        "startFrame": 123,
+        "endFrame": 137
+      },
+      {
+        "text": "and",
+        "startFrame": 137,
+        "endFrame": 146
+      },
+      {
+        "text": "rules",
+        "startFrame": 146,
+        "endFrame": 152
+      },
+      {
+        "text": "a",
+        "startFrame": 152,
+        "endFrame": 157
+      },
+      {
+        "text": "test",
+        "startFrame": 157,
+        "endFrame": 162
+      },
+      {
+        "text": "can",
+        "startFrame": 162,
+        "endFrame": 169
+      },
+      {
+        "text": "fail.",
+        "startFrame": 169,
+        "endFrame": 181
+      },
+      {
+        "text": "Fade",
+        "startFrame": 194,
+        "endFrame": 199
+      },
+      {
+        "text": "on",
+        "startFrame": 199,
+        "endFrame": 203
+      },
+      {
+        "text": "in",
+        "startFrame": 203,
+        "endFrame": 207
+      },
+      {
+        "text": "a",
+        "startFrame": 207,
+        "endFrame": 209
+      },
+      {
+        "text": "quarter",
+        "startFrame": 209,
+        "endFrame": 215
+      },
+      {
+        "text": "of",
+        "startFrame": 215,
+        "endFrame": 220
+      },
+      {
+        "text": "a",
+        "startFrame": 220,
+        "endFrame": 223
+      },
+      {
+        "text": "second,",
+        "startFrame": 223,
+        "endFrame": 230
+      },
+      {
+        "text": "and",
+        "startFrame": 230,
+        "endFrame": 235
+      },
+      {
+        "text": "off",
+        "startFrame": 243,
+        "endFrame": 251
+      },
+      {
+        "text": "in",
+        "startFrame": 251,
+        "endFrame": 259
+      },
+      {
+        "text": "zero",
+        "startFrame": 259,
+        "endFrame": 267
+      },
+      {
+        "text": "point",
+        "startFrame": 267,
+        "endFrame": 275
+      },
+      {
+        "text": "three",
+        "startFrame": 275,
+        "endFrame": 283
+      },
+      {
+        "text": "five.",
+        "startFrame": 284,
+        "endFrame": 291
+      },
+      {
+        "text": "A",
+        "startFrame": 292,
+        "endFrame": 293
+      },
+      {
+        "text": "retrigger",
+        "startFrame": 293,
+        "endFrame": 304
+      },
+      {
+        "text": "reverses",
+        "startFrame": 304,
+        "endFrame": 320
+      },
+      {
+        "text": "from",
+        "startFrame": 320,
+        "endFrame": 325
+      },
+      {
+        "text": "the",
+        "startFrame": 325,
+        "endFrame": 328
+      },
+      {
+        "text": "current",
+        "startFrame": 328,
+        "endFrame": 334
+      },
+      {
+        "text": "value.",
+        "startFrame": 334,
+        "endFrame": 347
+      },
+      {
+        "text": "One",
+        "startFrame": 355,
+        "endFrame": 359
+      },
+      {
+        "text": "frame",
+        "startFrame": 359,
+        "endFrame": 367
+      },
+      {
+        "text": "of",
+        "startFrame": 367,
+        "endFrame": 372
+      },
+      {
+        "text": "tolerance",
+        "startFrame": 372,
+        "endFrame": 382
+      },
+      {
+        "text": "at",
+        "startFrame": 382,
+        "endFrame": 389
+      },
+      {
+        "text": "30,",
+        "startFrame": 389,
+        "endFrame": 401
+      },
+      {
+        "text": "60",
+        "startFrame": 407,
+        "endFrame": 418
+      },
+      {
+        "text": "and",
+        "startFrame": 420,
+        "endFrame": 426
+      },
+      {
+        "text": "144",
+        "startFrame": 426,
+        "endFrame": 438
+      },
+      {
+        "text": "frames",
+        "startFrame": 438,
+        "endFrame": 458
+      },
+      {
+        "text": "per",
+        "startFrame": 458,
+        "endFrame": 465
+      },
+      {
+        "text": "second.",
+        "startFrame": 465,
+        "endFrame": 474
+      },
+      {
+        "text": "The",
+        "startFrame": 494,
+        "endFrame": 499
+      },
+      {
+        "text": "commit",
+        "startFrame": 499,
+        "endFrame": 505
+      },
+      {
+        "text": "history",
+        "startFrame": 505,
+        "endFrame": 518
+      },
+      {
+        "text": "shows",
+        "startFrame": 518,
+        "endFrame": 526
+      },
+      {
+        "text": "the",
+        "startFrame": 526,
+        "endFrame": 532
+      },
+      {
+        "text": "brief",
+        "startFrame": 532,
+        "endFrame": 537
+      },
+      {
+        "text": "landed",
+        "startFrame": 537,
+        "endFrame": 549
+      },
+      {
+        "text": "before",
+        "startFrame": 549,
+        "endFrame": 556
+      },
+      {
+        "text": "the",
+        "startFrame": 556,
+        "endFrame": 561
+      },
+      {
+        "text": "first",
+        "startFrame": 561,
+        "endFrame": 567
+      },
+      {
+        "text": "shader,",
+        "startFrame": 567,
+        "endFrame": 582
+      },
+      {
+        "text": "and",
+        "startFrame": 588,
+        "endFrame": 590
+      },
+      {
+        "text": "the",
+        "startFrame": 590,
+        "endFrame": 593
+      },
+      {
+        "text": "project's",
+        "startFrame": 593,
+        "endFrame": 611
+      },
+      {
+        "text": "Claude",
+        "startFrame": 617,
+        "endFrame": 622
+      },
+      {
+        "text": "dot",
+        "startFrame": 623,
+        "endFrame": 628
+      },
+      {
+        "text": "M",
+        "startFrame": 628,
+        "endFrame": 633
+      },
+      {
+        "text": "D",
+        "startFrame": 634,
+        "endFrame": 639
+      },
+      {
+        "text": "imports",
+        "startFrame": 640,
+        "endFrame": 653
+      },
+      {
+        "text": "it.",
+        "startFrame": 653,
+        "endFrame": 661
+      }
+    ],
+    "B04": [
+      {
+        "text": "Here's",
+        "startFrame": 0,
+        "endFrame": 7
+      },
+      {
+        "text": "the",
+        "startFrame": 7,
+        "endFrame": 10
+      },
+      {
+        "text": "author's",
+        "startFrame": 10,
+        "endFrame": 22
+      },
+      {
+        "text": "hand-written",
+        "startFrame": 22,
+        "endFrame": 34
+      },
+      {
+        "text": "effect.",
+        "startFrame": 34,
+        "endFrame": 46
+      },
+      {
+        "text": "It's",
+        "startFrame": 55,
+        "endFrame": 58
+      },
+      {
+        "text": "a",
+        "startFrame": 58,
+        "endFrame": 59
+      },
+      {
+        "text": "canvas",
+        "startFrame": 59,
+        "endFrame": 67
+      },
+      {
+        "text": "item",
+        "startFrame": 67,
+        "endFrame": 79
+      },
+      {
+        "text": "shader,",
+        "startFrame": 79,
+        "endFrame": 92
+      },
+      {
+        "text": "because",
+        "startFrame": 92,
+        "endFrame": 100
+      },
+      {
+        "text": "the",
+        "startFrame": 100,
+        "endFrame": 106
+      },
+      {
+        "text": "gauges",
+        "startFrame": 106,
+        "endFrame": 114
+      },
+      {
+        "text": "are",
+        "startFrame": 114,
+        "endFrame": 119
+      },
+      {
+        "text": "2D",
+        "startFrame": 119,
+        "endFrame": 132
+      },
+      {
+        "text": "drawing",
+        "startFrame": 132,
+        "endFrame": 140
+      },
+      {
+        "text": "inside",
+        "startFrame": 140,
+        "endFrame": 151
+      },
+      {
+        "text": "a",
+        "startFrame": 151,
+        "endFrame": 157
+      },
+      {
+        "text": "sub-viewport.",
+        "startFrame": 172,
+        "endFrame": 187
+      },
+      {
+        "text": "Three",
+        "startFrame": 188,
+        "endFrame": 195
+      },
+      {
+        "text": "uniforms:",
+        "startFrame": 195,
+        "endFrame": 211
+      },
+      {
+        "text": "night",
+        "startFrame": 219,
+        "endFrame": 223
+      },
+      {
+        "text": "amount,",
+        "startFrame": 223,
+        "endFrame": 230
+      },
+      {
+        "text": "driven",
+        "startFrame": 230,
+        "endFrame": 244
+      },
+      {
+        "text": "from",
+        "startFrame": 244,
+        "endFrame": 251
+      },
+      {
+        "text": "code;",
+        "startFrame": 251,
+        "endFrame": 260
+      },
+      {
+        "text": "a",
+        "startFrame": 265,
+        "endFrame": 267
+      },
+      {
+        "text": "warm",
+        "startFrame": 267,
+        "endFrame": 274
+      },
+      {
+        "text": "amber",
+        "startFrame": 274,
+        "endFrame": 281
+      },
+      {
+        "text": "colour;",
+        "startFrame": 288,
+        "endFrame": 295
+      },
+      {
+        "text": "and",
+        "startFrame": 295,
+        "endFrame": 297
+      },
+      {
+        "text": "a",
+        "startFrame": 297,
+        "endFrame": 299
+      },
+      {
+        "text": "brightness",
+        "startFrame": 299,
+        "endFrame": 308
+      },
+      {
+        "text": "floor.",
+        "startFrame": 308,
+        "endFrame": 320
+      },
+      {
+        "text": "Line",
+        "startFrame": 337,
+        "endFrame": 340
+      },
+      {
+        "text": "14",
+        "startFrame": 340,
+        "endFrame": 353
+      },
+      {
+        "text": "is",
+        "startFrame": 353,
+        "endFrame": 361
+      },
+      {
+        "text": "the",
+        "startFrame": 361,
+        "endFrame": 364
+      },
+      {
+        "text": "whole",
+        "startFrame": 364,
+        "endFrame": 368
+      },
+      {
+        "text": "effect.",
+        "startFrame": 368,
+        "endFrame": 379
+      },
+      {
+        "text": "It",
+        "startFrame": 388,
+        "endFrame": 390
+      },
+      {
+        "text": "mixes",
+        "startFrame": 390,
+        "endFrame": 398
+      },
+      {
+        "text": "the",
+        "startFrame": 398,
+        "endFrame": 403
+      },
+      {
+        "text": "original",
+        "startFrame": 403,
+        "endFrame": 412
+      },
+      {
+        "text": "colour",
+        "startFrame": 418,
+        "endFrame": 422
+      },
+      {
+        "text": "toward",
+        "startFrame": 423,
+        "endFrame": 431
+      },
+      {
+        "text": "that",
+        "startFrame": 431,
+        "endFrame": 437
+      },
+      {
+        "text": "colour",
+        "startFrame": 442,
+        "endFrame": 445
+      },
+      {
+        "text": "times",
+        "startFrame": 446,
+        "endFrame": 458
+      },
+      {
+        "text": "amber",
+        "startFrame": 458,
+        "endFrame": 466
+      },
+      {
+        "text": "times",
+        "startFrame": 466,
+        "endFrame": 477
+      },
+      {
+        "text": "brightness.",
+        "startFrame": 477,
+        "endFrame": 490
+      },
+      {
+        "text": "Multiplying",
+        "startFrame": 503,
+        "endFrame": 517
+      },
+      {
+        "text": "keeps",
+        "startFrame": 517,
+        "endFrame": 526
+      },
+      {
+        "text": "the",
+        "startFrame": 526,
+        "endFrame": 533
+      },
+      {
+        "text": "gauge",
+        "startFrame": 533,
+        "endFrame": 539
+      },
+      {
+        "text": "detail,",
+        "startFrame": 539,
+        "endFrame": 553
+      },
+      {
+        "text": "and",
+        "startFrame": 553,
+        "endFrame": 561
+      },
+      {
+        "text": "mix",
+        "startFrame": 561,
+        "endFrame": 566
+      },
+      {
+        "text": "lets",
+        "startFrame": 566,
+        "endFrame": 574
+      },
+      {
+        "text": "it",
+        "startFrame": 574,
+        "endFrame": 580
+      },
+      {
+        "text": "fade.",
+        "startFrame": 580,
+        "endFrame": 588
+      }
+    ],
+    "B05": [
+      {
+        "text": "Big",
+        "startFrame": 0,
+        "endFrame": 5
+      },
+      {
+        "text": "idea",
+        "startFrame": 5,
+        "endFrame": 13
+      },
+      {
+        "text": "one:",
+        "startFrame": 13,
+        "endFrame": 20
+      },
+      {
+        "text": "a",
+        "startFrame": 24,
+        "endFrame": 27
+      },
+      {
+        "text": "shader",
+        "startFrame": 27,
+        "endFrame": 37
+      },
+      {
+        "text": "is",
+        "startFrame": 37,
+        "endFrame": 41
+      },
+      {
+        "text": "a",
+        "startFrame": 41,
+        "endFrame": 43
+      },
+      {
+        "text": "small",
+        "startFrame": 43,
+        "endFrame": 49
+      },
+      {
+        "text": "program",
+        "startFrame": 49,
+        "endFrame": 63
+      },
+      {
+        "text": "the",
+        "startFrame": 63,
+        "endFrame": 70
+      },
+      {
+        "text": "GPU",
+        "startFrame": 70,
+        "endFrame": 79
+      },
+      {
+        "text": "runs",
+        "startFrame": 79,
+        "endFrame": 90
+      },
+      {
+        "text": "for",
+        "startFrame": 90,
+        "endFrame": 98
+      },
+      {
+        "text": "every",
+        "startFrame": 98,
+        "endFrame": 105
+      },
+      {
+        "text": "pixel.",
+        "startFrame": 105,
+        "endFrame": 116
+      },
+      {
+        "text": "Line",
+        "startFrame": 135,
+        "endFrame": 137
+      },
+      {
+        "text": "14",
+        "startFrame": 137,
+        "endFrame": 149
+      },
+      {
+        "text": "runs",
+        "startFrame": 149,
+        "endFrame": 157
+      },
+      {
+        "text": "once",
+        "startFrame": 157,
+        "endFrame": 167
+      },
+      {
+        "text": "per",
+        "startFrame": 167,
+        "endFrame": 172
+      },
+      {
+        "text": "dashboard",
+        "startFrame": 172,
+        "endFrame": 181
+      },
+      {
+        "text": "pixel,",
+        "startFrame": 181,
+        "endFrame": 194
+      },
+      {
+        "text": "so",
+        "startFrame": 194,
+        "endFrame": 202
+      },
+      {
+        "text": "its",
+        "startFrame": 202,
+        "endFrame": 206
+      },
+      {
+        "text": "output",
+        "startFrame": 206,
+        "endFrame": 214
+      },
+      {
+        "text": "can",
+        "startFrame": 214,
+        "endFrame": 222
+      },
+      {
+        "text": "be",
+        "startFrame": 222,
+        "endFrame": 225
+      },
+      {
+        "text": "predicted.",
+        "startFrame": 225,
+        "endFrame": 238
+      },
+      {
+        "text": "The",
+        "startFrame": 251,
+        "endFrame": 254
+      },
+      {
+        "text": "brief",
+        "startFrame": 254,
+        "endFrame": 259
+      },
+      {
+        "text": "predicted",
+        "startFrame": 259,
+        "endFrame": 273
+      },
+      {
+        "text": "two",
+        "startFrame": 273,
+        "endFrame": 279
+      },
+      {
+        "text": "pixels",
+        "startFrame": 279,
+        "endFrame": 287
+      },
+      {
+        "text": "by",
+        "startFrame": 287,
+        "endFrame": 296
+      },
+      {
+        "text": "hand,",
+        "startFrame": 296,
+        "endFrame": 305
+      },
+      {
+        "text": "the",
+        "startFrame": 309,
+        "endFrame": 311
+      },
+      {
+        "text": "dark",
+        "startFrame": 311,
+        "endFrame": 316
+      },
+      {
+        "text": "background",
+        "startFrame": 316,
+        "endFrame": 331
+      },
+      {
+        "text": "and",
+        "startFrame": 331,
+        "endFrame": 336
+      },
+      {
+        "text": "the",
+        "startFrame": 336,
+        "endFrame": 340
+      },
+      {
+        "text": "dial",
+        "startFrame": 340,
+        "endFrame": 348
+      },
+      {
+        "text": "hub,",
+        "startFrame": 348,
+        "endFrame": 355
+      },
+      {
+        "text": "at",
+        "startFrame": 355,
+        "endFrame": 359
+      },
+      {
+        "text": "three",
+        "startFrame": 359,
+        "endFrame": 365
+      },
+      {
+        "text": "settings.",
+        "startFrame": 365,
+        "endFrame": 376
+      },
+      {
+        "text": "The",
+        "startFrame": 388,
+        "endFrame": 391
+      },
+      {
+        "text": "engine",
+        "startFrame": 391,
+        "endFrame": 396
+      },
+      {
+        "text": "captures",
+        "startFrame": 396,
+        "endFrame": 411
+      },
+      {
+        "text": "match",
+        "startFrame": 411,
+        "endFrame": 419
+      },
+      {
+        "text": "all",
+        "startFrame": 419,
+        "endFrame": 429
+      },
+      {
+        "text": "eighteen",
+        "startFrame": 433,
+        "endFrame": 436
+      },
+      {
+        "text": "numbers",
+        "startFrame": 437,
+        "endFrame": 447
+      },
+      {
+        "text": "exactly.",
+        "startFrame": 447,
+        "endFrame": 463
+      },
+      {
+        "text": "At",
+        "startFrame": 476,
+        "endFrame": 479
+      },
+      {
+        "text": "two",
+        "startFrame": 484,
+        "endFrame": 488
+      },
+      {
+        "text": "point",
+        "startFrame": 489,
+        "endFrame": 493
+      },
+      {
+        "text": "zero,",
+        "startFrame": 494,
+        "endFrame": 498
+      },
+      {
+        "text": "set",
+        "startFrame": 499,
+        "endFrame": 510
+      },
+      {
+        "text": "from",
+        "startFrame": 510,
+        "endFrame": 516
+      },
+      {
+        "text": "code,",
+        "startFrame": 516,
+        "endFrame": 526
+      },
+      {
+        "text": "the",
+        "startFrame": 530,
+        "endFrame": 533
+      },
+      {
+        "text": "hub",
+        "startFrame": 533,
+        "endFrame": 538
+      },
+      {
+        "text": "goes",
+        "startFrame": 538,
+        "endFrame": 544
+      },
+      {
+        "text": "almost",
+        "startFrame": 544,
+        "endFrame": 553
+      },
+      {
+        "text": "black:",
+        "startFrame": 553,
+        "endFrame": 564
+      },
+      {
+        "text": "hint",
+        "startFrame": 575,
+        "endFrame": 578
+      },
+      {
+        "text": "range",
+        "startFrame": 578,
+        "endFrame": 584
+      },
+      {
+        "text": "draws",
+        "startFrame": 584,
+        "endFrame": 593
+      },
+      {
+        "text": "a",
+        "startFrame": 593,
+        "endFrame": 599
+      },
+      {
+        "text": "slider,",
+        "startFrame": 599,
+        "endFrame": 610
+      },
+      {
+        "text": "but",
+        "startFrame": 610,
+        "endFrame": 617
+      },
+      {
+        "text": "it",
+        "startFrame": 617,
+        "endFrame": 621
+      },
+      {
+        "text": "doesn't",
+        "startFrame": 621,
+        "endFrame": 629
+      },
+      {
+        "text": "clamp.",
+        "startFrame": 629,
+        "endFrame": 635
+      }
+    ],
+    "B06": [
+      {
+        "text": "Here's",
+        "startFrame": 0,
+        "endFrame": 7
+      },
+      {
+        "text": "the",
+        "startFrame": 7,
+        "endFrame": 10
+      },
+      {
+        "text": "hand",
+        "startFrame": 10,
+        "endFrame": 15
+      },
+      {
+        "text": "calculation.",
+        "startFrame": 15,
+        "endFrame": 34
+      },
+      {
+        "text": "Factor",
+        "startFrame": 50,
+        "endFrame": 58
+      },
+      {
+        "text": "the",
+        "startFrame": 58,
+        "endFrame": 63
+      },
+      {
+        "text": "mix,",
+        "startFrame": 63,
+        "endFrame": 68
+      },
+      {
+        "text": "and",
+        "startFrame": 68,
+        "endFrame": 76
+      },
+      {
+        "text": "each",
+        "startFrame": 76,
+        "endFrame": 80
+      },
+      {
+        "text": "channel",
+        "startFrame": 80,
+        "endFrame": 92
+      },
+      {
+        "text": "is",
+        "startFrame": 92,
+        "endFrame": 97
+      },
+      {
+        "text": "the",
+        "startFrame": 97,
+        "endFrame": 100
+      },
+      {
+        "text": "original",
+        "startFrame": 100,
+        "endFrame": 110
+      },
+      {
+        "text": "value",
+        "startFrame": 110,
+        "endFrame": 121
+      },
+      {
+        "text": "times",
+        "startFrame": 121,
+        "endFrame": 129
+      },
+      {
+        "text": "one",
+        "startFrame": 133,
+        "endFrame": 137
+      },
+      {
+        "text": "minus",
+        "startFrame": 137,
+        "endFrame": 146
+      },
+      {
+        "text": "the",
+        "startFrame": 146,
+        "endFrame": 154
+      },
+      {
+        "text": "amount,",
+        "startFrame": 154,
+        "endFrame": 161
+      },
+      {
+        "text": "plus",
+        "startFrame": 169,
+        "endFrame": 172
+      },
+      {
+        "text": "the",
+        "startFrame": 172,
+        "endFrame": 178
+      },
+      {
+        "text": "amount",
+        "startFrame": 178,
+        "endFrame": 184
+      },
+      {
+        "text": "times",
+        "startFrame": 184,
+        "endFrame": 196
+      },
+      {
+        "text": "amber",
+        "startFrame": 196,
+        "endFrame": 204
+      },
+      {
+        "text": "times",
+        "startFrame": 204,
+        "endFrame": 217
+      },
+      {
+        "text": "brightness.",
+        "startFrame": 217,
+        "endFrame": 228
+      },
+      {
+        "text": "For",
+        "startFrame": 248,
+        "endFrame": 253
+      },
+      {
+        "text": "the",
+        "startFrame": 253,
+        "endFrame": 257
+      },
+      {
+        "text": "hub's",
+        "startFrame": 257,
+        "endFrame": 265
+      },
+      {
+        "text": "red",
+        "startFrame": 265,
+        "endFrame": 268
+      },
+      {
+        "text": "channel",
+        "startFrame": 268,
+        "endFrame": 279
+      },
+      {
+        "text": "at",
+        "startFrame": 279,
+        "endFrame": 284
+      },
+      {
+        "text": "one",
+        "startFrame": 284,
+        "endFrame": 288
+      },
+      {
+        "text": "half,",
+        "startFrame": 288,
+        "endFrame": 297
+      },
+      {
+        "text": "that's",
+        "startFrame": 303,
+        "endFrame": 309
+      },
+      {
+        "text": "135",
+        "startFrame": 309,
+        "endFrame": 327
+      },
+      {
+        "text": "times",
+        "startFrame": 327,
+        "endFrame": 345
+      },
+      {
+        "text": "zero",
+        "startFrame": 354,
+        "endFrame": 362
+      },
+      {
+        "text": "point",
+        "startFrame": 362,
+        "endFrame": 370
+      },
+      {
+        "text": "seven",
+        "startFrame": 371,
+        "endFrame": 379
+      },
+      {
+        "text": "seven",
+        "startFrame": 380,
+        "endFrame": 388
+      },
+      {
+        "text": "five:",
+        "startFrame": 389,
+        "endFrame": 397
+      },
+      {
+        "text": "one",
+        "startFrame": 397,
+        "endFrame": 405
+      },
+      {
+        "text": "hundred",
+        "startFrame": 406,
+        "endFrame": 414
+      },
+      {
+        "text": "and",
+        "startFrame": 415,
+        "endFrame": 423
+      },
+      {
+        "text": "four",
+        "startFrame": 424,
+        "endFrame": 432
+      },
+      {
+        "text": "point",
+        "startFrame": 432,
+        "endFrame": 440
+      },
+      {
+        "text": "six",
+        "startFrame": 441,
+        "endFrame": 449
+      },
+      {
+        "text": "two",
+        "startFrame": 450,
+        "endFrame": 458
+      },
+      {
+        "text": "five,",
+        "startFrame": 459,
+        "endFrame": 467
+      },
+      {
+        "text": "which",
+        "startFrame": 467,
+        "endFrame": 473
+      },
+      {
+        "text": "rounds",
+        "startFrame": 473,
+        "endFrame": 480
+      },
+      {
+        "text": "to",
+        "startFrame": 480,
+        "endFrame": 488
+      },
+      {
+        "text": "105.",
+        "startFrame": 488,
+        "endFrame": 509
+      },
+      {
+        "text": "The",
+        "startFrame": 524,
+        "endFrame": 527
+      },
+      {
+        "text": "capture",
+        "startFrame": 527,
+        "endFrame": 536
+      },
+      {
+        "text": "reads",
+        "startFrame": 536,
+        "endFrame": 545
+      },
+      {
+        "text": "105.",
+        "startFrame": 545,
+        "endFrame": 569
+      }
+    ],
+    "B07": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 2
+      },
+      {
+        "text": "driver",
+        "startFrame": 2,
+        "endFrame": 11
+      },
+      {
+        "text": "is",
+        "startFrame": 11,
+        "endFrame": 19
+      },
+      {
+        "text": "GDScript",
+        "startFrame": 29,
+        "endFrame": 38
+      },
+      {
+        "text": "written",
+        "startFrame": 39,
+        "endFrame": 50
+      },
+      {
+        "text": "by",
+        "startFrame": 50,
+        "endFrame": 55
+      },
+      {
+        "text": "Claude",
+        "startFrame": 55,
+        "endFrame": 66
+      },
+      {
+        "text": "Code,",
+        "startFrame": 66,
+        "endFrame": 75
+      },
+      {
+        "text": "and",
+        "startFrame": 75,
+        "endFrame": 84
+      },
+      {
+        "text": "it",
+        "startFrame": 84,
+        "endFrame": 87
+      },
+      {
+        "text": "only",
+        "startFrame": 87,
+        "endFrame": 94
+      },
+      {
+        "text": "reads",
+        "startFrame": 94,
+        "endFrame": 103
+      },
+      {
+        "text": "the",
+        "startFrame": 103,
+        "endFrame": 108
+      },
+      {
+        "text": "van's",
+        "startFrame": 108,
+        "endFrame": 119
+      },
+      {
+        "text": "headlights",
+        "startFrame": 119,
+        "endFrame": 128
+      },
+      {
+        "text": "flag.",
+        "startFrame": 128,
+        "endFrame": 140
+      },
+      {
+        "text": "It",
+        "startFrame": 152,
+        "endFrame": 154
+      },
+      {
+        "text": "never",
+        "startFrame": 154,
+        "endFrame": 161
+      },
+      {
+        "text": "sets",
+        "startFrame": 161,
+        "endFrame": 169
+      },
+      {
+        "text": "it.",
+        "startFrame": 169,
+        "endFrame": 175
+      },
+      {
+        "text": "Each",
+        "startFrame": 183,
+        "endFrame": 188
+      },
+      {
+        "text": "frame,",
+        "startFrame": 188,
+        "endFrame": 196
+      },
+      {
+        "text": "it",
+        "startFrame": 196,
+        "endFrame": 201
+      },
+      {
+        "text": "moves",
+        "startFrame": 201,
+        "endFrame": 209
+      },
+      {
+        "text": "night",
+        "startFrame": 209,
+        "endFrame": 216
+      },
+      {
+        "text": "amount",
+        "startFrame": 216,
+        "endFrame": 224
+      },
+      {
+        "text": "toward",
+        "startFrame": 224,
+        "endFrame": 234
+      },
+      {
+        "text": "its",
+        "startFrame": 234,
+        "endFrame": 241
+      },
+      {
+        "text": "target",
+        "startFrame": 241,
+        "endFrame": 250
+      },
+      {
+        "text": "by",
+        "startFrame": 250,
+        "endFrame": 256
+      },
+      {
+        "text": "delta",
+        "startFrame": 256,
+        "endFrame": 263
+      },
+      {
+        "text": "over",
+        "startFrame": 263,
+        "endFrame": 273
+      },
+      {
+        "text": "the",
+        "startFrame": 273,
+        "endFrame": 277
+      },
+      {
+        "text": "fade",
+        "startFrame": 277,
+        "endFrame": 283
+      },
+      {
+        "text": "time,",
+        "startFrame": 283,
+        "endFrame": 292
+      },
+      {
+        "text": "so",
+        "startFrame": 292,
+        "endFrame": 301
+      },
+      {
+        "text": "the",
+        "startFrame": 301,
+        "endFrame": 304
+      },
+      {
+        "text": "speed",
+        "startFrame": 304,
+        "endFrame": 311
+      },
+      {
+        "text": "doesn't",
+        "startFrame": 311,
+        "endFrame": 320
+      },
+      {
+        "text": "depend",
+        "startFrame": 320,
+        "endFrame": 328
+      },
+      {
+        "text": "on",
+        "startFrame": 328,
+        "endFrame": 334
+      },
+      {
+        "text": "frame",
+        "startFrame": 334,
+        "endFrame": 343
+      },
+      {
+        "text": "rate.",
+        "startFrame": 343,
+        "endFrame": 352
+      },
+      {
+        "text": "A",
+        "startFrame": 364,
+        "endFrame": 365
+      },
+      {
+        "text": "retrigger",
+        "startFrame": 365,
+        "endFrame": 377
+      },
+      {
+        "text": "simply",
+        "startFrame": 377,
+        "endFrame": 388
+      },
+      {
+        "text": "reverses",
+        "startFrame": 388,
+        "endFrame": 405
+      },
+      {
+        "text": "from",
+        "startFrame": 405,
+        "endFrame": 410
+      },
+      {
+        "text": "wherever",
+        "startFrame": 410,
+        "endFrame": 416
+      },
+      {
+        "text": "the",
+        "startFrame": 416,
+        "endFrame": 422
+      },
+      {
+        "text": "value",
+        "startFrame": 422,
+        "endFrame": 432
+      },
+      {
+        "text": "is.",
+        "startFrame": 432,
+        "endFrame": 440
+      },
+      {
+        "text": "Once",
+        "startFrame": 450,
+        "endFrame": 454
+      },
+      {
+        "text": "it",
+        "startFrame": 454,
+        "endFrame": 457
+      },
+      {
+        "text": "arrives,",
+        "startFrame": 457,
+        "endFrame": 467
+      },
+      {
+        "text": "lines",
+        "startFrame": 475,
+        "endFrame": 479
+      },
+      {
+        "text": "25",
+        "startFrame": 479,
+        "endFrame": 497
+      },
+      {
+        "text": "and",
+        "startFrame": 497,
+        "endFrame": 505
+      },
+      {
+        "text": "26",
+        "startFrame": 505,
+        "endFrame": 517
+      },
+      {
+        "text": "stop",
+        "startFrame": 517,
+        "endFrame": 529
+      },
+      {
+        "text": "sending",
+        "startFrame": 529,
+        "endFrame": 541
+      },
+      {
+        "text": "updates.",
+        "startFrame": 541,
+        "endFrame": 553
+      }
+    ],
+    "B08": [
+      {
+        "text": "Here",
+        "startFrame": 0,
+        "endFrame": 5
+      },
+      {
+        "text": "it",
+        "startFrame": 5,
+        "endFrame": 8
+      },
+      {
+        "text": "is",
+        "startFrame": 8,
+        "endFrame": 11
+      },
+      {
+        "text": "in",
+        "startFrame": 11,
+        "endFrame": 15
+      },
+      {
+        "text": "the",
+        "startFrame": 15,
+        "endFrame": 19
+      },
+      {
+        "text": "game.",
+        "startFrame": 19,
+        "endFrame": 25
+      },
+      {
+        "text": "Lights",
+        "startFrame": 33,
+        "endFrame": 36
+      },
+      {
+        "text": "off,",
+        "startFrame": 36,
+        "endFrame": 45
+      },
+      {
+        "text": "and",
+        "startFrame": 45,
+        "endFrame": 52
+      },
+      {
+        "text": "the",
+        "startFrame": 52,
+        "endFrame": 56
+      },
+      {
+        "text": "gauges",
+        "startFrame": 56,
+        "endFrame": 65
+      },
+      {
+        "text": "fade",
+        "startFrame": 65,
+        "endFrame": 72
+      },
+      {
+        "text": "back",
+        "startFrame": 72,
+        "endFrame": 80
+      },
+      {
+        "text": "to",
+        "startFrame": 80,
+        "endFrame": 87
+      },
+      {
+        "text": "mint",
+        "startFrame": 87,
+        "endFrame": 91
+      },
+      {
+        "text": "white",
+        "startFrame": 91,
+        "endFrame": 100
+      },
+      {
+        "text": "in",
+        "startFrame": 100,
+        "endFrame": 107
+      },
+      {
+        "text": "about",
+        "startFrame": 107,
+        "endFrame": 112
+      },
+      {
+        "text": "a",
+        "startFrame": 112,
+        "endFrame": 116
+      },
+      {
+        "text": "third",
+        "startFrame": 116,
+        "endFrame": 121
+      },
+      {
+        "text": "of",
+        "startFrame": 121,
+        "endFrame": 125
+      },
+      {
+        "text": "a",
+        "startFrame": 125,
+        "endFrame": 128
+      },
+      {
+        "text": "second.",
+        "startFrame": 128,
+        "endFrame": 137
+      },
+      {
+        "text": "Lights",
+        "startFrame": 155,
+        "endFrame": 159
+      },
+      {
+        "text": "on,",
+        "startFrame": 159,
+        "endFrame": 166
+      },
+      {
+        "text": "and",
+        "startFrame": 166,
+        "endFrame": 172
+      },
+      {
+        "text": "the",
+        "startFrame": 172,
+        "endFrame": 176
+      },
+      {
+        "text": "amber",
+        "startFrame": 176,
+        "endFrame": 183
+      },
+      {
+        "text": "returns",
+        "startFrame": 183,
+        "endFrame": 194
+      },
+      {
+        "text": "in",
+        "startFrame": 194,
+        "endFrame": 201
+      },
+      {
+        "text": "a",
+        "startFrame": 201,
+        "endFrame": 203
+      },
+      {
+        "text": "quarter",
+        "startFrame": 203,
+        "endFrame": 209
+      },
+      {
+        "text": "of",
+        "startFrame": 209,
+        "endFrame": 214
+      },
+      {
+        "text": "a",
+        "startFrame": 214,
+        "endFrame": 217
+      },
+      {
+        "text": "second.",
+        "startFrame": 217,
+        "endFrame": 226
+      },
+      {
+        "text": "Tap",
+        "startFrame": 239,
+        "endFrame": 243
+      },
+      {
+        "text": "L",
+        "startFrame": 243,
+        "endFrame": 250
+      },
+      {
+        "text": "twice",
+        "startFrame": 250,
+        "endFrame": 259
+      },
+      {
+        "text": "mid-fade,",
+        "startFrame": 259,
+        "endFrame": 275
+      },
+      {
+        "text": "and",
+        "startFrame": 275,
+        "endFrame": 282
+      },
+      {
+        "text": "it",
+        "startFrame": 282,
+        "endFrame": 285
+      },
+      {
+        "text": "turns",
+        "startFrame": 285,
+        "endFrame": 291
+      },
+      {
+        "text": "around",
+        "startFrame": 291,
+        "endFrame": 301
+      },
+      {
+        "text": "without",
+        "startFrame": 301,
+        "endFrame": 308
+      },
+      {
+        "text": "a",
+        "startFrame": 308,
+        "endFrame": 311
+      },
+      {
+        "text": "jump.",
+        "startFrame": 311,
+        "endFrame": 317
+      },
+      {
+        "text": "The",
+        "startFrame": 332,
+        "endFrame": 334
+      },
+      {
+        "text": "tests",
+        "startFrame": 334,
+        "endFrame": 341
+      },
+      {
+        "text": "measured",
+        "startFrame": 341,
+        "endFrame": 352
+      },
+      {
+        "text": "these",
+        "startFrame": 352,
+        "endFrame": 359
+      },
+      {
+        "text": "fades",
+        "startFrame": 359,
+        "endFrame": 367
+      },
+      {
+        "text": "at",
+        "startFrame": 367,
+        "endFrame": 374
+      },
+      {
+        "text": "30,",
+        "startFrame": 374,
+        "endFrame": 385
+      },
+      {
+        "text": "60",
+        "startFrame": 392,
+        "endFrame": 404
+      },
+      {
+        "text": "and",
+        "startFrame": 408,
+        "endFrame": 412
+      },
+      {
+        "text": "144",
+        "startFrame": 412,
+        "endFrame": 427
+      },
+      {
+        "text": "frames",
+        "startFrame": 427,
+        "endFrame": 445
+      },
+      {
+        "text": "per",
+        "startFrame": 445,
+        "endFrame": 454
+      },
+      {
+        "text": "second,",
+        "startFrame": 454,
+        "endFrame": 464
+      },
+      {
+        "text": "each",
+        "startFrame": 464,
+        "endFrame": 477
+      },
+      {
+        "text": "within",
+        "startFrame": 477,
+        "endFrame": 485
+      },
+      {
+        "text": "one",
+        "startFrame": 485,
+        "endFrame": 492
+      },
+      {
+        "text": "frame.",
+        "startFrame": 492,
+        "endFrame": 503
+      }
+    ],
+    "B09": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "textured",
+        "startFrame": 3,
+        "endFrame": 13
+      },
+      {
+        "text": "shader",
+        "startFrame": 13,
+        "endFrame": 29
+      },
+      {
+        "text": "goes",
+        "startFrame": 29,
+        "endFrame": 34
+      },
+      {
+        "text": "on",
+        "startFrame": 34,
+        "endFrame": 40
+      },
+      {
+        "text": "two",
+        "startFrame": 40,
+        "endFrame": 47
+      },
+      {
+        "text": "new",
+        "startFrame": 47,
+        "endFrame": 53
+      },
+      {
+        "text": "overlays,",
+        "startFrame": 53,
+        "endFrame": 67
+      },
+      {
+        "text": "built",
+        "startFrame": 67,
+        "endFrame": 76
+      },
+      {
+        "text": "beside",
+        "startFrame": 76,
+        "endFrame": 86
+      },
+      {
+        "text": "the",
+        "startFrame": 86,
+        "endFrame": 91
+      },
+      {
+        "text": "existing",
+        "startFrame": 91,
+        "endFrame": 103
+      },
+      {
+        "text": "glass,",
+        "startFrame": 103,
+        "endFrame": 113
+      },
+      {
+        "text": "never",
+        "startFrame": 113,
+        "endFrame": 127
+      },
+      {
+        "text": "in",
+        "startFrame": 127,
+        "endFrame": 132
+      },
+      {
+        "text": "place",
+        "startFrame": 132,
+        "endFrame": 141
+      },
+      {
+        "text": "of",
+        "startFrame": 141,
+        "endFrame": 146
+      },
+      {
+        "text": "it.",
+        "startFrame": 146,
+        "endFrame": 151
+      },
+      {
+        "text": "The",
+        "startFrame": 164,
+        "endFrame": 167
+      },
+      {
+        "text": "windshield",
+        "startFrame": 167,
+        "endFrame": 175
+      },
+      {
+        "text": "gets",
+        "startFrame": 175,
+        "endFrame": 187
+      },
+      {
+        "text": "the",
+        "startFrame": 187,
+        "endFrame": 194
+      },
+      {
+        "text": "light",
+        "startFrame": 194,
+        "endFrame": 200
+      },
+      {
+        "text": "fog",
+        "startFrame": 200,
+        "endFrame": 209
+      },
+      {
+        "text": "material.",
+        "startFrame": 209,
+        "endFrame": 224
+      },
+      {
+        "text": "The",
+        "startFrame": 240,
+        "endFrame": 242
+      },
+      {
+        "text": "driver's",
+        "startFrame": 242,
+        "endFrame": 256
+      },
+      {
+        "text": "window",
+        "startFrame": 256,
+        "endFrame": 263
+      },
+      {
+        "text": "gets",
+        "startFrame": 263,
+        "endFrame": 270
+      },
+      {
+        "text": "the",
+        "startFrame": 270,
+        "endFrame": 278
+      },
+      {
+        "text": "heavy",
+        "startFrame": 278,
+        "endFrame": 283
+      },
+      {
+        "text": "fog",
+        "startFrame": 283,
+        "endFrame": 293
+      },
+      {
+        "text": "material,",
+        "startFrame": 293,
+        "endFrame": 309
+      },
+      {
+        "text": "and",
+        "startFrame": 309,
+        "endFrame": 320
+      },
+      {
+        "text": "because",
+        "startFrame": 320,
+        "endFrame": 327
+      },
+      {
+        "text": "that",
+        "startFrame": 327,
+        "endFrame": 334
+      },
+      {
+        "text": "overlay",
+        "startFrame": 334,
+        "endFrame": 345
+      },
+      {
+        "text": "is",
+        "startFrame": 345,
+        "endFrame": 352
+      },
+      {
+        "text": "a",
+        "startFrame": 352,
+        "endFrame": 355
+      },
+      {
+        "text": "child",
+        "startFrame": 355,
+        "endFrame": 365
+      },
+      {
+        "text": "of",
+        "startFrame": 365,
+        "endFrame": 370
+      },
+      {
+        "text": "the",
+        "startFrame": 370,
+        "endFrame": 372
+      },
+      {
+        "text": "window",
+        "startFrame": 372,
+        "endFrame": 379
+      },
+      {
+        "text": "pane,",
+        "startFrame": 379,
+        "endFrame": 389
+      },
+      {
+        "text": "it",
+        "startFrame": 397,
+        "endFrame": 400
+      },
+      {
+        "text": "inherits",
+        "startFrame": 400,
+        "endFrame": 414
+      },
+      {
+        "text": "every",
+        "startFrame": 414,
+        "endFrame": 422
+      },
+      {
+        "text": "move",
+        "startFrame": 422,
+        "endFrame": 428
+      },
+      {
+        "text": "the",
+        "startFrame": 428,
+        "endFrame": 434
+      },
+      {
+        "text": "pane",
+        "startFrame": 434,
+        "endFrame": 441
+      },
+      {
+        "text": "makes.",
+        "startFrame": 441,
+        "endFrame": 449
+      }
+    ],
+    "B10": [
+      {
+        "text": "Press",
+        "startFrame": 0,
+        "endFrame": 4
+      },
+      {
+        "text": "J,",
+        "startFrame": 4,
+        "endFrame": 13
+      },
+      {
+        "text": "and",
+        "startFrame": 16,
+        "endFrame": 20
+      },
+      {
+        "text": "the",
+        "startFrame": 20,
+        "endFrame": 23
+      },
+      {
+        "text": "driver's",
+        "startFrame": 23,
+        "endFrame": 37
+      },
+      {
+        "text": "window",
+        "startFrame": 37,
+        "endFrame": 43
+      },
+      {
+        "text": "drops",
+        "startFrame": 43,
+        "endFrame": 54
+      },
+      {
+        "text": "zero",
+        "startFrame": 61,
+        "endFrame": 67
+      },
+      {
+        "text": "point",
+        "startFrame": 68,
+        "endFrame": 74
+      },
+      {
+        "text": "eight",
+        "startFrame": 75,
+        "endFrame": 81
+      },
+      {
+        "text": "eight",
+        "startFrame": 82,
+        "endFrame": 88
+      },
+      {
+        "text": "metres",
+        "startFrame": 89,
+        "endFrame": 95
+      },
+      {
+        "text": "in",
+        "startFrame": 96,
+        "endFrame": 101
+      },
+      {
+        "text": "the",
+        "startFrame": 101,
+        "endFrame": 104
+      },
+      {
+        "text": "van's",
+        "startFrame": 104,
+        "endFrame": 115
+      },
+      {
+        "text": "own",
+        "startFrame": 115,
+        "endFrame": 118
+      },
+      {
+        "text": "frame,",
+        "startFrame": 118,
+        "endFrame": 126
+      },
+      {
+        "text": "and",
+        "startFrame": 126,
+        "endFrame": 136
+      },
+      {
+        "text": "the",
+        "startFrame": 136,
+        "endFrame": 140
+      },
+      {
+        "text": "fog",
+        "startFrame": 140,
+        "endFrame": 147
+      },
+      {
+        "text": "rides",
+        "startFrame": 147,
+        "endFrame": 156
+      },
+      {
+        "text": "down",
+        "startFrame": 156,
+        "endFrame": 166
+      },
+      {
+        "text": "with",
+        "startFrame": 166,
+        "endFrame": 173
+      },
+      {
+        "text": "it.",
+        "startFrame": 173,
+        "endFrame": 179
+      },
+      {
+        "text": "The",
+        "startFrame": 193,
+        "endFrame": 196
+      },
+      {
+        "text": "first",
+        "startFrame": 196,
+        "endFrame": 203
+      },
+      {
+        "text": "version",
+        "startFrame": 203,
+        "endFrame": 214
+      },
+      {
+        "text": "of",
+        "startFrame": 214,
+        "endFrame": 217
+      },
+      {
+        "text": "this",
+        "startFrame": 217,
+        "endFrame": 221
+      },
+      {
+        "text": "test",
+        "startFrame": 221,
+        "endFrame": 227
+      },
+      {
+        "text": "measured",
+        "startFrame": 227,
+        "endFrame": 239
+      },
+      {
+        "text": "in",
+        "startFrame": 239,
+        "endFrame": 244
+      },
+      {
+        "text": "world",
+        "startFrame": 244,
+        "endFrame": 250
+      },
+      {
+        "text": "space",
+        "startFrame": 250,
+        "endFrame": 261
+      },
+      {
+        "text": "and",
+        "startFrame": 261,
+        "endFrame": 269
+      },
+      {
+        "text": "got",
+        "startFrame": 269,
+        "endFrame": 273
+      },
+      {
+        "text": "one",
+        "startFrame": 280,
+        "endFrame": 285
+      },
+      {
+        "text": "point",
+        "startFrame": 286,
+        "endFrame": 292
+      },
+      {
+        "text": "one",
+        "startFrame": 292,
+        "endFrame": 298
+      },
+      {
+        "text": "three",
+        "startFrame": 299,
+        "endFrame": 305
+      },
+      {
+        "text": "metres,",
+        "startFrame": 306,
+        "endFrame": 311
+      },
+      {
+        "text": "because",
+        "startFrame": 312,
+        "endFrame": 326
+      },
+      {
+        "text": "the",
+        "startFrame": 326,
+        "endFrame": 332
+      },
+      {
+        "text": "whole",
+        "startFrame": 332,
+        "endFrame": 337
+      },
+      {
+        "text": "van",
+        "startFrame": 337,
+        "endFrame": 344
+      },
+      {
+        "text": "also",
+        "startFrame": 344,
+        "endFrame": 358
+      },
+      {
+        "text": "settles",
+        "startFrame": 358,
+        "endFrame": 371
+      },
+      {
+        "text": "onto",
+        "startFrame": 371,
+        "endFrame": 377
+      },
+      {
+        "text": "the",
+        "startFrame": 377,
+        "endFrame": 382
+      },
+      {
+        "text": "ground.",
+        "startFrame": 382,
+        "endFrame": 391
+      },
+      {
+        "text": "Measuring",
+        "startFrame": 404,
+        "endFrame": 412
+      },
+      {
+        "text": "in",
+        "startFrame": 412,
+        "endFrame": 418
+      },
+      {
+        "text": "the",
+        "startFrame": 418,
+        "endFrame": 421
+      },
+      {
+        "text": "van's",
+        "startFrame": 421,
+        "endFrame": 432
+      },
+      {
+        "text": "frame",
+        "startFrame": 432,
+        "endFrame": 438
+      },
+      {
+        "text": "fixed",
+        "startFrame": 438,
+        "endFrame": 450
+      },
+      {
+        "text": "it.",
+        "startFrame": 450,
+        "endFrame": 457
+      },
+      {
+        "text": "The",
+        "startFrame": 457,
+        "endFrame": 467
+      },
+      {
+        "text": "author",
+        "startFrame": 467,
+        "endFrame": 475
+      },
+      {
+        "text": "confirmed",
+        "startFrame": 475,
+        "endFrame": 491
+      },
+      {
+        "text": "it",
+        "startFrame": 491,
+        "endFrame": 494
+      },
+      {
+        "text": "by",
+        "startFrame": 494,
+        "endFrame": 499
+      },
+      {
+        "text": "hand,",
+        "startFrame": 499,
+        "endFrame": 508
+      },
+      {
+        "text": "too.",
+        "startFrame": 508,
+        "endFrame": 518
+      }
+    ],
+    "B11": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "fog",
+        "startFrame": 3,
+        "endFrame": 10
+      },
+      {
+        "text": "shader",
+        "startFrame": 10,
+        "endFrame": 21
+      },
+      {
+        "text": "is",
+        "startFrame": 21,
+        "endFrame": 25
+      },
+      {
+        "text": "spatial,",
+        "startFrame": 25,
+        "endFrame": 37
+      },
+      {
+        "text": "because",
+        "startFrame": 37,
+        "endFrame": 46
+      },
+      {
+        "text": "the",
+        "startFrame": 46,
+        "endFrame": 51
+      },
+      {
+        "text": "glass",
+        "startFrame": 51,
+        "endFrame": 58
+      },
+      {
+        "text": "is",
+        "startFrame": 58,
+        "endFrame": 64
+      },
+      {
+        "text": "in",
+        "startFrame": 64,
+        "endFrame": 69
+      },
+      {
+        "text": "3D.",
+        "startFrame": 69,
+        "endFrame": 83
+      },
+      {
+        "text": "Its",
+        "startFrame": 97,
+        "endFrame": 101
+      },
+      {
+        "text": "render",
+        "startFrame": 101,
+        "endFrame": 105
+      },
+      {
+        "text": "mode",
+        "startFrame": 105,
+        "endFrame": 115
+      },
+      {
+        "text": "blends",
+        "startFrame": 115,
+        "endFrame": 122
+      },
+      {
+        "text": "it",
+        "startFrame": 122,
+        "endFrame": 127
+      },
+      {
+        "text": "over",
+        "startFrame": 127,
+        "endFrame": 131
+      },
+      {
+        "text": "the",
+        "startFrame": 131,
+        "endFrame": 134
+      },
+      {
+        "text": "scene,",
+        "startFrame": 134,
+        "endFrame": 142
+      },
+      {
+        "text": "skips",
+        "startFrame": 149,
+        "endFrame": 156
+      },
+      {
+        "text": "depth",
+        "startFrame": 156,
+        "endFrame": 164
+      },
+      {
+        "text": "writes,",
+        "startFrame": 171,
+        "endFrame": 177
+      },
+      {
+        "text": "and",
+        "startFrame": 178,
+        "endFrame": 179
+      },
+      {
+        "text": "draws",
+        "startFrame": 179,
+        "endFrame": 185
+      },
+      {
+        "text": "both",
+        "startFrame": 185,
+        "endFrame": 195
+      },
+      {
+        "text": "faces.",
+        "startFrame": 195,
+        "endFrame": 209
+      },
+      {
+        "text": "Seven",
+        "startFrame": 226,
+        "endFrame": 233
+      },
+      {
+        "text": "uniforms",
+        "startFrame": 233,
+        "endFrame": 245
+      },
+      {
+        "text": "sit",
+        "startFrame": 245,
+        "endFrame": 255
+      },
+      {
+        "text": "in",
+        "startFrame": 255,
+        "endFrame": 259
+      },
+      {
+        "text": "three",
+        "startFrame": 259,
+        "endFrame": 265
+      },
+      {
+        "text": "Inspector",
+        "startFrame": 265,
+        "endFrame": 277
+      },
+      {
+        "text": "groups,",
+        "startFrame": 277,
+        "endFrame": 289
+      },
+      {
+        "text": "each",
+        "startFrame": 292,
+        "endFrame": 298
+      },
+      {
+        "text": "with",
+        "startFrame": 298,
+        "endFrame": 301
+      },
+      {
+        "text": "a",
+        "startFrame": 301,
+        "endFrame": 303
+      },
+      {
+        "text": "type,",
+        "startFrame": 303,
+        "endFrame": 309
+      },
+      {
+        "text": "a",
+        "startFrame": 314,
+        "endFrame": 315
+      },
+      {
+        "text": "range",
+        "startFrame": 315,
+        "endFrame": 323
+      },
+      {
+        "text": "and",
+        "startFrame": 329,
+        "endFrame": 331
+      },
+      {
+        "text": "a",
+        "startFrame": 331,
+        "endFrame": 333
+      },
+      {
+        "text": "default.",
+        "startFrame": 333,
+        "endFrame": 342
+      },
+      {
+        "text": "Big",
+        "startFrame": 355,
+        "endFrame": 359
+      },
+      {
+        "text": "idea",
+        "startFrame": 359,
+        "endFrame": 368
+      },
+      {
+        "text": "four:",
+        "startFrame": 373,
+        "endFrame": 377
+      },
+      {
+        "text": "group",
+        "startFrame": 377,
+        "endFrame": 387
+      },
+      {
+        "text": "uniforms,",
+        "startFrame": 387,
+        "endFrame": 406
+      },
+      {
+        "text": "hint",
+        "startFrame": 412,
+        "endFrame": 415
+      },
+      {
+        "text": "range",
+        "startFrame": 415,
+        "endFrame": 423
+      },
+      {
+        "text": "and",
+        "startFrame": 428,
+        "endFrame": 430
+      },
+      {
+        "text": "source",
+        "startFrame": 430,
+        "endFrame": 437
+      },
+      {
+        "text": "colour",
+        "startFrame": 443,
+        "endFrame": 448
+      },
+      {
+        "text": "aren't",
+        "startFrame": 448,
+        "endFrame": 456
+      },
+      {
+        "text": "plain",
+        "startFrame": 456,
+        "endFrame": 462
+      },
+      {
+        "text": "G",
+        "startFrame": 462,
+        "endFrame": 472
+      },
+      {
+        "text": "L",
+        "startFrame": 472,
+        "endFrame": 480
+      },
+      {
+        "text": "S",
+        "startFrame": 480,
+        "endFrame": 487
+      },
+      {
+        "text": "L.",
+        "startFrame": 487,
+        "endFrame": 494
+      },
+      {
+        "text": "They're",
+        "startFrame": 504,
+        "endFrame": 509
+      },
+      {
+        "text": "Godot's",
+        "startFrame": 509,
+        "endFrame": 527
+      },
+      {
+        "text": "shading",
+        "startFrame": 527,
+        "endFrame": 533
+      },
+      {
+        "text": "language",
+        "startFrame": 533,
+        "endFrame": 544
+      },
+      {
+        "text": "talking",
+        "startFrame": 544,
+        "endFrame": 556
+      },
+      {
+        "text": "to",
+        "startFrame": 556,
+        "endFrame": 562
+      },
+      {
+        "text": "the",
+        "startFrame": 562,
+        "endFrame": 566
+      },
+      {
+        "text": "editor.",
+        "startFrame": 566,
+        "endFrame": 573
+      }
+    ],
+    "B13": [
+      {
+        "text": "Three",
+        "startFrame": 0,
+        "endFrame": 5
+      },
+      {
+        "text": "textures,",
+        "startFrame": 5,
+        "endFrame": 18
+      },
+      {
+        "text": "three",
+        "startFrame": 25,
+        "endFrame": 29
+      },
+      {
+        "text": "jobs.",
+        "startFrame": 29,
+        "endFrame": 40
+      },
+      {
+        "text": "Fog",
+        "startFrame": 51,
+        "endFrame": 55
+      },
+      {
+        "text": "colour",
+        "startFrame": 60,
+        "endFrame": 65
+      },
+      {
+        "text": "has",
+        "startFrame": 65,
+        "endFrame": 71
+      },
+      {
+        "text": "source",
+        "startFrame": 71,
+        "endFrame": 77
+      },
+      {
+        "text": "colour,",
+        "startFrame": 85,
+        "endFrame": 92
+      },
+      {
+        "text": "so",
+        "startFrame": 93,
+        "endFrame": 95
+      },
+      {
+        "text": "Godot",
+        "startFrame": 95,
+        "endFrame": 106
+      },
+      {
+        "text": "decodes",
+        "startFrame": 106,
+        "endFrame": 118
+      },
+      {
+        "text": "it",
+        "startFrame": 118,
+        "endFrame": 124
+      },
+      {
+        "text": "as",
+        "startFrame": 124,
+        "endFrame": 127
+      },
+      {
+        "text": "colour.",
+        "startFrame": 139,
+        "endFrame": 149
+      },
+      {
+        "text": "Fog",
+        "startFrame": 151,
+        "endFrame": 158
+      },
+      {
+        "text": "normal",
+        "startFrame": 158,
+        "endFrame": 167
+      },
+      {
+        "text": "has",
+        "startFrame": 167,
+        "endFrame": 175
+      },
+      {
+        "text": "hint",
+        "startFrame": 175,
+        "endFrame": 178
+      },
+      {
+        "text": "normal:",
+        "startFrame": 178,
+        "endFrame": 188
+      },
+      {
+        "text": "these",
+        "startFrame": 193,
+        "endFrame": 197
+      },
+      {
+        "text": "are",
+        "startFrame": 197,
+        "endFrame": 202
+      },
+      {
+        "text": "directions,",
+        "startFrame": 202,
+        "endFrame": 214
+      },
+      {
+        "text": "not",
+        "startFrame": 214,
+        "endFrame": 225
+      },
+      {
+        "text": "colours.",
+        "startFrame": 238,
+        "endFrame": 250
+      },
+      {
+        "text": "Fog",
+        "startFrame": 251,
+        "endFrame": 260
+      },
+      {
+        "text": "data",
+        "startFrame": 260,
+        "endFrame": 268
+      },
+      {
+        "text": "has",
+        "startFrame": 268,
+        "endFrame": 275
+      },
+      {
+        "text": "no",
+        "startFrame": 275,
+        "endFrame": 280
+      },
+      {
+        "text": "hint",
+        "startFrame": 280,
+        "endFrame": 285
+      },
+      {
+        "text": "at",
+        "startFrame": 285,
+        "endFrame": 290
+      },
+      {
+        "text": "all,",
+        "startFrame": 290,
+        "endFrame": 295
+      },
+      {
+        "text": "and",
+        "startFrame": 301,
+        "endFrame": 302
+      },
+      {
+        "text": "line",
+        "startFrame": 302,
+        "endFrame": 307
+      },
+      {
+        "text": "35",
+        "startFrame": 307,
+        "endFrame": 324
+      },
+      {
+        "text": "reads",
+        "startFrame": 324,
+        "endFrame": 335
+      },
+      {
+        "text": "only",
+        "startFrame": 335,
+        "endFrame": 346
+      },
+      {
+        "text": "its",
+        "startFrame": 346,
+        "endFrame": 352
+      },
+      {
+        "text": "red",
+        "startFrame": 352,
+        "endFrame": 356
+      },
+      {
+        "text": "channel,",
+        "startFrame": 356,
+        "endFrame": 370
+      },
+      {
+        "text": "as",
+        "startFrame": 370,
+        "endFrame": 376
+      },
+      {
+        "text": "a",
+        "startFrame": 376,
+        "endFrame": 379
+      },
+      {
+        "text": "thickness",
+        "startFrame": 379,
+        "endFrame": 388
+      },
+      {
+        "text": "from",
+        "startFrame": 388,
+        "endFrame": 397
+      },
+      {
+        "text": "zero",
+        "startFrame": 397,
+        "endFrame": 405
+      },
+      {
+        "text": "to",
+        "startFrame": 405,
+        "endFrame": 412
+      },
+      {
+        "text": "one.",
+        "startFrame": 412,
+        "endFrame": 419
+      },
+      {
+        "text": "Big",
+        "startFrame": 433,
+        "endFrame": 436
+      },
+      {
+        "text": "idea",
+        "startFrame": 436,
+        "endFrame": 444
+      },
+      {
+        "text": "three:",
+        "startFrame": 444,
+        "endFrame": 457
+      },
+      {
+        "text": "a",
+        "startFrame": 461,
+        "endFrame": 465
+      },
+      {
+        "text": "texture",
+        "startFrame": 466,
+        "endFrame": 477
+      },
+      {
+        "text": "is",
+        "startFrame": 477,
+        "endFrame": 484
+      },
+      {
+        "text": "information,",
+        "startFrame": 484,
+        "endFrame": 500
+      },
+      {
+        "text": "not",
+        "startFrame": 506,
+        "endFrame": 509
+      },
+      {
+        "text": "just",
+        "startFrame": 509,
+        "endFrame": 515
+      },
+      {
+        "text": "a",
+        "startFrame": 515,
+        "endFrame": 519
+      },
+      {
+        "text": "picture.",
+        "startFrame": 519,
+        "endFrame": 529
+      }
+    ],
+    "B14": [
+      {
+        "text": "Here",
+        "startFrame": 0,
+        "endFrame": 5
+      },
+      {
+        "text": "are",
+        "startFrame": 5,
+        "endFrame": 8
+      },
+      {
+        "text": "the",
+        "startFrame": 8,
+        "endFrame": 11
+      },
+      {
+        "text": "three",
+        "startFrame": 11,
+        "endFrame": 19
+      },
+      {
+        "text": "files.",
+        "startFrame": 19,
+        "endFrame": 32
+      },
+      {
+        "text": "A",
+        "startFrame": 41,
+        "endFrame": 44
+      },
+      {
+        "text": "seeded",
+        "startFrame": 44,
+        "endFrame": 52
+      },
+      {
+        "text": "script",
+        "startFrame": 52,
+        "endFrame": 59
+      },
+      {
+        "text": "written",
+        "startFrame": 59,
+        "endFrame": 70
+      },
+      {
+        "text": "by",
+        "startFrame": 70,
+        "endFrame": 76
+      },
+      {
+        "text": "Claude",
+        "startFrame": 76,
+        "endFrame": 87
+      },
+      {
+        "text": "Code",
+        "startFrame": 87,
+        "endFrame": 93
+      },
+      {
+        "text": "generated",
+        "startFrame": 93,
+        "endFrame": 109
+      },
+      {
+        "text": "them,",
+        "startFrame": 109,
+        "endFrame": 118
+      },
+      {
+        "text": "so",
+        "startFrame": 118,
+        "endFrame": 125
+      },
+      {
+        "text": "they're",
+        "startFrame": 125,
+        "endFrame": 130
+      },
+      {
+        "text": "original",
+        "startFrame": 130,
+        "endFrame": 143
+      },
+      {
+        "text": "and",
+        "startFrame": 143,
+        "endFrame": 150
+      },
+      {
+        "text": "reproducible.",
+        "startFrame": 150,
+        "endFrame": 170
+      },
+      {
+        "text": "Their",
+        "startFrame": 184,
+        "endFrame": 190
+      },
+      {
+        "text": "import",
+        "startFrame": 190,
+        "endFrame": 198
+      },
+      {
+        "text": "settings",
+        "startFrame": 198,
+        "endFrame": 210
+      },
+      {
+        "text": "are",
+        "startFrame": 210,
+        "endFrame": 216
+      },
+      {
+        "text": "written",
+        "startFrame": 216,
+        "endFrame": 222
+      },
+      {
+        "text": "down",
+        "startFrame": 222,
+        "endFrame": 228
+      },
+      {
+        "text": "explicitly:",
+        "startFrame": 228,
+        "endFrame": 247
+      },
+      {
+        "text": "lossless,",
+        "startFrame": 259,
+        "endFrame": 272
+      },
+      {
+        "text": "mipmaps",
+        "startFrame": 278,
+        "endFrame": 284
+      },
+      {
+        "text": "on,",
+        "startFrame": 285,
+        "endFrame": 291
+      },
+      {
+        "text": "normal-map",
+        "startFrame": 300,
+        "endFrame": 308
+      },
+      {
+        "text": "mode",
+        "startFrame": 309,
+        "endFrame": 318
+      },
+      {
+        "text": "set",
+        "startFrame": 319,
+        "endFrame": 326
+      },
+      {
+        "text": "by",
+        "startFrame": 326,
+        "endFrame": 332
+      },
+      {
+        "text": "hand.",
+        "startFrame": 332,
+        "endFrame": 344
+      },
+      {
+        "text": "That's",
+        "startFrame": 353,
+        "endFrame": 359
+      },
+      {
+        "text": "why",
+        "startFrame": 359,
+        "endFrame": 363
+      },
+      {
+        "text": "opening",
+        "startFrame": 363,
+        "endFrame": 373
+      },
+      {
+        "text": "the",
+        "startFrame": 373,
+        "endFrame": 379
+      },
+      {
+        "text": "editor",
+        "startFrame": 379,
+        "endFrame": 385
+      },
+      {
+        "text": "later",
+        "startFrame": 385,
+        "endFrame": 394
+      },
+      {
+        "text": "didn't",
+        "startFrame": 394,
+        "endFrame": 403
+      },
+      {
+        "text": "change",
+        "startFrame": 403,
+        "endFrame": 413
+      },
+      {
+        "text": "them.",
+        "startFrame": 413,
+        "endFrame": 421
+      },
+      {
+        "text": "And",
+        "startFrame": 437,
+        "endFrame": 439
+      },
+      {
+        "text": "a",
+        "startFrame": 439,
+        "endFrame": 442
+      },
+      {
+        "text": "curl",
+        "startFrame": 442,
+        "endFrame": 448
+      },
+      {
+        "text": "check",
+        "startFrame": 448,
+        "endFrame": 455
+      },
+      {
+        "text": "against",
+        "startFrame": 455,
+        "endFrame": 466
+      },
+      {
+        "text": "a",
+        "startFrame": 466,
+        "endFrame": 470
+      },
+      {
+        "text": "known",
+        "startFrame": 470,
+        "endFrame": 475
+      },
+      {
+        "text": "Poly",
+        "startFrame": 475,
+        "endFrame": 485
+      },
+      {
+        "text": "Haven",
+        "startFrame": 485,
+        "endFrame": 496
+      },
+      {
+        "text": "pair",
+        "startFrame": 496,
+        "endFrame": 504
+      },
+      {
+        "text": "confirms",
+        "startFrame": 504,
+        "endFrame": 519
+      },
+      {
+        "text": "the",
+        "startFrame": 519,
+        "endFrame": 524
+      },
+      {
+        "text": "normal",
+        "startFrame": 524,
+        "endFrame": 532
+      },
+      {
+        "text": "map's",
+        "startFrame": 532,
+        "endFrame": 542
+      },
+      {
+        "text": "green",
+        "startFrame": 542,
+        "endFrame": 550
+      },
+      {
+        "text": "channel",
+        "startFrame": 550,
+        "endFrame": 563
+      },
+      {
+        "text": "points",
+        "startFrame": 563,
+        "endFrame": 572
+      },
+      {
+        "text": "up,",
+        "startFrame": 572,
+        "endFrame": 582
+      },
+      {
+        "text": "the",
+        "startFrame": 582,
+        "endFrame": 589
+      },
+      {
+        "text": "convention",
+        "startFrame": 589,
+        "endFrame": 601
+      },
+      {
+        "text": "Godot",
+        "startFrame": 608,
+        "endFrame": 614
+      },
+      {
+        "text": "expects.",
+        "startFrame": 615,
+        "endFrame": 625
+      }
+    ],
+    "B15": [
+      {
+        "text": "A",
+        "startFrame": 0,
+        "endFrame": 0
+      },
+      {
+        "text": "material",
+        "startFrame": 0,
+        "endFrame": 11
+      },
+      {
+        "text": "holds",
+        "startFrame": 16,
+        "endFrame": 20
+      },
+      {
+        "text": "settings,",
+        "startFrame": 20,
+        "endFrame": 33
+      },
+      {
+        "text": "not",
+        "startFrame": 42,
+        "endFrame": 43
+      },
+      {
+        "text": "the",
+        "startFrame": 43,
+        "endFrame": 47
+      },
+      {
+        "text": "program.",
+        "startFrame": 47,
+        "endFrame": 60
+      },
+      {
+        "text": "Light",
+        "startFrame": 74,
+        "endFrame": 79
+      },
+      {
+        "text": "fog",
+        "startFrame": 79,
+        "endFrame": 86
+      },
+      {
+        "text": "points",
+        "startFrame": 86,
+        "endFrame": 97
+      },
+      {
+        "text": "at",
+        "startFrame": 97,
+        "endFrame": 101
+      },
+      {
+        "text": "the",
+        "startFrame": 101,
+        "endFrame": 104
+      },
+      {
+        "text": "same",
+        "startFrame": 104,
+        "endFrame": 111
+      },
+      {
+        "text": "shader",
+        "startFrame": 111,
+        "endFrame": 124
+      },
+      {
+        "text": "and",
+        "startFrame": 124,
+        "endFrame": 127
+      },
+      {
+        "text": "the",
+        "startFrame": 127,
+        "endFrame": 131
+      },
+      {
+        "text": "same",
+        "startFrame": 131,
+        "endFrame": 137
+      },
+      {
+        "text": "three",
+        "startFrame": 137,
+        "endFrame": 145
+      },
+      {
+        "text": "textures,",
+        "startFrame": 145,
+        "endFrame": 157
+      },
+      {
+        "text": "then",
+        "startFrame": 157,
+        "endFrame": 167
+      },
+      {
+        "text": "sets",
+        "startFrame": 167,
+        "endFrame": 173
+      },
+      {
+        "text": "its",
+        "startFrame": 173,
+        "endFrame": 179
+      },
+      {
+        "text": "own",
+        "startFrame": 179,
+        "endFrame": 184
+      },
+      {
+        "text": "values.",
+        "startFrame": 184,
+        "endFrame": 196
+      },
+      {
+        "text": "Heavy",
+        "startFrame": 208,
+        "endFrame": 212
+      },
+      {
+        "text": "fog",
+        "startFrame": 212,
+        "endFrame": 220
+      },
+      {
+        "text": "differs",
+        "startFrame": 220,
+        "endFrame": 229
+      },
+      {
+        "text": "in",
+        "startFrame": 229,
+        "endFrame": 236
+      },
+      {
+        "text": "exactly",
+        "startFrame": 236,
+        "endFrame": 243
+      },
+      {
+        "text": "four",
+        "startFrame": 243,
+        "endFrame": 257
+      },
+      {
+        "text": "of",
+        "startFrame": 257,
+        "endFrame": 262
+      },
+      {
+        "text": "them.",
+        "startFrame": 262,
+        "endFrame": 266
+      },
+      {
+        "text": "Big",
+        "startFrame": 290,
+        "endFrame": 294
+      },
+      {
+        "text": "idea",
+        "startFrame": 294,
+        "endFrame": 303
+      },
+      {
+        "text": "two:",
+        "startFrame": 311,
+        "endFrame": 319
+      },
+      {
+        "text": "the",
+        "startFrame": 320,
+        "endFrame": 322
+      },
+      {
+        "text": "shader",
+        "startFrame": 322,
+        "endFrame": 331
+      },
+      {
+        "text": "declares",
+        "startFrame": 331,
+        "endFrame": 340
+      },
+      {
+        "text": "fog",
+        "startFrame": 340,
+        "endFrame": 350
+      },
+      {
+        "text": "amount",
+        "startFrame": 350,
+        "endFrame": 358
+      },
+      {
+        "text": "once,",
+        "startFrame": 358,
+        "endFrame": 366
+      },
+      {
+        "text": "on",
+        "startFrame": 366,
+        "endFrame": 374
+      },
+      {
+        "text": "line",
+        "startFrame": 374,
+        "endFrame": 379
+      },
+      {
+        "text": "7,",
+        "startFrame": 386,
+        "endFrame": 392
+      },
+      {
+        "text": "and",
+        "startFrame": 392,
+        "endFrame": 403
+      },
+      {
+        "text": "each",
+        "startFrame": 403,
+        "endFrame": 409
+      },
+      {
+        "text": "material",
+        "startFrame": 409,
+        "endFrame": 420
+      },
+      {
+        "text": "gives",
+        "startFrame": 420,
+        "endFrame": 428
+      },
+      {
+        "text": "it",
+        "startFrame": 428,
+        "endFrame": 433
+      },
+      {
+        "text": "its",
+        "startFrame": 433,
+        "endFrame": 438
+      },
+      {
+        "text": "own",
+        "startFrame": 438,
+        "endFrame": 442
+      },
+      {
+        "text": "value:",
+        "startFrame": 442,
+        "endFrame": 454
+      },
+      {
+        "text": "a",
+        "startFrame": 460,
+        "endFrame": 462
+      },
+      {
+        "text": "quarter",
+        "startFrame": 462,
+        "endFrame": 468
+      },
+      {
+        "text": "here,",
+        "startFrame": 468,
+        "endFrame": 476
+      },
+      {
+        "text": "three",
+        "startFrame": 482,
+        "endFrame": 487
+      },
+      {
+        "text": "quarters",
+        "startFrame": 487,
+        "endFrame": 498
+      },
+      {
+        "text": "on",
+        "startFrame": 498,
+        "endFrame": 506
+      },
+      {
+        "text": "the",
+        "startFrame": 506,
+        "endFrame": 509
+      },
+      {
+        "text": "side",
+        "startFrame": 509,
+        "endFrame": 517
+      },
+      {
+        "text": "window.",
+        "startFrame": 517,
+        "endFrame": 529
+      }
+    ],
+    "B16": [
+      {
+        "text": "Side",
+        "startFrame": 0,
+        "endFrame": 7
+      },
+      {
+        "text": "by",
+        "startFrame": 7,
+        "endFrame": 13
+      },
+      {
+        "text": "side:",
+        "startFrame": 13,
+        "endFrame": 22
+      },
+      {
+        "text": "light",
+        "startFrame": 29,
+        "endFrame": 32
+      },
+      {
+        "text": "fog",
+        "startFrame": 32,
+        "endFrame": 40
+      },
+      {
+        "text": "on",
+        "startFrame": 40,
+        "endFrame": 46
+      },
+      {
+        "text": "the",
+        "startFrame": 46,
+        "endFrame": 49
+      },
+      {
+        "text": "windshield,",
+        "startFrame": 49,
+        "endFrame": 58
+      },
+      {
+        "text": "heavy",
+        "startFrame": 67,
+        "endFrame": 70
+      },
+      {
+        "text": "fog",
+        "startFrame": 70,
+        "endFrame": 79
+      },
+      {
+        "text": "on",
+        "startFrame": 79,
+        "endFrame": 84
+      },
+      {
+        "text": "the",
+        "startFrame": 84,
+        "endFrame": 87
+      },
+      {
+        "text": "driver's",
+        "startFrame": 87,
+        "endFrame": 100
+      },
+      {
+        "text": "window.",
+        "startFrame": 100,
+        "endFrame": 110
+      },
+      {
+        "text": "Change",
+        "startFrame": 122,
+        "endFrame": 128
+      },
+      {
+        "text": "one",
+        "startFrame": 128,
+        "endFrame": 134
+      },
+      {
+        "text": "value",
+        "startFrame": 134,
+        "endFrame": 144
+      },
+      {
+        "text": "in",
+        "startFrame": 144,
+        "endFrame": 148
+      },
+      {
+        "text": "the",
+        "startFrame": 148,
+        "endFrame": 151
+      },
+      {
+        "text": "light",
+        "startFrame": 151,
+        "endFrame": 155
+      },
+      {
+        "text": "fog",
+        "startFrame": 155,
+        "endFrame": 163
+      },
+      {
+        "text": "material,",
+        "startFrame": 163,
+        "endFrame": 180
+      },
+      {
+        "text": "and",
+        "startFrame": 180,
+        "endFrame": 187
+      },
+      {
+        "text": "only",
+        "startFrame": 187,
+        "endFrame": 193
+      },
+      {
+        "text": "the",
+        "startFrame": 193,
+        "endFrame": 197
+      },
+      {
+        "text": "windshield",
+        "startFrame": 197,
+        "endFrame": 206
+      },
+      {
+        "text": "clouds",
+        "startFrame": 206,
+        "endFrame": 217
+      },
+      {
+        "text": "over,",
+        "startFrame": 217,
+        "endFrame": 229
+      },
+      {
+        "text": "because",
+        "startFrame": 229,
+        "endFrame": 236
+      },
+      {
+        "text": "materials",
+        "startFrame": 236,
+        "endFrame": 251
+      },
+      {
+        "text": "don't",
+        "startFrame": 251,
+        "endFrame": 261
+      },
+      {
+        "text": "share",
+        "startFrame": 261,
+        "endFrame": 267
+      },
+      {
+        "text": "values.",
+        "startFrame": 267,
+        "endFrame": 281
+      },
+      {
+        "text": "Now",
+        "startFrame": 300,
+        "endFrame": 305
+      },
+      {
+        "text": "turn",
+        "startFrame": 305,
+        "endFrame": 311
+      },
+      {
+        "text": "that",
+        "startFrame": 311,
+        "endFrame": 317
+      },
+      {
+        "text": "fog",
+        "startFrame": 317,
+        "endFrame": 325
+      },
+      {
+        "text": "up",
+        "startFrame": 325,
+        "endFrame": 331
+      },
+      {
+        "text": "so",
+        "startFrame": 331,
+        "endFrame": 337
+      },
+      {
+        "text": "it",
+        "startFrame": 337,
+        "endFrame": 340
+      },
+      {
+        "text": "shows,",
+        "startFrame": 340,
+        "endFrame": 347
+      },
+      {
+        "text": "and",
+        "startFrame": 347,
+        "endFrame": 354
+      },
+      {
+        "text": "change",
+        "startFrame": 354,
+        "endFrame": 361
+      },
+      {
+        "text": "one",
+        "startFrame": 361,
+        "endFrame": 370
+      },
+      {
+        "text": "line",
+        "startFrame": 370,
+        "endFrame": 376
+      },
+      {
+        "text": "of",
+        "startFrame": 376,
+        "endFrame": 380
+      },
+      {
+        "text": "the",
+        "startFrame": 380,
+        "endFrame": 384
+      },
+      {
+        "text": "shader:",
+        "startFrame": 384,
+        "endFrame": 395
+      },
+      {
+        "text": "both",
+        "startFrame": 403,
+        "endFrame": 407
+      },
+      {
+        "text": "windows",
+        "startFrame": 407,
+        "endFrame": 418
+      },
+      {
+        "text": "turn",
+        "startFrame": 418,
+        "endFrame": 427
+      },
+      {
+        "text": "red,",
+        "startFrame": 427,
+        "endFrame": 434
+      },
+      {
+        "text": "because",
+        "startFrame": 434,
+        "endFrame": 444
+      },
+      {
+        "text": "they",
+        "startFrame": 444,
+        "endFrame": 449
+      },
+      {
+        "text": "share",
+        "startFrame": 449,
+        "endFrame": 456
+      },
+      {
+        "text": "the",
+        "startFrame": 456,
+        "endFrame": 461
+      },
+      {
+        "text": "program.",
+        "startFrame": 461,
+        "endFrame": 473
+      },
+      {
+        "text": "Two",
+        "startFrame": 486,
+        "endFrame": 491
+      },
+      {
+        "text": "edits,",
+        "startFrame": 491,
+        "endFrame": 498
+      },
+      {
+        "text": "and",
+        "startFrame": 498,
+        "endFrame": 506
+      },
+      {
+        "text": "the",
+        "startFrame": 506,
+        "endFrame": 509
+      },
+      {
+        "text": "difference",
+        "startFrame": 509,
+        "endFrame": 517
+      },
+      {
+        "text": "between",
+        "startFrame": 517,
+        "endFrame": 528
+      },
+      {
+        "text": "a",
+        "startFrame": 528,
+        "endFrame": 531
+      },
+      {
+        "text": "material",
+        "startFrame": 531,
+        "endFrame": 543
+      },
+      {
+        "text": "and",
+        "startFrame": 543,
+        "endFrame": 548
+      },
+      {
+        "text": "a",
+        "startFrame": 548,
+        "endFrame": 553
+      },
+      {
+        "text": "shader",
+        "startFrame": 553,
+        "endFrame": 563
+      },
+      {
+        "text": "is",
+        "startFrame": 563,
+        "endFrame": 568
+      },
+      {
+        "text": "on",
+        "startFrame": 568,
+        "endFrame": 572
+      },
+      {
+        "text": "screen.",
+        "startFrame": 572,
+        "endFrame": 583
+      }
+    ],
+    "B17": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "hint",
+        "startFrame": 3,
+        "endFrame": 7
+      },
+      {
+        "text": "experiment",
+        "startFrame": 7,
+        "endFrame": 22
+      },
+      {
+        "text": "isolates",
+        "startFrame": 22,
+        "endFrame": 39
+      },
+      {
+        "text": "a",
+        "startFrame": 39,
+        "endFrame": 42
+      },
+      {
+        "text": "single",
+        "startFrame": 42,
+        "endFrame": 50
+      },
+      {
+        "text": "word.",
+        "startFrame": 50,
+        "endFrame": 61
+      },
+      {
+        "text": "A",
+        "startFrame": 71,
+        "endFrame": 73
+      },
+      {
+        "text": "tiny",
+        "startFrame": 73,
+        "endFrame": 80
+      },
+      {
+        "text": "image",
+        "startFrame": 80,
+        "endFrame": 90
+      },
+      {
+        "text": "holds",
+        "startFrame": 90,
+        "endFrame": 98
+      },
+      {
+        "text": "three",
+        "startFrame": 98,
+        "endFrame": 108
+      },
+      {
+        "text": "grey",
+        "startFrame": 111,
+        "endFrame": 114
+      },
+      {
+        "text": "bands:",
+        "startFrame": 115,
+        "endFrame": 127
+      },
+      {
+        "text": "64,",
+        "startFrame": 134,
+        "endFrame": 146
+      },
+      {
+        "text": "128",
+        "startFrame": 157,
+        "endFrame": 171
+      },
+      {
+        "text": "and",
+        "startFrame": 185,
+        "endFrame": 187
+      },
+      {
+        "text": "192.",
+        "startFrame": 187,
+        "endFrame": 209
+      },
+      {
+        "text": "The",
+        "startFrame": 225,
+        "endFrame": 229
+      },
+      {
+        "text": "author's",
+        "startFrame": 229,
+        "endFrame": 241
+      },
+      {
+        "text": "shader",
+        "startFrame": 241,
+        "endFrame": 249
+      },
+      {
+        "text": "reads",
+        "startFrame": 249,
+        "endFrame": 254
+      },
+      {
+        "text": "it",
+        "startFrame": 254,
+        "endFrame": 260
+      },
+      {
+        "text": "through",
+        "startFrame": 260,
+        "endFrame": 266
+      },
+      {
+        "text": "two",
+        "startFrame": 266,
+        "endFrame": 273
+      },
+      {
+        "text": "samplers,",
+        "startFrame": 273,
+        "endFrame": 290
+      },
+      {
+        "text": "one",
+        "startFrame": 294,
+        "endFrame": 296
+      },
+      {
+        "text": "with",
+        "startFrame": 296,
+        "endFrame": 300
+      },
+      {
+        "text": "source",
+        "startFrame": 300,
+        "endFrame": 306
+      },
+      {
+        "text": "colour",
+        "startFrame": 311,
+        "endFrame": 316
+      },
+      {
+        "text": "and",
+        "startFrame": 316,
+        "endFrame": 322
+      },
+      {
+        "text": "one",
+        "startFrame": 322,
+        "endFrame": 326
+      },
+      {
+        "text": "without,",
+        "startFrame": 326,
+        "endFrame": 335
+      },
+      {
+        "text": "and",
+        "startFrame": 342,
+        "endFrame": 344
+      },
+      {
+        "text": "a",
+        "startFrame": 344,
+        "endFrame": 346
+      },
+      {
+        "text": "show",
+        "startFrame": 346,
+        "endFrame": 351
+      },
+      {
+        "text": "data",
+        "startFrame": 351,
+        "endFrame": 359
+      },
+      {
+        "text": "switch",
+        "startFrame": 359,
+        "endFrame": 368
+      },
+      {
+        "text": "picks",
+        "startFrame": 368,
+        "endFrame": 377
+      },
+      {
+        "text": "which",
+        "startFrame": 377,
+        "endFrame": 383
+      },
+      {
+        "text": "one",
+        "startFrame": 383,
+        "endFrame": 389
+      },
+      {
+        "text": "an",
+        "startFrame": 389,
+        "endFrame": 393
+      },
+      {
+        "text": "unshaded",
+        "startFrame": 393,
+        "endFrame": 405
+      },
+      {
+        "text": "quad",
+        "startFrame": 405,
+        "endFrame": 415
+      },
+      {
+        "text": "displays.",
+        "startFrame": 415,
+        "endFrame": 431
+      },
+      {
+        "text": "Same",
+        "startFrame": 448,
+        "endFrame": 454
+      },
+      {
+        "text": "file,",
+        "startFrame": 454,
+        "endFrame": 466
+      },
+      {
+        "text": "same",
+        "startFrame": 472,
+        "endFrame": 478
+      },
+      {
+        "text": "pixels,",
+        "startFrame": 478,
+        "endFrame": 490
+      },
+      {
+        "text": "one",
+        "startFrame": 499,
+        "endFrame": 502
+      },
+      {
+        "text": "hint",
+        "startFrame": 502,
+        "endFrame": 509
+      },
+      {
+        "text": "different.",
+        "startFrame": 509,
+        "endFrame": 521
+      }
+    ],
+    "B18": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "prediction:",
+        "startFrame": 3,
+        "endFrame": 16
+      },
+      {
+        "text": "read",
+        "startFrame": 16,
+        "endFrame": 26
+      },
+      {
+        "text": "as",
+        "startFrame": 26,
+        "endFrame": 32
+      },
+      {
+        "text": "colour,",
+        "startFrame": 40,
+        "endFrame": 47
+      },
+      {
+        "text": "each",
+        "startFrame": 48,
+        "endFrame": 54
+      },
+      {
+        "text": "band",
+        "startFrame": 54,
+        "endFrame": 61
+      },
+      {
+        "text": "is",
+        "startFrame": 61,
+        "endFrame": 67
+      },
+      {
+        "text": "decoded",
+        "startFrame": 67,
+        "endFrame": 77
+      },
+      {
+        "text": "to",
+        "startFrame": 77,
+        "endFrame": 84
+      },
+      {
+        "text": "linear",
+        "startFrame": 84,
+        "endFrame": 89
+      },
+      {
+        "text": "light",
+        "startFrame": 89,
+        "endFrame": 99
+      },
+      {
+        "text": "and",
+        "startFrame": 99,
+        "endFrame": 105
+      },
+      {
+        "text": "encoded",
+        "startFrame": 105,
+        "endFrame": 118
+      },
+      {
+        "text": "back",
+        "startFrame": 118,
+        "endFrame": 125
+      },
+      {
+        "text": "on",
+        "startFrame": 125,
+        "endFrame": 132
+      },
+      {
+        "text": "the",
+        "startFrame": 132,
+        "endFrame": 136
+      },
+      {
+        "text": "way",
+        "startFrame": 136,
+        "endFrame": 140
+      },
+      {
+        "text": "out,",
+        "startFrame": 140,
+        "endFrame": 149
+      },
+      {
+        "text": "so",
+        "startFrame": 154,
+        "endFrame": 158
+      },
+      {
+        "text": "it",
+        "startFrame": 158,
+        "endFrame": 161
+      },
+      {
+        "text": "stays",
+        "startFrame": 161,
+        "endFrame": 168
+      },
+      {
+        "text": "64,",
+        "startFrame": 168,
+        "endFrame": 187
+      },
+      {
+        "text": "128",
+        "startFrame": 202,
+        "endFrame": 218
+      },
+      {
+        "text": "and",
+        "startFrame": 235,
+        "endFrame": 236
+      },
+      {
+        "text": "192.",
+        "startFrame": 236,
+        "endFrame": 263
+      },
+      {
+        "text": "Read",
+        "startFrame": 291,
+        "endFrame": 299
+      },
+      {
+        "text": "as",
+        "startFrame": 299,
+        "endFrame": 304
+      },
+      {
+        "text": "data,",
+        "startFrame": 304,
+        "endFrame": 313
+      },
+      {
+        "text": "the",
+        "startFrame": 316,
+        "endFrame": 318
+      },
+      {
+        "text": "raw",
+        "startFrame": 318,
+        "endFrame": 322
+      },
+      {
+        "text": "value",
+        "startFrame": 322,
+        "endFrame": 334
+      },
+      {
+        "text": "is",
+        "startFrame": 334,
+        "endFrame": 338
+      },
+      {
+        "text": "only",
+        "startFrame": 338,
+        "endFrame": 344
+      },
+      {
+        "text": "encoded:",
+        "startFrame": 344,
+        "endFrame": 361
+      },
+      {
+        "text": "137,",
+        "startFrame": 369,
+        "endFrame": 395
+      },
+      {
+        "text": "188",
+        "startFrame": 401,
+        "endFrame": 428
+      },
+      {
+        "text": "and",
+        "startFrame": 434,
+        "endFrame": 435
+      },
+      {
+        "text": "225.",
+        "startFrame": 435,
+        "endFrame": 466
+      },
+      {
+        "text": "A",
+        "startFrame": 479,
+        "endFrame": 482
+      },
+      {
+        "text": "Forward",
+        "startFrame": 482,
+        "endFrame": 491
+      },
+      {
+        "text": "Plus",
+        "startFrame": 491,
+        "endFrame": 500
+      },
+      {
+        "text": "comparison",
+        "startFrame": 500,
+        "endFrame": 517
+      },
+      {
+        "text": "matched",
+        "startFrame": 517,
+        "endFrame": 527
+      },
+      {
+        "text": "that",
+        "startFrame": 527,
+        "endFrame": 534
+      },
+      {
+        "text": "exactly.",
+        "startFrame": 534,
+        "endFrame": 550
+      },
+      {
+        "text": "But",
+        "startFrame": 560,
+        "endFrame": 564
+      },
+      {
+        "text": "in",
+        "startFrame": 564,
+        "endFrame": 567
+      },
+      {
+        "text": "Compatibility,",
+        "startFrame": 567,
+        "endFrame": 582
+      },
+      {
+        "text": "the",
+        "startFrame": 592,
+        "endFrame": 593
+      },
+      {
+        "text": "game's",
+        "startFrame": 593,
+        "endFrame": 604
+      },
+      {
+        "text": "renderer,",
+        "startFrame": 604,
+        "endFrame": 617
+      },
+      {
+        "text": "both",
+        "startFrame": 622,
+        "endFrame": 626
+      },
+      {
+        "text": "quads",
+        "startFrame": 626,
+        "endFrame": 638
+      },
+      {
+        "text": "showed",
+        "startFrame": 638,
+        "endFrame": 644
+      },
+      {
+        "text": "the",
+        "startFrame": 644,
+        "endFrame": 649
+      },
+      {
+        "text": "file's",
+        "startFrame": 649,
+        "endFrame": 659
+      },
+      {
+        "text": "values.",
+        "startFrame": 665,
+        "endFrame": 673
+      },
+      {
+        "text": "Same",
+        "startFrame": 684,
+        "endFrame": 690
+      },
+      {
+        "text": "shader,",
+        "startFrame": 690,
+        "endFrame": 704
+      },
+      {
+        "text": "different",
+        "startFrame": 709,
+        "endFrame": 714
+      },
+      {
+        "text": "renderer,",
+        "startFrame": 714,
+        "endFrame": 729
+      },
+      {
+        "text": "different",
+        "startFrame": 733,
+        "endFrame": 737
+      },
+      {
+        "text": "numbers.",
+        "startFrame": 737,
+        "endFrame": 750
+      }
+    ],
+    "B19": [
+      {
+        "text": "Here's",
+        "startFrame": 0,
+        "endFrame": 7
+      },
+      {
+        "text": "the",
+        "startFrame": 7,
+        "endFrame": 10
+      },
+      {
+        "text": "encode",
+        "startFrame": 10,
+        "endFrame": 20
+      },
+      {
+        "text": "the",
+        "startFrame": 20,
+        "endFrame": 24
+      },
+      {
+        "text": "prediction",
+        "startFrame": 24,
+        "endFrame": 34
+      },
+      {
+        "text": "used.",
+        "startFrame": 34,
+        "endFrame": 49
+      },
+      {
+        "text": "Above",
+        "startFrame": 58,
+        "endFrame": 60
+      },
+      {
+        "text": "a",
+        "startFrame": 60,
+        "endFrame": 65
+      },
+      {
+        "text": "tiny",
+        "startFrame": 65,
+        "endFrame": 71
+      },
+      {
+        "text": "threshold,",
+        "startFrame": 71,
+        "endFrame": 83
+      },
+      {
+        "text": "the",
+        "startFrame": 90,
+        "endFrame": 92
+      },
+      {
+        "text": "stored",
+        "startFrame": 92,
+        "endFrame": 99
+      },
+      {
+        "text": "value",
+        "startFrame": 99,
+        "endFrame": 110
+      },
+      {
+        "text": "is",
+        "startFrame": 110,
+        "endFrame": 116
+      },
+      {
+        "text": "one",
+        "startFrame": 124,
+        "endFrame": 131
+      },
+      {
+        "text": "point",
+        "startFrame": 132,
+        "endFrame": 140
+      },
+      {
+        "text": "zero",
+        "startFrame": 140,
+        "endFrame": 148
+      },
+      {
+        "text": "five",
+        "startFrame": 149,
+        "endFrame": 156
+      },
+      {
+        "text": "five",
+        "startFrame": 157,
+        "endFrame": 164
+      },
+      {
+        "text": "times",
+        "startFrame": 165,
+        "endFrame": 170
+      },
+      {
+        "text": "the",
+        "startFrame": 170,
+        "endFrame": 178
+      },
+      {
+        "text": "linear",
+        "startFrame": 178,
+        "endFrame": 184
+      },
+      {
+        "text": "value",
+        "startFrame": 184,
+        "endFrame": 194
+      },
+      {
+        "text": "to",
+        "startFrame": 194,
+        "endFrame": 199
+      },
+      {
+        "text": "the",
+        "startFrame": 199,
+        "endFrame": 202
+      },
+      {
+        "text": "power",
+        "startFrame": 202,
+        "endFrame": 209
+      },
+      {
+        "text": "one",
+        "startFrame": 212,
+        "endFrame": 216
+      },
+      {
+        "text": "over",
+        "startFrame": 216,
+        "endFrame": 221
+      },
+      {
+        "text": "two",
+        "startFrame": 228,
+        "endFrame": 233
+      },
+      {
+        "text": "point",
+        "startFrame": 234,
+        "endFrame": 239
+      },
+      {
+        "text": "four,",
+        "startFrame": 240,
+        "endFrame": 245
+      },
+      {
+        "text": "minus",
+        "startFrame": 246,
+        "endFrame": 263
+      },
+      {
+        "text": "zero",
+        "startFrame": 276,
+        "endFrame": 287
+      },
+      {
+        "text": "point",
+        "startFrame": 288,
+        "endFrame": 300
+      },
+      {
+        "text": "zero",
+        "startFrame": 301,
+        "endFrame": 313
+      },
+      {
+        "text": "five",
+        "startFrame": 314,
+        "endFrame": 326
+      },
+      {
+        "text": "five.",
+        "startFrame": 327,
+        "endFrame": 338
+      },
+      {
+        "text": "Feed",
+        "startFrame": 340,
+        "endFrame": 352
+      },
+      {
+        "text": "in",
+        "startFrame": 352,
+        "endFrame": 356
+      },
+      {
+        "text": "64",
+        "startFrame": 356,
+        "endFrame": 373
+      },
+      {
+        "text": "over",
+        "startFrame": 373,
+        "endFrame": 382
+      },
+      {
+        "text": "255,",
+        "startFrame": 382,
+        "endFrame": 413
+      },
+      {
+        "text": "about",
+        "startFrame": 413,
+        "endFrame": 425
+      },
+      {
+        "text": "zero",
+        "startFrame": 435,
+        "endFrame": 443
+      },
+      {
+        "text": "point",
+        "startFrame": 444,
+        "endFrame": 452
+      },
+      {
+        "text": "two",
+        "startFrame": 453,
+        "endFrame": 461
+      },
+      {
+        "text": "five",
+        "startFrame": 462,
+        "endFrame": 470
+      },
+      {
+        "text": "one,",
+        "startFrame": 471,
+        "endFrame": 480
+      },
+      {
+        "text": "and",
+        "startFrame": 481,
+        "endFrame": 483
+      },
+      {
+        "text": "you",
+        "startFrame": 483,
+        "endFrame": 486
+      },
+      {
+        "text": "get",
+        "startFrame": 486,
+        "endFrame": 490
+      },
+      {
+        "text": "about",
+        "startFrame": 490,
+        "endFrame": 495
+      },
+      {
+        "text": "zero",
+        "startFrame": 502,
+        "endFrame": 509
+      },
+      {
+        "text": "point",
+        "startFrame": 509,
+        "endFrame": 516
+      },
+      {
+        "text": "five",
+        "startFrame": 517,
+        "endFrame": 523
+      },
+      {
+        "text": "three",
+        "startFrame": 524,
+        "endFrame": 530
+      },
+      {
+        "text": "eight:",
+        "startFrame": 531,
+        "endFrame": 537
+      },
+      {
+        "text": "137.",
+        "startFrame": 538,
+        "endFrame": 575
+      }
+    ],
+    "B20": [
+      {
+        "text": "To",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "learn",
+        "startFrame": 3,
+        "endFrame": 8
+      },
+      {
+        "text": "the",
+        "startFrame": 8,
+        "endFrame": 12
+      },
+      {
+        "text": "language,",
+        "startFrame": 12,
+        "endFrame": 21
+      },
+      {
+        "text": "the",
+        "startFrame": 27,
+        "endFrame": 29
+      },
+      {
+        "text": "author",
+        "startFrame": 29,
+        "endFrame": 35
+      },
+      {
+        "text": "converted",
+        "startFrame": 35,
+        "endFrame": 50
+      },
+      {
+        "text": "a",
+        "startFrame": 50,
+        "endFrame": 55
+      },
+      {
+        "text": "standard",
+        "startFrame": 55,
+        "endFrame": 64
+      },
+      {
+        "text": "material",
+        "startFrame": 64,
+        "endFrame": 77
+      },
+      {
+        "text": "into",
+        "startFrame": 77,
+        "endFrame": 86
+      },
+      {
+        "text": "a",
+        "startFrame": 86,
+        "endFrame": 90
+      },
+      {
+        "text": "shader",
+        "startFrame": 90,
+        "endFrame": 100
+      },
+      {
+        "text": "and",
+        "startFrame": 100,
+        "endFrame": 106
+      },
+      {
+        "text": "annotated",
+        "startFrame": 106,
+        "endFrame": 121
+      },
+      {
+        "text": "what",
+        "startFrame": 121,
+        "endFrame": 127
+      },
+      {
+        "text": "Godot",
+        "startFrame": 127,
+        "endFrame": 138
+      },
+      {
+        "text": "generated.",
+        "startFrame": 138,
+        "endFrame": 157
+      },
+      {
+        "text": "Lines",
+        "startFrame": 168,
+        "endFrame": 178
+      },
+      {
+        "text": "6",
+        "startFrame": 179,
+        "endFrame": 187
+      },
+      {
+        "text": "and",
+        "startFrame": 187,
+        "endFrame": 193
+      },
+      {
+        "text": "7:",
+        "startFrame": 193,
+        "endFrame": 202
+      },
+      {
+        "text": "an",
+        "startFrame": 208,
+        "endFrame": 210
+      },
+      {
+        "text": "albedo",
+        "startFrame": 210,
+        "endFrame": 223
+      },
+      {
+        "text": "colour",
+        "startFrame": 226,
+        "endFrame": 230
+      },
+      {
+        "text": "and",
+        "startFrame": 230,
+        "endFrame": 236
+      },
+      {
+        "text": "an",
+        "startFrame": 236,
+        "endFrame": 239
+      },
+      {
+        "text": "albedo",
+        "startFrame": 239,
+        "endFrame": 252
+      },
+      {
+        "text": "texture,",
+        "startFrame": 252,
+        "endFrame": 263
+      },
+      {
+        "text": "both",
+        "startFrame": 272,
+        "endFrame": 275
+      },
+      {
+        "text": "marked",
+        "startFrame": 275,
+        "endFrame": 284
+      },
+      {
+        "text": "source",
+        "startFrame": 284,
+        "endFrame": 292
+      },
+      {
+        "text": "colour.",
+        "startFrame": 303,
+        "endFrame": 313
+      },
+      {
+        "text": "The",
+        "startFrame": 314,
+        "endFrame": 318
+      },
+      {
+        "text": "author's",
+        "startFrame": 318,
+        "endFrame": 329
+      },
+      {
+        "text": "equivalents",
+        "startFrame": 329,
+        "endFrame": 343
+      },
+      {
+        "text": "are",
+        "startFrame": 343,
+        "endFrame": 346
+      },
+      {
+        "text": "fog",
+        "startFrame": 346,
+        "endFrame": 355
+      },
+      {
+        "text": "tint,",
+        "startFrame": 362,
+        "endFrame": 368
+      },
+      {
+        "text": "on",
+        "startFrame": 368,
+        "endFrame": 370
+      },
+      {
+        "text": "line",
+        "startFrame": 370,
+        "endFrame": 376
+      },
+      {
+        "text": "9,",
+        "startFrame": 376,
+        "endFrame": 385
+      },
+      {
+        "text": "and",
+        "startFrame": 385,
+        "endFrame": 391
+      },
+      {
+        "text": "fog",
+        "startFrame": 391,
+        "endFrame": 399
+      },
+      {
+        "text": "colour,",
+        "startFrame": 405,
+        "endFrame": 410
+      },
+      {
+        "text": "on",
+        "startFrame": 411,
+        "endFrame": 417
+      },
+      {
+        "text": "line",
+        "startFrame": 417,
+        "endFrame": 421
+      },
+      {
+        "text": "26.",
+        "startFrame": 421,
+        "endFrame": 440
+      },
+      {
+        "text": "They",
+        "startFrame": 454,
+        "endFrame": 456
+      },
+      {
+        "text": "make",
+        "startFrame": 456,
+        "endFrame": 460
+      },
+      {
+        "text": "the",
+        "startFrame": 460,
+        "endFrame": 464
+      },
+      {
+        "text": "same",
+        "startFrame": 464,
+        "endFrame": 469
+      },
+      {
+        "text": "promise:",
+        "startFrame": 469,
+        "endFrame": 483
+      },
+      {
+        "text": "these",
+        "startFrame": 491,
+        "endFrame": 496
+      },
+      {
+        "text": "values",
+        "startFrame": 496,
+        "endFrame": 507
+      },
+      {
+        "text": "are",
+        "startFrame": 507,
+        "endFrame": 514
+      },
+      {
+        "text": "colours,",
+        "startFrame": 522,
+        "endFrame": 530
+      },
+      {
+        "text": "so",
+        "startFrame": 530,
+        "endFrame": 533
+      },
+      {
+        "text": "decode",
+        "startFrame": 533,
+        "endFrame": 544
+      },
+      {
+        "text": "them.",
+        "startFrame": 544,
+        "endFrame": 551
+      }
+    ],
+    "B22": [
+      {
+        "text": "Tests",
+        "startFrame": 0,
+        "endFrame": 8
+      },
+      {
+        "text": "get",
+        "startFrame": 8,
+        "endFrame": 13
+      },
+      {
+        "text": "their",
+        "startFrame": 13,
+        "endFrame": 19
+      },
+      {
+        "text": "own",
+        "startFrame": 19,
+        "endFrame": 25
+      },
+      {
+        "text": "look.",
+        "startFrame": 25,
+        "endFrame": 32
+      },
+      {
+        "text": "This",
+        "startFrame": 37,
+        "endFrame": 38
+      },
+      {
+        "text": "is",
+        "startFrame": 38,
+        "endFrame": 44
+      },
+      {
+        "text": "Claude",
+        "startFrame": 44,
+        "endFrame": 55
+      },
+      {
+        "text": "Code's",
+        "startFrame": 55,
+        "endFrame": 63
+      },
+      {
+        "text": "driver",
+        "startFrame": 63,
+        "endFrame": 72
+      },
+      {
+        "text": "test",
+        "startFrame": 72,
+        "endFrame": 82
+      },
+      {
+        "text": "asking",
+        "startFrame": 82,
+        "endFrame": 95
+      },
+      {
+        "text": "Godot",
+        "startFrame": 95,
+        "endFrame": 107
+      },
+      {
+        "text": "for",
+        "startFrame": 107,
+        "endFrame": 115
+      },
+      {
+        "text": "the",
+        "startFrame": 115,
+        "endFrame": 119
+      },
+      {
+        "text": "shader's",
+        "startFrame": 119,
+        "endFrame": 131
+      },
+      {
+        "text": "uniform",
+        "startFrame": 131,
+        "endFrame": 142
+      },
+      {
+        "text": "list.",
+        "startFrame": 142,
+        "endFrame": 155
+      },
+      {
+        "text": "If",
+        "startFrame": 163,
+        "endFrame": 166
+      },
+      {
+        "text": "the",
+        "startFrame": 166,
+        "endFrame": 169
+      },
+      {
+        "text": "shader",
+        "startFrame": 169,
+        "endFrame": 179
+      },
+      {
+        "text": "fails",
+        "startFrame": 179,
+        "endFrame": 186
+      },
+      {
+        "text": "to",
+        "startFrame": 186,
+        "endFrame": 193
+      },
+      {
+        "text": "parse,",
+        "startFrame": 193,
+        "endFrame": 202
+      },
+      {
+        "text": "that",
+        "startFrame": 208,
+        "endFrame": 211
+      },
+      {
+        "text": "list",
+        "startFrame": 211,
+        "endFrame": 216
+      },
+      {
+        "text": "comes",
+        "startFrame": 216,
+        "endFrame": 223
+      },
+      {
+        "text": "back",
+        "startFrame": 223,
+        "endFrame": 230
+      },
+      {
+        "text": "empty,",
+        "startFrame": 230,
+        "endFrame": 243
+      },
+      {
+        "text": "so",
+        "startFrame": 253,
+        "endFrame": 256
+      },
+      {
+        "text": "one",
+        "startFrame": 256,
+        "endFrame": 262
+      },
+      {
+        "text": "check",
+        "startFrame": 262,
+        "endFrame": 269
+      },
+      {
+        "text": "catches",
+        "startFrame": 269,
+        "endFrame": 281
+      },
+      {
+        "text": "a",
+        "startFrame": 281,
+        "endFrame": 286
+      },
+      {
+        "text": "broken",
+        "startFrame": 286,
+        "endFrame": 292
+      },
+      {
+        "text": "shader.",
+        "startFrame": 292,
+        "endFrame": 310
+      },
+      {
+        "text": "Other",
+        "startFrame": 327,
+        "endFrame": 333
+      },
+      {
+        "text": "checks",
+        "startFrame": 333,
+        "endFrame": 341
+      },
+      {
+        "text": "press",
+        "startFrame": 341,
+        "endFrame": 349
+      },
+      {
+        "text": "the",
+        "startFrame": 349,
+        "endFrame": 356
+      },
+      {
+        "text": "real",
+        "startFrame": 356,
+        "endFrame": 363
+      },
+      {
+        "text": "L",
+        "startFrame": 363,
+        "endFrame": 369
+      },
+      {
+        "text": "key",
+        "startFrame": 369,
+        "endFrame": 376
+      },
+      {
+        "text": "through",
+        "startFrame": 376,
+        "endFrame": 385
+      },
+      {
+        "text": "Godot's",
+        "startFrame": 385,
+        "endFrame": 403
+      },
+      {
+        "text": "input",
+        "startFrame": 403,
+        "endFrame": 409
+      },
+      {
+        "text": "system",
+        "startFrame": 409,
+        "endFrame": 424
+      },
+      {
+        "text": "and",
+        "startFrame": 424,
+        "endFrame": 432
+      },
+      {
+        "text": "sample",
+        "startFrame": 432,
+        "endFrame": 443
+      },
+      {
+        "text": "night",
+        "startFrame": 443,
+        "endFrame": 451
+      },
+      {
+        "text": "amount",
+        "startFrame": 451,
+        "endFrame": 459
+      },
+      {
+        "text": "on",
+        "startFrame": 459,
+        "endFrame": 466
+      },
+      {
+        "text": "every",
+        "startFrame": 466,
+        "endFrame": 473
+      },
+      {
+        "text": "frame.",
+        "startFrame": 473,
+        "endFrame": 484
+      }
+    ],
+    "B23": [
+      {
+        "text": "Every",
+        "startFrame": 0,
+        "endFrame": 7
+      },
+      {
+        "text": "suite",
+        "startFrame": 11,
+        "endFrame": 15
+      },
+      {
+        "text": "passes",
+        "startFrame": 16,
+        "endFrame": 27
+      },
+      {
+        "text": "through",
+        "startFrame": 27,
+        "endFrame": 35
+      },
+      {
+        "text": "the",
+        "startFrame": 35,
+        "endFrame": 39
+      },
+      {
+        "text": "test",
+        "startFrame": 39,
+        "endFrame": 46
+      },
+      {
+        "text": "wrapper",
+        "startFrame": 46,
+        "endFrame": 55
+      },
+      {
+        "text": "at",
+        "startFrame": 55,
+        "endFrame": 63
+      },
+      {
+        "text": "fixed",
+        "startFrame": 63,
+        "endFrame": 72
+      },
+      {
+        "text": "frame",
+        "startFrame": 72,
+        "endFrame": 83
+      },
+      {
+        "text": "rates.",
+        "startFrame": 83,
+        "endFrame": 94
+      },
+      {
+        "text": "Then",
+        "startFrame": 101,
+        "endFrame": 106
+      },
+      {
+        "text": "come",
+        "startFrame": 106,
+        "endFrame": 112
+      },
+      {
+        "text": "three",
+        "startFrame": 112,
+        "endFrame": 120
+      },
+      {
+        "text": "deliberate",
+        "startFrame": 120,
+        "endFrame": 130
+      },
+      {
+        "text": "breaks:",
+        "startFrame": 130,
+        "endFrame": 144
+      },
+      {
+        "text": "a",
+        "startFrame": 148,
+        "endFrame": 148
+      },
+      {
+        "text": "missing",
+        "startFrame": 148,
+        "endFrame": 155
+      },
+      {
+        "text": "semicolon,",
+        "startFrame": 155,
+        "endFrame": 173
+      },
+      {
+        "text": "a",
+        "startFrame": 176,
+        "endFrame": 178
+      },
+      {
+        "text": "renamed",
+        "startFrame": 178,
+        "endFrame": 188
+      },
+      {
+        "text": "uniform,",
+        "startFrame": 188,
+        "endFrame": 202
+      },
+      {
+        "text": "a",
+        "startFrame": 208,
+        "endFrame": 210
+      },
+      {
+        "text": "deleted",
+        "startFrame": 210,
+        "endFrame": 218
+      },
+      {
+        "text": "source",
+        "startFrame": 218,
+        "endFrame": 228
+      },
+      {
+        "text": "colour.",
+        "startFrame": 241,
+        "endFrame": 253
+      },
+      {
+        "text": "Each",
+        "startFrame": 254,
+        "endFrame": 260
+      },
+      {
+        "text": "one",
+        "startFrame": 260,
+        "endFrame": 264
+      },
+      {
+        "text": "made",
+        "startFrame": 264,
+        "endFrame": 269
+      },
+      {
+        "text": "a",
+        "startFrame": 269,
+        "endFrame": 271
+      },
+      {
+        "text": "test",
+        "startFrame": 271,
+        "endFrame": 278
+      },
+      {
+        "text": "exit",
+        "startFrame": 278,
+        "endFrame": 289
+      },
+      {
+        "text": "with",
+        "startFrame": 289,
+        "endFrame": 295
+      },
+      {
+        "text": "status",
+        "startFrame": 295,
+        "endFrame": 305
+      },
+      {
+        "text": "one,",
+        "startFrame": 305,
+        "endFrame": 314
+      },
+      {
+        "text": "which",
+        "startFrame": 314,
+        "endFrame": 321
+      },
+      {
+        "text": "proves",
+        "startFrame": 321,
+        "endFrame": 331
+      },
+      {
+        "text": "the",
+        "startFrame": 331,
+        "endFrame": 335
+      },
+      {
+        "text": "tests",
+        "startFrame": 335,
+        "endFrame": 344
+      },
+      {
+        "text": "can",
+        "startFrame": 344,
+        "endFrame": 350
+      },
+      {
+        "text": "fail.",
+        "startFrame": 350,
+        "endFrame": 361
+      },
+      {
+        "text": "What",
+        "startFrame": 373,
+        "endFrame": 376
+      },
+      {
+        "text": "they",
+        "startFrame": 376,
+        "endFrame": 380
+      },
+      {
+        "text": "can't",
+        "startFrame": 380,
+        "endFrame": 389
+      },
+      {
+        "text": "show",
+        "startFrame": 389,
+        "endFrame": 395
+      },
+      {
+        "text": "is",
+        "startFrame": 395,
+        "endFrame": 401
+      },
+      {
+        "text": "whether",
+        "startFrame": 401,
+        "endFrame": 409
+      },
+      {
+        "text": "any",
+        "startFrame": 409,
+        "endFrame": 415
+      },
+      {
+        "text": "of",
+        "startFrame": 415,
+        "endFrame": 418
+      },
+      {
+        "text": "this",
+        "startFrame": 418,
+        "endFrame": 422
+      },
+      {
+        "text": "looks",
+        "startFrame": 422,
+        "endFrame": 428
+      },
+      {
+        "text": "right.",
+        "startFrame": 428,
+        "endFrame": 437
+      },
+      {
+        "text": "A",
+        "startFrame": 446,
+        "endFrame": 449
+      },
+      {
+        "text": "headless",
+        "startFrame": 449,
+        "endFrame": 457
+      },
+      {
+        "text": "run",
+        "startFrame": 457,
+        "endFrame": 464
+      },
+      {
+        "text": "draws",
+        "startFrame": 464,
+        "endFrame": 472
+      },
+      {
+        "text": "nothing.",
+        "startFrame": 472,
+        "endFrame": 485
+      },
+      {
+        "text": "That",
+        "startFrame": 494,
+        "endFrame": 497
+      },
+      {
+        "text": "part",
+        "startFrame": 497,
+        "endFrame": 503
+      },
+      {
+        "text": "takes",
+        "startFrame": 503,
+        "endFrame": 509
+      },
+      {
+        "text": "eyes.",
+        "startFrame": 509,
+        "endFrame": 521
+      }
+    ],
+    "B24": [
+      {
+        "text": "Not",
+        "startFrame": 0,
+        "endFrame": 4
+      },
+      {
+        "text": "everything",
+        "startFrame": 4,
+        "endFrame": 15
+      },
+      {
+        "text": "was",
+        "startFrame": 15,
+        "endFrame": 21
+      },
+      {
+        "text": "right",
+        "startFrame": 21,
+        "endFrame": 25
+      },
+      {
+        "text": "the",
+        "startFrame": 25,
+        "endFrame": 30
+      },
+      {
+        "text": "first",
+        "startFrame": 30,
+        "endFrame": 36
+      },
+      {
+        "text": "time.",
+        "startFrame": 36,
+        "endFrame": 47
+      },
+      {
+        "text": "The",
+        "startFrame": 62,
+        "endFrame": 65
+      },
+      {
+        "text": "Claude",
+        "startFrame": 70,
+        "endFrame": 75
+      },
+      {
+        "text": "dot",
+        "startFrame": 76,
+        "endFrame": 80
+      },
+      {
+        "text": "M",
+        "startFrame": 81,
+        "endFrame": 86
+      },
+      {
+        "text": "D",
+        "startFrame": 86,
+        "endFrame": 91
+      },
+      {
+        "text": "draft",
+        "startFrame": 92,
+        "endFrame": 100
+      },
+      {
+        "text": "said",
+        "startFrame": 100,
+        "endFrame": 108
+      },
+      {
+        "text": "the",
+        "startFrame": 108,
+        "endFrame": 112
+      },
+      {
+        "text": "van",
+        "startFrame": 112,
+        "endFrame": 117
+      },
+      {
+        "text": "updates",
+        "startFrame": 117,
+        "endFrame": 127
+      },
+      {
+        "text": "every",
+        "startFrame": 127,
+        "endFrame": 139
+      },
+      {
+        "text": "frame;",
+        "startFrame": 139,
+        "endFrame": 148
+      },
+      {
+        "text": "it's",
+        "startFrame": 155,
+        "endFrame": 158
+      },
+      {
+        "text": "every",
+        "startFrame": 158,
+        "endFrame": 165
+      },
+      {
+        "text": "physics",
+        "startFrame": 165,
+        "endFrame": 173
+      },
+      {
+        "text": "tick,",
+        "startFrame": 173,
+        "endFrame": 184
+      },
+      {
+        "text": "fixed",
+        "startFrame": 184,
+        "endFrame": 194
+      },
+      {
+        "text": "in",
+        "startFrame": 194,
+        "endFrame": 200
+      },
+      {
+        "text": "review",
+        "startFrame": 200,
+        "endFrame": 209
+      },
+      {
+        "text": "with",
+        "startFrame": 209,
+        "endFrame": 217
+      },
+      {
+        "text": "the",
+        "startFrame": 217,
+        "endFrame": 220
+      },
+      {
+        "text": "author's",
+        "startFrame": 220,
+        "endFrame": 232
+      },
+      {
+        "text": "approval.",
+        "startFrame": 232,
+        "endFrame": 244
+      },
+      {
+        "text": "Two",
+        "startFrame": 255,
+        "endFrame": 259
+      },
+      {
+        "text": "agent-written",
+        "startFrame": 266,
+        "endFrame": 273
+      },
+      {
+        "text": "tests",
+        "startFrame": 274,
+        "endFrame": 285
+      },
+      {
+        "text": "were",
+        "startFrame": 285,
+        "endFrame": 292
+      },
+      {
+        "text": "wrong",
+        "startFrame": 292,
+        "endFrame": 299
+      },
+      {
+        "text": "until",
+        "startFrame": 299,
+        "endFrame": 306
+      },
+      {
+        "text": "they",
+        "startFrame": 306,
+        "endFrame": 310
+      },
+      {
+        "text": "failed.",
+        "startFrame": 310,
+        "endFrame": 322
+      },
+      {
+        "text": "An",
+        "startFrame": 333,
+        "endFrame": 335
+      },
+      {
+        "text": "audit",
+        "startFrame": 335,
+        "endFrame": 342
+      },
+      {
+        "text": "caught",
+        "startFrame": 342,
+        "endFrame": 349
+      },
+      {
+        "text": "the",
+        "startFrame": 349,
+        "endFrame": 355
+      },
+      {
+        "text": "fog",
+        "startFrame": 355,
+        "endFrame": 362
+      },
+      {
+        "text": "shader",
+        "startFrame": 362,
+        "endFrame": 376
+      },
+      {
+        "text": "drifting",
+        "startFrame": 376,
+        "endFrame": 383
+      },
+      {
+        "text": "from",
+        "startFrame": 383,
+        "endFrame": 392
+      },
+      {
+        "text": "its",
+        "startFrame": 392,
+        "endFrame": 398
+      },
+      {
+        "text": "brief,",
+        "startFrame": 398,
+        "endFrame": 406
+      },
+      {
+        "text": "which",
+        "startFrame": 413,
+        "endFrame": 416
+      },
+      {
+        "text": "the",
+        "startFrame": 416,
+        "endFrame": 420
+      },
+      {
+        "text": "author",
+        "startFrame": 420,
+        "endFrame": 427
+      },
+      {
+        "text": "settled",
+        "startFrame": 427,
+        "endFrame": 438
+      },
+      {
+        "text": "with",
+        "startFrame": 438,
+        "endFrame": 445
+      },
+      {
+        "text": "a",
+        "startFrame": 445,
+        "endFrame": 448
+      },
+      {
+        "text": "dated",
+        "startFrame": 448,
+        "endFrame": 457
+      },
+      {
+        "text": "revision.",
+        "startFrame": 457,
+        "endFrame": 472
+      },
+      {
+        "text": "And",
+        "startFrame": 485,
+        "endFrame": 487
+      },
+      {
+        "text": "the",
+        "startFrame": 487,
+        "endFrame": 490
+      },
+      {
+        "text": "author",
+        "startFrame": 490,
+        "endFrame": 497
+      },
+      {
+        "text": "stopped",
+        "startFrame": 497,
+        "endFrame": 509
+      },
+      {
+        "text": "Claude",
+        "startFrame": 515,
+        "endFrame": 521
+      },
+      {
+        "text": "from",
+        "startFrame": 522,
+        "endFrame": 525
+      },
+      {
+        "text": "searching",
+        "startFrame": 525,
+        "endFrame": 536
+      },
+      {
+        "text": "outside",
+        "startFrame": 536,
+        "endFrame": 548
+      },
+      {
+        "text": "the",
+        "startFrame": 548,
+        "endFrame": 554
+      },
+      {
+        "text": "project",
+        "startFrame": 554,
+        "endFrame": 565
+      },
+      {
+        "text": "folder.",
+        "startFrame": 565,
+        "endFrame": 580
+      }
+    ],
+    "B25": [
+      {
+        "text": "Who",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "did",
+        "startFrame": 3,
+        "endFrame": 8
+      },
+      {
+        "text": "what.",
+        "startFrame": 8,
+        "endFrame": 14
+      },
+      {
+        "text": "The",
+        "startFrame": 14,
+        "endFrame": 23
+      },
+      {
+        "text": "author",
+        "startFrame": 23,
+        "endFrame": 29
+      },
+      {
+        "text": "wrote",
+        "startFrame": 29,
+        "endFrame": 37
+      },
+      {
+        "text": "the",
+        "startFrame": 37,
+        "endFrame": 41
+      },
+      {
+        "text": "brief",
+        "startFrame": 41,
+        "endFrame": 47
+      },
+      {
+        "text": "and",
+        "startFrame": 50,
+        "endFrame": 52
+      },
+      {
+        "text": "its",
+        "startFrame": 52,
+        "endFrame": 56
+      },
+      {
+        "text": "predictions,",
+        "startFrame": 56,
+        "endFrame": 68
+      },
+      {
+        "text": "all",
+        "startFrame": 78,
+        "endFrame": 81
+      },
+      {
+        "text": "three",
+        "startFrame": 81,
+        "endFrame": 88
+      },
+      {
+        "text": "shaders,",
+        "startFrame": 88,
+        "endFrame": 102
+      },
+      {
+        "text": "the",
+        "startFrame": 105,
+        "endFrame": 107
+      },
+      {
+        "text": "annotations",
+        "startFrame": 107,
+        "endFrame": 122
+      },
+      {
+        "text": "and",
+        "startFrame": 122,
+        "endFrame": 129
+      },
+      {
+        "text": "the",
+        "startFrame": 129,
+        "endFrame": 133
+      },
+      {
+        "text": "language",
+        "startFrame": 133,
+        "endFrame": 140
+      },
+      {
+        "text": "notes,",
+        "startFrame": 140,
+        "endFrame": 151
+      },
+      {
+        "text": "and",
+        "startFrame": 151,
+        "endFrame": 157
+      },
+      {
+        "text": "played",
+        "startFrame": 157,
+        "endFrame": 163
+      },
+      {
+        "text": "the",
+        "startFrame": 163,
+        "endFrame": 168
+      },
+      {
+        "text": "build.",
+        "startFrame": 168,
+        "endFrame": 176
+      },
+      {
+        "text": "Claude",
+        "startFrame": 193,
+        "endFrame": 201
+      },
+      {
+        "text": "Code",
+        "startFrame": 206,
+        "endFrame": 210
+      },
+      {
+        "text": "wrote",
+        "startFrame": 211,
+        "endFrame": 214
+      },
+      {
+        "text": "the",
+        "startFrame": 214,
+        "endFrame": 219
+      },
+      {
+        "text": "driver,",
+        "startFrame": 219,
+        "endFrame": 229
+      },
+      {
+        "text": "the",
+        "startFrame": 233,
+        "endFrame": 235
+      },
+      {
+        "text": "tests,",
+        "startFrame": 235,
+        "endFrame": 242
+      },
+      {
+        "text": "the",
+        "startFrame": 250,
+        "endFrame": 251
+      },
+      {
+        "text": "texture",
+        "startFrame": 251,
+        "endFrame": 262
+      },
+      {
+        "text": "script,",
+        "startFrame": 262,
+        "endFrame": 272
+      },
+      {
+        "text": "the",
+        "startFrame": 277,
+        "endFrame": 278
+      },
+      {
+        "text": "materials",
+        "startFrame": 278,
+        "endFrame": 290
+      },
+      {
+        "text": "and",
+        "startFrame": 290,
+        "endFrame": 296
+      },
+      {
+        "text": "overlays,",
+        "startFrame": 296,
+        "endFrame": 310
+      },
+      {
+        "text": "the",
+        "startFrame": 314,
+        "endFrame": 316
+      },
+      {
+        "text": "captures,",
+        "startFrame": 316,
+        "endFrame": 326
+      },
+      {
+        "text": "the",
+        "startFrame": 332,
+        "endFrame": 335
+      },
+      {
+        "text": "audit",
+        "startFrame": 335,
+        "endFrame": 342
+      },
+      {
+        "text": "and",
+        "startFrame": 345,
+        "endFrame": 348
+      },
+      {
+        "text": "this",
+        "startFrame": 349,
+        "endFrame": 353
+      },
+      {
+        "text": "film.",
+        "startFrame": 353,
+        "endFrame": 361
+      },
+      {
+        "text": "The",
+        "startFrame": 379,
+        "endFrame": 382
+      },
+      {
+        "text": "fog",
+        "startFrame": 382,
+        "endFrame": 389
+      },
+      {
+        "text": "textures",
+        "startFrame": 389,
+        "endFrame": 403
+      },
+      {
+        "text": "are",
+        "startFrame": 403,
+        "endFrame": 410
+      },
+      {
+        "text": "original,",
+        "startFrame": 410,
+        "endFrame": 422
+      },
+      {
+        "text": "generated",
+        "startFrame": 429,
+        "endFrame": 439
+      },
+      {
+        "text": "by",
+        "startFrame": 439,
+        "endFrame": 446
+      },
+      {
+        "text": "code;",
+        "startFrame": 446,
+        "endFrame": 457
+      },
+      {
+        "text": "the",
+        "startFrame": 465,
+        "endFrame": 467
+      },
+      {
+        "text": "Poly",
+        "startFrame": 474,
+        "endFrame": 479
+      },
+      {
+        "text": "Haven",
+        "startFrame": 480,
+        "endFrame": 485
+      },
+      {
+        "text": "pair",
+        "startFrame": 486,
+        "endFrame": 493
+      },
+      {
+        "text": "is",
+        "startFrame": 493,
+        "endFrame": 500
+      },
+      {
+        "text": "only",
+        "startFrame": 500,
+        "endFrame": 505
+      },
+      {
+        "text": "used",
+        "startFrame": 505,
+        "endFrame": 514
+      },
+      {
+        "text": "in",
+        "startFrame": 514,
+        "endFrame": 517
+      },
+      {
+        "text": "a",
+        "startFrame": 517,
+        "endFrame": 520
+      },
+      {
+        "text": "test.",
+        "startFrame": 520,
+        "endFrame": 527
+      },
+      {
+        "text": "The",
+        "startFrame": 527,
+        "endFrame": 538
+      },
+      {
+        "text": "revision",
+        "startFrame": 538,
+        "endFrame": 548
+      },
+      {
+        "text": "shown",
+        "startFrame": 548,
+        "endFrame": 559
+      },
+      {
+        "text": "is",
+        "startFrame": 559,
+        "endFrame": 565
+      },
+      {
+        "text": "on",
+        "startFrame": 565,
+        "endFrame": 568
+      },
+      {
+        "text": "screen.",
+        "startFrame": 568,
+        "endFrame": 580
+      }
+    ],
+    "B26": [
+      {
+        "text": "Let's",
+        "startFrame": 0,
+        "endFrame": 21
+      },
+      {
+        "text": "recap",
+        "startFrame": 21,
+        "endFrame": 28
+      },
+      {
+        "text": "with",
+        "startFrame": 28,
+        "endFrame": 36
+      },
+      {
+        "text": "Claude.",
+        "startFrame": 36,
+        "endFrame": 49
+      },
+      {
+        "text": "Implemented:",
+        "startFrame": 55,
+        "endFrame": 67
+      },
+      {
+        "text": "a",
+        "startFrame": 76,
+        "endFrame": 78
+      },
+      {
+        "text": "dashboard",
+        "startFrame": 78,
+        "endFrame": 88
+      },
+      {
+        "text": "shader",
+        "startFrame": 88,
+        "endFrame": 102
+      },
+      {
+        "text": "driven",
+        "startFrame": 102,
+        "endFrame": 109
+      },
+      {
+        "text": "by",
+        "startFrame": 109,
+        "endFrame": 116
+      },
+      {
+        "text": "the",
+        "startFrame": 116,
+        "endFrame": 120
+      },
+      {
+        "text": "headlights,",
+        "startFrame": 120,
+        "endFrame": 131
+      },
+      {
+        "text": "and",
+        "startFrame": 131,
+        "endFrame": 138
+      },
+      {
+        "text": "a",
+        "startFrame": 138,
+        "endFrame": 142
+      },
+      {
+        "text": "textured",
+        "startFrame": 142,
+        "endFrame": 151
+      },
+      {
+        "text": "fog",
+        "startFrame": 151,
+        "endFrame": 161
+      },
+      {
+        "text": "shader",
+        "startFrame": 161,
+        "endFrame": 175
+      },
+      {
+        "text": "shared",
+        "startFrame": 175,
+        "endFrame": 182
+      },
+      {
+        "text": "by",
+        "startFrame": 182,
+        "endFrame": 189
+      },
+      {
+        "text": "two",
+        "startFrame": 189,
+        "endFrame": 195
+      },
+      {
+        "text": "materials.",
+        "startFrame": 195,
+        "endFrame": 209
+      },
+      {
+        "text": "Verified:",
+        "startFrame": 225,
+        "endFrame": 239
+      },
+      {
+        "text": "hand",
+        "startFrame": 239,
+        "endFrame": 249
+      },
+      {
+        "text": "predictions",
+        "startFrame": 249,
+        "endFrame": 260
+      },
+      {
+        "text": "matched",
+        "startFrame": 265,
+        "endFrame": 269
+      },
+      {
+        "text": "the",
+        "startFrame": 270,
+        "endFrame": 277
+      },
+      {
+        "text": "captures,",
+        "startFrame": 277,
+        "endFrame": 287
+      },
+      {
+        "text": "and",
+        "startFrame": 287,
+        "endFrame": 295
+      },
+      {
+        "text": "the",
+        "startFrame": 295,
+        "endFrame": 298
+      },
+      {
+        "text": "tests",
+        "startFrame": 298,
+        "endFrame": 305
+      },
+      {
+        "text": "failed",
+        "startFrame": 305,
+        "endFrame": 316
+      },
+      {
+        "text": "when",
+        "startFrame": 316,
+        "endFrame": 321
+      },
+      {
+        "text": "they",
+        "startFrame": 321,
+        "endFrame": 325
+      },
+      {
+        "text": "should.",
+        "startFrame": 325,
+        "endFrame": 331
+      },
+      {
+        "text": "Still",
+        "startFrame": 343,
+        "endFrame": 348
+      },
+      {
+        "text": "open:",
+        "startFrame": 348,
+        "endFrame": 360
+      },
+      {
+        "text": "why",
+        "startFrame": 364,
+        "endFrame": 367
+      },
+      {
+        "text": "Compatibility",
+        "startFrame": 367,
+        "endFrame": 383
+      },
+      {
+        "text": "showed",
+        "startFrame": 383,
+        "endFrame": 392
+      },
+      {
+        "text": "no",
+        "startFrame": 392,
+        "endFrame": 397
+      },
+      {
+        "text": "colour-space",
+        "startFrame": 405,
+        "endFrame": 411
+      },
+      {
+        "text": "split,",
+        "startFrame": 412,
+        "endFrame": 423
+      },
+      {
+        "text": "and",
+        "startFrame": 423,
+        "endFrame": 429
+      },
+      {
+        "text": "how",
+        "startFrame": 429,
+        "endFrame": 432
+      },
+      {
+        "text": "the",
+        "startFrame": 432,
+        "endFrame": 436
+      },
+      {
+        "text": "fog",
+        "startFrame": 436,
+        "endFrame": 442
+      },
+      {
+        "text": "layers",
+        "startFrame": 442,
+        "endFrame": 452
+      },
+      {
+        "text": "with",
+        "startFrame": 452,
+        "endFrame": 460
+      },
+      {
+        "text": "rain.",
+        "startFrame": 460,
+        "endFrame": 467
+      },
+      {
+        "text": "Human",
+        "startFrame": 480,
+        "endFrame": 485
+      },
+      {
+        "text": "judgement:",
+        "startFrame": 494,
+        "endFrame": 502
+      },
+      {
+        "text": "whether",
+        "startFrame": 503,
+        "endFrame": 508
+      },
+      {
+        "text": "it",
+        "startFrame": 508,
+        "endFrame": 513
+      },
+      {
+        "text": "reads",
+        "startFrame": 513,
+        "endFrame": 519
+      },
+      {
+        "text": "well",
+        "startFrame": 519,
+        "endFrame": 526
+      },
+      {
+        "text": "at",
+        "startFrame": 526,
+        "endFrame": 530
+      },
+      {
+        "text": "night.",
+        "startFrame": 530,
+        "endFrame": 536
+      },
+      {
+        "text": "Next",
+        "startFrame": 536,
+        "endFrame": 555
+      },
+      {
+        "text": "step:",
+        "startFrame": 555,
+        "endFrame": 566
+      },
+      {
+        "text": "profile",
+        "startFrame": 572,
+        "endFrame": 579
+      },
+      {
+        "text": "the",
+        "startFrame": 579,
+        "endFrame": 585
+      },
+      {
+        "text": "fog",
+        "startFrame": 585,
+        "endFrame": 592
+      },
+      {
+        "text": "on",
+        "startFrame": 592,
+        "endFrame": 596
+      },
+      {
+        "text": "the",
+        "startFrame": 596,
+        "endFrame": 599
+      },
+      {
+        "text": "MacBook",
+        "startFrame": 599,
+        "endFrame": 607
+      },
+      {
+        "text": "Air",
+        "startFrame": 607,
+        "endFrame": 617
+      },
+      {
+        "text": "M",
+        "startFrame": 622,
+        "endFrame": 626
+      },
+      {
+        "text": "one",
+        "startFrame": 626,
+        "endFrame": 630
+      },
+      {
+        "text": "this",
+        "startFrame": 631,
+        "endFrame": 637
+      },
+      {
+        "text": "game",
+        "startFrame": 637,
+        "endFrame": 643
+      },
+      {
+        "text": "targets.",
+        "startFrame": 643,
+        "endFrame": 656
+      }
+    ],
+    "B27": [
+      {
+        "text": "Your",
+        "startFrame": 0,
+        "endFrame": 3
+      },
+      {
+        "text": "turn.",
+        "startFrame": 3,
+        "endFrame": 11
+      },
+      {
+        "text": "Paste",
+        "startFrame": 17,
+        "endFrame": 23
+      },
+      {
+        "text": "this",
+        "startFrame": 23,
+        "endFrame": 28
+      },
+      {
+        "text": "into",
+        "startFrame": 28,
+        "endFrame": 34
+      },
+      {
+        "text": "Claude.",
+        "startFrame": 34,
+        "endFrame": 48
+      },
+      {
+        "text": "Please",
+        "startFrame": 55,
+        "endFrame": 58
+      },
+      {
+        "text": "use",
+        "startFrame": 58,
+        "endFrame": 66
+      },
+      {
+        "text": "Walker",
+        "startFrame": 66,
+        "endFrame": 74
+      },
+      {
+        "text": "to",
+        "startFrame": 74,
+        "endFrame": 80
+      },
+      {
+        "text": "help",
+        "startFrame": 80,
+        "endFrame": 84
+      },
+      {
+        "text": "me",
+        "startFrame": 84,
+        "endFrame": 89
+      },
+      {
+        "text": "test",
+        "startFrame": 89,
+        "endFrame": 97
+      },
+      {
+        "text": "one",
+        "startFrame": 97,
+        "endFrame": 103
+      },
+      {
+        "text": "change",
+        "startFrame": 103,
+        "endFrame": 112
+      },
+      {
+        "text": "to",
+        "startFrame": 112,
+        "endFrame": 119
+      },
+      {
+        "text": "my",
+        "startFrame": 119,
+        "endFrame": 124
+      },
+      {
+        "text": "night",
+        "startFrame": 124,
+        "endFrame": 130
+      },
+      {
+        "text": "dashboard",
+        "startFrame": 130,
+        "endFrame": 144
+      },
+      {
+        "text": "shader.",
+        "startFrame": 144,
+        "endFrame": 160
+      },
+      {
+        "text": "I",
+        "startFrame": 172,
+        "endFrame": 176
+      },
+      {
+        "text": "will",
+        "startFrame": 176,
+        "endFrame": 179
+      },
+      {
+        "text": "add",
+        "startFrame": 179,
+        "endFrame": 184
+      },
+      {
+        "text": "a",
+        "startFrame": 184,
+        "endFrame": 188
+      },
+      {
+        "text": "clamp",
+        "startFrame": 188,
+        "endFrame": 193
+      },
+      {
+        "text": "to",
+        "startFrame": 193,
+        "endFrame": 199
+      },
+      {
+        "text": "night",
+        "startFrame": 199,
+        "endFrame": 203
+      },
+      {
+        "text": "amount",
+        "startFrame": 203,
+        "endFrame": 210
+      },
+      {
+        "text": "myself.",
+        "startFrame": 210,
+        "endFrame": 225
+      },
+      {
+        "text": "Before",
+        "startFrame": 236,
+        "endFrame": 242
+      },
+      {
+        "text": "I",
+        "startFrame": 242,
+        "endFrame": 247
+      },
+      {
+        "text": "run",
+        "startFrame": 247,
+        "endFrame": 252
+      },
+      {
+        "text": "anything,",
+        "startFrame": 252,
+        "endFrame": 263
+      },
+      {
+        "text": "check",
+        "startFrame": 273,
+        "endFrame": 277
+      },
+      {
+        "text": "my",
+        "startFrame": 277,
+        "endFrame": 284
+      },
+      {
+        "text": "prediction",
+        "startFrame": 284,
+        "endFrame": 295
+      },
+      {
+        "text": "for",
+        "startFrame": 295,
+        "endFrame": 302
+      },
+      {
+        "text": "the",
+        "startFrame": 302,
+        "endFrame": 306
+      },
+      {
+        "text": "dial",
+        "startFrame": 306,
+        "endFrame": 314
+      },
+      {
+        "text": "hub",
+        "startFrame": 314,
+        "endFrame": 322
+      },
+      {
+        "text": "pixel",
+        "startFrame": 322,
+        "endFrame": 334
+      },
+      {
+        "text": "at",
+        "startFrame": 334,
+        "endFrame": 339
+      },
+      {
+        "text": "night",
+        "startFrame": 339,
+        "endFrame": 344
+      },
+      {
+        "text": "amount",
+        "startFrame": 344,
+        "endFrame": 352
+      },
+      {
+        "text": "two",
+        "startFrame": 358,
+        "endFrame": 364
+      },
+      {
+        "text": "point",
+        "startFrame": 364,
+        "endFrame": 370
+      },
+      {
+        "text": "zero",
+        "startFrame": 371,
+        "endFrame": 376
+      },
+      {
+        "text": "after",
+        "startFrame": 377,
+        "endFrame": 389
+      },
+      {
+        "text": "the",
+        "startFrame": 389,
+        "endFrame": 393
+      },
+      {
+        "text": "clamp,",
+        "startFrame": 393,
+        "endFrame": 400
+      },
+      {
+        "text": "then",
+        "startFrame": 412,
+        "endFrame": 416
+      },
+      {
+        "text": "run",
+        "startFrame": 416,
+        "endFrame": 421
+      },
+      {
+        "text": "the",
+        "startFrame": 421,
+        "endFrame": 427
+      },
+      {
+        "text": "capture",
+        "startFrame": 427,
+        "endFrame": 436
+      },
+      {
+        "text": "script",
+        "startFrame": 436,
+        "endFrame": 448
+      },
+      {
+        "text": "and",
+        "startFrame": 448,
+        "endFrame": 457
+      },
+      {
+        "text": "show",
+        "startFrame": 457,
+        "endFrame": 462
+      },
+      {
+        "text": "me",
+        "startFrame": 462,
+        "endFrame": 467
+      },
+      {
+        "text": "predicted",
+        "startFrame": 467,
+        "endFrame": 476
+      },
+      {
+        "text": "versus",
+        "startFrame": 476,
+        "endFrame": 489
+      },
+      {
+        "text": "measured.",
+        "startFrame": 489,
+        "endFrame": 502
+      },
+      {
+        "text": "One",
+        "startFrame": 525,
+        "endFrame": 535
+      },
+      {
+        "text": "small",
+        "startFrame": 535,
+        "endFrame": 543
+      },
+      {
+        "text": "change,",
+        "startFrame": 543,
+        "endFrame": 559
+      },
+      {
+        "text": "a",
+        "startFrame": 560,
+        "endFrame": 563
+      },
+      {
+        "text": "prediction",
+        "startFrame": 563,
+        "endFrame": 570
+      },
+      {
+        "text": "you",
+        "startFrame": 570,
+        "endFrame": 578
+      },
+      {
+        "text": "commit",
+        "startFrame": 578,
+        "endFrame": 586
+      },
+      {
+        "text": "to",
+        "startFrame": 586,
+        "endFrame": 591
+      },
+      {
+        "text": "first,",
+        "startFrame": 591,
+        "endFrame": 601
+      },
+      {
+        "text": "and",
+        "startFrame": 601,
+        "endFrame": 607
+      },
+      {
+        "text": "a",
+        "startFrame": 607,
+        "endFrame": 610
+      },
+      {
+        "text": "capture",
+        "startFrame": 610,
+        "endFrame": 619
+      },
+      {
+        "text": "that",
+        "startFrame": 619,
+        "endFrame": 626
+      },
+      {
+        "text": "can",
+        "startFrame": 626,
+        "endFrame": 631
+      },
+      {
+        "text": "prove",
+        "startFrame": 631,
+        "endFrame": 637
+      },
+      {
+        "text": "you",
+        "startFrame": 637,
+        "endFrame": 641
+      },
+      {
+        "text": "wrong.",
+        "startFrame": 641,
+        "endFrame": 649
+      },
+      {
+        "text": "Judge",
+        "startFrame": 664,
+        "endFrame": 669
+      },
+      {
+        "text": "Claude's",
+        "startFrame": 669,
+        "endFrame": 683
+      },
+      {
+        "text": "answer",
+        "startFrame": 683,
+        "endFrame": 689
+      },
+      {
+        "text": "on",
+        "startFrame": 689,
+        "endFrame": 694
+      },
+      {
+        "text": "three",
+        "startFrame": 694,
+        "endFrame": 700
+      },
+      {
+        "text": "things:",
+        "startFrame": 700,
+        "endFrame": 712
+      },
+      {
+        "text": "it",
+        "startFrame": 719,
+        "endFrame": 722
+      },
+      {
+        "text": "asks",
+        "startFrame": 722,
+        "endFrame": 729
+      },
+      {
+        "text": "for",
+        "startFrame": 729,
+        "endFrame": 734
+      },
+      {
+        "text": "your",
+        "startFrame": 734,
+        "endFrame": 738
+      },
+      {
+        "text": "number",
+        "startFrame": 738,
+        "endFrame": 745
+      },
+      {
+        "text": "before",
+        "startFrame": 745,
+        "endFrame": 752
+      },
+      {
+        "text": "running",
+        "startFrame": 752,
+        "endFrame": 760
+      },
+      {
+        "text": "anything,",
+        "startFrame": 760,
+        "endFrame": 772
+      },
+      {
+        "text": "it",
+        "startFrame": 776,
+        "endFrame": 779
+      },
+      {
+        "text": "shows",
+        "startFrame": 779,
+        "endFrame": 785
+      },
+      {
+        "text": "the",
+        "startFrame": 785,
+        "endFrame": 792
+      },
+      {
+        "text": "measured",
+        "startFrame": 792,
+        "endFrame": 799
+      },
+      {
+        "text": "pixel,",
+        "startFrame": 799,
+        "endFrame": 812
+      },
+      {
+        "text": "and",
+        "startFrame": 812,
+        "endFrame": 823
+      },
+      {
+        "text": "it",
+        "startFrame": 823,
+        "endFrame": 826
+      },
+      {
+        "text": "flags",
+        "startFrame": 826,
+        "endFrame": 833
+      },
+      {
+        "text": "a",
+        "startFrame": 833,
+        "endFrame": 838
+      },
+      {
+        "text": "mismatch",
+        "startFrame": 838,
+        "endFrame": 851
+      },
+      {
+        "text": "instead",
+        "startFrame": 851,
+        "endFrame": 861
+      },
+      {
+        "text": "of",
+        "startFrame": 861,
+        "endFrame": 865
+      },
+      {
+        "text": "explaining",
+        "startFrame": 865,
+        "endFrame": 877
+      },
+      {
+        "text": "it",
+        "startFrame": 877,
+        "endFrame": 883
+      },
+      {
+        "text": "away.",
+        "startFrame": 883,
+        "endFrame": 892
+      },
+      {
+        "text": "Liam,",
+        "startFrame": 911,
+        "endFrame": 923
+      },
+      {
+        "text": "in",
+        "startFrame": 923,
+        "endFrame": 934
+      },
+      {
+        "text": "for",
+        "startFrame": 934,
+        "endFrame": 940
+      },
+      {
+        "text": "Bear.",
+        "startFrame": 940,
+        "endFrame": 947
+      }
+    ],
+    "B28": [
+      {
+        "text": "Blackridge,",
+        "startFrame": 16,
+        "endFrame": 16
+      },
+      {
+        "text": "Shaded.",
+        "startFrame": 16,
+        "endFrame": 28
+      },
+      {
+        "text": "At",
+        "startFrame": 28,
+        "endFrame": 38
+      },
+      {
+        "text": "Nik",
+        "startFrame": 41,
+        "endFrame": 44
+      },
+      {
+        "text": "Bear",
+        "startFrame": 44,
+        "endFrame": 52
+      },
+      {
+        "text": "Brown.",
+        "startFrame": 52,
+        "endFrame": 64
+      }
+    ],
+    "B12": [
+      {
+        "text": "The",
+        "startFrame": 0,
+        "endFrame": 2
+      },
+      {
+        "text": "sweep",
+        "startFrame": 2,
+        "endFrame": 8
+      },
+      {
+        "text": "runs",
+        "startFrame": 8,
+        "endFrame": 16
+      },
+      {
+        "text": "every",
+        "startFrame": 16,
+        "endFrame": 27
+      },
+      {
+        "text": "control",
+        "startFrame": 27,
+        "endFrame": 38
+      },
+      {
+        "text": "at",
+        "startFrame": 38,
+        "endFrame": 43
+      },
+      {
+        "text": "its",
+        "startFrame": 43,
+        "endFrame": 48
+      },
+      {
+        "text": "minimum,",
+        "startFrame": 48,
+        "endFrame": 56
+      },
+      {
+        "text": "default",
+        "startFrame": 63,
+        "endFrame": 71
+      },
+      {
+        "text": "and",
+        "startFrame": 77,
+        "endFrame": 79
+      },
+      {
+        "text": "maximum",
+        "startFrame": 79,
+        "endFrame": 91
+      },
+      {
+        "text": "on",
+        "startFrame": 91,
+        "endFrame": 98
+      },
+      {
+        "text": "the",
+        "startFrame": 98,
+        "endFrame": 101
+      },
+      {
+        "text": "windshield,",
+        "startFrame": 101,
+        "endFrame": 112
+      },
+      {
+        "text": "then",
+        "startFrame": 116,
+        "endFrame": 121
+      },
+      {
+        "text": "measures",
+        "startFrame": 121,
+        "endFrame": 130
+      },
+      {
+        "text": "what",
+        "startFrame": 130,
+        "endFrame": 137
+      },
+      {
+        "text": "changed.",
+        "startFrame": 137,
+        "endFrame": 154
+      },
+      {
+        "text": "Fog",
+        "startFrame": 171,
+        "endFrame": 178
+      },
+      {
+        "text": "amount",
+        "startFrame": 178,
+        "endFrame": 188
+      },
+      {
+        "text": "is",
+        "startFrame": 188,
+        "endFrame": 192
+      },
+      {
+        "text": "the",
+        "startFrame": 192,
+        "endFrame": 196
+      },
+      {
+        "text": "big",
+        "startFrame": 196,
+        "endFrame": 202
+      },
+      {
+        "text": "one:",
+        "startFrame": 202,
+        "endFrame": 207
+      },
+      {
+        "text": "at",
+        "startFrame": 213,
+        "endFrame": 215
+      },
+      {
+        "text": "its",
+        "startFrame": 215,
+        "endFrame": 220
+      },
+      {
+        "text": "maximum,",
+        "startFrame": 220,
+        "endFrame": 232
+      },
+      {
+        "text": "eight",
+        "startFrame": 238,
+        "endFrame": 243
+      },
+      {
+        "text": "percent",
+        "startFrame": 244,
+        "endFrame": 249
+      },
+      {
+        "text": "of",
+        "startFrame": 250,
+        "endFrame": 253
+      },
+      {
+        "text": "the",
+        "startFrame": 253,
+        "endFrame": 257
+      },
+      {
+        "text": "frame",
+        "startFrame": 257,
+        "endFrame": 262
+      },
+      {
+        "text": "changes",
+        "startFrame": 262,
+        "endFrame": 278
+      },
+      {
+        "text": "and",
+        "startFrame": 278,
+        "endFrame": 284
+      },
+      {
+        "text": "the",
+        "startFrame": 284,
+        "endFrame": 288
+      },
+      {
+        "text": "pane",
+        "startFrame": 291,
+        "endFrame": 294
+      },
+      {
+        "text": "clouds",
+        "startFrame": 294,
+        "endFrame": 302
+      },
+      {
+        "text": "over.",
+        "startFrame": 302,
+        "endFrame": 314
+      },
+      {
+        "text": "Clear",
+        "startFrame": 327,
+        "endFrame": 332
+      },
+      {
+        "text": "centre",
+        "startFrame": 337,
+        "endFrame": 341
+      },
+      {
+        "text": "at",
+        "startFrame": 342,
+        "endFrame": 347
+      },
+      {
+        "text": "zero",
+        "startFrame": 347,
+        "endFrame": 355
+      },
+      {
+        "text": "lets",
+        "startFrame": 355,
+        "endFrame": 364
+      },
+      {
+        "text": "fog",
+        "startFrame": 364,
+        "endFrame": 372
+      },
+      {
+        "text": "creep",
+        "startFrame": 372,
+        "endFrame": 380
+      },
+      {
+        "text": "in",
+        "startFrame": 380,
+        "endFrame": 385
+      },
+      {
+        "text": "from",
+        "startFrame": 385,
+        "endFrame": 390
+      },
+      {
+        "text": "the",
+        "startFrame": 390,
+        "endFrame": 394
+      },
+      {
+        "text": "corner.",
+        "startFrame": 394,
+        "endFrame": 403
+      },
+      {
+        "text": "The",
+        "startFrame": 413,
+        "endFrame": 416
+      },
+      {
+        "text": "other",
+        "startFrame": 416,
+        "endFrame": 419
+      },
+      {
+        "text": "five",
+        "startFrame": 419,
+        "endFrame": 427
+      },
+      {
+        "text": "barely",
+        "startFrame": 427,
+        "endFrame": 437
+      },
+      {
+        "text": "move",
+        "startFrame": 437,
+        "endFrame": 443
+      },
+      {
+        "text": "a",
+        "startFrame": 443,
+        "endFrame": 448
+      },
+      {
+        "text": "pixel,",
+        "startFrame": 448,
+        "endFrame": 457
+      },
+      {
+        "text": "because",
+        "startFrame": 457,
+        "endFrame": 467
+      },
+      {
+        "text": "at",
+        "startFrame": 467,
+        "endFrame": 471
+      },
+      {
+        "text": "the",
+        "startFrame": 471,
+        "endFrame": 473
+      },
+      {
+        "text": "light",
+        "startFrame": 473,
+        "endFrame": 478
+      },
+      {
+        "text": "default",
+        "startFrame": 478,
+        "endFrame": 488
+      },
+      {
+        "text": "the",
+        "startFrame": 488,
+        "endFrame": 496
+      },
+      {
+        "text": "fog",
+        "startFrame": 496,
+        "endFrame": 505
+      },
+      {
+        "text": "band",
+        "startFrame": 510,
+        "endFrame": 514
+      },
+      {
+        "text": "sits",
+        "startFrame": 515,
+        "endFrame": 519
+      },
+      {
+        "text": "behind",
+        "startFrame": 520,
+        "endFrame": 528
+      },
+      {
+        "text": "the",
+        "startFrame": 528,
+        "endFrame": 533
+      },
+      {
+        "text": "frame.",
+        "startFrame": 533,
+        "endFrame": 542
+      },
+      {
+        "text": "To",
+        "startFrame": 542,
+        "endFrame": 558
+      },
+      {
+        "text": "judge",
+        "startFrame": 558,
+        "endFrame": 567
+      },
+      {
+        "text": "them,",
+        "startFrame": 567,
+        "endFrame": 574
+      },
+      {
+        "text": "the",
+        "startFrame": 574,
+        "endFrame": 580
+      },
+      {
+        "text": "next",
+        "startFrame": 580,
+        "endFrame": 586
+      },
+      {
+        "text": "sweep",
+        "startFrame": 586,
+        "endFrame": 593
+      },
+      {
+        "text": "needs",
+        "startFrame": 593,
+        "endFrame": 601
+      },
+      {
+        "text": "a",
+        "startFrame": 601,
+        "endFrame": 607
+      },
+      {
+        "text": "heavier",
+        "startFrame": 607,
+        "endFrame": 614
+      },
+      {
+        "text": "base",
+        "startFrame": 614,
+        "endFrame": 622
+      },
+      {
+        "text": "fog.",
+        "startFrame": 622,
+        "endFrame": 632
+      }
+    ],
+    "B21": [
+      {
+        "text": "Here",
+        "startFrame": 0,
+        "endFrame": 5
+      },
+      {
+        "text": "are",
+        "startFrame": 5,
+        "endFrame": 8
+      },
+      {
+        "text": "the",
+        "startFrame": 8,
+        "endFrame": 11
+      },
+      {
+        "text": "same",
+        "startFrame": 11,
+        "endFrame": 18
+      },
+      {
+        "text": "texture",
+        "startFrame": 18,
+        "endFrame": 30
+      },
+      {
+        "text": "files",
+        "startFrame": 30,
+        "endFrame": 41
+      },
+      {
+        "text": "through",
+        "startFrame": 41,
+        "endFrame": 50
+      },
+      {
+        "text": "both",
+        "startFrame": 50,
+        "endFrame": 58
+      },
+      {
+        "text": "shaders.",
+        "startFrame": 58,
+        "endFrame": 73
+      },
+      {
+        "text": "Godot's",
+        "startFrame": 87,
+        "endFrame": 99
+      },
+      {
+        "text": "generated",
+        "startFrame": 99,
+        "endFrame": 112
+      },
+      {
+        "text": "shader",
+        "startFrame": 112,
+        "endFrame": 126
+      },
+      {
+        "text": "paints",
+        "startFrame": 126,
+        "endFrame": 131
+      },
+      {
+        "text": "the",
+        "startFrame": 131,
+        "endFrame": 137
+      },
+      {
+        "text": "colour",
+        "startFrame": 140,
+        "endFrame": 143
+      },
+      {
+        "text": "texture",
+        "startFrame": 143,
+        "endFrame": 157
+      },
+      {
+        "text": "onto",
+        "startFrame": 157,
+        "endFrame": 164
+      },
+      {
+        "text": "an",
+        "startFrame": 164,
+        "endFrame": 169
+      },
+      {
+        "text": "opaque,",
+        "startFrame": 169,
+        "endFrame": 175
+      },
+      {
+        "text": "lit",
+        "startFrame": 175,
+        "endFrame": 185
+      },
+      {
+        "text": "surface,",
+        "startFrame": 185,
+        "endFrame": 199
+      },
+      {
+        "text": "and",
+        "startFrame": 199,
+        "endFrame": 208
+      },
+      {
+        "text": "the",
+        "startFrame": 208,
+        "endFrame": 211
+      },
+      {
+        "text": "normal",
+        "startFrame": 211,
+        "endFrame": 218
+      },
+      {
+        "text": "map",
+        "startFrame": 218,
+        "endFrame": 226
+      },
+      {
+        "text": "raises",
+        "startFrame": 226,
+        "endFrame": 238
+      },
+      {
+        "text": "tiny",
+        "startFrame": 238,
+        "endFrame": 248
+      },
+      {
+        "text": "bumps.",
+        "startFrame": 248,
+        "endFrame": 256
+      },
+      {
+        "text": "The",
+        "startFrame": 271,
+        "endFrame": 272
+      },
+      {
+        "text": "author's",
+        "startFrame": 272,
+        "endFrame": 283
+      },
+      {
+        "text": "shader",
+        "startFrame": 283,
+        "endFrame": 292
+      },
+      {
+        "text": "turns",
+        "startFrame": 292,
+        "endFrame": 299
+      },
+      {
+        "text": "them",
+        "startFrame": 299,
+        "endFrame": 304
+      },
+      {
+        "text": "into",
+        "startFrame": 304,
+        "endFrame": 309
+      },
+      {
+        "text": "fog:",
+        "startFrame": 309,
+        "endFrame": 318
+      },
+      {
+        "text": "the",
+        "startFrame": 325,
+        "endFrame": 327
+      },
+      {
+        "text": "data",
+        "startFrame": 327,
+        "endFrame": 332
+      },
+      {
+        "text": "texture",
+        "startFrame": 332,
+        "endFrame": 346
+      },
+      {
+        "text": "makes",
+        "startFrame": 346,
+        "endFrame": 352
+      },
+      {
+        "text": "it",
+        "startFrame": 352,
+        "endFrame": 358
+      },
+      {
+        "text": "patchy,",
+        "startFrame": 358,
+        "endFrame": 371
+      },
+      {
+        "text": "and",
+        "startFrame": 371,
+        "endFrame": 376
+      },
+      {
+        "text": "alpha",
+        "startFrame": 376,
+        "endFrame": 383
+      },
+      {
+        "text": "lets",
+        "startFrame": 383,
+        "endFrame": 388
+      },
+      {
+        "text": "the",
+        "startFrame": 388,
+        "endFrame": 394
+      },
+      {
+        "text": "stripes",
+        "startFrame": 394,
+        "endFrame": 403
+      },
+      {
+        "text": "behind",
+        "startFrame": 403,
+        "endFrame": 414
+      },
+      {
+        "text": "it",
+        "startFrame": 414,
+        "endFrame": 419
+      },
+      {
+        "text": "show",
+        "startFrame": 419,
+        "endFrame": 425
+      },
+      {
+        "text": "through.",
+        "startFrame": 425,
+        "endFrame": 436
+      },
+      {
+        "text": "The",
+        "startFrame": 453,
+        "endFrame": 455
+      },
+      {
+        "text": "generated",
+        "startFrame": 455,
+        "endFrame": 467
+      },
+      {
+        "text": "code",
+        "startFrame": 467,
+        "endFrame": 479
+      },
+      {
+        "text": "teaches",
+        "startFrame": 479,
+        "endFrame": 491
+      },
+      {
+        "text": "the",
+        "startFrame": 491,
+        "endFrame": 498
+      },
+      {
+        "text": "vocabulary;",
+        "startFrame": 498,
+        "endFrame": 515
+      },
+      {
+        "text": "the",
+        "startFrame": 529,
+        "endFrame": 532
+      },
+      {
+        "text": "hand-written",
+        "startFrame": 532,
+        "endFrame": 542
+      },
+      {
+        "text": "shader",
+        "startFrame": 542,
+        "endFrame": 557
+      },
+      {
+        "text": "decides",
+        "startFrame": 557,
+        "endFrame": 566
+      },
+      {
+        "text": "what",
+        "startFrame": 566,
+        "endFrame": 576
+      },
+      {
+        "text": "the",
+        "startFrame": 576,
+        "endFrame": 580
+      },
+      {
+        "text": "textures",
+        "startFrame": 580,
+        "endFrame": 590
+      },
+      {
+        "text": "mean.",
+        "startFrame": 590,
+        "endFrame": 601
+      }
+    ]
+  }
+}

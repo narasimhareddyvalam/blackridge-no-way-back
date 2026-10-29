@@ -1,0 +1,4 @@
+Rig self-test stills, 3840x2400, paused tree (SceneTree.paused = true):
+  time_scale 1.0, frames 112 vs 172 (1 s apart): 57594 of 9216000 pixels changed (max channel diff 18)
+  time_scale 0.0, frames 175 vs 235 (1 s apart): 0 of 9216000 pixels changed (max channel diff 0)
+  frame 235 vs frame 236 where light_fog fog_amount=1.0 was set in the same frame: 1735001 of 9216000 pixels changed (max channel diff 34)

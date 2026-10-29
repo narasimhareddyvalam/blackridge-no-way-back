@@ -1,0 +1,40 @@
+{
+  "mp4": "material_edit.mp4",
+  "width": 3840,
+  "height": 2400,
+  "frames": 420,
+  "fps": "60/1",
+  "samples": [
+    {
+      "frame": 0,
+      "mean_abs_diff": 0.511,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 119,
+      "mean_abs_diff": 0.509,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 120,
+      "mean_abs_diff": 0.521,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 210,
+      "mean_abs_diff": 0.521,
+      "p99_9_abs_diff": 4.0
+    },
+    {
+      "frame": 300,
+      "mean_abs_diff": 0.489,
+      "p99_9_abs_diff": 3.0
+    },
+    {
+      "frame": 419,
+      "mean_abs_diff": 0.489,
+      "p99_9_abs_diff": 3.0
+    }
+  ],
+  "failures": []
+}

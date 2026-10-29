@@ -1,0 +1,2 @@
+probe_3840x2160_screen1.avi: mjpeg,1280,800,60/1,120
+probe_3840x2400.avi: mjpeg,1280,800,60/1,120

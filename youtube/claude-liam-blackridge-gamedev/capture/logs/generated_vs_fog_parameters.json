@@ -1,0 +1,73 @@
+{
+  "backdrop": {
+    "material": "StandardMaterial3D unshaded, nearest filter, 1600x900 diagonal stripes (48 px black / 48 px white)",
+    "mesh": "QuadMesh 8 x 4.5 at z = -1.5"
+  },
+  "camera": {
+    "fov_deg": 40.0,
+    "position": "(0, 0, 3.2)",
+    "projection": "perspective"
+  },
+  "directional_light": {
+    "light_color": "Color(1, 1, 1)",
+    "light_energy": 1.0,
+    "rotation_degrees": "(-35, -30, 0)",
+    "shadow_enabled": false
+  },
+  "environment": {
+    "ambient_light_color": "Color(1, 1, 1)",
+    "ambient_light_energy": 0.25,
+    "ambient_light_source": "AMBIENT_SOURCE_COLOR",
+    "background_color": "Color(0.03, 0.03, 0.035)",
+    "background_mode": "BG_COLOR",
+    "fog_enabled": false,
+    "glow_enabled": false,
+    "tonemap_exposure": 1.0,
+    "tonemap_mode": "TONE_MAPPER_LINEAR"
+  },
+  "left_generated": {
+    "left_unset": [
+      "texture_metallic (hint_default_white)",
+      "texture_roughness (hint_roughness_r)",
+      "albedo_texture_size",
+      "point_size",
+      "uv2_scale",
+      "uv2_offset"
+    ],
+    "parameters_set": {
+      "albedo": "(1.0, 1.0, 1.0, 1.0)",
+      "metallic": "0.0",
+      "metallic_texture_channel": "(1.0, 0.0, 0.0, 0.0)",
+      "normal_scale": "1.0",
+      "roughness": "1.0",
+      "specular": "0.5",
+      "texture_albedo": "res://assets/textures/windshield/fog_color.png",
+      "texture_normal": "res://assets/textures/windshield/fog_normal.png",
+      "uv1_offset": "(0.0, 0.0, 0.0)",
+      "uv1_scale": "(1.0, 1.0, 1.0)"
+    },
+    "shader": "res://shaders/standard_generated.gdshader"
+  },
+  "quads": {
+    "left_position": "(-0.75, 0, 0)",
+    "mesh": "QuadMesh 1.20000004768372 x 1.5, upright, facing the camera",
+    "right_position": "(0.75, 0, 0)"
+  },
+  "right_fog": {
+    "material": "res://materials/windshield/light_fog.tres",
+    "runtime_change": "fog_amount 0.25 -> 1.0 (never saved)",
+    "values_now": {
+      "clear_center": "0.65",
+      "edge_softness": "0.2",
+      "fog_amount": "1.0",
+      "fog_color": "res://assets/textures/windshield/fog_color.png",
+      "fog_data": "res://assets/textures/windshield/fog_data.png",
+      "fog_normal": "res://assets/textures/windshield/fog_normal.png",
+      "fog_opacity": "0.45",
+      "fog_tint": "(0.82, 0.87, 0.9, 1.0)",
+      "normal_strength": "0.5",
+      "texture_scale": "1.0"
+    }
+  },
+  "scene": "built in code by take_f_generated_vs_fog.gd (not saved, not part of the game)"
+}

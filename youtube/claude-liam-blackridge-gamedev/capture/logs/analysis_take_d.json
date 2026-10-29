@@ -1,0 +1,89 @@
+{
+  "defaults_identical": true,
+  "default_vs_take_c_baseline_changed_px": 0,
+  "fog_amount_min": {
+    "changed_total": 43922,
+    "inside_windshield_mask": 43922,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "fog_amount_max": {
+    "changed_total": 1737239,
+    "inside_windshield_mask": 1737239,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "fog_opacity_min": {
+    "changed_total": 43922,
+    "inside_windshield_mask": 43922,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "fog_opacity_max": {
+    "changed_total": 50659,
+    "inside_windshield_mask": 50659,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "clear_center_min": {
+    "changed_total": 420779,
+    "inside_windshield_mask": 420779,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "clear_center_max": {
+    "changed_total": 43178,
+    "inside_windshield_mask": 43178,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "edge_softness_min": {
+    "changed_total": 42048,
+    "inside_windshield_mask": 42048,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "edge_softness_max": {
+    "changed_total": 107360,
+    "inside_windshield_mask": 107360,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "normal_strength_min": {
+    "changed_total": 2832,
+    "inside_windshield_mask": 2832,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "normal_strength_max": {
+    "changed_total": 6340,
+    "inside_windshield_mask": 6340,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "texture_scale_min": {
+    "changed_total": 44042,
+    "inside_windshield_mask": 44042,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "texture_scale_max": {
+    "changed_total": 40913,
+    "inside_windshield_mask": 40913,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "fog_tint_min": {
+    "changed_total": 61127,
+    "inside_windshield_mask": 61127,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "fog_tint_max": {
+    "changed_total": 34968,
+    "inside_windshield_mask": 34968,
+    "inside_driver_window_mask": 0,
+    "outside_both_masks": 0
+  },
+  "failures": []
+}

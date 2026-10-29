@@ -1,0 +1,4 @@
+renderer=forward_plus driver=metal adapter=Apple M4 (Apple9) image=3840x2160 file=hint_forward_plus_4k.png
+AsColor: band 1 at (1470, 675) = (64, 64, 64) [9x9 min (64, 64, 64) max (64, 64, 64)]; band 2 at (1920, 675) = (128, 128, 128) [9x9 min (128, 128, 128) max (128, 128, 128)]; band 3 at (2370, 675) = (192, 192, 192) [9x9 min (192, 192, 192) max (192, 192, 192)]
+AsData: band 1 at (1470, 1485) = (137, 137, 137) [9x9 min (137, 137, 137) max (137, 137, 137)]; band 2 at (1920, 1485) = (188, 188, 188) [9x9 min (188, 188, 188) max (188, 188, 188)]; band 3 at (2370, 1485) = (225, 225, 225) [9x9 min (225, 225, 225) max (225, 225, 225)]
+earlier measurement (lower resolution): AsColor 64/128/192, AsData 137/188/225 (1280x800 window, evidence/captures)

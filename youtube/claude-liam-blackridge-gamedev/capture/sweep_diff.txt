@@ -1,0 +1,15 @@
+Interface sweep, light_fog on the windshield. Share of pixels changed by more than 6 levels (max over RGB) versus the default capture, whole 3840x2400 frame.
+fog_amount       min:  0.00% changed · largest difference 6 levels
+fog_amount       max:  8.12% changed · largest difference 34 levels
+fog_opacity      min:  0.00% changed · largest difference 6 levels
+fog_opacity      max:  0.00% changed · largest difference 7 levels
+clear_center     min:  0.80% changed · largest difference 27 levels
+clear_center     max:  0.00% changed · largest difference 6 levels
+edge_softness    min:  0.03% changed · largest difference 22 levels
+edge_softness    max:  0.00% changed · largest difference 3 levels
+normal_strength  min:  0.00% changed · largest difference 1 levels
+normal_strength  max:  0.00% changed · largest difference 3 levels
+texture_scale    min:  0.00% changed · largest difference 7 levels
+texture_scale    max:  0.00% changed · largest difference 7 levels
+fog_tint         min:  0.06% changed · largest difference 16 levels
+fog_tint         max:  0.00% changed · largest difference 3 levels
