@@ -10,3 +10,8 @@ capture/raw/
 _qc/frames/
 _qc/pilot/
 .remotion-*/
+
+# compile.py working folder (per-beat clips, WAV audio): regenerable build output
+clips/
+*.wav
+build/final_export.log

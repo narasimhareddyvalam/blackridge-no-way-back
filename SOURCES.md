@@ -28,7 +28,13 @@ Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
 
 ## Generative models
 
-None. No image, sound or text generator was used for Assignment 5 assets.
+- **Game assets:** none. No image, sound or text generator made any Assignment 5 game asset.
+- **Film narration:** Kokoro-82M (Apache-2.0), run locally through kokoro-onnx (MIT), voice
+  `am_onyx`. It is free, uses no voice cloning, and has no paid TTS.
+- **Film word timing:** faster-whisper (MIT), Whisper `base`.
+- **Film visuals:** no image, video or music generator. Every visual is real engine output,
+  an actual source file, or a Remotion teaching view. Details are in
+  `youtube/claude-liam-blackridge-gamedev/SOURCES.md`.
 
 ## Human and AI contributions
 
@@ -66,6 +72,13 @@ None. No image, sound or text generator was used for Assignment 5 assets.
 - Curl check: `normal_map_check.gd`, the course's code with tab indentation, and the
   calibration download.
 - Docs: the doc skeletons and the measured parts of `TEST-REPORT.md`.
+- The film "Blackridge, Shaded" (`youtube/claude-liam-blackridge-gamedev/`). Claude wrote:
+  - the script draft, the beat sheet and the narration text;
+  - the evidence ledger and the shared `GodotEngineEvidence` component;
+  - the 4K capture drivers and takes, through a subagent on an isolated copy of `game/`;
+  - the build and QC.
+  The author approved the script and set the rule that the narration never frames the work
+  as course requirements.
 
 ### Suggestions adopted, modified or rejected
 
@@ -74,5 +87,6 @@ None. No image, sound or text generator was used for Assignment 5 assets.
   foggy-windshield idea was the author's own. Claude suggested overlays rather
   than replacing the glass.
 - The author rejected the impact flash, which Claude had recommended.
-- The author accepted Claude's review findings on the brief and on `CLAUDE.md`,
-  and wrote the fixes in their own words.
+- The author accepted Claude's review findings. On the brief, the author wrote the dated
+  revision in their own words (`a09eb4e`). On `CLAUDE.md`, the author approved the fixes and
+  Claude applied them (`4bba9b2`).

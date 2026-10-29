@@ -80,8 +80,10 @@ after `frame_post_draw`. Images are in `evidence/captures/night_cluster_*.png`.
 - **OS screenshot comparison:** Claude Code cropped the dashboard from the author's macOS
   screenshot (headlights on) and put it beside `cockpit_night_amount_0.0.png` and `_1.0.png`
   (`evidence/playtest/cluster_compare.png`). It matches the amber 1.0 capture, not the
-  mint-white 0.0 capture. Author to confirm by eye.
-- Author to confirm: look at each image.
+  mint-white 0.0 capture.
+- **Author's check (2026-10-29, as reported to Claude Code):** after watching the film
+  preview, which shows these captures and the dashboard dimming in play, the author confirms
+  the dimming "looks right".
 
 ## In play (HUMAN CHECK)
 

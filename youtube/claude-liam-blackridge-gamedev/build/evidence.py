@@ -210,12 +210,12 @@ P["B05"] = {"evidence_media": "evidence/night_cluster_1.0.png", "props": {
         {"label": "2.0, set from code", "text": "hub (13, 0, 0) · background (0, 0, 0)\nhint_range draws a slider; it does not clamp", "tone": "fail", "at": t_2}]}}
 
 # B06 — the hand calculation
-P["B06"] = {"props": {"title": "The Hand Prediction", "rows": math_rows([
+P["B06"] = {"props": {"title": "Predicted 105, Measured 105", "rows": math_rows([
     (r"R = C\,(1 - a + a\,n\,b)", when("B06", "Factor", 2)),
     (r"135 \times (1 - 0.5 + 0.5 \times 1.0 \times 0.55)", when("B06", "135", 9)),
     (r"= 135 \times 0.775 = 104.625 \approx 105", when("B06", "rounds", 13))]),
-    "note": "C original · a amount · n amber · b brightness",
-    "conditions": "Hub red at a = 0.5. The capture reads 105."}}
+    "note": "the colour line, factored",
+    "conditions": ""}}
 
 # B08 — the effect in play (take A, real-time segments cut only between presses)
 TAKE_A = "capture/take_a_headlights.mp4"

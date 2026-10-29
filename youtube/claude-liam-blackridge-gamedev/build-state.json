@@ -1,0 +1,5 @@
+{
+  "status": "failed",
+  "error": "[art] command failed:\n/Users/narasimhareddyvalam/Desktop/brutalist.art/.venv/bin/python3 /Users/narasimhareddyvalam/Desktop/brutalist.art/runtime/qc/final_frame_check.py /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev --mp4 /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/exports/landscape/.claude-liam-blackridge-gamedev-candidate-d4drc3s2/candidate.mp4 --sheet /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-gamedev/clips/_work/resolved-sheet.json\n",
+  "at": "2026-10-29T17:09:44.343521-04:00"
+}

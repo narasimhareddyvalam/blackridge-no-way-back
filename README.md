@@ -72,8 +72,13 @@ what are in [SOURCES.md](SOURCES.md).
 **Known limitations:**
 - Under Compatibility, the hint experiment shows the file's values on both quads. A
   Forward+ comparison matches the sRGB predictions.
-- The fog's look still needs the author's visual review.
-- **Film:** link to be added at submission.
+- At the light default, five of the fog's seven controls barely show from the driver's
+  view (measured in the film's 4K sweep).
+- Captures are offline renders at a fixed 60 fps; real-time performance has not been
+  profiled on the target MacBook Air M1.
+- **Film:** "Blackridge, Shaded" (4K, about 9.5 minutes). The source is in
+  `youtube/claude-liam-blackridge-gamedev/`: script, beat sheet, 4K engine captures,
+  evidence ledger and build log. Link: to be added at submission.
 
 The [complete story](docs/GAME_STORY.md) and
 [game design document](docs/GAME_DESIGN.md) are verified Markdown conversions of

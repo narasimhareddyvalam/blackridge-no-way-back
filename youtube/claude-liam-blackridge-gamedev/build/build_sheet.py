@@ -107,7 +107,9 @@ beat("B01", "BLUF",
                {"at": "rules you can test", "event": "Deletes 'decoration', types 'rules you can test'"}]},
      "EXECUTIVE-SUMMARY LAW, walker bookend 2. Single-token trigger (the component matches one word): "
      "'decoration' -> 'rules you can test'. Misconception: shaders as decoration -> testable rules.",
-     lead_silence_s=0.8)
+     lead_silence_s=0.8,
+     qc={"sparse_by_design": True, "sparse_reason": "Hesitant-writer bookend (EXECUTIVE-SUMMARY LAW): the "
+         "overview is typed token by token, so steady-state frames are mostly cream by design."})
 
 beat("B02", "SETUP",
      "Blackridge already had the van, the district and the driving. This build adds four pieces: a shader "
@@ -419,7 +421,9 @@ beat("B26", "VERDICT",
              "Open: the Compatibility hint result, fog layered with rain, and M1 performance.",
              "Human judgement: whether it reads well at night."]}}},
      "Walker bookend 4a: verdict separates implemented work, limitations and human judgement.",
-     lead_silence_s=0.5)
+     lead_silence_s=0.5,
+     qc={"sparse_by_design": True, "sparse_reason": "Locked ClaudeVerdictArtifact bookend: the component fixes "
+         "the card layout and the four recap lines are the mandated content; the cream around it is the card's page."})
 
 beat("B27", "HANDOFF",
      "Your turn. Paste this into Claude. Please use Walker to help me test one change to my night dashboard "

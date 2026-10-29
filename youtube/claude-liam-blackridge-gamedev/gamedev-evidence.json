@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "teaching_contract": "code-then-result-v1",
+  "game": "Blackridge: No Way Back",
+  "game_root": "game/",
+  "components": [
+    {
+      "id": "night-dimming",
+      "explanation": "Hand-written canvas_item shader dims the 2D instrument cluster toward amber while FreightVan.headlights_on is true; a code-made driver fades night_amount by delta and reverses mid-fade.",
+      "beat_ids": [
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08"
+      ],
+      "files": [
+        "shaders/night_cluster.gdshader",
+        "features/vehicles/freight_van/night_dimming.gd",
+        "features/vehicles/freight_van/instruments.gd",
+        "features/vehicles/freight_van/freight_van.gd"
+      ]
+    },
+    {
+      "id": "fog-windshield",
+      "explanation": "Spatial fog shader with seven grouped uniforms and three textures (colour, normal, data); one shader, two ShaderMaterials on overlays beside the windshield and the driver's window.",
+      "beat_ids": [
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "B14",
+        "B15",
+        "B16"
+      ],
+      "files": [
+        "shaders/foggy_windshield.gdshader",
+        "materials/windshield/light_fog.tres",
+        "materials/windshield/heavy_fog.tres",
+        "features/vehicles/freight_van/van_presentation.gd",
+        "assets/textures/windshield/ATTRIBUTION.md",
+        "assets/textures/windshield/fog_color.png",
+        "assets/textures/windshield/fog_color.png.import",
+        "assets/textures/windshield/fog_data.png",
+        "assets/textures/windshield/fog_data.png.import",
+        "assets/textures/windshield/fog_normal.png",
+        "assets/textures/windshield/fog_normal.png.import"
+      ]
+    },
+    {
+      "id": "hint-experiment",
+      "explanation": "Two samplers read one three-band image with and without source_color; unshaded quads show the values under Compatibility and a Forward+ comparison.",
+      "beat_ids": [
+        "B17",
+        "B18",
+        "B19"
+      ],
+      "files": [
+        "shaders/hint_experiment.gdshader",
+        "experiments/hint_experiment/greys_3x1.png",
+        "experiments/hint_experiment/greys_3x1.png.import",
+        "experiments/hint_experiment/hint_as_color.tres",
+        "experiments/hint_experiment/hint_as_data.tres",
+        "experiments/hint_experiment/hint_experiment.tscn"
+      ]
+    },
+    {
+      "id": "generated-shader",
+      "explanation": "Godot's StandardMaterial3D conversion, annotated by the author, compared line-by-line and rendered beside the hand-written fog shader with the same textures.",
+      "beat_ids": [
+        "B20",
+        "B21"
+      ],
+      "files": [
+        "shaders/standard_generated.gdshader"
+      ]
+    },
+    {
+      "id": "tests",
+      "explanation": "Headless suites: uniform-list contract, real input timing at 30/60/144 fps, material/import audit, and the normal-map curl check calibrated on a Poly Haven pair.",
+      "beat_ids": [
+        "B14",
+        "B22",
+        "B23"
+      ],
+      "files": [
+        "tests/calibration/.gdignore",
+        "tests/calibration/ATTRIBUTION.md",
+        "tests/calibration/box_profile_metal_sheet_nor_dx_1k.png",
+        "tests/calibration/box_profile_metal_sheet_nor_gl_1k.png",
+        "tests/normal_map_check.gd",
+        "tests/test_materials.gd",
+        "tests/test_night_dimming.gd"
+      ]
+    },
+    {
+      "id": "project-config",
+      "explanation": "project.godot names the Compatibility renderer (line 125), the main scene and the headlights (L) and left_window (J) input actions the captures press.",
+      "beat_ids": [
+        "B02",
+        "B03"
+      ],
+      "files": [
+        "project.godot"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/textures/windshield/ATTRIBUTION.md",
+      "sha256": "440d91dd50643530f45b9b6db84cfdc01855370223fe69bd0d147d3fa5dae024",
+      "role": "documentation",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_color.png",
+      "sha256": "d075d863d6a2efb34c5a240622f42f72807a50a5a7533fd556e578b5be3e575c",
+      "role": "texture",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_color.png.import",
+      "sha256": "4e1b404145141c8b6e6d3146ddd14f3d7415dc4a92ec06faef9232d5474b5445",
+      "role": "import settings",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_data.png",
+      "sha256": "6c311ac7304e3bb6fd002834aa85778767678aea4e889c4cfba4457b9a2532bd",
+      "role": "texture",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_data.png.import",
+      "sha256": "5caf339ef1f0b348421e3b4dbc4080a29ae9febbb58dcce8790036429d16c1bf",
+      "role": "import settings",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_normal.png",
+      "sha256": "c7b33bf7b2207aad1fa88155f63ec270f59325979acdb729927bafbf5f86d9fb",
+      "role": "texture",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "assets/textures/windshield/fog_normal.png.import",
+      "sha256": "274db2e9e5d91280fd9c27c424ed19e0dc770b53f9d74c07bbbdc45da63a8230",
+      "role": "import settings",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "experiments/hint_experiment/greys_3x1.png",
+      "sha256": "deb9df2a9689dd2297f2d37a3fa2759104f49dbb2eb3e33c00e1fa6292060ca6",
+      "role": "texture",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "experiments/hint_experiment/greys_3x1.png.import",
+      "sha256": "4607207828eb0d706153cd2ba8eb384dac24098b954a85357dd51d16fc9f34a8",
+      "role": "import settings",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "experiments/hint_experiment/hint_as_color.tres",
+      "sha256": "b9c396dcbf6447f6e26150263dc4d7db4d6e4c2a3c67ce5ddda2feb4a5147330",
+      "role": "material",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "experiments/hint_experiment/hint_as_data.tres",
+      "sha256": "1037c11498dfd8cfff14b394fc428c43058e08d849ee5d40481b51c92ac449ec",
+      "role": "material",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "experiments/hint_experiment/hint_experiment.tscn",
+      "sha256": "4ce6189560e193951250dd99776ea2e3e35de2e35512256f3488ba2e47daf3fb",
+      "role": "scene",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "features/vehicles/freight_van/freight_van.gd",
+      "sha256": "371ff9820f91e872d3642f5969633c4ff527853fb5686389a9bd78a19bbf7827",
+      "role": "script",
+      "component_ids": [
+        "night-dimming"
+      ]
+    },
+    {
+      "path": "features/vehicles/freight_van/instruments.gd",
+      "sha256": "769ade3ee7dcc675e42904b85dc6c14b4f6790e1c4f53bad8d393679ad3619db",
+      "role": "script",
+      "component_ids": [
+        "night-dimming"
+      ]
+    },
+    {
+      "path": "features/vehicles/freight_van/night_dimming.gd",
+      "sha256": "dfb3bc448439b328a0b90047a21edc6762383820aee547cd91ce8efdfdc8690e",
+      "role": "script",
+      "component_ids": [
+        "night-dimming"
+      ]
+    },
+    {
+      "path": "features/vehicles/freight_van/van_presentation.gd",
+      "sha256": "b4036ed585f1a690a1d3ac587dfcaf6742b9e2d6287bcf2690082f3fac5702fe",
+      "role": "script",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "materials/windshield/heavy_fog.tres",
+      "sha256": "0d61537fb05f04940d829c5997d251b89b06b70fcc959bc77168159e6779e725",
+      "role": "material",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "materials/windshield/light_fog.tres",
+      "sha256": "b5b949d58bb55e9d5606f588e79db85d767159ca27598c3376bcb7ef6d63a475",
+      "role": "material",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "project.godot",
+      "sha256": "aa4b8a8b5d8c297ef2c4d0125e9f7a0de7c4cbb114da96aae8706cf10a747640",
+      "role": "configuration",
+      "component_ids": [
+        "project-config"
+      ]
+    },
+    {
+      "path": "shaders/foggy_windshield.gdshader",
+      "sha256": "3fbe19ff1143364ed77a839432018e4395bcb5d9481263092df45f975b382aca",
+      "role": "shader",
+      "component_ids": [
+        "fog-windshield"
+      ]
+    },
+    {
+      "path": "shaders/hint_experiment.gdshader",
+      "sha256": "808650dd6d9952401f051e72ed106d1f6c44c3e5980cb560c21e9dd4443d8829",
+      "role": "shader",
+      "component_ids": [
+        "hint-experiment"
+      ]
+    },
+    {
+      "path": "shaders/night_cluster.gdshader",
+      "sha256": "7746cd41ba1eb33f6ff3a8981de3d5087be4c1166fbc44ea2e85b3ef37be7f8a",
+      "role": "shader",
+      "component_ids": [
+        "night-dimming"
+      ]
+    },
+    {
+      "path": "shaders/standard_generated.gdshader",
+      "sha256": "e1df32a572541dbc9b168ba64ee4dfac3f2e38924c3bef0a23be51d8f88e483d",
+      "role": "shader",
+      "component_ids": [
+        "generated-shader"
+      ]
+    },
+    {
+      "path": "tests/calibration/.gdignore",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "documentation",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/calibration/ATTRIBUTION.md",
+      "sha256": "4a1aa67538b483c7301c108fbb58ca02de155bd411111eab026693a7f0709913",
+      "role": "documentation",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/calibration/box_profile_metal_sheet_nor_dx_1k.png",
+      "sha256": "8fa6bda781df18aefd20e71091c447d824760b20bd2e71423afddc1125c79efb",
+      "role": "texture",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/calibration/box_profile_metal_sheet_nor_gl_1k.png",
+      "sha256": "a90439e877843125c4e0493cc481cb9c7140db487859b4e372de2a5887558cea",
+      "role": "texture",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/normal_map_check.gd",
+      "sha256": "903229caa974657074046b6db32e6469ea626dddc9bfc31f92cb63da2eba7585",
+      "role": "script",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/test_materials.gd",
+      "sha256": "31c218edd051d6d79d2e1f2b307792b9db02c73de623b6e2a8a34ec9e747bb66",
+      "role": "script",
+      "component_ids": [
+        "tests"
+      ]
+    },
+    {
+      "path": "tests/test_night_dimming.gd",
+      "sha256": "6d6d9fbffbd381db092ca3831eafa14b1cfaf252e5f97e880aa651cf3b815646",
+      "role": "script",
+      "component_ids": [
+        "tests"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "path": "MATERIALS.md",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "app/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "app/first_drive.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "app/first_drive.tscn",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "app/visual_benchmark.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "app/visual_benchmark.tscn",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "default_bus_layout.tres",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/cabin_rain.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/cabin_rain.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/collision.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/collision.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/driving_audio.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/engine.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/engine.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/horn.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/horn.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/indicator_off.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/indicator_off.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/indicator_on.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/indicator_on.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/music.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/music.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/rain.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/rain.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/tires.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/tires.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/wind.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/wind.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/window.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/window.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/wiper.wav",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/audio/first_drive/wiper.wav.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/characters/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/characters/driver/driver.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/cinematics/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/depot_yard.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/depot_yard.tscn",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/derived/box_profile_metal_sheet_grey_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/derived/box_profile_metal_sheet_grey_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/POLYHAVEN.md",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/hdris/rooftop_night/rooftop_night_2k.hdr",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/hdris/rooftop_night/rooftop_night_2k.hdr.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/barrel_03.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/barrel_03.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/barrel_03.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/cardboard_box_01.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/cardboard_box_01.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/cardboard_box_01.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/cardboard_box_01/textures/cardboard_box_01_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/concrete_road_barrier.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/concrete_road_barrier.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/concrete_road_barrier.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/concrete_road_barrier/textures/concrete_road_barrier_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/covered_car.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/covered_car.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/covered_car.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/exterior_aircon_unit.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/exterior_aircon_unit.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/exterior_aircon_unit.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_opacity_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_opacity_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_02_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_02_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_02_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_02_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_opacity_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_opacity_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/fire_hydrant.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/fire_hydrant.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/fire_hydrant.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_aged_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/fire_hydrant/textures/fire_hydrant_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/metal_trash_can.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/metal_trash_can.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/metal_trash_can.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/metal_trash_can/textures/metal_trash_can_rust_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/modular_chainlink_fence.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/modular_chainlink_fence.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/modular_chainlink_fence.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/modular_electricity_poles.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/modular_electricity_poles.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/modular_electricity_poles.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_pieces_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/modular_metal_gutter.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/modular_metal_gutter.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/modular_metal_gutter.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/old_tyre.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/old_tyre.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/old_tyre.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/old_tyre/textures/old_tyre_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/rollershutter_door.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/rollershutter_door.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/rollershutter_door.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_graffiti_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_graffiti_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/security_light.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/security_light.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/security_light.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/utility_box_01.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/utility_box_01.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/utility_box_01/utility_box_01.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/water_manhole_cover.bin",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/water_manhole_cover.gltf",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/models/water_manhole_cover/water_manhole_cover.gltf.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_floor_worn_001/concrete_floor_worn_001_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/concrete_wall_006/concrete_wall_006_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_arm_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_arm_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_diff_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_diff_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_nor_gl_2k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_nor_gl_2k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_arm_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_arm_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_diff_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_diff_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_nor_gl_1k.jpg",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_nor_gl_1k.jpg.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/depot_yard/wet_ground.gdshader",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/asphalt_albedo.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/asphalt_albedo.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/asphalt_normal.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/asphalt_normal.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/bollard.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/bollard.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/concrete_albedo.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/concrete_albedo.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/concrete_normal.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/concrete_normal.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/crate.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/crate.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/crate_legends.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/crate_legends.png.import",
+      "reason": "Pre-existing label texture's import settings. The Godot editor's Detect 3D reimport rewrote them during this work (VRAM Compressed; TEST-REPORT.md, commit df5a1fd). Not shader code and not taught in this film."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/pallet.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/art/pallet.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/depot_detail.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/industrial_loop.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/industrial_loop.tscn",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/industrial_wall.gdshader",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/environments/industrial_loop/wet_asphalt.gdshader",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/missions/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/missions/night_freight/first_drive.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/systems/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/ui/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/ui/driving_hud/driving_hud.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/ui/performance_overlay/performance_overlay.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/body.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/body.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/body_legends.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/body_legends.png.import",
+      "reason": "Pre-existing label texture's import settings. The Godot editor's Detect 3D reimport rewrote them during this work (VRAM Compressed; TEST-REPORT.md, commit df5a1fd). Not shader code and not taught in this film."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_cabin_grain_normal.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_cabin_grain_normal.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_cabin_grain_orm.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_cabin_grain_orm.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_grain_normal.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_grain_normal.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_grain_orm.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_grain_orm.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_legends.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/cabin_legends.png.import",
+      "reason": "Pre-existing label texture's import settings. The Godot editor's Detect 3D reimport rewrote them during this work (VRAM Compressed; TEST-REPORT.md, commit df5a1fd). Not shader code and not taught in this film."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/legends.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/legends.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_cabin_grain_normal.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_cabin_grain_normal.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_cabin_grain_orm.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_cabin_grain_orm.png.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_legends.png",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/steering_legends.png.import",
+      "reason": "Pre-existing label texture's import settings. The Godot editor's Detect 3D reimport rewrote them during this work (VRAM Compressed; TEST-REPORT.md, commit df5a1fd). Not shader code and not taught in this film."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/tire.glb",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/art/tire.glb.import",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/freight_van.tscn",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/navigation_display.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "features/vehicles/freight_van/windshield.gdshader",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "shared/assets/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "shared/components/.gitkeep",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    },
+    {
+      "path": "shared/components/mesh_builder.gd",
+      "reason": "Pre-existing Blackridge system or asset from the baseline project (commit e81ec92: environment, audio, UI, missions, vehicle art, shared builders). Unchanged in substance by this shader work and outside this film's scope; it appears only as context inside the captured footage."
+    }
+  ],
+  "excerpts": [
+    {
+      "beat_id": "B04",
+      "path": "shaders/night_cluster.gdshader",
+      "start_line": 1,
+      "end_line": 15,
+      "text": "shader_type canvas_item;\n\n// How much the dashboard changes at night\nuniform float night_amount : hint_range(0.0, 1.0) = 0.0;\n\n// Warm amber dashboard light\nuniform vec4 night_color : source_color = vec4(1.0, 0.55, 0.20, 1.0);\n\n// How bright the gauges stay at night\nuniform float night_brightness : hint_range(0.1, 1.0) = 0.55;\n\nvoid fragment() {\n\t// Blend between normal and night lighting\n\tCOLOR.rgb = mix(COLOR.rgb, COLOR.rgb * night_color.rgb * night_brightness, night_amount);\n}"
+    },
+    {
+      "beat_id": "B07",
+      "path": "features/vehicles/freight_van/night_dimming.gd",
+      "start_line": 21,
+      "end_line": 31,
+      "text": "func _process(delta: float) -> void:\n\tif not is_instance_valid(vehicle):\n\t\treturn\n\tvar target := 1.0 if vehicle.headlights_on else 0.0\n\tif night_amount == target:\n\t\treturn\n\tvar seconds := fade_in_seconds if target > night_amount else fade_out_seconds\n\tnight_amount = move_toward(night_amount, target, delta / seconds)\n\tif absf(target - night_amount) < 0.000001:\n\t\tnight_amount = target\n\tmaterial.set_shader_parameter(\"night_amount\", night_amount)"
+    },
+    {
+      "beat_id": "B09",
+      "path": "features/vehicles/freight_van/van_presentation.gd",
+      "start_line": 226,
+      "end_line": 233,
+      "text": "\tvar windshield := QuadMesh.new()\n\twindshield.size = Vector2(2.12, 1.08)\n\tvar pane := Build.instance(_cabin, Vector3(0, 2.17, -1.34), windshield, _glass)\n\tpane.rotation.x = 0.32\n\tfog_overlays.append(_fog_overlay(pane, windshield.size, Vector3(0, 0, 0.012), 0.0,\n\t\tLIGHT_FOG))\n\tfog_overlays.append(_fog_overlay(_windows[0], Vector2(1.48, 0.9), Vector3(0.012, 0, 0),\n\t\tPI / 2, HEAVY_FOG))"
+    },
+    {
+      "beat_id": "B11",
+      "path": "shaders/foggy_windshield.gdshader",
+      "start_line": 1,
+      "end_line": 10,
+      "text": "shader_type spatial;\nrender_mode blend_mix, depth_draw_never, cull_disabled;\n\n// Fog settings\ngroup_uniforms Fog;\n\nuniform float fog_amount : hint_range(0.0, 1.0) = 0.25;\nuniform float fog_opacity : hint_range(0.0, 1.0) = 0.45;\nuniform vec4 fog_tint : source_color = vec4(0.82, 0.87, 0.90, 1.0);\n"
+    },
+    {
+      "beat_id": "B13",
+      "path": "shaders/foggy_windshield.gdshader",
+      "start_line": 26,
+      "end_line": 35,
+      "text": "uniform sampler2D fog_color : source_color, filter_linear, repeat_enable;\nuniform sampler2D fog_normal : hint_normal, filter_linear, repeat_enable;\nuniform sampler2D fog_data : filter_linear, repeat_enable;\n\nvoid fragment() {\n\t// Read the three textures\n\tvec2 fog_uv = UV * texture_scale;\n\tvec3 color_sample = texture(fog_color, fog_uv).rgb;\n\tvec3 normal_sample = texture(fog_normal, fog_uv).rgb;\n\tfloat fog_thickness = texture(fog_data, fog_uv).r;"
+    },
+    {
+      "beat_id": "B15",
+      "path": "materials/windshield/light_fog.tres",
+      "start_line": 8,
+      "end_line": 19,
+      "text": "[resource]\nshader = ExtResource(\"1\")\nshader_parameter/fog_color = ExtResource(\"2\")\nshader_parameter/fog_normal = ExtResource(\"3\")\nshader_parameter/fog_data = ExtResource(\"4\")\nshader_parameter/fog_amount = 0.25\nshader_parameter/fog_opacity = 0.45\nshader_parameter/clear_center = 0.65\nshader_parameter/edge_softness = 0.2\nshader_parameter/normal_strength = 0.5\nshader_parameter/texture_scale = 1.0\nshader_parameter/fog_tint = Color(0.82, 0.87, 0.9, 1)"
+    },
+    {
+      "beat_id": "B17",
+      "path": "shaders/hint_experiment.gdshader",
+      "start_line": 1,
+      "end_line": 16,
+      "text": "shader_type spatial;\nrender_mode unshaded;\n\n// Same image, read in two different ways\nuniform sampler2D color_read : source_color, filter_nearest;\nuniform sampler2D data_read : filter_nearest;\n\n// Switch between the two results\nuniform bool show_data = false;\n\nvoid fragment() {\n\tvec3 as_color = texture(color_read, UV).rgb;\n\tvec3 as_data = texture(data_read, UV).rgb;\n\n\tALBEDO = show_data ? as_data : as_color;\n}"
+    },
+    {
+      "beat_id": "B20",
+      "path": "shaders/standard_generated.gdshader",
+      "start_line": 6,
+      "end_line": 7,
+      "text": "uniform vec4 albedo : source_color; // stores the main colour of the material\nuniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable; // reads the colour texture"
+    },
+    {
+      "beat_id": "B22",
+      "path": "tests/test_night_dimming.gd",
+      "start_line": 70,
+      "end_line": 75,
+      "text": "func _check_contract() -> void:\n\tvar shader := load(SHADER_PATH) as Shader\n\tvar listed := {}\n\tfor item in shader.get_shader_uniform_list():\n\t\tlisted[item.name] = item.type\n\t_check(not listed.is_empty(), \"Shader parses: get_shader_uniform_list() is not empty\")"
+    }
+  ],
+  "code_result_pairs": [
+    {
+      "code_beat": "B04",
+      "result_beat": "B05",
+      "observation": "Captured cluster pixels at night_amount 0.0/0.5/1.0 equal the hand predictions (18/18); 2.0 set from code goes darker, so hint_range did not clamp.",
+      "media": {
+        "path": "evidence/night_cluster_1.0.png",
+        "sha256": "b302e213b79c938a3945bdc12865fd4e28cf3acaba7acb5296b088a0e6f15fdd"
+      }
+    },
+    {
+      "code_beat": "B07",
+      "result_beat": "B08",
+      "observation": "Pressing L fades the dashboard between amber and mint-white; a mid-fade double tap reverses without a jump.",
+      "media": {
+        "path": "capture/take_a_headlights_keyframes.png",
+        "sha256": "a0bfa339b03a6e582d5508763b3509a7301657b2d0319887fa985c06b7467c09"
+      }
+    },
+    {
+      "code_beat": "B09",
+      "result_beat": "B10",
+      "observation": "Pressing J lowers the driver's window and its heavy-fog overlay together.",
+      "media": {
+        "path": "capture/take_b_driver_window_keyframes.png",
+        "sha256": "abceb3e058406d0c982c425892feda4e8a0ad67486ae7370ab7ba38caaf920f4"
+      }
+    },
+    {
+      "code_beat": "B11",
+      "result_beat": "B12",
+      "observation": "Each uniform swept min/default/max on light_fog changes the windshield fog as its range describes.",
+      "media": {
+        "path": "capture/sweep_fog_amount_max.png",
+        "sha256": "f4fb349bf34915f87216049d110e99969fb185c1ba0b7230cafbcc35c456dedf"
+      }
+    },
+    {
+      "code_beat": "B13",
+      "result_beat": "B14",
+      "observation": "The three bound textures are the actual generated files with explicit import settings; the normal map reads as OpenGL (curl check).",
+      "media": {
+        "path": "evidence/fog_data.png",
+        "sha256": "6c311ac7304e3bb6fd002834aa85778767678aea4e889c4cfba4457b9a2532bd"
+      }
+    },
+    {
+      "code_beat": "B15",
+      "result_beat": "B16",
+      "observation": "Editing the light_fog material changes only the windshield; editing the shared shader line changes both windows.",
+      "media": {
+        "path": "capture/shader_edit_visible_after.png",
+        "sha256": "778f28055188716584a78cbed24b50f62e3875162ea26da6b4f0c1431c242f04"
+      }
+    },
+    {
+      "code_beat": "B17",
+      "result_beat": "B18",
+      "observation": "Forward+ shows 137/188/225 on the data quad as predicted; Compatibility shows the file values on both quads.",
+      "media": {
+        "path": "capture/hint_compatibility_4k.png",
+        "sha256": "ccaa5dcd5d831cf4d504d7fed8d00b09626619ccc7628e438b982e73aa4c8f76"
+      }
+    },
+    {
+      "code_beat": "B20",
+      "result_beat": "B21",
+      "observation": "Godot's generated shader renders the textures as an opaque lit surface; the hand-written fog shader is transparent with a clear centre.",
+      "media": {
+        "path": "capture/generated_vs_fog_4k.png",
+        "sha256": "9092c7adde70851fb207a742d3f870a32300de7d8cc5013d625993edecea2cf8"
+      }
+    },
+    {
+      "code_beat": "B22",
+      "result_beat": "B23",
+      "observation": "Recorded suite results pass; each deliberate mutation made its test exit 1.",
+      "media": {
+        "path": "evidence/recorded_test_output.png",
+        "sha256": "9cea8357f44ace463b4e8b4b9b70b83c68df33ebddb4f727dcc23c7112366b67"
+      }
+    }
+  ]
+}
