@@ -159,8 +159,33 @@ Set explicitly, then reimported:
 The first headless import had written normal_map=0 (Detect), mipmaps=false and
 detect_3d/compress_to=1.
 
-Author to do: run `git status` after the first editor session, and explain any `.import`
-diff.
+After the author's first editor session (2026-10-29), `git status` showed four changed
+`.import` files. None of them is an Assignment 5 texture:
+- `game/features/vehicles/freight_van/art/body_legends.png.import`
+- `game/features/vehicles/freight_van/art/cabin_legends.png.import`
+- `game/features/vehicles/freight_van/art/steering_legends.png.import`
+- `game/features/environments/industrial_loop/art/crate_legends.png.import`
+
+All four diffs are the same:
+- `compress/mode` went from 0 (Lossless) to 2 (VRAM Compressed);
+- `detect_3d/compress_to` went from 1 to 0 (Disabled);
+- the imported file changed from `.ctex` to `.s3tc.ctex`, with `"vram_texture": true`.
+
+These textures still had Godot's default Detect 3D setting. When the editor first used them
+in a 3D material, it reimported them as VRAM Compressed and then turned detection off. That
+is what Detect 3D does. Headless runs never trigger it, which is why the baseline import had
+not changed them.
+
+None of the fog textures changed, and neither did the hint PNG. Their `detect_3d/compress_to`
+was already 0, which is the result the explicit import settings were meant to give.
+
+The editor's change was kept and committed, so the next editor session leaves the tree
+clean. After it, all five suites still pass at 60 fps (regression 64/64, integration
+0 failures, materials 76/76, night dimming 30/30, art check 0 failures). The only changes in
+the logs are the engine's leak counts at exit.
+
+VRAM compression is lossy, so the legend text needs a look during the playtest. To undo the
+change, set those four textures to Lossless with Detect 3D disabled.
 
 ## Inspect-and-revise cycle
 

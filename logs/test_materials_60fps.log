@@ -85,7 +85,7 @@ PASS: Real J press lowers the window and its fog overlay by 0.880 m (expected 0.
 PASS: Hint quads use hint_as_color.tres and hint_as_data.tres
 PASS: Hint scene: Linear tonemap, exposure 1.0, glow/fog/adjustments off
 MATERIALS RESULT: 76/76 passed; 0 failed
-WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 2 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)
