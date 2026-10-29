@@ -60,7 +60,7 @@ The measured frame counts equal the author's CHANGE-BRIEF Q5 table.
 | --- | --- | --- |
 | Delete one semicolon in the effect shader (line 4) | `test_night_dimming.gd` at 60 fps | **1**: 2 `SHADER ERROR: Expected a ';'` lines, uniform list empty, 25/30 (`logs/mutation_semicolon_60fps.log`) |
 | Rename the driven uniform in the shader only (`night_amount` → `night_level`) | `test_night_dimming.gd` at 60 fps | **1**: no SHADER ERROR (still valid), but `night_amount` is missing from the uniform list and the declaration and colour-line checks fail, 27/30 (`logs/mutation_rename_60fps.log`) |
-| Remove `source_color` from the colour sampler | `test_materials.gd` | after the audit |
+| Remove `source_color` from the colour sampler (`foggy_windshield.gdshader:26`) | `test_materials.gd` at 60 fps | **1**: the `fog_color` hints check fails (found `filter_linear, repeat_enable`), 75/76 (`logs/mutation_source_color_60fps.log`) |
 
 ## Controlled values (HUMAN CHECK)
 
@@ -129,7 +129,8 @@ look.
   0 failures.
 - **Real J press:** lowers the driver's window and its fog overlay by 0.880 m. The test
   measures this in the van's frame, because the van also settles onto the ground.
-- **`source_color` mutation:** author to run.
+- **`source_color` mutation:** run by the author. It exited 1, and a clean rerun after the
+  restore gives 76/76 (see Mutations).
 
 ## Texture data
 
