@@ -1,0 +1,4 @@
+Diagnostic, same scene, data_read bound to a separate ImageTexture with no source_color anywhere:
+gl_compatibility, data-only separate texture: 64, 128, 192
+forward_plus, data-only separate texture: 137, 188, 225
+(output of tools/captures/hint_diagnose.gd, run 2026-10-29 on Apple M4, macOS 26.6.2)
