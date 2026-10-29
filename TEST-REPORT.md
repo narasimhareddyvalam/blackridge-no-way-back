@@ -104,7 +104,10 @@ Captures: `evidence/captures/hint_experiment_compatibility.png` and `_forward_pl
 
 - A separate data-only texture gives the same split: 64/128/192 under Compatibility and
   137/188/225 under Forward+ (`evidence/captures/hint_diagnose_results.txt`).
-- Author to explain in their own words, and to confirm by eye.
+- **The author's explanation, in their own words:** LANGUAGE-NOTES.md Q4 and FRICTIONAL.md
+  (2026-10-29 testing notes).
+- **4K re-capture for the film:** the same values on both renderers
+  (`youtube/claude-liam-blackridge-gamedev/capture/hint_samples_4k.txt`).
 
 ## Interface sweep (HUMAN CHECK)
 
@@ -112,8 +115,19 @@ Scripted captures of the windshield's `light_fog.tres`, one per uniform at minim
 and maximum: `evidence/captures/fog/sweep_<uniform>_<min|default|max>.png` (21 images, made
 by `tools/captures/capture_fog.gd`).
 
-Author to do: look at each set, write what changed, and note any setting that breaks the
-look.
+**Author's check (2026-10-29, as reported to Claude Code):** the author looked at the sweep
+images and reports that they "look nice and how they are supposed to look".
+
+**Measured by Claude Code** on the 4K re-capture made for the film (time frozen, wipers
+parked):
+- Files: `youtube/claude-liam-blackridge-gamedev/capture/sweep_*.png`, compared with
+  `build/sweep_diff.py`. The measure is the share of pixels that changed by more than 6
+  levels against the default frame.
+- **fog_amount at max:** 8.12%; the pane clouds over.
+- **clear_center at 0:** 0.80%; fog appears in the top-left corner.
+- **fog_opacity, edge_softness, normal_strength, texture_scale, fog_tint:** 0.06% or less.
+  At fog_amount 0.25 the fog band sits behind the window frame, so these barely show from
+  the driver's view. Judging them needs a heavier base fog.
 
 ## One shader, two materials (HUMAN CHECK)
 
@@ -122,10 +136,17 @@ look.
   in one view.
 - **Material edit:** at runtime, `light_fog` fog_amount went 0.25 → 1.0 while `heavy_fog`
   stayed 0.75 (`material_edit_light_fog_amount_1.0.png`).
-- **Author to do:**
-  - confirm by eye that only the windshield changed;
-  - edit one line of `foggy_windshield.gdshader` in the editor, record that both windows
-    change, then restore the line.
+- **Author's check (2026-10-29, as reported to Claude Code):** the author reports doing the
+  shader-edit test in the editor and restoring the line, and says the results "look nice and
+  how they are supposed to look". Git shows the shader file unchanged.
+- **Scripted captures for the film** (`youtube/claude-liam-blackridge-gamedev/capture/`):
+  - **Material edit** (light_fog fog_amount 0.25 → 1.0): 19.7% of the windshield region
+    changes, and nothing on the driver's-window overlay.
+  - **In-memory shader edit at the light default:** only the driver's window visibly changed
+    (windshield 0.00%).
+  - **A second take with light_fog's fog_amount raised to 1.0 first** (disclosed): both
+    windows change, the windshield by 31.9% and the driver's window by 40.6%.
+  - Files: `material_edit.mp4`, `shader_edit_visible.mp4`, CAPTURE.md.
 
 ## Material wiring
 
