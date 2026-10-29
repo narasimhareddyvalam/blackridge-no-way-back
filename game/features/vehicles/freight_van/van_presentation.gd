@@ -3,6 +3,7 @@ extends Node3D
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Instruments = preload("instruments.gd")
 const Navigation = preload("navigation_display.gd")
+const NightDimming = preload("night_dimming.gd")
 const GLASS = preload("windshield.gdshader")
 const BODY_ART = preload("art/body.glb")
 const CABIN_ART = preload("art/cabin.glb")
@@ -11,6 +12,7 @@ const TIRE_ART = preload("art/tire.glb")
 
 var driving_camera: Camera3D
 var navigation: Control
+var night_dimming: Node
 var mirrors: Array[SubViewport] = []
 var reverse_view: SubViewport
 var reverse_screen: MeshInstance3D
@@ -133,6 +135,10 @@ func _displays() -> void:
 	var cluster := Instruments.new()
 	cluster.vehicle = vehicle
 	var instruments := _display_viewport(Vector2i(640, 256), cluster)
+	night_dimming = NightDimming.new()
+	night_dimming.name = "NightDimming"
+	add_child(night_dimming)
+	night_dimming.configure(vehicle, cluster)
 	_screen(instruments, Vector3(-0.53, 1.74, -0.935), Vector2(0.65, 0.26))
 	navigation = Navigation.new()
 	navigation.vehicle = vehicle

@@ -30,7 +30,7 @@ PASS: Escape action pauses scene
 PASS: Escape action resumes scene
 PASS: Recovery returns stopped occupied van
 BEHAVIOR RESULT: 0 failures
-WARNING: 28 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 30 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 4 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)
