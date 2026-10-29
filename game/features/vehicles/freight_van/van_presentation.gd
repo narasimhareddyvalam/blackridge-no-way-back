@@ -9,6 +9,8 @@ const BODY_ART = preload("art/body.glb")
 const CABIN_ART = preload("art/cabin.glb")
 const STEERING_ART = preload("art/steering.glb")
 const TIRE_ART = preload("art/tire.glb")
+const LIGHT_FOG = preload("res://materials/windshield/light_fog.tres")
+const HEAVY_FOG = preload("res://materials/windshield/heavy_fog.tres")
 
 var driving_camera: Camera3D
 var navigation: Control
@@ -18,6 +20,7 @@ var reverse_view: SubViewport
 var reverse_screen: MeshInstance3D
 var vehicle: CharacterBody3D
 var mirror_cameras: Array[Camera3D] = []
+var fog_overlays: Array[MeshInstance3D] = []
 var mirror_poses: Array[Transform3D] = []
 var _look: Node3D
 var _wheel: Node3D
@@ -224,6 +227,10 @@ func _windows_and_wipers() -> void:
 	windshield.size = Vector2(2.12, 1.08)
 	var pane := Build.instance(_cabin, Vector3(0, 2.17, -1.34), windshield, _glass)
 	pane.rotation.x = 0.32
+	fog_overlays.append(_fog_overlay(pane, windshield.size, Vector3(0, 0, 0.012), 0.0,
+		LIGHT_FOG))
+	fog_overlays.append(_fog_overlay(_windows[0], Vector2(1.48, 0.9), Vector3(0.012, 0, 0),
+		PI / 2, HEAVY_FOG))
 	for x in [-0.52, 0.48]:
 		var hinge := Node3D.new()
 		_cabin.add_child(hinge)
@@ -232,6 +239,21 @@ func _windows_and_wipers() -> void:
 		Build.box(hinge, Vector3(0, 0.29, 0), Vector3(0.012, 0.58, 0.015), _steel)
 		Build.box(hinge, Vector3(0, 0.59, 0.008), Vector3(0.021, 0.42, 0.018), _rubber)
 		_wipers.append(hinge)
+
+
+func _fog_overlay(
+	glass: Node3D, dimensions: Vector2, offset: Vector3, turn: float, material: Material
+) -> MeshInstance3D:
+	var quad := QuadMesh.new()
+	quad.size = dimensions
+	var overlay := MeshInstance3D.new()
+	overlay.mesh = quad
+	overlay.material_override = material
+	overlay.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	overlay.position = offset
+	overlay.rotation.y = turn
+	glass.add_child(overlay)
+	return overlay
 
 
 func _mark_layer(node: Node, layer: int) -> void:

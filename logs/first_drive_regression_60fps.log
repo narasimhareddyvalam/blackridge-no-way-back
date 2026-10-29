@@ -82,7 +82,7 @@ PASS: Physical wall collision stops actual motion
 PASS: Measured speed stays zero while throttle is held against a wall
 PASS: Van remains on the near side of the test wall
 REGRESSION RESULT: 64/64 passed; 0 failed
-WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 24 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 2 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)
