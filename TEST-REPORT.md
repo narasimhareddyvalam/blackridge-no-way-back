@@ -2,83 +2,168 @@
 
 | Field | Value |
 | --- | --- |
-| Source revision | |
+| Source revision | `5669a40` (2026-10-29); final SHA recorded at submission |
 | Godot | 4.7.2.stable.official.ed1daf0bf |
 | Renderer | Compatibility (`gl_compatibility`, `game/project.godot:125`) |
 | Machine | MacBook Air, Apple M4, macOS 26.6.2 |
 
-Machine results come from `./scripts/run-test.sh` logs in `logs/`. A HUMAN CHECK
-row records the author's own observation in the editor or a windowed run. A
-headless run uses a dummy renderer and draws nothing.
+Machine results come from `./scripts/run-test.sh` logs in `logs/` and from the capture
+scripts in `tools/captures/`. A HUMAN CHECK row needs the author's own observation in the
+editor or in a windowed run; rows marked "author to confirm" are not done yet. A headless
+run draws nothing.
 
 ## Baseline (earlier suites, pinned frame rate)
 
-| Suite | FPS | Before Assignment 5 (`2b6b251`) | After Assignment 5 |
+| Suite | FPS | Before Assignment 5 (`2b6b251`) | After the driver and overlays (`2204b55`) |
 | --- | --- | --- | --- |
-| `first_drive_regression.gd` | 60 | 64/64 passed, exit 0 | |
-| `first_drive_integration.gd` | 60 | 29/29 passed, exit 0 | |
-| `check_first_drive_art.py` (Python, outside the wrapper) | n/a | 133/133 | |
+| `first_drive_regression.gd` | 60 | 64/64 passed, exit 0 | 64/64 passed, exit 0 |
+| `first_drive_integration.gd` | 60 | 29/29 passed, exit 0 | 29/29 passed, exit 0 |
+| `check_first_drive_art.py` (Python, outside the wrapper) | n/a | 133/133 | not affected (no art files changed) |
 
-Both Godot logs end with an engine "resources still in use at exit" error at
-shutdown. It predates Assignment 5 and is not a SHADER or SCRIPT ERROR.
+Both Godot logs end with an engine "resources still in use at exit" error at shutdown. It
+predates Assignment 5 and is not a SHADER or SCRIPT ERROR.
 
 ## Shaders parse
 
-Uniform-list assertions for both shaders, no SHADER ERROR line.
+| Shader | Evidence |
+| --- | --- |
+| `night_cluster.gdshader` | `get_shader_uniform_list()` lists `night_amount` (float), `night_color` (Color), `night_brightness` (float): checks 1–4 of `test_night_dimming.gd`. The author's reimport log `logs/import_night_cluster.log` has 0 SHADER ERROR lines. |
+| `foggy_windshield.gdshader` | Author to finish: the draft does not yet match CHANGE-BRIEF §5. |
+| `hint_experiment.gdshader` | Parses (two samplers and a bool); author to commit. |
 
 ## Driver (30, 60 and 144 fps)
 
-The uniform sampled every frame through a real event, including a retrigger:
-first value, last value, game-time duration.
+`game/tests/test_night_dimming.gd`, 30 checks, through real L, Escape and R input
+(`Input.parse_input_event`). A `process_priority` 1000 sampler records every frame.
+
+| Check | 30 fps | 60 fps | 144 fps |
+| --- | --- | --- | --- |
+| Result | 30/30, exit 0 | 30/30, exit 0 | 30/30, exit 0 |
+| Start value before the first frame | 1.0 | 1.0 | 1.0 |
+| Off-fade 1 → 0 (spec 0.35 s ± 1 frame) | 11 frames, 0.3667 s | 21 frames, 0.3500 s | 51 frames, 0.3542 s |
+| On-fade 0 → 1 (spec 0.25 s ± 1 frame) | 8 frames, 0.2667 s | 15 frames, 0.2500 s | 36 frames, 0.2500 s |
+| Retrigger (reverse from current value) | rise 0.1333 s vs 0.1190 s | rise 0.1000 s vs 0.0952 s | rise 0.0833 s vs 0.0794 s |
+| On-fade at `time_scale` 0.5, real time (spec 0.50 s) | 15 frames, 0.5000 s | 30 frames, 0.5000 s | 72 frames, 0.5000 s |
+
+Every frame-rate run also showed:
+- the value holds while paused;
+- L while paused changes nothing;
+- R recovery changes nothing;
+- a second van keeps its own material and value;
+- no frame changes faster than the fade-in rate.
+
+The measured frame counts equal the author's CHANGE-BRIEF Q5 table.
 
 ## Mutations
 
 | Mutation | Test | Exit status |
 | --- | --- | --- |
-| Delete one semicolon in the effect shader | | |
-| Rename the driven uniform in the shader only | | |
-| Remove `source_color` from the colour sampler | | |
+| Delete one semicolon in the effect shader | `test_night_dimming.gd` | author to run |
+| Rename the driven uniform in the shader only | `test_night_dimming.gd` | author to run |
+| Remove `source_color` from the colour sampler | `test_materials.gd` | after the audit |
 
 ## Controlled values (HUMAN CHECK)
 
-One in-engine capture per controlled value, with the sampled pixels beside the
-predicted table. One capture with the uniform set to 2.0 from code, answering
-the `hint_range` question. One comparison against an OS screenshot.
+Scripted in-engine captures from a real window, using `tools/captures/capture_night_cluster.gd`.
+The driver is stopped, the value is set, and the cluster's own 640×256 SubViewport is read
+after `frame_post_draw`. Images are in `evidence/captures/night_cluster_*.png`.
+
+| `night_amount` | Background (10, 10): predicted → measured | Dial hub (155, 136): predicted → measured |
+| --- | --- | --- |
+| 0.0 | (8, 14, 18) → (8, 14, 18) | (135, 156, 148) → (135, 156, 148) |
+| 0.5 | (6, 9, 10) → (6, 9, 10) | (105, 102, 82) → (105, 102, 82) |
+| 1.0 | (4, 4, 2) → (4, 4, 2) | (74, 47, 16) → (74, 47, 16) |
+| 2.0 (set from code) | not predicted → (0, 0, 0) | not predicted → (13, 0, 0) |
+
+- The 2.0 capture differs from the 1.0 capture, so `hint_range` did not clamp a value set
+  from code.
+- Author to confirm: look at each image, and compare one capture with an OS screenshot.
 
 ## In play (HUMAN CHECK)
 
-The state triggered by normal play several times; boundaries hold.
+Author to do: drive normally, press L several times, and confirm the headlights, the LIGHTS
+text and the switch click still work.
 
 ## Hint experiment (HUMAN CHECK)
 
-A capture of both quads, with the sampled band values beside the predictions.
+Captures: `evidence/captures/hint_experiment_compatibility.png` and `_forward_plus.png`.
+
+| Band (file value) | Predicted, `source_color` | Predicted, data | Compatibility, `source_color` | Compatibility, data | Forward+ comparison, `source_color` | Forward+ comparison, data |
+| --- | --- | --- | --- | --- | --- | --- |
+| 64 | 64 | 137 | 64 | 64 | 64 | 137 |
+| 128 | 128 | 188 | 128 | 128 | 128 | 188 |
+| 192 | 192 | 225 | 192 | 192 | 192 | 225 |
+
+- A separate data-only texture gives the same split: 64/128/192 under Compatibility and
+  137/188/225 under Forward+ (`evidence/captures/hint_diagnose_results.txt`).
+- Author to explain in their own words, and to confirm by eye.
 
 ## Interface sweep (HUMAN CHECK)
 
-Each textured-shader uniform at minimum, default and maximum: what changed, and
-any setting that breaks the look.
+After the fog shader matches CHANGE-BRIEF §5: each fog uniform at minimum, default and
+maximum.
 
 ## One shader, two materials (HUMAN CHECK)
 
-Side-by-side captures under the stated lighting. One shader line edited, and
-both objects change. One value edited in one material, and only that object
-changes.
+After the fog shader matches CHANGE-BRIEF §5: side-by-side captures, plus the shader-edit
+and material-edit observations.
 
 ## Material wiring
 
-The material test after a fresh import (`game/.godot` deleted).
+After the audit: `test_materials.gd` after a fresh import, then the `source_color` mutation.
 
 ## Texture data
 
-Curl ratio under both conventions for every normal map and for the calibration
-pair.
+Curl ratio (`game/tests/normal_map_check.gd`, stride 4):
+
+| Map | Read as GL | Read as DX |
+| --- | --- | --- |
+| Poly Haven `box_profile_metal_sheet_nor_gl_1k.png` (calibration, known good) | 0.5792 | 1.4208 |
+| Poly Haven `box_profile_metal_sheet_nor_dx_1k.png` (calibration) | 1.4208 | 0.5792 |
+| `fog_normal.png` (generated) | 0.0033 | 1.9967 |
+
+- **Sign convention:** correct. The GL file is lower when read as GL, so no flip is needed.
+- **Known-good drift:** the GL file drifts toward 1 because the panel is mostly flat.
+- **Pair check:** the green channel is exactly inverted; red and blue are identical.
+- **Pass threshold, from the known-good pair:** read as GL ≤ 0.5792 and lower than read as DX.
 
 ## Import settings
 
-The diff of any `.import` file the editor rewrote, with the reason.
+Set explicitly, then reimported:
+
+| File | `compress/mode` | `compress/normal_map` | `mipmaps/generate` | `detect_3d/compress_to` |
+| --- | --- | --- | --- | --- |
+| fog textures | 0 | 1 for `fog_normal`, 2 for the others | true | 0 |
+| hint PNG | 0 | 2 | false | 0 |
+
+The first headless import had written normal_map=0 (Detect), mipmaps=false and
+detect_3d/compress_to=1.
+
+Author to do: run `git status` after the first editor session, and explain any `.import`
+diff.
 
 ## Inspect-and-revise cycle
 
-At least one observation that led to a change, and what changed.
+Candidates, all observed:
+1. `test_night_dimming.gd` first failed 1 check, because it counted a frame after the fade
+   had finished. Fixed in `_first_at`.
+2. Float rounding made the 60 fps fade land one frame late, so the driver now snaps within
+   1e-6.
+3. The Compatibility hint-experiment result differed from the Forward+ prediction, which led
+   to the diagnostic run.
 
 ## What no headless run can show
+
+- Whether the dimmed cluster is readable or looks right.
+- Whether the fog looks natural, and how it layers with the rain shader.
+- Real-window colour output (covered only by the captures above).
+- Performance on the M4.
+
+## Agent session record
+
+Session 1 (CLAUDE.md draft, `sessions/session-1.jsonl`):
+- result `success`, 34 of 40 turns, `end_turn`;
+- 4 Bash calls denied by the tool scope (a for-loop, `command -v`, two `git -C`);
+- read-only `cat` and `grep` still ran, so the checksum comparison is the real guarantee.
+
+The shader sha256 sums were unchanged after every agent step.

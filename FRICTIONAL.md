@@ -38,5 +38,55 @@ to *Blackridge: No Way Back*. `SUBMISSION.md` points to this entry.
 - Claude created empty skeletons for `CHANGE-BRIEF.md`, `LANGUAGE-NOTES.md`,
   `FRICTIONAL.md`, `TEST-REPORT.md`, `SOURCES.md` and `SUBMISSION.md`: headings
   and copied questions only.
-- No specification, shader, driver or test content existed before
-  `CHANGE-BRIEF.md`.
+- Correction recorded 2026-10-29: the line above said no shader content
+  existed before `CHANGE-BRIEF.md`. That was true when it was written, but
+  the author then drafted all three shaders from their own notes before
+  writing the brief. The brief was committed (`2729c26`) before any shader
+  was committed (`c055037`). No driver or test content existed before the
+  brief.
+
+## 2026-10-28 — My own notes (author to write)
+
+Write here, in your own words:
+- that you drafted the shaders before the brief while learning;
+- why you moved from impact flash to night dimming, and from wet cladding to
+  the foggy windshield;
+- what you checked in the `CLAUDE.md` draft, and which fixes you decided on.
+
+## 2026-10-28 – 2026-10-29 — Agent work (recorded by Claude Code, facts only)
+
+- **CLAUDE.md, session 1** (`ea88542`, review `4bba9b2`):
+  - `claude -p` with the course's tool scope: success in 34 of 40 turns;
+  - 4 Bash calls denied;
+  - read-only `cat`/`grep` still ran outside the allowed list, so checksums of
+    `game/shaders/` were the real guarantee: unchanged.
+- **Brief:** the author's `night_amount` default was 1.0 in the shader but
+  0.0 in the brief. Claude flagged it. The author chose 0.0 and changed it
+  themselves with a `!` command; Claude declined to edit the shader.
+- **Driver and test** (`132a068`):
+  - first run 29/30. The failure was a test bug: it counted one frame after
+    the fade had finished. The test was fixed;
+  - float rounding made the 60 fps fade land one frame late, so the driver
+    now snaps within 1e-6;
+  - then 30/30 at 30, 60 and 144 fps; existing suites 64/64 and 29/29.
+- **Night cluster captures** (`5669a40`): the measured pixels at 0, 0.5 and
+  1.0 equal the author's hand predictions exactly. At 2.0 the result differs
+  from 1.0, so `hint_range` did not clamp a value set from code.
+- **Hint experiment** (`5669a40`): under Compatibility both quads show
+  64/128/192. Under a Forward+ comparison the data quad shows 137/188/225,
+  which is the author's prediction. A diagnostic with a separate data-only
+  texture gives the same split.
+- **Fog** (`0b8fbb0`, `384e5b8`, `2204b55`):
+  - textures written by code;
+  - the first import defaulted to Detect, no mipmaps, and detect-3D on; all
+    were set explicitly;
+  - calibration GL 0.5792 / DX 1.4208, and `fog_normal.png` 0.0033 / 1.9967;
+  - Claude made both materials from the brief's values and added the overlays.
+- **Flagged:** the author's `foggy_windshield.gdshader` draft does not match
+  CHANGE-BRIEF §5. It uses a screen texture, is unshaded, has `ALPHA = 1.0`
+  and only one uniform group. It needs rewriting by the author.
+
+## 2026-10-29 — My own notes on testing (author to write)
+
+Write here what you saw when you looked at the captures and played the game.
+Include the Compatibility hint result and how you explain it.

@@ -34,7 +34,46 @@ also remains pending. Automated checks do not establish visual acceptance.
 
 Explain each implementation batch and obtain approval before changing code.
 The chronological [development record](fractional.md) tracks requests, approvals,
-problems, solutions, and actual checks. No Git commits have been created.
+problems, solutions, and actual checks. Git history starts at the 2026-10-28
+baseline commit `e81ec92`.
+
+## Assignment 5 — Shaders, materials and the Godot shading language
+
+This layer adds three hand-written shaders in `game/shaders/` and the code and tests
+around them. *Blackridge* replaced the author's Assignment 2–4 game for the final; see
+[FRICTIONAL.md](FRICTIONAL.md).
+
+- **Night dashboard dimming** (`night_cluster.gdshader`, `canvas_item`): while the
+  headlights are on (L), the instrument cluster fades to a warm, dim amber. The fade
+  takes 0.25 s in and 0.35 s out, driven by
+  `game/features/vehicles/freight_van/night_dimming.gd`.
+- **Foggy windshield** (`foggy_windshield.gdshader`, `spatial`): `light_fog.tres` on the
+  windshield and `heavy_fog.tres` on the driver's window. They are overlays, so the
+  original glass, rain and wipers are unchanged. The three textures are written by
+  `tools/make_fog_textures.py`.
+- **Hint experiment** (`hint_experiment.gdshader`): the scene
+  `game/experiments/hint_experiment/hint_experiment.tscn` reads one 3×1 grey PNG as
+  colour and as data.
+
+Run the tests from the repository root (Godot 4.7.2; the wrapper finds the binary):
+
+```sh
+./scripts/run-test.sh test_night_dimming.gd 30   # also 60 and 144
+./scripts/run-test.sh first_drive_regression.gd 60
+./scripts/run-test.sh first_drive_integration.gd 60
+```
+
+In-engine captures open a real window, for example
+`/Applications/Godot.app/Contents/MacOS/Godot --path game --script ../tools/captures/capture_night_cluster.gd`.
+The results are in [TEST-REPORT.md](TEST-REPORT.md). The spec and context are in
+[CHANGE-BRIEF.md](CHANGE-BRIEF.md) and [CLAUDE.md](CLAUDE.md). Credits and who wrote
+what are in [SOURCES.md](SOURCES.md).
+
+**Known limitations:**
+- Under Compatibility, the hint experiment shows the file's values on both quads. A
+  Forward+ comparison matches the sRGB predictions.
+- The fog's look still needs the author's visual review.
+- **Film:** link to be added at submission.
 
 The [complete story](docs/GAME_STORY.md) and
 [game design document](docs/GAME_DESIGN.md) are verified Markdown conversions of
@@ -195,6 +234,5 @@ sidecars in version control. Generated caches and builds stay out. Repository
 formatting is defined in `.editorconfig` and `.gitattributes`; no plugins, Git LFS
 filters, or automated test framework are required by this scaffold.
 
-Git configuration files are supplied, but no Git repository, branch, commit, or
-remote has been created. To initialize version control yourself, run `git init`
-from the repository root, then inspect `git status` before staging files.
+The project is a Git repository on branch `main` (initialized 2026-10-28). Commit
+messages say whether the author or an agent wrote each change.

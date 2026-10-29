@@ -9,23 +9,67 @@ Assignments 2–4 used a different game; see `FRICTIONAL.md`.
 
 ## Tools
 
-- Godot 4.7.2 stable, standard build, Compatibility renderer.
-- Claude Code (model Claude Opus 5.5).
+- Godot 4.7.2 stable, standard build, Compatibility renderer. One Forward+
+  comparison capture was made for the hint experiment only.
+- Claude Code 2.1.299 (model Claude Opus 5.5), through the author's Claude
+  account.
+- Python 3 with NumPy 2.5.3 and Pillow 12.3.0, used by `tools/make_fog_textures.py`.
 
 ## Textures
 
-| Asset | Source URL | Authors (roles) | Licence | Date checked | Normal-map convention | Used in |
+| Asset | Source | Authors (roles) | Licence | Date checked | Normal-map convention | Used in |
 | --- | --- | --- | --- | --- | --- | --- |
-| | | | | | | |
+| `fog_color.png`, `fog_data.png`, `fog_normal.png` | Written by code: `tools/make_fog_textures.py` (Claude Code), seed 20261029 | Claude Code (script); no other contributors | Original, no licence needed | 2026-10-29 | OpenGL (green up) | fog overlays (`light_fog.tres`, `heavy_fog.tres`) |
+| `greys_3x1.png` | Written by code: `tools/make_hint_png.gd` (Claude Code) | Claude Code (script) | Original, no licence needed | 2026-10-29 | n/a | hint experiment |
+| `box_profile_metal_sheet_nor_gl_1k.png`, `_nor_dx_1k.png` | https://polyhaven.com/a/box_profile_metal_sheet | Amal Kumar ("All", per the Poly Haven API) | CC0 1.0 | 2026-10-29 | GL and DX pair | curl-check calibration only |
+
+Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
+`game/tests/calibration/ATTRIBUTION.md`.
 
 ## Generative models
 
-None used for Assignment 5 so far.
+None. No image, sound or text generator was used for Assignment 5 assets.
 
 ## Human and AI contributions
 
 ### Written by the author, by hand
 
+- `CHANGE-BRIEF.md` (commit `2729c26`): the spec, colour line, rules, hand
+  predictions, material plan and answers. Claude Code put the author's text into
+  the file and drafted the parts listed in that commit message.
+- `game/shaders/night_cluster.gdshader` (`c055037`), and the reimport.
+- `game/shaders/foggy_windshield.gdshader` and `hint_experiment.gdshader`
+  (author to finalize and commit).
+- `LANGUAGE-NOTES.md` and the annotated `standard_generated.gdshader` (author to do).
+- The `CLAUDE.md` review decisions (`4bba9b2`), every HUMAN CHECK, and the
+  `FRICTIONAL.md` experience entries.
+
 ### Written by Claude Code
 
+- The `CLAUDE.md` draft, made in scoped session 1 (`ea88542`).
+- `scripts/run-test.sh`, adapted from the course wrapper.
+- Driver and test:
+  - `night_dimming.gd` and the `van_presentation.gd` hookup;
+  - `game/tests/test_night_dimming.gd`.
+- Fog:
+  - `tools/make_fog_textures.py` and the three fog textures with their import
+    settings;
+  - `light_fog.tres` and `heavy_fog.tres`, with the author's values from
+    CHANGE-BRIEF §5.8;
+  - the overlay hookup.
+- Hint experiment and captures:
+  - `tools/make_hint_png.gd`, the hint-experiment scene and its materials;
+  - the capture scripts in `tools/captures/`.
+- Curl check: `normal_map_check.gd`, the course's code with tab indentation, and the
+  calibration download.
+- Docs: the doc skeletons and the measured parts of `TEST-REPORT.md`.
+
 ### Suggestions adopted, modified or rejected
+
+- Night dimming was one of Claude's suggested effects. The author picked it.
+- The author first chose rain-wet metal cladding, then a foggy windshield. The
+  foggy-windshield idea was the author's own. Claude suggested overlays rather
+  than replacing the glass.
+- The author rejected the impact flash, which Claude had recommended.
+- The author accepted Claude's review findings on the brief and on `CLAUDE.md`,
+  and wrote the fixes in their own words.
