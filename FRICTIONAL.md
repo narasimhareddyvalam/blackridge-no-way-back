@@ -85,6 +85,10 @@ Write here, in your own words:
 - **Flagged:** the author's `foggy_windshield.gdshader` draft does not match
   CHANGE-BRIEF §5. It uses a screen texture, is unshaded, has `ALPHA = 1.0`
   and only one uniform group. It needs rewriting by the author.
+- **Fog shader rewritten** (`3bac73e`): the author rewrote it. The audit
+  (`fe625c4`) then found two differences from the brief, multiply instead of
+  `mix()` and fixed ROUGHNESS and SPECULAR values. The author settled both
+  with a dated brief revision (`a09eb4e`).
 
 ## 2026-10-29 — My own notes on testing (author to write)
 
