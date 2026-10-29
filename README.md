@@ -79,7 +79,7 @@ what are in [SOURCES.md](SOURCES.md).
 - **Film:** "Blackridge, Shaded" (4K, about 9.5 minutes). The source is in
   `youtube/claude-liam-blackridge-gamedev/`: script, beat sheet, 4K engine captures,
   evidence ledger and build log. File: `Blackridge-Shaded-4K.mp4`, SHA-256 `89066f8d42e86392f157c76ed832ff1b5b9994b20f1c6f5b08fee695d7b6c1c2`;
-  the OneDrive link is in the Canvas submission note.
+  watch it on OneDrive: https://northeastern-my.sharepoint.com/:v:/g/personal/valam_n_northeastern_edu/IQCCHHcatHuxT7BIfeUyLjEyAcdyHfosv8mtnbjcAG55b2Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=Fk9uVc
 
 The [complete story](docs/GAME_STORY.md) and
 [game design document](docs/GAME_DESIGN.md) are verified Markdown conversions of
