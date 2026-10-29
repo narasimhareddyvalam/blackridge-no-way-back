@@ -1,0 +1,19 @@
+* text=auto eol=lf
+
+*.pdf binary
+*.blend binary
+*.glb binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.psd binary
+*.kra binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
+*.res binary
+*.scn binary
+*.mesh binary

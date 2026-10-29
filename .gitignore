@@ -1,0 +1,40 @@
+# Godot-generated state. Keep .import and .uid sidecars tracked.
+/game/.godot/
+/game/**/*.translation
+
+# Generated exports; keep the empty output directory in version control.
+/builds/*
+!/builds/.gitkeep
+
+# Disposable development-tool output; tools and their documentation stay tracked.
+/tools/.cache/
+__pycache__/
+*.pyc
+
+# Local export/signing credentials. Non-secret export_presets.cfg stays tracked.
+/game/export_credentials.cfg
+*.p12
+*.pfx
+*.keystore
+
+# Source Word documents stay outside the repository; documentation is Markdown.
+*.[dD][oO][cC]
+*.[dD][oO][cC][xX]
+
+# Blender backups; keep original asset source files tracked.
+*.blend[0-9]*
+
+# macOS metadata.
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100/
+.Trashes/
+
+# Local editor state and temporary swap files.
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
