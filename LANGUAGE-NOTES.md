@@ -28,19 +28,15 @@ Evidence: `night_cluster.gdshader:1`, `foggy_windshield.gdshader:1`, `hint_exper
 
 ### Q2. What are processor functions? What would change if I moved the colour calculation to vertex()?
 
-Processor functions tell Godot when to run different parts of my shader.
+Processor functions tell Godot when different parts of a shader should run.
 
-In my dashboard shader, I use `fragment()` because I want to change the colour of the dashboard pixels.
+In my dashboard shader, I use `fragment()` to change the dashboard colour for each pixel.
 
-If I move my colour calculation to `vertex()`, it would run only for the vertices of the rectangle, usually its four corners, instead of running for every fragment.
+If I move the same colour calculation to `vertex()`, it would run for each vertex instead of every pixel. In a 2D `canvas_item` shader, the `COLOR` value written in `vertex()` is automatically passed to `fragment()`.
 
-The values calculated at the corners would then be interpolated across the rectangle. Since `night_amount`, `night_color`, and `night_brightness` are uniforms, they stay the same across that rectangle. So if I pass the calculated colour correctly from `vertex()` to `fragment()`, the result could look similar for a simple rectangle with a uniform colour.
+Since my calculation only multiplies the original colour by fixed uniform values, the dashboard would look the same in this case. The main difference is that the calculation would happen at the vertices instead of for every pixel.
 
-But if the colour or lighting changes across the rectangle, doing the calculation at the vertices might lose some details because it only calculates at the corners.
-
-Also, I cannot just copy the same `COLOR.rgb` line into `vertex()` and expect the same result. I would need to pass the calculated value to `fragment()` properly, and the incoming `COLOR` may behave differently between these stages.
-
-Evidence: `night_cluster.gdshader:12–14`, `foggy_windshield.gdshader:30`, `hint_experiment.gdshader:11`.
+Evidence: `night_cluster.gdshader:12–14`.
 
 ### Q3. What are built-in variables?
 
@@ -70,15 +66,19 @@ Shader hints tell Godot how to display uniforms or how to handle textures.
 
 **repeat_enable:** This makes the texture repeat when UV coordinates go outside the 0 to 1 range. It changes texture sampling, not just the Inspector.
 
+Evidence: `night_cluster.gdshader:4,7,10`, `foggy_windshield.gdshader:7–9,14–15,20–21,26–28`, `hint_experiment.gdshader:5–6`.
+
 **My hint experiment results:**
 
-In Compatibility, both quads showed the same RGB values: `(64, 128, 192)`.
+In my hint experiment, I tested three grey bands with values 64, 128, and 192.
 
-In Forward+, the data quad showed `(137, 188, 225)`, which matched my predicted values.
+In Compatibility, both quads showed the same three grey bands: 64, 128, and 192.
 
-From this, I understood that `source_color` can affect the values read from a texture, but I also learned that the renderer matters. My Compatibility capture did not show the same difference as Forward+, so I should not assume both renderers behave exactly the same.
+In Forward+, the data quad showed values of 137, 188, and 225, which matched my calculations.
 
-Evidence: `night_cluster.gdshader:4,7,10`, `foggy_windshield.gdshader:7–9,14–15,20–21,26–28`, `hint_experiment.gdshader:5–6`, `evidence/captures/hint_experiment_compatibility.png`, `evidence/captures/hint_experiment_forward_plus.png`.
+This helped me understand that `source_color` can affect how texture values are handled, but the result can be different depending on the renderer. So I should always check the results in the renderer I am actually using.
+
+Evidence: `evidence/captures/hint_experiment_compatibility.png`, `evidence/captures/hint_experiment_forward_plus.png`.
 
 ### Q5. What does hint_range do, and does it clamp values?
 
@@ -114,15 +114,15 @@ Evidence: `standard_generated.gdshader:7,19`.
 
 ### Q7. How does the GPU process many pixels at once?
 
-The GPU can run the fragment shader for many fragments in parallel.
+The GPU can run the fragment shader for many pixels at the same time.
 
-Each fragment calculates its own result using its inputs, textures, and uniforms. It does not automatically know the finished result of a neighbouring fragment, because those calculations may be happening at the same time.
+Each pixel calculates its own colour using the values provided to the shader. It cannot directly read another pixel's finished result because the calculations can happen in parallel.
 
-For my dashboard, the dimming driver updates `night_amount` every frame. The shader reads that uniform and uses it to calculate the colour for each fragment.
+In my dashboard shader, the dimming driver updates `night_amount` only while the fade is running. Once the value reaches the target, the driver stops updating it until another fade starts.
 
-This means I can control the whole dashboard with one value instead of manually updating each pixel.
+The shader then uses the current `night_amount` value to calculate the dashboard colour for each pixel. This way, I can control the whole dashboard using one uniform instead of manually changing every pixel.
 
-Evidence: `night_cluster.gdshader:4,14`, `night_dimming.gd:18,31`.
+Evidence: `night_cluster.gdshader:4,14`, `night_dimming.gd:18,25–26,31`.
 
 ### Q8. How is Godot's shading language different from plain GLSL?
 
