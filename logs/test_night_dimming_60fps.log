@@ -31,7 +31,7 @@ PASS: Each van builds its own ShaderMaterial instance
 PASS: The other van keeps night_amount 1.0 while the first van fades out
 PASS: No frame changes night_amount faster than the fade-in rate
 NIGHT DIMMING RESULT: 30/30 passed; 0 failed
-WARNING: 26 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 2 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)

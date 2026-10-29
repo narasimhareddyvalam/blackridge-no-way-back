@@ -28,8 +28,8 @@ predates Assignment 5 and is not a SHADER or SCRIPT ERROR.
 | Shader | Evidence |
 | --- | --- |
 | `night_cluster.gdshader` | `get_shader_uniform_list()` lists `night_amount` (float), `night_color` (Color), `night_brightness` (float): checks 1–4 of `test_night_dimming.gd`. The author's reimport log `logs/import_night_cluster.log` has 0 SHADER ERROR lines. |
-| `foggy_windshield.gdshader` | Author to finish: the draft does not yet match CHANGE-BRIEF §5. |
-| `hint_experiment.gdshader` | Parses (two samplers and a bool); author to commit. |
+| `foggy_windshield.gdshader` | `test_materials.gd` lists the Fog, Shape and Detail groups, 7 uniforms and 3 samplers with the right types. The source hints and declarations match CHANGE-BRIEF §5.4–5.5. Reimport log `logs/import_foggy_windshield.log` has 0 SHADER ERROR lines. |
+| `hint_experiment.gdshader` | `test_materials.gd` lists `color_read`, `data_read` and `show_data`, and its source hints match CHANGE-BRIEF §4. |
 
 ## Driver (30, 60 and 144 fps)
 
@@ -100,17 +100,36 @@ Captures: `evidence/captures/hint_experiment_compatibility.png` and `_forward_pl
 
 ## Interface sweep (HUMAN CHECK)
 
-After the fog shader matches CHANGE-BRIEF §5: each fog uniform at minimum, default and
-maximum.
+Scripted captures of the windshield's `light_fog.tres`, one per uniform at minimum, default
+and maximum: `evidence/captures/fog/sweep_<uniform>_<min|default|max>.png` (21 images, made
+by `tools/captures/capture_fog.gd`).
+
+Author to do: look at each set, write what changed, and note any setting that breaks the
+look.
 
 ## One shader, two materials (HUMAN CHECK)
 
-After the fog shader matches CHANGE-BRIEF §5: side-by-side captures, plus the shader-edit
-and material-edit observations.
+- **Side by side:** `evidence/captures/fog/side_by_side_world_fog_off.png` and
+  `_world_fog_on.png`, with the windshield (light fog) and the driver's window (heavy fog)
+  in one view.
+- **Material edit:** at runtime, `light_fog` fog_amount went 0.25 → 1.0 while `heavy_fog`
+  stayed 0.75 (`material_edit_light_fog_amount_1.0.png`).
+- **Author to do:**
+  - confirm by eye that only the windshield changed;
+  - edit one line of `foggy_windshield.gdshader` in the editor, record that both windows
+    change, then restore the line.
 
 ## Material wiring
 
-After the audit: `test_materials.gd` after a fresh import, then the `source_color` mutation.
+- **Fresh cache:** `game/.godot` deleted, then a full headless reimport
+  (`logs/import_fresh_cache.log`: 0 errors, 0 SHADER ERROR lines).
+- **Materials test after the fresh cache:** `test_materials.gd` **76/76**, exit 0
+  (`logs/test_materials_fresh_cache_60fps.log`).
+- **Other suites on the same cache:** night dimming 30/30, regression 64/64, integration
+  0 failures.
+- **Real J press:** lowers the driver's window and its fog overlay by 0.880 m. The test
+  measures this in the van's frame, because the van also settles onto the ground.
+- **`source_color` mutation:** author to run.
 
 ## Texture data
 
@@ -151,6 +170,9 @@ Candidates, all observed:
    1e-6.
 3. The Compatibility hint-experiment result differed from the Forward+ prediction, which led
    to the diagnostic run.
+4. The first `test_materials.gd` run failed one check. The overlay seemed to drop 1.13 m on
+   J, because the whole van settles 0.25 m onto the ground. The test now measures in the
+   van's frame: 0.880 m.
 
 ## What no headless run can show
 
