@@ -1,46 +1,183 @@
-# LANGUAGE-NOTES — Assignment 5
+# LANGUAGE-NOTES.md
 
-Answers are written by the author, in their own words. Claude Code copied the
-questions from the assignment brief and does not write the answers. Line
-references use `path:line`.
+## Part A — Generated Shader
 
-## A. The generated shader
+I created a StandardMaterial3D in Godot, added the fog colour, normal, and data textures, and converted it into a ShaderMaterial to understand how Godot generates shader code. I saved the generated code as `game/shaders/standard_generated.gdshader`.
 
-`game/shaders/standard_generated.gdshader`, converted from a StandardMaterial3D
-with albedo, normal and roughness textures.
+| Feature | Line number in generated shader |
+|---|---|
+| `shader_type` | 3 |
+| `render_mode` | 4 |
+| Albedo colour uniform | 6 |
+| Normal strength uniform (`normal_scale`) | 20 |
+| Colour texture sampler (`texture_albedo`, hint `source_color`) | 7 |
+| Normal texture sampler (`texture_normal`, hint `hint_roughness_normal`) | 19 |
+| `ALBEDO` output | 35 |
+| `ROUGHNESS` output | 43 |
+| `NORMAL_MAP` output | 46 |
 
-| Item | Line(s) |
-| --- | --- |
-| `shader_type` and `render_mode` | |
-| Uniform for the Inspector's albedo colour | |
-| Uniform for the Inspector's normal-map strength | |
-| Albedo sampler, with its hints | |
-| Normal-map sampler, with its hints | |
-| Line that writes `ALBEDO` | |
-| Line that writes `ROUGHNESS` | |
-| Line that writes `NORMAL_MAP` | |
+## Part B — Eight Questions
 
-## B. Questions
+### Q1. What does shader_type do?
 
-### 1. What does `shader_type` decide? Answer for each type you used, citing the first line of each shader.
+`shader_type` tells Godot what kind of shader I am writing. It also decides which processor functions and built-in variables are available.
 
-### 2. Which processor functions did you write, and when does each run? What would change if you moved your colour line into `vertex()`, and why?
+My `night_cluster.gdshader` uses `canvas_item` because it changes the colours of my 2D dashboard. My `foggy_windshield.gdshader` uses `spatial` because the fog is on 3D glass. My `hint_experiment.gdshader` also uses `spatial` because I use it to test textures on 3D objects.
 
-### 3. Name three built-ins you read and two you wrote. Which of the ones you read are read-only?
+Evidence: `night_cluster.gdshader:1`, `foggy_windshield.gdshader:1`, `hint_experiment.gdshader:1`.
 
-### 4. For each hint you used, does it change only the Inspector, or also the value the shader receives? Cite your hint experiment.
+### Q2. What are processor functions? What would change if I moved the colour calculation to vertex()?
 
-### 5. Does `hint_range` clamp a value set from code? Cite what you observed.
+Processor functions tell Godot when to run different parts of my shader.
 
-### 6. Which line of the generated shader makes the albedo sample as colour and the normal map as data, and what is the equivalent line in your textured shader?
+In my dashboard shader, I use `fragment()` because I want to change the colour of the dashboard pixels.
 
-### 7. Your `fragment()` runs for every pixel at once. Why can't it read what the neighbouring pixel's `fragment()` is computing, and how does game state reach it instead?
+If I move my colour calculation to `vertex()`, it would run only for the vertices of the rectangle, usually its four corners, instead of running for every fragment.
 
-### 8. Name two things the Godot shading language provides that plain GLSL does not, or makes you write yourself.
+The values calculated at the corners would then be interpolated across the rectangle. Since `night_amount`, `night_color`, and `night_brightness` are uniforms, they stay the same across that rectangle. So if I pass the calculated colour correctly from `vertex()` to `fragment()`, the result could look similar for a simple rectangle with a uniform colour.
 
-## C. The four ideas, each with a line of your own code (preparation for the film)
+But if the colour or lighting changes across the rectangle, doing the calculation at the vertices might lose some details because it only calculates at the corners.
 
-1. What a shader does:
-2. How a material differs from a shader:
-3. Why a texture is information rather than a picture:
-4. What the Godot shading language is:
+Also, I cannot just copy the same `COLOR.rgb` line into `vertex()` and expect the same result. I would need to pass the calculated value to `fragment()` properly, and the incoming `COLOR` may behave differently between these stages.
+
+Evidence: `night_cluster.gdshader:12–14`, `foggy_windshield.gdshader:30`, `hint_experiment.gdshader:11`.
+
+### Q3. What are built-in variables?
+
+Built-in variables are values Godot already provides to shaders or lets shaders write.
+
+In my shaders, I read `COLOR` to get the incoming dashboard colour and `UV` to get texture coordinates. `UV` is a read-only input in the spatial fragment stage. `COLOR` in my CanvasItem fragment shader can be read and written.
+
+I write to `ALBEDO` for the fog colour, `ALPHA` for transparency, and `NORMAL_MAP` for surface details. These are outputs in the spatial fragment shader.
+
+In my shaders, I only read two different built-in variables, `COLOR` and `UV`. I also checked the shader generated by Godot, and it only reads `UV` on lines 28 and 32. The other built-ins like `ALBEDO`, `METALLIC`, `SPECULAR`, `ROUGHNESS`, and `NORMAL_MAP` are written to, not read from.
+
+Evidence: `night_cluster.gdshader:14`, `foggy_windshield.gdshader:32,38,59,62,66`, `hint_experiment.gdshader:12–15`, `standard_generated.gdshader:28,32`.
+
+### Q4. What are shader hints? Do they change the Inspector or the shader values?
+
+Shader hints tell Godot how to display uniforms or how to handle textures.
+
+**hint_range:** This mainly changes the Inspector by showing a slider with a minimum and maximum. It does not automatically clamp values sent through code. I checked this using `night_amount = 2.0`.
+
+**source_color:** This is not just an Inspector setting. It tells Godot to handle the texture or colour as colour data and apply the correct colour-space conversion when needed. This can change the values the shader receives.
+
+**hint_normal:** This tells Godot the texture is a normal map. It affects how Godot handles the texture and its import settings, not just how it appears in the Inspector.
+
+**filter_linear:** This changes how the texture is sampled. It blends between nearby texels to make the result smoother.
+
+**filter_nearest:** This samples the nearest texel without blending between nearby texels, so the result can look more pixelated.
+
+**repeat_enable:** This makes the texture repeat when UV coordinates go outside the 0 to 1 range. It changes texture sampling, not just the Inspector.
+
+**My hint experiment results:**
+
+In Compatibility, both quads showed the same RGB values: `(64, 128, 192)`.
+
+In Forward+, the data quad showed `(137, 188, 225)`, which matched my predicted values.
+
+From this, I understood that `source_color` can affect the values read from a texture, but I also learned that the renderer matters. My Compatibility capture did not show the same difference as Forward+, so I should not assume both renderers behave exactly the same.
+
+Evidence: `night_cluster.gdshader:4,7,10`, `foggy_windshield.gdshader:7–9,14–15,20–21,26–28`, `hint_experiment.gdshader:5–6`, `evidence/captures/hint_experiment_compatibility.png`, `evidence/captures/hint_experiment_forward_plus.png`.
+
+### Q5. What does hint_range do, and does it clamp values?
+
+`hint_range` creates a slider in the Inspector, but it does not guarantee that a value outside the range will be clamped.
+
+My `night_amount` uniform has a range of 0.0 to 1.0. When I tested it with 2.0, the background pixel was `(0, 0, 0)` and the hub pixel was `(13, 0, 0)`.
+
+At 1.0, those values were `(4, 4, 2)` and `(74, 47, 16)`.
+
+Because the values changed beyond the 1.0 result, the test shows that `hint_range` did not clamp this value to 1.0.
+
+If I need to guarantee the value stays inside the range, I should use `clamp()` in the shader or in my GDScript code.
+
+Evidence: `night_cluster.gdshader:4`, `evidence/captures/night_cluster_2.0.png`, `evidence/captures/night_cluster_samples.txt:4–5`.
+
+### Q6. Why are colour textures and data textures different?
+
+A texture is not always just a picture. It can also store numbers that the shader uses for calculations.
+
+My `fog_color` texture stores colour, so I use `source_color`.
+
+My `fog_normal` texture stores surface directions, so I use `hint_normal`.
+
+My `fog_data` texture stores fog thickness in its red channel. A value near 0 means clear glass, and a value near 1 means thicker fog. I do not use `source_color` for this texture because I want the data values, not colour-space conversion.
+
+The generated shader will help me compare how Godot handles these different texture types.
+
+Evidence: `foggy_windshield.gdshader:26–28,35`.
+
+In the shader generated by Godot, I found the colour sampler on line 7 and the normal sampler on line 19.
+
+Evidence: `standard_generated.gdshader:7,19`.
+
+### Q7. How does the GPU process many pixels at once?
+
+The GPU can run the fragment shader for many fragments in parallel.
+
+Each fragment calculates its own result using its inputs, textures, and uniforms. It does not automatically know the finished result of a neighbouring fragment, because those calculations may be happening at the same time.
+
+For my dashboard, the dimming driver updates `night_amount` every frame. The shader reads that uniform and uses it to calculate the colour for each fragment.
+
+This means I can control the whole dashboard with one value instead of manually updating each pixel.
+
+Evidence: `night_cluster.gdshader:4,14`, `night_dimming.gd:18,31`.
+
+### Q8. How is Godot's shading language different from plain GLSL?
+
+Godot's shading language is similar to GLSL, but it includes features that work directly with the Godot engine.
+
+For example, `shader_type` tells Godot whether the shader is for 2D or 3D rendering. `render_mode` controls rendering behaviour, and `group_uniforms` organizes settings in the Inspector.
+
+Godot also has hints like `source_color`, `hint_normal`, and `hint_range`. These help connect my shader code to materials, textures, and Inspector settings.
+
+Evidence: `foggy_windshield.gdshader:1–2,5,12,18,26–27`.
+
+## Part C — Four Big Ideas
+
+### 1. What a shader does
+
+A shader is a program that tells the GPU how to draw something.
+
+In my dashboard shader, I use `mix()` to blend the original dashboard colour with a darker amber colour. The result depends on `night_amount`.
+
+This helped me understand that a shader can change how something looks without changing the actual object.
+
+Evidence: `night_cluster.gdshader:14`.
+
+### 2. How a material differs from a shader
+
+A shader contains the instructions, while a material stores the settings and textures used with those instructions.
+
+For my foggy glass, I use the same shader for both windows. But I have two different materials: `light_fog.tres` and `heavy_fog.tres`.
+
+The front windshield has lighter fog, while the driver's side window has heavier fog.
+
+This helped me understand that I do not need to duplicate the shader just to get different results.
+
+Evidence: `foggy_windshield.gdshader:7`, `game/materials/windshield/light_fog.tres`, `game/materials/windshield/heavy_fog.tres`.
+
+### 3. Why a texture is information, not just a picture
+
+Before working with shaders, I mostly thought textures were images used to make objects look realistic.
+
+Now I understand that textures can store different kinds of information.
+
+My `fog_color` texture stores colour. My `fog_normal` texture stores directions used for lighting details. My `fog_data` texture stores thickness values in its red channel.
+
+The shader reads these values and uses them to calculate the final result.
+
+Evidence: `foggy_windshield.gdshader:26–28,35`.
+
+### 4. What the Godot shading language is
+
+Godot's shading language is the language I use to write shaders inside Godot.
+
+It is similar to GLSL, but Godot provides its own shader types, processor functions, built-in variables, and uniform hints.
+
+I used `canvas_item` for my 2D dashboard and `spatial` for my 3D foggy glass.
+
+This helped me understand why I cannot use every shader feature in exactly the same way for every object.
+
+Evidence: `night_cluster.gdshader:1`, `foggy_windshield.gdshader:1`.
