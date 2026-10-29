@@ -58,8 +58,8 @@ The measured frame counts equal the author's CHANGE-BRIEF Q5 table.
 
 | Mutation | Test | Exit status |
 | --- | --- | --- |
-| Delete one semicolon in the effect shader | `test_night_dimming.gd` | author to run |
-| Rename the driven uniform in the shader only | `test_night_dimming.gd` | author to run |
+| Delete one semicolon in the effect shader (line 4) | `test_night_dimming.gd` at 60 fps | **1**: 2 `SHADER ERROR: Expected a ';'` lines, uniform list empty, 25/30 (`logs/mutation_semicolon_60fps.log`) |
+| Rename the driven uniform in the shader only (`night_amount` → `night_level`) | `test_night_dimming.gd` at 60 fps | **1**: no SHADER ERROR (still valid), but `night_amount` is missing from the uniform list and the declaration and colour-line checks fail, 27/30 (`logs/mutation_rename_60fps.log`) |
 | Remove `source_color` from the colour sampler | `test_materials.gd` | after the audit |
 
 ## Controlled values (HUMAN CHECK)
