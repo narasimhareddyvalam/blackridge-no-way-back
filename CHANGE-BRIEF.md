@@ -753,3 +753,7 @@ I will record the actual result in `TEST-REPORT.md`.
 7. Update `FRICTIONAL.md`. I will mention that I tried writing the shaders first while learning, but finished the brief before committing the shader files.
 
 I will write down any changes I make after this plan as a new dated note at the bottom instead of changing the original plan.
+
+Revision — October 29, 2026
+
+In my foggy windshield shader, I used multiplication instead of mix() to combine the colour texture with fog_tint. I also set ROUGHNESS to 0.95 and SPECULAR to 0.1 so the fog stays matte and does not look too shiny. I updated this explanation to match how I actually wrote the shader.
