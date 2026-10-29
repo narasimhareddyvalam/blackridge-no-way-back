@@ -77,12 +77,20 @@ after `frame_post_draw`. Images are in `evidence/captures/night_cluster_*.png`.
 
 - The 2.0 capture differs from the 1.0 capture, so `hint_range` did not clamp a value set
   from code.
-- Author to confirm: look at each image, and compare one capture with an OS screenshot.
+- **OS screenshot comparison:** Claude Code cropped the dashboard from the author's macOS
+  screenshot (headlights on) and put it beside `cockpit_night_amount_0.0.png` and `_1.0.png`
+  (`evidence/playtest/cluster_compare.png`). It matches the amber 1.0 capture, not the
+  mint-white 0.0 capture. Author to confirm by eye.
+- Author to confirm: look at each image.
 
 ## In play (HUMAN CHECK)
 
-Author to do: drive normally, press L several times, and confirm the headlights, the LIGHTS
-text and the switch click still work.
+The author's playtest on 2026-10-29, as reported to Claude Code in answer to its checklist:
+- **L:** the headlights turned off and on, the dashboard changed between dim amber and its
+  normal mint-white, the LIGHTS text changed, and the switch click played.
+- **J:** the driver's window went down, and its fog went down with it.
+- **Screenshot:** the author's macOS screenshot with the headlights on, as pasted:
+  `evidence/playtest/os_screenshot_cockpit_headlights_on.png`.
 
 ## Hint experiment (HUMAN CHECK)
 
@@ -184,8 +192,10 @@ clean. After it, all five suites still pass at 60 fps (regression 64/64, integra
 0 failures, materials 76/76, night dimming 30/30, art check 0 failures). The only changes in
 the logs are the engine's leak counts at exit.
 
-VRAM compression is lossy, so the legend text needs a look during the playtest. To undo the
-change, set those four textures to Lossless with Detect 3D disabled.
+VRAM compression is lossy, so the legend text needs a look. In the author's playtest
+screenshot, the legend text that shows ("B R" on the wheel hub, "AC" on the console) is
+readable. That is Claude Code's reading of the screenshot. To undo the change, set those
+four textures to Lossless with Detect 3D disabled.
 
 ## Inspect-and-revise cycle
 
