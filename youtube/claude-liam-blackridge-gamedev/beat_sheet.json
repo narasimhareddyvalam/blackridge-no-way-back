@@ -27,7 +27,15 @@
     "presenter": "Liam (in for Bear)",
     "in_for_bear": true,
     "teaching_contract": "code-then-result-v1",
-    "note": "Narration never frames the work as course requirements (author's instruction, 2026-10-29)."
+    "note": "Narration never frames the work as course requirements (author's instruction, 2026-10-29).",
+    "build": {
+      "at": "2026-10-29T17:19:22",
+      "cut": "master",
+      "filled": 29,
+      "of": 29,
+      "slates": [],
+      "skin_warnings": []
+    }
   },
   "beats": [
     {
@@ -67,7 +75,14 @@
         ]
       },
       "audio_file": "mp3/beat-B00.mp3",
-      "actual_duration_s": 17.43
+      "actual_duration_s": 17.43,
+      "render_duration_s": 17.433333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B00.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B01",
@@ -113,7 +128,14 @@
       "actual_duration_s": 12.28,
       "audio_notes": [
         "lead silence 0.8s baked into the mp3 (no toolkit script consumes lead_silence_s/tail_silence_s)"
-      ]
+      ],
+      "render_duration_s": 12.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B01.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B02",
@@ -192,7 +214,14 @@
         ]
       },
       "audio_file": "mp3/beat-B02.mp3",
-      "actual_duration_s": 20.01
+      "actual_duration_s": 20.01,
+      "render_duration_s": 20.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B02.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B03",
@@ -265,7 +294,14 @@
         ]
       },
       "audio_file": "mp3/beat-B03.mp3",
-      "actual_duration_s": 22.57
+      "actual_duration_s": 22.57,
+      "render_duration_s": 22.6,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B03.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B04",
@@ -334,7 +370,14 @@
         }
       },
       "audio_file": "mp3/beat-B04.mp3",
-      "actual_duration_s": 20.31
+      "actual_duration_s": 20.31,
+      "render_duration_s": 20.333333333333332,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B04.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B05",
@@ -498,7 +541,14 @@
         "evidence_media": "evidence/night_cluster_1.0.png"
       },
       "audio_file": "mp3/beat-B05.mp3",
-      "actual_duration_s": 21.85
+      "actual_duration_s": 21.85,
+      "render_duration_s": 21.866666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B05.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B06",
@@ -549,7 +599,14 @@
         ]
       },
       "audio_file": "mp3/beat-B06.mp3",
-      "actual_duration_s": 19.82
+      "actual_duration_s": 19.82,
+      "render_duration_s": 19.833333333333332,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B06.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B07",
@@ -613,7 +670,14 @@
         }
       },
       "audio_file": "mp3/beat-B07.mp3",
-      "actual_duration_s": 19.2
+      "actual_duration_s": 19.2,
+      "render_duration_s": 19.2,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B07.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B08",
@@ -748,7 +812,14 @@
         "evidence_media": "capture/take_a_headlights_keyframes.png"
       },
       "audio_file": "mp3/beat-B08.mp3",
-      "actual_duration_s": 17.45
+      "actual_duration_s": 17.45,
+      "render_duration_s": 17.466666666666665,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B08.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B09",
@@ -811,7 +882,14 @@
         }
       },
       "audio_file": "mp3/beat-B09.mp3",
-      "actual_duration_s": 15.72
+      "actual_duration_s": 15.72,
+      "render_duration_s": 15.733333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B09.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B10",
@@ -886,7 +964,14 @@
         "evidence_media": "capture/take_b_driver_window_keyframes.png"
       },
       "audio_file": "mp3/beat-B10.mp3",
-      "actual_duration_s": 17.92
+      "actual_duration_s": 17.92,
+      "render_duration_s": 17.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B10.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B11",
@@ -954,7 +1039,14 @@
         }
       },
       "audio_file": "mp3/beat-B11.mp3",
-      "actual_duration_s": 19.75
+      "actual_duration_s": 19.75,
+      "render_duration_s": 19.766666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B11.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B12",
@@ -1284,7 +1376,14 @@
         "evidence_media": "capture/sweep_fog_amount_max.png"
       },
       "audio_file": "mp3/beat-B12.mp3",
-      "actual_duration_s": 21.78
+      "actual_duration_s": 21.78,
+      "render_duration_s": 21.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B12.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B13",
@@ -1352,7 +1451,14 @@
         }
       },
       "audio_file": "mp3/beat-B13.mp3",
-      "actual_duration_s": 18.37
+      "actual_duration_s": 18.37,
+      "render_duration_s": 18.4,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B13.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B14",
@@ -1439,7 +1545,14 @@
         "evidence_media": "evidence/fog_data.png"
       },
       "audio_file": "mp3/beat-B14.mp3",
-      "actual_duration_s": 21.61
+      "actual_duration_s": 21.61,
+      "render_duration_s": 21.633333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B14.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B15",
@@ -1503,7 +1616,14 @@
         }
       },
       "audio_file": "mp3/beat-B15.mp3",
-      "actual_duration_s": 18.33
+      "actual_duration_s": 18.33,
+      "render_duration_s": 18.333333333333332,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B15.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B16",
@@ -1622,7 +1742,14 @@
         "evidence_media": "capture/shader_edit_visible_after.png"
       },
       "audio_file": "mp3/beat-B16.mp3",
-      "actual_duration_s": 20.14
+      "actual_duration_s": 20.14,
+      "render_duration_s": 20.166666666666668,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B16.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B17",
@@ -1686,7 +1813,14 @@
         }
       },
       "audio_file": "mp3/beat-B17.mp3",
-      "actual_duration_s": 18.01
+      "actual_duration_s": 18.01,
+      "render_duration_s": 18.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B17.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B18",
@@ -1802,7 +1936,14 @@
         "evidence_media": "capture/hint_compatibility_4k.png"
       },
       "audio_file": "mp3/beat-B18.mp3",
-      "actual_duration_s": 25.76
+      "actual_duration_s": 25.76,
+      "render_duration_s": 25.766666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B18.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B19",
@@ -1853,7 +1994,14 @@
         ]
       },
       "audio_file": "mp3/beat-B19.mp3",
-      "actual_duration_s": 19.86
+      "actual_duration_s": 19.86,
+      "render_duration_s": 19.866666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B19.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B20",
@@ -1907,7 +2055,14 @@
         }
       },
       "audio_file": "mp3/beat-B20.mp3",
-      "actual_duration_s": 19.01
+      "actual_duration_s": 19.01,
+      "render_duration_s": 19.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B20.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B21",
@@ -1958,7 +2113,14 @@
         "evidence_media": "capture/generated_vs_fog_4k.png"
       },
       "audio_file": "mp3/beat-B21.mp3",
-      "actual_duration_s": 20.69
+      "actual_duration_s": 20.69,
+      "render_duration_s": 20.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B21.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B22",
@@ -2012,7 +2174,14 @@
         }
       },
       "audio_file": "mp3/beat-B22.mp3",
-      "actual_duration_s": 16.81
+      "actual_duration_s": 16.81,
+      "render_duration_s": 16.833333333333332,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B22.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B23",
@@ -2088,7 +2257,14 @@
         "evidence_media": "evidence/recorded_test_output.png"
       },
       "audio_file": "mp3/beat-B23.mp3",
-      "actual_duration_s": 18.11
+      "actual_duration_s": 18.11,
+      "render_duration_s": 18.133333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B23.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B24",
@@ -2161,7 +2337,14 @@
         ]
       },
       "audio_file": "mp3/beat-B24.mp3",
-      "actual_duration_s": 20.01
+      "actual_duration_s": 20.01,
+      "render_duration_s": 20.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B24.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B25",
@@ -2215,6 +2398,10 @@
               }
             ],
             "durationSeconds": 20.03
+          },
+          "rendered": {
+            "out": "media/B25.mp4",
+            "at": "2026-10-29T21:13:11.580149+00:00"
           }
         },
         "show": [
@@ -2237,7 +2424,14 @@
         ]
       },
       "audio_file": "mp3/beat-B25.mp3",
-      "actual_duration_s": 20.03
+      "actual_duration_s": 20.03,
+      "render_duration_s": 20.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B25.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B26",
@@ -2271,7 +2465,14 @@
       "actual_duration_s": 22.54,
       "audio_notes": [
         "lead silence 0.5s baked into the mp3 (no toolkit script consumes lead_silence_s/tail_silence_s)"
-      ]
+      ],
+      "render_duration_s": 22.566666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B26.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B27",
@@ -2295,7 +2496,14 @@
         }
       },
       "audio_file": "mp3/beat-B27.mp3",
-      "actual_duration_s": 32.25
+      "actual_duration_s": 32.25,
+      "render_duration_s": 32.266666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B27.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     },
     {
       "beat_id": "B28",
@@ -2320,7 +2528,14 @@
       "actual_duration_s": 3.92,
       "audio_notes": [
         "tail silence 1.0s baked into the mp3 (no toolkit script consumes lead_silence_s/tail_silence_s)"
-      ]
+      ],
+      "render_duration_s": 3.933333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B28.mp4",
+        "filled_by": "media",
+        "at": "2026-10-29T17:19:22"
+      }
     }
   ]
 }

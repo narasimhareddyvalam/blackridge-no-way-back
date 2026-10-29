@@ -78,7 +78,8 @@ what are in [SOURCES.md](SOURCES.md).
   profiled on the target MacBook Air M1.
 - **Film:** "Blackridge, Shaded" (4K, about 9.5 minutes). The source is in
   `youtube/claude-liam-blackridge-gamedev/`: script, beat sheet, 4K engine captures,
-  evidence ledger and build log. Link: to be added at submission.
+  evidence ledger and build log. File: `Blackridge-Shaded-4K.mp4`, SHA-256 `89066f8d42e86392f157c76ed832ff1b5b9994b20f1c6f5b08fee695d7b6c1c2`;
+  the OneDrive link is in the Canvas submission note.
 
 The [complete story](docs/GAME_STORY.md) and
 [game design document](docs/GAME_DESIGN.md) are verified Markdown conversions of
