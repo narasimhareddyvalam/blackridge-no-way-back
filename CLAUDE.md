@@ -90,28 +90,53 @@ Checked on this machine on 2026-10-28 (Godot 4.7.2, macOS 26.6.2):
 
 @CHANGE-BRIEF.md
 
+## Working rule
+
+- The author approves every step before it happens: "at each step take my approval and
+  then only do it" (2026-10-30). For each step:
+  1. Describe it: the files and the commands.
+  2. Wait for approval.
+  3. Do only that step and show the real output.
+  4. Stop.
+- All work happens on the `develop` branch. `main` stays exactly as the last graded
+  submission, and it changes only through a pull request the author approves.
+- Each agent run ends by writing `HANDOFF.md`. It lists the files changed, the exact test
+  commands with their real results, what the next run may rely on, and what is
+  unverified.
+- Each run starts by reading `HANDOFF.md` and rerunning every test it lists. The file
+  does not exist until Run 1 ends.
+
 ## Ownership
 
 - Every file in `game/shaders/` is hand-written by the human. Agents never create,
   edit, reformat, rename or delete files there, even to fix an error; report shader
   problems to the human instead.
 
-## Out of scope
+## Out of scope (Phase 1)
 
-- Headlight logic and `headlights_on`, lamps and lens materials, the `LIGHTS` text and
-  the switch click. The dimming driver only reads `headlights_on`; it never sets it.
+- `headlights_on`, the `headlights` action (L), the `LIGHTS` text and the switch click.
+  - The headlight lights and lenses change only as `CHANGE-BRIEF.md` §4 says.
+  - The dimming driver and `night_cluster` only read `headlights_on` and never set it.
 - Van movement, steering, collisions, recovery, gear, indicators, wipers, rain, window
   motion, audio, and every other control or key binding.
-- The existing glass (`windshield.gdshader` and its material, the side-window
-  `StandardMaterial3D`): fog overlays go beside it, never in place of it.
-- Existing tests, including the L-key check; they keep passing unchanged.
-- Other objects and scenes, the world environment, renderer and `project.godot`
-  settings. World-fog-off comparisons are runtime-only and never saved.
-- No fog animation, new controls, autoloads or screen-texture sampling; at most one
-  test-only screenshot key, as the brief allows.
+- The existing glass and the fog materials, which change only with the author's OK:
+  - the glass is `windshield.gdshader` and its material, plus the side-window
+    `StandardMaterial3D`;
+  - the fog materials are `light_fog.tres` and `heavy_fog.tres`. The fog is re-checked by
+    eye under Forward+.
+  - If the author approves new fog values, `test_materials.gd` changes with them, recorded
+    as a dated revision in `CHANGE-BRIEF.md`. Every other existing test keeps passing
+    unchanged.
+- The tonemap stays Linear unless lit surfaces clip to white. Any change is shown to the
+  author with before/after stills first. Volumetric fog stays off.
+- `project.godot` changes only its rendering method.
+- The interior, the road's shape and material, models, other scenes, autoloads and new
+  controls are later phases in `ROADMAP.md`.
 
 ## Unconfirmed
 
-- Which node the `night_cluster` material goes on (the `instruments.gd` Control or
-  another node), and where the dimming driver lives. Neither exists yet.
-- I did not read the contents of `game/shaders/*.gdshader`.
+- Whether the night-cluster colours stay exactly at the Assignment 5 values under
+  Forward+ (prediction P3). Run 1 measures it.
+- The final low-beam values. The 2026-10-30 test values are starting points.
+- What a Godot 4.7.2 macOS export needs on this Mac (signing mode, the `.zip`
+  contents). Run 3 checks it.

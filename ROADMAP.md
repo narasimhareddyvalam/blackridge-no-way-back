@@ -478,3 +478,28 @@ the same parked driver's view at 3840×2400. The stills and who decided on each 
   - **README:** the renderer note and the export state.
   - **The development log:** a dated entry for every request, decision and result.
   - **`source_assets/artwork/captures/`:** the Phase 1 stills.
+
+## Revision 2026-10-30 (evening): repository structure, branches, Assignment 5
+
+- **No assignment folders.** "i dont want it to look like assignment 5 and assignment 6
+  after done with this course. i want to keep it as professional and i developed and
+  portfolio piece". Course submissions are kept only as git tags (`a5` … `a10`). This
+  replaces §5.1's plan to move Assignment 5's files into `course/assignment-05/`.
+- **Branches.** `main` stays exactly as the last graded submission, which is what the TA
+  sees. All work happens on `develop`, which is pushed as a backup. After Assignment 5 is
+  graded, a pull request merges `develop` into `main`: "for now we will make a pr later
+  after assignment 5 is graded". Later assignments follow the same path: merge, then tag.
+- **Nothing removed for the TA.** "dont remove everything what we have in files till now.
+  the ta will check our assignment". `main` and tag `a5` keep every Assignment 5 file
+  unchanged.
+- **Portfolio cleanup after December 20.** This replaces §5 as the cleanup plan, and it
+  needs my approval at the time:
+  - the README becomes the game's page;
+  - course-only files move to `docs/development/`, or off `main` (the tags keep them);
+  - a `v1.0` tag marks the portfolio version.
+
+  §5.3's naming rules apply to new files now.
+- **Assignment 5 is not resubmitted.** "its fine. focus on creating making realistic
+  game".
+- **Every step is approved first.** "at each step take my approval and then only do it".
+  This is recorded in `CLAUDE.md`.

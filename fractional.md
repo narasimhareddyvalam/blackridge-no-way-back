@@ -1115,3 +1115,28 @@ result. Unfinished checks remain marked unfinished.
   author's approval and is committed before any code. Assignment 5's brief stays
   at tag `a5`. Assignment 10 requires redoing every earlier look check after a
   renderer switch, so Assignment 5's checks are part of Phase 1.
+
+### 2026-10-30 — Branch `develop`; Phase 1 brief committed before code
+
+- **Author decisions:**
+  - Approval before every step: "at each step take my approval and then only do it".
+  - Structure: a professional portfolio piece after the course, with no assignment
+    folders. Submissions stay as git tags.
+  - The Assignment 5 deadline was extended, but the author declined to resubmit: "its
+    fine. focus on creating making realistic game".
+  - "dont remove everything what we have in files till now. the ta will check our
+    assignment", then "make changes and push to a new branch, for now we will make a pr
+    later after assignment 5 is graded".
+- **Done, on the new `develop` branch:**
+  - **`CHANGE-BRIEF.md`:** now the approved Phase 1 brief. Assignment 5's brief stays on
+    `main` and at tag `a5`.
+  - **`CLAUDE.md`:**
+    - a "Working rule" section: approval before each step, `develop` versus `main`, and
+      `HANDOFF.md`;
+    - Phase 1's "Out of scope" and "Unconfirmed" lists.
+
+    It is now 142 lines, over Assignment 5's 120-line limit. `main` keeps the 117-line
+    Assignment 5 version; trimming would be a separate approved step.
+  - **`ROADMAP.md`:** a dated revision for the structure, branches and Assignment 5.
+  - **GitHub:** `develop` pushed. `main` and tag `a5` are untouched.
+- **Next (needs approval):** Run 1, the renderer switch.
