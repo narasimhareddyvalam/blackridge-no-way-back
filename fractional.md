@@ -876,3 +876,242 @@ result. Unfinished checks remain marked unfinished.
   passed 29/29, both exiting 0. Each prints an engine "resources still in use at
   exit" error at shutdown. This was there before Assignment 5 and is not a SHADER
   or SCRIPT ERROR. The Python art check `check_first_drive_art.py` passed 133/133.
+
+### 2026-10-30 — Assignment 5 submitted; final-project realism pass begins
+
+- **Assignment 5 closed.** Tag `a5` points at `a2dd684` on the public GitHub
+  repository `blackridge-no-way-back`. The author submitted on Canvas with the
+  source zip, `SUBMISSION.md`, `FILM-SHA256.txt` and a short note. Work from
+  2026-10-28 to today is in `TEST-REPORT.md`, `FRICTIONAL.md`, `SUBMISSION.md`
+  and the commit history up to that tag.
+- **Author request (realism):** "which tools do you think we should use via mcp
+  to get the most realistic game"; "the game is not as realstic as i want it to
+  be". The Blender MCP server is configured, but when checked, Blender was not
+  running with its add-on started. No Godot MCP is installed. Asked "can we use
+  unreal engine to make our game more reaslitic"; Claude advised against
+  switching engines. Author: "this is my final project", then "its upto us.
+  whatever makes our game more realistic", then "yes run the experiment".
+- **Experiment 1, renderer.** Scratch copy, runtime-only settings, the same parked
+  driver's view captured at 3840×2400 in three versions: Compatibility, Forward+,
+  and Forward+ with the AgX tonemap, SSR, SSAO, glow and volumetric fog (0.015).
+  - Forward+ alone barely changed the picture: mean luma 37.9 → 39.2, and 1.3% of
+    the gauge pixels changed.
+  - The exception was the driver-window fog overlay. It rendered much stronger:
+    44% of that area changed by more than 6 levels. Any renderer switch needs an
+    eye check of the fog materials.
+  - The full stack made the frame 21% darker (39.2 → 30.9), with no visible
+    reflections or lamp glow.
+  - Conclusion: the gap is content and lighting, not post-processing.
+- **Author feedback:** "the road doesnt look like road.. it should look realsictic
+  and ghosted. and headlights dont make any difference when switched on and off.
+  the user should see the road little better when turned on. and less when turned
+  off. i want all small details like this. and i am not happy with car interior".
+  "Ghosted" is taken to mean eerie and empty, still to be confirmed with the author.
+- **Experiment 2, headlights (scratch copy):**
+  - Switching the headlights on or off changed 0.0% of the outside view, even at
+    12× energy in Forward+.
+  - **Cause:** `_mark_layer(_body, 2)` (`van_presentation.gd:62,259-263`) also
+    sets the two headlight SpotLight3Ds' `layers` to 2. The driving camera's
+    `cull_mask` is 5 (`:132`), so the camera culls them. The capture log
+    confirms `layers_before: [2, 2]`.
+  - Moving them to layer 1 alone still changed nothing measurable with today's
+    lighting: the moon (0.55) and ambient light (0.30) light the road about as
+    much as the headlights do.
+  - Next try: a darker night, stronger headlights and thin volumetric fog in
+    Forward+. The beam lit the mist: the view got 52% brighter, but the road
+    disappeared. **Author: "terrible, cant see the road at all when light is
+    on. road should be more visible".**
+  - Mist removed for a low-beam test:
+    - settings: moon 0.25, ambient 0.12, energy 560, decay 1.0, aimed 2° down,
+      35° half-angle, and a pattern texture with a sharp top edge;
+    - results: road band 26.3 → 78.9 (3.0×); road just past the dashboard
+      19.6 → 105.0; band above the horizon 63.0 → 64.2.
+    - Shown to the author; verdict pending.
+  - The dashboard hood sits almost at eye level and hides roughly the first 15 m
+    of road.
+- **Author realism target:** a screenshot of another game's rainy cockpit: "i
+  want it to be as realistic as this. this is a game." Claude first filed it as
+  an approved reference. The author corrected this: "no i gave it for you to know
+  how realistic i want my game to be". The file was removed and is not stored in
+  the project. It only sets the level of realism.
+- **Author decisions (multiple-choice):**
+  - Switch to Forward+.
+  - Use free CC0/CC-BY models only, credited in `SOURCES.md` with logos removed,
+    each shown before use. This repeats the 2026-10-19 "Free only" decision.
+  - Keep the rainy night.
+  - Deadline: more than a month away.
+- **Author request:** "add like realistic shaders if we need to, add animations do
+  how a top mnc do it, follow best practices and techniques. and make sure to
+  write in frequency.md whats happening and all our decisions and also make sure
+  to save the pictures in assets whatever we are rejecting and approving in
+  accurate folders." "frequency.md" means this file, as before.
+- **Done:**
+  - **`FINAL-BRIEF.md` drafted (status DRAFT).** It covers:
+    - goals, decisions (linked to the 2026-10-19 benchmark and van shortlist) and
+      test findings;
+    - Phase 1: Forward+, the headlight fix, low beams, a darker night and
+      reflections, with machine and human checks;
+    - how we build: pictures decide, everything is logged, PBR materials before
+      custom shaders, and Claude-written shaders stay out of `game/shaders/`;
+    - studio animation practices, and later phases 2–8.
+
+    A reviewer subagent checks it before the author reads it.
+  - **New `source_assets/artwork/captures/`** with `approved/`, `rejected/` and
+    `pending/` folders, and a README listing who decided and in what words.
+    Rejected: today's headlights on/off, the post-processing stack, and the
+    headlights lighting the mist. Pending: the low-beam test.
+  - The references README now points to the new captures folder.
+- **Not changed:** nothing in `game/`, `project.godot`, the tests or `CLAUDE.md`.
+  Nothing committed or pushed. All experiments ran on a scratch copy with
+  runtime-only settings.
+- **Open:**
+  - the builder check of the brief;
+  - the author's approval of the brief, then Phase 1;
+  - the author's verdict on the low-beam stills;
+  - the meaning of "ghosted".
+
+### 2026-10-30 — Brief review and the author's answers
+
+- **Builder check.** A reviewer subagent read `FINAL-BRIEF.md` against the code. It
+  confirmed the headlight diagnosis and raised eight questions.
+  - **Correction it caught:** Godot applies a light's pattern image only when that
+    light casts shadows, and only the left headlight did. In the low-beam test, the
+    right beam therefore had no sharp top edge; that is why the road sign lit up.
+  - **Claude settled these in the brief, each marked "Claude's call":**
+    - shadows on both headlights;
+    - the test values as tunable starting points;
+    - a Linear tonemap unless lit surfaces clip;
+    - the capture regions and a no-white-out check, with the rig moved into
+      `tools/captures/`;
+    - a 60 FPS target (never below 45 after a 10-minute drive at 1280×800);
+    - `test_materials.gd` following any newly approved fog values;
+    - a whole-van swap in Phase 3;
+    - "ghosted" read as eerie and empty.
+- **Author answers (multiple-choice):**
+  - **Final scope:** "I'll paste the assignment". The brief will follow it.
+  - **Art target:** "Near-photoreal, consistent". This overrides the design doc's
+    stylized low-to-mid-poly kit, recorded as C11 in `docs/DESIGN_DECISIONS.md`.
+    The Forward+ switch is recorded as C12.
+  - **Low beam:** "Approve the direction". The two low-beam stills moved from
+    `captures/pending/` to `captures/approved/`; the exact values are still to be
+    tuned in Phase 1.
+- **Next:** read the final project assignment, revise the brief to match, then
+  hand the brief to the author for approval before any code.
+
+### 2026-10-30 — Assignment 10 (final project) received; roadmap drafted
+
+- **Author:** pasted the Assignment 10 brief, "Final Project: From Brief to Export"
+  (250 points), and added: "this will keep changing because my submission in
+  december 20th. but i want a real game as my final portfolio piece".
+- **What the assignment adds:**
+  - The Assignment 9 game-AI technique in real play, with an audit of a gap its
+    tests miss.
+  - Persistence under save rules written first.
+  - A keyboard-only start or pause menu.
+  - A clean clone of tag `a10` that reproduces.
+  - A macOS export with an inspected pack and an honest source-ready or
+    export-ready claim.
+  - A pitch ledger against Assignment 8's "will exist" list.
+  - Two Brutalist films (godot-walkthrough and godot-gdd) naming the five
+    Supervisory Capacities.
+  - `HANDOFF.md` after every agent run.
+- **Its dates:**
+  - Nov 3: export target and renderer decided, export attempted.
+  - Nov 13: save rules written.
+  - Nov 23: persistence and menu working.
+  - Dec 3: a playable loop and a clean-clone rehearsal.
+  - Dec 13–20: integration, playtesting and films.
+
+  The brief says a renderer change is cheap before effects and animation are
+  final; Phase 1 does exactly that.
+- **Author decisions (multiple-choice):**
+  - **Export target:** "macOS, Forward+" (C13).
+  - **Export templates:** "Yes, download". Downloaded to the session scratchpad,
+    1,281,349,702 bytes, and the SHA-512 matches Godot's official
+    `SHA512-SUMS.txt`. Not installed yet; Phase 1 installs them.
+  - **Scope by December 20:** "All three missions" (C14). Claude had recommended
+    a polished Mission 1 and noted that realism work would then be cut back.
+- **The brief became a roadmap.** The course reserves `CHANGE-BRIEF.md` for each
+  change's brief, committed before code, so `FINAL-BRIEF.md` was replaced by
+  `ROADMAP.md`. It holds:
+  - the schedule against the Assignment 10 dates, plus a cut list (Claude's
+    call);
+  - a requirement-by-requirement map of Assignment 10;
+  - Phase 1 in detail, now including the macOS export preset, pack listing and
+    release export;
+  - the three missions as `GAME_DESIGN.md` §9 defines them;
+  - the realism phases in priority order, the 2026-10-30 evidence, and open
+    items.
+- **Open items now:**
+  - how Assignments 2–4's layers from the earlier game are carried or explained;
+  - which Assignment 9 technique fits the guards;
+  - how one `CHANGE-BRIEF.md` serves both Assignments 6–9 and Assignment 10's
+    overlapping preparation;
+  - the van model choice;
+  - "ghosted".
+- **Not changed:** nothing in `game/`, `project.godot`, the tests or `CLAUDE.md`;
+  nothing committed.
+
+### 2026-10-30 — Goal: a commercial game; structure and documentation audit
+
+- **Author:** "make sure to follow best practices, make sure to update the
+  documentation. make sure the file names are appropriate and accurate and
+  meaninful and folder strucutre is clean and best practices. the goal is to put
+  the game on some game store to sell it. make sure we are doing a realistic and
+  professional game". Recorded as C15 in `docs/DESIGN_DECISIONS.md`.
+- **What selling changes:**
+  - every asset and tool must allow commercial use;
+  - real vehicle brands and designs must be avoided;
+  - the van creator's extra term ("not free of rights. You must inform me of
+    your usage") needs written permission;
+  - Windows matters for most buyers;
+  - a Mac build sold outside the App Store needs Apple signing and notarization
+    ($99 a year);
+  - the game needs its own licence decision, a settings menu, controller
+    support, a credits screen with every licence, and an age rating.
+
+  None of these were decided yet; they are listed in `ROADMAP.md` §10 and §12.
+- **Audit (read-only):**
+  - `fractional.md` and `FRICTIONAL.md` are near-identical names for different
+    files. 11 files link to `fractional.md`.
+  - Two different `first_drive.gd` files exist (app and mission).
+  - Assignment 5's deliverables lie loose at the root: `LANGUAGE-NOTES.md`,
+    `evidence/` (42 files), `prompts/`, `sessions/`, `logs/`, and A5's
+    `TEST-REPORT.md` and `SUBMISSION.md`.
+  - A document sits inside the Godot project (`game/MATERIALS.md`).
+  - `docs/CLAUDE_HANDOFF.md` clashes with the course's `HANDOFF.md`.
+  - There are empty folders and `.gitkeep` files in folders with content.
+  - "MacBook Air M1" is stale in README, `AGENTS.md`, `docs/DEVELOPMENT.md` and
+    `docs/ARCHITECTURE.md` (C10 made the M4 the target).
+  - `AGENTS.md` still says "The current stage is repository setup only".
+- **Done:**
+  - **README:** a short "Final-project plan" note under "Current status" points to
+    `ROADMAP.md` and C11–C15, and says nothing in it is built yet.
+  - **`ROADMAP.md`:** rewritten with the goal; Phase 0 (renames and moves using
+    `git mv`, docs brought up to date, naming rules, a link check and unchanged
+    tests as proof); and §10 "Selling the game". Sections renumbered.
+- **Proposed in Phase 0, not done:**
+  - this file becomes `docs/DEVELOPMENT_LOG.md`;
+  - Assignment 5's files move to `course/assignment-05/`, with tag `a5` keeping
+    the originals;
+  - `youtube/`, `game/shaders/` and the course-required root names are kept on
+    purpose.
+
+  Waiting for the author's approval of the roadmap.
+
+### 2026-10-30 — Priorities: a realistic game, course first; selling and cleanup deferred
+
+- **Author:** "we can skip selling also if its too much work. but i want
+  realistic game. dont do anything that will go against our assignments for
+  now. focus on thedevelopement of game, we will clean it up when i sat".
+- **Recorded:**
+  - **C15 amended:** a realistic game first, selling optional and deferred,
+    the course first, and the Phase 0 cleanup waits for the author.
+  - **`ROADMAP.md`:** Phase 0 and §10 marked deferred. Product-only items (a
+    changelog, store work) were removed from Phase 1.
+  - **README:** the status note now says selling is optional.
+- **Next:** Phase 1 is the course's own November 3 target (export target and
+  renderer decided, export attempted). Its `CHANGE-BRIEF.md` is drafted for the
+  author's approval and is committed before any code. Assignment 5's brief stays
+  at tag `a5`. Assignment 10 requires redoing every earlier look check after a
+  renderer switch, so Assignment 5's checks are part of Phase 1.

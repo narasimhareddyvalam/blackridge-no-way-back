@@ -7,6 +7,18 @@ first-person cockpit driving over an approximately twelve-week university projec
 
 ## Current status
 
+**Final-project plan (2026-10-30).** [ROADMAP.md](ROADMAP.md) is the plan to finish the
+game by 2026-12-20 for Assignment 10. It covers:
+- all three missions;
+- a near-photoreal rainy night;
+- the Forward+ renderer;
+- a macOS export.
+
+A realistic game comes first and the course assignments take priority. Selling it later
+is optional. The author's decisions are C11–C15 in
+[DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md). Nothing in that plan is built yet, and the
+rest of this section describes the game as it is today.
+
 The first vehicle prototype is implemented in `game/app/first_drive.tscn` and set
 as the main scene. It includes an industrial road loop, cockpit controls and
 instruments, live-view camera wiring, windows, wipers, lights, synthesized audio,
