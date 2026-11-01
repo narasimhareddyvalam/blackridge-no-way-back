@@ -26,6 +26,9 @@ uniform float wiper_park = -1.55;
 uniform float wiper_sweep = 1.72;
 uniform vec4 wiper_pivots = vec4(-0.8, -0.51, 0.14, -0.51);
 uniform vec4 wiper_spans = vec4(0.15, 0.85, 0.185, 0.735);
+uniform vec4 glare_points = vec4(9.0);
+uniform vec2 glare_power = vec2(0.0);
+uniform vec3 glare_colour : source_color = vec3(1.0, 0.95, 0.86);
 
 const float RUN_LANE = 0.06;
 const float RUN_EPOCH = 0.5;
@@ -36,6 +39,15 @@ const float STREAK_BAND = 0.006;
 const float ARM_HALF = 0.007;
 const float SHUTTER = 0.02;
 const vec3 BLADE_TINT = vec3(0.012);
+const float GLARE_LEVEL = 3.0;
+const float GLARE_EYE = 0.0004;
+const float GLARE_CORE = 0.011;
+const float GLARE_VEIL = 0.075;
+const float GLARE_WIDE = 0.4;
+const float GLARE_GLINT = 4.0;
+const float GLINT_REACH = 0.18;
+const float ARC_WIDTH = 0.0035;
+const float ARC_REACH = 0.16;
 
 #include "rain_drops.gdshaderinc"
 
@@ -181,6 +193,31 @@ vec4 runner(vec2 metres, float odometer, float direction, float phase, float sho
 	return vec4(bead_shape, bead * 0.9, 0.006);
 }
 
+float arc_streak(vec2 metres, vec2 point, vec2 pivot, vec2 span) {
+	vec2 lamp = point - pivot;
+	float radius = length(lamp);
+	if (radius < span.x || radius > span.y) {
+		return 0.0;
+	}
+	vec2 from_pivot = metres - pivot;
+	float across = (length(from_pivot) - radius) / ARC_WIDTH;
+	float along = abs(atan(from_pivot.y, from_pivot.x) - atan(lamp.y, lamp.x)) * radius;
+	return exp(-across * across) * exp(-along / ARC_REACH);
+}
+
+float glare_veil(vec2 metres, vec2 point, float power, float film) {
+	if (power <= 0.0) {
+		return 0.0;
+	}
+	float r = length(metres - point);
+	float scatter = mix(0.35, 1.0, film);
+	float halo = 0.9 * exp(-r * r / (GLARE_CORE * GLARE_CORE)) + GLARE_EYE / (r * r + GLARE_EYE)
+		+ scatter * (0.35 * exp(-r / GLARE_VEIL) + 0.08 * exp(-r / GLARE_WIDE));
+	float arcs = arc_streak(metres, point, wiper_pivots.xy, wiper_spans.xy)
+		+ arc_streak(metres, point, wiper_pivots.zw, wiper_spans.zw);
+	return power * (halo + 0.3 * scatter * arcs);
+}
+
 void fragment() {
 	vec2 metres = vec2((UV.x - 0.5) * glass_size.x, (0.5 - UV.y) * glass_size.y);
 	float age = texture(wipe_mask, UV).r;
@@ -219,9 +256,18 @@ void fragment() {
 	vec3 around = textureLod(scene_color, SCREEN_UV, 3.5).rgb;
 	vec3 colour = glass.rgb + sky_glow.rgb * sky_view(drop_mix)
 		+ (around * 0.9 + sky_glow.rgb * 0.35) * crest;
+	float near = glare_power.x * exp(-length(metres - glare_points.xy) / GLINT_REACH)
+		+ glare_power.y * exp(-length(metres - glare_points.zw) / GLINT_REACH);
+	colour += glare_colour * near * GLARE_GLINT * drop_mix.z
+		* (0.3 + 0.7 * smoothstep(0.5, 1.0, length(drop_mix.xy)));
 	float alpha = max(glass.a, crest * 0.8);
 	float blur = blade_blur(metres);
 	float covered = 1.0 - (1.0 - alpha) * (1.0 - blur);
-	ALBEDO = (colour * alpha * (1.0 - blur) + BLADE_TINT * blur) / max(covered, 0.001);
-	ALPHA = covered;
+	float veil = clamp(glare_veil(metres, glare_points.xy, glare_power.x, film)
+		+ glare_veil(metres, glare_points.zw, glare_power.y, film), 0.0, 0.9);
+	float lit = 1.0 - (1.0 - covered) * (1.0 - veil);
+	vec3 shown = colour * alpha * (1.0 - blur) + BLADE_TINT * blur
+		+ glare_colour * GLARE_LEVEL * veil * (1.0 - covered);
+	ALBEDO = shown / max(lit, 0.001);
+	ALPHA = lit;
 }

@@ -113,6 +113,10 @@ func _run() -> void:
 	check(not van.get("occupied") and app.get("driver").get("active"),
 		"Stopped van allows safe exit")
 	await tap("interact")
+	var boarding := 0.0
+	while not van.get("occupied") and boarding < 8.0:
+		await create_timer(0.1).timeout
+		boarding += 0.1
 	check(van.get("occupied") and not app.get("driver").get("active"),
 		"Nearby driver can reenter")
 	await tap("pause")

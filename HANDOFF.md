@@ -1,6 +1,210 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 18 (rain follows the beam), 2026-10-31, on branch `develop`.
+**Last run:** Phase 1, Run 19 (on foot, the oncoming van, the collision; C27–C29), all four
+steps done, 2026-10-31, on branch `develop`. At the author's request ("commit and push to
+develop", #71), Run 19 is committed in the commit after `b1e5785`, and `develop` is pushed to
+`origin`. `main` is untouched. Final logs: `logs/phase_1/run19/step4/`.
+
+## Run 19, step 4: the collision, the flight and the depot (approved: "Yes, unavoidable (Recommended)")
+
+**Files:**
+
+- **New:**
+  - `game/features/characters/pedestrian/pedestrian.gd` (with its `.uid`);
+  - `game/tests/test_collision.gd` (with its `.uid`);
+  - `tools/captures/capture_collision.gd`.
+- **Changed:**
+  - mission `first_drive.gd`: `struck`, `pedestrian`, `fleeing`, `_physics_process()`,
+    `_send_pedestrian()`, `_on_struck()`, `_restore_braking()`; "DRIVE." in
+    `_update_objective()`; recovery keeps him after a hit;
+  - `game/app/first_drive.gd`: `_struck()`, `_drive_completed()`, `_exit_at_depot()`, E blocked
+    while fleeing, music back on "New drive";
+  - `freight_van.gd`: `held`;
+  - `van_presentation.gd`: `jolt()`; eye adaptation through the driving camera's
+    `CameraAttributesPractical`;
+  - `driving_audio.gd`: `silence_music()`, `play_music()`;
+  - `driver.gd`: `play_clip(clip, facing, from, shift)`, `clip_finished()`, `finish_clip()`;
+  - `test_oncoming_van.gd`: two adaptation checks.
+- **Docs:** `CHANGE-BRIEF.md`, `docs/DESIGN_DECISIONS.md` (C29) and the prompt log #70.
+
+**What the next run can rely on:**
+
+- **Mission state:** `route.pedestrian.hit` says whether he was struck. `route.fleeing` is
+  true from "DRIVE." until "New drive". `route.complete` after a hit triggers the depot exit.
+- **The pedestrian:** his `struck(speed)` signal fires once.
+- **Throw:** `THROW_BASE` 0.8 + `THROW_PER_SPEED_SQUARED` 0.16 × speed², at most 12 m.
+- **The driving camera** now has a `CameraAttributesPractical`. Its `exposure_multiplier` is 1.0
+  except while the glare adapts the eye.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run19/step4` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 18/18; art 0 failures |
+| the same, as the final run before the commit (the logs in that folder) | the same results. No "SCRIPT ERROR", "SHADER ERROR" or "Failed loading resource" line; the only "ERROR:" lines are the engine's "resources still in use at exit". The run before it showed one freed-object error from `_clear_oncoming()`, fixed before the commit |
+| `test_collision.gd` with dry brakes (`SKID_BRAKING` 9.0) | 8/18, exit 1 (`mutation_dry_brakes/`) |
+| `capture_collision.gd -- evidence/phase_1/collision/step4` (windowed, on battery) | 11 stills: step-out at 7.0 m/s, too late at 4 m, impact at 8.3 m/s, skid, he lies 8 m ahead of the bumper in the low beams, "DRIVE.", side views, getting out and shutting the door at the depot |
+
+**Unverified:**
+
+- How it plays and feels in motion. It was seen only in tests and stills, never driven by a
+  person.
+- Whether the darkened view after the glare makes him hard enough to see in normal play. In the
+  capture the player stopped and was teleported, so the eyes had recovered.
+- Frame rate on power.
+
+## Run 19, step 3: the oncoming van and its glare (approved: "Yes, start step 3 (Recommended)")
+
+**Files:**
+
+- **New:**
+  - `game/features/vehicles/oncoming_van/oncoming_van.gd` (with its `.uid`);
+  - `game/tests/test_oncoming_van.gd` (with its `.uid`);
+  - `tools/captures/capture_oncoming.gd`.
+- **Changed:**
+  - `game/features/missions/night_freight/first_drive.gd`: `road`, `oncoming`,
+    `_send_oncoming()`, `_nearest_index()` and `_clear_oncoming()`;
+  - `game/app/first_drive.gd`: `route.road = world.road`;
+  - `van_presentation.gd`: `oncoming`, `_update_glare()`, `_on_windshield()`, `_hidden()`,
+    `_oncoming_rain()`; `_light_the_rain()` also lights the rain with the oncoming lamps;
+  - `windshield.gdshader`: `glare_points`, `glare_power`, `glare_colour`, `glare_veil()`,
+    `arc_streak()`;
+  - `beam_rain.gdshader`: the `oncoming_*` uniforms; `lamp_light()` takes a pattern and a
+    range.
+- **Docs:** `CHANGE-BRIEF.md` and the prompt log #69.
+
+**What the next run can rely on:**
+
+- **The trigger:** `ENCOUNTER` (98.7, 25.5), within 14 m, in stage 4, once per drive.
+- **The van:** it starts between samples 1040 and 1090, meets the player near 1012, and is
+  removed at 900. It emits `passed` once the player is behind it, which step 4 can use to send
+  the pedestrian.
+- **Numbers:** `OncomingVan.KEEP_RIGHT` 0.95, `BUMPERS` 4.7, `STOP_GAP` 2.5, `CRUISE`
+  11.1 m/s.
+- **Its body:** with `sync_to_physics` off, its transform is exact on the first frame.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run19/step3` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 19/19; art 0 failures |
+| `test_oncoming_van.gd`, never blocked | 18/19, exit 1 (`mutation_no_blocking/`) |
+| `test_oncoming_van.gd`, no glare | 18/19, exit 1 (`mutation_no_glare/`) |
+| `capture_oncoming.gd -- evidence/phase_1/oncoming/step3` (windowed, on battery) | 10 stills; glare 0.10 at 120 m to 0.89 at 10 m; windshield brightness 53 → 88 at 20 m |
+
+**Unverified:**
+
+- How the glare feels while driving; it was seen only in stills, parked.
+- Frame rate with the second van on power. The stills ran at 46–61 FPS on battery.
+- Whether two vans meeting in the hairpins themselves would fit. The van is removed before
+  them.
+
+## Run 19, step 2: start on foot and get into the van (approved: "Yes, lights on at ignition (Recommended)")
+
+**Files:**
+
+- **Changed:**
+  - `game/app/first_drive.gd`: `_begin()`, `_new_drive()`, `_begin_on_foot()`,
+    `_board_van()`, `_cancel_boarding()`, `_path_to()`, `_on_ground()` and the hints;
+  - `game/features/characters/driver/driver.gd`: Ethan's model and clips, `walk_to()`,
+    `play_clip()`;
+  - `game/features/vehicles/freight_van/freight_van.gd`: `engine_on`, `driver_door`,
+    `switch_off()`, `start_engine()`, `ignition_sweep()`, `engine_started`;
+  - `van_presentation.gd`: `DOOR_ART`, `DOOR_HINGE`, `DOOR_SWING`, `_door`, `_door_glass`,
+    `_power_screens()`, `_tail_off`;
+  - `instruments.gd`: the sweep;
+  - `driving_audio.gd`: the engine is silent while off;
+  - `driving_hud.gd`: `fade()`, the controls line;
+  - `tools/art/build_first_drive_art.py` and the regenerated `body.glb`.
+- **New:** `art/door.glb`, `game/tests/test_on_foot.gd` (with its `.uid`) and
+  `tools/captures/capture_on_foot.gd`.
+- **Tests changed (recorded in `CHANGE-BRIEF.md`):** `first_drive_integration.gd` waits for
+  boarding; `check_first_drive_art.py` expects five van models.
+- **Docs:** `CHANGE-BRIEF.md`, `CLAUDE.md` (the ignition line), `SOURCES.md` and the prompt
+  log #68.
+
+**What the next run can rely on:**
+
+- **Tests start in the van.** Suites that call `_resume()` start in the van with the engine
+  running, as before. Only the HUD's "Begin / continue drive" (`_begin()`) and "New drive"
+  (`_new_drive()`) start on foot.
+- **The boarding spot** is van-local (-2.25, 0, -0.35), facing the van's +X. At clip time
+  1.05 s his hand meets the handle at (-1.20, 1.05, -0.22).
+- **The door** swings to 31° (`driver_door` 1.0) by 1.6 s, and the cut starts at 1.75 s.
+- **Ignition:** 0.6 s after the cut, then a 1.4 s sweep, then the low beams and wipers.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `python3 tools/art/build_first_drive_art.py` | only `body.glb` changed (9,838 → 9,278 triangles); new `door.glb` 1,172 |
+| every suite before the two test changes (`logs/phase_1/run19/step2_before_test_changes/`) | all pass except "Nearby driver can reenter" (integration) and the art check's model count |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run19/step2` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25; art 0 failures |
+| `test_on_foot.gd` with the ignition call removed | 20/25, exit 1 (`logs/phase_1/run19/step2/mutation_no_ignition/`) |
+| `capture_on_foot.gd -- evidence/phase_1/characters/step2` (windowed) | 8 stills: start (mean brightness 9.6/255), walking, reach, door open (third-person and side), in the cab with the engine off, gauge sweep, low beams and wipers on |
+
+**Unverified:**
+
+- How it looks and feels in motion: the walk, the reach and the cut were checked only in
+  stills.
+- Walking around the van from the far side (`_path_to()`), which no test covers.
+- Whether the start is too dark to find the door. The objective and hint name it.
+
+## Run 19, step 1: Mixamo characters imported (approved: "Go ahead, dark shirt (Recommended)")
+
+**Files:**
+
+- **New:**
+  - `tools/art/convert_mixamo.py`;
+  - `game/features/characters/ethan/ethan.glb` (6.5 MB), `pedestrian/pedestrian.glb`
+    (3.2 MB), their `.import` files and six extracted WebP textures;
+  - `game/features/characters/ATTRIBUTION.md`;
+  - `tools/captures/capture_characters.gd`;
+  - stills in `evidence/phase_1/characters/step1/`.
+- **Changed:**
+  - `tools/assets/configure_imports.py` also sets `*.webp` textures, and treats
+    `*_Normal.webp` as normal maps;
+  - `.gitignore` ignores `/source_assets/mixamo/*.fbx` (about 55 MB each);
+  - `source_assets/mixamo/README.md`;
+  - `SOURCES.md`.
+
+**What the game can rely on:**
+
+- **Ethan:** 54,938 triangles, 65 bones and 1.78 m tall. His clips are `Idle`, `Walk`,
+  `WalkBack` and `Run`, which loop, plus `EnterVan` and `ExitVan`.
+- **The pedestrian:** 42,818 triangles and 1.75 m tall. His clips are `HitByVan` and `Walk`
+  (looping). His polo is charcoal, about sRGB (56, 58, 62).
+- **Bones:** `mixamorig_*` in Godot, so either character can play the other's clips.
+- **Walk and run play in place.** Ground speeds: `Walk` 1.705 m/s (a 1.033 s cycle),
+  `WalkBack` 0.529 m/s, `Run` 4.535 m/s. The car and hit clips keep their own motion.
+- **Looping** comes from Godot's "-loop" track-name hint, so the `.import` files stay at
+  their defaults.
+- **EnterVan does not fit the cab.** Seated, his hips are 0.83 m above his feet. The cab
+  floor is 1.17 m above the van's base and the driver's eye 2.03 m, so seated hips would be
+  about 0.6 m higher. The clip also ducks him into a low car door
+  (`enter_van_2.5s_debug_light.png`).
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Blender -b --factory-startup --python tools/art/convert_mixamo.py` | the two `.glb` files above, both under 25 MB |
+| `Godot --headless --editor --path game --import`, then `configure_imports.py game/features/characters`, then the import again | VRAM-compressed textures with mipmaps; normal maps marked |
+| `Godot --path game --resolution 1280x800 --script ../tools/captures/capture_characters.gd -- evidence/phase_1/characters/step1` (windowed) | 11 stills; pedestrian at 14 m against the road behind him: low beam 156.0 / 149.4, high 187.9 / 153.1, off 12.1 / 15.2 |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run19/step1` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12; art 0 failures |
+
+No log has a "SCRIPT ERROR", "SHADER ERROR" or "Failed loading resource" line. The only
+other "ERROR:" lines are the engine's "resources still in use at exit".
+
+**Unverified:**
+
+- Mixamo's normal-map convention.
+- How the characters look in motion; only stills exist.
+- Whether the art check should also cover `game/features/characters/`. Today it reads only
+  the van and world art folders.
+
+## Run 18 (committed)
+
 The author tested Runs 15–18 ("everything is perfect"). Runs 1–16 are in `ef011b8`, and
 Runs 17–18 are in the commit after it; `develop` is pushed to `origin`, and `main` is not.
 Final logs: `logs/phase_1/run18/`.
@@ -638,6 +842,9 @@ LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_night_dimming.gd 30   # also
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_cockpit.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_ghat_road.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_wipers.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_on_foot.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_oncoming_van.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_collision.gd 60
 python3 tools/tests/check_first_drive_art.py
 ```
 

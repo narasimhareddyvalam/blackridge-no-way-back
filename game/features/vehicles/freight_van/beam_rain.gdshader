@@ -12,6 +12,11 @@ uniform float fall_speed = 7.5;
 uniform float slant = 0.0;
 uniform float density : hint_range(0.0, 1.0) = 0.75;
 uniform vec3 tint : source_color = vec3(0.92, 0.9, 0.84);
+uniform sampler2D oncoming_pattern : source_color, filter_linear, repeat_disable;
+uniform mat4 oncoming_left = mat4(1.0);
+uniform mat4 oncoming_right = mat4(1.0);
+uniform float oncoming = 0.0;
+uniform float oncoming_reach = 120.0;
 instance uniform float seed = 0.0;
 
 const float COLUMN = 0.045;
@@ -26,7 +31,7 @@ float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
 }
 
-float lamp_light(mat4 lamp, vec3 point) {
+float lamp_light(sampler2D beam, mat4 lamp, vec3 point, float range) {
 	vec3 local = (lamp * vec4(point, 1.0)).xyz;
 	float ahead = -local.z;
 	if (ahead < 0.1) {
@@ -38,8 +43,8 @@ float lamp_light(mat4 lamp, vec3 point) {
 		return 0.0;
 	}
 	float distance_to_lamp = length(local);
-	float fade = 1.0 - smoothstep(reach * 0.6, reach, distance_to_lamp);
-	return texture(pattern, uv).r * fade / max(distance_to_lamp, 1.0);
+	float fade = 1.0 - smoothstep(range * 0.6, range, distance_to_lamp);
+	return texture(beam, uv).r * fade / max(distance_to_lamp, 1.0);
 }
 
 void vertex() {
@@ -48,8 +53,13 @@ void vertex() {
 }
 
 void fragment() {
-	float light = (lamp_light(lamp_left, world_position) + lamp_light(lamp_right, world_position))
-		* beams;
+	float light = (lamp_light(pattern, lamp_left, world_position, reach)
+		+ lamp_light(pattern, lamp_right, world_position, reach)) * beams;
+	if (oncoming > 0.0) {
+		light += (lamp_light(oncoming_pattern, oncoming_left, world_position, oncoming_reach)
+			+ lamp_light(oncoming_pattern, oncoming_right, world_position, oncoming_reach))
+			* oncoming;
+	}
 	if (light < 0.0005) {
 		discard;
 	}

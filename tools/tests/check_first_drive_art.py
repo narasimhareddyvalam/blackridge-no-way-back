@@ -62,8 +62,8 @@ for path in sorted([*VAN.glob('*.glb'), *WORLD.glob('*.glb')]):
               'Van body fits existing vehicle footprint with trim allowance')
     print(f'GEOMETRY: {path.name}: {triangles} triangles')
 
-check(len(list(VAN.glob('*.glb'))) == 4 and len(list(WORLD.glob('*.glb'))) == 3,
-      'All four vehicle assets and three depot props exist')
+check(len(list(VAN.glob('*.glb'))) == 5 and len(list(WORLD.glob('*.glb'))) == 3,
+      'All five vehicle assets (with the driver\'s door) and three depot props exist')
 
 COCKPIT = VAN / 'cockpit'
 COCKPIT_TRIANGLES = 900000

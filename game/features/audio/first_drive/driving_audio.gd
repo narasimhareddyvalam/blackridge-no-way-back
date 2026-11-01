@@ -61,7 +61,7 @@ func _process(_delta: float) -> void:
 	var opening: float = vehicle.get_window_openness() if vehicle.occupied else 1.0
 	var speed: float = absf(vehicle.speed) / vehicle.maximum_speed
 	_engine.pitch_scale = 0.78 + speed * 1.05
-	_engine.volume_db = -18.0 + speed * 5.0 + opening * 3.0
+	_engine.volume_db = -18.0 + speed * 5.0 + opening * 3.0 if vehicle.engine_on else -80.0
 	_rain.volume_db = lerpf(-24.0, -7.0, opening)
 	_cabin_rain.volume_db = lerpf(-6.0, -28.0, opening)
 	_tires.volume_db = linear_to_db(maxf(0.0001, speed * 0.45))
@@ -70,6 +70,15 @@ func _process(_delta: float) -> void:
 		_horn.play()
 	elif not vehicle.horn_on and _horn.playing:
 		_horn.stop()
+
+
+func silence_music() -> void:
+	_music.stop()
+
+
+func play_music() -> void:
+	if not _music.playing:
+		_music.play()
 
 
 func _indicator(high: bool) -> void:

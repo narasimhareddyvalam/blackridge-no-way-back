@@ -38,13 +38,16 @@ Assignments 2–4 used a different game; see `FRICTIONAL.md`.
 | `rock_moss_set_02` model (1k) | https://polyhaven.com/a/rock_moss_set_02 | Kless Gyzen | CC0 1.0 | 2026-10-30 | OpenGL | mossy rocks; the landslide |
 | `dead_tree_trunk` model (1k) | https://polyhaven.com/a/dead_tree_trunk | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | fallen trunks |
 | `cabin.glb`, `steering.glb` (rebuilt) | Written by code: `tools/art/build_first_drive_art.py` (Codex; cabin and wheel parts changed by Claude Code on 2026-10-30) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-30 | OpenGL | van interior |
+| `body.glb` and `door.glb` (the driver's door split out) | Written by code: `tools/art/build_first_drive_art.py` (Codex; the driver's door, its lowered handle and its share of the trim moved into `door.glb` by Claude Code on 2026-10-31, Run 19) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-31 | OpenGL | van body; the driver's door that swings open when Ethan gets in |
 | `cockpit/` in `game/features/vehicles/freight_van/art/`: `cockpit_front`, `cockpit_back`, `cockpit_roof` and `cockpit_wheel` (glTF), 27 textures, two shadow stand-ins | "FREE // Honda E (Detailed Interior) 2021", https://sketchfab.com/3d-models/free-honda-e-detailed-interior-2021-814cf3f8cfd64594b1c4f96e873c3cef | Alex Murias (Sketchfab: Xlay3D), model and textures. Changed by Claude Code in Blender on 2026-10-31: fitted to the van's cab (dash widened to the windshield, doors and seats moved, roof stretched, cab closed behind the seats), Honda badges and screen pictures removed, slimmed with no visible change, textures resized to 1k and 2k, split into four files; its own sunroof frame reopened as a moon roof on 2026-10-31 (Run 16) | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) | 2026-10-31 | OpenGL (glTF) | van cockpit (C22); `cabin.glb` and `steering.glb` stay in the repository, unused |
+| `ethan.glb` and `pedestrian.glb` in `game/features/characters/`, with six extracted WebP textures | Adobe Mixamo, https://www.mixamo.com: characters "Ch33" (Ethan, C28) and "Ch01" (the pedestrian); animations Breathing Idle, Walking, Walking Backwards, Running, Entering Car, Exiting Car and Hit By Car, downloaded by the author on 2026-10-31 (`source_assets/mixamo/README.md`) | Adobe Mixamo (characters, rigs and motion). Converted by Claude Code with `tools/art/convert_mixamo.py` on 2026-10-31: one material per part with its own roughness, no metal, Mixamo's gloss and specular maps dropped, hair clipped, the pedestrian's polo tinted charcoal, textures halved to 2048 pixels as WebP, one bone prefix, walk and run in place | Adobe Mixamo terms: free in games, including sold games; not to be shared on their own. Committed as an exception to C10 (C27) | 2026-10-31 | glTF; Mixamo's convention not checked | Ethan on foot at the start of Mission 1; the pedestrian in the collision |
 
 Credits files: `game/assets/textures/windshield/ATTRIBUTION.md`,
 `game/tests/calibration/ATTRIBUTION.md` and
 `game/features/environments/industrial_loop/polyhaven/POLYHAVEN.md`,
 `source_assets/polyhaven/POLYHAVEN.md` (checksums and authors) and
-`game/features/vehicles/freight_van/art/cockpit/ATTRIBUTION.md`.
+`game/features/vehicles/freight_van/art/cockpit/ATTRIBUTION.md`,
+`game/features/characters/ATTRIBUTION.md` and `source_assets/mixamo/README.md`.
 
 ## Generative models
 

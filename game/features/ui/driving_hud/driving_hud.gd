@@ -11,7 +11,7 @@ const CONTROLS := "W / S   Accelerate / brake     A / D   Steer\n" + \
 	"Z / C   Left / right indicator     X   Hazard lights\n" + \
 	"V   Wipers: low / high / off     L   Headlights     H   Horn\n" + \
 	"J / K   Driver / passenger window     MOUSE   Look     F   Center view\n" + \
-	"E   Leave / enter van (stop first)     SHIFT   Walk faster\n" + \
+	"E   Get in / out of the van (stop first)     SHIFT   Run\n" + \
 	"R   Recover to checkpoint     ESC   Pause / controls / audio"
 
 var menu_visible: bool = true
@@ -22,6 +22,7 @@ var _notice: Label
 var _menu: PanelContainer
 var _resume: Button
 var _notice_timer: float = 0.0
+var _fade: ColorRect
 var _settings := ConfigFile.new()
 
 
@@ -49,6 +50,12 @@ func _ready() -> void:
 	_notice = _label("", 18, Color("e3c799"))
 	_notice.position = Vector2(32, 127)
 	root.add_child(_notice)
+	_fade = ColorRect.new()
+	_fade.color = Color.BLACK
+	_fade.modulate.a = 0.0
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.add_child(_fade)
 	_build_menu(root)
 
 
@@ -168,6 +175,12 @@ func set_objective(title: String, detail: String) -> void:
 
 func set_hint(words: String) -> void:
 	_hint.text = words
+
+
+func fade(to: float, seconds: float) -> Tween:
+	var tween := create_tween()
+	tween.tween_property(_fade, "modulate:a", to, seconds)
+	return tween
 
 
 func notify(words: String) -> void:

@@ -196,32 +196,68 @@ beam('Lower_Spoke', (0, -0.055, 0.005), (0, -0.172, 0), 0.05, leather, 'steering
 beam('Lower_Trim', (0, -0.07, 0.024), (0, -0.16, 0.018), 0.012, silver, 'steering')
 label('Wheel_Identity', 'B R', (0, 0.0, 0.058), 0.02, silver, 'steering')
 
+DOOR_FRONT, DOOR_BACK, DOOR_GAP, BELT_LINE = -1.45, 0.06, 0.003, 1.57
+CAB_HANDLE = 1.05
+DOOR_TRIM = range(2, 9)
+
+
+def arch(center, angle):
+    return (center + math.cos(angle) * 0.57, 0.48 + math.sin(angle) * 0.57)
+
+
+def sill(z):
+    return 0.48 + (1.28 - z) * 0.16 / 2.16
+
+
+hinge_angle = math.acos((DOOR_FRONT + 1.52) / 0.57)
+front_arch = np.linspace(0, math.pi, 17)
+rear_arch = [arch(1.85, angle) for angle in front_arch]
 for side in (-1, 1):
-    outline = [(-2.35, 0.63), (-2.35, 1.32), (-1.67, 1.52),
-               (-1.45, 1.57), (0.06, 1.57), (0.06, 2.93), (2.73, 2.93), (2.85, 2.78),
-               (2.85, 0.64), (2.48, 0.64)]
-    for center in (1.85, -1.52):
-        if center < 0:
-            outline.append((-0.88, 0.64))
-        for angle in np.linspace(0, math.pi, 17):
-            outline.append((center + math.cos(angle) * 0.57,
-                            0.48 + math.sin(angle) * 0.57))
-    outline.append((-2.18, 0.64))
-    profile('Side_Shell', outline, side * 1.14 - 0.035, side * 1.14 + 0.035,
-            paint, 'body', 0.018)
+    shell = (side * 1.14 - 0.035, side * 1.14 + 0.035)
+    if side > 0:
+        outline = [(-2.35, 0.63), (-2.35, 1.32), (-1.67, 1.52),
+                   (DOOR_FRONT, BELT_LINE), (DOOR_BACK, BELT_LINE), (0.06, 2.93), (2.73, 2.93),
+                   (2.85, 2.78), (2.85, 0.64), (2.48, 0.64), *rear_arch, (-0.88, 0.64)]
+        outline += [arch(-1.52, angle) for angle in front_arch]
+        profile('Side_Shell', outline + [(-2.18, 0.64)], *shell, paint, 'body', 0.018)
+    else:
+        fender = [(-2.35, 0.63), (-2.35, 1.32), (-1.67, 1.52), (DOOR_FRONT, BELT_LINE),
+                  arch(-1.52, hinge_angle)]
+        fender += [arch(-1.52, angle) for angle in front_arch if angle > hinge_angle]
+        profile('Side_Shell', fender + [(-2.18, 0.64)], *shell, paint, 'body', 0.018)
+        cargo = [(DOOR_BACK, sill(DOOR_BACK)), (DOOR_BACK, 2.93), (2.73, 2.93), (2.85, 2.78),
+                 (2.85, 0.64), (2.48, 0.64), *rear_arch]
+        profile('Side_Shell', cargo, *shell, paint, 'body', 0.018)
+        front, back = DOOR_FRONT + DOOR_GAP, DOOR_BACK - DOOR_GAP
+        door = [(front, BELT_LINE), (back, BELT_LINE), (back, sill(back)), (-0.88, 0.64)]
+        door += [arch(-1.52, angle) for angle in front_arch if angle < hinge_angle]
+        door.append((front, arch(-1.52, hinge_angle)[1]))
+        profile('Driver_Door', door, *shell, paint, 'door', 0.018)
+    cab = 'door' if side < 0 else 'body'
     for z in (-0.02, 2.55):
-        box('Cargo_Seam', (side * 1.18, 1.79, z), (0.006, 2.08, 0.009), seam, 'body')
+        if z < 0 and side < 0:
+            box('Cargo_Seam', (side * 1.18, 1.16, z), (0.006, 0.82, 0.009), seam, 'door')
+            box('Cargo_Seam', (side * 1.18, 2.20, z), (0.006, 1.26, 0.009), seam, 'body')
+        else:
+            box('Cargo_Seam', (side * 1.18, 1.79, z), (0.006, 2.08, 0.009), seam, 'body')
     box('Sliding_Rail', (side * 1.18, 1.73, 1.27), (0.015, 0.025, 2.26), silver, 'body')
-    box('Side_Rub_Strip', (side * 1.19, 0.85, 0.35), (0.06, 0.18, 2.1), rubber, 'body')
-    for z in (-0.22, 0.32):
-        box('Door_Handle', (side * 1.20, 1.60, z), (0.05, 0.05, 0.20), rubber, 'body')
+    if side < 0:
+        box('Side_Rub_Strip', (side * 1.19, 0.85, -0.3215), (0.06, 0.18, 0.757), rubber,
+            'door')
+        box('Side_Rub_Strip', (side * 1.19, 0.85, 0.7315), (0.06, 0.18, 1.337), rubber,
+            'body')
+    else:
+        box('Side_Rub_Strip', (side * 1.19, 0.85, 0.35), (0.06, 0.18, 2.1), rubber, 'body')
+    box('Door_Handle', (side * 1.20, CAB_HANDLE, -0.22), (0.05, 0.05, 0.20), rubber, cab)
+    box('Door_Handle', (side * 1.20, 1.60, 0.32), (0.05, 0.05, 0.20), rubber, 'body')
     for center in (-1.52, 1.85):
         for index in range(20):
             a, b = index * math.pi / 20, (index + 1) * math.pi / 20
+            on_door = side < 0 and center < 0 and index in DOOR_TRIM
             beam('Wheelarch_Trim', (side * 1.19, 0.48 + math.sin(a) * 0.57,
                  center + math.cos(a) * 0.57),
                  (side * 1.19, 0.48 + math.sin(b) * 0.57,
-                  center + math.cos(b) * 0.57), 0.045, rubber, 'body')
+                  center + math.cos(b) * 0.57), 0.045, rubber, 'door' if on_door else 'body')
 box('Roof', (0, 2.93, 0.80), (2.28, 0.13, 4.07), paint, 'body', 0.055)
 profile('Hood', [(-2.39, 1.23), (-2.27, 1.49), (-1.59, 1.57),
         (-1.48, 1.48), (-1.65, 1.30)], -1.11, 1.11, paint, 'body', 0.045)
@@ -265,7 +301,7 @@ box('Baseplate', (0, 0.025, 0), (0.34, 0.05, 0.34), metal, 'bollard')
 
 report = {}
 for group, asset in groups.items():
-    destination = VAN if group in {'body', 'cabin', 'steering', 'tire'} else WORLD
+    destination = VAN if group in {'body', 'cabin', 'steering', 'tire', 'door'} else WORLD
     report[group] = {'triangles': asset.export(destination / f'{group}.glb', materials),
                      'surfaces': len(asset.surfaces)}
 (SOURCE / 'geometry_report.md').write_text(

@@ -122,8 +122,10 @@ on the entire road"). Those are in scope. These stay protected:
 
 - `headlights_on` (true while either beam is on), the `headlights` action (L), the
   `LIGHTS` text and the switch click. At the author's request of 2026-10-31 (#50), L
-  cycles low beam → high beam → off, and the game starts on low beams. The dimming
-  driver and `night_cluster` only read `headlights_on` and never set it.
+  cycles low beam → high beam → off, and the game starts on low beams. Since Run 19
+  (#68), a drive begun from the menu starts on foot beside the dark van, and the
+  ignition (`FreightVan.start_engine()`) turns the low beams and wipers on once. The
+  dimming driver and `night_cluster` only read `headlights_on` and never set it.
 - Every file in `game/shaders/` (see Ownership). Assignment 5's evidence in `logs/*.log`
   and `evidence/captures/` is never overwritten. New runs use `LOG_DIR` and output folders.
 - The fog materials (`light_fog.tres`, `heavy_fog.tres`) change only with the author's OK.

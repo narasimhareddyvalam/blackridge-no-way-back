@@ -622,6 +622,122 @@ tag `a5`. Pictures the author approved or rejected are filed in
       `develop`, and `develop` is pushed to `origin`. `main` is not pushed; it changes only
       through a pull request the author approves.
 
+59. **Prompt:** "dont merge to main. push to develop only"
+    - **Result:** nothing was merged into `main`, and only `develop` was pushed
+      (`f39cbf9..b1e5785 develop -> develop`). `main` is untouched.
+
+60. **Prompt:** "whats next?? any ideas to imporve the reality of mission one?"
+    - **Claude Code's ideas:** Mission 1's two story beats (Maya's call and the collision,
+      with the pedestrian left unidentified, N01); van and camera motion; a scripted oncoming
+      truck whose lights glare through the wet glass; a sound pass; small touches from the
+      roadmap. It also noted the roadmap's Nov 3 export.
+    - **The author's choice:** "Oncoming truck with glare".
+
+61. **Prompt:** "the start of the game is not so realistic. maybe we should guide user to get into the van and drive. also we didnt hit and run anyone in the game yet? use these animations - [Image #60] as well to make it to more realistic. and yes makes sense on a turn let a van come and its headlights should reduce our visibility and that is when we should hit and run"
+    - **Context:** the image is the author's Mixamo (Adobe) page, searched for "car": the
+      animations "Exiting Car", "Entering Car" and "Hit By Car", with Mixamo's default
+      character.
+    - **Claude Code's plan:** four steps, each approved on its own:
+      1. Mixamo assets, downloaded by the author;
+      2. a start on foot, getting into the van with the driver's door opening;
+      3. the oncoming van with glare;
+      4. the collision on the dark bend, the flight, and climbing out at the depot.
+
+      The van passes and is gone before the impact, so there is no witness, as the story
+      says. The pedestrian (N01) and the van's connection to anything (N02) stay open.
+    - **Claude Code's question:** Mixamo is free for games, including sold ones, but its
+      terms forbid sharing the files on their own, the repo is public, and C10 allows only
+      CC0 or CC-BY.
+    - **The author's answer:** "Use Mixamo, commit it (Recommended)" (C27).
+
+62. **Prompt:** "create the folder and keep"
+    - **Result:** `source_assets/mixamo/` was created with a README listing the downloads
+      and their settings, so the folder is kept in Git while it waits for the files.
+
+63. **Prompt:** "[Image #61] - what should i select"
+    - **Context:** Mixamo's download settings for "Hit By Car" on the default X Bot.
+    - **Answer:**
+      - FBX Binary;
+      - "Without Skin" for animations, and "With Skin" only for the two character files;
+      - 30 fps; keyframe reduction none;
+      - the side panel at its defaults;
+      - pick the real pedestrian character before downloading, not X Bot.
+
+64. **Prompt:** "give exact source path"
+    - **Answer:** `/Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/source_assets/mixamo/`,
+      with each file's full path.
+
+65. **Prompt:** "done check now"
+    - **Found:**
+      - **Three files:** "Entering Car.fbx" (165 frames), "Exiting Car.fbx" (175) and "Hit By Car
+        (1).fbx" (146), each about 55 MB.
+      - **Character:** all three are downloaded with the skin of the same Mixamo character
+        ("Ch33", a man in a navy blazer, tie and jeans, 1.78 m, 54,938 triangles, 4K
+        textures) on the standard 65-bone Mixamo rig.
+      - **Missing:** the Idle and Walking animations and a second character.
+    - **Claude Code's advice:**
+      - this man suits the pedestrian, not Ethan, a truck driver after a night shift;
+      - Ethan needs a man in work clothes, with Entering Car (with skin), and Exiting Car,
+        Idle and Walking without skin;
+      - the pedestrian needs Walking without skin;
+      - the raw 55 MB files stay out of Git, and only the slimmer game versions are
+        committed.
+
+66. **Prompt:** "i pasted three more"
+    - **Found:**
+      - "Walking.fbx" (1.0 s), "Walking Backwards.fbx" (1.5 s) and "Running.fbx" (0.7 s), each
+        about 55 MB with skin;
+      - all six files are on the same man (Mixamo "Ch33");
+      - walking and running were downloaded with their forward motion, without "In Place".
+    - **Claude Code's question:** is the man in the navy blazer Ethan or the pedestrian? Both
+      cannot be the same man.
+    - **The author's answer:** "Ethan" (C28). The pedestrian needs one more character in dark
+      clothes, and Ethan needs an Idle animation.
+
+67. **Prompt:** "i pasted check now"
+    - **Found:**
+      - "Breathing Idle.fbx" is on Ethan: a 9.9 s loop, in place.
+      - A new "Hit By Car.fbx" is on a second character, the pedestrian (Mixamo "Ch01"): a
+        young man, 1.76 m, in a short-sleeved light grey polo, blue jeans and white sneakers.
+      - The earlier "Hit By Car (1).fbx" on Ethan is gone.
+      - Every file step 1 needs is now present.
+    - **Claude Code's note:** a light short-sleeved shirt is unlikely on a cold rainy night and
+      makes him easy to see, so it offered to tint the shirt dark in the game.
+    - **The author's answer:** "Go ahead, dark shirt (Recommended)". Step 1 is approved, with
+      the pedestrian's polo tinted charcoal.
+
+68. **Step 1 result, and two questions.** Both characters were imported
+    (`HANDOFF.md`, Run 19 step 1).
+    - **Finding:** Mixamo's Entering Car is made for a car. Seated, his hips are 0.83 m above
+      the ground, but the van's cab floor is 1.17 m up. Step 2 therefore shows him reach and
+      open the door, then cuts to the driver's seat.
+    - **Claude Code's questions:**
+      - when should the van's lights come on in step 2 (writing `headlights_on`, which
+        `CLAUDE.md` protects)?
+      - should the pedestrian's jeans be darkened too?
+    - **The author's answers:**
+      - "Yes, lights on at ignition (Recommended)": step 2 is approved; the van sits dark
+        until Ethan starts it, then ignition turns on the low beams and wipers;
+      - "Leave them (Recommended)": the jeans stay blue.
+
+69. **Step 2 result, and the next step.** The drive starts on foot and Ethan gets into the van
+    (`HANDOFF.md`, Run 19 step 2).
+    - **Claude Code's question:** start step 3, the oncoming van whose lights dazzle the
+      player on the dark bend after the last hairpin of the descent?
+    - **The author's answer:** "Yes, start step 3 (Recommended)".
+
+70. **Step 3 result, and how step 4 should play.** The oncoming van and its glare are in
+    (`HANDOFF.md`, Run 19 step 3).
+    - **Claude Code's question:** start step 4, the collision; can the player avoid hitting
+      the pedestrian?
+    - **The author's answer:** "Yes, unavoidable (Recommended)". He steps out about 0.7 s
+      before the bumper reaches him, too late to stop at any speed. If the player crawls below
+      25 km/h, he waits until the van speeds up.
+
+71. **Prompt:** "commit and push to develop"
+    - **Done:** Run 19 (steps 1–4) is committed on `develop`, in the commit after `b1e5785`,
+      after a final run of every suite. `develop` is pushed to `origin`; `main` is untouched.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac

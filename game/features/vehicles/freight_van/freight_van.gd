@@ -5,12 +5,14 @@ signal indicator_clicked(high: bool)
 signal wiper_swept
 signal collided(strength: float)
 signal window_operated
+signal engine_started
 
 const TURN_FLOOR_CLEARANCE: float = 0.1
 const SLOPE_GRAVITY: float = 9.8
 const WIPER_PARK: float = -1.55
 const WIPER_SWEEP: float = 1.72
 const WIPER_CYCLES: Array[float] = [0.0, 0.75, 1.1]
+const IGNITION_SECONDS: float = 1.4
 
 @export var maximum_speed: float = 19.0
 @export var reverse_speed: float = 5.0
@@ -20,6 +22,9 @@ const WIPER_CYCLES: Array[float] = [0.0, 0.75, 1.1]
 @export var maximum_steering: float = 0.52
 
 var occupied: bool = true
+var engine_on: bool = true
+var held: bool = false
+var driver_door: float = 0.0
 var speed: float = 0.0
 var actual_speed: float = 0.0
 var steering: float = 0.0
@@ -41,6 +46,7 @@ var input_enabled: bool = false
 
 var _blink_time: float = 0.0
 var _wiper_time: float = 0.0
+var _ignition: float = -1.0
 var _wiper_half: int = 0
 var _turn_started: bool = false
 var _collision_cooldown: float = 0.0
@@ -67,8 +73,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_collision_cooldown = maxf(0.0, _collision_cooldown - delta)
-	var active := occupied and input_enabled
-	var throttle := Input.get_action_strength("accelerate") if active else 0.0
+	var active := occupied and input_enabled and not held
+	var throttle := Input.get_action_strength("accelerate") if active and engine_on else 0.0
 	var brake := Input.get_action_strength("brake") if active else 0.0
 	var handbrake := Input.is_action_pressed("handbrake") if active else true
 	braking = brake > 0.0 or handbrake
@@ -171,7 +177,40 @@ func _restart_blink() -> void:
 		indicator_clicked.emit(true)
 
 
+func switch_off() -> void:
+	engine_on = false
+	_ignition = -1.0
+	headlights_on = false
+	high_beams = false
+	wiper_setting = 0
+
+
+func start_engine() -> void:
+	if engine_on:
+		return
+	engine_on = true
+	_ignition = 0.0
+	engine_started.emit()
+
+
+func ignition_sweep() -> float:
+	if _ignition < 0.0:
+		return 0.0
+	return sin(PI * clampf(_ignition / IGNITION_SECONDS, 0.0, 1.0))
+
+
+func _update_ignition(delta: float) -> void:
+	if _ignition < 0.0:
+		return
+	_ignition += delta
+	if _ignition >= IGNITION_SECONDS:
+		_ignition = -1.0
+		headlights_on = true
+		wiper_setting = 1
+
+
 func _update_accessories(delta: float) -> void:
+	_update_ignition(delta)
 	left_window = move_toward(left_window, left_window_target, delta / 2.0)
 	right_window = move_toward(right_window, right_window_target, delta / 2.0)
 	if indicator != 0 or hazards_on:

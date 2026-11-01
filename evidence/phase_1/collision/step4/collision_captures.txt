@@ -1,0 +1,10 @@
+saved he_steps_out.png: van 7.0 m/s, pedestrian 7.5 m ahead and 1.7 m right, windshield brightness 49.2, objective RETURN TO THE DEPOT
+saved too_late_to_stop.png: van 8.2 m/s, pedestrian 4.0 m ahead and 0.9 m right, windshield brightness 48.8, objective RETURN TO THE DEPOT
+saved impact.png: van 8.3 m/s, pedestrian 3.3 m ahead and 0.6 m right, windshield brightness 49.2, objective RETURN TO THE DEPOT
+saved skid.png: van 1.5 m/s, pedestrian 7.7 m ahead and 0.6 m right, windshield brightness 50.5, objective RETURN TO THE DEPOT
+saved he_lies_in_the_beams.png: van 0.0 m/s, pedestrian 10.5 m ahead and 0.6 m right, windshield brightness 51.0, objective RETURN TO THE DEPOT
+saved drive_objective.png: van 0.0 m/s, pedestrian 10.5 m ahead and 0.6 m right, windshield brightness 50.6, objective DRIVE.
+saved on_the_road_night.png: van 0.0 m/s, pedestrian 10.5 m ahead and 0.6 m right, windshield brightness 93.1, objective DRIVE.
+saved on_the_road_debug_light.png: van 0.0 m/s, pedestrian 10.5 m ahead and 0.6 m right, windshield brightness 93.7, objective DRIVE.
+saved getting_out_at_the_depot.png: van 0.0 m/s, pedestrian -26.8 m ahead and -9.1 m right, windshield brightness 23.1, objective DRIVE COMPLETE
+saved shutting_the_door.png: van 0.0 m/s, pedestrian -26.8 m ahead and -9.1 m right, windshield brightness 23.1, objective DRIVE COMPLETE

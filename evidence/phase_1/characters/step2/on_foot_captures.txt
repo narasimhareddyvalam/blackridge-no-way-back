@@ -1,0 +1,8 @@
+saved start_on_foot.png: mean brightness 9.6 (0-255), engine false, lights false, door 0.00
+saved walking_to_the_van.png: mean brightness 10.8 (0-255), engine false, lights false, door 0.00
+saved reach_for_handle.png: mean brightness 10.8 (0-255), engine false, lights false, door 0.00
+saved door_open.png: mean brightness 10.8 (0-255), engine false, lights false, door 1.00
+saved door_open_side.png: mean brightness 14.2 (0-255), engine false, lights false, door 1.00
+saved in_the_cab_engine_off.png: mean brightness 16.9 (0-255), engine false, lights false, door 0.00
+saved ignition_gauge_sweep.png: mean brightness 18.5 (0-255), engine true, lights false, door 0.00
+saved low_beams_and_wipers_on.png: mean brightness 27.8 (0-255), engine true, lights true, door 0.00

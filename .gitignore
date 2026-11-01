@@ -38,3 +38,7 @@ __pycache__/
 *.swp
 *.swo
 *~
+
+# Raw Mixamo downloads (about 55 MB each, over the 25 MB limit). The slimmed game copies in
+# game/features/characters/ are committed instead (decision C27).
+/source_assets/mixamo/*.fbx

@@ -1187,3 +1187,183 @@ logs, and commit.
   three states; it ran at 76 FPS on power with a charged battery earlier in the day. To be
   measured again once charged.
 - **Evidence:** `evidence/phase_1/beams/run18/beams_sheet.png`.
+
+## Revision 2026-10-31 (Run 19, steps 1–2: Ethan on foot and getting into the van; C27–C28)
+
+- **Author:** "the start of the game is not so realistic. maybe we should guide user to get into
+  the van and drive ... use these animations", then "Use Mixamo, commit it (Recommended)",
+  "Go ahead, dark shirt (Recommended)", "Yes, lights on at ignition (Recommended)" and
+  "Leave them (Recommended)" (`AUTHOR_PROMPTS_AND_DECISIONS.md` #61–#68).
+- **Step 1, the Mixamo characters** (`tools/art/convert_mixamo.py`):
+  - **Ethan** (Ch33, `ethan.glb`, 54,938 triangles, 1.78 m): Idle, Walk, WalkBack and Run
+    loop; EnterVan and ExitVan play once.
+  - **The pedestrian** (Ch01, `pedestrian.glb`, 42,818 triangles, 1.75 m): HitByVan, and
+    Ethan's Walk. His light grey polo is tinted charcoal; his jeans stay blue.
+  - **Materials:** Mixamo's materials were half metallic, with a gloss map wired in as
+    roughness. Now each part has its own roughness, and nothing is metallic.
+  - **Textures and bones:** textures are 2048-pixel WebP, VRAM-compressed. Every bone is
+    `mixamorig_*`.
+  - **Motion:** walk and run play in place (1.705 and 4.535 m/s).
+  - **Raw downloads:** the FBX files stay out of Git.
+- **Step 2, starting on foot:**
+  - **The start:** "Begin / continue drive" starts the drive on foot beside the van. The van
+    is dark: engine off, lights off, wipers parked, dash screens and rear lamps off. The
+    objective reads "GET IN THE VAN", and the hint "E  Get in the van".
+  - **"New drive"** starts on foot again. Recovery puts Ethan in the van with the engine
+    running.
+  - **Ethan:** the box figure is replaced by Ethan's model and clips (`driver.gd`). He walks
+    at 1.705 m/s and runs at 4.535 m/s, the clips' own speeds; the box figure walked at
+    2.8 m/s.
+  - **Getting in:**
+    - E walks Ethan to the driver's door (around the van if he is on the far side), and he
+      plays Entering Car.
+    - He grabs the handle at 1.05 s and pulls the door about 31° open by 1.6 s.
+    - At 1.75 s the screen fades to black and back into the driver's seat, with the door
+      shut.
+    - The clip is made for a car: seated, his hips are 0.83 m off the ground, but the cab
+      floor is 1.17 m up. So the climb in is not shown.
+  - **Ignition:** 0.6 s after the cut, the needles sweep to the top and back over 1.4 s.
+    Then the low beams and wipers come on (`FreightVan.start_engine()`, approved as #68).
+    The engine sound fades in with it.
+  - **The door:**
+    - `build_first_drive_art.py` splits the driver's door out of `body.glb` into `door.glb`
+      (1,172 triangles), with a 3 mm gap, its share of the rub strip, the seam and the
+      wheel-arch trim.
+    - The cab door handles move down from 1.60 m to 1.05 m, where the clip's hand closes.
+    - Every other generated model is byte-identical.
+    - The door glass and its rain layer swing on the same hinge.
+    - The Honda interior's door trim stays in place: it is merged into 31 meshes with the
+      dash. The cut comes before it would show.
+- **Test changes, by the author's request:**
+  - **`first_drive_integration.gd`:** "Nearby driver can reenter" now waits up to 8 s for
+    Ethan to get in, because getting in takes about 2.5 s instead of one frame.
+  - **`check_first_drive_art.py`:** expects five van models, the driver's door included.
+  - **Unchanged:** every other suite. They start the game through `_resume()`, which skips
+    the on-foot start, as it always skipped the menu.
+  - **New `game/tests/test_on_foot.gd`, 25 checks:** the dark start; walking and running at
+    the clips' paces; the door swing with its glass; the cut; the ignition sweep, low beams
+    and wipers; driving after it; getting back in without a second ignition; "New drive".
+    With the ignition call removed it fails 20/25 and exits 1
+    (`logs/phase_1/run19/step2/mutation_no_ignition/`).
+- **Tests:** all suites pass (64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25; art 0 failures); logs are in `logs/phase_1/run19/step2/`.
+- **Evidence:** `evidence/phase_1/characters/step1/` and `step2/`.
+
+## Revision 2026-10-31 (Run 19, step 3: the oncoming van and its glare)
+
+- **Author:** "on a turn let a van come and its headlights should reduce our visibility", then
+  "Yes, start step 3 (Recommended)" (#61, #69).
+- **The encounter** (mission `first_drive.gd`):
+  - **When:** in the last stage, 90 m below the last hairpin of the descent (road sample 970),
+    the mission sends one oncoming van per drive.
+  - **Where it starts:** out of sight beyond the valley S-bend (samples 1040–1090). It is timed
+    from the player's speed to meet the player on the S-bend (sample 1012).
+  - **Clearing it:** recovery and "New drive" clear it and allow it again.
+  - **The road:** the app now gives the mission the road (`route.road`).
+- **The van** (`game/features/vehicles/oncoming_van/oncoming_van.gd`, new):
+  - **Model:** built from our van's body, door and tyres, painted dark grey-blue. It is an
+    `AnimatableBody3D` on layers 1 and 2, so both the van and Ethan collide with it.
+  - **Driving:** it follows the road at 40 km/h, slows for bends (2.5 m/s² of grip), and keeps
+    1.3 m right of the centre line, its right wheels on the verge. If the player's van blocks
+    its lane, it brakes on a 3 m/s² curve and stops 2.5 m short. When the player keeps right,
+    it squeezes past with 0.2 m to spare.
+  - **High beams:** if the player's high beams are on while it is within 150 m, it flashes
+    its own high beams twice.
+  - **Leaving:** it drives back up the hill and is removed at sample 900.
+  - **Its lights:**
+    - two low beams with our low-beam pattern, without shadows, lighting the world and the
+      player's cab;
+    - bright lenses, and flares outside;
+    - red tail lamps.
+- **Glare on the player's windshield** (`windshield.gdshader` and `van_presentation.gd`, both in
+  the van's folder):
+  - **Where:** each lamp's point on the glass comes from the driver's eye. Glare is off when a
+    tree trunk hides the lamp.
+  - **Strength:** it grows as the lamp faces the driver (facing³) and as it comes closer
+    (40 m falloff). It is 3.2× for high beams.
+  - **What it adds:**
+    - a bright core;
+    - an eye veil that fades with angle from the lamp;
+    - a wet-film halo;
+    - light streaks along the wiper arcs;
+    - lit droplets near the lamp.
+
+  The veil washes out the glass around the lamps, which is what makes the road hard to see.
+- **Rain in its beams:** `beam_rain.gdshader` also lights the rain with the oncoming van's
+  lamps, backlit 2.5×, within 70 m. It shows even with the player's lights off.
+- **Measured** (`capture_oncoming.gd`, parked at the S-bend):
+  - glare power, per lamp: 0.10 at 120 m, 0.28 at 60 m, 0.42 at 35 m, 0.76 at 20 m and
+    0.89 at 10 m;
+  - windshield brightness: 53 before the van and 88 at 20 m;
+  - once it is behind, the glare is 0.
+- **Tests:**
+  - **New `game/tests/test_oncoming_van.gd`, 19 checks.** It fails when the van ignores a
+    blocked lane (18/19) and when the glare is removed (18/19), each with exit 1
+    (`logs/phase_1/run19/step3/mutation_*`).
+  - **All suites pass** (64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+    12/12, 25/25, 19/19; art 0 failures); logs are in `logs/phase_1/run19/step3/`.
+- **Evidence:** `evidence/phase_1/oncoming/step3/`. The stills were taken on battery, so their
+  frame rates are not comparable.
+
+## Revision 2026-10-31 (Run 19, step 4: the collision, the flight, getting out at the depot; C29)
+
+- **Author:** "we didnt hit and run anyone in the game yet? ... that is when we should hit and
+  run", then "Yes, unavoidable (Recommended)" (#61, #70; C29).
+- **The pedestrian** (`game/features/characters/pedestrian/pedestrian.gd`, new):
+  - **Who:** Mixamo Ch01 in the charcoal polo. He has no collision body, and stays
+    unidentified (N01).
+  - **The step-out:** he walks from the right verge across the van's path at his Walk clip's
+    pace.
+  - **The hit:** when the front bumper reaches him (within 1.7 m of the centre line), he plays
+    Hit By Car from its impact frame (2.6 s). He is thrown forward 0.8 m + 0.16 × speed²
+    (at most 12 m), over up to 1.6 s, and lies on the road. There is no gore.
+- **The sequence** (mission `first_drive.gd`):
+  - **The step-out:** 1 s after the oncoming van has passed, at 25 km/h or more, he steps out
+    1.3 m right of the van's path, aimed 0.75 s ahead of the bumper. Until the impact the wet
+    road gives 3 m/s² of braking, so the hit always happens (C29).
+  - **The hit:** the van's own collision thud plays, the camera jolts, and the music stops.
+    Full brakes bring the van to a stop.
+  - **The hold:** the van is held for 4 s; throttle and E do nothing. Then the objective
+    becomes "DRIVE." and driving returns. E stays blocked while fleeing.
+  - **No witness:** the oncoming van is behind the player and gone around the bend; in the
+    test it was 94 m away.
+  - **The depot:** parking there ends the drive, as before. After the hit, Ethan gets out:
+    - a fade, then Exiting Car from 2.6 s, standing at the open door;
+    - he turns and shuts the door between 3.7 and 4.3 s, then walks clear;
+    - control returns on foot.
+  - **Recovery and New drive:** after the hit, recovery keeps the pedestrian where he lies.
+    "New drive" clears everything and brings the music back.
+- **Eye adaptation** (`van_presentation.gd`):
+  - **Darkening:** the oncoming lamps' glare lowers the driving camera's exposure
+    (`CameraAttributesPractical.exposure_multiplier` = 1 / (1 + 1.2 × adaptation)). It comes
+    on in about a third of a second and recovers over about 2 s.
+  - **Measured:** staring into the lamps the view darkens to 0.47, and it is still at 0.83 a
+    second after they pass, when the pedestrian steps out.
+- **Other files:**
+  - `freight_van.gd`: `held`;
+  - `driving_audio.gd`: `silence_music()`, `play_music()`;
+  - `van_presentation.gd`: `jolt()`;
+  - `driver.gd`: `play_clip()` takes a start time and a model shift; `finish_clip()` moves
+    Ethan to where the clip left him;
+  - `game/app/first_drive.gd`: `_struck()`, `_drive_completed()`, `_exit_at_depot()`, E
+    blocked while fleeing.
+- **Tests:**
+  - **New `game/tests/test_collision.gd`, 18 checks:** step-out timing and place, the
+    unavoidable hit with the brakes on, the thud, the music, no witness, the skid and hold,
+    E blocked, "DRIVE.", driving again, thrown clear and lying, getting out at the depot, and
+    "New drive".
+  - **Mutation:** with dry brakes (9 m/s²) it fails 8/18 and exits 1
+    (`logs/phase_1/run19/step4/mutation_dry_brakes/`).
+  - **`test_oncoming_van.gd`** gained the two adaptation checks (21 in all).
+  - **All suites pass** (64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+    12/12, 25/25, 21/21, 18/18; art 0 failures); logs are in `logs/phase_1/run19/step4/`.
+  - **Fix before the commit:** a final run caught a freed-object error line. "New drive"
+    cleared the encounter by putting the oncoming van into a typed list after it had already
+    removed itself. `_clear_oncoming()` now checks the van and the pedestrian one at a time.
+    The final run's only "ERROR:" lines are the engine's "resources still in use at exit".
+- **Evidence:** `evidence/phase_1/collision/step4/`, an unbraked hit at 30 km/h; he lies 8 m
+  ahead of the bumper, at the edge of the low beams.
+- **Not done:**
+  - door, engine-start and impact sounds of their own (the van's collision sound is used);
+  - the drive's end screen still reads "DRIVE COMPLETE";
+  - a hit is not saved with the checkpoint, so quitting and reloading replays the encounter.

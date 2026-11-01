@@ -32,8 +32,9 @@ func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, DESIGN_SIZE), Color("05080a"))
 	var speed_kmh := absf(vehicle.actual_speed) * 3.6
 	var load: float = 0.13 + absf(vehicle.speed) / vehicle.maximum_speed * 0.6
-	_dial(Vector2(158, 130), 106, speed_kmh / 160.0, 160, 20, 5, "km/h", 0.0)
-	_dial(Vector2(482, 130), 96, load, 7, 1, 0.5, "x1000 r/min", 6.0)
+	var sweep: float = vehicle.ignition_sweep()
+	_dial(Vector2(158, 130), 106, maxf(speed_kmh / 160.0, sweep), 160, 20, 5, "km/h", 0.0)
+	_dial(Vector2(482, 130), 96, maxf(load, sweep), 7, 1, 0.5, "x1000 r/min", 6.0)
 	_sub_gauge(Vector2(158, 196), 0.62, "E", "F")
 	_sub_gauge(Vector2(482, 192), 0.48, "C", "H")
 	_centre_display(speed_kmh)
