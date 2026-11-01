@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+road samples: near 95 (10-46 m), far 130 (50-100 m)
+low_beams   road near  91.4, far  41.2 | white-out 0.00% | 24.8 FPS | lights true, high false
+high_beams  road near 133.8, far  98.6 | white-out 0.00% | 24.3 FPS | lights true, high true
+lights_off  road near  18.8, far  27.2 | white-out 0.00% | 28.3 FPS | lights false, high false
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

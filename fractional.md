@@ -1638,3 +1638,34 @@ result. Unfinished checks remain marked unfinished.
 - **Fix:** the live rear view now plays on the Honda mirror's face, angled toward the driver,
   like the Honda e's real camera mirror. The old mirror is gone.
 - **Tests:** two new cockpit checks; with the old mirror back they fail. All suites pass.
+
+### 2026-10-31 — Run 17: rain in the beams, green signs, outside roof glass (C26)
+
+- **Request:** "do all these and i will test", for Run 16's open items. For rain in the beams
+  the author chose "Shader rain now", which leaves particles to Assignment 6.
+- **Rain in the beams:**
+  - eight layers of falling streaks ride ahead of the van;
+  - each point is lit only as much as the real headlights light it, using the same beam
+    pattern, so the low beam's cutoff shows in the rain and high beams light it far ahead;
+  - no particle system.
+- **Found on the way:**
+  - The first rain was invisible: one-pixel streaks barely brighten an already lit road.
+  - A debug view (beam light in red) showed the lighting maths was right, so the fix was
+    brightness, streak length and density, plus fading the far layers, whose sub-pixel
+    streaks only added a grey haze.
+- **Signs:** the guide boards were teal, which turned pale cyan under high beams. They are
+  now highway green.
+- **Outside roof:** dark glass sits on the van's outer roof over the moon roof.
+- **Tests:** four new checks; all suites pass.
+- **Frame rate:** not comparable. The Mac was on battery at 10%, which held everything near
+  60 FPS, and Godot's GPU timer reads 0 on Metal. To be measured again on power.
+
+### 2026-10-31 — Run 18: rain follows the beam
+
+- **Request:** less falling rain on low beams, more on high beams, "like in real life".
+- **Done:** the rain's strength follows the beam. Low beams show half the rain, close to the
+  road. High beams show 1.6× more and denser rain, lit far ahead: a wall of streaks against
+  the dark, as drivers see it.
+- **Measured:** the rain adds +3.7 to the near road on low beams and +30.6 on high beams.
+- **Tests:** all suites pass, with a new check that high-beam rain is at least 3× as strong.
+- **Frame rate:** not comparable; the Mac was charging from 8%.

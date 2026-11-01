@@ -1,8 +1,73 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 16 step 5 (one rear-view mirror), 2026-10-31, on branch
-`develop`. Runs 1 to 16 are committed together at the end of this step (see the
-development log for the hash). Final logs: `logs/phase_1/run16/mirror/`.
+**Last run:** Phase 1, Run 18 (rain follows the beam), 2026-10-31, on branch `develop`.
+The author tested Runs 15–18 ("everything is perfect"). Runs 1–16 are in `ef011b8`, and
+Runs 17–18 are in the commit after it; `develop` is pushed to `origin`, and `main` is not.
+Final logs: `logs/phase_1/run18/`.
+
+## Files changed in Run 18
+
+- `game/features/vehicles/freight_van/van_presentation.gd`: `LOW_BEAM_RAIN` and
+  `HIGH_BEAM_RAIN`; `_light_the_rain()` sets the rain's glow and density by beam.
+- `game/tests/test_headlights.gd`: the 3× check (17 in total).
+- **Docs:** `CHANGE-BRIEF.md`, the prompt log (#56–#57), the development log and the
+  captures README.
+
+## Run 18 commands and real results
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run18` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12; art 0 failures |
+| `test_headlights.gd` with equal rain for both beams | 16/17, exit 1 (`logs/phase_1/run18/mutation_same_rain/`) |
+| `capture_beams.gd -- evidence/phase_1/beams/run18` (windowed) | near/far: low 91.4/41.2, high 133.8/98.6, off 18.8/27.2; white-out 0.00%; 24–28 FPS while charging from 8% |
+
+No log has a "SCRIPT ERROR", "SHADER ERROR" or "Failed loading resource" line. The only
+other "ERROR:" lines are the engine's "resources still in use at exit".
+
+## Unverified
+
+- The frame rate with the beam rain, on power with a charged battery.
+- The author's test of Runs 15–18.
+
+## Files changed in Run 17
+
+- `game/features/vehicles/freight_van/beam_rain.gdshader` (new, with its `.uid`).
+- `van_presentation.gd`:
+  - `BEAM_RAIN`, `RAIN_LAYERS`, `LAMP_FRONT`, `RAIN_SLANT` and `BODY_ROOF`;
+  - `_rain_layers` and `_beam_rain_material`;
+  - `_beam_rain()` and `_light_the_rain()`;
+  - `MoonRoofOutside` in `_exterior()`.
+- `game/features/environments/industrial_loop/industrial_loop.gd`: `GUIDE_GREEN`.
+- `CLAUDE.md`: "cycled (low beam, high beam, off)".
+- **Tests:**
+  - `test_headlights.gd` (16), with `_check_beam_rain()`;
+  - `test_cockpit.gd` (29);
+  - `test_ghat_road.gd` (31).
+- **Docs:**
+  - `CHANGE-BRIEF.md` and `docs/DESIGN_DECISIONS.md` (C26);
+  - the prompt log (#55), the development log and the captures README.
+
+## Run 17 commands and real results
+
+| Command | Result |
+| --- | --- |
+| `Godot --headless --editor --path game --import` | exit 0 (`logs/phase_1/run17_import.log`) |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run17` | 64/64, 0 failures, 92/92, 16/16, 12/12, 30/30 ×3, 29/29, 31/31, 12/12; art 0 failures |
+| headlight and ghat tests with the rain always shown and teal signs | 15/16 and 30/31, exit 1 each |
+| `capture_beams.gd -- evidence/phase_1/beams/run17` (windowed) | near/far: low 97.3/48.1, high 120.7/82.3, off 18.2/28.6; white-out 0.00% |
+| a scratch still script for the outside roof (windowed) | `evidence/phase_1/moon_roof/run17/` |
+| `measure_performance.gd` and a GPU-time script (windowed) | not comparable: the Mac was on battery at 10% (about 60 FPS, 18 ms frames); the GPU timer reads 0 on Metal |
+
+No log has a "SCRIPT ERROR", "SHADER ERROR" or "Failed loading resource" line. The only
+other "ERROR:" lines are the engine's "resources still in use at exit".
+
+## Unverified
+
+- The beam rain's frame-time cost; re-measure on power with `measure_performance.gd`.
+- How the beam rain looks while driving fast. The layers ride with the van, so the drops
+  fall but do not rush toward the driver.
+- The author's verdicts on everything since Run 15, including the lumber-yard start and the
+  landslide.
 
 ## Files changed in Run 16, step 5
 

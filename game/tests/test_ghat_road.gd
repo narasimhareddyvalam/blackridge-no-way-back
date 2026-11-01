@@ -258,6 +258,19 @@ func _check_mission() -> void:
 		closest = minf(closest, _beyond_asphalt(road, Vector2(at.x, at.z)))
 	_check(closest > -0.02,
 		"The depot yard stops at the road's edge (closest %.2f m beyond it)" % closest)
+	var boards := 0
+	var green := 0
+	for found in _world.find_children("*", "MeshInstance3D", true, false):
+		var board := found as MeshInstance3D
+		var box := board.mesh as BoxMesh
+		if box == null or not box.size.is_equal_approx(Vector3(6.6, 1.5, 0.12)):
+			continue
+		boards += 1
+		var paint := (board.material_override as BaseMaterial3D).albedo_color
+		if paint.g > paint.r * 2.0 and paint.g > paint.b * 1.3:
+			green += 1
+	_check(boards == 4 and green == boards,
+		"The guide signs are highway green (%d of %d boards)" % [green, boards])
 
 
 func _check_start() -> void:

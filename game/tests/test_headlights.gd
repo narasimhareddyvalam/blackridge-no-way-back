@@ -55,7 +55,45 @@ func _run() -> void:
 		and _all_visible(lights, true) and _all_patterns(lights, PROJECTOR_PATH),
 		"A third L press brings the low beams back")
 	_check_patterns()
+	await _check_beam_rain()
 	_finish()
+
+
+func _check_beam_rain() -> void:
+	var presentation := _van.get_node("VanPresentation")
+	var layers: Array = presentation.get("_rain_layers")
+	var rain: ShaderMaterial = presentation.get("_beam_rain_material")
+	var low_lit := _rain_shows(layers, true) and _rain_pattern(rain) == PROJECTOR_PATH
+	var low_glow := float(rain.get_shader_parameter("glow"))
+	await _press("headlights")
+	await _wait_physics(3)
+	var high_lit := _rain_shows(layers, true) and _rain_pattern(rain) == HIGH_PATH \
+		and float(rain.get_shader_parameter("reach")) > 200.0
+	var high_glow := float(rain.get_shader_parameter("glow"))
+	await _press("headlights")
+	await _wait_physics(3)
+	var dark := _rain_shows(layers, false)
+	await _press("headlights")
+	await _wait_physics(3)
+	_check(layers.size() >= 6 and low_lit and high_lit,
+		"Rain falls through the beams, lit by the low and then the high pattern (%d layers)"
+		% layers.size())
+	_check(dark and _rain_shows(layers, true), "No rain shows in the dark with the lights off")
+	_check(high_glow >= low_glow * 3.0 and low_glow > 0.0,
+		"High beams show at least 3x as much rain as low beams (%.1f against %.1f)" % [
+		high_glow, low_glow])
+
+
+func _rain_shows(layers: Array, expected: bool) -> bool:
+	for layer: MeshInstance3D in layers:
+		if layer.visible != expected:
+			return false
+	return not layers.is_empty()
+
+
+func _rain_pattern(rain: ShaderMaterial) -> String:
+	var pattern: Texture2D = rain.get_shader_parameter("pattern")
+	return pattern.resource_path if pattern != null else ""
 
 
 func _check_patterns() -> void:

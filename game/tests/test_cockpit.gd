@@ -197,6 +197,13 @@ func _check_moon_roof() -> void:
 			and surface != null and surface.shader.resource_path == SIDE_RAIN
 	_check(fits, "The moon roof has tinted glass the size of the Honda's frame, with rain lying "
 		+ "on top of it")
+	var outside := _presentation.find_child("MoonRoofOutside", true, false) as MeshInstance3D
+	var covered := outside != null and outside.layers == 2
+	if covered:
+		var top := _local(outside).origin
+		covered = Vector2(top.x, top.z).distance_to(Presentation.MOON_ROOF.get_center()) < 0.01 \
+			and top.y >= Presentation.BODY_ROOF
+	_check(covered, "The van's outside roof has dark glass over the moon roof")
 	var camera: Camera3D = _presentation.get("driving_camera")
 	var highest := rad_to_deg(Presentation.LOOK_UP + camera.rotation.x) + camera.fov * 0.5
 	var edge := ROOF_BACK_EDGE - EYE

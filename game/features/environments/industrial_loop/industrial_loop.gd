@@ -42,6 +42,7 @@ const GLOW_SIZE := 16.0
 const GLOW_FROM := 150.0
 const LANDSLIDE_AT := Vector2(330, 166)
 const SIGN_SETBACK := 3.0
+const GUIDE_GREEN := Color("0a4128")
 const TOWN_LAMPS: Array[Vector3] = [Vector3(-45, 0, 64.5), Vector3(-15, 0, 63.8),
 	Vector3(8, 0, 62.5)]
 
@@ -419,7 +420,7 @@ func _direction_sign(near: Vector2, title: String, detail: String) -> void:
 	sign.rotation.y = road.heading_at(index)
 	Build.box(sign, Vector3(0, 1.6, 0), Vector3(0.12, 3.2, 0.12), _metal)
 	Build.box(sign, Vector3(0, 3.3, 0), Vector3(6.6, 1.5, 0.12),
-		Build.material(Color("203d3f")))
+		Build.material(GUIDE_GREEN))
 	Build.text(sign, title + "\n" + detail, Vector3(0, 3.3, 0.07), 33, Color("e0dbc0"))
 
 

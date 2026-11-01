@@ -1100,3 +1100,90 @@ logs, and commit.
 - **Evidence:** `evidence/phase_1/mirror/run16/`: straight ahead, looking at the mirror, and
   zoomed in on its live rear view. The first capture window timed out without drawing a
   frame (macOS likely stopped drawing it); the retry worked.
+
+## Revision 2026-10-31 (Run 17: rain in the beams, green signs, outside roof glass, C26)
+
+- **Author:** "do all these and i will test" (#55), for the open items from Run 16. For the
+  rain in the beams: "Shader rain now (Recommended)" (C26).
+- **Rain in the headlight beams** (`beam_rain.gdshader`, new, in the van's folder, not
+  `game/shaders/`; `van_presentation.gd`, `_beam_rain()` and `_light_the_rain()`):
+  - **Layers:** eight additive layers stand 3–31 m ahead of the lamps, sized to the beam's
+    cone, on the cab layer so the mirrors never draw them.
+  - **Light:** each layer works out, for every point, how much light both headlights give
+    it, using the lamps' real positions and the current beam pattern. The low beam's cutoff
+    therefore shows in the rain, and high beams light it far ahead. Rain outside the beams
+    is not drawn.
+  - **Streaks:** falling streaks (7.5 m/s, 32 cm of motion blur, a slight slant) in random
+    columns. Their width is kept at a pixel or more, and they fade beyond about 10 m, where
+    rain stops reading as streaks.
+  - **No particle system** (C26). The layers hide when the headlights are off.
+- **Green guide signs** (`industrial_loop.gd`): the boards were teal (`203d3f`), which read
+  pale cyan under high beams. They are now highway green (`GUIDE_GREEN` `0a4128`):
+  - under low beams the board measures (79, 99, 78), clearly green;
+  - under high beams it reads a lighter green, as the beam's brightness and the rain haze
+    wash colour out.
+- **Outside roof glass** (`van_presentation.gd`, `MoonRoofOutside`): a dark glossy pane, 5 cm
+  larger than the moon roof's frame, sits on the van's flat outer roof (`BODY_ROOF`
+  2.995 m). It is on the body layer, so it shows from outside and in captures, not from the
+  driver's seat.
+- **`CLAUDE.md`:** the project-context line now says L cycles low beam, high beam and off,
+  instead of "toggled".
+- **The lumber-yard start and the landslide** are unchanged; the author judges them while
+  testing.
+- **Test changes, with reasons:**
+  - `test_headlights.gd` gains two checks (16 in total):
+    - rain falls through the beams, lit by the low and then the high pattern;
+    - no rain shows with the lights off.
+  - `test_cockpit.gd` gains one (29): the outside roof has the dark glass over the moon
+    roof.
+  - `test_ghat_road.gd` gains one (31): all four guide boards are green.
+  - **Mutations:** with the rain left showing with the lights off, the headlight test fails
+    15/16; with the teal boards back, the ghat test fails 30/31. Both exit 1
+    (`logs/phase_1/run17/mutation_rain_and_sign/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 16/16, 12/12, 30/30 ×3, 29/29,
+  31/31, 12/12, art 0 failures (`logs/phase_1/run17/`).
+- **Measured** at the start straight (`capture_beams.gd`): road near/far reads 97.3/48.1 on
+  low beams, 120.7/82.3 on high beams and 18.2/28.6 with the lights off. The beams light the
+  rain, so the lit road reads a little brighter than in Run 16; white-out stays 0.00%.
+- **Frame rate: not measured fairly.**
+  - The Mac was on battery at 10%, and every run held about 60 FPS with 18 ms median frames.
+    Earlier today, on power, the game ran at 76 FPS.
+  - Godot's GPU timer reads 0 on Metal, so the rain's own cost could not be measured.
+  - From what the shader does (eight layers, a few multiplies and one texture read per
+    pixel, nothing drawn outside the beams), it should cost well under 1 ms. To be
+    re-measured on power.
+- **Evidence:**
+  - `evidence/phase_1/beams/run17/` (`beams_sheet.png`);
+  - `evidence/phase_1/moon_roof/run17/` (`outside_roof_sheet.png`, at night and in debug
+    light: ambient 6.0, fog off).
+
+## Revision 2026-10-31 (Run 18: rain follows the beam)
+
+- **Author:** "when the low beam is turned on the falling rain should be less and when high
+  beam is turned on it should be more like in real lkfe" (#56); "plugged in, go ahead" (#57).
+- **Why, in real life:** low beams aim down at the road, so the rain they light is seen
+  against the bright road, mostly close in. High beams light the rain at eye level against
+  the dark, which shows a wall of bright streaks.
+- **Change** (`van_presentation.gd`): the beam rain's strength follows the beam:
+  - `LOW_BEAM_RAIN` (glow 5, density 0.65), half the Run 17 strength;
+  - `HIGH_BEAM_RAIN` (glow 16, density 0.9), 1.6× as strong and denser.
+
+  High-beam rain is 3.2× as strong as low-beam rain.
+- **Measured** at the start straight: the light the rain adds to the road, against Run 16
+  (no beam rain):
+
+  | Beam | Road 10–46 m | Road 50–100 m | Run 17 |
+  | --- | --- | --- | --- |
+  | Low | +3.7 | +0.9 | +9.6 / +7.8 |
+  | High | +30.6 | +37.0 | +17.5 / +20.7 |
+
+  White-out stays 0.00%.
+- **Test change, with its reason (#56):** `test_headlights.gd` gains "High beams show at
+  least 3x as much rain as low beams" (17 checks). With equal rain for both beams it fails
+  (16/17, exit 1; `logs/phase_1/run18/mutation_same_rain/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29,
+  31/31, 12/12, art 0 failures (`logs/phase_1/run18/`).
+- **Frame rate:** not comparable. The Mac was charging from 8% and ran at 24–28 FPS in all
+  three states; it ran at 76 FPS on power with a charged battery earlier in the day. To be
+  measured again once charged.
+- **Evidence:** `evidence/phase_1/beams/run18/beams_sheet.png`.

@@ -579,10 +579,51 @@ tag `a5`. Pictures the author approved or rejected are filed in
         back. All suites pass.
       - **The commit:** Runs 1–16 are committed together on `develop`, without a push.
 
+55. **Prompt:** "- Rain falling through the headlight beams waits for Assignment 6's particles. - A green road sign looks pale cyan under high beams. - The van's outside roof has no glass, which only shows from outside. - Your verdict on the lumber-yard start and the landslide. - Whether the CLAUDE.md line that says L "toggles" the lights should say "cycles". - do all these and i will test"
+    - **Context:** the author pasted the open items from Claude Code's last report.
+    - **Claude Code's question:** falling rain in the beams was kept for Assignment 6 (the
+      particles assignment), so how should it be done: shader rain now, particles now, or
+      wait?
+    - **The author's answer:** "Shader rain now (Recommended)".
+    - **Decision (C26):** rain streaks drawn by a shader inside the headlight beams, with no
+      particle system, so Assignment 6's particles can replace them later. The other items
+      are done as listed. The lumber-yard start and the landslide stay as they are for the
+      author to judge while testing.
+    - **Result (Run 17):**
+      - **Rain in the beams:** streaks fall through the headlight beams, lit by the real
+        low-beam and high-beam patterns, and none show with the lights off.
+      - **Guide signs:** they are highway green.
+      - **Outside roof:** the van's outside roof has dark glass over the moon roof.
+      - **`CLAUDE.md`:** it says L cycles the lights.
+      - **Tests:** all suites pass.
+      - **Frame rate:** not measured fairly, because the Mac was on battery at 10%.
+      - **Commit:** Run 17 is not committed; the author tests first.
+
+56. **Prompt:** "when the low beam is turned on the falling rain should be less and when high beam is turned on it should be more like in real lkfe"
+    - **Claude Code's proposal:** low-beam rain at about half its strength, mostly close to
+      the road; high-beam rain at about 1.6× and a little denser; a test that high-beam rain
+      is at least 3× as strong; every suite; one game window. It asked the author to plug
+      in the Mac first (5% battery).
+
+57. **Prompt:** "plugged in, go ahead"
+    - **Decision:** approved Run 18, rain strength by beam, as proposed.
+    - **Result (Run 18):**
+      - **Low beams:** the rain is half as strong, so the view stays clear with a little
+        rain close in.
+      - **High beams:** the rain is 1.6× as strong and denser, a wall of streaks lit far up
+        the road.
+      - **Measured:** the rain adds +3.7 to the near road on low beams and +30.6 on high
+        beams.
+      - **Tests:** all suites pass; the new check fails if both beams show the same rain.
+
+58. **Prompt:** "alright. everything is perfect. commit and push to remote"
+    - **Decision:** the author accepts Runs 15–18 as tested ("everything is perfect"),
+      including Run 15's lumber-yard start and landslide. Runs 17–18 are committed on
+      `develop`, and `develop` is pushed to `origin`. `main` is not pushed; it changes only
+      through a pull request the author approves.
+
 ## Waiting for the author
 
-- Verdicts on the pending stills in `source_assets/artwork/captures/pending/`.
-- Their own drive with the new wipers, beams and moon roof.
-- Commit approval for Runs 1–16 on `develop`.
-- Verdicts on Run 15's own calls: the lumber-yard start and the landslide.
-- The rest of the backlog: the double rear-view mirror, and rain in the beams (Assignment 6).
+- A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
+  was on battery or charging).
+- Any pull request from `develop` to `main`, only with the author's approval.

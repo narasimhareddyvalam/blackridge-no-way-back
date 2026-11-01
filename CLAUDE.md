@@ -22,8 +22,9 @@
     `StandardMaterial3D` (`van_presentation.gd:136,190-203`).
 - Game state that drives the effect: `freight_van.gd` (the `FreightVan`
   `CharacterBody3D`) owns `var headlights_on: bool = true`
-  (`game/features/vehicles/freight_van/freight_van.gd:23`), toggled by the
-  `headlights` action (`freight_van.gd:117-119`), bound to L (`game/project.godot:57-59`).
+  (`game/features/vehicles/freight_van/freight_van.gd:23`), cycled (low beam, high beam,
+  off) by the `headlights` action (`freight_van.gd:117-119`), bound to L
+  (`game/project.godot:57-59`).
   Input is ignored unless `occupied` and `input_enabled` (`freight_van.gd:112`). Each
   physics tick (60 per second, not every rendered frame) `_physics_process` calls
   `_visual.update_vehicle(delta)` (`freight_van.gd:63,100`). Lamps, lenses and `LIGHTS`

@@ -43,6 +43,13 @@ const MOON_ROOF_HEIGHT := 2.79
 const ROOF_SLOPE := Vector2(0.0, -0.05)
 const ROOF_AIR := 0.8
 const LOOK_UP := 1.05
+const BODY_ROOF := 2.995
+const BEAM_RAIN = preload("beam_rain.gdshader")
+const RAIN_LAYERS: Array[float] = [3.0, 4.5, 6.5, 9.0, 12.5, 17.0, 23.0, 31.0]
+const LAMP_FRONT := -2.44
+const RAIN_SLANT := 0.08
+const LOW_BEAM_RAIN := Vector2(5.0, 0.65)
+const HIGH_BEAM_RAIN := Vector2(16.0, 0.9)
 const WINDSHIELD_AIR := 0.85
 const SIDE_AIR := 0.9
 const SIDE_AIR_DIRECTION := Vector2(-0.989, 0.148)
@@ -85,6 +92,8 @@ var _tires: Array[Node3D] = []
 var _rolling_meshes: Array[Node3D] = []
 var _glass: ShaderMaterial
 var _high_beams_shown: bool = false
+var _rain_layers: Array[MeshInstance3D] = []
+var _beam_rain_material: ShaderMaterial
 var _mirror_timer: float = 0.0
 var _mirror_turn: int = 0
 var _water: float = 0.6
@@ -119,6 +128,7 @@ func configure(van: CharacterBody3D) -> void:
 	add_child(_body)
 	add_child(_cabin)
 	_exterior()
+	_beam_rain()
 	_interior()
 	_camera()
 	_displays()
@@ -129,6 +139,11 @@ func configure(van: CharacterBody3D) -> void:
 
 func _exterior() -> void:
 	_body.add_child(BODY_ART.instantiate())
+	var sky_glass := Build.material(Color("070a0c"), 0.05)
+	var centre := MOON_ROOF.get_center()
+	var top := Build.box(_body, Vector3(centre.x, BODY_ROOF + 0.004, centre.y),
+		Vector3(MOON_ROOF.size.x + 0.05, 0.008, MOON_ROOF.size.y + 0.05), sky_glass)
+	top.name = "MoonRoofOutside"
 	for side in [-1, 1]:
 		var lens := Build.box(_body, Vector3(side * 0.88, 1.20, -2.36),
 			Vector3(0.38, 0.20, 0.065), _steel)
@@ -363,6 +378,45 @@ func _windows_and_wipers() -> void:
 		_blades.append(wiper.blade)
 
 
+func _beam_rain() -> void:
+	_beam_rain_material = ShaderMaterial.new()
+	_beam_rain_material.shader = BEAM_RAIN
+	_beam_rain_material.set_shader_parameter("slant", RAIN_SLANT)
+	var holder := Node3D.new()
+	holder.name = "BeamRain"
+	add_child(holder)
+	var spread := tan(deg_to_rad(_headlights[0].spot_angle))
+	for index in range(RAIN_LAYERS.size()):
+		var ahead: float = RAIN_LAYERS[index]
+		var quad := QuadMesh.new()
+		quad.size = Vector2(2.0 * (ahead + 0.5) * spread + 1.8, minf(2.6 + ahead * 0.3, 9.0))
+		var layer := Build.instance(holder, Vector3(0.0, quad.size.y * 0.5 - 0.2,
+			LAMP_FRONT - ahead), quad, _beam_rain_material)
+		layer.layers = 4
+		layer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		layer.set_instance_shader_parameter("seed", 11.0 * index + 3.0)
+		_rain_layers.append(layer)
+
+
+func _light_the_rain() -> void:
+	var lit: bool = vehicle.headlights_on
+	for layer in _rain_layers:
+		layer.visible = lit
+	if not lit:
+		return
+	var lamp := _headlights[0]
+	var strength := HIGH_BEAM_RAIN if vehicle.high_beams else LOW_BEAM_RAIN
+	_beam_rain_material.set_shader_parameter("glow", strength.x)
+	_beam_rain_material.set_shader_parameter("density", strength.y)
+	_beam_rain_material.set_shader_parameter("pattern", lamp.light_projector)
+	_beam_rain_material.set_shader_parameter("reach", lamp.spot_range)
+	_beam_rain_material.set_shader_parameter("tan_half", tan(deg_to_rad(lamp.spot_angle)))
+	_beam_rain_material.set_shader_parameter("lamp_left",
+		Projection(_headlights[0].global_transform.affine_inverse()))
+	_beam_rain_material.set_shader_parameter("lamp_right",
+		Projection(_headlights[1].global_transform.affine_inverse()))
+
+
 func _aim_beam(headlight: SpotLight3D, high: bool) -> void:
 	headlight.light_projector = HIGH_BEAM if high else LOW_BEAM
 	headlight.spot_range = HIGH_BEAM_RANGE if high else LOW_BEAM_RANGE
@@ -503,6 +557,7 @@ func update_vehicle(delta: float) -> void:
 		_high_beams_shown = vehicle.high_beams
 		for headlight in _headlights:
 			_aim_beam(headlight, _high_beams_shown)
+	_light_the_rain()
 	for lens in _front_lenses:
 		lens.material_override = _lens_on if vehicle.headlights_on else _lens_off
 	for lamp in _rear_lamps:
