@@ -1,0 +1,11 @@
+import exit 0
+first_drive_regression 60 exit 0
+first_drive_integration 60 exit 0
+test_materials 60 exit 0
+test_night_dimming 30 exit 0
+test_night_dimming 60 exit 0
+test_night_dimming 144 exit 0
+check_first_drive_art exit 0
+capture_night_cluster exit 0
+capture_hint exit 0
+capture_fog exit 0

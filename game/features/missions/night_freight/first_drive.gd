@@ -6,17 +6,18 @@ signal checkpoint_save_failed(error: int)
 signal drive_completed
 
 const SAVE_PATH := "user://driving_prototype.cfg"
-const TARGETS: Array[Vector3] = [Vector3(118, 0, 5), Vector3(0, 0, -73),
-	Vector3(-118, 0, 0), Vector3(-68, 0, 73), Vector3(-28, 0, 93)]
-const HEADINGS: Array[float] = [0.0, PI / 2, PI, -PI / 2, PI]
-const DIRECTIONS: Array[String] = ["EAST ROAD", "NORTH ROAD", "WEST ROAD", "DEPOT APPROACH",
-	"PARK AT THE DEPOT"]
+const TARGETS: Array[Vector3] = [Vector3(482.24, 25.4, -24.37), Vector3(458.48, 43.6, -114.17),
+	Vector3(164.28, 64.42, -206.81), Vector3(-20.05, 24.98, -50.67), Vector3(-28, 0, 93)]
+const HEADINGS: Array[float] = [0.2508, 0.2966, 1.5538, -2.6609, PI]
+const DIRECTIONS: Array[String] = ["THE SWITCHBACKS", "THE VIEWPOINT", "THE PASS",
+	"THE DESCENT", "PARK AT THE DEPOT"]
+const START := Transform3D(Basis(Vector3.UP, PI / 2), Vector3(560, 0.1, 130))
 
 var vehicle: CharacterBody3D
 var checkpoint_path: String = SAVE_PATH
 var stage: int = 0
 var complete: bool = false
-var recovery_pose := Transform3D(Basis(Vector3.UP, -PI / 2), Vector3(-5, 0.1, 73))
+var recovery_pose := START
 var _timer: float = 0.0
 
 
@@ -52,7 +53,7 @@ func _process(delta: float) -> void:
 
 func _update_objective() -> void:
 	var title := "RETURN TO THE DEPOT"
-	var detail := "Follow the freight loop via " + DIRECTIONS[stage].to_lower() + ". Keep right."
+	var detail := "Follow the freight loop via " + DIRECTIONS[stage].to_lower() + "."
 	if stage == 4:
 		detail = "Turn into the depot yard. Stop inside the marked parking bay."
 	if complete:
@@ -68,7 +69,7 @@ func _update_objective() -> void:
 func restart() -> void:
 	stage = 0
 	complete = false
-	recovery_pose = Transform3D(Basis(Vector3.UP, -PI / 2), Vector3(-5, 0.1, 73))
+	recovery_pose = START
 	vehicle.recover(recovery_pose)
 	_save_checkpoint()
 	_update_objective()

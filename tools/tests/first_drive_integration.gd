@@ -55,13 +55,18 @@ func _run() -> void:
 	check(van.get("hazards_on") and van.get("indicator_lit"), "Hazards activate")
 	await tap("hazards")
 	await tap("headlights")
+	check(van.get("headlights_on") and van.get("high_beams"), "Headlight switch selects high beams")
+	await tap("headlights")
 	check(not van.get("headlights_on"), "Headlight switch turns lamps off")
 	await tap("headlights")
+	check(van.get("headlights_on") and not van.get("high_beams"),
+		"Headlight switch returns to low beams")
 	await tap("wipers")
 	check(van.get("wiper_setting") == 2, "Wipers select high speed")
 	await tap("wipers")
 	await create_timer(0.85).timeout
-	check(van.get("wiper_setting") == 0 and absf(van.get("wiper_angle") + 0.9) < 0.02,
+	var park: float = van.get_script().get_script_constant_map()["WIPER_PARK"]
+	check(van.get("wiper_setting") == 0 and absf(van.get("wiper_angle") - park) < 0.02,
 		"Wipers switch off and park")
 	await tap("window_left")
 	await create_timer(2.1).timeout

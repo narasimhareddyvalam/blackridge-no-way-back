@@ -3,6 +3,11 @@ extends SceneTree
 const Check = preload("res://tests/normal_map_check.gd")
 const FOG_SHADER := "res://shaders/foggy_windshield.gdshader"
 const HINT_SHADER := "res://shaders/hint_experiment.gdshader"
+const WINDSHIELD_SHADER := "res://features/vehicles/freight_van/windshield.gdshader"
+const SIDE_RAIN_SHADER := "res://features/vehicles/freight_van/side_window_rain.gdshader"
+const RAIN_INCLUDE := "#include \"rain_drops.gdshaderinc\""
+const RAIN_UNIFORMS := {"rain": TYPE_FLOAT, "wetness": TYPE_FLOAT, "speed": TYPE_FLOAT,
+	"drop_radii": TYPE_VECTOR4, "runner_speed": TYPE_FLOAT}
 const HINT_PNG := "res://experiments/hint_experiment/greys_3x1.png"
 const FOG_TEXTURES := {
 	"fog_color": "res://assets/textures/windshield/fog_color.png",
@@ -11,7 +16,7 @@ const FOG_TEXTURES := {
 }
 const FOG_MATERIALS := {
 	"res://materials/windshield/light_fog.tres": [0.25, 0.45, 0.65, 0.2, 0.5, 1.0],
-	"res://materials/windshield/heavy_fog.tres": [0.75, 0.6, 0.35, 0.25, 0.5, 1.0],
+	"res://materials/windshield/heavy_fog.tres": [0.75, 0.35, 0.35, 0.25, 0.5, 1.0],
 }
 const FOG_VALUE_NAMES: Array[String] = ["fog_amount", "fog_opacity", "clear_center",
 	"edge_softness", "normal_strength", "texture_scale"]
@@ -77,6 +82,7 @@ func _run() -> void:
 	create_timer(120.0, true, false, true).timeout.connect(_timeout)
 	_check_sampler_hints()
 	_check_uniform_lists()
+	_check_rain_shaders()
 	_check_fog_materials()
 	_check_hint_materials()
 	_check_imports()
@@ -116,6 +122,13 @@ func _check_uniform_lists() -> void:
 		if item.usage == PROPERTY_USAGE_GROUP and item.name != "":
 			groups.append(item.name)
 	_check(groups == FOG_GROUPS, "Fog uniform groups are %s (found %s)" % [FOG_GROUPS, groups])
+
+
+func _check_rain_shaders() -> void:
+	for shader_path: String in [WINDSHIELD_SHADER, SIDE_RAIN_SHADER]:
+		_check_listed(shader_path, RAIN_UNIFORMS)
+		_check(FileAccess.get_file_as_string(shader_path).contains(RAIN_INCLUDE),
+			"%s uses the shared drop code: %s" % [shader_path.get_file(), RAIN_INCLUDE])
 
 
 func _check_listed(shader_path: String, expected: Dictionary) -> void:
@@ -204,23 +217,43 @@ func _check_van_overlays() -> void:
 	app.call("_resume")
 	var presentation := app.get_node("FreightVan/VanPresentation")
 	var overlays: Array = presentation.get("fog_overlays")
+	var rain: Array = presentation.get("side_rain_overlays")
 	var windows: Array = presentation.get("_windows")
-	_check(overlays.size() == 2, "Van builds two fog overlays")
+	_check(overlays.size() == 1 and rain.size() == 2,
+		"Van builds the windshield fog overlay and two side-window rain overlays")
 	var windshield: MeshInstance3D = overlays[0]
-	var side: MeshInstance3D = overlays[1]
+	var side: MeshInstance3D = rain[0]
 	_check(windshield.material_override.resource_path.ends_with("light_fog.tres"),
 		"Windshield overlay uses light_fog.tres")
-	_check(side.material_override.resource_path.ends_with("heavy_fog.tres"),
-		"Driver-window overlay uses heavy_fog.tres")
+	_check((side.material_override as ShaderMaterial).shader.resource_path.ends_with(
+		"side_window_rain.gdshader"),
+		"Driver-window overlay uses side_window_rain.gdshader (fog removed by the author)")
 	var pane := windshield.get_parent() as MeshInstance3D
 	_check(pane.material_override is ShaderMaterial
 		and (pane.material_override as ShaderMaterial).shader.resource_path.ends_with(
 		"windshield.gdshader"), "Original windshield glass keeps windshield.gdshader")
 	_check(side.get_parent() == windows[0] and windows[0].material_override
-		is StandardMaterial3D, "Side overlay is a child of the left window; its glass is unchanged")
+		is StandardMaterial3D,
+		"Driver-window rain overlay is a child of the left window; its glass is unchanged")
+	_check(side.position.x < 0.0 and side.sorting_offset < 0.0,
+		"Driver-window rain sits on the outside of the glass and draws before it")
 	_check(windshield.layers == 4 and side.layers == 4, "Both overlays are on the cabin layer")
 	var van := app.get_node("FreightVan") as Node3D
-	var start_y := van.to_local(side.global_position).y
+	var glass := pane.material_override as ShaderMaterial
+	van.set("actual_speed", 0.0)
+	presentation.call("update_vehicle", 0.0)
+	var up_before := float(glass.get_shader_parameter("runner_up"))
+	var down_before := float(glass.get_shader_parameter("runner_down"))
+	van.set("actual_speed", 18.0)
+	presentation.call("update_vehicle", 0.5)
+	var climbed := float(glass.get_shader_parameter("runner_up")) - up_before
+	van.set("actual_speed", 0.0)
+	presentation.call("update_vehicle", 0.5)
+	var slid := float(glass.get_shader_parameter("runner_down")) - down_before
+	_check(climbed > 0.0 and slid > 0.0,
+		"Windshield runners climb at 65 km/h (%.3f m) and slide down when parked (%.3f m)" % [
+		climbed, slid])
+	var start_y: float = presentation.to_local(side.global_position).y
 	var press := InputEventAction.new()
 	press.action = "window_left"
 	press.pressed = true
@@ -231,7 +264,7 @@ func _check_van_overlays() -> void:
 	Input.parse_input_event(release)
 	for frame in range(180):
 		await process_frame
-	var moved := start_y - van.to_local(side.global_position).y
+	var moved: float = start_y - presentation.to_local(side.global_position).y
 	_check(absf(moved - 0.88) < 0.02,
 		"Real J press lowers the window and its fog overlay by %.3f m (expected 0.88)" % moved)
 	app.queue_free()

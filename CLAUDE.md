@@ -3,8 +3,9 @@
 ## Project context
 
 - Engine: Godot 4.7.2 stable (`README.md:142`), tag `"4.7"` (`game/project.godot:15`).
-- Renderer: Compatibility, `renderer/rendering_method="gl_compatibility"` on desktop
-  and mobile (`game/project.godot:125-126`). No `rendering/viewport/hdr_2d` key is set.
+- Renderer: Forward+ on desktop, `renderer/rendering_method="forward_plus"`
+  (`game/project.godot:125`), since Phase 1 Run 1 (C12). Mobile stays `gl_compatibility`
+  (`:126`). Tag `a5` was Compatibility. No `rendering/viewport/hdr_2d` key is set.
 - Main scene: `res://app/first_drive.tscn` (`game/project.godot:14`). It instances
   the van as node `FreightVan` (`game/app/first_drive.tscn:5,14`).
 - How the shaded object (dashboard cluster) is drawn:
@@ -114,24 +115,26 @@ Checked on this machine on 2026-10-28 (Godot 4.7.2, macOS 26.6.2):
 
 ## Out of scope (Phase 1)
 
-- `headlights_on`, the `headlights` action (L), the `LIGHTS` text and the switch click.
-  - The headlight lights and lenses change only as `CHANGE-BRIEF.md` §4 says.
-  - The dimming driver and `night_cluster` only read `headlights_on` and never set it.
-- Van movement, steering, collisions, recovery, gear, indicators, wipers, rain, window
-  motion, audio, and every other control or key binding.
-- The existing glass and the fog materials, which change only with the author's OK:
-  - the glass is `windshield.gdshader` and its material, plus the side-window
-    `StandardMaterial3D`;
-  - the fog materials are `light_fog.tres` and `heavy_fog.tres`. The fog is re-checked by
-    eye under Forward+.
-  - If the author approves new fog values, `test_materials.gd` changes with them, recorded
-    as a dated revision in `CHANGE-BRIEF.md`. Every other existing test keeps passing
-    unchanged.
-- The tonemap stays Linear unless lit surfaces clip to white. Any change is shown to the
-  author with before/after stills first. Volumetric fog stays off.
-- `project.godot` changes only its rendering method.
-- The interior, the road's shape and material, models, other scenes, autoloads and new
-  controls are later phases in `ROADMAP.md`.
+On 2026-10-30 the author asked for the road, forest, headlights, rain and interior to
+be made realistic now ("show me after making the road,car more realstic add lot of trees
+on the entire road"). Those are in scope. These stay protected:
+
+- `headlights_on` (true while either beam is on), the `headlights` action (L), the
+  `LIGHTS` text and the switch click. At the author's request of 2026-10-31 (#50), L
+  cycles low beam → high beam → off, and the game starts on low beams. The dimming
+  driver and `night_cluster` only read `headlights_on` and never set it.
+- Every file in `game/shaders/` (see Ownership). Assignment 5's evidence in `logs/*.log`
+  and `evidence/captures/` is never overwritten. New runs use `LOG_DIR` and output folders.
+- The fog materials (`light_fog.tres`, `heavy_fog.tres`) change only with the author's OK.
+  If they change, `test_materials.gd` follows, recorded in `CHANGE-BRIEF.md`.
+- Existing tests keep passing. A test changes only when the author's request changes what
+  it checks, and the change is written down.
+- Volumetric fog stays off in front of the headlights. The tonemap is AgX at exposure 1.3,
+  chosen after Linear clipped lit trunks to white (stills in `evidence/phase_1/forest_road/`).
+- `project.godot` changes only its rendering method and, with the author's OK of
+  2026-10-31, MetalFX upscaling on macOS (`scaling_3d/mode.macos=4`,
+  `scaling_3d/scale.macos=0.75`; see `PERFORMANCE.md`). No autoloads and no new controls
+  without the author's OK.
 
 ## Unconfirmed
 

@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+renderer=forward_plus image=1280x800
+AsColor: band 1 at (473, 250) = (64, 64, 64); band 2 at (640, 250) = (128, 128, 128); band 3 at (806, 250) = (192, 192, 192)
+AsData: band 1 at (473, 550) = (137, 137, 137); band 2 at (640, 550) = (188, 188, 188); band 3 at (806, 550) = (225, 225, 225)

@@ -1,0 +1,103 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: foggy_windshield.gdshader sampler fog_color hints are 'source_color, filter_linear, repeat_enable' (found 'source_color, filter_linear, repeat_enable')
+PASS: foggy_windshield.gdshader sampler fog_normal hints are 'hint_normal, filter_linear, repeat_enable' (found 'hint_normal, filter_linear, repeat_enable')
+PASS: foggy_windshield.gdshader sampler fog_data hints are 'filter_linear, repeat_enable' (found 'filter_linear, repeat_enable')
+PASS: hint_experiment.gdshader sampler color_read hints are 'source_color, filter_nearest' (found 'source_color, filter_nearest')
+PASS: hint_experiment.gdshader sampler data_read hints are 'filter_nearest' (found 'filter_nearest')
+PASS: Fog shader line 1 is shader_type spatial
+PASS: Fog shader render_mode matches CHANGE-BRIEF 5.4
+PASS: Fog shader reads no screen texture
+PASS: Fog source declares: uniform float fog_amount : hint_range(0.0, 1.0) = 0.25;
+PASS: Fog source declares: uniform float fog_opacity : hint_range(0.0, 1.0) = 0.45;
+PASS: Fog source declares: uniform vec4 fog_tint : source_color = vec4(0.82, 0.87, 0.90, 1.0);
+PASS: Fog source declares: uniform float clear_center : hint_range(0.0, 0.9) = 0.65;
+PASS: Fog source declares: uniform float edge_softness : hint_range(0.01, 0.5) = 0.20;
+PASS: Fog source declares: uniform float normal_strength : hint_range(0.0, 2.0) = 0.5;
+PASS: Fog source declares: uniform float texture_scale : hint_range(0.5, 4.0) = 1.0;
+PASS: foggy_windshield.gdshader parses: uniform list is not empty
+PASS: foggy_windshield.gdshader lists fog_amount as float
+PASS: foggy_windshield.gdshader lists fog_opacity as float
+PASS: foggy_windshield.gdshader lists fog_tint as Color
+PASS: foggy_windshield.gdshader lists clear_center as float
+PASS: foggy_windshield.gdshader lists edge_softness as float
+PASS: foggy_windshield.gdshader lists normal_strength as float
+PASS: foggy_windshield.gdshader lists texture_scale as float
+PASS: foggy_windshield.gdshader lists fog_color as Object
+PASS: foggy_windshield.gdshader lists fog_normal as Object
+PASS: foggy_windshield.gdshader lists fog_data as Object
+PASS: hint_experiment.gdshader parses: uniform list is not empty
+PASS: hint_experiment.gdshader lists color_read as Object
+PASS: hint_experiment.gdshader lists data_read as Object
+PASS: hint_experiment.gdshader lists show_data as bool
+PASS: Fog uniform groups are ["Fog", "Shape", "Detail"] (found ["Fog", "Shape", "Detail"])
+PASS: windshield.gdshader parses: uniform list is not empty
+PASS: windshield.gdshader lists rain as float
+PASS: windshield.gdshader lists wetness as float
+PASS: windshield.gdshader lists speed as float
+PASS: windshield.gdshader lists drop_radii as Vector4
+PASS: windshield.gdshader lists runner_speed as float
+PASS: windshield.gdshader uses the shared drop code: #include "rain_drops.gdshaderinc"
+PASS: side_window_rain.gdshader parses: uniform list is not empty
+PASS: side_window_rain.gdshader lists rain as float
+PASS: side_window_rain.gdshader lists wetness as float
+PASS: side_window_rain.gdshader lists speed as float
+PASS: side_window_rain.gdshader lists drop_radii as Vector4
+PASS: side_window_rain.gdshader lists runner_speed as float
+PASS: side_window_rain.gdshader uses the shared drop code: #include "rain_drops.gdshaderinc"
+PASS: light_fog.tres uses res://shaders/foggy_windshield.gdshader
+PASS: light_fog.tres fog_amount = 0.25
+PASS: light_fog.tres fog_opacity = 0.45
+PASS: light_fog.tres clear_center = 0.65
+PASS: light_fog.tres edge_softness = 0.2
+PASS: light_fog.tres normal_strength = 0.5
+PASS: light_fog.tres texture_scale = 1.0
+PASS: light_fog.tres fog_tint = (0.82, 0.87, 0.9, 1.0)
+PASS: light_fog.tres binds fog_color.png to fog_color
+PASS: light_fog.tres binds fog_normal.png to fog_normal
+PASS: light_fog.tres binds fog_data.png to fog_data
+PASS: heavy_fog.tres uses res://shaders/foggy_windshield.gdshader
+PASS: heavy_fog.tres fog_amount = 0.75
+PASS: heavy_fog.tres fog_opacity = 0.35
+PASS: heavy_fog.tres clear_center = 0.35
+PASS: heavy_fog.tres edge_softness = 0.25
+PASS: heavy_fog.tres normal_strength = 0.5
+PASS: heavy_fog.tres texture_scale = 1.0
+PASS: heavy_fog.tres fog_tint = (0.82, 0.87, 0.9, 1.0)
+PASS: heavy_fog.tres binds fog_color.png to fog_color
+PASS: heavy_fog.tres binds fog_normal.png to fog_normal
+PASS: heavy_fog.tres binds fog_data.png to fog_data
+PASS: hint_as_color.tres uses res://shaders/hint_experiment.gdshader
+PASS: hint_as_color.tres show_data = false
+PASS: hint_as_color.tres binds greys_3x1.png to color_read
+PASS: hint_as_color.tres binds greys_3x1.png to data_read
+PASS: hint_as_data.tres uses res://shaders/hint_experiment.gdshader
+PASS: hint_as_data.tres show_data = true
+PASS: hint_as_data.tres binds greys_3x1.png to color_read
+PASS: hint_as_data.tres binds greys_3x1.png to data_read
+PASS: fog_color.png import: compress/mode=0 normal_map=2 mipmaps=true detect_3d=0
+PASS: fog_normal.png import: compress/mode=0 normal_map=1 mipmaps=true detect_3d=0
+PASS: fog_data.png import: compress/mode=0 normal_map=2 mipmaps=true detect_3d=0
+PASS: greys_3x1.png import: compress/mode=0 normal_map=2 mipmaps=false detect_3d=0
+CURL calibration GL file: as GL 0.5792, as DX 1.4208
+CURL calibration DX file: as GL 1.4208, as DX 0.5792
+PASS: Calibration pair: each file is lower in its own convention (sign convention correct)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/textures/windshield/fog_normal.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+     at: load_from_file (core/io/image.cpp:2780)
+     GDScript backtrace (most recent call first):
+         [0] _check_normal_maps (res://tests/test_materials.gd:203)
+         [1] _run (res://tests/test_materials.gd:89)
+CURL fog_normal.png: as GL 0.0033, as DX 1.9967
+PASS: fog_normal.png is a real surface in the GL convention (<= 0.5792)
+PASS: Van builds the windshield fog overlay and two side-window rain overlays
+PASS: Windshield overlay uses light_fog.tres
+PASS: Driver-window overlay uses side_window_rain.gdshader (fog removed by the author)
+PASS: Original windshield glass keeps windshield.gdshader
+PASS: Driver-window rain overlay is a child of the left window; its glass is unchanged
+PASS: Driver-window rain sits on the outside of the glass and draws before it
+PASS: Both overlays are on the cabin layer
+PASS: Windshield runners climb at 65 km/h (0.049 m) and slide down when parked (0.071 m)
+PASS: Real J press lowers the window and its fog overlay by 0.880 m (expected 0.88)
+PASS: Hint quads use hint_as_color.tres and hint_as_data.tres
+PASS: Hint scene: Linear tonemap, exposure 1.0, glow/fog/adjustments off
+MATERIALS RESULT: 92/92 passed; 0 failed

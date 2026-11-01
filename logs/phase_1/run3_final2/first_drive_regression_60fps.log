@@ -1,0 +1,88 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Physical vehicle collision dimensions are preserved
+PASS: Ground contact permits a left turn
+PASS: Ground contact permits a right turn
+PASS: Turning into an adjacent obstacle is rejected
+PASS: Turning away from the adjacent obstacle remains possible
+PASS: Throttle produces forward travel
+PASS: Measured speed reports forward motion
+PASS: Left steering changes heading during actual physics movement
+PASS: Service brake stops the turning van
+PASS: Recovery immediately resets measured speed
+PASS: Measured speed reports reverse motion
+PASS: _engine loop reaches the source WAV's complete frame count
+PASS: _engine loops forward from the beginning
+PASS: _engine playback owns a separate stream resource
+PASS: _rain loop reaches the source WAV's complete frame count
+PASS: _rain loops forward from the beginning
+PASS: _rain playback owns a separate stream resource
+PASS: _cabin_rain loop reaches the source WAV's complete frame count
+PASS: _cabin_rain loops forward from the beginning
+PASS: _cabin_rain playback owns a separate stream resource
+PASS: _tires loop reaches the source WAV's complete frame count
+PASS: _tires loops forward from the beginning
+PASS: _tires playback owns a separate stream resource
+PASS: _wind loop reaches the source WAV's complete frame count
+PASS: _wind loops forward from the beginning
+PASS: _wind playback owns a separate stream resource
+PASS: _horn loop reaches the source WAV's complete frame count
+PASS: _horn loops forward from the beginning
+PASS: _horn playback owns a separate stream resource
+PASS: _music loop reaches the source WAV's complete frame count
+PASS: _music loops forward from the beginning
+PASS: _music playback owns a separate stream resource
+PASS: _click remains a one-shot effect
+PASS: _wiper remains a one-shot effect
+PASS: _window remains a one-shot effect
+PASS: _collision remains a one-shot effect
+PASS: First landmark advances route state
+PASS: Successful checkpoint emits only a saved result
+PASS: Successful checkpoint is readable from disk
+PASS: Successful replacement leaves no temporary save file
+PASS: HUD reports successful disk write
+EXPECTED FAILURE: temporary save path is an existing test directory
+WARNING: Could not save driving checkpoint: Can't open file
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:94)
+         [1] _process (res://features/missions/night_freight/first_drive.gd:49)
+         [2] _test_checkpoint_failure (res://../tools/tests/first_drive_regression.gd:185)
+         [3] _run (res://../tools/tests/first_drive_regression.gd:51)
+         [4] _test_steering (res://../tools/tests/first_drive_regression.gd:113)
+PASS: Save failure keeps current route progress in memory
+PASS: Failed write emits failure and never emits saved
+PASS: Save failure carries an error code
+PASS: Failed write preserves the previous checkpoint
+PASS: HUD reports failure rather than claiming a save
+PASS: In-session recovery still works after failed saving
+PASS: Checkpoint saving resumes after the obstruction is removed
+PASS: A successful replacement updates an existing checkpoint
+EXPECTED FAILURE: final save target is an existing test directory
+WARNING: Could not save driving checkpoint: Failed
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:94)
+         [1] _test_checkpoint_failure (res://../tools/tests/first_drive_regression.gd:210)
+         [2] _run (res://../tools/tests/first_drive_regression.gd:51)
+         [3] _test_steering (res://../tools/tests/first_drive_regression.gd:113)
+PASS: Failed final replacement reports failure without saved success
+PASS: Failed replacement removes its incomplete temporary file
+PASS: Failed replacement preserves the obstructing directory
+PASS: A fresh route instance reloads the saved stage
+PASS: Reload restores the authored safe recovery pose
+PASS: Invalid checkpoint stage -1 is ignored
+PASS: Invalid checkpoint stage 99 is ignored
+PASS: Invalid checkpoint stage two is ignored
+PASS: Invalid checkpoint stage 2.5 is ignored
+PASS: Blocked doors prevent exiting into obstacles
+PASS: Clear doors allow exit
+PASS: Driver can reenter the van
+PASS: Physical wall collision stops actual motion
+PASS: Measured speed stays zero while throttle is held against a wall
+PASS: Van remains on the near side of the test wall
+REGRESSION RESULT: 64/64 passed; 0 failed
+WARNING: 25 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

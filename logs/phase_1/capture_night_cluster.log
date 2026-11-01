@@ -1,0 +1,10 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+renderer=forward_plus cluster=640x256
+night_amount 0.0: background (10, 10) = (8, 14, 18); dial hub (155, 136) = (135, 156, 148)
+night_amount 0.5: background (10, 10) = (6, 9, 10); dial hub (155, 136) = (105, 102, 82)
+night_amount 1.0: background (10, 10) = (4, 4, 2); dial hub (155, 136) = (74, 47, 16)
+night_amount 2.0: background (10, 10) = (1, 0, 0); dial hub (155, 136) = (14, 0, 0)
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

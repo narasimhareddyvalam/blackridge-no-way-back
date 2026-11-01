@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The cockpit uses cockpit/cockpit_front.gltf
+PASS: The cockpit uses cockpit/cockpit_back.gltf
+PASS: The cockpit uses cockpit/cockpit_roof.gltf
+PASS: The cockpit uses cockpit/cockpit_wheel.gltf
+PASS: The cockpit uses cockpit/cockpit_shadow.glb
+PASS: The cockpit uses cockpit/cockpit_wheel_shadow.glb
+PASS: The old cabin.glb and steering.glb are no longer drawn (the files stay in the repo)
+PASS: The cockpit draws the slimmed model (847364 triangles)
+PASS: All 93 cockpit meshes are on the cabin layer, which the mirrors never draw
+PASS: The detailed cockpit casts no shadows itself
+PASS: Two shadow stand-ins cast the cockpit's shadows, from both sides
+PASS: The gauge cluster sits on the Honda driver display, just in front of its glass
+PASS: The map sits on the driver's half of the Honda centre screen
+PASS: The reverse camera shares the map's place and starts hidden
+PASS: reverse_screen is the dash screen that shows the reverse camera
+PASS: The left mirror view shows, mirrored, on the dash-end screen facing the driver
+PASS: The right mirror view shows, mirrored, on the dash-end screen facing the driver
+PASS: The wheel pivots on the Honda hub, on a column tilted 18.49 degrees
+PASS: The Honda wheel turns with the steering pivot
+FAIL: Steering left turns the top of the wheel to the left (-1.47 rad)
+FAIL: Steering right turns the top of the wheel to the right
+PASS: The hub stays put and the wheel centres again
+COCKPIT RESULT: 20/22 passed; 2 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

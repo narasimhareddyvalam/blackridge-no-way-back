@@ -1,0 +1,12 @@
+renderer=forward_plus
+trees=6549 saplings=1369 colliders=3422
+forest floor props=14430
+wipers parked: setting 0 angle -0.90
+road sample points visible: 40
+saved driver_headlights_on.png 1280x800
+saved driver_headlights_off.png 1280x800
+road on 98.4 off 12.0 ratio 8.17
+white-out in windshield: on 0.00% off 0.00%
+saved chase_headlights_on.png 1280x800
+saved overview.png 1280x800
+saved roadside_low.png 1280x800

@@ -1140,3 +1140,501 @@ result. Unfinished checks remain marked unfinished.
   - **`ROADMAP.md`:** a dated revision for the structure, branches and Assignment 5.
   - **GitHub:** `develop` pushed. `main` and tag `a5` are untouched.
 - **Next (needs approval):** Run 1, the renderer switch.
+
+### 2026-10-30 — Phase 1 Run 1: renderer switched to Forward+ (on `develop`)
+
+- **Approved by the author:** "yes do it. never push to main without my approval".
+- **Changed:**
+  - `game/project.godot` now uses `forward_plus`;
+  - `scripts/run-test.sh` gained an optional `LOG_DIR`;
+  - the three Assignment 5 capture scripts gained an optional output folder, so
+    Assignment 5's `logs/` and `evidence/captures/` stay untouched;
+  - `CLAUDE.md` and README renderer notes;
+  - a dated revision in `CHANGE-BRIEF.md`;
+  - a new `HANDOFF.md`.
+- **Results:**
+  - The import is clean.
+  - Regression 64/64, integration 0 failures, materials 76/76, night dimming 30/30
+    at 30, 60 and 144 FPS, and the art check 0 failures. All exit 0, with no
+    SCRIPT, SHADER or "Failed loading resource" lines.
+  - **Cluster colours (P3)** are identical to Assignment 5 at 0, 0.5 and 1.0.
+  - **Hint experiment (P4)** is identical to Assignment 5's Forward+ comparison.
+  - **Fog (P5):** much stronger overlays and a darker ground. 59.0%, 52.4% and
+    32.5% of pixels changed; the author's eye check is pending.
+- **Problem found:** the brief listed `normal_map_check.gd` as a suite. It is a
+  helper, so it ran into the 120 s timeout (exit 124). The art check ran instead,
+  and the brief got a dated revision.
+- **Not committed yet:** waiting for the author's approval to commit and push
+  `develop`.
+
+### 2026-10-30 — Run 2: working headlights and a single-lane forest road (on `develop`)
+
+- **Author:**
+  - "show me after making the road,car more realstic add lot of trees on the entire
+    road. dense trees, froest like road just a single lane road. they are literally the
+    same bro. i told you to improve them. assignment 5 is done. move on."
+  - Then: "when i switch on lights, i dont see more road, when lights are off road
+    should be more darker. and also, the van interior isnt realistic. and rain should
+    be super realistic ... use something better if this is not the best - 17 million
+    polygons".
+- **Blender:** the MCP add-on was not connected ("Could not connect to Blender"), so
+  the van model and scan-baked tree cards wait. Poly Haven's trees are 7.9 to 17.4
+  million polygons, too heavy to instance, so the trees are code-built game trees,
+  with cards ready to be swapped.
+- **Headlights:**
+  - Test-first: `test_headlights.gd` failed 7/12 on the old code (the layer bug, no
+    pattern, the right lamp had no shadows).
+  - After the fix: 12/12. With the layer fix undone: 10/12, exit 1.
+- **Forest road:**
+  - 4.5 m single lane: Poly Haven `tarred_gravel` asphalt, `leaf_scattered_gravel`
+    edges, `forest_leaves_04` floor and `pine_bark`, all CC0 and checksum-verified.
+  - 6,549 pines in 48 m tiles, each with a near and a far version.
+  - 3,422 trunk colliders.
+  - Clearings around the depot, buildings, signs, fence and barriers.
+  - The roadside lamps and old cone trees were removed.
+- **Problems and fixes:**
+  - **Tilted view.** The first capture's view was tilted up about 13°, because real
+    mouse movement turned the captured view. The capture now blocks real input.
+  - **Wrong regions.** The old pixel regions no longer covered the narrow road, so the
+    road is now measured at projected road points.
+  - **White-out.** Lit trunks clipped to pure white on 1.25% of the windshield view
+    under Linear. AgX at exposure 1.3 brought that to 0.00%, with before/after stills.
+  - **White "socks".** The trunks looked like they had white socks, so the beam edge
+    was softened and its leak raised.
+- **Result:** the road reads 62.6 with the lights on and 16.9 with them off (3.71×).
+  All suites pass, the headlight test included.
+- **Not done yet:** realistic rain on the glass (next), the van interior (needs
+  Blender and a model), undergrowth, and a frame-rate check in a played drive.
+- **Not committed:** Run 1 and Run 2 both wait for the author's approval.
+
+### 2026-10-30 — Run 3: rain, undergrowth, gauge cluster and cabin (on `develop`)
+
+- **Author:** "do all these properly then i will test all at once. i want the car
+  interior to be different the ac vents, speedometer, sterrting wheel everything. more
+  details, realistic".
+- **Done:**
+  - **Windshield rain.** A wetness map dries exactly where each blade sweeps and
+    re-wets over 6 s. Three sizes of lens-like drops come back in random order, big
+    drops run down (up at speed), and there is a water film and a blade smear.
+  - **Heavy window fog.** Opacity 0.60 → 0.35, chosen from four stills.
+    `test_materials.gd` was updated to match.
+  - **Undergrowth.** 11,330 Poly Haven CC0 props (ferns, branches, stumps, mossy
+    rocks, fallen trunks).
+  - **Gauge cluster.** Redrawn at 2× resolution as two analog dials plus a centre
+    display.
+  - **Cabin.** The instrument hood was lowered from 1.94 m to 1.845 m, there are
+    four round chrome vents, and a new tilted three-spoke leather wheel.
+- **Problems found and fixed:**
+  - **White specks.** Drop glints showed as white specks over the dark sky. They now
+    follow the brightness behind each drop.
+  - **Ferns piled on corners.** Ferns were placed per road segment, so 92% landed on
+    corners. They are now weighted by road length.
+  - **Glaring foreground.** The near ground and trunk bases glared. The beam's
+    foreground was dimmed and the wet ground darkened.
+  - **Hidden gauges.** The new wheel covered the gauges, so it was lowered and tilted
+    22°.
+- **Measured:** the road reads 97.7 with the lights on and 11.2 with them off (8.7×,
+  against 3.8× before the hood was lowered). White-out 0.00%. All suites pass:
+  64/64, 0 failures, 76/76, 12/12, 30/30 ×3, art 0 failures.
+- **Not done:**
+  - Scan-quality tree cards: Blender was never connected during the run.
+  - Nothing is committed yet; that waits for the author's test and approval.
+
+### 2026-10-30 — Run 4: author feedback; vent and wheel fixes; side-window rain
+
+- **Author:** the trees "look fake"; no fog on the driver's window ("add water
+  droplets dripping"); "change the van interiors completely"; "the sterring wheel
+  sucks"; the vent sat "inside the drivers door"; the wheel "points downwards". Then
+  chose:
+  - a free prebuilt modern van cockpit that the author picks;
+  - drops and drips with no fog;
+  - Blender plus a Sketchfab token for access.
+- **Two bugs found and fixed:**
+  - The outer vent rings overlapped the door cards. They are now smaller and moved.
+  - The wheel tilt sign was inverted, so its face pointed at the lap. Now -22°.
+- **Side windows:** rain drops, drips and speed streaks replace the fog on both side
+  windows. The first look read as dark dots, so the drops were made sparser, given a
+  thinner rim and a glossy edge. `test_materials.gd` updated, 76/76.
+- **All suites pass.** Logs are in `logs/phase_1/run4_final/`.
+- **Blocked:** Blender never answered ("Could not connect to Blender"). The prebuilt
+  cockpit search and the tree baking wait for the author to connect Blender and add
+  the Sketchfab token.
+
+### 2026-10-30 — Run 5: driver's-window rain brought up to the windshield
+
+- **Author:** "the drivers window rain doesnt look as realistic as front windshield".
+- **Why it fell short:** the side windows ran their own simpler copy of the rain shader,
+  and the rain layer sat inside the tinted glass. A drop refracts a copy of the screen
+  that has no transparent objects in it, so every drop showed the view without the tint
+  and read as a dark dot. The drip trails were also drawn ahead of each drip.
+- **Decisions (Claude Code's; the author judges them from the stills):**
+  - One shared drop library, `rain_drops.gdshaderinc`, for the windshield and both side
+    windows, instead of two copies. The windshield's maths did not change.
+  - Rain sits on the outside of the side glass, as real rain does, and draws before it.
+  - The side drops are lit, and they refract the night-sky glow into their lower edge.
+    Without that they vanish at night: the dark forest gives a drop nothing bright to
+    refract.
+- **Passes** (`evidence/phase_1/side_window_rain/`):
+  - `pass3`: outside the glass, unlit. The dark dots were gone, and so were the drops.
+  - `pass4`: lit. The highlights were single-pixel points that looked like stars.
+  - `pass5`: smoother water and the sky glow. The drops read as water.
+  - `pass6` (final): a softer sky gradient and a darker outer edge.
+- **Noticed:**
+  - The bright glow on the side glass in the wide view is the existing glass reflecting a
+    light. It was already in Run 4's captures.
+  - `scripts/run-test.sh` exits 0 when the test file is not found: Godot prints "Can't
+    load script" and quits normally. Only the RESULT line proves that a test ran.
+  - Parked wipers rest at -0.9 rad (about 52° from vertical), so the blade lies across
+    the lower glass. Real wipers park flat along the bottom edge. Not changed.
+- **All suites pass:** 64/64, 0 failures, 87/87, 12/12, 30/30 ×3, art 0 failures.
+- **For the author:**
+  `source_assets/artwork/captures/pending/2026-10-30_run5_side_window_rain.png`.
+
+### 2026-10-31 — Run 6: heavier windshield rain, scanned trees, cockpit search
+
+- **Author:** "do these for me": a new interior from 2–3 free cockpits that the author picks,
+  realistic trees from Poly Haven's pine scans, and "more rain to the front windshiled and
+  make it little unclear to see as if in real life".
+- **Blender was disconnected** ("Connection to Blender lost: Broken pipe", add-on protocol
+  13 against 15). The author was asked to update it. Everything else went ahead without it.
+- **Windshield rain (Claude Code's values; the author judges them from the stills):**
+  - re-wetting in 1 s, faster with speed;
+  - more drops;
+  - a rippling water sheet that the blade leaves behind;
+  - a film of 0.6 with the wipers on.
+
+  With the wipers on, the road stays readable through drops and ripples. After 9 s with
+  them off, the view is badly blurred, as in a real downpour.
+- **Trees:**
+  - Poly Haven's "Fir Tree 01" ships its branches as a scanned twig atlas, so the cards were
+    built from it in Python instead of rendered in Blender.
+  - Card passes: the first was too sparse (13% coverage), so the twigs were paired on both
+    sides, with fill along the stem (24%). The bare stem became a dead-branch card after four
+    clean-up passes: a stray piece of the side stem, padding streaks, a reversed taper and a
+    detached twig.
+- **Performance found:** the game runs at about 21 FPS at 1280×800 on this Mac. The trees
+  cost about 40 ms a frame and the ground props about 15 ms. Dead branches built into each
+  tree added 10 ms, so they were moved to a 40 m layer without shadows (+1 ms). A forest
+  performance pass is the next recommended step.
+- **Cockpit search:**
+  - Sketchfab: free, downloadable, CC0 or CC-BY.
+  - Ruled out: the Sprinter "interior" is a phone scan of an empty cargo area; the County is
+    a minibus; the GAZelle is very low-detail; the raw van scan has no roof.
+  - Shown to the author: Hyundai Staria (a modern van, but possibly ripped from a game),
+    Ford Transit (the older body style) and Honda e (the best cockpit, but a car).
+  - Paid "royalty-free" models were ruled out because the repository is public.
+- **All suites pass:** 64/64, 0 failures, 87/87, 12/12, 30/30 ×3, art 0 failures.
+
+### 2026-10-31 — Run 7: water runs up the glass at speed; cockpit A chosen
+
+- **Author:** water should run up at speed "and is trying to fall off the car". They asked
+  whether the trees were meant to use another tool (Blender), and chose cockpit A (Hyundai
+  Staria).
+- **Rain:** water now runs down when parked, holds still at around 30–37 km/h and streams
+  up from about 45 km/h, fanning toward the pillars and off the top edge. On the side
+  windows it blows back and slightly up. A real bug was fixed on the way: drips jumped
+  whenever the speed changed, because their positions were time × a speed-dependent rate.
+  The distance the water travels is now added up in `van_presentation.gd` each tick.
+- **Trees:** yes, the plan was Blender. Blender was disconnected, and the Poly Haven scan
+  already held the twigs as photos, so the cards were built in Python. Blender is still the
+  tool for the next step: rendering whole 3D branches and far-tree stand-ins, which would
+  also cut the forest's frame cost.
+- **Cockpit A, licence check:** the uploader ("Sloftm_Carz", SLBofficial) posted 22 free
+  models between 2024-04-10 and 2024-05-17, all photoreal production cars of 1–2.5M faces
+  (Lamborghini, McLaren, BMW, Range Rover, VW ID. Buzz, Hyundai Staria and more). That pace
+  suggests re-uploaded paid or game models, so the CC-BY label may not be valid. The
+  author was told before anything was downloaded.
+- **Blender:** reachable (Blender 5.2.2, add-on protocol 13 against 15). The Sketchfab and
+  Poly Haven libraries are off, so Sketchfab downloads still need the add-on update and the
+  token, or a manual download.
+- **All suites pass:** 64/64, 0 failures, 90/90, 12/12, 30/30 ×3, art 0 failures.
+
+### 2026-10-31 — Run 8: water moved by real forces; author log
+
+- **Author:** "its fine use it for now" (cockpit A, after the licence warning); "make this
+  for realstici understand the gravity, physics and do it"; asked for a record of every
+  prompt, approval and decline; "i want the A van. do it ... show me interiors as well".
+- **Physics replaces hand-picked speeds** (C19). Gravity, air drag in the boundary layer,
+  and contact-line pinning now decide when each drop size moves and how fast. The
+  constants are textbook values (water 1000 kg/m³, air 1.2 kg/m³, surface tension
+  0.072 N/m). The two that cannot be measured here, the 2 mm boundary layer and the sliding
+  resistance, were set so that a big drop slides at about 15 cm/s, a typical speed for
+  drops running down glass.
+- **Measured from the model** (`test_rain_physics.gd`): an 11 mm runner −0.151 m/s parked,
+  0 at 49 km/h, +0.135 m/s at 68 km/h; film −0.0078 and +0.0116 m/s; a side window at
+  68 km/h (−0.367, −0.127) m/s.
+- **Visual consequence:** drops are now physically sized (4–9 mm across), smaller than the
+  old 12–22 mm lens drops. The windshield reads less bubbly and more like real rain; the
+  author judges it.
+- **Author log:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` lists 28 prompts verbatim, with
+  each decision and result. The pasted text in prompt 28 never reached Claude Code; it was
+  taken to be the four lines describing water at speed.
+- **Blender:** the add-on file on disk is new, but Blender kept the old one (protocol 13)
+  in memory. It needs a full restart before the Staria can be downloaded.
+- **All suites pass:** 64/64, 0 failures, 92/92, 12/12, physics 11/11, 30/30 ×3, art 0
+  failures.
+
+### 2026-10-31 — Run 9: 60 FPS with every effect kept
+
+- **Author:** the game "feels like its kind of lagging"; keep every effect and reach 60
+  FPS; approved the MetalFX setting.
+- **Diagnosis, measured** (`tools/captures/measure_performance.gd`):
+  - Shadows were the main cost: switching off tree, prop and moon shadows took a hot Mac
+    from 10–14 to 44 FPS.
+  - The mirrors caused the hitch: with their 3D off, the slowest 5% of frames fell from
+    37 ms to 15 ms.
+- **Fixes, each measured:**
+  - shadows only at near distances;
+  - the light tree version casts the shadows;
+  - smaller prop chunks;
+  - mirrors that take turns;
+  - MetalFX at 75%;
+  - one moon-shadow cascade;
+  - full-detail trees to 60 m.
+- **Result:** driving 23 → 71 FPS (median 12.2 ms); parked 21 → 73 FPS. The table is in
+  `PERFORMANCE.md`.
+- **Decision (Claude Code's, within the author's approval):** none of the author's effects
+  were switched off. The only visible change is detail beyond 50–60 m, where the low beam
+  barely reaches.
+- **Found:** `project.godot` has no explicit Forward+ line. Forward+ is Godot's default, so
+  Run 1 removed the Compatibility line instead of adding one.
+- **All suites pass:** 64/64, 0 failures, 92/92, 12/12, physics 11/11, 30/30 ×3, art 0
+  failures.
+
+### 2026-10-31 — Run 10: undergrowth between the trees
+
+- **Author:** asked whether the bushes had been removed (they had not), then approved
+  sparse undergrowth between the trees.
+- **Poly Haven's saplings were rejected for scattering:** 0.4M to 9.8M polygons each,
+  against 1,600 per fern part. Young firs are built with the existing tree builder and the
+  scanned branch cards instead: about 300 triangles each, consistent with the big trees.
+- **Passes, checked in a test close-up lit by a lamp:**
+  - first: the young firs looked like sticks with a few sprigs, because the lowest
+    branches angled 24° down into the ground, and only 7 stood within 25 m of the van;
+  - then: level-to-upward branches, denser whorls, and three times the density within
+    18 m of the road (24 within 25 m);
+  - last: thin dark stems ending inside the top, instead of a pale pole showing through.
+- **Measured:** 1,369 young firs and 3,100 deeper props cost about 2 FPS. Driving is 68.6
+  FPS, still above 60.
+- **At night most undergrowth stays dark:** it shows where the headlights reach it, mainly
+  along the road edge.
+- **All suites pass.**
+
+### 2026-10-31 — Run 11: more windshield droplets; random running drops
+
+- **Author:** fewer droplets than before; running drops should be random, not uniform,
+  "thats not how the real life works"; document it.
+- **Diagnosis:**
+  - Physically sized drops (Run 8) drawn at 75% (MetalFX, Run 9) became 1–2 pixel speckle.
+  - Drops of one size slid in lockstep columns at one speed.
+- **What real rain does, and the model now:**
+  - most drops pinned; a few heavy ones slide;
+  - sliding is stick-slip (pause and surge);
+  - every runner starts at a random time and place, wanders, sweeps a lane and leaves
+    beads, then stops.
+
+  Each runner is an independent event within its lane. Its progress comes from the
+  physics distance counters, so speed changes never make it jump.
+- **More droplets:** a resting-drop layer of 3.4–6.4 mm drops (dirty glass pins drops that
+  size), and sky glow in every drop's lower edge, as on the side windows since Run 5.
+- **Checking motion:** subtracting frames found wind sway in a young fir, not drops. A
+  temporary debug colouring proved the runners: about a dozen at once, each at its own
+  place, length and pace.
+- **No cost:** 68.0 FPS driving.
+- **All suites pass.**
+
+### 2026-10-31 — Cockpit reference: van A's interior is a placeholder
+
+- **Imported:** the Sketchfab Staria (A), into the author's Blender only as a reference
+  (C20). It is 5.25 m long and left-hand drive.
+- **From inside:** the cabin is a smooth grey placeholder, with a faceted wheel, no gauges,
+  no switches and no textures. It is less detailed than our current cockpit. The realism
+  in its thumbnail is the exterior only.
+- **Its meshes are grouped by material** (each about 22,000 faces, spanning the whole van),
+  which is typical of converted game models. That supports the earlier licence concern.
+- **Consequence:** A cannot serve as the realism reference for the cockpit. The rebuild
+  needs real modern-van cockpit references; the author's approved images and real van
+  layouts are proposed.
+
+### 2026-10-31 — Run 12: the Honda e cockpit in the game (C22)
+
+- **Author:** chose the Honda e interior ("i like this more"), then approved four steps:
+  - fit it into the van;
+  - close the cab "so accurate";
+  - slim it, "keep it looking the same ... smooth as butter";
+  - hook it up.
+- **Blender (steps 1–3):**
+  - the dash was cut and bridged to the van's width;
+  - the cab was closed until a ray test from the driver's eye found no gaps at 0.1°;
+  - the model was slimmed to 847,364 triangles. Nine views were compared pixel by pixel;
+    at most 0.13% of pixels changed from the driver's seat.
+- **Hookup (step 4):**
+  - four glTF files with shared textures, each under 25 MB;
+  - shadow stand-ins;
+  - our cluster, map and reverse camera on the Honda screens, through a box-filtered screen
+    shader (Godot cannot mipmap viewport textures);
+  - the mirror views on the dash-end screens.
+- **Found on the way:**
+  - The steering wheel had always turned the wrong way. It is now fixed and tested.
+  - Step 3 had left the hub ring and the spoke covers on the fixed column. A 90° turn test
+    in Blender showed them, and they now turn with the wheel.
+  - Seven centimetres of each old mirror arm floated inside the new cab. The arms now start
+    at the glass.
+- **Kept as is:** the source model's 59 inverted triangles. Flipping them would have changed
+  what single-sided materials show.
+- **Cost:** about 0.4–0.7 ms a frame, back to back with the old cabin (65 FPS driving with the
+  Mac cool).
+
+### 2026-10-31 — Runs 13–14: the wheel moved left; real ghats (C23)
+
+- **Run 13:** the author wanted the wheel "in front of driver little to the left" and chose
+  to move the wheel, not the seat.
+  - The wheel, column and stalks moved 5 cm left.
+  - The gauge display moved 3.5 cm, as far as the Honda's black screen panel allows.
+- **Run 14:** the author asked for "real ghats", not a circle road. The flat loop became a
+  3.2 km hill road:
+  - **Shape:** five hairpins up and five down, 79 m high, grades up to 9.1%, hairpins
+    flatter (6.2%) and wider (6.5 m).
+  - **Code:** `ghat_road.gd` holds the layout; `hill_terrain.gd` the hill (2 m grid,
+    shaped to the road, carved, height-map collision).
+  - **Van:** it now feels slopes (rolls back, holds on the brake, climbs) and tilts with
+    the road.
+  - **Forest:** it stands on the hill and is thinned away from the road for the frame
+    rate.
+  - **Rest:** the map screen draws the road, the buildings moved into the valley, and the
+    checkpoints moved onto the hill.
+- **Found on the way:**
+  - **Embankments:** a hillside with flat contours left every climbing leg on an
+    embankment, with drops on both sides. Within 20 m, the hillside now follows the road's
+    heights.
+  - **Slow checks:** checking every road segment for every plant would have taken about
+    60 million distance tests. The hill's distance field answers it at once.
+  - **Window test:** it measured against the van's physics body, which now moves relative
+    to the cab. It measures in the cab's frame now.
+- **Frame rate (cool Mac):** 69–84 FPS on the hill, 78–79 FPS on the start straight.
+
+### 2026-10-31 — Run 15: a ghat road with no pattern, its dressing, real wipers (C24)
+
+- **Request:** "dont make it a pattern. make sure its uniqque", with a drawn ghat road map,
+  plus "make the wipers more realisitc and spawn the user away from the depot", and
+  "make sure we are documenting everything".
+- **Road:** Run 14's regular zigzags became one irregular road of 38 hand-placed waypoints
+  joined by Bézier curves: four hairpins up and four down, no two legs alike, a 3.0 km lap
+  climbing 64 m at up to 9.7%. A widened hairpin halfway up is the viewpoint.
+- **Dressing** (`ghat_dressing.gd`):
+  - galvanized W-beam guardrails and dry-stone walls at the drops, with collision;
+  - white delineators;
+  - American warning signs, chevrons, speed plates and grade signs from a scripted atlas;
+  - convex mirrors at the two tightest hairpins;
+  - a landslide closing the valley road.
+- **Hill:** rock faces on the steep cuts (`hill_ground.gdshader`).
+- **Start:** a lumber yard 589 m from the depot, past a "VALLEY ROAD CLOSED" sign.
+- **Town:** lit windows and soft glows seen from the viewpoint.
+- **Wipers:** tandem arms that park flat, sweep 99° with a crank-like motion, and rock the
+  blade as it reverses. The wiped area on the glass follows the new pivots.
+- **Found on the way:**
+  - **Turn direction:** `angle_difference` between a hairpin's first and last headings
+    reads a 180° turn either way, so the sign side was sometimes wrong. The turn is now
+    summed step by step.
+  - **Scaling:** `Basis.scaled()` scales in world axes, which skewed the rotated guardrails.
+    `scaled_local()` scales along the piece's own axes. Collision boxes are built at full
+    size, never scaled.
+  - **Barriers:** the first rule (1.6 m drop measured 4.5 m out) left most drops bare. The
+    rule now probes 6.5 m out for 1.2 m, extends runs and closes short gaps.
+  - **Two-sided barriers:** shallow cuttings had barriers on both sides. Only the deeper
+    side gets one now, unless both drop 3 m or more.
+  - **Viewpoint:** trees blocked the view, so the forest leaves five clearings below the
+    viewpoint. The town behind the far rim was hidden, so it moved onto the valley floor,
+    with glows that show only from a distance.
+  - **Signs in the headlights:** sign backs 8 m ahead clipped to pure white, so the faces
+    and backs were dulled.
+  - **A wrong distance:** the climb sign said the pass was "3 MI" away; it is 1,032 m, so
+    the sign now says 3/4 MI.
+- **Tests:** all suites pass. `test_ghat_road.gd` is 29/29, with checks for the dressing,
+  the start and the wipers. With the wipers parked at the old angle it fails (28/29).
+- **Frame rate (cool Mac):** 74.9 FPS parked and 76.0 driving at the start, 68–119 FPS on
+  the hill.
+
+### 2026-10-31 — Run 16, step 1: the depot floor
+
+- **Report:** the author's screenshot showed the depot's floor drawn over the road.
+- **Cause:** an 18 × 18 m driveway box from the old flat loop was never moved for the ghat
+  road. It covered 16 m of the road, and its lit side was a white line across the asphalt.
+  The yard box also covered the road's edge at its corner.
+- **Fix:** one flat yard surface built from the road's own edge, with the driveway meeting
+  the asphalt level. A new test check measures it against the road; it fails when the
+  driveway is pushed onto the road.
+- **Lesson:** when a layout changes, everything placed for the old one has to be checked
+  against the new road, not only the buildings.
+- **Tests:** all suites pass (`test_ghat_road.gd` 30/30).
+
+### 2026-10-31 — Run 16, step 2: real wipers, and water that reacts
+
+- **Report:** "They look like sticks", "Water doesn't react".
+- **What a capture of the old wipers showed:** plain black boxes. The wiped glass re-wet in
+  about a second, a third of that at speed, and kept most of its water film, so a wipe
+  changed nothing you could see.
+- **Shape:** each wiper is now nine code-built parts, from the pivot cap to the blade's
+  rubber lip. The driver's blade (70 cm) is longer than the passenger's (55 cm), and each
+  wiper sits exactly where the glass is wiped.
+- **Water:**
+  - the wiped fan stays crisp and refills over about two seconds;
+  - new drops land in new places after every wipe;
+  - a ridge of water rides ahead of each blade and is dumped where the blades turn;
+  - the rubber leaves thin streaks;
+  - a moving blade leaves a short blur, as the eye sees it.
+- **Found on the way:**
+  - **First-frame jump:** the presentation began from wiper angle 0, so its first frame saw
+    a 93 rad/s blade jump.
+  - **Unset values:** a mutation showed the new test crashing, not failing, when the shader
+    values were never set. It now reads them as 0, so it fails cleanly.
+- **Night water is hard to see:** sub-millimetre water lines vanish at 1280 pixels, and
+  water that only bends a dark scene stays dark. The ridges were widened and given a crest
+  that catches the light around it.
+- **Tests:** all suites pass; the new `test_wipers.gd` is 12/12. Frame rate unchanged.
+
+### 2026-10-31 — Run 16, step 3: low and high beams on L (C25)
+
+- **Request:** L cycles low beam, high beam, off. This changes a protected control, at the
+  author's own request.
+- **Kept safe:** `headlights_on` still means "the lights are on", so the dashboard dimming,
+  the `LIGHTS` text, the lamps and the switch click needed no change. A new `high_beams`
+  says which beam.
+- **High beams:** the same two headlights switch to a pattern that keeps the low beam's
+  light and adds a hot spot on the horizon, reaching 220 m. A blue lamp lights on the
+  cluster. The far road reads about 50% brighter, the trunks are lit higher up, and the
+  sign ahead lights up. Nothing clips to white.
+- **Tests:** every test that pressed L once for "off" now follows the cycle, including
+  Assignment 5's dimming test, which presses until the lights flip. All suites pass.
+- **Found on the way:** the forest capture still waited for the wipers' old park angle,
+  which Run 15 changed, so it sat out a 10-second timeout each run.
+
+### 2026-10-31 — Run 16, step 4: the moon roof
+
+- **Request:** "i want a moon roof, let users see into the sky"; the author chose glass over
+  the front seats.
+- **Found:**
+  - The Honda e interior already has a sunroof frame over the front seats, with its
+    headliner open inside the frame.
+  - The sky was hidden by the plate added when the cockpit was fitted. That plate had been
+    merged into the roof cloth and the shadow stand-ins by the slimming step, so it was not
+    a separate part to delete.
+- **Done:**
+  - In Blender, the plate is cut along the frame's edges and removed inside it. Only the
+    roof file and the static shadow file were re-exported, and the textures are
+    byte-identical.
+  - In Godot, there is tinted glass with its own rain: it sits when parked and is pushed
+    backward at speed. The mouse looks up far enough to see the whole roof.
+- **Tests:** the cockpit test traces five sight lines from the driver's eye through the frame
+  against the imported meshes. With the old closed roof it fails (0 of 5 clear).
+- **Kept:** the moon roof uses the Honda's own 139 × 43 cm frame, not a smaller 70 cm cut,
+  so the original trim borders the glass.
+
+### 2026-10-31 — Run 16, step 5: one rear-view mirror
+
+- **Problem:** the van showed two inside mirrors: the old code-built one, which sat 1.3 cm
+  beyond the windshield in the rain, and the Honda's own centre mirror, whose camera-screen
+  picture had been removed, leaving an empty face.
+- **Fix:** the live rear view now plays on the Honda mirror's face, angled toward the driver,
+  like the Honda e's real camera mirror. The old mirror is gone.
+- **Tests:** two new cockpit checks; with the old mirror back they fail. All suites pass.

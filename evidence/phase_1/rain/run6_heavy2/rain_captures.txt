@@ -1,0 +1,9 @@
+saved wipers_low_0.png 1280x800 wiper_angle -0.86 setting 1
+saved wipers_low_1.png 1280x800 wiper_angle -0.15 setting 1
+saved wipers_low_2.png 1280x800 wiper_angle 0.90 setting 1
+saved wipers_low_3.png 1280x800 wiper_angle -0.03 setting 1
+saved wipers_low_4.png 1280x800 wiper_angle -0.88 setting 1
+saved wipers_low_5.png 1280x800 wiper_angle 0.26 setting 1
+saved wipers_off_9s.png 1280x800 wiper_angle -0.90 setting 0
+saved wipers_off_9s_zoom.png 1280x800 wiper_angle -0.90 setting 0
+saved first_wipe_zoom.png 1280x800 wiper_angle 0.66 setting 1

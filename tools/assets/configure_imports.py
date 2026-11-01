@@ -26,7 +26,7 @@ def configure(path: pathlib.Path) -> bool:
     if 'importer="texture"' not in text:
         return False
     wanted = dict(SETTINGS)
-    wanted["compress/normal_map"] = "1" if "_nor_gl_" in path.name else "0"
+    wanted["compress/normal_map"] = "1" if "_nor_gl" in path.name else "0"
     updated = text
     for key, value in wanted.items():
         updated = re.sub(rf"^{re.escape(key)}=.*$", f"{key}={value}", updated, flags=re.M)
@@ -38,7 +38,8 @@ def configure(path: pathlib.Path) -> bool:
 
 def main() -> None:
     root = pathlib.Path(sys.argv[1])
-    changed = [p for p in sorted(root.rglob("*.jpg.import")) if configure(p)]
+    imports = sorted(root.rglob("*.jpg.import")) + sorted(root.rglob("*.png.import"))
+    changed = [p for p in imports if configure(p)]
     print(f"Updated {len(changed)} texture import files under {root}")
 
 

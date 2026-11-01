@@ -4,6 +4,9 @@ Each file is checked against the MD5 published by the Poly Haven API. Existing
 files with a matching checksum are skipped, so reruns never overwrite edits made
 to other files. A Markdown provenance manifest is written beside the assets.
 
+"maps" downloads single texture maps of an asset (for example a model's twig
+atlas), named in "map_names", as JPEG files.
+
 Usage, from the repository root:
     python3 -I tools/assets/fetch_polyhaven.py tools/assets/depot_yard_assets.json
 """
@@ -13,6 +16,7 @@ import json
 import pathlib
 import sys
 import urllib.request
+from collections.abc import Callable
 
 API = "https://api.polyhaven.com"
 HEADERS = {"User-Agent": "BlackridgeNoWayBack-asset-fetch/1.0"}
@@ -64,6 +68,16 @@ def texture_files(asset: str, files: dict, resolution: str) -> list:
     return result
 
 
+def map_files(names: list) -> Callable[[str, dict, str], list]:
+    def build(asset: str, files: dict, resolution: str) -> list:
+        result = []
+        for name in names:
+            data = files[name][resolution]["jpg"]
+            result.append((data["url"], data["md5"], f"{asset}_{name}_{resolution}.jpg"))
+        return result
+    return build
+
+
 def hdri_files(asset: str, files: dict, resolution: str) -> list:
     data = files["hdri"][resolution]["hdr"]
     return [(data["url"], data["md5"], f"{asset}_{resolution}.hdr")]
@@ -73,7 +87,8 @@ def main() -> None:
     config_path = pathlib.Path(sys.argv[1])
     config = json.loads(config_path.read_text())
     root = pathlib.Path(config["destination"])
-    builders = {"models": model_files, "textures": texture_files, "hdris": hdri_files}
+    builders = {"models": model_files, "textures": texture_files, "hdris": hdri_files,
+                "maps": map_files(config.get("map_names", []))}
     rows = []
     for kind, builder in builders.items():
         for asset, resolution in config.get(kind, {}).items():

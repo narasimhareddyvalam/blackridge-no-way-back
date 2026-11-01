@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved parked_look_up.png: look (1.0, 0.0), speed 0.0 m/s, roof water flows (0.0, -1.0)
+saved parked_look_up_right.png: look (0.95, -0.45), speed 0.0 m/s, roof water flows (0.0, -1.0)
+saved driving_look_up_right.png: look (0.95, -0.45), speed 12.4 m/s, roof water flows (0.0, -1.0)
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

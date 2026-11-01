@@ -22,9 +22,29 @@ Assignments 2–4 used a different game; see `FRICTIONAL.md`.
 | `fog_color.png`, `fog_data.png`, `fog_normal.png` | Written by code: `tools/make_fog_textures.py` (Claude Code), seed 20261029 | Claude Code (script); no other contributors | Original, no licence needed | 2026-10-29 | OpenGL (green up) | fog overlays (`light_fog.tres`, `heavy_fog.tres`) |
 | `greys_3x1.png` | Written by code: `tools/make_hint_png.gd` (Claude Code) | Claude Code (script) | Original, no licence needed | 2026-10-29 | n/a | hint experiment |
 | `box_profile_metal_sheet_nor_gl_1k.png`, `_nor_dx_1k.png` | https://polyhaven.com/a/box_profile_metal_sheet | Amal Kumar ("All", per the Poly Haven API) | CC0 1.0 | 2026-10-29 | GL and DX pair | curl-check calibration only |
+| `tarred_gravel` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/tarred_gravel | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | forest road surface |
+| `leaf_scattered_gravel` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/leaf_scattered_gravel | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | road edges |
+| `forest_leaves_04` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/forest_leaves_04 | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | forest floor |
+| `pine_bark` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/pine_bark | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | pine trunks; lumber-yard logs |
+| `conifer_branch_diff.png`, `conifer_branch_nor_gl.png`, `conifer_deadwood_diff.png`, `conifer_deadwood_nor_gl.png` | Built by code from the twig atlas of https://polyhaven.com/a/fir_tree_01 (`twig_diff`, `twig_alpha`, `twig_nor_gl`, 2k): `tools/make_conifer_cards.py` (Claude Code), seed 20261030 | Rob Tuytel, Rico Cilliers (scan); Claude Code (script) | CC0 1.0 | 2026-10-31 | OpenGL (green up) | live branch cards; dead lower branches |
+| `low_beam_pattern.png` | Written by code: `tools/make_low_beam_pattern.py` (Claude Code) | Claude Code (script) | Original, no licence needed | 2026-10-30 | n/a | headlight low-beam pattern |
+| `high_beam_pattern.png` | Written by code: `tools/make_high_beam_pattern.py` (Claude Code), from the low-beam pattern plus a hot spot on the horizon | Claude Code (script) | Original, no licence needed | 2026-10-31 | n/a | headlight high-beam pattern |
+| `rock_wall_02` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/rock_wall_02 | Rob Tuytel | CC0 1.0 | 2026-10-31 | OpenGL | rock faces on the hill's steep cuts (`hill_ground.gdshader`) |
+| `rustic_stone_wall` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/rustic_stone_wall | Dimitrios Savva | CC0 1.0 | 2026-10-31 | OpenGL | dry-stone walls at the hairpins and the viewpoint |
+| `road_signs.png` | Written by code: `tools/make_road_signs.py` (Claude Code). The lettering is drawn with the macOS system font Arial Bold, which is not copied into the repository | Claude Code (script) | Original, no licence needed | 2026-10-31 | n/a | warning signs, chevrons, plates and boards on the ghat road |
+| `fern_02` model (1k) | https://polyhaven.com/a/fern_02 | Rob Tuytel, Rico Cilliers | CC0 1.0 | 2026-10-30 | OpenGL | roadside ferns |
+| `dry_branches_medium_01` model (1k) | https://polyhaven.com/a/dry_branches_medium_01 | Rico Cilliers | CC0 1.0 | 2026-10-30 | OpenGL | fallen branches |
+| `tree_stump_01` model (1k) | https://polyhaven.com/a/tree_stump_01 | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | stumps |
+| `rock_moss_set_02` model (1k) | https://polyhaven.com/a/rock_moss_set_02 | Kless Gyzen | CC0 1.0 | 2026-10-30 | OpenGL | mossy rocks; the landslide |
+| `dead_tree_trunk` model (1k) | https://polyhaven.com/a/dead_tree_trunk | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | fallen trunks |
+| `cabin.glb`, `steering.glb` (rebuilt) | Written by code: `tools/art/build_first_drive_art.py` (Codex; cabin and wheel parts changed by Claude Code on 2026-10-30) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-30 | OpenGL | van interior |
+| `cockpit/` in `game/features/vehicles/freight_van/art/`: `cockpit_front`, `cockpit_back`, `cockpit_roof` and `cockpit_wheel` (glTF), 27 textures, two shadow stand-ins | "FREE // Honda E (Detailed Interior) 2021", https://sketchfab.com/3d-models/free-honda-e-detailed-interior-2021-814cf3f8cfd64594b1c4f96e873c3cef | Alex Murias (Sketchfab: Xlay3D), model and textures. Changed by Claude Code in Blender on 2026-10-31: fitted to the van's cab (dash widened to the windshield, doors and seats moved, roof stretched, cab closed behind the seats), Honda badges and screen pictures removed, slimmed with no visible change, textures resized to 1k and 2k, split into four files; its own sunroof frame reopened as a moon roof on 2026-10-31 (Run 16) | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) | 2026-10-31 | OpenGL (glTF) | van cockpit (C22); `cabin.glb` and `steering.glb` stay in the repository, unused |
 
-Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
-`game/tests/calibration/ATTRIBUTION.md`.
+Credits files: `game/assets/textures/windshield/ATTRIBUTION.md`,
+`game/tests/calibration/ATTRIBUTION.md` and
+`game/features/environments/industrial_loop/polyhaven/POLYHAVEN.md`,
+`source_assets/polyhaven/POLYHAVEN.md` (checksums and authors) and
+`game/features/vehicles/freight_van/art/cockpit/ATTRIBUTION.md`.
 
 ## Generative models
 
@@ -81,6 +101,8 @@ Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
   as course requirements.
 
 ### Suggestions adopted, modified or rejected
+
+From the final-project work on, every author prompt, approval and decline is recorded verbatim in [`docs/AUTHOR_PROMPTS_AND_DECISIONS.md`](docs/AUTHOR_PROMPTS_AND_DECISIONS.md).
 
 - Night dimming was one of Claude's suggested effects. The author picked it.
 - The author first chose rain-wet metal cladding, then a foggy windshield. The

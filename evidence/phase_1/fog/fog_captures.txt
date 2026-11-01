@@ -1,0 +1,27 @@
+renderer=forward_plus
+saved fog/side_by_side_world_fog_off.png
+saved fog/side_by_side_world_fog_on.png
+saved fog/windshield_forward.png
+saved fog/sweep_fog_amount_min.png
+saved fog/sweep_fog_amount_default.png
+saved fog/sweep_fog_amount_max.png
+saved fog/sweep_fog_opacity_min.png
+saved fog/sweep_fog_opacity_default.png
+saved fog/sweep_fog_opacity_max.png
+saved fog/sweep_clear_center_min.png
+saved fog/sweep_clear_center_default.png
+saved fog/sweep_clear_center_max.png
+saved fog/sweep_edge_softness_min.png
+saved fog/sweep_edge_softness_default.png
+saved fog/sweep_edge_softness_max.png
+saved fog/sweep_normal_strength_min.png
+saved fog/sweep_normal_strength_default.png
+saved fog/sweep_normal_strength_max.png
+saved fog/sweep_texture_scale_min.png
+saved fog/sweep_texture_scale_default.png
+saved fog/sweep_texture_scale_max.png
+saved fog/sweep_fog_tint_min.png
+saved fog/sweep_fog_tint_default.png
+saved fog/sweep_fog_tint_max.png
+saved fog/material_edit_light_fog_amount_1.0.png
+material edit: light_fog fog_amount 0.25 -> 1.0 at runtime; heavy_fog fog_amount stayed 0.75 (was 0.75)

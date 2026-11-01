@@ -1,0 +1,14 @@
+saved valley_start.png at (-5.0, -0.2, 70.0), road grade 0.0%, body pitch -0.0 degrees
+valley start, parked         FPS  79.2 | median  11.43 ms, slowest 5%  15.33 ms | 1588 draws, 1.60M triangles
+saved climb_leg.png at (97.6, 55.2, -87.7), road grade 8.8%, body pitch 5.0 degrees
+steepest climb, parked       FPS  69.0 | median  12.26 ms, slowest 5%  18.59 ms | 1396 draws, 2.07M triangles
+saved hairpin_approach.png at (-3.5, 35.1, -38.0), road grade 8.3%, body pitch 4.8 degrees
+saved hairpin_apex.png at (121.7, 24.4, -25.6), road grade 3.6%, body pitch 2.0 degrees
+hairpin 2, parked            FPS  83.5 | median  10.30 ms, slowest 5%  16.01 ms | 1255 draws, 2.00M triangles
+saved summit_ahead.png at (250.8, 78.8, -166.0), road grade -0.3%, body pitch -0.2 degrees
+summit, parked               FPS  81.8 | median  10.23 ms, slowest 5%  16.66 ms | 958 draws, 1.28M triangles
+saved summit_look_down.png at (250.8, 78.8, -166.0), road grade -0.3%, body pitch -0.2 degrees
+saved descent_leg.png at (311.5, 74.3, -116.0), road grade -9.1%, body pitch -5.1 degrees
+climbing at full throttle    FPS  70.5 | median  12.35 ms, slowest 5%  17.90 ms | 1434 draws, 2.33M triangles
+saved map_screen.png
+saved overview_debug_light.png (debug: ambient 6.0, fog off)

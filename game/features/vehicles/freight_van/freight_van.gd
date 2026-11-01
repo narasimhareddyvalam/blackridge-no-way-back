@@ -7,6 +7,10 @@ signal collided(strength: float)
 signal window_operated
 
 const TURN_FLOOR_CLEARANCE: float = 0.1
+const SLOPE_GRAVITY: float = 9.8
+const WIPER_PARK: float = -1.55
+const WIPER_SWEEP: float = 1.72
+const WIPER_CYCLES: Array[float] = [0.0, 0.75, 1.1]
 
 @export var maximum_speed: float = 19.0
 @export var reverse_speed: float = 5.0
@@ -21,8 +25,9 @@ var actual_speed: float = 0.0
 var steering: float = 0.0
 var gear: int = 1
 var headlights_on: bool = true
+var high_beams: bool = false
 var wiper_setting: int = 1
-var wiper_angle: float = -0.9
+var wiper_angle: float = WIPER_PARK
 var left_window: float = 0.0
 var right_window: float = 0.0
 var left_window_target: float = 0.0
@@ -71,13 +76,14 @@ func _physics_process(delta: float) -> void:
 	var requested_steer := Input.get_axis("steer_right", "steer_left") if active else 0.0
 	steering = move_toward(steering, requested_steer, delta * 2.0)
 	var speed_limit := maximum_speed if gear > 0 else reverse_speed
+	var pull := slope_pull() * delta
 	if braking:
-		speed = move_toward(speed, 0.0, brake_deceleration * delta)
+		speed = move_toward(speed + pull, 0.0, brake_deceleration * delta)
 	else:
 		var drive_force := throttle * acceleration * gear
 		var drag := 0.28 + absf(speed) * 0.035 + speed * speed * 0.001
 		speed = move_toward(speed, 0.0, drag * delta)
-		speed = clampf(speed + drive_force * delta, -reverse_speed, speed_limit)
+		speed = clampf(speed + drive_force * delta + pull, -reverse_speed, speed_limit)
 	var steering_limit := maximum_steering / (1.0 + absf(speed) * 0.045)
 	var yaw := speed / wheelbase * tan(steering * steering_limit) * delta
 	if not _rotation_blocked(yaw):
@@ -100,6 +106,12 @@ func _physics_process(delta: float) -> void:
 	_visual.update_vehicle(delta)
 
 
+func slope_pull() -> float:
+	if not is_on_floor():
+		return 0.0
+	return SLOPE_GRAVITY * get_floor_normal().dot(-global_basis.z)
+
+
 func _rotation_blocked(yaw: float) -> bool:
 	if is_zero_approx(yaw):
 		return false
@@ -115,7 +127,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		gear *= -1
 		switch_operated.emit()
 	elif event.is_action_pressed("headlights"):
-		headlights_on = not headlights_on
+		_cycle_headlights()
 		switch_operated.emit()
 	elif event.is_action_pressed("wipers"):
 		wiper_setting = (wiper_setting + 1) % 3
@@ -133,6 +145,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("window_right"):
 		right_window_target = 1.0 - right_window_target
 		window_operated.emit()
+
+
+func _cycle_headlights() -> void:
+	if not headlights_on:
+		headlights_on = true
+	elif not high_beams:
+		high_beams = true
+	else:
+		headlights_on = false
+		high_beams = false
 
 
 func _set_indicator(direction: int) -> void:
@@ -167,14 +189,18 @@ func _update_accessories(delta: float) -> void:
 			indicator = 0
 			_turn_started = false
 	if wiper_setting > 0:
-		_wiper_time += delta * (0.65 if wiper_setting == 1 else 1.1)
+		_wiper_time += delta * WIPER_CYCLES[wiper_setting]
 		var half_cycle := int(_wiper_time * 2.0)
 		if half_cycle != _wiper_half:
 			_wiper_half = half_cycle
 			wiper_swept.emit()
-		wiper_angle = -cos(_wiper_time * TAU) * 0.9
+		wiper_angle = WIPER_PARK + WIPER_SWEEP * (1.0 - cos(_wiper_time * TAU)) * 0.5
 	else:
-		wiper_angle = move_toward(wiper_angle, -0.9, delta * 2.4)
+		wiper_angle = move_toward(wiper_angle, WIPER_PARK, delta * 2.4)
+
+
+func wiper_cycles() -> float:
+	return _wiper_time
 
 
 func recover(at: Transform3D) -> void:

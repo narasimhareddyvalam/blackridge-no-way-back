@@ -125,17 +125,21 @@ cardboard = material('Kraft_Cardboard', (0.34, 0.24, 0.13), 0.9)
 profile('Sculpted_Dashboard', [(-1.83, 1.43), (-1.60, 1.64), (-1.33, 1.76),
         (-1.12, 1.75), (-0.99, 1.58), (-1.02, 1.06), (-1.30, 1.05)],
         -1.07, 1.07, plastic, 'cabin', 0.06)
-box('Instrument_Recess', (-0.53, 1.74, -1.005), (0.73, 0.34, 0.10), rubber, 'cabin', 0.045)
-profile('Instrument_Hood', [(-1.40, 1.78), (-1.13, 1.94), (-0.96, 1.92),
-        (-0.90, 1.88), (-0.93, 1.84), (-1.12, 1.85)], -0.94, -0.13, plastic, 'cabin')
+box('Instrument_Recess', (-0.53, 1.70, -1.005), (0.73, 0.30, 0.10), rubber, 'cabin', 0.045)
+profile('Instrument_Hood', [(-1.38, 1.70), (-1.13, 1.845), (-0.98, 1.84),
+        (-0.925, 1.815), (-0.955, 1.79), (-1.12, 1.78)], -0.94, -0.13, plastic, 'cabin')
 box('Center_Stack', (0.30, 1.43, -0.984), (0.70, 0.67, 0.12), plastic, 'cabin', 0.045)
 box('Display_Trim', (0.30, 1.64, -0.908), (0.49, 0.32, 0.04), silver, 'cabin', 0.018)
-for x in (-0.97, -0.02, 0.62, 0.96):
-    box('Vent_Bezel', (x, 1.64, -0.95), (0.14, 0.22, 0.055), silver, 'cabin', 0.02)
-    box('Vent_Cavity', (x, 1.64, -0.912), (0.115, 0.196, 0.015), rubber, 'cabin', 0.01)
-    for y in range(6):
-        box('Vent_Louver', (x, 1.56 + y * 0.031, -0.897),
-            (0.109, 0.012, 0.024), plastic, 'cabin', 0.004)
+for x, size in ((-0.952, 0.72), (-0.02, 1.0), (0.62, 1.0), (0.952, 0.72)):
+    torus('Vent_Bezel', (x, 1.64, -0.925), 0.067 * size, 0.011 * size, silver, 'cabin')
+    cylinder('Vent_Cavity', (x, 1.64, -0.945), 0.062 * size, 0.03, rubber, 'cabin', (0, 0, 1),
+             24)
+    for y in (-0.036 * size, -0.012 * size, 0.012 * size, 0.036 * size):
+        half = math.sqrt(max((0.06 * size) ** 2 - y ** 2, 0.0))
+        box('Vent_Louver', (x, 1.64 + y, -0.93), (2 * half, 0.007, 0.02), plastic, 'cabin',
+            0.003)
+    cylinder('Vent_Hub', (x, 1.64, -0.924), 0.013, 0.012, silver, 'cabin', (0, 0, 1), 16)
+    box('Vent_Tab', (x, 1.652, -0.917), (0.012, 0.03, 0.008), rubber, 'cabin', 0.003)
 for x in (0.08, 0.30, 0.52):
     cylinder('Climate_Ring', (x, 1.30, -0.895), 0.056, 0.018, silver, 'cabin')
     cylinder('Climate_Knob', (x, 1.30, -0.879), 0.045, 0.024, rubber, 'cabin')
@@ -174,19 +178,23 @@ for side in (-1, 1):
     box('Visor', (side * 0.56, 2.67, -1.18), (0.65, 0.16, 0.055), plastic, 'cabin', 0.025)
 box('Headliner', (0, 2.77, -0.42), (2.18, 0.08, 1.72), cloth, 'cabin', 0.035)
 
-torus('Leather_Rim', (0, 0, 0), 0.196, 0.026, leather, 'steering')
-torus('Rim_Stitch', (0, 0, 0.025), 0.190, 0.0018, stitch, 'steering')
-box('Airbag_Hub', (0, 0, 0.018), (0.19, 0.15, 0.065), leather, 'steering', 0.05)
+torus('Leather_Rim', (0, 0, 0), 0.19, 0.031, leather, 'steering')
+torus('Rim_Stitch', (0, 0, 0.03), 0.186, 0.0022, stitch, 'steering')
+box('Airbag_Hub', (0, 0, 0.02), (0.165, 0.125, 0.07), leather, 'steering', 0.04)
+torus('Hub_Ring', (0, 0, 0.056), 0.03, 0.004, silver, 'steering')
 for side in (-1, 1):
-    beam('Wheel_Spoke', (side * 0.07, -0.01, 0), (side * 0.17, 0.045, 0),
-         0.04, silver, 'steering')
-    box('Wheel_Buttons', (side * 0.123, 0.025, 0.028), (0.075, 0.06, 0.016),
-        rubber, 'steering', 0.012)
-    for x in (-0.015, 0.015):
-        box('Button_Marking', (side * 0.123 + x, 0.03, 0.039),
+    beam('Wheel_Spoke', (side * 0.075, -0.005, 0.005), (side * 0.168, 0.02, 0),
+         0.045, leather, 'steering')
+    beam('Spoke_Trim', (side * 0.08, -0.03, 0.022), (side * 0.165, -0.008, 0.016),
+         0.012, silver, 'steering')
+    box('Wheel_Buttons', (side * 0.118, 0.022, 0.03), (0.07, 0.05, 0.014),
+        rubber, 'steering', 0.01)
+    for x in (-0.014, 0.014):
+        box('Button_Marking', (side * 0.118 + x, 0.026, 0.0385),
             (0.009, 0.003, 0.002), stitch, 'steering')
-beam('Lower_Spoke', (0, -0.05, 0), (0, -0.18, 0), 0.037, silver, 'steering')
-label('Wheel_Identity', 'B R', (0, 0.005, 0.053), 0.022, silver, 'steering')
+beam('Lower_Spoke', (0, -0.055, 0.005), (0, -0.172, 0), 0.05, leather, 'steering')
+beam('Lower_Trim', (0, -0.07, 0.024), (0, -0.16, 0.018), 0.012, silver, 'steering')
+label('Wheel_Identity', 'B R', (0, 0.0, 0.058), 0.02, silver, 'steering')
 
 for side in (-1, 1):
     outline = [(-2.35, 0.63), (-2.35, 1.32), (-1.67, 1.52),

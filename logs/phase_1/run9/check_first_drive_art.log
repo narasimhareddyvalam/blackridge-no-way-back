@@ -1,0 +1,141 @@
+PASS: bollard.glb header
+PASS: bollard.glb surface 0 finite geometry
+PASS: bollard.glb surface 0 valid vertex references
+PASS: bollard.glb surface 0 unit normals
+PASS: bollard.glb surface 0 outward winding agrees with normals
+PASS: bollard.glb surface 1 finite geometry
+PASS: bollard.glb surface 1 valid vertex references
+PASS: bollard.glb surface 1 unit normals
+PASS: bollard.glb surface 1 outward winding agrees with normals
+PASS: bollard.glb surface 2 finite geometry
+PASS: bollard.glb surface 2 valid vertex references
+PASS: bollard.glb surface 2 unit normals
+PASS: bollard.glb surface 2 outward winding agrees with normals
+PASS: bollard.glb bounded geometry (<30000 triangles)
+GEOMETRY: bollard.glb: 684 triangles
+PASS: crate.glb header
+PASS: crate.glb surface 0 finite geometry
+PASS: crate.glb surface 0 valid vertex references
+PASS: crate.glb surface 0 unit normals
+PASS: crate.glb surface 0 outward winding agrees with normals
+PASS: crate.glb surface 1 finite geometry
+PASS: crate.glb surface 1 valid vertex references
+PASS: crate.glb surface 1 unit normals
+PASS: crate.glb surface 1 outward winding agrees with normals
+PASS: crate.glb surface 2 finite geometry
+PASS: crate.glb surface 2 valid vertex references
+PASS: crate.glb surface 2 unit normals
+PASS: crate.glb surface 2 outward winding agrees with normals
+PASS: crate.glb surface 3 finite geometry
+PASS: crate.glb surface 3 valid vertex references
+PASS: crate.glb surface 3 unit normals
+PASS: crate.glb surface 3 outward winding agrees with normals
+PASS: crate.glb bounded geometry (<30000 triangles)
+GEOMETRY: crate.glb: 902 triangles
+PASS: pallet.glb header
+PASS: pallet.glb surface 0 finite geometry
+PASS: pallet.glb surface 0 valid vertex references
+PASS: pallet.glb surface 0 unit normals
+PASS: pallet.glb surface 0 outward winding agrees with normals
+PASS: pallet.glb bounded geometry (<30000 triangles)
+GEOMETRY: pallet.glb: 3000 triangles
+PASS: body.glb header
+PASS: body.glb surface 0 finite geometry
+PASS: body.glb surface 0 valid vertex references
+PASS: body.glb surface 0 unit normals
+PASS: body.glb surface 0 outward winding agrees with normals
+PASS: body.glb surface 1 finite geometry
+PASS: body.glb surface 1 valid vertex references
+PASS: body.glb surface 1 unit normals
+PASS: body.glb surface 1 outward winding agrees with normals
+PASS: body.glb surface 2 finite geometry
+PASS: body.glb surface 2 valid vertex references
+PASS: body.glb surface 2 unit normals
+PASS: body.glb surface 2 outward winding agrees with normals
+PASS: body.glb surface 3 finite geometry
+PASS: body.glb surface 3 valid vertex references
+PASS: body.glb surface 3 unit normals
+PASS: body.glb surface 3 outward winding agrees with normals
+PASS: body.glb surface 4 finite geometry
+PASS: body.glb surface 4 valid vertex references
+PASS: body.glb surface 4 unit normals
+PASS: body.glb surface 4 outward winding agrees with normals
+PASS: body.glb bounded geometry (<30000 triangles)
+PASS: Van body remains above road and near existing collision height
+PASS: Van body fits existing vehicle footprint with trim allowance
+GEOMETRY: body.glb: 9838 triangles
+PASS: cabin.glb header
+PASS: cabin.glb surface 0 finite geometry
+PASS: cabin.glb surface 0 valid vertex references
+PASS: cabin.glb surface 0 unit normals
+PASS: cabin.glb surface 0 outward winding agrees with normals
+PASS: cabin.glb surface 1 finite geometry
+PASS: cabin.glb surface 1 valid vertex references
+PASS: cabin.glb surface 1 unit normals
+PASS: cabin.glb surface 1 outward winding agrees with normals
+PASS: cabin.glb surface 2 finite geometry
+PASS: cabin.glb surface 2 valid vertex references
+PASS: cabin.glb surface 2 unit normals
+PASS: cabin.glb surface 2 outward winding agrees with normals
+PASS: cabin.glb surface 3 finite geometry
+PASS: cabin.glb surface 3 valid vertex references
+PASS: cabin.glb surface 3 unit normals
+PASS: cabin.glb surface 3 outward winding agrees with normals
+PASS: cabin.glb surface 4 finite geometry
+PASS: cabin.glb surface 4 valid vertex references
+PASS: cabin.glb surface 4 unit normals
+PASS: cabin.glb surface 4 outward winding agrees with normals
+PASS: cabin.glb surface 5 finite geometry
+PASS: cabin.glb surface 5 valid vertex references
+PASS: cabin.glb surface 5 unit normals
+PASS: cabin.glb surface 5 outward winding agrees with normals
+PASS: cabin.glb surface 6 finite geometry
+PASS: cabin.glb surface 6 valid vertex references
+PASS: cabin.glb surface 6 unit normals
+PASS: cabin.glb surface 6 outward winding agrees with normals
+PASS: cabin.glb bounded geometry (<30000 triangles)
+GEOMETRY: cabin.glb: 27084 triangles
+PASS: steering.glb header
+PASS: steering.glb surface 0 finite geometry
+PASS: steering.glb surface 0 valid vertex references
+PASS: steering.glb surface 0 unit normals
+PASS: steering.glb surface 0 outward winding agrees with normals
+PASS: steering.glb surface 1 finite geometry
+PASS: steering.glb surface 1 valid vertex references
+PASS: steering.glb surface 1 unit normals
+PASS: steering.glb surface 1 outward winding agrees with normals
+PASS: steering.glb surface 2 finite geometry
+PASS: steering.glb surface 2 valid vertex references
+PASS: steering.glb surface 2 unit normals
+PASS: steering.glb surface 2 outward winding agrees with normals
+PASS: steering.glb surface 3 finite geometry
+PASS: steering.glb surface 3 valid vertex references
+PASS: steering.glb surface 3 unit normals
+PASS: steering.glb surface 3 outward winding agrees with normals
+PASS: steering.glb surface 4 finite geometry
+PASS: steering.glb surface 4 valid vertex references
+PASS: steering.glb surface 4 unit normals
+PASS: steering.glb surface 4 outward winding agrees with normals
+PASS: steering.glb bounded geometry (<30000 triangles)
+GEOMETRY: steering.glb: 5174 triangles
+PASS: tire.glb header
+PASS: tire.glb surface 0 finite geometry
+PASS: tire.glb surface 0 valid vertex references
+PASS: tire.glb surface 0 unit normals
+PASS: tire.glb surface 0 outward winding agrees with normals
+PASS: tire.glb surface 1 finite geometry
+PASS: tire.glb surface 1 valid vertex references
+PASS: tire.glb surface 1 unit normals
+PASS: tire.glb surface 1 outward winding agrees with normals
+PASS: tire.glb surface 2 finite geometry
+PASS: tire.glb surface 2 valid vertex references
+PASS: tire.glb surface 2 unit normals
+PASS: tire.glb surface 2 outward winding agrees with normals
+PASS: tire.glb surface 3 finite geometry
+PASS: tire.glb surface 3 valid vertex references
+PASS: tire.glb surface 3 unit normals
+PASS: tire.glb surface 3 outward winding agrees with normals
+PASS: tire.glb bounded geometry (<30000 triangles)
+GEOMETRY: tire.glb: 5696 triangles
+PASS: All four vehicle assets and three depot props exist
+ART RESULT: 0 failures

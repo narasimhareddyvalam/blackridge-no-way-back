@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+renderer=forward_plus
+trees=6549 colliders=3422
+wipers parked: setting 0 angle -0.90
+road sample points visible: 40
+saved driver_headlights_on.png 1280x800
+saved driver_headlights_off.png 1280x800
+road on 60.0 off 20.1 ratio 2.98
+white-out in windshield: on 1.25% off 0.00%
+saved chase_headlights_on.png 1280x800
+saved overview.png 1280x800
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

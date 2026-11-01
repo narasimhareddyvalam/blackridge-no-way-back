@@ -15,7 +15,13 @@ game by 2026-12-20 for Assignment 10. It covers:
 - a macOS export.
 
 A realistic game comes first and the course assignments take priority. Selling it later
-is optional. The author's decisions are C11–C15 in
+is optional. Built so far on the `develop` branch:
+- Forward+;
+- low-beam headlights that light the road;
+- a darker night;
+- a single-lane road through about 6,500 pines with ferns and undergrowth;
+- windshield rain that the wipers clear;
+- a new gauge cluster, round vents and a new steering wheel. The author's decisions are C11–C15 in
 [DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md). Nothing in that plan is built yet, and the
 rest of this section describes the game as it is today.
 
@@ -214,10 +220,13 @@ marker when its directory contains real tracked files.
    write exports to `builds/`. Complete interactive validation before treating an
    export as ready.
 
-The initial renderer is **Compatibility**, a provisional choice to keep the
-starting configuration simple. It is not a measured performance result or a
-final art requirement. Compare renderer options on the M1 with representative
-content before committing to renderer-specific effects. Godot documents the
+The project started on **Compatibility**, a provisional choice to keep the starting
+configuration simple. On 2026-10-30 it moved to **Forward+** (decision C12 in
+[DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)). Side-by-side captures showed that
+working headlights with a sharp low-beam cutoff and wet-road reflections need it, and
+Assignment 10 asks for the renderer to be settled early. The export target is macOS
+(C13). Assignment 5's results were measured under Compatibility, and tag `a5` keeps that
+state. Godot documents the
 [renderer tradeoffs](https://docs.godotengine.org/en/stable/tutorials/rendering/renderers.html).
 
 From the repository root, the installed macOS application can open the editor:

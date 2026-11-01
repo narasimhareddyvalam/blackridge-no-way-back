@@ -119,22 +119,22 @@ func _start_game() -> void:
 
 func _check_fades() -> void:
 	var start := _sampler.values.size()
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(0.0)
-	_check(not _van.get("headlights_on"), "Real L press turned the headlights off")
+	_check(not _van.get("headlights_on"), "Real L presses (low, high, off) turned the headlights off")
 	_check_duration(start, 0.0, FADE_OUT, "Off-fade 1 -> 0", false)
 	start = _sampler.values.size()
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(1.0)
 	_check(_van.get("headlights_on"), "Real L press turned the headlights on")
 	_check_duration(start, 1.0, FADE_IN, "On-fade 0 -> 1", false)
 
 
 func _check_retrigger() -> void:
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_frames(roundi(0.1 / _period()))
 	var turn := _sampler.values.size()
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(1.0)
 	var lowest := 1.0
 	for index in range(turn, _sampler.values.size()):
@@ -149,18 +149,18 @@ func _check_retrigger() -> void:
 
 
 func _check_time_scale() -> void:
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(0.0)
 	Engine.time_scale = 0.5
 	var start := _sampler.values.size()
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(1.0)
 	_check_duration(start, 1.0, FADE_IN * 2.0, "On-fade at time_scale 0.5 in real time", true)
 	Engine.time_scale = 1.0
 
 
 func _check_pause() -> void:
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_frames(5)
 	await _press("pause")
 	await _wait_frames(2)
@@ -179,7 +179,7 @@ func _check_pause() -> void:
 
 
 func _check_recovery() -> void:
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(1.0)
 	await _press("recover")
 	await _wait_frames(10)
@@ -194,7 +194,7 @@ func _check_second_van() -> void:
 	var other: ShaderMaterial = second.get_node("VanPresentation").get("night_dimming").get(
 		"material")
 	_check(other != _material, "Each van builds its own ShaderMaterial instance")
-	await _press("headlights")
+	await _switch_headlights()
 	await _wait_for(0.0)
 	_check(_parameter(other) == 1.0 and second.get("headlights_on"),
 		"The other van keeps night_amount 1.0 while the first van fades out")
@@ -279,6 +279,14 @@ func _press(action: String) -> void:
 	release.pressed = false
 	Input.parse_input_event(release)
 	await process_frame
+
+
+func _switch_headlights() -> void:
+	var was: bool = _van.get("headlights_on")
+	for press in range(3):
+		await _press("headlights")
+		if _van.get("headlights_on") != was:
+			return
 
 
 func _wait_frames(count: int) -> void:

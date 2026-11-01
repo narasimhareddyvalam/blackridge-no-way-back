@@ -31,7 +31,7 @@ func _run() -> void:
 	var light: ShaderMaterial = overlays[0].material_override
 	var heavy: ShaderMaterial = overlays[1].material_override
 	var world: WorldEnvironment = app.find_children("*", "WorldEnvironment", true, false)[0]
-	_folder = ProjectSettings.globalize_path("res://").path_join("../evidence/captures/fog")
+	_folder = _output_folder("evidence/captures/fog")
 	DirAccess.make_dir_recursive_absolute(_folder)
 	var log := PackedStringArray(["renderer=%s" % RenderingServer.get_current_rendering_method()])
 	world.environment.fog_enabled = false
@@ -75,3 +75,11 @@ func _save(file_name: String, log: PackedStringArray) -> void:
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png(_folder.path_join(file_name))
 	log.append("saved fog/" + file_name)
+
+
+func _output_folder(default_folder: String) -> String:
+	var args := OS.get_cmdline_user_args()
+	var folder: String = args[0] if args.size() > 0 else default_folder
+	if folder.is_absolute_path():
+		return folder
+	return ProjectSettings.globalize_path("res://").path_join("..").path_join(folder)

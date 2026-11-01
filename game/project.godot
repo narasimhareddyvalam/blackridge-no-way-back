@@ -122,5 +122,6 @@ sprint={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+scaling_3d/mode.macos=4
+scaling_3d/scale.macos=0.75

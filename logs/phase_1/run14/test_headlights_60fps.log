@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The van has two headlight SpotLight3Ds (found 2)
+PASS: Headlight 0 is on a layer the driving camera sees (layers 1, cull mask 5)
+PASS: Headlight 0 lights the world layer
+PASS: Headlight 0 casts shadows, which its pattern needs
+PASS: Headlight 0 uses the low-beam pattern
+PASS: Headlight 1 is on a layer the driving camera sees (layers 1, cull mask 5)
+PASS: Headlight 1 lights the world layer
+PASS: Headlight 1 casts shadows, which its pattern needs
+PASS: Headlight 1 uses the low-beam pattern
+PASS: Headlights start on and visible
+PASS: A real L press switches both headlights off
+PASS: A second L press switches both headlights back on
+HEADLIGHTS RESULT: 12/12 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

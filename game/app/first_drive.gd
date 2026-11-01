@@ -6,6 +6,7 @@ const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
 @onready var van: CharacterBody3D = $FreightVan
 @onready var route: Node = $DrivingTrial
 @onready var hud: CanvasLayer = $DrivingHud
+@onready var world: Node3D = $IndustrialLoop
 var driver: CharacterBody3D
 var _audio: Node
 var _exit_query := PhysicsShapeQueryParameters3D.new()
@@ -30,6 +31,7 @@ func _ready() -> void:
 	route.checkpoint_save_failed.connect(_checkpoint_save_failed)
 	route.drive_completed.connect(func() -> void: hud.notify("Depot reached. Drive complete."))
 	route.configure(van)
+	van.get_node("VanPresentation").navigation.road = world.road_points
 	hud.resume_requested.connect(_resume)
 	hud.pause_requested.connect(_toggle_pause)
 	hud.restart_requested.connect(_restart)
@@ -108,8 +110,8 @@ func _process(delta: float) -> void:
 	if _hint_time < 0.2:
 		return
 	_hint_time = 0.0
-	if van.global_position.y < -5 or absf(van.global_position.x) > 190 \
-			or absf(van.global_position.z) > 160:
+	var ground := Vector2(van.global_position.x, van.global_position.z)
+	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
 		_recover()
 	if van.occupied:
 		hud.set_hint("W / S  Drive / brake    Q  D / R (stopped)    E  Exit    ESC  All controls")

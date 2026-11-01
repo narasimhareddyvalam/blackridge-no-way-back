@@ -1,0 +1,16 @@
+parked_00: phase 0.00, wiper angle -1.55 rad, speed 0.0 m/s, blade 2 cm = 7.8 px
+parked_01: phase 0.15, wiper angle -1.20 rad, speed 0.0 m/s, blade 2 cm = 7.5 px
+parked_02: phase 0.25, wiper angle -0.69 rad, speed 0.0 m/s, blade 2 cm = 9.7 px
+parked_03: phase 0.38, wiper angle -0.08 rad, speed 0.0 m/s, blade 2 cm = 11.2 px
+parked_04: phase 0.50, wiper angle 0.17 rad, speed 0.0 m/s, blade 2 cm = 10.9 px
+parked_05: phase 0.63, wiper angle -0.08 rad, speed 0.0 m/s, blade 2 cm = 10.6 px
+parked_06: phase 0.75, wiper angle -0.69 rad, speed 0.0 m/s, blade 2 cm = 10.3 px
+parked_07: phase 0.88, wiper angle -1.30 rad, speed 0.0 m/s, blade 2 cm = 8.5 px
+driving_00: phase 0.00, wiper angle -1.55 rad, speed 13.2 m/s, blade 2 cm = 7.8 px
+driving_01: phase 0.13, wiper angle -1.30 rad, speed 13.1 m/s, blade 2 cm = 7.2 px
+driving_02: phase 0.25, wiper angle -0.69 rad, speed 12.9 m/s, blade 2 cm = 9.7 px
+driving_03: phase 0.38, wiper angle -0.08 rad, speed 12.8 m/s, blade 2 cm = 11.2 px
+driving_04: phase 0.50, wiper angle 0.17 rad, speed 12.6 m/s, blade 2 cm = 10.9 px
+driving_05: phase 0.63, wiper angle -0.08 rad, speed 12.5 m/s, blade 2 cm = 10.6 px
+driving_06: phase 0.75, wiper angle -0.69 rad, speed 12.3 m/s, blade 2 cm = 10.3 px
+driving_07: phase 0.88, wiper angle -1.30 rad, speed 12.2 m/s, blade 2 cm = 8.5 px
