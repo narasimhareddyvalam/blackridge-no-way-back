@@ -1367,3 +1367,192 @@ logs, and commit.
   - door, engine-start and impact sounds of their own (the van's collision sound is used);
   - the drive's end screen still reads "DRIVE COMPLETE";
   - a hit is not saved with the checkpoint, so quitting and reloading replays the encounter.
+
+## Revision 2026-11-02 (the save rules, written before any save code)
+
+- **Author:** "yes start with the save rules" (#105), after Claude Code proposed missions in a row
+  and saving as the next work (#104).
+- **Why now:** Assignment 10 asks for save rules "before implementation: path, format and version
+  field, and what happens for missing, corrupt, newer-version and unwritable files", by
+  November 13, with saving working by November 23. Its grading asks that they are "written first
+  and enforced": the version read first, newer files never overwritten, the whole file validated
+  before live state changes, warn and stay playable, and a temporary file then a rename.
+- **Status: approved by the author on 2026-11-03** ("commit the plan to git", #107), and
+  committed before any save code, because the course grades the rules as written first. The calls
+  marked "Claude Code's call" came with the plan; any change to them is a later, dated revision.
+- **What exists today** (the prototype's checkpoint, from Assignment 5):
+  - `user://driving_prototype.cfg` (Godot's ConfigFile text) holds Mission 1's stage, and after
+    the hit the van's place, where the man lies and the crack. It is written to a `.tmp` file and
+    renamed, and a failed write keeps the old file. Assignment 5's regression suite checks this.
+  - `user://driving_audio.cfg` holds the four audio volumes. It is written straight over the old
+    file on every slider movement.
+  - Neither file has a version. The game applies the stage before checking the rest of the file,
+    and says nothing when a file cannot be read.
+
+### What is saved
+
+1. **Progress** (`user://progress.cfg`):
+   - which mission the player is on: `night_freight` (Mission 1) for now;
+   - Mission 1's checkpoint: 0 at the start, up to 4 before the depot;
+   - after the hit, also the van's place, where the man lies (11 body parts) and the crack, as
+     today.
+2. **Settings** (`user://settings.cfg`): the Master, Vehicle, Ambience and Music volumes.
+
+- **Not saved:** anything between checkpoints (the design doc: "Use mission checkpoints, not
+  arbitrary world-state persistence"), the van's clock, Maya's call and the hints already shown.
+
+### When
+
+- **Progress:**
+  - at every checkpoint: the four on the road, and silently when "DRIVE." appears after the hit;
+  - when a mission ends, the save moves to the next mission's start. Until Mission 2 exists,
+    finishing Mission 1 saves its start, as "Drive again" does;
+  - at "New drive".
+- **Settings:** when the player leaves the menu or quits (Claude Code's call; today every slider
+  movement writes the file).
+
+### Where, the format and the version
+
+- **Folder:** Godot's `user://`. On this Mac it is under
+  `~/Library/Application Support/Godot/app_userdata/`, in a folder named after the project. The
+  exact folder name is checked in the build step.
+- **Format:** Godot's ConfigFile text, as today (Claude Code's call). Assignment 5's regression
+  suite and the collision test keep reading Mission 1's `[drive]` section unchanged.
+- **Version field:** each file has a `[save]` section holding `version`, a whole number, 1 for both
+  files now. Any change to what a file holds raises its version, including adding a mission.
+- **Progress, version 1:**
+
+  ```ini
+  [save]
+  version=1
+  mission="night_freight"
+
+  [drive]
+  stage=3
+  ; after the hit only, all three or none; body has 11 entries:
+  recovery=Transform3D(...)
+  body=[Transform3D(...), ...]
+  crack={"amount": 1.0, "point": Vector2(...), "seed": 0.42}
+  ```
+
+- **Settings, version 1:** `[save]` with `version=1`, and `[audio]` with the four volumes, each 0
+  to 1.
+- **Today's files** (`driving_prototype.cfg`, `driving_audio.cfg`) are never read again and never
+  deleted. The first launch under these rules starts a new drive at the default volumes (Claude
+  Code's call; only the author and testers have saves).
+
+### Reading a file, in this order
+
+1. **Missing:** a new drive, or the default volumes, with no warning. That is the first launch.
+2. **The version, before any other field:**
+   - **newer** than the game knows: the file is not loaded, and it is never written over, moved or
+     deleted, whatever else happens. Saving that file is off for the session. The game warns and
+     plays on;
+   - **older:** upgraded in memory, one version at a time. None exists yet, because 1 is the first;
+   - **no version, not a whole number, or below 1,** or a file that is not ConfigFile text:
+     **corrupt** (below).
+3. **The whole file is checked before anything in the game changes:**
+   - a known mission;
+   - a checkpoint from 0 to 4;
+   - the after-the-hit values all present or all absent, and only at checkpoint 3 or 4;
+   - the van's place and every body part as finite transforms, inside the playable area;
+   - exactly 11 body parts;
+   - a crack amount from 0 to 1, with a finite point and seed;
+   - each volume, where present, a number from 0 to 1 (a missing one keeps its default).
+
+   Unknown extra keys are ignored. One failure makes the whole file corrupt, and nothing from it
+   is used.
+4. **Only then** is it applied.
+
+- **Corrupt:**
+  - the file is renamed `progress.cfg.corrupt` or `settings.cfg.corrupt`, replacing an older one,
+    so it is kept and never written over;
+  - the game warns and starts a new drive, or uses the default volumes;
+  - if the rename fails, saving that file is off for the session, so a file the game could not
+    read is never replaced.
+
+### Writing a file
+
+1. **Saving off** (no path given, a newer file, or a corrupt file that could not be moved): nothing
+   is written.
+2. **A temporary file, then a rename:** the whole file goes to `progress.cfg.tmp`, then is renamed
+   over `progress.cfg`. The settings file follows the same rule; today it is written straight over.
+3. **Unwritable** (a read-only folder, a full disk, or a failed write or rename): the temporary file
+   is removed, and the last good file stays as it was. The game warns, keeps playing, and tries
+   again at the next checkpoint.
+
+### Warnings
+
+- **On screen,** in plain words, where the player will see them: the menu at launch, the notice
+  line while driving. **In the log,** with `push_warning`, every time.
+- **Drafts** (the failed-save line is today's, which Assignment 5's suite checks):
+  - corrupt progress: "Saved progress could not be read, so a new drive has started. The old file
+    was kept.";
+  - newer progress: "This save is from a newer version of the game. It was not loaded or changed,
+    and progress will not be saved this session.";
+  - a failed save: "Checkpoint could not be saved. Recovery is available for this session.";
+  - settings: "Settings could not be read, so the default volumes are in use."
+
+### Tests never touch the player's real save
+
+- **Saving is off unless a path is given:**
+  - the game, launched normally, gives the real paths;
+  - a game that a test builds saves and reads nothing unless the test gives it scratch paths;
+  - today the progress path defaults to the real file, and every test run reads the real audio file
+    when the HUD starts.
+- **A scratch home for every test and capture run:**
+  - `scripts/run-test.sh` points `HOME` at `.scratch-home/` in the repository, ignored by Git, so
+    even a mistake lands there (Claude Code's call: the course suggests `../scratch-home`, which is
+    outside the project folder);
+  - captures, run by hand, use it too;
+  - exports and the editor keep the real home, where the export templates are;
+  - that Godot on this Mac follows `HOME` is checked before relying on it, and how goes into
+    `TEST-REPORT.md`.
+- **The real folder is checked:** `scripts/run-test.sh` takes a fingerprint of the real save folder
+  before and after every run, and fails if anything in it changed.
+- **Prediction: where the existing tests' runs will be saved once persistence exists.**
+  - The 13 game tests that load the game and both Assignment 5 suites already give it a scratch
+    checkpoint file in the system temp folder, so their progress saves keep landing there.
+  - Today's runs still touch the real folder: the HUD reads the real audio file, and Godot probably
+    writes its own log to `user://logs/`. With the scratch home and saving off by default, nothing
+    will.
+
+### Predicted failure cases, and how they are caught
+
+1. **A test that forgets its path** writes the player's save. Caught by saving being off by default,
+   and by the wrapper's fingerprint.
+2. **A newer file read past its version,** treated as corrupt and moved aside, so the newer game's
+   progress is lost. Caught by a test that loads a version 2 file, reaches a checkpoint, and finds
+   the file byte-for-byte the same under its own name.
+3. **A half-applied file:** a good checkpoint used with a broken body part. Caught by a test with
+   one bad value among good ones: nothing from it is used.
+4. **Godot on this Mac ignoring `HOME`.** Caught by the check before relying on it.
+
+### How it is checked (the build step, with its own approval)
+
+- **A new `game/tests/test_save_rules.gd`:**
+  - **round trip:** quit after the hit and load again: the same mission, checkpoint, van place,
+    body and crack;
+  - **missing:** a new drive, with no warning;
+  - **corrupt:** text that is not ConfigFile, a bad version, and one bad value among good ones.
+    Each time nothing is applied, the file is kept as `.corrupt`, and the game warns;
+  - **newer:** not loaded, and byte-for-byte unchanged after a checkpoint;
+  - **unwritable:** a read-only scratch folder gives the warning, the old file unchanged, and a game
+    that still plays;
+  - no `.tmp` left behind, and the settings file checked the same way;
+  - a game built by a test with no paths writes nothing.
+- **Mutations,** each of which must fail it:
+  - the version read after the other fields;
+  - a file applied before it is checked;
+  - a newer file written over.
+- **Unchanged:** Assignment 5's checkpoint checks, which keep passing as they are.
+- **Human check (Assignment 10):** quit at a checkpoint, relaunch, continue, and confirm.
+- **The submission's one line:** "Mission progress and its last checkpoint, plus audio volumes, as
+  versioned ConfigFile text in `user://`: version read first, newer files never overwritten, the
+  whole file checked before use, warn and keep playing, temporary file then rename."
+- **Files:**
+  - new `game/shared/save/save_file.gd`: the rules in one place, for both files;
+  - the mission (progress), the app (real paths only when launched as the game, and the warnings)
+    and the HUD (settings);
+  - `scripts/run-test.sh` and `.gitignore`;
+  - the new test.
