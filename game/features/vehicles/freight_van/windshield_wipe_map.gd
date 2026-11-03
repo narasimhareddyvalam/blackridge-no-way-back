@@ -1,9 +1,9 @@
 extends Node2D
 
-const GLASS_SIZE := Vector2(2.12, 1.08)
-const PIVOTS: Array[Vector2] = [Vector2(-0.8, -0.51), Vector2(0.14, -0.51)]
-const ARMS: Array[float] = [0.5, 0.46]
-const BLADES: Array[float] = [0.7, 0.55]
+const GLASS_SIZE := Vector2(1.77, 1.0)
+const PIVOTS: Array[Vector2] = [Vector2(-0.595, -0.47), Vector2(0.06, -0.5)]
+const ARMS: Array[float] = [0.42, 0.4]
+const BLADES: Array[float] = [0.65, 0.53]
 const REWET_SECONDS := 2.0
 const SPEED_REWET := 10.0
 

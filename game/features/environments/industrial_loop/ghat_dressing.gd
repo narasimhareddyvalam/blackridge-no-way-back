@@ -9,8 +9,11 @@ const STONE := "res://features/environments/industrial_loop/polyhaven/textures/"
 const CELLS := {"hairpin_left": 0, "hairpin_right": 1, "curve_left": 2, "curve_right": 3,
 	"chevron_left": 4, "chevron_right": 5, "speed_15": 6, "speed_20": 7, "speed_25": 8,
 	"steep_grade": 9, "grade_9": 10, "road_closed": 11, "landslide": 12, "scenic_view": 13,
-	"low_gear": 14}
-const FACE_SIZE := {"diamond": 1.15, "plate": 0.62, "chevron": 0.75, "board": 1.25}
+	"low_gear": 14, "pedestrian": 15, "ahead": 16, "arrow_down_left": 17, "bus_stop": 18}
+const ATLAS_COLUMNS := 4
+const FACE_SIZE := {"diamond": 1.15, "plate": 0.62, "chevron": 0.75, "board": 1.25,
+	"flag": 0.7}
+const BACK_SIZE := {"diamond": Vector2(0.67, 0.67), "flag": Vector2(0.6, 0.92)}
 const DROP := 1.2
 const DEEP_DROP := 3.0
 const DROP_PROBE := 6.5
@@ -23,6 +26,7 @@ const SHOULDER_POST := 0.9
 const DELINEATOR_STEP := 13
 const WARNING_LEAD := 30
 const CURVE_RADIUS := 45.0
+const CROSSING_LEAD := 15
 const LANDSLIDE_LENGTH := 9
 const RUN_EXTENSION := 2
 const RUN_GAP := 6
@@ -44,7 +48,8 @@ var _concrete: Material
 var _flashers: Array[MeshInstance3D] = []
 
 
-func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: Vector2) -> void:
+func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: Vector2,
+		crossing: int = -1) -> void:
 	_road = road
 	_terrain = terrain
 	_points = road.points
@@ -62,6 +67,7 @@ func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: 
 	_grade_signs()
 	_landslide(landslide)
 	_mirrors()
+	_crossing_signs(crossing)
 	_build_signs()
 
 
@@ -228,6 +234,21 @@ func _grade_signs() -> void:
 	_sign("low_gear", first + 22, 1.0, 1.7, "board")
 
 
+func _crossing_signs(index: int) -> void:
+	if index < 0:
+		return
+	var count := _points.size()
+	for side: float in [1.0, -1.0]:
+		var lead := posmod(index - int(side) * CROSSING_LEAD, count)
+		var near := posmod(index - int(side) * 2, count)
+		var facing := 0.0 if side > 0.0 else PI
+		_sign("pedestrian", lead, side, 2.15, "diamond", _road.heading_at(lead) + facing)
+		_sign("ahead", lead, side, 1.35, "plate", _road.heading_at(lead) + facing)
+		_sign("pedestrian", near, side, 2.15, "diamond", _road.heading_at(near) + facing)
+		_sign("arrow_down_left", near, side, 1.35, "plate", _road.heading_at(near) + facing)
+	_sign("bus_stop", posmod(index - 3, count), 1.0, 2.25, "flag")
+
+
 func _landslide(index: int) -> void:
 	var frame := _frame(index)
 	var rocks := (load(ROCKS) as PackedScene).instantiate()
@@ -382,8 +403,10 @@ func _build_signs() -> void:
 		face.albedo_color = Color(0.55, 0.55, 0.55)
 		face.roughness = 0.6
 		var cell: int = CELLS[kind]
-		face.uv1_scale = Vector3(0.25, 0.25, 1.0)
-		face.uv1_offset = Vector3((cell % 4) * 0.25, (cell / 4) * 0.25, 0.0)
+		var rows := float(SIGNS.get_height() * ATLAS_COLUMNS) / SIGNS.get_width()
+		face.uv1_scale = Vector3(1.0 / ATLAS_COLUMNS, 1.0 / rows, 1.0)
+		face.uv1_offset = Vector3(float(cell % ATLAS_COLUMNS) / ATLAS_COLUMNS,
+			float(cell / ATLAS_COLUMNS) / rows, 0.0)
 		var quad := QuadMesh.new()
 		var back := StandardMaterial3D.new()
 		back.albedo_color = Color("50565a")
@@ -400,7 +423,7 @@ func _build_signs() -> void:
 			backs.append(Transform3D(turned, pose.origin - pose.basis.z.normalized() * 0.012))
 		var back_quad := QuadMesh.new()
 		back_quad.material = back
-		back_quad.size = Vector2(0.67, 0.67) if diamond else Vector2(0.9, 0.56)
+		back_quad.size = BACK_SIZE.get(_shapes[kind], Vector2(0.9, 0.56))
 		_multimesh(back_quad, backs, null, "SignBack_" + kind)
 	_multimesh(_box(), _posts, _steel, "Posts")
 

@@ -42,3 +42,7 @@ __pycache__/
 # Raw Mixamo downloads (about 55 MB each, over the 25 MB limit). The slimmed game copies in
 # game/features/characters/ are committed instead (decision C27).
 /source_assets/mixamo/*.fbx
+
+# Raw Sketchfab downloads (hundreds of MB). Each folder's README.md stays tracked.
+/source_assets/sketchfab/*/*
+!/source_assets/sketchfab/*/README.md

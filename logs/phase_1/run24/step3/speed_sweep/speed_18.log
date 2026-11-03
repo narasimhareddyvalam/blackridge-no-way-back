@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+t 2.8 encounter starts at sample 698 (65 km/h), oncoming van at sample 815
+t 10.5 vans pass at sample 770 (meeting point 777), oncoming 43 km/h
+ERROR: String formatting error: a number is required.
+   at: validated_evaluate (core/variant/variant_op.h:770)
+   GDScript backtrace (most recent call first):
+       [0] _run (/private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/probe_encounter.gd:63)
+t %.1f (van 2.86 across, walking to (63.33939, 32.6952, -78.52329); lane %.2f) he steps out, bumper %.1f m from the crossing, van %.0f km/h, locked %s
+   lock +0.00 across 2.86 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.59
+   lock +0.10 across 2.60 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.59
+   lock +0.20 across 2.34 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.58
+   lock +0.30 across 2.08 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.57
+   lock +0.40 across 1.83 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.56
+   lock +0.50 across 1.57 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.55
+   lock +0.60 across 1.32 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.54
+   lock +0.70 across 1.06 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.54
+   lock +0.80 across 0.81 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.53
+   lock +0.90 across 0.56 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.52
+   lock +1.00 across 0.31 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.51
+   lock +1.10 across 0.06 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.50
+   lock +1.20 across -0.19 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.49
+   lock +1.30 across -0.44 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.48
+   lock +1.40 across -0.69 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.48
+   lock +1.50 across -0.94 heading-to-road 8.28 deg, locked true, steering -0.04, real velocity across -2.47
+t 12.1 HIT at 62 km/h, 1.58 s after the lock, skid heard true
+   LIMB +0.03 elbows L 77 R -41 knees L 21 R 50 | hips y 0.74 above van origin, forearm L speed 15.1 R 14.6
+   LIMB +0.53 elbows L 91 R -97 knees L 19 R 11 | hips y 0.94 above van origin, forearm L speed 6.4 R 7.9
+   LIMB +0.55 elbows L 88 R -38 knees L 18 R 10 | hips y 0.90 above van origin, forearm L speed 6.4 R 9.1
+   LIMB +0.88 elbows L -93 R 102 knees L 46 R 135 | hips y 0.69 above van origin, forearm L speed 6.9 R 0.9
+   LIMB +0.90 elbows L -84 R 105 knees L 43 R 133 | hips y 0.73 above van origin, forearm L speed 8.4 R 1.1
+   1.5 s later: crack 0.00, he is -13.6 m ahead of the van
+t 18.8 fleeing
+checkpoint load: 0 keys ["stage", "recovery", "body", "crack"]
+  stage 3 recovery [X: (-0.227509, 0.0, -0.973776), Y: (0.0, 1.0, 0.0), Z: (0.973776, 0.0, -0.227509), O: (39.03901, 30.55236, -72.44057)] body bones 11 crack { "amount": 0.0, "point": <null>, "seed": <null> }
+WARNING: 19 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

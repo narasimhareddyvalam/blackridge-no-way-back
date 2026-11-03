@@ -1,11 +1,12 @@
 extends SceneTree
 
-const TRIGGER_SIDE := 966
-const WATCH_FROM := 1000
+const TRIGGER_SIDE := 729
+const WATCH_FROM := 750
 const PULL_OVER := 1.35
 const DISTANCES: Array[float] = [120.0, 60.0, 35.0, 20.0, 10.0]
-const FLASH_AT := 80.0
+const DRIVING := 8.0
 const WINDSHIELD := Rect2i(160, 60, 960, 380)
+const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 
 
 class InputGate extends Node:
@@ -38,7 +39,7 @@ func _run() -> void:
 	await process_frame
 	_app.call("_resume")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	_folder = _output_folder("evidence/phase_1/oncoming/step3")
+	_folder = _output_folder("evidence/phase_1/oncoming/run24_step3")
 	DirAccess.make_dir_recursive_absolute(_folder)
 	_van = _app.get_node("FreightVan")
 	_route = _app.get_node("DrivingTrial")
@@ -46,8 +47,9 @@ func _run() -> void:
 	var holder := _app.get_node("IndustrialLoop").find_children("*", "WorldEnvironment", false,
 		false)[0] as WorldEnvironment
 	_environment = holder.environment
-	_route.set("stage", 4)
+	_route.set("stage", Mission.ENCOUNTER_STAGE)
 	_place(TRIGGER_SIDE, 0.0)
+	_van.set("speed", DRIVING)
 	while not is_instance_valid(_route.get("oncoming")):
 		await physics_frame
 	var oncoming: Node3D = _route.get("oncoming")
@@ -56,17 +58,8 @@ func _run() -> void:
 	_hold("brake", true)
 	await _seconds(1.5)
 	await _shot("before_it_comes", oncoming)
-	var flashed := false
 	for limit in DISTANCES:
 		while is_instance_valid(oncoming) and _gap(oncoming) > limit:
-			if not flashed and _gap(oncoming) < FLASH_AT:
-				flashed = true
-				await _press("headlights")
-				while is_instance_valid(oncoming) and not oncoming.get("high_beams"):
-					await process_frame
-				await _shot("high_beams_flash_back", oncoming)
-				await _press("headlights")
-				await _press("headlights")
 			await process_frame
 		await _shot("oncoming_%dm" % int(limit), oncoming)
 	while is_instance_valid(oncoming) and not oncoming.get("_passed"):
@@ -143,13 +136,6 @@ func _luma(image: Image, area: Rect2i) -> float:
 			total += 0.2126 * colour.r + 0.7152 * colour.g + 0.0722 * colour.b
 			count += 1
 	return total * 255.0 / maxf(1.0, float(count))
-
-
-func _press(action: String) -> void:
-	_hold(action, true)
-	await process_frame
-	_hold(action, false)
-	await process_frame
 
 
 func _hold(action: String, pressed: bool) -> void:

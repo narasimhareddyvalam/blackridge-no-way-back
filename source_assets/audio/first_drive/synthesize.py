@@ -36,6 +36,95 @@ def noise_function(seed, smoothing, amplitude):
     return sample
 
 
+def body_impact():
+    thump = noise_function(131, 0.05, 1.0)
+    crunch = noise_function(137, 0.55, 1.0)
+    debris = random.Random(139)
+    ticks = [(debris.uniform(0.01, 0.15), debris.uniform(2500, 6500)) for _ in range(9)]
+    phase = 0.0
+
+    def sample(t, i):
+        nonlocal phase
+        phase += TAU * (90 - 40 * min(t / 0.2, 1.0)) / RATE
+        body = (math.sin(phase) * 0.9 + thump(t, i) * 0.8) * math.exp(-t * 10)
+        hit = crunch(t, i) * math.exp(-t * 55) * 0.45
+        tick = sum(math.sin(TAU * pitch * (t - start)) * math.exp(-(t - start) * 700)
+                   for start, pitch in ticks if t >= start) * 0.22
+        landing = t - 0.42
+        fall = 0.0
+        if landing >= 0:
+            fall = (math.sin(TAU * 62 * landing) * 0.5 + thump(t, i) * 0.4) \
+                * math.exp(-landing * 14) * 0.5
+        return body + hit + tick + fall
+
+    return sample
+
+
+def skid():
+    hiss = noise_function(151, 0.42, 0.7)
+    scrub = noise_function(157, 0.05, 0.6)
+    phase = 0.0
+
+    def sample(t, i):
+        nonlocal phase
+        phase += TAU * (960 + 70 * math.sin(TAU * 1.5 * t) + 25 * math.sin(TAU * 7 * t)) / RATE
+        squeal = math.sin(phase) * 0.12 * (0.7 + 0.3 * math.sin(TAU * 2.5 * t))
+        return hiss(t, i) * 0.55 + scrub(t, i) * 0.35 + squeal
+
+    return sample
+
+
+def tone(t, start, length, pitch):
+    local = t - start
+    if local < 0 or local >= length:
+        return 0.0
+    edge = min(1.0, local / 0.005, (length - local) / 0.005)
+    return math.sin(TAU * pitch * local) * edge
+
+
+def phone_ring():
+    notes = ((0.0, 784.0), (0.16, 988.0), (0.32, 784.0), (0.48, 988.0))
+
+    def sample(t, i):
+        value = 0.0
+        for start, pitch in notes:
+            local = t - start
+            if 0.0 <= local < 0.6:
+                value += (math.sin(TAU * pitch * local) * 0.7
+                          + math.sin(TAU * pitch * 2.01 * local) * 0.15) * math.exp(-local * 9)
+        return value * 0.32
+
+    return sample
+
+
+def breathing():
+    air = noise_function(151, 0.32, 1.0)
+    body = noise_function(157, 0.06, 1.0)
+    rng = random.Random(163)
+    breaths = []
+    start = 0.25
+    for _ in range(3):
+        inhale = rng.uniform(1.0, 1.25)
+        exhale = rng.uniform(1.3, 1.7)
+        breaths.append((start, inhale, exhale))
+        start += inhale + exhale + rng.uniform(0.45, 0.8)
+
+    def sample(t, i):
+        breath = air(t, i) - body(t, i) * 0.6
+        for begin, inhale, exhale in breaths:
+            local = t - begin
+            if 0.0 <= local < inhale:
+                return breath * 0.42 * math.sin(math.pi * local / inhale) ** 1.5
+            local -= inhale
+            if 0.0 <= local < exhale:
+                shake = 1.0 + 0.22 * math.sin(TAU * 7.5 * local)
+                level = math.sin(math.pi * (local / exhale) ** 0.7) ** 1.2
+                return (breath * 0.7 + body(t, i) * 0.35) * 0.62 * level * shake
+        return 0.0
+
+    return sample, start
+
+
 def engine(t, i):
     cycle = TAU * 36 * t
     pulse = math.sin(cycle) * 0.28 + math.sin(cycle * 2) * 0.14
@@ -77,4 +166,16 @@ if __name__ == '__main__':
     crash = noise_function(97, 0.17, 1.0)
     render('collision', 0.7, lambda t, i:
            (crash(t, i) + math.sin(TAU * 68 * t) * 0.3) * math.exp(-t * 9))
-    print('Rendered 12 original prototype sounds at 22,050 Hz.')
+    render('impact_body', 1.4, body_impact())
+    render('phone_ring', 2.2, phone_ring(), True)
+    render('call_connect', 0.12, lambda t, i:
+           math.sin(TAU * 1320 * t) * math.exp(-t * 40) * 0.35)
+    render('call_end', 0.36, lambda t, i:
+           (tone(t, 0.0, 0.12, 620) + tone(t, 0.2, 0.12, 470)) * 0.3)
+    breath, breath_length = breathing()
+    render('breathing', breath_length, breath, True)
+    render('engine_tick', 0.06, lambda t, i:
+           (math.sin(TAU * 3100 * t) * 0.5 + math.sin(TAU * 4700 * t) * 0.3)
+           * math.exp(-t * 90) * 0.5)
+    render('skid', 2.0, skid(), True)
+    print('Rendered 19 original prototype sounds at 22,050 Hz.')

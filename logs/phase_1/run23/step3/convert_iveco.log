@@ -1,0 +1,117 @@
+15:03:31 | INFO: Data are loaded, start creating Blender stuff
+15:03:31 | INFO: Blender create Mesh node Back_door_1_Back door_0
+15:03:31 | INFO: Blender create Mesh node Back_door_1_Body exterior 1_0
+15:03:31 | INFO: Blender create Mesh node Back_door_2_Back door_0
+15:03:31 | INFO: Blender create Mesh node Back_door_2_Body exterior 1_0
+15:03:31 | INFO: Blender create Mesh node Back_door_2_Other_0
+15:03:31 | INFO: Blender create Mesh node Front_door_L_Front door_0
+15:03:31 | INFO: Blender create Mesh node Front_door_L_Other_0
+15:03:31 | INFO: Blender create Mesh node Front_door_L_Window_0
+15:03:31 | INFO: Blender create Mesh node Front_door_R_Front door_0
+15:03:31 | INFO: Blender create Mesh node Front_door_R_Other_0
+15:03:31 | INFO: Blender create Mesh node Front_door_R_Window_0
+15:03:31 | INFO: Blender create Mesh node Wheel_Wheel_0
+15:03:31 | INFO: Blender create Mesh node Body_exterior_Body exterior 1_0
+15:03:31 | INFO: Blender create Mesh node Body_exterior_2_Body exterior 2_0
+15:03:31 | INFO: Blender create Mesh node Body_interior_Body Interior_0
+15:03:31 | INFO: Blender create Mesh node Dashboard_Dashboard_0
+15:03:31 | INFO: Blender create Mesh node Interior_Interior_0
+15:03:31 | INFO: Blender create Mesh node Interior2_Interior 2_0
+15:03:31 | INFO: Blender create Mesh node Lateral_door_Lateral door_0
+15:03:31 | INFO: Blender create Mesh node Lateral_door_Other_0
+15:03:31 | INFO: Blender create Mesh node Other_Other_0
+15:03:31 | INFO: Blender create Mesh node Window_Window_0
+15:03:31 | INFO: glTF import finished in 0.26s
+Removed 318 grille-letter faces, 319 rear-door letter faces and 1530 wiper faces
+Rear plate: door surface at y -2.325, plate centre (-0.3, -2.332, 0.62)
+  Body_exterior_1: painted out 17812 texels of the name in each map
+  Body_exterior_1: painted out 49799 texels of the name in each map
+  Back_door: painted out 44022 texels of the name in each map
+  Interior: painted out 52319 texels of the hub badge in each map
+  Other: plate painted at (1450, 308) texels
+  Other: 797723 texels only the letters used, grey
+  Back_door: 88485 texels only the letters used, grey
+Moon roof: cut 158 roof faces and 60 headliner faces
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+15:03:45 | INFO: Starting glTF 2.0 export
+15:03:45 | INFO: Extracting primitive: Body
+15:03:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:46 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:47 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:48 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:49 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:49 | INFO: Primitives created: 5
+15:03:49 | INFO: Extracting primitive: BodyGlass
+15:03:50 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:50 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:50 | INFO: Primitives created: 1
+15:03:50 | INFO: Extracting primitive: DriverDoor
+15:03:51 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:51 | INFO: Primitives created: 2
+15:03:51 | INFO: Extracting primitive: DriverWindow
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: FrontIndicatorLeft
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: FrontIndicatorRight
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: Headlights
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: PassengerDoor
+15:03:51 | INFO: Primitives created: 2
+15:03:51 | INFO: Extracting primitive: PassengerWindow
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: RearIndicatorLeft
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: RearIndicatorRight
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: TailLamps
+15:03:51 | INFO: Primitives created: 1
+15:03:51 | INFO: Extracting primitive: WheelFrontLeft
+15:03:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:52 | INFO: Primitives created: 1
+15:03:52 | INFO: Extracting primitive: WheelFrontRight
+15:03:52 | INFO: Primitives created: 1
+15:03:52 | INFO: Extracting primitive: WheelRearLeft
+15:03:52 | INFO: Primitives created: 1
+15:03:52 | INFO: Extracting primitive: WheelRearRight
+15:03:52 | INFO: Primitives created: 1
+15:03:52 | INFO: Extracting primitive: Windshield
+15:03:52 | INFO: Primitives created: 1
+15:03:52 | INFO: Finished glTF 2.0 export in 7.253006219863892 s
+
+Wrote game/features/vehicles/freight_van/art/iveco/iveco_exterior.glb: 5.5 MB, 56438 triangles
+  Body: origin (0.000, 0.000, 0.000) Blender, 21822 triangles
+  BodyGlass: origin (0.000, 0.000, 0.000) Blender, 152 triangles
+  Windshield: origin (0.000, 0.000, 0.000) Blender, 248 triangles
+  Headlights: origin (0.000, 0.000, 0.000) Blender, 1150 triangles
+  FrontIndicatorRight: origin (0.000, 0.000, 0.000) Blender, 172 triangles
+  TailLamps: origin (0.000, 0.000, 0.000) Blender, 672 triangles
+  RearIndicatorRight: origin (0.000, 0.000, 0.000) Blender, 31 triangles
+  FrontIndicatorLeft: origin (0.000, 0.000, 0.000) Blender, 172 triangles
+  RearIndicatorLeft: origin (0.000, 0.000, 0.000) Blender, 31 triangles
+  DriverDoor: origin (-0.962, 1.909, 1.102) Blender, 7294 triangles
+  PassengerDoor: origin (0.978, 1.910, 1.102) Blender, 7294 triangles
+  WheelFrontLeft: origin (-0.872, 2.007, 0.359) Blender, 4328 triangles
+  WheelRearLeft: origin (-0.872, -1.497, 0.359) Blender, 4328 triangles
+  WheelFrontRight: origin (0.872, 2.007, 0.359) Blender, 4328 triangles
+  WheelRearRight: origin (0.872, -1.497, 0.359) Blender, 4328 triangles
+  DriverWindow: origin (-0.962, 1.909, 1.102) Blender, 44 triangles
+  PassengerWindow: origin (0.978, 1.910, 1.102) Blender, 44 triangles
+15:03:52 | INFO: Starting glTF 2.0 export
+15:03:52 | INFO: Extracting primitive: Cab
+15:03:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:54 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:03:54 | INFO: Primitives created: 4
+15:03:54 | INFO: Extracting primitive: SteeringWheel
+15:03:54 | INFO: Primitives created: 1
+15:03:54 | INFO: Finished glTF 2.0 export in 2.176755905151367 s
+
+Wrote game/features/vehicles/freight_van/art/iveco/iveco_cab.glb: 1.9 MB, 31990 triangles
+  Cab: origin (0.000, 0.000, 0.000) Blender, 29242 triangles
+  SteeringWheel: origin (-0.476, 1.642, 1.313) Blender, 2748 triangles
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

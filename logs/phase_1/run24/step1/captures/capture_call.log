@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved phone_ringing.png: subtitle "", dash caller "MAYA" at -1.0 s, fov 74
+saved dash_incoming_call.png: subtitle "", dash caller "MAYA" at -1.0 s, fov 14
+saved dash_call_connected.png: subtitle "ETHAN: Last run of the night. Almost done.", dash caller "MAYA" at 3.2 s, fov 14
+saved first_lines.png: subtitle "ETHAN: Last run of the night. Almost done.", dash caller "MAYA" at 4.2 s, fov 74
+saved lock_your_door.png: subtitle "ETHAN: Lock your door tonight.", dash caller "MAYA" at 24.4 s, fov 74
+saved after_the_call.png: subtitle "", dash caller "" at 33.6 s, fov 74
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

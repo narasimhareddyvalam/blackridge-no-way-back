@@ -4,50 +4,75 @@ const Build = preload("res://shared/components/mesh_builder.gd")
 const Instruments = preload("instruments.gd")
 const Navigation = preload("navigation_display.gd")
 const NightDimming = preload("night_dimming.gd")
+const ParkingGuides = preload("parking_guides.gd")
 const GLASS = preload("windshield.gdshader")
-const BODY_ART = preload("art/body.glb")
-const DOOR_ART = preload("art/door.glb")
-const TIRE_ART = preload("art/tire.glb")
-const COCKPIT_FRONT = preload("art/cockpit/cockpit_front.gltf")
-const COCKPIT_BACK = preload("art/cockpit/cockpit_back.gltf")
-const COCKPIT_ROOF = preload("art/cockpit/cockpit_roof.gltf")
-const COCKPIT_WHEEL = preload("art/cockpit/cockpit_wheel.gltf")
-const COCKPIT_SHADOW = preload("art/cockpit/cockpit_shadow.glb")
-const WHEEL_SHADOW = preload("art/cockpit/cockpit_wheel_shadow.glb")
+const EXTERIOR_ART = preload("art/iveco/iveco_exterior.glb")
+const CAB_ART = preload("art/iveco/iveco_cab.glb")
 const SCREEN = preload("cockpit_screen.gdshader")
-const WHEEL_HUB := Vector3(-0.57, 1.7328, -0.8167)
-const WHEEL_TILT := -18.49
+const IVECO_PLACE := Vector3(0.0, 0.16, 0.5)
 const SCREEN_GAP := 0.0015
-const CLUSTER_SCREEN := Vector3(-0.5563, 1.8007, -1.0219)
-const CLUSTER_SIZE := Vector2(0.162, 0.0648)
-const MAP_SCREEN := Vector3(-0.2369, 1.7879, -1.0219)
-const MAP_SIZE := Vector2(0.15525, 0.1035)
-const MIRROR_SCREENS := {-1: Vector3(-1.027, 1.7889, -1.0356), 1: Vector3(1.031, 1.7889, -1.0356)}
-const MIRROR_SCREEN_SIZE := Vector2(0.1294, 0.076)
-const MIRROR_SCREEN_YAW := 33.77
-const MIRROR_SCREEN_ROLL := 1.4
-const CENTRE_MIRROR := Vector3(-0.0072, 2.5935, -1.1004)
-const CENTRE_MIRROR_SIZE := Vector2(0.185, 0.044)
-const CENTRE_MIRROR_TURN := Vector3(11.4, -8.9, 0.0)
-const WHEEL_SPOTS: Array[Vector3] = [Vector3(-1.15, 0, -1.52), Vector3(1.15, 0, -1.52),
-	Vector3(-1.15, 0, 1.85), Vector3(1.15, 0, 1.85)]
+const CLUSTER_SCREEN := Vector3(-0.4844, 1.4665, -1.3466)
+const CLUSTER_SIZE := Vector2(0.432, 0.139)
+const CLUSTER_TURN := Vector3(-19.77, -7.95, 0.0)
+const MAP_SCREEN := Vector3(0.0, 1.5201, -1.2871)
+const MAP_SIZE := Vector2(0.1361, 0.0708)
+const MAP_TURN := Vector3(-23.68, 0.0, 0.0)
+const MAP_PIXELS := Vector2i(768, 400)
+const REVERSE_PIXELS := Vector2i(576, 300)
+const SCREEN_PICTURE := Rect2(0.069, 0.744, 0.106, 0.05)
+const SCREEN_COVER := 0.0005
+const SCREEN_GLASS := 0.0045
+const SCREEN_BORDER := Vector2(0.022, 0.042)
+const SCREEN_BLACK := 0.012
+const SCREEN_ANGLE := 0.25
+const SCREEN_GLOW := 0.06
+const BOOT_SECONDS := 1.2
+const MIRROR_CAMERA := Vector3(1.2, 1.63, -1.2)
+const MIRROR_GLASS := Vector3(1.142, 1.61, -1.272)
+const MIRROR_GLASS_SIZE := Vector2(0.15, 0.19)
+const WIDE_GLASS := Vector3(1.142, 1.43, -1.272)
+const WIDE_GLASS_SIZE := Vector2(0.15, 0.11)
+const TYRES: Array[String] = ["WheelFrontLeft", "WheelRearLeft", "WheelFrontRight",
+	"WheelRearRight"]
+const TYRE_RADIUS := 0.359
+const WHEEL_SPOTS: Array[Vector3] = [Vector3(-0.872, 0, -1.507), Vector3(0.872, 0, -1.507),
+	Vector3(-0.872, 0, 1.997), Vector3(0.872, 0, 1.997)]
+const HEADLIGHT := Vector3(0.64, 1.15, -2.31)
+const INDICATORS: Array[String] = ["FrontIndicatorLeft", "RearIndicatorLeft",
+	"FrontIndicatorRight", "RearIndicatorRight"]
 const TILT_RATE := 10.0
 const BLADE_FLIP := 0.14
 const LIGHT_FOG = preload("res://materials/windshield/light_fog.tres")
 const SIDE_RAIN = preload("side_window_rain.gdshader")
+const SIDE_GLASS = preload("side_glass.gdshader")
 const RainPhysics = preload("rain_physics.gd")
-const WINDSHIELD_RAKE := 0.32
-const WINDSHIELD_CENTRE := Vector3(0, 2.17, -1.34)
+const WINDSHIELD_RAKE := 0.7967
+const WINDSHIELD_CENTRE := Vector3(0.0, 1.8493, -1.3888)
+const PANE_SPLIT := 0.52
+const HANDLE := Vector3(-0.042, -0.04, 1.026)
+const DOME := Vector3(0.0, 2.184, -0.94)
+const DOME_LENS := Vector3(0.18, 0.012, 0.08)
+const DOME_BEZEL := Vector3(0.21, 0.01, 0.1)
+const DOME_COLOR := Color("ffe2b8")
+const DOME_ENERGY := 1.1
+const DOME_RANGE := 2.6
+const DOME_GLOW := 2.5
+const DOME_ON := 0.12
+const DOME_FADE := 2.0
+const SILL_SAMPLES := 32
+const DROP_MARGIN := 0.02
 const DUMP_SECONDS := 0.7
-const MOON_ROOF := Rect2(-0.692, -0.944, 1.39, 0.433)
-const MOON_ROOF_HEIGHT := 2.79
+const MOON_ROOF := Rect2(-0.52, -0.8, 1.04, 0.44)
+const MOON_ROOF_HEIGHT := 2.226
+const ROOF_TOP := 2.231
+const ROOF_FRAME := Vector3(0.05, 2.18, 2.228)
+const ROOF_SEAL := 0.02
 const ROOF_SLOPE := Vector2(0.0, -0.05)
 const ROOF_AIR := 0.8
 const LOOK_UP := 1.05
-const BODY_ROOF := 2.995
 const BEAM_RAIN = preload("beam_rain.gdshader")
 const RAIN_LAYERS: Array[float] = [3.0, 4.5, 6.5, 9.0, 12.5, 17.0, 23.0, 31.0]
-const LAMP_FRONT := -2.44
+const LAMP_FRONT := -2.31
 const RAIN_SLANT := 0.08
 const LOW_BEAM_RAIN := Vector2(5.0, 0.65)
 const HIGH_BEAM_RAIN := Vector2(16.0, 0.9)
@@ -64,18 +89,36 @@ const HIGH_BEAM_RANGE := 220.0
 const WipeMap = preload("windshield_wipe_map.gd")
 const Wiper = preload("wiper.gd")
 const WIPE_MAP_SIZE := Vector2i(512, 256)
-const DOOR_HINGE := Vector3(-1.175, 0.0, -1.45)
 const DOOR_SWING := 0.541
 const GLARE_FALLOFF := 40.0
 const GLARE_RATE := 12.0
 const OFF_GLASS := Vector2(9.0, 9.0)
 const ONCOMING_RAIN_REACH := 70.0
 const BACKLIT_RAIN := 2.5
-const EYE := Vector3(-0.52, 2.03, -0.32)
+const EYE := Vector3(-0.45, 1.88, -0.72)
 const JOLT_FADE := 2.5
+const ROCK_STIFFNESS := 38.0
+const ROCK_DAMPING := 3.0
+const ROCK_KICK := 0.12
+const LEAN := Vector3(0.0, 0.05, -0.42)
+const LEAN_RATE := 1.5
+const LOOK_DOWN := -0.55
+const CAMERA_TILT := 0.15
+const CRACK_GROWTH := 6.0
+const CRACK_AREA := Rect2(-0.7, -0.42, 1.2, 0.82)
 const DAZZLE := 1.2
 const ADAPT_ATTACK := 3.0
 const ADAPT_RELEASE := 0.5
+const FRONT_LAYER := 16
+const FRONT_PROFILE: Array[Vector3] = [Vector3(0.99, 0.41, -2.5), Vector3(0.99, 0.96, -2.5),
+	Vector3(0.95, 1.16, -2.42), Vector3(0.92, 1.41, -2.33), Vector3(0.9, 1.56, -1.79),
+	Vector3(0.9, 1.5, -1.0), Vector3(0.99, 0.41, -1.0)]
+const GLASS_PROFILE: Array[Vector3] = [Vector3(0.92, 1.45, -1.8), Vector3(0.92, 2.2, -1.03),
+	Vector3(0.92, 2.23, -0.5), Vector3(0.92, 1.45, -0.5)]
+const BONNET_FRICTION := 0.3
+const HEAD_REACH := 0.16
+const COWL := 0.1
+const HEAD_WATCH := 1.0
 
 var driving_camera: Camera3D
 var navigation: Control
@@ -85,6 +128,7 @@ var reverse_view: SubViewport
 var reverse_screen: MeshInstance3D
 var vehicle: CharacterBody3D
 var oncoming: Node3D
+var look_target_node: Node3D
 var mirror_cameras: Array[Camera3D] = []
 var fog_overlays: Array[MeshInstance3D] = []
 var side_rain_overlays: Array[MeshInstance3D] = []
@@ -98,12 +142,17 @@ var _last_wiper: float = 0.0
 var _last_swing: float = 0.0
 var _dump: float = 0.0
 var _windows: Array[MeshInstance3D] = []
+var _window_drop: Array[float] = []
+var cabin_lamp: OmniLight3D
+var _dome_lens := StandardMaterial3D.new()
+var _dome_level := 0.0
+var _window_glass: Array[ShaderMaterial] = []
+var _window_lowered: Array[float] = [0.0, 0.0]
 var _headlights: Array[SpotLight3D] = []
 var _front_lenses: Array[MeshInstance3D] = []
 var _rear_lamps: Array[MeshInstance3D] = []
 var _indicators: Array[MeshInstance3D] = []
 var _tires: Array[Node3D] = []
-var _rolling_meshes: Array[Node3D] = []
 var _glass: ShaderMaterial
 var _high_beams_shown: bool = false
 var _rain_layers: Array[MeshInstance3D] = []
@@ -120,28 +169,37 @@ var _ground_rest: float = 0.0
 var _tilt := Vector3.ZERO
 var _body := Node3D.new()
 var _cabin := Node3D.new()
-var _door := Node3D.new()
+var _door: Node3D
 var _door_glass := Node3D.new()
 var _powered_screens: Array[MeshInstance3D] = []
+var _dark_screens: Array[MeshInstance3D] = []
 var _powered_views: Array[SubViewport] = []
 var _screens_on: bool = true
+var _screen_power: float = 0.0
+var _map_screen: MeshInstance3D
+var _screen_light: OmniLight3D
 var _windshield: MeshInstance3D
 var _glare := Vector2.ZERO
 var _jolt: float = 0.0
 var _adapt: float = 0.0
 var _jolt_time: float = 0.0
+var _rock: float = 0.0
+var _rock_speed: float = 0.0
+var _lean: float = 0.0
+var _leaning: bool = false
+var _crack: float = 0.0
+var _crack_target: float = 0.0
+var _front := AnimatableBody3D.new()
+var _head: Node3D
+var _head_watch: float = -1.0
+var _head_strength: float = 0.0
 var _glare_ray := PhysicsRayQueryParameters3D.new()
 var _trim := Build.material(Color("141c22"), 0.86)
-var _paint := Build.material(Color("536369"), 0.34)
-var _rubber := Build.material(Color("0b1115"), 0.96)
-var _steel := Build.material(Color("5d696d"), 0.3)
+var _seal := Build.material(Color("0b0d0f"), 0.55)
 var _amber := Build.luminous(Color("ff9e30"), 1.2)
-var _amber_off := Build.material(Color("623b19"))
 var _red := Build.luminous(Color("e1442e"))
 var _tail := Build.luminous(Color("68251e"))
-var _tail_off := Build.material(Color("3a1714"))
-var _lens_on := Build.luminous(Color("e9ebdc"))
-var _lens_off := Build.material(Color("78838b"), 0.12)
+var _lens_on := Build.luminous(Color("e9ebdc"), 2.0)
 
 
 func configure(van: CharacterBody3D) -> void:
@@ -160,33 +218,50 @@ func configure(van: CharacterBody3D) -> void:
 	_camera()
 	_displays()
 	_windows_and_wipers()
+	_front_shell()
 	_mark_layer(_body, 2)
 	_mark_layer(_cabin, 4)
 
 
+func _front_shell() -> void:
+	_front.name = "FrontShell"
+	_front.top_level = true
+	_front.collision_layer = FRONT_LAYER
+	_front.collision_mask = 0
+	_front.physics_material_override = PhysicsMaterial.new()
+	_front.physics_material_override.friction = BONNET_FRICTION
+	for profile: Array[Vector3] in [FRONT_PROFILE, GLASS_PROFILE]:
+		var points := PackedVector3Array()
+		for point in profile:
+			points.append(point)
+			points.append(Vector3(-point.x, point.y, point.z))
+		var shape := ConvexPolygonShape3D.new()
+		shape.points = points
+		var collision := CollisionShape3D.new()
+		collision.shape = shape
+		_front.add_child(collision)
+	add_child(_front)
+	_front.global_transform = global_transform
+
+
 func _exterior() -> void:
-	_body.add_child(BODY_ART.instantiate())
-	_door.name = "DriverDoor"
-	_door.position = DOOR_HINGE
-	_body.add_child(_door)
-	var panel := DOOR_ART.instantiate() as Node3D
-	panel.position = -DOOR_HINGE
-	_door.add_child(panel)
-	var sky_glass := Build.material(Color("070a0c"), 0.05)
-	var centre := MOON_ROOF.get_center()
-	var top := Build.box(_body, Vector3(centre.x, BODY_ROOF + 0.004, centre.y),
-		Vector3(MOON_ROOF.size.x + 0.05, 0.008, MOON_ROOF.size.y + 0.05), sky_glass)
-	top.name = "MoonRoofOutside"
+	var outside := EXTERIOR_ART.instantiate() as Node3D
+	outside.name = "Iveco"
+	outside.position = IVECO_PLACE
+	_body.add_child(outside)
+	_door = outside.get_node("DriverDoor") as Node3D
+	var headlights := outside.get_node("Headlights") as MeshInstance3D
+	var tail_lamps := outside.get_node("TailLamps") as MeshInstance3D
+	_front_lenses.append(headlights)
+	_rear_lamps.append(tail_lamps)
+	for label in INDICATORS:
+		_indicators.append(outside.get_node(label) as MeshInstance3D)
+	for lens: MeshInstance3D in _indicators + [headlights, tail_lamps,
+			outside.get_node("BodyGlass")]:
+		lens.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	for side in [-1, 1]:
-		var lens := Build.box(_body, Vector3(side * 0.88, 1.20, -2.36),
-			Vector3(0.38, 0.20, 0.065), _steel)
-		lens.rotation_degrees.z = side * 8.0
-		for offset in [-0.10, 0.10]:
-			_front_lenses.append(Build.box(_body,
-				Vector3(side * 0.88 + offset, 1.22, -2.405),
-				Vector3(0.12, 0.065, 0.018), _lens_on))
 		var headlight := SpotLight3D.new()
-		headlight.position = Vector3(side * 0.86, 1.18, -2.44)
+		headlight.position = Vector3(side * HEADLIGHT.x, HEADLIGHT.y, HEADLIGHT.z)
 		headlight.rotation_degrees.x = -2.0
 		headlight.light_color = Color("fff0db")
 		headlight.light_energy = 650.0
@@ -198,58 +273,46 @@ func _exterior() -> void:
 		headlight.light_cull_mask = 1
 		_body.add_child(headlight)
 		_headlights.append(headlight)
-		_rear_lamps.append(Build.box(_body, Vector3(side * 1.03, 1.35, 2.91),
-			Vector3(0.18, 0.36, 0.06), _tail))
-		for z in [-2.37, 2.91]:
-			_indicators.append(Build.box(_body, Vector3(side * 1.05, 1.1, z),
-				Vector3(0.19, 0.09, 0.055), _amber_off))
-		for z in [-1.52, 1.85]:
-			var pivot := Node3D.new()
-			_body.add_child(pivot)
-			pivot.position = Vector3(side * 1.15, 0.48, z)
-			var rolling := TIRE_ART.instantiate() as Node3D
-			pivot.add_child(rolling)
-			_tires.append(pivot)
-			_rolling_meshes.append(rolling)
-	var plate := Build.text(_body, "BR  048", Vector3(0, 0.76, 2.98), 13,
-		Color("e7dfc3"))
-	plate.pixel_size = 0.003
+	for label in TYRES:
+		_tires.append(outside.get_node(label) as Node3D)
 
 
 func _interior() -> void:
-	for art: PackedScene in [COCKPIT_FRONT, COCKPIT_BACK, COCKPIT_ROOF]:
-		_cockpit_part(art, _cabin)
-	_wheel = Node3D.new()
-	_cabin.add_child(_wheel)
-	_wheel.position = WHEEL_HUB
-	_wheel.rotation.x = deg_to_rad(WHEEL_TILT)
-	_cockpit_part(COCKPIT_WHEEL, _wheel)
-	var both_sides := StandardMaterial3D.new()
-	both_sides.cull_mode = BaseMaterial3D.CULL_DISABLED
-	_shadow_stand_in(COCKPIT_SHADOW, _cabin, both_sides)
-	_shadow_stand_in(WHEEL_SHADOW, _wheel, both_sides)
+	var cab := CAB_ART.instantiate() as Node3D
+	cab.name = "IvecoCab"
+	cab.position = IVECO_PLACE
+	_cabin.add_child(cab)
+	for mesh: GeometryInstance3D in cab.find_children("*", "GeometryInstance3D", true, false):
+		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_wheel = cab.get_node("SteeringWheel") as Node3D
 	var light := OmniLight3D.new()
-	light.position = Vector3(-0.25, 2.30, -0.55)
+	light.position = Vector3(0.0, 1.75, -0.85)
 	light.light_color = Color("b7c2c9")
 	light.light_energy = 0.45
 	light.omni_range = 2.5
 	light.light_cull_mask = 4
 	_cabin.add_child(light)
+	_dome_lamp()
+	_cover_screen(cab)
 
 
-func _cockpit_part(art: PackedScene, parent: Node3D) -> void:
-	var part := art.instantiate()
-	parent.add_child(part)
-	for mesh: GeometryInstance3D in part.find_children("*", "GeometryInstance3D", true, false):
-		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-
-
-func _shadow_stand_in(art: PackedScene, parent: Node3D, surface: Material) -> void:
-	var stand_in := art.instantiate()
-	parent.add_child(stand_in)
-	for mesh: GeometryInstance3D in stand_in.find_children("*", "GeometryInstance3D", true, false):
-		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
-		mesh.material_override = surface
+func _dome_lamp() -> void:
+	Build.box(_cabin, DOME + Vector3.UP * 0.003, DOME_BEZEL, Build.material(Color("3a3b3c"), 0.6))
+	_dome_lens.albedo_color = Color("d9d2c4")
+	_dome_lens.roughness = 0.4
+	_dome_lens.emission_enabled = true
+	_dome_lens.emission = DOME_COLOR
+	_dome_lens.emission_energy_multiplier = 0.0
+	Build.box(_cabin, DOME, DOME_LENS, _dome_lens)
+	cabin_lamp = OmniLight3D.new()
+	cabin_lamp.name = "CabinLamp"
+	cabin_lamp.position = DOME + Vector3.DOWN * 0.05
+	cabin_lamp.light_color = DOME_COLOR
+	cabin_lamp.light_energy = 0.0
+	cabin_lamp.omni_range = DOME_RANGE
+	cabin_lamp.light_cull_mask = 6
+	cabin_lamp.visible = false
+	_cabin.add_child(cabin_lamp)
 
 
 func _camera() -> void:
@@ -261,7 +324,7 @@ func _camera() -> void:
 	driving_camera.rotation.x = -0.15
 	driving_camera.near = 0.045
 	driving_camera.far = 350.0
-	driving_camera.cull_mask = 5
+	driving_camera.cull_mask = 7
 	driving_camera.attributes = CameraAttributesPractical.new()
 	_look.add_child(driving_camera)
 	driving_camera.make_current()
@@ -276,37 +339,97 @@ func _displays() -> void:
 	night_dimming.name = "NightDimming"
 	add_child(night_dimming)
 	night_dimming.configure(vehicle, cluster)
-	_powered_screens.append(_dash_screen(instruments, CLUSTER_SCREEN, CLUSTER_SIZE))
+	_powered_screens.append(_dash_screen(instruments, CLUSTER_SCREEN, CLUSTER_SIZE, CLUSTER_TURN))
+	_dark_screens.append(_blank_screen(CLUSTER_SCREEN, CLUSTER_SIZE, CLUSTER_TURN))
 	navigation = Navigation.new()
 	navigation.vehicle = vehicle
-	var gps := _display_viewport(Vector2i(384, 256), navigation)
-	_powered_screens.append(_dash_screen(gps, MAP_SCREEN, MAP_SIZE))
+	var gps := _display_viewport(MAP_PIXELS, navigation)
+	_map_screen = _dash_screen(gps, MAP_SCREEN, MAP_SIZE, MAP_TURN)
+	_lcd(_map_screen)
+	_powered_screens.append(_map_screen)
+	_dark_screens.append(_blank_screen(MAP_SCREEN, MAP_SIZE, MAP_TURN))
 	_powered_views.append_array([instruments, gps])
 	for side in [-1, 1]:
-		var view := _camera_view(Vector3(side * 1.35, 2.14, -1.2),
-			Vector3(0, PI + side * 0.13, 0), Vector2i(256, 320), 62.0)
-		mirrors.append(view)
-		_screen(view, Vector3(side * 1.3, 2.11, -1.22), Vector2(0.26, 0.35), true)
-		Build.box(_cabin, Vector3(side * 1.23, 1.94, -1.22),
-			Vector3(0.2, 0.04, 0.04), _trim)
-		_powered_screens.append(_dash_screen(view, MIRROR_SCREENS[side], MIRROR_SCREEN_SIZE,
-			Vector3(0, -side * MIRROR_SCREEN_YAW, -side * MIRROR_SCREEN_ROLL), true))
-	var inside := _camera_view(Vector3(0, 2.4, -1.2), Vector3(0, PI, 0),
-		Vector2i(384, 128), 65.0)
-	mirrors.append(inside)
-	_powered_screens.append(_dash_screen(inside, CENTRE_MIRROR, CENTRE_MIRROR_SIZE,
-		CENTRE_MIRROR_TURN, true))
-	reverse_view = _camera_view(Vector3(0, 2.35, 3.02), Vector3(-0.28, PI, 0),
-		Vector2i(384, 256), 85.0)
-	reverse_screen = _dash_screen(reverse_view, MAP_SCREEN, MAP_SIZE, Vector3.ZERO, false,
+		mirrors.append(_camera_view(Vector3(side * MIRROR_CAMERA.x, MIRROR_CAMERA.y,
+			MIRROR_CAMERA.z), Vector3(0, PI + side * 0.13, 0), Vector2i(256, 320), 62.0))
+	reverse_view = _camera_view(Vector3(0, 2.15, 3.0), Vector3(-0.28, PI, 0), REVERSE_PIXELS,
+		85.0)
+	reverse_view.add_child(ParkingGuides.new())
+	reverse_screen = _dash_screen(reverse_view, MAP_SCREEN, MAP_SIZE, MAP_TURN, false,
 		2.0 * SCREEN_GAP)
+	_lcd(reverse_screen)
 	reverse_screen.visible = false
+	_screen_glass()
+
+
+func _lcd(screen: MeshInstance3D) -> void:
+	var surface := screen.material_override as ShaderMaterial
+	surface.set_shader_parameter("border", SCREEN_BORDER)
+	surface.set_shader_parameter("black_level", SCREEN_BLACK)
+	surface.set_shader_parameter("view_falloff", SCREEN_ANGLE)
+	surface.set_shader_parameter("power", _screen_power)
+
+
+func _screen_glass() -> void:
+	var glass := StandardMaterial3D.new()
+	glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	glass.albedo_color = Color(0.02, 0.025, 0.03, 0.12)
+	glass.roughness = 0.06
+	glass.metallic_specular = 0.6
+	var pane := QuadMesh.new()
+	pane.size = MAP_SIZE + Vector2(0.004, 0.004)
+	var front := Build.instance(_cabin, MAP_SCREEN - _cabin.position, pane, glass)
+	front.name = "ScreenGlass"
+	front.rotation_degrees = MAP_TURN
+	front.position += front.basis.z * SCREEN_GLASS
+	front.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_screen_light = OmniLight3D.new()
+	_screen_light.name = "ScreenGlow"
+	_screen_light.position = MAP_SCREEN - _cabin.position + front.basis.z * 0.06
+	_screen_light.light_color = Color("8fb2ff")
+	_screen_light.light_energy = 0.0
+	_screen_light.omni_range = 0.45
+	_screen_light.light_cull_mask = 4
+	_cabin.add_child(_screen_light)
+
+
+func _cover_screen(cab: Node3D) -> void:
+	var faces := PackedVector3Array()
+	var lift := Basis.from_euler(MAP_TURN * PI / 180.0).z * SCREEN_COVER
+	for mesh: MeshInstance3D in cab.find_children("*", "MeshInstance3D", true, false):
+		var to_cab := cab.global_transform.affine_inverse() * mesh.global_transform
+		for surface in range(mesh.mesh.get_surface_count()):
+			var material := mesh.mesh.surface_get_material(surface)
+			if material == null or material.resource_name != "Dashboard":
+				continue
+			var arrays := mesh.mesh.surface_get_arrays(surface)
+			var points: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var uvs: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+			var order: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+			for corner in range(0, order.size(), 3):
+				var inside := true
+				for k in range(3):
+					inside = inside and SCREEN_PICTURE.has_point(uvs[order[corner + k]])
+				if inside:
+					for k in range(3):
+						faces.append(to_cab * points[order[corner + k]] + lift)
+	var cover_mesh := ArrayMesh.new()
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = faces
+	cover_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var cover := Build.instance(_cabin, cab.position, cover_mesh, Build.material(Color("050607"),
+		0.6))
+	cover.name = "ScreenCover"
+	cover.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _power_screens(on: bool) -> void:
 	_screens_on = on
 	for screen in _powered_screens:
 		screen.visible = on
+	for screen in _dark_screens:
+		screen.visible = not on
 	for view in _powered_views:
 		view.render_target_update_mode = (SubViewport.UPDATE_ALWAYS if on
 			else SubViewport.UPDATE_DISABLED)
@@ -345,26 +468,11 @@ func _camera_view(
 	return viewport
 
 
-func _screen(
-	viewport: SubViewport, at: Vector3, dimensions: Vector2, mirror: bool = false
-) -> MeshInstance3D:
-	Build.box(_cabin, at - Vector3(0, 0, 0.014),
-		Vector3(dimensions.x + 0.035, dimensions.y + 0.035, 0.025), _trim)
-	var surface := StandardMaterial3D.new()
-	surface.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	surface.albedo_texture = viewport.get_texture()
-	if mirror:
-		surface.uv1_scale.x = -1.0
-		surface.uv1_offset.x = 1.0
-	var quad := QuadMesh.new()
-	quad.size = dimensions
-	return Build.instance(_cabin, at, quad, surface)
-
-
 func _dash_screen(
 	viewport: SubViewport, at: Vector3, dimensions: Vector2, turn: Vector3 = Vector3.ZERO,
-	mirror: bool = false, gap: float = SCREEN_GAP
+	mirror: bool = false, gap: float = SCREEN_GAP, holder: Node3D = null
 ) -> MeshInstance3D:
+	var parent := holder if holder != null else _cabin
 	var picture := float(viewport.size.x) / viewport.size.y
 	var glass := dimensions.x / dimensions.y
 	var surface := ShaderMaterial.new()
@@ -375,49 +483,74 @@ func _dash_screen(
 		minf(1.0, picture / glass)))
 	var quad := QuadMesh.new()
 	quad.size = dimensions
-	var screen := Build.instance(_cabin, at, quad, surface)
+	var screen := Build.instance(parent, at - parent.position, quad, surface)
 	screen.rotation_degrees = turn
 	screen.position += screen.basis.z * gap
 	screen.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return screen
 
 
+func _blank_screen(at: Vector3, dimensions: Vector2, turn: Vector3) -> MeshInstance3D:
+	var quad := QuadMesh.new()
+	quad.size = dimensions
+	var screen := Build.instance(_cabin, at, quad, Build.material(Color("050607"), 0.18))
+	screen.rotation_degrees = turn
+	screen.position += screen.basis.z * SCREEN_GAP
+	screen.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	screen.visible = false
+	return screen
+
+
+func _mirror_glass() -> void:
+	for index in range(mirrors.size()):
+		var side := -1.0 if index == 0 else 1.0
+		var holder: Node3D = _door_glass if index == 0 else _cabin
+		for spot: Array in [[MIRROR_GLASS, MIRROR_GLASS_SIZE], [WIDE_GLASS, WIDE_GLASS_SIZE]]:
+			var at: Vector3 = spot[0]
+			_dash_screen(mirrors[index], Vector3(side * at.x, at.y, at.z), spot[1], Vector3.ZERO,
+				true, SCREEN_GAP, holder)
+
+
 func _windows_and_wipers() -> void:
-	var glass := StandardMaterial3D.new()
-	glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	glass.albedo_color = Color(0.33, 0.50, 0.57, 0.14)
-	glass.roughness = 0.09
-	glass.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var outside := _body.get_node("Iveco") as Node3D
 	_door_glass.name = "DriverDoorGlass"
-	_door_glass.position = DOOR_HINGE
+	_door_glass.position = outside.position + _door.position
 	_cabin.add_child(_door_glass)
-	for side in [-1, 1]:
-		var holder: Node3D = _door_glass if side < 0 else _cabin
-		var at := Vector3(side * 1.13, 2.12, -0.69) - holder.position
-		_windows.append(Build.box(holder, at, Vector3(0.015, 0.9, 1.48), glass))
+	var driver_window := _door.get_node("DriverWindow") as MeshInstance3D
+	driver_window.reparent(_door_glass)
+	var passenger_window := outside.get_node("PassengerDoor/PassengerWindow") as MeshInstance3D
+	passenger_window.reparent(_cabin)
+	_windows.assign([driver_window, passenger_window])
+	for window in _windows:
+		var pane := ShaderMaterial.new()
+		pane.shader = SIDE_GLASS
+		_window_drop.append(_slide_into_door(pane, window.mesh))
+		_window_glass.append(pane)
+		window.material_override = pane
+		window.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_glass = ShaderMaterial.new()
 	_glass.shader = GLASS
+	_glass.set_shader_parameter("glass_size", WipeMap.GLASS_SIZE)
 	_glass.set_shader_parameter("wipe_mask", _wipe_map())
 	_glass.set_shader_parameter("drop_radii", RainPhysics.RADII)
 	_wiper_uniforms()
-	var windshield := QuadMesh.new()
-	windshield.size = Vector2(2.12, 1.08)
-	var pane := Build.instance(_cabin, WINDSHIELD_CENTRE, windshield, _glass)
-	pane.rotation.x = WINDSHIELD_RAKE
-	_windshield = pane
-	fog_overlays.append(_fog_overlay(pane, windshield.size, Vector3(0, 0, 0.012), 0.0,
+	_windshield = _glass_pane(outside.get_node("Windshield") as MeshInstance3D)
+	fog_overlays.append(_fog_overlay(_windshield, _windshield.mesh, Vector3(0, 0, 0.012),
 		LIGHT_FOG))
 	for index in range(_windows.size()):
+		var shape := _side_glass(_windows[index])
 		var rain := ShaderMaterial.new()
 		rain.shader = SIDE_RAIN
 		rain.set_shader_parameter("seed", 13.0 * index)
+		rain.set_shader_parameter("glass_size", shape[1])
 		rain.set_shader_parameter("drop_radii", RainPhysics.RADII)
+		_slide_into_door(rain, _windows[index].mesh)
 		var outward := -0.012 if index == 0 else 0.012
-		var overlay := _fog_overlay(_windows[index], Vector2(1.48, 0.9),
-			Vector3(outward, 0, 0), PI / 2, rain)
+		var overlay := _fog_overlay(_windows[index], shape[0], Vector3(outward, 0, 0), rain)
 		overlay.sorting_offset = -0.05
 		side_rain_overlays.append(overlay)
 	_moon_roof()
+	_mirror_glass()
 	for index in range(WipeMap.PIVOTS.size()):
 		var wiper := Wiper.new()
 		wiper.name = "Wiper%d" % index
@@ -426,6 +559,110 @@ func _windows_and_wipers() -> void:
 		wiper.build(WipeMap.ARMS[index], WipeMap.BLADES[index])
 		_wipers.append(wiper)
 		_blades.append(wiper.blade)
+
+
+func _glass_pane(source: MeshInstance3D) -> MeshInstance3D:
+	var frame := Transform3D(Basis(Vector3.RIGHT, WINDSHIELD_RAKE), WINDSHIELD_CENTRE)
+	var size := WipeMap.GLASS_SIZE
+	var pane := MeshInstance3D.new()
+	pane.name = "Windshield"
+	pane.mesh = _projected(source.mesh, frame.affine_inverse() * _local(source),
+		func(at: Vector3) -> Vector2: return Vector2(at.x / size.x + 0.5, 0.5 - at.y / size.y))
+	pane.transform = frame
+	pane.material_override = _glass
+	pane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_cabin.add_child(pane)
+	source.queue_free()
+	return pane
+
+
+func _slide_into_door(material: ShaderMaterial, mesh: Mesh) -> float:
+	var arrays := mesh.surface_get_arrays(0)
+	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var corners: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+	var span := Vector2(INF, -INF)
+	for at in vertices:
+		if at.z > PANE_SPLIT:
+			span = Vector2(minf(span.x, at.z), maxf(span.y, at.z))
+	var sill := PackedFloat32Array()
+	sill.resize(SILL_SAMPLES)
+	sill.fill(INF)
+	for first in range(0, corners.size(), 3):
+		var triangle: Array[Vector3] = [vertices[corners[first]], vertices[corners[first + 1]],
+			vertices[corners[first + 2]]]
+		if triangle[0].z <= PANE_SPLIT:
+			continue
+		for sample in range(SILL_SAMPLES):
+			var z := lerpf(span.x, span.y, float(sample) / (SILL_SAMPLES - 1))
+			for edge in range(3):
+				var from := triangle[edge]
+				var to := triangle[(edge + 1) % 3]
+				if (from.z - z) * (to.z - z) > 0.0:
+					continue
+				var y := minf(from.y, to.y) if is_equal_approx(from.z, to.z) \
+					else lerpf(from.y, to.y, (z - from.z) / (to.z - from.z))
+				sill[sample] = minf(sill[sample], y)
+	var height := 0.0
+	for at in vertices:
+		if at.z > PANE_SPLIT:
+			var along := (at.z - span.x) / (span.y - span.x) * (SILL_SAMPLES - 1)
+			var below := mini(floori(along), SILL_SAMPLES - 2)
+			height = maxf(height, at.y - lerpf(sill[below], sill[below + 1], along - below))
+	material.set_shader_parameter("slides", true)
+	material.set_shader_parameter("pane_split", PANE_SPLIT)
+	material.set_shader_parameter("sill", sill)
+	material.set_shader_parameter("sill_span", span)
+	return height + DROP_MARGIN
+
+
+func door_handle() -> Vector3:
+	return _door.global_transform * HANDLE
+
+
+func door_opening_toward(point: Vector3) -> float:
+	var hinge := vehicle.to_local(_door.global_position)
+	var at := vehicle.to_local(point)
+	return atan2(hinge.x - at.x, at.z - hinge.z) / DOOR_SWING
+
+
+func _light_the_cab(delta: float) -> void:
+	var wanted := 1.0 if vehicle.cabin_light or vehicle.driver_door > 0.001 else 0.0
+	_dome_level = move_toward(_dome_level, wanted,
+		delta / (DOME_ON if wanted > _dome_level else DOME_FADE))
+	cabin_lamp.visible = _dome_level > 0.0
+	cabin_lamp.light_energy = DOME_ENERGY * _dome_level
+	_dome_lens.emission_energy_multiplier = DOME_GLOW * _dome_level
+
+
+func _side_glass(window: MeshInstance3D) -> Array:
+	var box := window.mesh.get_aabb()
+	var middle := box.get_center()
+	var size := Vector2(box.size.z, box.size.y)
+	var mesh := _projected(window.mesh, Transform3D.IDENTITY,
+		func(at: Vector3) -> Vector2: return Vector2((middle.z - at.z) / size.x + 0.5,
+			0.5 - (at.y - middle.y) / size.y))
+	return [mesh, size]
+
+
+func _projected(mesh: Mesh, into: Transform3D, uv_of: Callable) -> ArrayMesh:
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for surface in range(mesh.get_surface_count()):
+		var arrays := mesh.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+		var index: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+		for corner in index:
+			var at := into * vertices[corner]
+			tool.set_normal((into.basis * normals[corner]).normalized())
+			tool.set_uv(uv_of.call(at))
+			tool.add_vertex(at)
+	tool.generate_tangents()
+	return tool.commit()
+
+
+func _local(node: Node3D) -> Transform3D:
+	return global_transform.affine_inverse() * node.global_transform
 
 
 func _beam_rain() -> void:
@@ -525,7 +762,7 @@ func _on_windshield(eye: Vector3, target: Vector3) -> Vector2:
 	if reach <= 0.0:
 		return OFF_GLASS
 	var local := pane.affine_inverse() * (eye + ray * reach)
-	var half := (_windshield.mesh as QuadMesh).size * 0.5
+	var half := WipeMap.GLASS_SIZE * 0.5
 	if absf(local.x) > half.x or absf(local.y) > half.y:
 		return OFF_GLASS
 	return Vector2(local.x, local.y)
@@ -561,9 +798,23 @@ func _moon_roof() -> void:
 	rain.set_shader_parameter("seed", 29.0)
 	rain.set_shader_parameter("glass_size", MOON_ROOF.size)
 	rain.set_shader_parameter("drop_radii", RainPhysics.RADII)
-	roof_rain = _fog_overlay(glass, MOON_ROOF.size, Vector3(0, 0, 0.012), 0.0, rain)
+	roof_rain = _fog_overlay(glass, pane, Vector3(0, 0, 0.012), rain)
 	roof_rain.name = "MoonRoofRain"
 	roof_rain.sorting_offset = -0.05
+	var half := MOON_ROOF.size * 0.5
+	var width := ROOF_FRAME.x
+	var frame_middle := (ROOF_FRAME.y + ROOF_FRAME.z) * 0.5
+	var frame_height := ROOF_FRAME.z - ROOF_FRAME.y
+	for side in [-1, 1]:
+		Build.box(_cabin, Vector3(centre.x + side * (half.x + width * 0.5), frame_middle,
+			centre.y), Vector3(width, frame_height, MOON_ROOF.size.y + 2.0 * width), _trim)
+		Build.box(_cabin, Vector3(centre.x, frame_middle, centre.y + side * (half.y + width * 0.5)),
+			Vector3(MOON_ROOF.size.x, frame_height, width), _trim)
+		Build.box(_body, Vector3(centre.x + side * (half.x + ROOF_SEAL * 0.5), ROOF_TOP + 0.003,
+			centre.y), Vector3(ROOF_SEAL, 0.008, MOON_ROOF.size.y + 2.0 * ROOF_SEAL), _seal)
+		Build.box(_body, Vector3(centre.x, ROOF_TOP + 0.003,
+			centre.y + side * (half.y + ROOF_SEAL * 0.5)),
+			Vector3(MOON_ROOF.size.x, 0.008, ROOF_SEAL), _seal)
 
 
 func _on_glass(at: Vector2) -> Transform3D:
@@ -611,17 +862,12 @@ func _wipe_map() -> Texture2D:
 	return viewport.get_texture()
 
 
-func _fog_overlay(
-	glass: Node3D, dimensions: Vector2, offset: Vector3, turn: float, material: Material
-) -> MeshInstance3D:
-	var quad := QuadMesh.new()
-	quad.size = dimensions
+func _fog_overlay(glass: Node3D, mesh: Mesh, offset: Vector3, material: Material) -> MeshInstance3D:
 	var overlay := MeshInstance3D.new()
-	overlay.mesh = quad
+	overlay.mesh = mesh
 	overlay.material_override = material
 	overlay.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	overlay.position = offset
-	overlay.rotation.y = turn
 	glass.add_child(overlay)
 	return overlay
 
@@ -641,8 +887,21 @@ func _follow_ground(delta: float) -> void:
 		atan2((ground[1] + ground[3]) * 0.5 - (ground[0] + ground[2]) * 0.5,
 		WHEEL_SPOTS[1].x - WHEEL_SPOTS[0].x))
 	_tilt = _tilt.lerp(target, 1.0 - exp(-delta * TILT_RATE))
-	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x, 0.0, _tilt.z)),
+	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x + _rock, 0.0, _tilt.z)),
 		Vector3(0.0, _tilt.y, 0.0))
+
+
+func _lean_to_look(delta: float) -> void:
+	var leaning: bool = vehicle.held and absf(vehicle.speed) < 0.3 \
+		and is_instance_valid(look_target_node)
+	_lean = move_toward(_lean, 1.0 if leaning else 0.0, delta * LEAN_RATE)
+	if leaning:
+		var to := to_local(look_target_node.global_position) - _look.position
+		_look_target = Vector2(clampf(atan2(to.y, Vector2(to.x, to.z).length()) + CAMERA_TILT,
+			LOOK_DOWN, LOOK_UP), atan2(-to.x, -to.z))
+	elif _leaning:
+		_look_target = Vector2.ZERO
+	_leaning = leaning
 
 
 func _mark_layer(node: Node, layer: int) -> void:
@@ -664,14 +923,75 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func jolt(strength: float) -> void:
 	_jolt = maxf(_jolt, strength)
+	_rock_speed -= strength * ROCK_KICK
+
+
+func crack_at(point: Vector3, strength: float) -> void:
+	var local := _windshield.global_transform.affine_inverse() * point
+	var spot := Vector2(clampf(local.x, CRACK_AREA.position.x, CRACK_AREA.end.x),
+		clampf(local.y, CRACK_AREA.position.y, CRACK_AREA.end.y))
+	_glass.set_shader_parameter("crack_point", spot)
+	_glass.set_shader_parameter("crack_seed", fmod(absf(point.x * 13.7 + point.z * 7.3), 97.0))
+	_crack_target = clampf(strength, 0.0, 1.0)
+
+
+func watch_head(head: Node3D, strength: float) -> void:
+	_head = head
+	_head_strength = strength
+	_head_watch = 0.0
+
+
+func _watch_head(delta: float) -> void:
+	if _head_watch < 0.0:
+		return
+	_head_watch += delta
+	if not is_instance_valid(_head) or _head_watch > HEAD_WATCH:
+		_head_watch = -1.0
+		return
+	var local := _windshield.global_transform.affine_inverse() * _head.global_position
+	var half := WipeMap.GLASS_SIZE * 0.5
+	if -local.z < HEAD_REACH and absf(local.x) < half.x and local.y > -half.y - COWL \
+			and local.y < half.y:
+		_head_watch = -1.0
+		crack_at(_head.global_position, _head_strength)
+
+
+func crack_state() -> Dictionary:
+	return {"point": _glass.get_shader_parameter("crack_point"),
+		"seed": _glass.get_shader_parameter("crack_seed"), "amount": _crack_target}
+
+
+func restore_crack(state: Dictionary) -> void:
+	if float(state.get("amount", 0.0)) <= 0.0:
+		return
+	_glass.set_shader_parameter("crack_point", state["point"])
+	_glass.set_shader_parameter("crack_seed", state["seed"])
+	_crack_target = float(state["amount"])
+	_crack = _crack_target
+	_glass.set_shader_parameter("crack_amount", _crack)
+
+
+func clear_crack() -> void:
+	_head_watch = -1.0
+	_crack = 0.0
+	_crack_target = 0.0
+	_glass.set_shader_parameter("crack_amount", 0.0)
 
 
 func update_vehicle(delta: float) -> void:
+	_rock_speed += (-ROCK_STIFFNESS * _rock - ROCK_DAMPING * _rock_speed) * delta
+	_rock += _rock_speed * delta
 	_follow_ground(delta)
+	_front.global_transform = global_transform
+	_watch_head(delta)
 	_jolt_time += delta
 	_jolt = move_toward(_jolt, 0.0, delta * JOLT_FADE)
-	_look.position = EYE + Vector3(sin(_jolt_time * 37.0) * 0.02, sin(_jolt_time * 53.0) * 0.03,
-		0.0) * _jolt
+	_lean_to_look(delta)
+	_look.position = EYE + LEAN * smoothstep(0.0, 1.0, _lean) + Vector3(
+		sin(_jolt_time * 37.0) * 0.02, sin(_jolt_time * 53.0) * 0.03, 0.0) * _jolt
+	if _crack != _crack_target:
+		_crack = move_toward(_crack, _crack_target, delta * CRACK_GROWTH)
+		_glass.set_shader_parameter("crack_amount", _crack)
 	_wheel.rotation.z = vehicle.steering * 2.2
 	_look.rotation.x = lerp_angle(_look.rotation.x, _look_target.x, 1.0 - exp(-delta * 14))
 	_look.rotation.y = lerp_angle(_look.rotation.y, _look_target.y, 1.0 - exp(-delta * 14))
@@ -679,11 +999,21 @@ func update_vehicle(delta: float) -> void:
 		-vehicle.steering * vehicle.speed * 0.0015, 1.0 - exp(-delta * 5))
 	for index in range(_windows.size()):
 		var openness: float = vehicle.left_window if index == 0 else vehicle.right_window
-		_windows[index].position.y = 2.12 - openness * 0.88
+		var lowered := openness * _window_drop[index]
+		if not is_equal_approx(_window_lowered[index], lowered):
+			_window_lowered[index] = lowered
+			_window_glass[index].set_shader_parameter("lowered", lowered)
+			(side_rain_overlays[index].material_override as ShaderMaterial).set_shader_parameter(
+				"lowered", lowered)
 	_door.rotation.y = -vehicle.driver_door * DOOR_SWING
 	_door_glass.rotation.y = _door.rotation.y
+	_light_the_cab(delta)
 	if vehicle.engine_on != _screens_on:
 		_power_screens(vehicle.engine_on)
+	_screen_power = move_toward(_screen_power, 1.0 if _screens_on else 0.0, delta / BOOT_SECONDS)
+	for screen: MeshInstance3D in [_map_screen, reverse_screen]:
+		(screen.material_override as ShaderMaterial).set_shader_parameter("power", _screen_power)
+	_screen_light.light_energy = SCREEN_GLOW * _screen_power
 	for headlight in _headlights:
 		headlight.visible = vehicle.headlights_on
 	if vehicle.high_beams != _high_beams_shown:
@@ -692,17 +1022,17 @@ func update_vehicle(delta: float) -> void:
 			_aim_beam(headlight, _high_beams_shown)
 	_light_the_rain()
 	for lens in _front_lenses:
-		lens.material_override = _lens_on if vehicle.headlights_on else _lens_off
+		lens.material_override = _lens_on if vehicle.headlights_on else null
 	for lamp in _rear_lamps:
-		lamp.material_override = (_red if vehicle.braking else _tail) if vehicle.engine_on else _tail_off
+		lamp.material_override = (_red if vehicle.braking else _tail) if vehicle.engine_on else null
 	for index in range(_indicators.size()):
 		var side := -1 if index < 2 else 1
 		var lit: bool = vehicle.indicator_lit and (
 			vehicle.hazards_on or vehicle.indicator == side)
-		_indicators[index].material_override = _amber if lit else _amber_off
+		_indicators[index].material_override = _amber if lit else null
 	for index in range(_tires.size()):
 		_tires[index].rotation.y = vehicle.steering * 0.4 if index % 2 == 0 else 0.0
-		_rolling_meshes[index].rotation.x -= vehicle.actual_speed * delta / 0.46
+		_tires[index].rotation.x -= vehicle.actual_speed * delta / TYRE_RADIUS
 	for wiper in _wipers:
 		wiper.rotation.z = vehicle.wiper_angle
 	var stroke: float = vehicle.wiper_angle - _last_wiper

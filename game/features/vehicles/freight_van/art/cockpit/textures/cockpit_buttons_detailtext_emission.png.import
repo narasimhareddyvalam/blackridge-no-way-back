@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://f8fov2g7beya"
 path.s3tc="res://.godot/imported/cockpit_buttons_detailtext_emission.png-de76ca7f8f89a1b198a08f4a0deb643a.s3tc.ctex"
+path.etc2="res://.godot/imported/cockpit_buttons_detailtext_emission.png-de76ca7f8f89a1b198a08f4a0deb643a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/cockpit/textures/cockpit_buttons_detailtext_emission.png"
-dest_files=["res://.godot/imported/cockpit_buttons_detailtext_emission.png-de76ca7f8f89a1b198a08f4a0deb643a.s3tc.ctex"]
+dest_files=["res://.godot/imported/cockpit_buttons_detailtext_emission.png-de76ca7f8f89a1b198a08f4a0deb643a.s3tc.ctex", "res://.godot/imported/cockpit_buttons_detailtext_emission.png-de76ca7f8f89a1b198a08f4a0deb643a.etc2.ctex"]
 
 [params]
 

@@ -8,6 +8,7 @@ const TURN_RATE := 10.0
 const ARRIVE := 0.06
 const STUCK_SECONDS := 1.0
 const FACE_SECONDS := 0.25
+const GRIP_REACH := 0.17
 
 var active: bool = false
 var _pivot: Node3D
@@ -20,6 +21,11 @@ var _route: Array[Vector3] = []
 var _scripted: bool = false
 var _best_gap: float = INF
 var _stuck: float = 0.0
+var _grip := TwoBoneIK3D.new()
+var _grip_target := Node3D.new()
+var _grip_pole := Node3D.new()
+var _grip_seen := Vector3.ZERO
+var _hand := -1
 
 
 func _ready() -> void:
@@ -39,6 +45,7 @@ func _ready() -> void:
 	_player = _model.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
 	_skeleton = _model.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
 	_player.play("Idle")
+	_grip_hand()
 	_pivot = Node3D.new()
 	_pivot.position.y = 1.55
 	add_child(_pivot)
@@ -81,6 +88,42 @@ func walk_to(points: Array[Vector3]) -> void:
 	_scripted = false
 	_best_gap = INF
 	_stuck = 0.0
+
+
+func grip(at: Vector3, elbow: Vector3, amount: float) -> void:
+	_grip_target.global_position = at
+	_grip_pole.global_position = elbow
+	_grip.influence = clampf(amount, 0.0, 1.0)
+	_grip.active = amount > 0.0
+
+
+func grip_point() -> Vector3:
+	return _grip_seen
+
+
+func _remember_grip() -> void:
+	var hand := _skeleton.global_transform * _skeleton.get_bone_global_pose(_hand)
+	_grip_seen = hand.origin + hand.basis.y.normalized() * GRIP_REACH
+
+
+func _grip_hand() -> void:
+	for point: Node3D in [_grip_target, _grip_pole]:
+		point.top_level = true
+		add_child(point)
+	_grip.name = "LeftHandGrip"
+	_grip.set_setting_count(1)
+	_grip.set_root_bone_name(0, "mixamorig_LeftArm")
+	_grip.set_middle_bone_name(0, "mixamorig_LeftForeArm")
+	_grip.set_end_bone_name(0, "mixamorig_LeftHand")
+	_grip.set_extend_end_bone(0, true)
+	_grip.set_end_bone_direction(0, SkeletonModifier3D.BONE_DIRECTION_PLUS_Y)
+	_grip.set_end_bone_length(0, GRIP_REACH / _skeleton.global_basis.get_scale().y)
+	_grip.active = false
+	_skeleton.add_child(_grip)
+	_grip.set_target_node(0, _grip.get_path_to(_grip_target))
+	_grip.set_pole_node(0, _grip.get_path_to(_grip_pole))
+	_hand = _skeleton.find_bone("mixamorig_LeftHand")
+	_skeleton.skeleton_updated.connect(_remember_grip)
 
 
 func walking() -> bool:

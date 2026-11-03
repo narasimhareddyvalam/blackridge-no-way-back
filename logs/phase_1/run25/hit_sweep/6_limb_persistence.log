@@ -1,0 +1,47 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: At 30 km/h he is thrown onto the bonnet (hips 1.38 m up)
+PASS: At 30 km/h his head strikes the windshield and cracks it (0.93)
+PASS: At 30 km/h he never passes over or through the cab, and lies 2.1 m ahead of the bumper (furthest back -1.89 m)
+   LIMBS 30 km/h: peak -34 / 97, longest out-of-range run 1 ticks, final [-2.03022923113786, 36.7919619434948, 52.4160953387904, 2.0486934848668], settled true
+FAIL: At 30 km/h his knees and elbows stay in range (worst -34 and 97 degrees)
+PASS: At 35 km/h he is thrown onto the bonnet (hips 1.50 m up)
+PASS: At 35 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 35 km/h he never passes over or through the cab, and lies 2.7 m ahead of the bumper (furthest back -1.71 m)
+   LIMBS 35 km/h: peak -27 / 160, longest out-of-range run 1 ticks, final [-2.01164039549285, 81.5282277008309, 135.500859637962, 94.4061392488588], settled true
+FAIL: At 35 km/h his knees and elbows stay in range (worst -27 and 160 degrees)
+PASS: At 40 km/h he is thrown onto the bonnet (hips 1.59 m up)
+PASS: At 40 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 40 km/h he never passes over or through the cab, and lies 2.0 m ahead of the bumper (furthest back -1.74 m)
+   LIMBS 40 km/h: peak -21 / 147, longest out-of-range run 0 ticks, final [138.142453897749, -1.38027386448654, 65.6574117218224, 142.381185548845], settled true
+PASS: At 40 km/h his knees and elbows stay in range (worst -21 and 147 degrees)
+PASS: At 45 km/h he is thrown onto the bonnet (hips 1.37 m up)
+PASS: At 45 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 45 km/h he never passes over or through the cab, and lies 2.0 m ahead of the bumper (furthest back -1.92 m)
+   LIMBS 45 km/h: peak -28 / 139, longest out-of-range run 0 ticks, final [137.799988658959, 0.74207455041011, 1.56936805066073, 2.25895947882728], settled true
+PASS: At 45 km/h his knees and elbows stay in range (worst -28 and 139 degrees)
+PASS: At 50 km/h he is thrown onto the bonnet (hips 1.61 m up)
+PASS: At 50 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 50 km/h he never passes over or through the cab, and lies 2.9 m ahead of the bumper (furthest back -1.47 m)
+   LIMBS 50 km/h: peak -19 / 151, longest out-of-range run 0 ticks, final [110.899565903818, 136.973231653079, 38.3272510011235, 96.4581796231832], settled true
+PASS: At 50 km/h his knees and elbows stay in range (worst -19 and 151 degrees)
+PASS: At 55 km/h he is thrown onto the bonnet (hips 1.82 m up)
+PASS: At 55 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 55 km/h he never passes over or through the cab, and lies 2.8 m ahead of the bumper (furthest back -1.43 m)
+   LIMBS 55 km/h: peak -58 / 147, longest out-of-range run 1 ticks, final [0.97815367647523, 136.965902685554, 142.180796076717, 1.55350575223682], settled true
+FAIL: At 55 km/h his knees and elbows stay in range (worst -58 and 147 degrees)
+PASS: At 60 km/h he is thrown onto the bonnet (hips 1.84 m up)
+PASS: At 60 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 60 km/h he never passes over or through the cab, and lies 2.5 m ahead of the bumper (furthest back -1.51 m)
+   LIMBS 60 km/h: peak -59 / 146, longest out-of-range run 1 ticks, final [62.5626216240336, 105.770710184409, 69.3178392425957, 142.638486320239], settled true
+FAIL: At 60 km/h his knees and elbows stay in range (worst -59 and 146 degrees)
+PASS: At 65 km/h he is thrown onto the bonnet (hips 1.83 m up)
+PASS: At 65 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 65 km/h he never passes over or through the cab, and lies 1.3 m ahead of the bumper (furthest back -1.60 m)
+   LIMBS 65 km/h: peak -21 / 152, longest out-of-range run 0 ticks, final [-1.87979367498681, -0.739832774335, 71.6096995349045, 2.6051242493324], settled true
+PASS: At 65 km/h his knees and elbows stay in range (worst -21 and 152 degrees)
+HIT SPEEDS RESULT: 28/32 passed; 4 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

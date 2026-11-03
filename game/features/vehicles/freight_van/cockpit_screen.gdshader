@@ -4,6 +4,10 @@ render_mode unshaded, shadows_disabled;
 uniform sampler2D display : source_color, filter_linear, repeat_disable;
 uniform bool mirrored = false;
 uniform vec2 crop = vec2(1.0);
+uniform float power = 1.0;
+uniform vec2 border = vec2(0.0);
+uniform float black_level = 0.0;
+uniform float view_falloff = 0.0;
 
 const int TAPS = 6;
 
@@ -19,5 +23,14 @@ void fragment() {
 			sum += texture(display, uv + across * offset.x + down * offset.y).rgb;
 		}
 	}
-	ALBEDO = sum / float(TAPS * TAPS);
+	vec3 colour = sum / float(TAPS * TAPS);
+	if (border.x > 0.0 || border.y > 0.0) {
+		vec2 edge = min(UV, 1.0 - UV);
+		vec2 feather = fwidth(UV);
+		float lit = smoothstep(border.x, border.x + feather.x, edge.x)
+			* smoothstep(border.y, border.y + feather.y, edge.y);
+		colour = max(colour, vec3(black_level)) * lit;
+	}
+	colour *= mix(1.0 - view_falloff, 1.0, abs(dot(NORMAL, VIEW)));
+	ALBEDO = colour * power;
 }

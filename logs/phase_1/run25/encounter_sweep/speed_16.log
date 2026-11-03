@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+t 4.3 encounter starts at sample 707 (58 km/h), oncoming van at sample 815
+t 11.8 vans pass at sample 770 (meeting point 777), oncoming 43 km/h
+ERROR: String formatting error: a number is required.
+   at: validated_evaluate (core/variant/variant_op.h:770)
+   GDScript backtrace (most recent call first):
+       [0] _run (/private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/probe_encounter.gd:63)
+t %.1f (van 1.50 across, walking to (63.12468, 32.6952, -81.03695); lane %.2f) he steps out, bumper %.1f m from the crossing, van %.0f km/h, locked %s
+   lock +0.00 across 1.50 heading-to-road 4.59 deg, locked true, steering -0.09, real velocity across -1.28
+   lock +0.10 across 1.38 heading-to-road 3.85 deg, locked true, steering -0.09, real velocity across -1.07
+   lock +0.20 across 1.29 heading-to-road 3.14 deg, locked true, steering -0.09, real velocity across -0.87
+   lock +0.30 across 1.21 heading-to-road 2.48 deg, locked true, steering -0.09, real velocity across -0.69
+   lock +0.40 across 1.15 heading-to-road 1.92 deg, locked true, steering -0.09, real velocity across -0.53
+   lock +0.50 across 1.10 heading-to-road 1.42 deg, locked true, steering -0.09, real velocity across -0.39
+   lock +0.60 across 1.07 heading-to-road 1.02 deg, locked true, steering -0.09, real velocity across -0.28
+   lock +0.70 across 1.05 heading-to-road 0.68 deg, locked true, steering -0.09, real velocity across -0.19
+   lock +0.80 across 1.04 heading-to-road 0.44 deg, locked true, steering -0.09, real velocity across -0.12
+   lock +0.90 across 1.03 heading-to-road 0.28 deg, locked true, steering -0.09, real velocity across -0.08
+t 13.6 HIT at 56 km/h, 0.95 s after the lock, skid heard true
+   1.5 s later: crack 1.00, he is 3.6 m ahead of the van
+   LIMB +2.12 elbows L 25 R -54 knees L 128 R 16 | hips y -0.36 above van origin, forearm L speed 5.8 R 5.7
+t 20.0 fleeing
+checkpoint load: 0 keys ["stage", "recovery", "body", "crack"]
+  stage 3 recovery [X: (-0.087223, 0.0, -0.996189), Y: (0.0, 1.0, 0.0), Z: (0.996189, 0.0, -0.087223), O: (43.30769, 31.04471, -78.75246)] body bones 11 crack { "amount": 1.0, "point": (0.5, -0.40715), "seed": 81.7191673278808 }
+WARNING: 22 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+   0.0 s  sample    0   0.0 m/s  start at sample 0
+  17.9 s  sample   91   6.0 m/s  passes sample 91
+  18.0 s  sample   91   6.1 m/s  ringing (attempt 1)
+  26.8 s  sample  138   2.2 m/s  missed
+  28.8 s  sample  142   6.3 m/s  ringing (attempt 2)
+  37.6 s  sample  206  19.0 m/s  missed
+  39.6 s  sample  225  19.0 m/s  ringing (attempt 3)
+  44.0 s  sample  267  19.0 m/s  connected
+  77.6 s  sample  587  19.0 m/s  ended
+  87.4 s  sample  680  19.0 m/s  passes sample 680, stage 3
+  88.8 s  sample  693  19.0 m/s  ENCOUNTER STARTS, call active false
+slowest speed after 10 s: 0.0 m/s
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

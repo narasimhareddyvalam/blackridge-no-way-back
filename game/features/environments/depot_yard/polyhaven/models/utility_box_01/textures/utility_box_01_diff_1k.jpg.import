@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://denjj1fvahqm4"
 path.s3tc="res://.godot/imported/utility_box_01_diff_1k.jpg-8263b5f2b40427cf68a9a59139c141bf.s3tc.ctex"
+path.etc2="res://.godot/imported/utility_box_01_diff_1k.jpg-8263b5f2b40427cf68a9a59139c141bf.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/utility_box_01/textures/utility_box_01_diff_1k.jpg"
-dest_files=["res://.godot/imported/utility_box_01_diff_1k.jpg-8263b5f2b40427cf68a9a59139c141bf.s3tc.ctex"]
+dest_files=["res://.godot/imported/utility_box_01_diff_1k.jpg-8263b5f2b40427cf68a9a59139c141bf.s3tc.ctex", "res://.godot/imported/utility_box_01_diff_1k.jpg-8263b5f2b40427cf68a9a59139c141bf.etc2.ctex"]
 
 [params]
 

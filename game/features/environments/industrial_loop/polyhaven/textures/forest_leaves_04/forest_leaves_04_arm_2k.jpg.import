@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d08xcc81q48la"
 path.s3tc="res://.godot/imported/forest_leaves_04_arm_2k.jpg-721557dcd251354062ecd207c9d0644d.s3tc.ctex"
+path.etc2="res://.godot/imported/forest_leaves_04_arm_2k.jpg-721557dcd251354062ecd207c9d0644d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/textures/forest_leaves_04/forest_leaves_04_arm_2k.jpg"
-dest_files=["res://.godot/imported/forest_leaves_04_arm_2k.jpg-721557dcd251354062ecd207c9d0644d.s3tc.ctex"]
+dest_files=["res://.godot/imported/forest_leaves_04_arm_2k.jpg-721557dcd251354062ecd207c9d0644d.s3tc.ctex", "res://.godot/imported/forest_leaves_04_arm_2k.jpg-721557dcd251354062ecd207c9d0644d.etc2.ctex"]
 
 [params]
 

@@ -7,6 +7,9 @@ to other files. A Markdown provenance manifest is written beside the assets.
 "maps" downloads single texture maps of an asset (for example a model's twig
 atlas), named in "map_names", as JPEG files.
 
+The manifest keeps the rows of assets fetched earlier into the same folder, so several
+asset lists can share one destination.
+
 Usage, from the repository root:
     python3 -I tools/assets/fetch_polyhaven.py tools/assets/depot_yard_assets.json
 """
@@ -83,6 +86,20 @@ def hdri_files(asset: str, files: dict, resolution: str) -> list:
     return [(data["url"], data["md5"], f"{asset}_{resolution}.hdr")]
 
 
+def earlier_rows(manifest: pathlib.Path, fetched: set) -> list:
+    if not manifest.exists():
+        return []
+    kept = []
+    for line in manifest.read_text().splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) != 6 or not cells[1].startswith("["):
+            continue
+        asset = cells[1][1:cells[1].index("]")]
+        if asset not in fetched:
+            kept.append(line)
+    return kept
+
+
 def main() -> None:
     config_path = pathlib.Path(sys.argv[1])
     config = json.loads(config_path.read_text())
@@ -110,6 +127,8 @@ def main() -> None:
         "| Type | Asset | Name | Resolution | Authors | Bytes |",
         "| --- | --- | --- | --- | --- | --- |",
     ]
+    fetched = {asset for _, asset, _, _, _, _ in rows}
+    lines.extend(earlier_rows(root / "POLYHAVEN.md", fetched))
     for kind, asset, name, resolution, authors, total in rows:
         link = f"[{asset}](https://polyhaven.com/a/{asset})"
         lines.append(f"| {kind} | {link} | {name} | {resolution} | {authors} | {total} |")

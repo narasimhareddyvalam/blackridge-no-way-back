@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+res://features/vehicles/freight_van/art/iveco/iveco_exterior.glb root iveco_exterior
+  Body (parent iveco_exterior) origin (0.0, 0.0, 0.0) box (-1.002, 0.235, -3.021)..(1.002, 2.081, 2.512) surfaces 6
+    transparent surface: Window
+  DriverDoor (parent iveco_exterior) origin (-0.962, 1.102, -1.909) box (-1.231, 0.252, -1.914)..(-0.772, 2.027, -0.779) surfaces 2
+  DriverWindow (parent DriverDoor) origin (-0.962, 1.102, -1.909) box (-0.928, 1.291, -1.723)..(-0.87, 1.917, -0.855) surfaces 1
+    transparent surface: Window
+  PassengerDoor (parent iveco_exterior) origin (0.978, 1.102, -1.91) box (0.772, 0.252, -1.913)..(1.23, 2.027, -0.779) surfaces 2
+  PassengerWindow (parent PassengerDoor) origin (0.978, 1.102, -1.91) box (0.87, 1.291, -1.723)..(0.927, 1.917, -0.855) surfaces 1
+    transparent surface: Window
+  WheelFrontLeft (parent iveco_exterior) origin (-0.872, 0.359, -2.007) box (-0.99, 0.0, -2.365)..(-0.753, 0.718, -1.648) surfaces 1
+  WheelFrontRight (parent iveco_exterior) origin (0.872, 0.359, -2.007) box (0.753, 0.0, -2.365)..(0.99, 0.718, -1.648) surfaces 1
+  WheelRearLeft (parent iveco_exterior) origin (-0.872, 0.359, 1.497) box (-0.99, 0.0, 1.138)..(-0.753, 0.718, 1.856) surfaces 1
+  WheelRearRight (parent iveco_exterior) origin (0.872, 0.359, 1.497) box (0.753, 0.0, 1.138)..(0.99, 0.718, 1.856) surfaces 1
+  Windshield (parent iveco_exterior) origin (0.0, 0.0, 0.0) box (-0.885, 1.345, -2.254)..(0.885, 1.987, -1.48) surfaces 1
+    transparent surface: Window
+res://features/vehicles/freight_van/art/iveco/iveco_cab.glb root iveco_cab
+  Cab (parent iveco_cab) origin (0.0, 0.0, 0.0) box (-0.887, 0.279, -2.254)..(0.898, 2.063, 2.246) surfaces 4
+  SteeringWheel (parent iveco_cab) origin (-0.476, 1.313, -1.642) box (-0.651, 1.154, -1.799)..(-0.301, 1.453, -1.502) surfaces 1 local Z (0.0, 0.703, 0.711)

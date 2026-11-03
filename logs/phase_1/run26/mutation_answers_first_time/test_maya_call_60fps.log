@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The drive starts quietly: no call, and the dash shows the map
+PASS: Driving onto the climb, the phone rings through the van and the dash shows MAYA, incoming
+FAIL: It keeps ringing until answered: the dash asks for T, and the hint says "W / S  Accelerate / brake     A / D  Steer"
+PASS: Pressing T answers: it connects hands-free at once, the dash shows the call, and the music dips -13 dB
+PASS: Her call plays the 13 approved lines in order, as subtitles (13 heard; first "MAYA: Hey. Still working?", last "MAYA: Drive safe, okay?")
+PASS: The call is short: 34 s once connected
+PASS: When she hangs up, the subtitles clear, the music comes back and the dash shows the map
+PASS: After the call, on the dark climb, the hint teaches the high beams (L  High beams     L again  Lights off     L again  Low beams)
+PASS: Driving onto the climb again, she does not call twice
+PASS: A new drive brings the call back
+FAIL: Unanswered, the call is missed and she calls back; after two missed calls the third picks up by itself after two rings (0.0 s)
+CALL RESULT: 9/11 passed; 2 failed

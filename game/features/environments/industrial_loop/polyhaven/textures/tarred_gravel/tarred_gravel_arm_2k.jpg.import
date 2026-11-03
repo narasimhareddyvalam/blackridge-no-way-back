@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://551cthmdfrt1"
 path.s3tc="res://.godot/imported/tarred_gravel_arm_2k.jpg-05bde35710cf057da7139e0d45583e2a.s3tc.ctex"
+path.etc2="res://.godot/imported/tarred_gravel_arm_2k.jpg-05bde35710cf057da7139e0d45583e2a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/textures/tarred_gravel/tarred_gravel_arm_2k.jpg"
-dest_files=["res://.godot/imported/tarred_gravel_arm_2k.jpg-05bde35710cf057da7139e0d45583e2a.s3tc.ctex"]
+dest_files=["res://.godot/imported/tarred_gravel_arm_2k.jpg-05bde35710cf057da7139e0d45583e2a.s3tc.ctex", "res://.godot/imported/tarred_gravel_arm_2k.jpg-05bde35710cf057da7139e0d45583e2a.etc2.ctex"]
 
 [params]
 

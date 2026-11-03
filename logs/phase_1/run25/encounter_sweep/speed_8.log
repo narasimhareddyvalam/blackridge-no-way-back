@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+t 11.8 encounter starts at sample 728 (35 km/h), oncoming van at sample 815
+t 20.7 vans pass at sample 770 (meeting point 777), oncoming 38 km/h
+ERROR: String formatting error: a number is required.
+   at: validated_evaluate (core/variant/variant_op.h:770)
+   GDScript backtrace (most recent call first):
+       [0] _run (/private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/probe_encounter.gd:63)
+t %.1f (van 1.06 across, walking to (63.13571, 32.6952, -80.90785); lane %.2f) he steps out, bumper %.1f m from the crossing, van %.0f km/h, locked %s
+   lock +0.00 across 1.06 heading-to-road 2.52 deg, locked true, steering -0.08, real velocity across -0.45
+   lock +0.02 across 1.05 heading-to-road 2.46 deg, locked true, steering -0.08, real velocity across -0.44
+   lock +0.12 across 1.01 heading-to-road 2.08 deg, locked true, steering -0.08, real velocity across -0.36
+   lock +0.22 across 0.98 heading-to-road 1.71 deg, locked true, steering -0.08, real velocity across -0.30
+   lock +0.32 across 0.95 heading-to-road 1.41 deg, locked true, steering -0.08, real velocity across -0.24
+   lock +0.42 across 0.93 heading-to-road 1.12 deg, locked true, steering -0.08, real velocity across -0.19
+   lock +0.52 across 0.91 heading-to-road 0.88 deg, locked true, steering -0.08, real velocity across -0.15
+   lock +0.62 across 0.90 heading-to-road 0.67 deg, locked true, steering -0.08, real velocity across -0.11
+   lock +0.72 across 0.89 heading-to-road 0.50 deg, locked true, steering -0.08, real velocity across -0.09
+   lock +0.82 across 0.88 heading-to-road 0.34 deg, locked true, steering -0.08, real velocity across -0.06
+   lock +0.92 across 0.88 heading-to-road 0.24 deg, locked true, steering -0.08, real velocity across -0.04
+   lock +1.02 across 0.87 heading-to-road 0.14 deg, locked true, steering -0.08, real velocity across -0.02
+t 23.5 HIT at 34 km/h, 1.05 s after the lock, skid heard true
+   1.5 s later: crack 1.00, he is 4.2 m ahead of the van
+t 29.2 fleeing
+checkpoint load: 0 keys ["stage", "recovery", "body", "crack"]
+  stage 3 recovery [X: (-0.086246, 0.0, -0.996274), Y: (0.0, 1.0, 0.0), Z: (0.996274, 0.0, -0.086246), O: (55.20166, 32.16361, -79.6545)] body bones 11 crack { "amount": 1.0, "point": (0.5, -0.42), "seed": 82.5677406311034 }
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cddkg4kqmsqbi"
 path.s3tc="res://.godot/imported/body_legends.png-9b58419365686c7b3d3f81c49e128539.s3tc.ctex"
+path.etc2="res://.godot/imported/body_legends.png-9b58419365686c7b3d3f81c49e128539.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/body_legends.png"
-dest_files=["res://.godot/imported/body_legends.png-9b58419365686c7b3d3f81c49e128539.s3tc.ctex"]
+dest_files=["res://.godot/imported/body_legends.png-9b58419365686c7b3d3f81c49e128539.s3tc.ctex", "res://.godot/imported/body_legends.png-9b58419365686c7b3d3f81c49e128539.etc2.ctex"]
 
 [params]
 

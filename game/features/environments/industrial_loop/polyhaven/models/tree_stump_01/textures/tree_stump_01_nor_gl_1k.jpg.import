@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqr617ewhuvgc"
 path.s3tc="res://.godot/imported/tree_stump_01_nor_gl_1k.jpg-3c61a39f7cba04866af86226f1e5248b.s3tc.ctex"
+path.etc2="res://.godot/imported/tree_stump_01_nor_gl_1k.jpg-3c61a39f7cba04866af86226f1e5248b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/models/tree_stump_01/textures/tree_stump_01_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/tree_stump_01_nor_gl_1k.jpg-3c61a39f7cba04866af86226f1e5248b.s3tc.ctex"]
+dest_files=["res://.godot/imported/tree_stump_01_nor_gl_1k.jpg-3c61a39f7cba04866af86226f1e5248b.s3tc.ctex", "res://.godot/imported/tree_stump_01_nor_gl_1k.jpg-3c61a39f7cba04866af86226f1e5248b.etc2.ctex"]
 
 [params]
 

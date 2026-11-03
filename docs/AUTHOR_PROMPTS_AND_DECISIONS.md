@@ -738,8 +738,739 @@ tag `a5`. Pictures the author approved or rejected are filed in
     - **Done:** Run 19 (steps 1–4) is committed on `develop`, in the commit after `b1e5785`,
       after a final run of every suite. `develop` is pushed to `origin`; `main` is untouched.
 
+72. **Prompt:** "hitting the user make it more realistic"
+    - **Read as:** the collision with the pedestrian should look and feel more real.
+      Claude Code proposes the steps before doing anything.
+    - **Claude Code's proposal:**
+      - **Step 1:** a physics ragdoll. At contact he stops being an animation and becomes
+        about 13 physics bones, which the van's flat front throws forward; he tumbles and
+        slides on the wet road. Just before contact he freezes in the headlights and turns
+        toward them. The pedestrian is re-exported at real size for the physics.
+      - **Step 2,** with its own approval: a cracked windshield where he struck it, a cabin
+        shudder and a heavier impact sound.
+    - **The author's answer (2026-11-01):** "Yes, start step 1 (Recommended)".
+    - **Result:** the ragdoll is in (`CHANGE-BRIEF.md`, Run 20). He comes to rest about 2 m
+      ahead of the van, inside a cab-over's blind spot. The author decides whether that
+      stays.
+
+73. **Run 20 step 1 result, and step 2.** The hit is physics (`HANDOFF.md`, Run 20).
+    - **Claude Code's note:** he comes to rest about 2 m ahead of the van, inside a cab-over's
+      blind spot, so the driver's seat does not show him.
+    - **Claude Code's proposal for step 2:**
+      - a cracked windshield where he struck it;
+      - a cabin shudder;
+      - Ethan leaning forward over the wheel during the hold, to look at him on the road;
+      - a heavier impact sound, made by code.
+    - **The author's answer:** "Yes, all of it (Recommended)".
+    - **Result** (`CHANGE-BRIEF.md`, Run 20 step 2):
+      - **done:** the impact sound, the cabin shudder, and the lean. The lean had to be 55 cm
+        forward and 15 cm up, because the proposed 35 cm showed at most 2 of his 11 body
+        parts;
+      - **not done:** the crack. His head is 1.56 m up at the van's nose, and the van's
+        1.5 m hood reaches 0.9 m ahead of the glass, so the head never reaches the glass.
+        The proposal had assumed low cab-over glass;
+      - **found:** the cab view does not draw the van's hood. Counting the hood, leaning
+        shows none of him when he lies 1.6 m ahead (a braked hit), and most of him at
+        2.8 m.
+      - The author decides on the crack and the hood.
+
+74. **The crack and the hood, after step 2.**
+    - **Claude Code's questions:**
+      - the windshield crack cannot happen on this van, because his head never reaches the
+        glass; leave it out?
+      - should the cab view draw the van's hood, so that leaning only shows him when a real
+        driver could see him?
+    - **The author's answers (2026-11-01):**
+      - crack: "Put it in anyway" ("A star crack low on the glass. Dramatic, but not what this
+        van would do.");
+      - hood: "Draw the hood (Recommended)" ("Realistic: after a braked hit he stays hidden
+        under the hood line even when Ethan leans; thrown further, leaning shows him. Its own
+        step, with stills first.").
+    - **Result:**
+      - the crack is in: a spider-web crack, low on the glass in line with where his head
+        was, kept inside the part of the glass the driver sees from the seat. It grows with
+        the impact speed and stays for the drive (`CHANGE-BRIEF.md`, Run 20 step 2);
+      - drawing the hood is proposed as the next step, with its own approval.
+
+75. **Step 3, the hood in the cab view.**
+    - **Claude Code's proposal:** copy only the hood's own surfaces out of `body.glb` into a
+      mesh the cab camera draws, with the same paint. Drawing the whole body would put its
+      solid roof over the moon roof. `test_collision.gd` counts the hood, the braked test hit
+      expects him hidden even when leaning, and a check shows the road from about 2.4 m past
+      the bumper. Stills come first.
+    - **The author's answer (2026-11-01):** "Yes, start step 3 (Recommended)".
+    - **Result** (`CHANGE-BRIEF.md`, Run 20 step 3): the hood shows from the cab. After a
+      braked hit he lies 1.6 m past the bumper and stays hidden even when Ethan leans;
+      leaning shows the road from 2.4 m past the bumper. The seated view is unchanged.
+
+76. **Prompt:** "after hitting make it look kind of like the pedestrian fell over the windshield.
+    Also, think about how the pedestrian comes out. its kind of weird hes coming out of jungle it
+    doesnt feel natural. add a zebra crossing and a bus stop or something like that? give ideas.
+    also, make sure everything is realistic."
+    - **Read as:** ideas first, nothing built yet. The hit should read as if he fell onto the
+      windshield, and he needs a natural place to come from.
+    - **Claude Code's findings:**
+      - the van's nose is 1.5 m tall and reaches 0.9 m ahead of the glass, so a real hit pushes
+        a person forward; going over a windshield happens with low-nosed cars;
+      - from the seat, the dash hides the glass below about 1.8 m;
+      - today he is struck by the van's right front corner, so from the seat only his head
+        shows, briefly, in the bottom-right corner;
+      - the story's prologue sets the hit on "a dark stretch of road" with "no visible
+        witness, camera warning".
+    - **Claude Code's ideas:**
+      - **the hit:** (recommended) he is struck by the middle of the van, his upper body folds
+        onto the front of the hood just below the driver's eyes, and the braking van throws him
+        ahead; or a movie-style roll over the windshield, which a van this tall does not do;
+      - **where he comes from:** (recommended) a dark rural bus stop on the right with a faded
+        crosswalk to a footpath toward the town's lights, and pedestrian-crossing signs before
+        it. He waits in the shelter, lets the oncoming van pass, and steps onto the crossing
+        while the driver is dazzled. No bus is there, so there is still no witness. At a fixed
+        crossing he would step out whatever the van's speed, so C29's 25 km/h floor would go.
+        Other ideas: he gets off a late bus (its driver and camera could be witnesses, against
+        the story), or a hiking-trail crossing;
+      - **a reminder:** Assignment 10's export checkpoint is on November 3, and no export has
+        been made yet.
+    - **The author's answers (2026-11-01):**
+      - the hit: "maybe lets reduce the van size?? and make it more realsitic to look at from
+        outside? and do over the windshield and movie style type?";
+      - where he comes from: "Bus stop + zebra crossing (Recommended)";
+      - order: "macOS export first (Recommended)".
+    - **Claude Code's note:** a smaller van with a lower nose, like a modern delivery van, is
+      also what makes a fall onto the windshield happen in real crashes.
+
+77. **Run 21 step 1, the macOS export preset and pack listing.**
+    - **Claude Code's proposal:** `game/export_presets.cfg` with one Apple Silicon (arm64)
+      macOS preset at version 0.1.0, ad-hoc signed, no notarization or credentials, exporting
+      to `builds/macos/`, leaving out `tests/`, `experiments/` and the visual benchmark scene.
+      Godot 4.7.2 will not export for Apple Silicon unless "Import ETC2 ASTC" is on, so
+      `project.godot` gains that one line. Then the pack listing with and without the filters
+      (P6), every suite and the docs. Step 2 (templates, release export, launch) gets its own
+      approval.
+    - **The author's answer (2026-11-01):** "Yes, start step 1 (Recommended)".
+    - **Result** (`CHANGE-BRIEF.md`, Run 21 step 1): the preset and the one setting are in.
+      The filtered pack has 703 entries and no tests, experiments or benchmark scene; without
+      the filters it has 34 more entries. All suites pass.
+
+78. **Run 21 step 2, the release export.**
+    - **Claude Code's proposal:**
+      - check the templates file against Godot's official SHA-512;
+      - install only the macOS template into
+        `~/Library/Application Support/Godot/export_templates/4.7.2.stable/`;
+      - `--export-release "macOS"` to `builds/macos/Blackridge.zip`, unzip it, and record its
+        SHA-256;
+      - open the app for the author to play, and check its log;
+      - update the docs, plus one `CLAUDE.md` line allowing the ETC2/ASTC texture setting in
+        `project.godot`.
+    - **The author's answer (2026-11-01):** "Yes, start step 2 (Recommended)".
+    - **The first release export failed:** "Requested template binary
+      \"godot_macos_release.arm64\" not found". The official 4.7.2 macOS template holds only
+      universal binaries; an arm64-only export needs a custom-built template.
+    - **Claude Code's question:** switch the preset to universal (Intel and Apple Silicon in
+      one app, running natively on the M4, about 85 MB bigger)?
+    - **The author's answer:** "Switch to universal (Recommended)".
+    - **Result** (`CHANGE-BRIEF.md`, Run 21 step 2): the universal export succeeded.
+      `builds/macos/Blackridge.zip` has SHA-256
+      `a547b5eae4e68f4935fbc6a1242efb4bd2c80d863b83fa4bfca848150e690ae7`. The app
+      (`Blackridge- No Way Back.app`) opened on the M4 for the author to play.
+
+79. **Prompt:** "proceed"
+    - **Read as:** go on to the plan for the queued work (#76): the bus stop and zebra
+      crossing, the smaller and more realistic van, and the fall onto the windshield. The
+      exported game was still open, so its log is checked once it quits.
+    - **Claude Code's findings:** today's hit spot is lit by the first depot street lamp at
+      (8, 62.5), about 30 m before the depot gate. The road reaches the flat valley floor about
+      80 m before the gate (road samples 998–1004): straight, dark and away from the lamps.
+      The town lies south, on the driver's left.
+    - **Claude Code's plan:**
+      1. the bus stop and zebra crossing at that dark straight;
+      2. 2–3 free, realistic, unbranded modern vans shown with pictures for the author to
+         pick, or a van modelled from scratch; nothing in the game changes in that step;
+      3. the chosen van fitted, the cab lowered and the cockpit refitted, then the fall onto
+         the windshield, over several approved steps.
+
+80. **Run 22 step 1, the bus stop and zebra crossing.**
+    - **Claude Code's proposal:**
+      - **the place:** at the foot of the hill road, about 80 m before the depot gate;
+      - **the stop and crossing:** an unlit shelter with a bench and a "BUS STOP" sign
+        (made-up Blackridge Transit route 4) on the right, US-style crossing bars on the
+        asphalt, pedestrian-crossing signs both ways ("AHEAD" 30 m before, an arrow at the
+        crossing), and a dirt footpath on the far side toward the town;
+      - **the pedestrian:** re-exported with Breathing Idle, he waits at the shelter and steps
+        onto the crossing just after the oncoming van passes, whatever the van's speed
+        (amending C29);
+      - **the oncoming van:** meets the player on the last bend before the crossing;
+      - **checks:** tests, stills and docs.
+    - **The author's answer (2026-11-01):** "Yes, start step 1 (Recommended)".
+    - **Result** (`CHANGE-BRIEF.md`, Run 22 step 1; C30): the stop, the crossing, the signs
+      and the footpath are in; he waits at the kerb and is struck on the crossing at 20 to
+      60 km/h. Below about 15 km/h only an instant stop avoids him. All suites pass.
+
+82. **Step 2, choosing the new van.**
+    - **Claude Code's proposal:** search free sources for realistic, unbranded modern delivery
+      vans with a commercial-use licence (CC0 or CC-BY), check each licence, and show 2–3 with
+      pictures, plus the option of modelling one in Blender. The author picks; nothing in the
+      game changes in this step.
+    - **The author's answer (2026-11-01):** "Yes, start step 2 (Recommended)".
+    - **Result:** a private shortlist page
+      (https://claude.ai/artifact/EMZWF2L7Fkv3GcJTqGmJbX), from Sketchfab's public search with
+      each licence and source checked:
+      - **Iveco Daily van (2014)**, by Max: CC BY with his note "not free of rights. You must
+        inform me of your usage"; 89,823 faces with 4K PBR. Recommended; it is also the
+        roadmap's first choice;
+      - **Fiat Ducato (2014)**, by razor24: plain CC BY, made in Blender; 35,486 faces,
+        untextured. Its body is the US Ram ProMaster;
+      - **a van modelled from scratch** in Blender;
+      - **European Delivery Van**, by Evan Hiltz: CC BY and fully textured, but a 1970s design.
+        Not recommended;
+      - **left out:** Max's Sprinter 2006 (the same note), Savelliy 07's Sprinter (untextured,
+        96k faces), the 2003 Chevrolet Express / GMC Savana (tagged "need-for-speed", probably
+        taken from a game) and photo scans with no separate doors, wheels or glass.
+    - **The author's choice (2026-11-01):** "Iveco Daily (Recommended)".
+
+83. **Run 23 step 1, bring the Iveco in and inspect it (no game changes).**
+    - **Claude Code's proposal:**
+      - a Discord message for the author to send Max (`max7215`), telling him how the model
+        will be used, as his note asks;
+      - the model brought in and kept in `source_assets/sketchfab/iveco_daily_2014/`, out of
+        Git;
+      - inspected in Blender (size, parts, triangles, textures, badges), with renders from
+        four sides and beside today's van;
+      - what must change to make it fictional, and how the Honda cockpit would fit its cab.
+    - **The author's answer (2026-11-01):** "I'll open Blender's add-on" (the import goes
+      through the Blender add-on's Sketchfab connection).
+    - **Result:** the Iveco Daily, measured at real size.
+      - **Size:** 5.53 m long, 2.08 m tall, 2.0 m wide (2.49 m with mirrors), with a 3.50 m
+        wheelbase and 0.72 m tyres.
+      - **The cab:** the driver's eye is at 1.72 m (2.03 m today) and the dashboard top at
+        1.40 m.
+      - **The nose:** the hood edge is 1.1 m up, the hood 0.55 m long, and the glass starts at
+        1.38 m, raked back about 45°, so a head strike on the windshield is realistic.
+      - **Branding:** "IVECO" on the grille, a rear door and the wheel hub, plus the number
+        plates, all painted in the textures.
+      - **Raw copy:** exported to `source_assets/sketchfab/iveco_daily_2014/` (260 MB, kept
+        out of Git, README tracked).
+      - **Renders:** `evidence/phase_1/van/run23_step1/`, and a private page at
+        https://claude.ai/artifact/8wSABn3GWLVYZBipGe7VSv.
+      - **The open choice:** the Iveco's own cab, or the Honda e cockpit refitted lower and
+        narrower.
+
+84. **The cab.**
+    - **Claude Code's question:** the Iveco's own cab (fits exactly, lighter, less detailed),
+      or the Honda e cockpit refitted about 0.32 m lower and narrower over several Blender
+      steps?
+    - **The author's answer (2026-11-01):** "Iveco's own cab (Recommended)".
+
+85. **Run 23 step 2, make the van ours in Blender (no game changes yet).**
+    - **Claude Code's proposal:**
+      - paint out the IVECO badges (grille, rear door, wheel hub) and put a Blackridge plate
+        on;
+      - split out the driver's door, steering wheel, four wheels and windshield glass, and
+        remove the model's own wipers;
+      - shrink the textures to 2048 and 1024 pixels;
+      - export `.glb` parts into `game/features/vehicles/freight_van/art/iveco/`;
+      - renders for the author, credits and an art-check exception.
+      - Suggested: message Max before the files are committed.
+    - **The author's answer (2026-11-01):** "Yes, start step 2 (Recommended)".
+
+86. **After Run 23 step 2: the note about Max, and step 3.**
+    - **The author's message (2026-11-01):** "Please message Max before these files are
+      committed.? what do you mean by this?? and proceed with step 3".
+    - **Claude Code's answer:** Max's note asks to be told how his model is used. A push to
+      GitHub publishes it, so the author tells him before that push.
+
+87. **How to contact Max, and the cab.**
+    - **The author's message (2026-11-01):** "how and where to text him?? and tell me how to do
+      it before commiting. we are using iveco van and its interiors right?"
+    - **Claude Code's answer:** a Discord message to `max7215`, or a comment on the model's
+      Sketchfab page, with a short draft. Yes, the Iveco's own outside and its own cab (C31).
+
+88. **Run 23 step 3: the moon roof and the inside mirror in the Iveco cab.**
+    - **Claude Code's questions:** the Iveco cab has a solid metal roof, so should a moon roof be
+      cut into it? It has no inside rear-view mirror, because the solid wall behind the seats
+      blocks the view; what should the cab have?
+    - **The author's answers (2026-11-01):** "Cut one in (Recommended)"; "No inside mirror
+      (Recommended)".
+
+89. **Run 23 step 4, the fall onto the windshield, made natural.**
+    - **Claude Code's proposal:** the pedestrian goes over the Iveco's sloped bonnet onto the
+      windshield, and the crack lands where his head hits.
+    - **The author's answer (2026-11-01):** "yes start step 4 and it should kind of look more
+      natural. i mean the truck upcoming should blind us with their headlights and the van
+      should continously go and the pedestrian should walk in fornt and our car should hit. make
+      it natual and unavoidable by the user to play the game."
+    - **What Claude Code did (Run 23 step 4, C33):**
+      - the oncoming vehicle is the Iveco painted dark grey with its own plate, high beams on all
+        the way in;
+      - from the valley road below the last hairpin until the impact, the van drives itself at
+        42–45 km/h; the brake, throttle and wheel do nothing;
+      - he steps out once the oncoming van is past him; the van hits him on the crossing, he
+        folds onto the bonnet and his head strikes the base of the windshield, which cracks there;
+      - reported: physics alone lands his head 25 cm short of the glass on the Iveco's high bonnet,
+        so an upward sweep of his legs and hips is added; and the knee and elbow limits, wrong
+        since Run 20, let the knees fold through at 42–45 km/h, now fixed.
+
+90. **The oncoming vehicle.**
+    - **Claude Code's question:** the vehicle that dazzles the player is the old blocky van; the
+      author called it a truck. An Iveco in a dark colour, a real truck found on Sketchfab, or
+      the old van?
+    - **The author's answer (2026-11-01):** "Iveco, dark colour (Recommended)".
+
+81. **Prompt:** "i think i clicked ignore external changes in gadot bymistakenly, idk if it will
+    affect anything"
+    - **What Claude Code found:**
+      - the open Godot editor rewrote `game/project.godot` at 12:46, which removed Run 21's
+        `import_etc2_astc=true` line, and re-imported the textures, so the 160 `.import`
+        sidecars went back to one format;
+      - every script, shader and `export_presets.cfg` change was intact, and the exported
+        build was made before this;
+      - the exported game's log shows Metal 4.0, Forward+, Apple M4 and no errors;
+      - a Godot test probe from another project (Assignment 2) has been running since
+        October 6; it was left alone.
+    - **The repair:** the editor is closed without saving, the line is restored, the textures
+      are re-imported, and then the editor can be reopened.
+    - **The author's answers:** "Quit it, go ahead"; for the Assignment 2 process, "Stop it";
+      when the editor was still running, "Close it for me".
+    - **Result:**
+      - the old process and the editor were ended; neither wrote any file;
+      - the line is back, the import made all 160 ETC2/ASTC copies again, and a check export
+        to the scratch folder exits 0;
+      - the author can reopen Godot, choosing "Reload" whenever it reports files changed on
+        disk.
+
+91. **Ideas for Mission 1.**
+    - **The author's message (2026-11-01):** "alright now, give me how else can we improve mission
+      1?? give me ideas"
+    - **Claude Code's answer:** ideas in five groups, checked against `GAME_STORY.md`,
+      `GAME_DESIGN.md` and the decisions:
+      - story moments the documents ask for: Maya's call, a quiet ending instead of "DRIVE
+        COMPLETE", his panic, the unused call for help;
+      - a geography problem: the hit is 76 m from the depot gate, so he "flees" to his own
+        workplace; option 1 moves the crossing back up the road, option 2 keeps it (which
+        touches N02);
+      - mission flow: an end-of-shift start, controls taught when needed, a checkpoint after
+        the hit, a shorter no-control stretch;
+      - realism: road spray from the oncoming van, sound (the oncoming van is silent), damage,
+        a few scripted vehicles, valley fog, his umbrella, particle rain (Assignment 6);
+      - technical: Jolt physics for the ragdoll (a `project.godot` setting), an in-game
+        credits screen.
+
+92. **Mission 1: what to do first, and control near the pedestrian.**
+    - **The author's message (2026-11-01):** "start with maya's call and the quiet ending. start
+      with mission flow. do this also - - Option 1: move the crossing further back up the valley
+      road, so running away is a real drive. also, i want the game user to control the driving
+      when hes near the pedestrian i guess idk? we are taking away control too much maybe? make
+      it natural and professional game."
+    - **Claude Code's plan, each step approved on its own:**
+      1. Maya's call and the quiet ending;
+      2. mission flow: the end-of-shift start, controls taught when needed, a checkpoint after
+         the hit;
+      3. the crossing moved to the straight between the second and third hairpins on the way
+         down (about 500 m before the depot), and the wheel given back.
+    - **Asked:** how much control to keep near the pedestrian, which draft of Maya's call to
+      build (two drafts, or the author's own lines), and how the mission ends at the depot.
+    - **The author's answers (2026-11-01):** "Lose only the last second (Recommended)"; "Draft A: big
+      brother"; "Stay in the cab (Recommended)".
+    - **Draft A, as approved:**
+
+      ```text
+      MAYA:  Hey. Still working?
+      ETHAN: Last run of the night. Almost done.
+      MAYA:  You always say that.
+      ETHAN: You eating okay?
+      MAYA:  Ethan.
+      ETHAN: That's not an answer.
+      MAYA:  I'm fine. Work's just busy.
+      ETHAN: Come by Sunday. I'll cook.
+      MAYA:  Maybe. I'll let you know.
+      ETHAN: Lock your door tonight.
+      MAYA:  I'm twenty-five.
+      ETHAN: Lock it anyway.
+      MAYA:  Drive safe, okay?
+      ```
+    - **What Claude Code did (Run 24 step 1, C34):** Maya's call rings once per drive as the climb
+      begins, connects hands-free after two rings, shows "MAYA" on the dash, and plays the 13
+      lines above as subtitles (34 s) while the music dips. At the depot the quiet ending
+      replaces "DRIVE COMPLETE" and getting out: engine, lights and wipers off, rain, the engine
+      ticking and his breathing, a fade to black, then the menu with "Drive again". Steps 2 and
+      3 wait for their own approval.
+
+93. **Cutscenes, a studio intro, the dash screen, and step 2.**
+    - **The author's message (2026-11-01):** "and the game starting is too boring. i want cut scenes
+      and professional movie style game i guess idk? give ideas?? i want my name as a company to
+      start the game with in my brand colors and brand cut scene animation maybe?  add cut scenes
+      more realistically, more graphics. that screen inside looks fake. and go ahead with step 2 as
+      well. remember to do all these"
+    - **Step 2 approved:** the end-of-shift start and controls taught when needed.
+    - **Claude Code's ideas:** a studio intro in the author's brand; a live title screen; an
+      opening cutscene from the story's opening image; a film look in cutscenes (black bars, depth
+      of field, grain) and a filmed ending; slow motion at the impact. The game's title still
+      appears only after the final cut to black (C04). For the dash: a real car-screen look.
+    - **The author's answers (2026-11-01):** "The centre screen"; the run sheet: "Use this run
+      sheet"; the brand: "Not decided yet"; cinematics: "Studio intro (Recommended), Opening
+      cutscene (Recommended), Title screen + film look (Recommended)" (no slow motion).
+    - **The run sheet, as approved:**
+
+      ```text
+      BLACKRIDGE FREIGHT DEPOT
+      RUN SHEET - NIGHT
+
+      Driver ......... E. COLE
+      Van ............ BR 048
+      Pick-up ........ Lumber yard, Hill Road
+      Load ........... 14 pallets, sawn timber
+      Deliver to ..... Freight depot, bay 3
+      Route .......... Over the pass
+                       (valley road closed)
+
+      Signed ......... E. Cole
+      ```
+
+    - **The agreed list, in order, each step approved on its own:**
+      1. Run 24 step 2: the end-of-shift start (the run sheet) and controls taught when needed;
+      2. Run 24 step 3: the crossing moved up the road, the wheel given back except the last
+         second, and a checkpoint after the hit;
+      3. the centre dash screen rebuilt like a real car display;
+      4. the opening cutscene, the live title screen and the film look, with the filmed ending;
+      5. the studio intro, once the author has a company name and colours.
+    - **What Claude Code did (Run 24 step 2, C35):** the drive now begins at a small lit site
+      office by the yard gate. Ethan signs the run sheet above from a clipboard by the door, then
+      walks to the van, which waits until he has signed. One hint at a time teaches the controls
+      when they are first needed, in place of the permanent controls line. Seen: it is very dark
+      by the van; a yard floodlight would fix it, if the author wants one.
+
+94. **The site office, made realistic in Blender.**
+    - **The author's message (2026-11-01):** "the shed looks so fake, do it in blender and make it
+      realstic home. the office i mean."
+    - **Still open from step 2's report:** the yard floodlight by the van, and starting step 3.
+    - **Claude Code's plan:** build the office from scratch in Blender (no licence needed), with
+      Poly Haven's CC0 textures, instead of the code-built boxes.
+    - **The author's answers (2026-11-01):** "Timber yard office (Recommended)"; "Yes, light the
+      van (Recommended)".
+    - **What Claude Code did (Run 24, C36):**
+      - **The office:** a timber yard office made in Blender by a script. It has:
+        - weathered plank walls and a corrugated iron roof, with gutters and a stovepipe;
+        - a plank door under a bracketed hood, and a lit window with blinds;
+        - an OFFICE board, with the clipboard under a gooseneck lamp.
+      - **The floodlight:** on the office's corner, it lights the van. The van's brightness goes
+        from 13 to 53.
+      - **Seen:** the driver's door, on the van's far side, stays in the van's own shadow until
+        the ignition.
+
+95. **Bugs found in play, before step 3.**
+    - **The author's message (2026-11-01):** "i found couple of bugs, when i am rolling down the
+      side windows, the window is going down and its glitching down, i can see the window inside
+      going down, its glitching, fix it. also, i wasnt able to find the van in the start, add a
+      map to guide user to van. also, i lost control of the vechile before 5-10 seconds before
+      hitting the pedestrian? and also, when i am opening the door my hand is going off into the
+      door and when i exit the door, exit animation isnt coming. then we can go to step 3. when
+      the door opens and closes, make sure the cabin light turns on when the door is open. and
+      also let the gamer choose if he wants to switch on the cabin light or off"
+    - **The author's follow-up (2026-11-01):** "the glass after coming down compeltely can be
+      seen from inside. it shouldnt be seen after it goes down completely right?"
+    - **What Claude Code found:**
+      - the side glass slides 88 cm straight down, and nothing hides it below the sill;
+      - the small fixed front pane slides down with it;
+      - the entering clip brings the left wrist, not the fingers, to the handle;
+      - E at a stop teleports Ethan out;
+      - the early loss of control is Run 23's takeover, which step 3 replaces.
+    - **The author's answers (2026-11-01):** "Both" (a corner minimap and a marker over the van);
+      "I (Recommended)" (the cabin light key); "In step 3 (Recommended)" (the takeover); "Yes,
+      start (Recommended)" (these fixes as one step).
+    - **What Claude Code did (Run 24, C37):**
+      - **Windows:** the side glass slides into the door and none of it shows when fully down;
+        the small front pane stays fixed.
+      - **Getting in:** Ethan's left hand stays on the handle as the door opens (arm IK).
+      - **Getting out:** E at a stop plays Exiting Car, and he pushes the door shut.
+      - **The cabin lamp:** it comes on with the door open and fades after it shuts, and I
+        switches it.
+      - **The guide:** a corner map and a "VAN" marker lead to the van.
+      - **Left for step 3:** the takeover.
+
+96. **The CLAUDE.md line and step 3.**
+    - **Claude Code asked:** whether to add the I key to `CLAUDE.md`'s `project.godot` rule
+      ("and, with the author's OK of 2026-11-01 (#95), the `cabin_light` action on I"), and
+      whether to start step 3 (the crossing up the hill, the wheel given back except the last
+      second, a checkpoint after the hit).
+    - **The author's answer (2026-11-01):** "okay proceed"
+    - **What Claude Code did:**
+      - **`CLAUDE.md`:** the `project.godot` rule names the I key, worded as above.
+      - **Run 24 step 3 (C38):**
+        - **The crossing:** it moved up the hill to the straight between the second and third
+          hairpins down, a dark 9% downgrade. The depot is 511 m further on by road.
+        - **Control:** the player drives all the way. When he steps out of the oncoming glare,
+          the wheels lock on the wet crossing paint: braking barely slows the van, the tyres
+          skid, and the wheel does nothing. The lock lasts from his first step to the impact,
+          about 2 s, not one second.
+        - **After the hit:**
+          - Ethan keeps his foot on the brake until the player drives. In the first capture the
+            van rolled down the grade onto him;
+          - a checkpoint keeps the van's place, the body and the crack, and continuing starts
+            in the cab there.
+        - **Seen:** the hit holds up at 30–36 km/h. Faster, it does not: above about 50 km/h he
+          goes under the van and the glass does not crack, and at 37–62 km/h an elbow can bend
+          the wrong way for a moment.
+
+97. **After step 3: the hit at speed, or the dash screen.**
+    - **Claude Code asked:** "Should the next step make the hit hold up at 40–65 km/h, or go on
+      to the dash screen?"
+    - **The author's answer (2026-11-01):** "ok"
+    - **Claude Code asked again,** describing both: "Fix the hit at speed (Recommended)" (a
+      test first, with hits at 30, 45 and 60 km/h that must land him on the bonnet, crack the
+      glass and leave him ahead of the van; then the impact scaled with speed in
+      `pedestrian.gd`; the elbow flips may not fully go away) or "Dash screen next".
+    - **The author's answer (2026-11-01):** "Fix the hit at speed (Recommended)"
+    - **What Claude Code did (Run 25, C39):**
+      - **The test first:** it hits him at 30, 45 and 60 km/h, and failed 7/12 on step 3's code.
+      - **The cause was not the push:**
+        - the road bends gently just before the crossing, and the locked van went straight off
+          its lane;
+        - at speed he aimed at a point up to 4 m across the road, so the van's corner caught
+          him outside the part of its front that throws him.
+      - **The fix:**
+        - the locked van follows its lane, and the wheel still does nothing;
+        - he walks to where the van will be.
+      - **The result:**
+        - from 30 to 65 km/h he lands on the bonnet, the glass cracks, and he lies ahead of
+          the van;
+        - the lock now lasts about one second, not two.
+      - **Not changed:** `pedestrian.gd`. Two changes to the hit itself were tried and made no
+        difference, so they were dropped.
+      - **Still there:** single-tick limb spikes as he tumbles. None lasts, and he always comes
+        to rest with his limbs in range.
+
+98. **The dash screen, mockups first.**
+    - **Claude Code asked:** "Next on the list is the dash screen, starting with 2–3 mockups for
+      you to pick from. Shall I start it?"
+    - **The author's answer (2026-11-01):** "ok"
+    - **The author, later (2026-11-02):** "sorry i am back check now"
+    - **What Claude Code did:** three mockups on a private canvas,
+      https://claude.ai/artifact/XrjFWwDyNwrsBHUzRWT7aq, with nothing in the game changed:
+      - **The scene:** the same moment in each, drawn from the game's own road data: on Hill Road
+        during Maya's call, 46 m before the first hairpin;
+      - **The designs:**
+        - A, factory navigation;
+        - B, phone mirroring;
+        - C, a fleet terminal showing the approved run sheet;
+      - **Two states each:** driving, and Maya's call;
+      - **The comparison:** today's screen, and all three at the size the driver sees them.
+      - **Not used:** the organization's website design system, because these are in-car screens
+        in the game's world.
+
+99. **The dash screen: B's idea with C's details.**
+    - **Claude Code asked:** "Which centre screen should I build into the game?" The options
+      were "A · Factory navigation (Recommended)", "B · Phone mirroring" and "C · Fleet
+      terminal".
+    - **The author's answer (2026-11-02):** "i like B idea but i love details in C. so combine
+      both of them give me final design"
+    - **What Claude Code did:** a final design, in the top row of the same canvas:
+      - **From B:** the app rail with the clock and 7°C; the full-height moving map with the van
+        moved right of centre; floating cards for the next instruction and the hairpin warning.
+      - **From C:** a run-sheet card using only the approved text (van BR 048, E. COLE, the
+        depot bay, the load, "Over the pass", "valley road closed"), with a progress bar from
+        the lumber yard to the depot and the arrival time.
+      - **During Maya's call:** a call card under the instruction, and the run-sheet card keeps
+        the depot, the progress and the arrival time.
+      - **A seat-size check** against today's screen.
+
+100. **Building the final dash screen.**
+     - **Claude Code asked:** "Build this final dash screen into the game?" The options were
+       "Yes, build it (Recommended)" and "Change the design first".
+     - **The author's answer (2026-11-02):** "show me design first"
+     - **What Claude Code did:** opened the canvas for the author. Nothing is built yet.
+
+101. **The final dash screen: approved, with three requirements.**
+     - **The author's message (2026-11-02):** "its perfect. make sure it looks like an actual
+       screen in the van and not like some block - [Image #62]. include it nicely. and make
+       sure the map works as in real life. also, i want the user to pickup the call by clicking
+       a button."
+     - **The image:** a screenshot of the canvas's "Today" artboard, the current screen in the
+       cab.
+     - **Claude Code's plan:**
+       - fit the screen into the van's own display, with glass, a black border and a glow;
+       - the map as real navigation;
+       - Answer and Decline on the screen;
+       - tests and a capture.
+
+       It asked two questions. Answering: "Look at screen, click (Recommended)" or "Click
+       anywhere". Not answering: "She calls back (Recommended)" or "Keep ringing".
+     - **The author's answers (2026-11-02):** "prompt the user to click a key on keyboard to
+       answer the call"; "she calls back and if user doesnt answer upto 2 times then
+       automaticallly pick up third time".
+     - **What Claude Code did (Run 26, C40):**
+       - **A real screen:** the map now fills the van's own 13.6 × 7.1 cm display, measured from
+         the model. The old picture was 17.2 × 11.3 cm and covered the buttons and the PUSH knob.
+         It has glossy glass, a thin black border, backlit blacks, a faint glow on the dash and a
+         fade-in at the ignition.
+       - **A map that works like real navigation:**
+         - heading-up, zooming with speed;
+         - the distance to the depot turn measured along the road, not in a straight line;
+         - a hairpin warning, "Turn around" and "Arrived";
+         - the arrival time from the van's running clock.
+       - **The call:**
+         - it rings until the player presses **T** (Claude Code's choice of key), and the screen
+           and the hint both say so;
+         - after six rings it is missed, and she calls back 8 s later;
+         - the third call answers itself after two rings.
+         - There is no Decline: the author's answers replaced the planned buttons.
+       - **The design's shape:** the approved design was 3:2. The van's display is 1.92:1, so the
+         same layout is 112 pixels shorter.
+       - **Tests:** a new dash-screen test (14 checks); the call test gains two checks and
+         rewrites one. All suites pass, and five mutations fail as they should.
+       - **Capture:** stills in `evidence/phase_1/dash/run26/`.
+
+102. **The late call, and the cutscene plan.**
+     - **Claude Code asked:** whether the `CLAUDE.md` line for the T key could be added; "Should
+       the pedestrian scene wait until Maya's call ends? It only matters in that rare fast
+       case."; and "Next on your list is the opening cutscene, the live title screen, the film
+       look and the filmed ending. Shall I plan it?"
+     - **The author's message (2026-11-02):** "yes  pedestrian scene wait until Maya's call
+       ends? after this do this  Next on your list is the opening cutscene, the live title
+       screen, the film look and the filmed ending. Shall I plan it?. i have the my company logo
+       and game name in downloads. first start with these and take my approval before you
+       access downloads folder for the company logo and game logo"
+     - **Not answered:** the `CLAUDE.md` line for the T key, so it is not applied.
+     - **What Claude Code did (Run 26 step 2, C41):**
+       - **The scene waits:** the pedestrian scene starts only when no call is active.
+       - **Why waiting alone would fail:** the van can reach that point in 62.0 s flat out, and a
+         call ignored twice used to run 80.3 s. If the scene only waited, a fast player would have
+         passed the crossing with no scene at all.
+       - **So the call is quicker to give up:** it is missed after four rings (it was six), and
+         she calls back after 2 s (it was 8 s). Ignored twice, it now ends at 59.5 s. The third
+         call still picks up by itself.
+       - **Tests:** the call test gains two checks (13). All suites pass, and two deliberate
+         breakages fail as they should.
+     - **Then:** the plan for the opening cutscene, the live title screen, the film look and the
+       filmed ending, with the logo questions.
+     - **A slip, reported to the author:** one of Claude Code's commands listed `~/Downloads` by
+       mistake, with its output thrown away. No file name was seen, and nothing there was
+       opened or copied.
+
+103. **Where the logos go: the author asks for Claude Code's view.**
+     - **The author's message (2026-11-02):** "what do you think will be best for our game?"
+     - **Claude Code's recommendation:**
+       - **The company logo:** a short studio intro on black at launch, which can be skipped.
+       - **The game logo:** on the title screen, as the game's cover, over the live shot of the
+         lumber yard. Inside the story only mission names appear (the opening cutscene's card
+         and the endings), and the title's reveal after the final cut to black stays as written.
+       - **Why:** the name is already in the window's title bar and the Mac's menu bar, and the
+         reveal works because of where it lands, as a film's title card at the end does although
+         the title is on the poster. Until the game's ending is built, the logo would otherwise
+         appear nowhere in the game.
+       - **What it changes:** C04 and C35 say the title appears only after the final cut to
+         black. This allows it on the title screen, outside the story, so it needs the author's
+         OK and would be recorded as a decision.
+     - **A correction:** #102 asked to start with the logos, but Claude Code's plan put the studio
+       intro and the title screen last. The new order:
+       1. look at the two logos, with the author's OK;
+       2. the studio intro and the title screen;
+       3. the film look and the opening cutscene;
+       4. the filmed ending.
+
+       Each starts with stills for the author to choose from, so there is no separate storyboard
+       step.
+     - **Claude Code asked:** where the game logo goes, and whether it may look in `~/Downloads`
+       for the two logos.
+     - **The author's answers (2026-11-02):** "Title screen too (Recommended)"; "Yes, look".
+     - **What Claude Code did:**
+       - recorded the logo decision as C42;
+       - listed the image files at the top of `~/Downloads` (names, dates and sizes only; 11
+         files), and opened only the two newest, the logos: `BLACKRIDGE_ No Way Back.png`
+         (1672 × 941) and `Cinematic Rainy Road N Logo.png` (1536 × 1024). Nothing was copied.
+
+104. **The logos set aside; what comes next.**
+     - **Claude Code asked:** "Can you get the BLACKRIDGE logo on plain black?" and "Shall I make
+       the title-screen and studio-intro stills now?" The author chose to clarify instead.
+     - **The author's message (2026-11-02):** "lets ignore the logos for now. lets fpcus on
+       building the game. whats next"
+     - **What Claude Code did:** set the logo work aside (C42 stands for later) and recommended,
+       in order:
+       1. missions in a row and saving: the game goes on from Mission 1 to Missions 2 and 3 and
+          remembers where the player is, starting with the course's save rules, before any code;
+       2. Mission 2, The Wrong Cargo, planned with the author on a map before it is built;
+       3. Mission 3, then the story scenes and the ending.
+
+       It also recommended committing Runs 20–26 first, after the author's message to Max.
+
+105. **The save rules.**
+     - **Claude Code asked:** whether to start step 1 by writing the save rules, for the author to
+       approve before any code.
+     - **The author's message (2026-11-02):** "yes start with the save rules"
+     - **What Claude Code did:** wrote the rules as a dated draft revision at the end of
+       `CHANGE-BRIEF.md`, from Assignment 10's own wording (pasted on 2026-10-30) and today's
+       saving code. Nothing in the game changed.
+       - **Kept:** Godot's ConfigFile text and Mission 1's `[drive]` section, so Assignment 5's
+         checkpoint checks and the collision test pass unchanged.
+       - **Added:** a version field, the mission's name, the whole file checked before use, newer
+         files never touched, damaged files kept aside, warnings on screen, saving off unless the
+         game is launched normally, and a scratch home for test runs.
+       - **Claude Code's calls, open to change:** the new file names (`progress.cfg`,
+         `settings.cfg`), with the prototype's files left unread; volumes saved when the menu
+         closes; the scratch home inside the repository.
+
+106. **What the save-rules report was asking for.**
+     - **Claude Code asked:** "Shall I go with these rules, or what would you change?", at the end
+       of a long summary of the drafted rules.
+     - **The author's message (2026-11-02):** "what are you saying you will do?"
+     - **What Claude Code did:** answered in plain words, with nothing changed:
+       - the rules are a plan for how the game remembers where the player got to, and
+         Assignment 10 grades that they are written before any save code and then followed;
+       - after the author's OK there are three steps, each approved on its own: commit the
+         rules; build the saving, with its test and a guard that keeps tests away from the real
+         save; then the author's own check (quit at a checkpoint, relaunch, continue);
+       - Runs 20–26 are not committed and share files with the save code, so they go in first.
+         That waits on the author's message to Max about the Iveco van (C31).
+     - **Claude Code asked:** for the OK on the rules, and whether Max has been messaged.
+
+107. **The save rules committed.**
+     - **The author's message (2026-11-03):** "commit the plan to git"
+     - **What Claude Code did:**
+       - marked the rules approved in `CHANGE-BRIEF.md`, quoting the author, and took "a draft
+         for the author's approval" out of their heading;
+       - committed only the save-rules section of `CHANGE-BRIEF.md`, as `301c250` on `develop`,
+         not pushed. Runs 20–26 and their notes stay uncommitted until the author has messaged
+         Max (#106).
+
+108. **What comes next: all the missions first?**
+     - **The author's message (2026-11-03):** "whats next for us?? mission 2 or is there something
+       else to focus on right now?? i want to build all the missions  first and then come back and
+       make changes to story plot or like make it more gamify. i am thinking right or you want to
+       question me or suggest me something better"
+     - **Claude Code's answer:** mostly yes, with three changes:
+       - saving and the menu come first: Assignment 10 wants them by November 23 (26 points), the
+         rules are written, and Mission 2 needs the game to remember the mission;
+       - Missions 2 and 3 are built rough first, playable from start to finish, before any
+         realism work;
+       - some of the "game" goes into Missions 2 and 3 from the start: the design's one combat
+         encounter, a way to fail and retry (the final film must show "failure and completion",
+         and Mission 1 has none), and the guards' AI from Assignment 9 (20 points, in real play).
+         Small story changes are cheap later; a big plot change after a mission is built means
+         rebuilding it.
+     - **The suggested order:** the author messages Max, and Runs 20–26 are committed and pushed;
+       saving, then the menu; Mission 2 planned on a map, then built rough; Mission 3 rough, with
+       the combat and the story scenes; the author plays the whole game, then the story changes,
+       the "gamify" pass and the polish.
+     - **Claude Code asked:** what the author pictures the player doing, with "more gamify", that
+       they cannot do now.
+
+109. **Max told; the order approved; the bar for the work.**
+     - **The author's message (2026-11-03):** "i messaged max, hes said thanks for letting me
+       know. and proceed with the order. make sure we are following best practices. and remember
+       to keep the game realistic as fuck. make sure the details are there. make sure minor
+       details are realisitc as well. thats what makes our game good"
+     - **What Claude Code did (step 1 of the order, #108):**
+       - checked what would be committed: no credentials, no file over 25 MB (the largest is
+         5.7 MB), no MP3, MP4, archive, Blender or FBX file, and no code changed since the last
+         full test run (Run 26 step 2);
+       - recorded in the van's `ATTRIBUTION.md` and its source README that Max was told about
+         this use on 2026-11-03 and acknowledged it;
+       - brought `HANDOFF.md`'s agreed order up to date;
+       - committed Runs 20–26 together on `develop` and pushed `develop`. `main` is untouched.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
   was on battery or charging).
 - Any pull request from `develop` to `main`, only with the author's approval.
+- The `CLAUDE.md` wording for the new T key (`answer_call`), drafted in Run 26.
+- Set aside until the author returns to it: the game logo without its painted scene, and the
+  studio intro and title-screen stills (#103–#104).

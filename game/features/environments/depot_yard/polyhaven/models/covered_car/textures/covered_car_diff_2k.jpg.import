@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4fr848t52m0k"
 path.s3tc="res://.godot/imported/covered_car_diff_2k.jpg-22bc3ba78a87d4b810b29ccfae5c5956.s3tc.ctex"
+path.etc2="res://.godot/imported/covered_car_diff_2k.jpg-22bc3ba78a87d4b810b29ccfae5c5956.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/covered_car/textures/covered_car_diff_2k.jpg"
-dest_files=["res://.godot/imported/covered_car_diff_2k.jpg-22bc3ba78a87d4b810b29ccfae5c5956.s3tc.ctex"]
+dest_files=["res://.godot/imported/covered_car_diff_2k.jpg-22bc3ba78a87d4b810b29ccfae5c5956.s3tc.ctex", "res://.godot/imported/covered_car_diff_2k.jpg-22bc3ba78a87d4b810b29ccfae5c5956.etc2.ctex"]
 
 [params]
 

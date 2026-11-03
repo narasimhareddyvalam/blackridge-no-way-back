@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://fqcraq2g7lhl"
 path.s3tc="res://.godot/imported/dry_branches_medium_01_nor_gl_1k.jpg-3214272045a446e57685cdd4903411b1.s3tc.ctex"
+path.etc2="res://.godot/imported/dry_branches_medium_01_nor_gl_1k.jpg-3214272045a446e57685cdd4903411b1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/models/dry_branches_medium_01/textures/dry_branches_medium_01_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/dry_branches_medium_01_nor_gl_1k.jpg-3214272045a446e57685cdd4903411b1.s3tc.ctex"]
+dest_files=["res://.godot/imported/dry_branches_medium_01_nor_gl_1k.jpg-3214272045a446e57685cdd4903411b1.s3tc.ctex", "res://.godot/imported/dry_branches_medium_01_nor_gl_1k.jpg-3214272045a446e57685cdd4903411b1.etc2.ctex"]
 
 [params]
 

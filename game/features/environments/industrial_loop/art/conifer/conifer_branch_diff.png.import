@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://1nmhj4rxk03"
 path.s3tc="res://.godot/imported/conifer_branch_diff.png-b01e2a14bda3189e014f9a177610a472.s3tc.ctex"
+path.etc2="res://.godot/imported/conifer_branch_diff.png-b01e2a14bda3189e014f9a177610a472.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/art/conifer/conifer_branch_diff.png"
-dest_files=["res://.godot/imported/conifer_branch_diff.png-b01e2a14bda3189e014f9a177610a472.s3tc.ctex"]
+dest_files=["res://.godot/imported/conifer_branch_diff.png-b01e2a14bda3189e014f9a177610a472.s3tc.ctex", "res://.godot/imported/conifer_branch_diff.png-b01e2a14bda3189e014f9a177610a472.etc2.ctex"]
 
 [params]
 

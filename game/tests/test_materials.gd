@@ -232,9 +232,14 @@ func _check_van_overlays() -> void:
 	_check(pane.material_override is ShaderMaterial
 		and (pane.material_override as ShaderMaterial).shader.resource_path.ends_with(
 		"windshield.gdshader"), "Original windshield glass keeps windshield.gdshader")
-	_check(side.get_parent() == windows[0] and windows[0].material_override
-		is StandardMaterial3D,
-		"Driver-window rain overlay is a child of the left window; its glass is unchanged")
+	var door_glass := windows[0].material_override as ShaderMaterial
+	var side_rain := side.material_override as ShaderMaterial
+	_check(side.get_parent() == windows[0] and door_glass != null
+		and door_glass.shader.resource_path.ends_with("side_glass.gdshader")
+		and bool(door_glass.get_shader_parameter("slides"))
+		and bool(side_rain.get_shader_parameter("slides")),
+		"Driver-window rain overlay is a child of the left window; the glass and its rain slide "
+		+ "into the door together")
 	_check(side.position.x < 0.0 and side.sorting_offset < 0.0,
 		"Driver-window rain sits on the outside of the glass and draws before it")
 	_check(windshield.layers == 4 and side.layers == 4, "Both overlays are on the cabin layer")
@@ -253,7 +258,6 @@ func _check_van_overlays() -> void:
 	_check(climbed > 0.0 and slid > 0.0,
 		"Windshield runners climb at 65 km/h (%.3f m) and slide down when parked (%.3f m)" % [
 		climbed, slid])
-	var start_y: float = presentation.to_local(side.global_position).y
 	var press := InputEventAction.new()
 	press.action = "window_left"
 	press.pressed = true
@@ -264,11 +268,32 @@ func _check_van_overlays() -> void:
 	Input.parse_input_event(release)
 	for frame in range(180):
 		await process_frame
-	var moved: float = start_y - presentation.to_local(side.global_position).y
-	_check(absf(moved - 0.88) < 0.02,
-		"Real J press lowers the window and its fog overlay by %.3f m (expected 0.88)" % moved)
+	var lowered := float(door_glass.get_shader_parameter("lowered"))
+	var corners := _sliding_corners(windows[0], door_glass, lowered)
+	_check(lowered > 0.5 and corners.x == 0 and corners.y > 0 and corners.z > 0
+		and is_equal_approx(lowered, float(side_rain.get_shader_parameter("lowered"))),
+		"Real J press lowers the driver's window %.3f m into the door: none of the sliding pane "
+		% lowered + "is left above the sill (%d of %d corners), its rain goes with it, and the "
+		% [corners.x, corners.y] + "%d corners of the fixed front pane stay" % corners.z)
 	app.queue_free()
 	await process_frame
+
+
+func _sliding_corners(window: MeshInstance3D, glass: ShaderMaterial, lowered: float) -> Vector3i:
+	var sill: PackedFloat32Array = glass.get_shader_parameter("sill")
+	var span: Vector2 = glass.get_shader_parameter("sill_span")
+	var split := float(glass.get_shader_parameter("pane_split"))
+	var counts := Vector3i.ZERO
+	for corner: Vector3 in window.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]:
+		if corner.z <= split:
+			counts.z += 1
+			continue
+		counts.y += 1
+		var along := clampf((corner.z - span.x) / (span.y - span.x), 0.0, 1.0) * (sill.size() - 1)
+		var below := mini(floori(along), sill.size() - 2)
+		if corner.y - lowered >= lerpf(sill[below], sill[below + 1], along - below) - 0.004:
+			counts.x += 1
+	return counts
 
 
 func _check_hint_scene() -> void:

@@ -9,7 +9,7 @@ been used here. Preview approval and final selection remain open.
 
 ## Current assets
 
-All twelve WAV files in `game/features/audio/first_drive/` were synthesized for
+All nineteen WAV files in `game/features/audio/first_drive/` were synthesized for
 this prototype with the original source
 `source_assets/audio/first_drive/synthesize.py`. They are mono, 16-bit PCM at
 22,050 Hz before Godot import. They are provisional synthesized effects, not
@@ -29,6 +29,13 @@ recordings of a real vehicle, and have no third-party asset source.
 | `wiper.wav` | Wiper stroke | 0.44 s | One shot per half-cycle |
 | `window.wav` | Window motor | 2 s | One shot per window operation |
 | `collision.wav` | Simple impact feedback | 0.7 s | One shot |
+| `impact_body.wav` | The pedestrian striking the van's front: a deep thud, a crunch, ticks of cracking plastic, the body landing at 0.42 s (added 2026-11-01, Run 20) | 1.4 s | One shot |
+| `phone_ring.wav` | Maya's call ringing through the van's speakers: four soft tones, then a pause (added 2026-11-01, Run 24) | 2.2 s | Loop while ringing (two rings) |
+| `call_connect.wav` | The hands-free call connecting | 0.12 s | One shot |
+| `call_end.wav` | The call ending: two falling beeps | 0.36 s | One shot |
+| `breathing.wav` | Ethan's shaky breathing in the quiet ending after the hit: three breaths with a tremble on each exhale | 9.9 s | Loop, fading in |
+| `engine_tick.wav` | The hot engine ticking as it cools in the quiet ending | 0.06 s | One shot, twelve times at random gaps |
+| `skid.wav` | Locked tyres skidding on the wet crossing paint: tyre hiss, rubber scrub and a squeal near 960 Hz (added 2026-11-01, Run 24 step 3) | 2.0 s | Loop while the locked wheels brake, louder with speed |
 
 These files can be opened individually for audition. The in-game mix has Master,
 Vehicle, Ambience, and Music sliders in the pause menu. Headless checks confirm
@@ -41,6 +48,15 @@ or audio quality. No subjective listening approval is recorded yet.
 trigger switches, indicator ticks, wiper strokes, window motors, and impacts.
 Each update reads speed and window position to adjust engine pitch and the rain,
 tire, and wind mix. The four audio buses allow independent volume adjustment.
+
+Since Run 24:
+
+- the engine winds down over about 0.6 s when switched off, instead of cutting out;
+- Maya's call rings, connects and hangs up through these sounds, and the music dips
+  13 dB while she talks;
+- in the quiet ending the music stops, the breathing fades in over 1.5 s, the engine
+  ticks, and every loop fades out with the picture;
+- the tyres skid while the wheels are locked on the crossing paint and braking (step 3).
 
 The current loader expects `AudioStreamWAV`. Simply changing an extension to MP3
 or OGG will not work. Future replacements need compatible WAV exports or an
@@ -64,7 +80,7 @@ After approval, replace or reconnect the specific runtime sound, preserve import
 sidecars, check its duration and loop boundaries, then listen in context. Obtain
 the author's verdict rather than marking a provisional sound final automatically.
 
-The current synthesis source overwrites its twelve runtime WAVs when run. Do not
+The current synthesis source overwrites its nineteen runtime WAVs when run. Do not
 rerun it over author-selected replacements. Its repository-root command is:
 
 ```sh

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bn8enkcy3237k"
 path.s3tc="res://.godot/imported/barrel_03_nor_gl_1k.jpg-a29932dc1942b696433a8bec148e9a4c.s3tc.ctex"
+path.etc2="res://.godot/imported/barrel_03_nor_gl_1k.jpg-a29932dc1942b696433a8bec148e9a4c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/barrel_03/textures/barrel_03_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/barrel_03_nor_gl_1k.jpg-a29932dc1942b696433a8bec148e9a4c.s3tc.ctex"]
+dest_files=["res://.godot/imported/barrel_03_nor_gl_1k.jpg-a29932dc1942b696433a8bec148e9a4c.s3tc.ctex", "res://.godot/imported/barrel_03_nor_gl_1k.jpg-a29932dc1942b696433a8bec148e9a4c.etc2.ctex"]
 
 [params]
 

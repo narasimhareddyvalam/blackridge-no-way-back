@@ -6,7 +6,8 @@ them, are made from Adobe Mixamo characters and animations:
 - **Source:** Adobe Mixamo, https://www.mixamo.com
 - **Ethan:** Mixamo character "Ch33", with the animations Breathing Idle, Walking, Walking
   Backwards, Running, Entering Car and Exiting Car (decision C28).
-- **The pedestrian:** Mixamo character "Ch01", with Hit By Car and Ethan's Walking.
+- **The pedestrian:** Mixamo character "Ch01", with Hit By Car, and Ethan's Walking and
+  Breathing Idle (the idle added on 2026-11-01, Run 22, for waiting at the bus stop).
 - **Licence:** Adobe's Mixamo terms. They are free to use in games, including games that
   are sold, and may not be shared on their own. The author accepted that this public
   repository makes them downloadable (decision C27).
@@ -27,5 +28,8 @@ author's request:
 - **Textures:** halved from 4096 to 2048 pixels and stored as WebP.
 - **Bones:** renamed to one prefix, so either character can play the other's animations.
 - **Walk and run:** they play in place, and the game moves the character.
+- **The pedestrian at real size (2026-11-01):** Mixamo's 1/100 scale and 90-degree turn are
+  baked into his skeleton, so his physics ragdoll can attach to it. In the game Hit By Car now
+  gives only his standing pose; the hit itself is physics.
 
 The source downloads are described in `source_assets/mixamo/README.md`.

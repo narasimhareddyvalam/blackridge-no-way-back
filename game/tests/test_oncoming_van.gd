@@ -1,10 +1,14 @@
 extends SceneTree
 
 const OncomingVan = preload("res://features/vehicles/oncoming_van/oncoming_van.gd")
-const LOW_BEAM = preload("res://features/vehicles/freight_van/art/low_beam_pattern.png")
-const TRIGGER_SIDE := 966
-const WAIT_AT := 1030
+const HIGH_BEAM = preload("res://features/vehicles/freight_van/art/high_beam_pattern.png")
+const PLATE = preload("res://features/vehicles/oncoming_van/art/number_plate.png")
+const TRIGGER_SIDE := 729
+const WAIT_AT := 795
+const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const PULL_OVER := 1.35
+const DRIVING := 8.0
+const MIRRORS := 2.47
 
 var _checks: int = 0
 var _failures: int = 0
@@ -42,12 +46,13 @@ func _run() -> void:
 	_app.call("_resume")
 	await physics_frame
 	_check(_route.get("road") == _road, "The mission is given the ghat road")
-	_route.set("stage", 4)
+	_route.set("stage", Mission.ENCOUNTER_STAGE)
 	_place(TRIGGER_SIDE, 0.0)
+	_van.set("speed", DRIVING)
 	await _seconds(0.5)
 	var oncoming: Node3D = _route.get("oncoming")
 	_check_arrival(oncoming)
-	if not is_instance_valid(oncoming):
+	if not is_instance_valid(oncoming) or _failures > 0:
 		_finish()
 		return
 	_place(WAIT_AT, 0.0)
@@ -56,6 +61,7 @@ func _run() -> void:
 	await _check_passing(oncoming)
 	await _check_gone(oncoming)
 	_place(TRIGGER_SIDE, 0.0)
+	_van.set("speed", DRIVING)
 	await _seconds(0.5)
 	_check(not is_instance_valid(_route.get("oncoming")),
 		"Driving past the trigger again sends no second van (once per drive)")
@@ -65,11 +71,18 @@ func _run() -> void:
 
 
 func _check_arrival(oncoming: Node3D) -> void:
-	_check(oncoming is AnimatableBody3D, "Below the last hairpin the mission sends one oncoming van")
+	_check(oncoming is AnimatableBody3D,
+		"In the second hairpin down, the mission sends one oncoming van")
 	if not is_instance_valid(oncoming):
 		return
 	var start := int(round(float(oncoming.get("distance")) / OncomingVan.SPACING))
-	_check(start >= 1040, "It starts beyond the valley S-bend, out of sight (sample %d)" % start)
+	var eye := _van.to_global(Vector3(-0.45, 1.88, -0.72))
+	var sight := PhysicsRayQueryParameters3D.create(eye, oncoming.global_position + Vector3.UP,
+		1, [_van.get_rid(), (oncoming as CollisionObject3D).get_rid()])
+	var hidden := not _van.get_world_3d().direct_space_state.intersect_ray(sight).is_empty()
+	_check(absi(start - Mission.SPAWN_AT) <= 2 and hidden,
+		"It starts at the foot of the descent straight, where the hill hides it (sample %d)"
+		% start)
 	var points: PackedVector3Array = _road.points
 	var downhill := points[start - 1] - points[start]
 	_check((-oncoming.global_basis.z).dot(downhill.normalized()) > 0.9,
@@ -78,8 +91,19 @@ func _check_arrival(oncoming: Node3D) -> void:
 	var proper := lamps.size() == 2
 	for lamp: SpotLight3D in lamps:
 		proper = proper and not lamp.shadow_enabled and lamp.light_cull_mask == 5 \
-			and lamp.light_projector == LOW_BEAM
-	_check(proper, "Its two low beams cast no shadows and light the road and the player's cab")
+			and lamp.light_projector == HIGH_BEAM
+	_check(proper, "Its two high beams cast no shadows and light the road and the player's cab")
+	var painted := 0
+	var plates := 0
+	for mesh: MeshInstance3D in oncoming.find_children("*", "MeshInstance3D", true, false):
+		for surface in range(mesh.get_surface_override_material_count()):
+			var paint := mesh.get_surface_override_material(surface) as BaseMaterial3D
+			painted += 1 if paint != null and paint.albedo_color == OncomingVan.PAINT else 0
+		var shown := mesh.material_override as BaseMaterial3D
+		plates += 1 if shown != null and shown.albedo_texture == PLATE else 0
+	_check(oncoming.get_node_or_null("Iveco") != null and painted >= 4 and plates == 2,
+		"It is an Iveco like the player's, painted dark, with its own plates front and rear "
+		+ "(%d painted parts, %d plates)" % [painted, plates])
 	_check((oncoming.collision_layer & 1) != 0 and (_van.collision_mask & 1) != 0,
 		"The player's van can collide with it")
 	_check(_presentation.get("oncoming") == oncoming,
@@ -91,9 +115,7 @@ func _check_blocked(oncoming: Node3D) -> void:
 	var brightest := 0.0
 	var darkest := 1.0
 	var backlit := 0.0
-	var toggles := 0
-	var was_high := false
-	var dipped := false
+	var always_high := true
 	while waited < 25.0:
 		await physics_frame
 		waited += 1.0 / 60.0
@@ -102,31 +124,19 @@ func _check_blocked(oncoming: Node3D) -> void:
 		darkest = minf(darkest, _exposure())
 		var lit_rain: Variant = _rain().get_shader_parameter("oncoming")
 		backlit = maxf(backlit, 0.0 if lit_rain == null else float(lit_rain))
+		always_high = always_high and bool(oncoming.get("high_beams"))
 		var gap := -_van_from(oncoming).z - OncomingVan.BUMPERS
-		if gap < 60.0 and toggles == 0 and not _van.get("high_beams"):
-			await _tap("headlights")
-		var high: bool = oncoming.get("high_beams")
-		if high != was_high:
-			toggles += 1
-			was_high = high
-		if toggles >= 4 and _van.get("high_beams") and not dipped:
-			dipped = true
-			await _tap("headlights")
-			await _tap("headlights")
 		if float(oncoming.get("speed")) < 0.05 and gap < 15.0:
 			break
 	var stopped_gap := -_van_from(oncoming).z - OncomingVan.BUMPERS
 	_check(float(oncoming.get("speed")) < 0.05 and stopped_gap > 1.5 and stopped_gap < 6.0,
 		"Blocked by the player's van in mid-road, it stops short (%.1f m gap, %.1f s)" % [
 			stopped_gap, waited])
-	_check(toggles >= 4, "It flashes its high beams twice at the player's high beams (%d changes)"
-		% toggles)
+	_check(always_high, "It keeps its high beams on all the way in (%.1f s)" % waited)
 	_check(brightest > 0.3, "Its lamps put glare on the wet windshield (peak %.2f)" % brightest)
 	_check(darkest < 0.7, "Staring into them, the driver's eyes adapt: the road darkens to %.2f"
 		% darkest)
 	_check(backlit > 0.0, "Its beams light the rain in front of the player (%.1f)" % backlit)
-	_check(_van.get("headlights_on") and not _van.get("high_beams"),
-		"The player's lights are back on low beam")
 
 
 func _check_passing(oncoming: Node3D) -> void:
@@ -143,7 +153,8 @@ func _check_passing(oncoming: Node3D) -> void:
 			- (2.25 - OncomingVan.KEEP_RIGHT)))
 	_check(bool(oncoming.get("_passed")),
 		"When the player keeps right it squeezes past (%.1f s)" % waited)
-	_check(closest >= 2.45, "The two vans never overlap (%.2f m between centres)" % closest)
+	_check(closest >= MIRRORS, "The two vans never touch, mirrors included "
+		+ "(%.2f m between centres)" % closest)
 	_check(offset_error < 0.1, "It hugs its own verge, %.2f m right of the centre line (error %.2f)"
 		% [2.25 - OncomingVan.KEEP_RIGHT, offset_error])
 	await _seconds(1.0)
@@ -151,7 +162,7 @@ func _check_passing(oncoming: Node3D) -> void:
 	_check(maxf(power.x, power.y) < 0.02, "Once it is behind, the glare is gone (%.3f)"
 		% maxf(power.x, power.y))
 	var after_pass := _exposure()
-	await _seconds(6.0)
+	await _seconds(8.0)
 	_check(after_pass < 0.9 and _exposure() > 0.97,
 		"The eyes recover over a few seconds (%.2f a second after, %.2f later)" % [after_pass,
 		_exposure()])

@@ -13,6 +13,8 @@ const ForestFloor = preload("forest_floor.gd")
 const GhatRoad = preload("ghat_road.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
+const BusStop = preload("bus_stop.gd")
+const SiteOffice = preload("art/office/site_office.glb")
 const GROUND = preload("hill_ground.gdshader")
 const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/textures/"
 const FOREST_CLEARANCE := 2.5
@@ -34,6 +36,21 @@ const FENCE_FROM := -40
 const FENCE_TO := 130
 const FENCE_PLOT := Rect2(FENCE_FROM - 2, FENCE_Z - 1.5, FENCE_TO - FENCE_FROM + 4, 3)
 const LUMBER_YARD := Rect2(520, 72, 80, 40)
+const SITE_OFFICE := Vector3(552.0, -0.12, 117.5)
+const SHEET_STAND := 0.7
+const OFFICE_TEXTURES := {
+	"siding": ["weathered_plank_siding", 1.57, "2k"],
+	"roof": ["corrugated_iron", 1.12, "1k"],
+	"door": ["rough_pine_door", 2.0, "1k"],
+	"deck": ["stair_planks", 1.2, "1k"],
+	"concrete": ["brushed_concrete_03", 2.0, "1k"],
+}
+const OFFICE_PAINT := {
+	"trim": Color("8e897d"), "sign": Color("0b3321"), "letters": Color("ddd6c0"),
+	"paper": Color("e8e3d4"), "clipboard": Color("6b4a2e"),
+}
+const LAMP_COLOR := Color("ffd7a0")
+const FLOODLIGHT_COLOR := Color("e4ebf2")
 const VIEW_CLEARINGS: Array[Rect2] = [Rect2(420, -140, 75, 55), Rect2(395, -112, 70, 50),
 	Rect2(368, -82, 70, 50), Rect2(340, -52, 72, 50), Rect2(312, -22, 74, 50)]
 const SKYLINE_Z := 207.0
@@ -41,6 +58,7 @@ const SKYLINE_PLOT := Rect2(-112, 197, 556, 44)
 const GLOW_SIZE := 16.0
 const GLOW_FROM := 150.0
 const LANDSLIDE_AT := Vector2(330, 166)
+const CROSSING_AT := Vector2(64.0, -79.0)
 const SIGN_SETBACK := 3.0
 const GUIDE_GREEN := Color("0a4128")
 const TOWN_LAMPS: Array[Vector3] = [Vector3(-45, 0, 64.5), Vector3(-15, 0, 63.8),
@@ -50,9 +68,13 @@ var road_points := PackedVector3Array()
 var road: RefCounted
 var terrain: Node3D
 var dressing: Node3D
+var crossing: Node3D
 var playable_area := PLAYABLE_AREA
 var depot_position := Vector3(-28.0, 0.0, 91.0)
 var clearings: Array[Rect2] = []
+var run_sheet_at := Vector3.ZERO
+var run_sheet_spot := Vector3.ZERO
+var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
 var _metal := Build.material(Color("343d43"), 0.48)
@@ -137,10 +159,17 @@ func _ground_and_roads() -> void:
 	asphalt.set_shader_parameter("dry_color", Vector3(0.85, 0.85, 0.85))
 	_road_strip(0.0, 0.0, asphalt, false)
 	_road_strip(GhatRoad.VERGE, -0.012, _surface("leaf_scattered_gravel", 1.8, false), true)
+	crossing = BusStop.new()
+	crossing.name = "BusStop"
+	add_child(crossing)
+	crossing.build(road, terrain, CROSSING_AT, _concrete,
+		_surface("leaf_scattered_gravel", 1.8, false))
+	crossing.paint(asphalt)
+	clearings.append_array(crossing.clearings)
 	dressing = GhatDressing.new()
 	dressing.name = "GhatDressing"
 	add_child(dressing)
-	dressing.build(road, terrain, _concrete, LANDSLIDE_AT)
+	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index)
 	var yard := ShaderMaterial.new()
 	yard.shader = ASPHALT
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
@@ -473,6 +502,81 @@ func _lumber_yard() -> void:
 	Build.box(self, Vector3(yard.end.x - 9, 4.2, yard.position.y + 30), Vector3(11, 0.3, 8),
 		_metal)
 	_lamp_post(Vector3(yard.position.x + 6, 0, yard.end.y - 3), PI / 2)
+	_site_office()
+
+
+func _site_office() -> void:
+	var at := SITE_OFFICE
+	clearings.append(Rect2(at.x - 5.0, at.z - 3.5, 10.0, 7.5))
+	var office := SiteOffice.instantiate() as Node3D
+	office.name = "SiteOffice"
+	office.position = at
+	add_child(office)
+	office_transform = office.transform
+	var shell := office.get_node("SiteOffice") as MeshInstance3D
+	for surface in range(shell.mesh.get_surface_count()):
+		var part := shell.mesh.surface_get_material(surface).resource_name
+		shell.set_surface_override_material(surface, _office_material(part))
+	_office_lights(office)
+	var sheet := office.get_node("RunSheet") as Node3D
+	run_sheet_at = office.transform * sheet.position
+	run_sheet_spot = office.transform * Vector3(sheet.position.x, 0.0,
+		sheet.position.z + SHEET_STAND)
+
+
+func _office_material(part: String) -> Material:
+	if OFFICE_TEXTURES.has(part):
+		var source: Array = OFFICE_TEXTURES[part]
+		var tile: float = source[1]
+		var material := _surface(source[0], tile, false, source[2])
+		material.uv1_offset.y = 1.0 - 1.0 / tile
+		return material
+	match part:
+		"metal":
+			return _metal
+		"glass":
+			var glass := Build.material(Color(0.1, 0.12, 0.13, 0.3), 0.05)
+			glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			return glass
+		"blinds":
+			var blinds := Build.material(Color("cfc6b0"), 0.8)
+			blinds.emission_enabled = true
+			blinds.emission = Color("ffcf94")
+			blinds.emission_energy_multiplier = 0.3
+			return blinds
+		"window_glow":
+			return Build.luminous(Color("ffd9a6"), 0.8)
+		"lamp_glow":
+			return _lamp
+	return Build.material(OFFICE_PAINT[part], 0.8)
+
+
+func _office_lights(office: Node3D) -> void:
+	var lamp := SpotLight3D.new()
+	lamp.name = "NoticeLight"
+	lamp.transform = (office.get_node("NoticeLamp") as Node3D).transform
+	lamp.light_color = LAMP_COLOR
+	lamp.light_energy = 4.0
+	lamp.spot_range = 8.0
+	lamp.spot_angle = 55.0
+	lamp.shadow_enabled = true
+	office.add_child(lamp)
+	var flood := SpotLight3D.new()
+	flood.name = "FloodLight"
+	flood.transform = (office.get_node("Floodlight") as Node3D).transform
+	flood.light_color = FLOODLIGHT_COLOR
+	flood.light_energy = 9.0
+	flood.spot_range = 32.0
+	flood.spot_angle = 30.0
+	flood.shadow_enabled = true
+	office.add_child(flood)
+	var glow := OmniLight3D.new()
+	glow.name = "WindowGlow"
+	glow.position = (office.get_node("WindowLight") as Node3D).position
+	glow.light_color = Color("ffcf94")
+	glow.light_energy = 0.8
+	glow.omni_range = 4.0
+	office.add_child(glow)
 
 
 func _street_furniture() -> void:
@@ -554,12 +658,13 @@ func _forest() -> void:
 	forest_floor.build(road_points, clearings, 42020, terrain)
 
 
-func _surface(asset: String, tile_size: float, triplanar: bool) -> ORMMaterial3D:
+func _surface(asset: String, tile_size: float, triplanar: bool,
+		resolution: String = "2k") -> ORMMaterial3D:
 	var material := ORMMaterial3D.new()
-	material.albedo_texture = _texture(asset, "diff")
+	material.albedo_texture = _texture(asset, "diff", resolution)
 	material.normal_enabled = true
-	material.normal_texture = _texture(asset, "nor_gl")
-	material.orm_texture = _texture(asset, "arm")
+	material.normal_texture = _texture(asset, "nor_gl", resolution)
+	material.orm_texture = _texture(asset, "arm", resolution)
 	material.uv1_scale = Vector3.ONE / tile_size
 	material.uv1_triplanar = triplanar
 	material.uv1_world_triplanar = triplanar
@@ -567,5 +672,5 @@ func _surface(asset: String, tile_size: float, triplanar: bool) -> ORMMaterial3D
 	return material
 
 
-func _texture(asset: String, map: String) -> Texture2D:
-	return load(POLYHAVEN + "%s/%s_%s_2k.jpg" % [asset, asset, map])
+func _texture(asset: String, map: String, resolution: String = "2k") -> Texture2D:
+	return load(POLYHAVEN + "%s/%s_%s_%s.jpg" % [asset, asset, map, resolution])

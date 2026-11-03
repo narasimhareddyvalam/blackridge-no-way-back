@@ -87,11 +87,14 @@ func _check_layout() -> void:
 	for point in points:
 		inside = inside and area.grow(-25.0).has_point(Vector2(point.x, point.z))
 	_check(inside, "The whole road lies at least 25 m inside the playable area")
-	var line: PackedVector2Array = _presentation.navigation.get("_road_line")
-	var on_map := line.size() > 100
-	for point in line:
-		on_map = on_map and Rect2(37, 55, 310, 148).has_point(point)
-	_check(on_map, "The map screen draws the real road inside its panel (%d points)" % line.size())
+	var map: Control = _presentation.navigation
+	var drawn: PackedVector2Array = map.get("drawn_road")
+	var tracked: Vector3 = points[int(map.get("route_index"))]
+	var off_road := Vector2(tracked.x - _van.global_position.x,
+		tracked.z - _van.global_position.z).length()
+	_check(drawn.size() > 20 and off_road < 40.0,
+		"The map screen draws the real road around the van, heading-up (%d points on the map, "
+		% drawn.size() + "tracked %.0f m from the van)" % off_road)
 
 
 func _check_surfaces() -> void:

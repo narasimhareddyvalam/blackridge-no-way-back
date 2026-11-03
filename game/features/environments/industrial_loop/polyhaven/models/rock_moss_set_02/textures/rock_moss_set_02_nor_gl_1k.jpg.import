@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cp3vq8e0n3l6i"
 path.s3tc="res://.godot/imported/rock_moss_set_02_nor_gl_1k.jpg-05a7efc4fcd0fda00eff94fa62f01f03.s3tc.ctex"
+path.etc2="res://.godot/imported/rock_moss_set_02_nor_gl_1k.jpg-05a7efc4fcd0fda00eff94fa62f01f03.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/models/rock_moss_set_02/textures/rock_moss_set_02_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/rock_moss_set_02_nor_gl_1k.jpg-05a7efc4fcd0fda00eff94fa62f01f03.s3tc.ctex"]
+dest_files=["res://.godot/imported/rock_moss_set_02_nor_gl_1k.jpg-05a7efc4fcd0fda00eff94fa62f01f03.s3tc.ctex", "res://.godot/imported/rock_moss_set_02_nor_gl_1k.jpg-05a7efc4fcd0fda00eff94fa62f01f03.etc2.ctex"]
 
 [params]
 

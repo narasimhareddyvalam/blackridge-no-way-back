@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkw8hskkva357"
 path.s3tc="res://.godot/imported/modular_chainlink_fence_posts_diff_1k.jpg-8f01016fc78398abbdb5f63517950f40.s3tc.ctex"
+path.etc2="res://.godot/imported/modular_chainlink_fence_posts_diff_1k.jpg-8f01016fc78398abbdb5f63517950f40.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_posts_diff_1k.jpg"
-dest_files=["res://.godot/imported/modular_chainlink_fence_posts_diff_1k.jpg-8f01016fc78398abbdb5f63517950f40.s3tc.ctex"]
+dest_files=["res://.godot/imported/modular_chainlink_fence_posts_diff_1k.jpg-8f01016fc78398abbdb5f63517950f40.s3tc.ctex", "res://.godot/imported/modular_chainlink_fence_posts_diff_1k.jpg-8f01016fc78398abbdb5f63517950f40.etc2.ctex"]
 
 [params]
 

@@ -15,7 +15,10 @@ committed. The conversion:
 - makes the walk and run cycles walk in place (the game moves the character) and prints
   their ground speed; the car and hit clips keep their own motion;
 - names the idle, walk and run tracks "<name>-loop", Godot's import hint for a looping
-  clip; Godot removes the suffix on import.
+  clip; Godot removes the suffix on import;
+- exports the pedestrian at real size: Mixamo's 1/100 scale and 90-degree turn are baked
+  into his skeleton and mesh, and the clips' movement is scaled to match, because the
+  physics bones of his ragdoll cannot hang from a scaled skeleton.
 
 Usage, from the repository root:
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \\
@@ -35,6 +38,7 @@ ROUGHNESS = {"Body": 0.5, "Hair": 0.55, "Eyelashes": 0.6, "Suit": 0.82, "Shirt":
              "Pants": 0.85, "Tie": 0.55, "Belt": 0.45, "Shoes": 0.4, "Sneakers": 0.75}
 TINT = {("pedestrian", "Shirt"): (0.08, 0.087, 0.098)}
 IN_PLACE = {"Walk", "WalkBack", "Run"}
+REAL_SIZE = {"pedestrian"}
 LOOPING = IN_PLACE | {"Idle"}
 FPS = 30.0
 CHARACTERS = {
@@ -42,7 +46,8 @@ CHARACTERS = {
         ("Walking.fbx", "Walk"), ("Walking Backwards.fbx", "WalkBack"),
         ("Running.fbx", "Run"), ("Entering Car.fbx", "EnterVan"),
         ("Exiting Car.fbx", "ExitVan")]),
-    "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk")]),
+    "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
+                                                    ("Breathing Idle.fbx", "Idle")]),
 }
 
 
@@ -193,6 +198,22 @@ def clean_materials(name, meshes):
             image.scale(image.size[0] // 2, image.size[1] // 2)
 
 
+def real_size(armature, meshes, actions):
+    scale = armature.scale.x
+    bpy.ops.object.select_all(action="DESELECT")
+    for item in [armature] + meshes:
+        item.select_set(True)
+    bpy.context.view_layer.objects.active = armature
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+    for action in actions:
+        for curve in fcurves(action):
+            if curve.data_path.endswith(".location"):
+                for key in curve.keyframe_points:
+                    for point in (key.co, key.handle_left, key.handle_right):
+                        point[1] *= scale
+                curve.update()
+
+
 def export(name, armature, meshes):
     bpy.ops.object.select_all(action="DESELECT")
     for item in [armature] + meshes:
@@ -221,6 +242,8 @@ def build(name, base_file, base_label, extras):
     push_tracks(armature, actions)
     meshes = [o for o in objects if o.type == "MESH"]
     clean_materials(name, meshes)
+    if name in REAL_SIZE:
+        real_size(armature, meshes, [action for _, action in actions])
     target = export(name, armature, meshes)
     triangles = sum(sum(len(p.vertices) - 2 for p in m.data.polygons) for m in meshes)
     print(f"{target}: {triangles} triangles, {len(armature.data.bones)} bones, "

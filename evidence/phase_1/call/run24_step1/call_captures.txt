@@ -1,0 +1,6 @@
+saved phone_ringing.png: subtitle "", dash caller "MAYA" at -1.0 s, fov 74
+saved dash_incoming_call.png: subtitle "", dash caller "MAYA" at -1.0 s, fov 14
+saved dash_call_connected.png: subtitle "ETHAN: Last run of the night. Almost done.", dash caller "MAYA" at 3.2 s, fov 14
+saved first_lines.png: subtitle "ETHAN: Last run of the night. Almost done.", dash caller "MAYA" at 4.2 s, fov 74
+saved lock_your_door.png: subtitle "ETHAN: Lock your door tonight.", dash caller "MAYA" at 24.4 s, fov 74
+saved after_the_call.png: subtitle "", dash caller "" at 33.6 s, fov 74

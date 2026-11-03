@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://csd57w3fw555y"
 path.s3tc="res://.godot/imported/exterior_aircon_unit_01_opacity_1k.jpg-cecca3295a2f7e77b4cec017bbd8c5f1.s3tc.ctex"
+path.etc2="res://.godot/imported/exterior_aircon_unit_01_opacity_1k.jpg-cecca3295a2f7e77b4cec017bbd8c5f1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/exterior_aircon_unit/textures/exterior_aircon_unit_01_opacity_1k.jpg"
-dest_files=["res://.godot/imported/exterior_aircon_unit_01_opacity_1k.jpg-cecca3295a2f7e77b4cec017bbd8c5f1.s3tc.ctex"]
+dest_files=["res://.godot/imported/exterior_aircon_unit_01_opacity_1k.jpg-cecca3295a2f7e77b4cec017bbd8c5f1.s3tc.ctex", "res://.godot/imported/exterior_aircon_unit_01_opacity_1k.jpg-cecca3295a2f7e77b4cec017bbd8c5f1.etc2.ctex"]
 
 [params]
 

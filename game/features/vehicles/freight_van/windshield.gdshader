@@ -29,6 +29,9 @@ uniform vec4 wiper_spans = vec4(0.15, 0.85, 0.185, 0.735);
 uniform vec4 glare_points = vec4(9.0);
 uniform vec2 glare_power = vec2(0.0);
 uniform vec3 glare_colour : source_color = vec3(1.0, 0.95, 0.86);
+uniform vec2 crack_point = vec2(9.0);
+uniform float crack_amount = 0.0;
+uniform float crack_seed = 0.0;
 
 const float RUN_LANE = 0.06;
 const float RUN_EPOCH = 0.5;
@@ -48,6 +51,11 @@ const float GLARE_GLINT = 4.0;
 const float GLINT_REACH = 0.18;
 const float ARC_WIDTH = 0.0035;
 const float ARC_REACH = 0.16;
+const float CRACK_REACH = 0.34;
+const float CRACK_WIDTH = 0.0008;
+const float CRACK_RAYS = 14.0;
+const vec4 CRACK_RINGS = vec4(0.12, 0.24, 0.4, 0.58);
+const vec3 CRACK_TINT = vec3(0.62, 0.65, 0.68);
 
 #include "rain_drops.gdshaderinc"
 
@@ -218,6 +226,54 @@ float glare_veil(vec2 metres, vec2 point, float power, float film) {
 	return power * (halo + 0.3 * scatter * arcs);
 }
 
+float crack_ray(float index) {
+	return (index + hash(vec2(mod(index, CRACK_RAYS), crack_seed)) * 0.8) / CRACK_RAYS * TAU;
+}
+
+vec2 crack_lines(vec2 metres) {
+	if (crack_amount <= 0.0) {
+		return vec2(0.0);
+	}
+	vec2 rel = metres - crack_point;
+	float r = length(rel);
+	float reach = CRACK_REACH * crack_amount;
+	if (r > reach) {
+		return vec2(0.0);
+	}
+	float width = max(CRACK_WIDTH, fwidth(metres.x) * 0.55);
+	float theta = mod(atan(rel.y, rel.x), TAU);
+	float lines = 0.0;
+	for (int i = 0; i < int(CRACK_RAYS); i++) {
+		float index = float(i);
+		float spread = hash(vec2(crack_seed, index));
+		float ray_length = reach * (hash(vec2(crack_seed, index + 0.5)) > 0.35
+			? 0.6 + 0.4 * spread : 0.2 + 0.25 * spread);
+		float kink = (noise(vec2(r * 9.0, index * 3.7 + crack_seed)) - 0.5) * 0.12;
+		float off = abs(mod(theta - crack_ray(index) - kink + PI, TAU) - PI) * r;
+		float glint = 0.4 + 0.6 * noise(vec2(r * 60.0, index * 5.1 + crack_seed));
+		lines = max(lines, (1.0 - smoothstep(width, width * 2.2, off))
+			* (1.0 - smoothstep(ray_length * 0.5, ray_length, r)) * glint);
+	}
+	float sector = floor(theta / TAU * CRACK_RAYS);
+	sector -= step(theta, crack_ray(sector) - 0.00001);
+	float low = crack_ray(sector);
+	float span = crack_ray(sector + 1.0) - low;
+	float across = r * cos(theta - low - span * 0.5);
+	float along = r * sin(theta - low - span * 0.5);
+	for (int k = 0; k < 4; k++) {
+		float ring = float(k);
+		float radius = reach * CRACK_RINGS[k]
+			* (1.0 + 0.25 * (hash(vec2(sector + 7.1 * ring, crack_seed)) - 0.5));
+		float present = step(hash(vec2(sector * 1.7 + ring, crack_seed + 3.3)), 0.85 - 0.15 * ring);
+		float chord = abs(across - radius * cos(span * 0.5));
+		float glint = 0.4 + 0.6 * noise(vec2(along * 80.0, sector * 3.0 + ring));
+		lines = max(lines, (1.0 - smoothstep(width, width * 2.2, chord)) * present
+			* (0.9 - 0.12 * ring) * glint);
+	}
+	float frost = (1.0 - smoothstep(0.004, 0.02, r)) * (0.6 + 0.4 * noise(metres * 700.0));
+	return vec2(lines, frost);
+}
+
 void fragment() {
 	vec2 metres = vec2((UV.x - 0.5) * glass_size.x, (0.5 - UV.y) * glass_size.y);
 	float age = texture(wipe_mask, UV).r;
@@ -260,7 +316,10 @@ void fragment() {
 		+ glare_power.y * exp(-length(metres - glare_points.zw) / GLINT_REACH);
 	colour += glare_colour * near * GLARE_GLINT * drop_mix.z
 		* (0.3 + 0.7 * smoothstep(0.5, 1.0, length(drop_mix.xy)));
-	float alpha = max(glass.a, crest * 0.8);
+	vec2 crack = crack_lines(metres);
+	vec3 shatter = CRACK_TINT * (0.22 + 1.4 * dot(around, vec3(0.333))) + glare_colour * near * 3.0;
+	colour = mix(colour, shatter, max(crack.x, crack.y));
+	float alpha = max(max(glass.a, crest * 0.8), max(crack.x * 0.65, crack.y * 0.85));
 	float blur = blade_blur(metres);
 	float covered = 1.0 - (1.0 - alpha) * (1.0 - blur);
 	float veil = clamp(glare_veil(metres, glare_points.xy, glare_power.x, film)

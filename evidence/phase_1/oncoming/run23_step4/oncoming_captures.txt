@@ -1,0 +1,10 @@
+debug camera at (-47.36161, 2.2, 67.6595), oncoming van at (-56.2479, 0.0, 73.34139)
+saved oncoming_van_night.png: oncoming 228 m away, glare (0.0, 0.00359) at (0.149307, 0.018196, 0.142487, 0.0186), lamps on screen (588.0, 454.0) (477.0, 443.0), windshield brightness 20.3, 45 FPS
+saved oncoming_van_debug_light.png: oncoming 221 m away, glare (0.0, 0.000001) at (-0.259125, 0.049316, -0.263077, 0.049461), lamps on screen (588.0, 454.0) (477.0, 443.0), windshield brightness 55.9, 45 FPS
+saved before_it_comes.png: oncoming 85 m away, glare (0.003526, 0.000002) at (-0.162903, 0.035122, -0.174637, 0.035204), lamps on screen (879.0, 325.0) (869.0, 325.0), windshield brightness 50.0, 47 FPS
+saved oncoming_120m.png: oncoming 84 m away, glare (0.000712, 0.265462) at (-0.165268, 0.034971, -0.17717, 0.035059), lamps on screen (877.0, 325.0) (867.0, 325.0), windshield brightness 67.4, 47 FPS
+saved oncoming_60m.png: oncoming 60 m away, glare (0.17362, 0.910388) at (-0.218628, 0.031574, -0.234268, 0.031742), lamps on screen (831.0, 327.0) (818.0, 327.0), windshield brightness 107.6, 60 FPS
+saved oncoming_35m.png: oncoming 35 m away, glare (1.351125, 1.260534) at (-0.382385, 0.02285, -0.405525, 0.023304), lamps on screen (694.0, 332.0) (675.0, 332.0), windshield brightness 142.2, 60 FPS
+saved oncoming_20m.png: oncoming 20 m away, glare (2.415588, 2.259954) at (-0.502632, 0.003181, -0.551468, 0.003691), lamps on screen (597.0, 343.0) (557.0, 343.0), windshield brightness 159.3, 53 FPS
+saved oncoming_10m.png: oncoming 10 m away, glare (2.739608, 2.337193) at (-0.63311, -0.065622, -0.768707, -0.065313), lamps on screen (501.0, 379.0) (398.0, 378.0), windshield brightness 148.9, 45 FPS
+saved after_it_passed.png: oncoming 17 m away, glare (0.0, 0.0) at (9.0, 9.0, 9.0, 9.0), lamps on screen (744.0, 308.0) (781.0, 307.0), windshield brightness 42.8, 60 FPS

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8r01b3nbr3dn"
 path.s3tc="res://.godot/imported/cockpit_steering_wheel_nor_gl.png-7888cb65799c91397578f84973a21c67.s3tc.ctex"
+path.etc2="res://.godot/imported/cockpit_steering_wheel_nor_gl.png-7888cb65799c91397578f84973a21c67.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/cockpit/textures/cockpit_steering_wheel_nor_gl.png"
-dest_files=["res://.godot/imported/cockpit_steering_wheel_nor_gl.png-7888cb65799c91397578f84973a21c67.s3tc.ctex"]
+dest_files=["res://.godot/imported/cockpit_steering_wheel_nor_gl.png-7888cb65799c91397578f84973a21c67.s3tc.ctex", "res://.godot/imported/cockpit_steering_wheel_nor_gl.png-7888cb65799c91397578f84973a21c67.etc2.ctex"]
 
 [params]
 

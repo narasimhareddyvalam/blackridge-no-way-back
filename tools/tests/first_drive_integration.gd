@@ -44,7 +44,8 @@ func _run() -> void:
 	presentation = van.get_node("VanPresentation")
 	await create_timer(0.25).timeout
 	check(not van.call("_rotation_blocked", 0.04), "Steering clearance accepts open level ground")
-	check(presentation.get("mirrors").size() == 3, "Three live mirror viewports exist")
+	check(presentation.get("mirrors").size() == 2,
+		"Two live door-mirror viewports exist (the Iveco has no inside mirror)")
 	for camera in presentation.get("mirror_cameras"):
 		check(camera.get_world_3d() == van.get_world_3d(), "Mirror/rear camera shares live world")
 	await tap("indicator_left")
@@ -110,6 +111,10 @@ func _run() -> void:
 	await create_timer(1).timeout
 	Input.action_release("brake")
 	await tap("interact")
+	var leaving := 0.0
+	while bool(app.get("_boarding")) and leaving < 8.0:
+		await create_timer(0.1).timeout
+		leaving += 0.1
 	check(not van.get("occupied") and app.get("driver").get("active"),
 		"Stopped van allows safe exit")
 	await tap("interact")

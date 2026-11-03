@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2ux8ks8vpdla"
 path.s3tc="res://.godot/imported/pine_bark_nor_gl_2k.jpg-f90146793eecaf6936e94207e530d6bd.s3tc.ctex"
+path.etc2="res://.godot/imported/pine_bark_nor_gl_2k.jpg-f90146793eecaf6936e94207e530d6bd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/textures/pine_bark/pine_bark_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/pine_bark_nor_gl_2k.jpg-f90146793eecaf6936e94207e530d6bd.s3tc.ctex"]
+dest_files=["res://.godot/imported/pine_bark_nor_gl_2k.jpg-f90146793eecaf6936e94207e530d6bd.s3tc.ctex", "res://.godot/imported/pine_bark_nor_gl_2k.jpg-f90146793eecaf6936e94207e530d6bd.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://uvesn85tlcra"
 path.s3tc="res://.godot/imported/leaf_scattered_gravel_diff_2k.jpg-c253f7a20999c3774ba681705712fa42.s3tc.ctex"
+path.etc2="res://.godot/imported/leaf_scattered_gravel_diff_2k.jpg-c253f7a20999c3774ba681705712fa42.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/industrial_loop/polyhaven/textures/leaf_scattered_gravel/leaf_scattered_gravel_diff_2k.jpg"
-dest_files=["res://.godot/imported/leaf_scattered_gravel_diff_2k.jpg-c253f7a20999c3774ba681705712fa42.s3tc.ctex"]
+dest_files=["res://.godot/imported/leaf_scattered_gravel_diff_2k.jpg-c253f7a20999c3774ba681705712fa42.s3tc.ctex", "res://.godot/imported/leaf_scattered_gravel_diff_2k.jpg-c253f7a20999c3774ba681705712fa42.etc2.ctex"]
 
 [params]
 

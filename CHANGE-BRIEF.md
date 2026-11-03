@@ -1368,6 +1368,1556 @@ logs, and commit.
   - the drive's end screen still reads "DRIVE COMPLETE";
   - a hit is not saved with the checkpoint, so quitting and reloading replays the encounter.
 
+## Revision 2026-11-01 (Run 20, step 1: the hit by physics, a ragdoll)
+
+- **Author:** "hitting the user make it more realistic", then "Yes, start step 1 (Recommended)"
+  (`AUTHOR_PROMPTS_AND_DECISIONS.md` #72–#73).
+- **Why the old hit looked fake:** Mixamo's Hit By Car is a canned knock from the side. He
+  stood, tipped over to his right, and a script slid him along the road, whatever the van's
+  speed.
+- **What happens now** (`game/features/characters/pedestrian/pedestrian.gd`):
+  - **Before contact:** when the van's bumper is about 0.35 s away, he stops walking, stands
+    still and turns up to 69° toward the headlights.
+  - **At contact:** the animation stops and a physics ragdoll takes over:
+    - 11 bodies: pelvis, torso, head, both upper arms, forearms, thighs and shins;
+    - 75 kg in all, collision with the road, verge, trees and rails, but not with each
+      other.
+  - **The throw:** the van's flat front gives the whole body one push, 1.08 × the van's speed
+    plus 0.6 m/s upward. That is forward projection, as when a van or truck hits a person.
+    The feet catch the road, so he is swept off his feet, lands, and tumbles and slides on
+    the wet road.
+  - **At rest:** once nothing has moved more than 5 cm in half a second for a second, the
+    bodies are frozen where they lie.
+  - **Typical result:** at 29 km/h he lands about 5.6 m down the road and the braking van
+    stops 2 m short of him.
+- **Joints, and why:** each choice was found with a stress test of 24 pushes (3–10 m/s) from
+  walking and standing poses, plus 9 from the worst stride poses:
+  - **Knees and elbows:** hinges. They bend only forward (140° and 145°) and stop 2° past
+    straight. The limits are stiffened (softness 0.3, bias 0.6), and their axes come from the
+    walk clip.
+  - **Hips, shoulders, the torso at the pelvis, the neck:** 6DOF joints with per-axis limits:
+    - hips 75° swing and 40° twist;
+    - shoulders 80° and 60°;
+    - torso 40° and 35°;
+    - neck 60° each.
+  - **Cone joints failed** under impacts, even at human ranges: 23 of 24 pushes blew up.
+    Shoulder limits near 90° failed too.
+  - **One torso body:** a three-joint spine chain (pelvis, lower spine, chest, head) failed,
+    so the torso is one body from the lower spine to the neck.
+  - **Built standing:** the ragdoll is built in his standing pose (Hit By Car at 1.6 s), so
+    the limits centre on how he stands.
+  - **Result:** 0 of 33 stress trials fail. In the game the hit lands the same way every run.
+- **The pedestrian model:** `tools/art/convert_mixamo.py` now exports him at real size. Mixamo's
+  1/100 scale and 90° turn are baked in, because physics bodies cannot hang from a scaled
+  skeleton. His clips are unchanged, and Ethan's file is byte-identical.
+- **Test changes, by the author's request:** `test_collision.gd` (22 checks) replaces "Hit By Car
+  plays" with checks that:
+  - he freezes in the headlights before the impact;
+  - a ragdoll takes over at the impact;
+  - he comes to rest (2.6 s), thrown clear ahead of the bumper (1.8 m when braking at once);
+  - he lies on the road and never sinks into it;
+  - knees and elbows only bend the right way (worst 34° and 13°).
+
+  The hold check now counts only while the van is held.
+- **Mutations:** both exit 1 (`logs/phase_1/run20/mutation_*`):
+  - with no push he ends 3.1 m behind the bumper, under the van: 20/22;
+  - with the knee limits reversed the knees bend to −103°: 21/22.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 22/22; art 0 failures. Logs are in `logs/phase_1/run20/`.
+- **Evidence:** `evidence/phase_1/collision/run20/`:
+  - an unbraked hit at 29 km/h;
+  - side-on frames 0.15, 0.35, 0.6 and 1.0 s after the impact;
+  - where he lies, at night and in debug light;
+  - the depot exit.
+- **What it means in play:**
+  - He comes to rest about 2 m ahead of the van and to its right, inside a cab-over van's
+    blind spot, so the driver's seat does not show him; the player passes him on the left
+    when driving off.
+  - His final pose depends on the hit; in the capture he lies curled on his side.
+- **Not done (step 2, its own approval):** a cracked windshield, a cabin shudder and a heavier
+  impact sound.
+
+## Revision 2026-11-01 (Run 20, step 2: the van takes the hit)
+
+- **Author:** "Yes, all of it (Recommended)" (`AUTHOR_PROMPTS_AND_DECISIONS.md` #73), for a
+  cracked windshield, a cabin shudder, Ethan leaning forward to look, and a heavier impact
+  sound made by code. Then, for the crack, "Put it in anyway" (#74).
+- **Impact sound** (`impact_body.wav`, from `body_impact()` in
+  `source_assets/audio/first_drive/synthesize.py`):
+  - 1.4 s: a deep thud falling from 90 to 50 Hz, a crunch, nine sharp ticks of cracking
+    plastic in the first 0.15 s, then the body landing on the road at 0.42 s;
+  - the hit now plays it through `driving_audio.gd`'s `body_impact()`, instead of the van's
+    generic collision thud (the mission no longer emits `collided` for the hit);
+  - the other 12 WAVs are byte-identical.
+- **Cabin shudder** (`van_presentation.gd`, `jolt()`):
+  - the cab rocks on a damped spring (`ROCK_STIFFNESS` 38, `ROCK_DAMPING` 3, about 1 Hz),
+    kicked nose-down by the impact;
+  - the kick and the camera shake grow with the impact speed, full at 9 m/s
+    (`IMPACT_SPEED` in `game/app/first_drive.gd`). Before, the shake was always full;
+  - the result is 0.36° at 15 km/h and about 0.75° at 31 km/h, settled within about 1.5 s.
+- **Ethan leans to look** (`van_presentation.gd`, `_lean_to_look()`):
+  - while the van is held and stopped after the hit, his eye moves 55 cm forward and 15 cm
+    up over the wheel in 0.7 s, half-standing, and his view turns to the body (`LEAN`,
+    `LEAN_RATE`);
+  - when "DRIVE." appears he sits back;
+  - **measured** with sight lines against the cockpit model: from the seat, none of the
+    pedestrian's 11 body parts show, because the Honda's long screen housing hides him.
+    Leaning, 9 of 11 show when he lies 1.6 m ahead of the bumper. The proposed 35 cm lean
+    showed at most 2.
+- **The cracked windshield, against the physics, at the author's request:**
+  - **why it cannot happen:** at the impact his head is 1.56 m up, at the van's nose. The
+    van has a flat hood 1.50–1.57 m high that reaches 0.9 m ahead of the windshield, and the
+    glass starts at 1.66 m. A front that high throws a person forward, as step 1's ragdoll
+    does, so his head never reaches the glass. The proposal had assumed low cab-over glass.
+    Claude Code reported this, and the author chose "Put it in anyway";
+  - **the look** (`windshield.gdshader`, `crack_lines()`): a spider-web crack, as laminated
+    glass breaks:
+    - 14 straight radial cracks with slight kinks, some long and some short;
+    - up to four rings made of straight pieces between neighbouring radial cracks;
+    - a frosted centre;
+    - uneven glints along every line.
+  - **where:** in line with where his head was, low on the glass. It is kept inside the part
+    of the glass the driver sees from the seat (`CRACK_AREA`: 55 cm either side of the
+    centre, and above the lowest 16 cm, which the dash hides);
+  - **size:** it grows with the impact speed, full size (34 cm across each way) at 9 m/s and
+    46% at 15 km/h, and it stays for the rest of the drive;
+  - "New drive" clears it.
+- **Found: the cab view does not draw the van's own hood.** The driving camera draws layers
+  1 and 3, and the van's body is on layer 2:
+  - from the seat this does not matter, because the dash hides the hood;
+  - leaning, it does. With the hood counted, a braked hit (he lies 1.6 m ahead) shows 0 of
+    11 body parts, and an unbraked hit (2.8 m ahead) shows 10 of 11;
+  - the author chose "Draw the hood (Recommended)", as its own step (#74).
+- **Test changes, with reasons** (`test_collision.gd`, 28 checks):
+  - "The van's collision thud plays" becomes "The body strikes the van with a heavy impact
+    sound", because the hit now plays its own sound instead of the van's thud;
+  - **new:**
+    - the cab rocks on its springs (0.36°, allowed 0.11°–1.15°);
+    - the windshield cracks low in front of where he struck the van, in view from the seat
+      (unblocked from the eye, and inside the seated camera's view);
+    - leaning, Ethan sees him (9 of 11 body parts, none from the seat, the view centred on
+      his hips);
+    - Ethan sits back to drive;
+    - the crack stays for the rest of the drive;
+    - "New drive" brings back an unbroken windshield.
+  - The sight lines are rays against the meshes the driving camera draws. Glass, decals,
+    screens and the moving wipers are left out.
+- **Mutations:** both exit 1 (`logs/phase_1/run20/step2/mutation_*`):
+  - with no lean, 27/28;
+  - with the crack at the glass's bottom edge, behind the dash, 27/28.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 28/28; art 0 failures. Logs are in `logs/phase_1/run20/step2/`.
+- **Evidence:** `evidence/phase_1/collision/run20_step2/`, 15 stills from an unbraked hit at
+  8.3 m/s, including:
+  - `leaning_over_the_wheel`: he lies on the verge in the headlight spill, and the crack
+    glints low on the right of the glass;
+  - `sitting_back`: from the seat he cannot be seen; the crack sits low on the right, with
+    the wiper crossing it;
+  - `driving_on_with_the_crack`.
+
+  `capture_collision.gd` now sets its window to 1280×800 itself, because one run opened
+  full-screen.
+
+## Revision 2026-11-01 (Run 20, step 3: the hood in the cab view)
+
+- **Author:** "Draw the hood (Recommended)" (#74), then "Yes, start step 3 (Recommended)" (#75).
+- **Why:** the driving camera draws layers 1 and 3, and the van's body is on layer 2. From the
+  cab the hood was invisible, so leaning over the wheel showed ground that the real hood
+  hides.
+- **Change** (`van_presentation.gd`, `_hood_from_cab()` and `_hood_faces()`):
+  - **the copy:** the body's own triangles inside the hood region (`HOOD`: 2.6 m wide,
+    1.0–1.7 m high, from the nose back to the windshield's base). That is 1,002 triangles,
+    with the body's own materials;
+  - **its layer:** render layer value 8 (`HOOD_LAYER`), which only the driving camera draws
+    (cull mask 5 becomes 13). The cabin light, the headlights and the reflection probe leave
+    it alone, and the mirrors keep showing the real body;
+  - **its place:** 3 mm outside the real hood (`HOOD_LIFT`). Outside cameras see the same
+    paint without flicker, and the copy is not in the real hood's shadow. It casts no shadow;
+  - **why not the whole body:** its solid roof would cover the moon roof.
+- **Result:**
+  - the seated driving view is unchanged, because the dash hides the hood;
+  - leaning, the hood covers the ground just ahead of the bumper. After a braked hit (he
+    lies 1.6 m past the bumper) he stays hidden even when Ethan leans;
+  - leaning shows the road from 2.4 m past the bumper (6.3 m from the seat), so a harder hit
+    that throws him further still shows him.
+- **Test changes, with reasons (#74–#75),** `test_collision.gd`, 29 checks:
+  - the sight lines use the driving camera's own cull mask, so the hood counts;
+  - "Leaning ... Ethan sees him lying in the road" becomes "Leaning 55 cm over the wheel,
+    Ethan looks, but the hood hides him 1.6 m past the bumper (0 of 11 body parts in view)";
+  - **new:** "Leaning shows the road from 2.4 m past the bumper, where a harder hit leaves
+    him (6.3 m from the seat)".
+- **Mutations:** both exit 1 (`logs/phase_1/run20/step3/mutation_*`):
+  - with the hood left out of the cab view, 28/29;
+  - with no lean, 27/29.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 29/29; art 0 failures. Logs are in `logs/phase_1/run20/step3/`.
+- **Evidence:** `evidence/phase_1/collision/run20_step3/`, 15 stills from an unbraked hit at
+  8.3 m/s:
+  - in `leaning_over_the_wheel` the ivory hood covers the ground ahead. He came to rest
+    2.25 m past the bumper, and only a sliver of him shows past its edge;
+  - the seated stills (`he_steps_out`, `sitting_back`) look as before.
+
+## Revision 2026-11-01 (Run 21, step 1: the macOS export preset and the pack listing)
+
+- **Author:** "macOS export first (Recommended)" (#76), then "Yes, start step 1 (Recommended)"
+  (#77). This is §4.7, the export that Assignment 10 asks to be attempted by November 3.
+- **The preset** (`game/export_presets.cfg`, new, one preset named "macOS"):
+  - Apple Silicon only (`binary_format/architecture` "arm64"), for this MacBook Air M4 (C13);
+  - version 0.1.0;
+  - "Testing" distribution, built-in ad-hoc signing, no notarization and no credentials;
+  - a placeholder bundle identifier, `com.blackridge.nowayback`, to be replaced before any
+    store release;
+  - output to `builds/macos/Blackridge.zip` (`builds/` is ignored by Git);
+  - it leaves out `tests/*`, `experiments/*` and `app/visual_benchmark.*`.
+
+  Godot's macOS export has no separate app-name option, so the app takes the project's name,
+  "Blackridge: No Way Back". Step 2 shows how the colon comes out in the app's file name.
+- **One project setting, with the author's OK (#77):** `game/project.godot` gains
+  `rendering/textures/vram_compression/import_etc2_astc=true`. Godot 4.7.2 refuses to export
+  for Apple Silicon without it: "Cannot export for universal or arm64 if ETC2 ASTC texture
+  format is disabled."
+  - **The re-import:** the headless import made a second, ETC2/ASTC copy of each of the
+    160 compressed textures in `game/.godot/imported/`.
+  - **Changed sidecars:** each texture's tracked `.import` file now lists both formats and
+    the new copy, so 160 `.import` files change with this step.
+- **The pack listing (P6),** exported as ZIP packs into the agent's scratch folder:
+  - **with the preset's filters:** 703 entries, 482.7 MB, and no file from `tests/`,
+    `experiments/` or the visual benchmark;
+  - **with a temporary filter-free copy of the preset:** 737 entries. The 34 extra entries
+    are the 11 test scripts (22 entries), the hint experiment's four files with its two
+    exported resources, its scene and its texture, and the benchmark's scene and script. The
+    temporary preset was removed afterwards;
+  - P6 holds;
+  - both packs carry both texture formats (160 of each), so the Apple Silicon pack also
+    ships the desktop copies;
+  - `shaders/hint_experiment.gdshader`, used only by the experiment, still ships, because
+    it lives in `game/shaders/`.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 29/29; art 0 failures. Logs are in `logs/phase_1/run21/step1/`.
+- **Evidence:** `evidence/phase_1/export/run21/`: both listings, the 34 entries only the
+  filter-free pack has, and both export logs (no errors or warnings).
+- **Next (step 2, its own approval):**
+  - check the downloaded 4.7.2 templates against the official SHA-512;
+  - install the macOS template;
+  - run `--export-release`;
+  - launch and play the app, and record its SHA-256.
+
+## Revision 2026-11-01 (Run 21, step 2: the release export)
+
+- **Author:** "Yes, start step 2 (Recommended)" (#78), then "Switch to universal
+  (Recommended)".
+- **Templates:**
+  - the 4.7.2 templates file downloaded on 2026-10-30 matches the official SHA-512;
+  - only the macOS template (`macos.zip`, 123.6 MB, with `version.txt` "4.7.2.stable") is
+    installed, in `~/Library/Application Support/Godot/export_templates/4.7.2.stable/`. The
+    folder was empty before.
+- **First attempt, kept as evidence:** the arm64 preset failed in 2 s with "Requested
+  template binary "godot_macos_release.arm64" not found". Godot's official macOS template
+  holds only universal binaries. An arm64-only export needs a custom-built template, so
+  Claude Code's arm64 recommendation in step 1 was wrong for official templates.
+- **The fix, with the author's OK:** `binary_format/architecture` becomes "universal". The
+  app runs natively on the M4; it also carries the Intel version, which costs about 85 MB.
+  Both texture formats are needed for universal, and step 1 already imports both.
+- **The export:** `--export-release "macOS" ../builds/macos/Blackridge.zip` exits 0 in 20 s:
+  - `builds/macos/Blackridge.zip` is 350,894,372 bytes, SHA-256
+    `a547b5eae4e68f4935fbc6a1242efb4bd2c80d863b83fa4bfca848150e690ae7`. It is built from the
+    working tree on `develop`, with Runs 20 and 21 not yet committed;
+  - the app is `Blackridge- No Way Back.app`: macOS turns the colon into a dash in the file
+    name, and the menu-bar name stays "Blackridge: No Way Back";
+  - it is a universal binary (x86_64 and arm64) with a 384.7 MB pack, ad-hoc signed, bundle
+    identifier `com.blackridge.nowayback`, version 0.1.0;
+  - it carries no quarantine flag, so Gatekeeper lets it open on this Mac.
+- **Launch:** it opens on the MacBook Air M4 and keeps running. The author's play check, and
+  the app's own log (written when it quits), are still to come.
+- **Docs:**
+  - README gains the export note and command;
+  - `CLAUDE.md`'s `project.godot` rule gains the texture setting (approved with step 2).
+- **Evidence:** `evidence/phase_1/export/run21/`:
+  - `export_release_arm64_failed.log`;
+  - `export_release_universal.log`;
+  - `release_export.txt` (size, SHA-256, architectures, signature, bundle values).
+- **The editor incident (#81):**
+  - the open Godot editor, told to "Ignore" files changed on disk, rewrote `project.godot`
+    and dropped the texture line, then re-imported the textures in one format;
+  - the editor was closed without saving, the line was restored and the textures were
+    re-imported (160 again);
+  - a check export exits 0, the same size as the build;
+  - whenever the editor reports files changed on disk, choose "Reload".
+
+## Revision 2026-11-01 (Run 22, step 1: the bus stop and zebra crossing, C30)
+
+- **Author:** "its kind of weird hes coming out of jungle it doesnt feel natural. add a zebra
+  crossing and a bus stop or something like that?" (#76); "Bus stop + zebra crossing
+  (Recommended)"; then "Yes, start step 1 (Recommended)" (#80).
+- **Where:**
+  - the foot of the hill road, at road sample 1002 (41.7, 53.8), about 80 m before the
+    depot gate;
+  - the road there is straight and flat, and the nearest lamp is 36 m away, so it is the
+    story's "dark stretch of road";
+  - the town lies to the left, and the footpath points at it;
+  - the hit moves here from under the first depot lamp.
+- **The stop** (`bus_stop.gd`, new, placed by `industrial_loop.gd`):
+  - **the shelter:** on the right, 10 m before the crossing, on a concrete pad. It has steel
+    posts, a roof, a glass back and sides, a slatted bench, a timetable (made-up Blackridge
+    Transit, route 4) and Poly Haven's metal trash can. Its frame and back glass have
+    collision;
+  - **the footpath:** leaf-scattered gravel from the far side, 26 m toward the town's lights;
+  - **clearings:** they keep trees and plants out of the shelter and off the path.
+- **The crossing paint** (`wet_asphalt.gdshader`, in the environment folder):
+  - four continental bars, 0.6 m wide with 0.6 m gaps, across the 4.5 m road, 3 m long;
+  - more worn in the tyre tracks, speckled, and glossier than the asphalt when wet;
+  - the rest of the road draws as before.
+- **Signs** (`ghat_dressing.gd`, `tools/make_road_signs.py`):
+  - **the atlas** gains a fifth row: pedestrian crossing (MUTCD W11-2), an AHEAD plate, a
+    down-left arrow plate and a BUS STOP flag. The 15 older faces are pixel-identical;
+  - **both directions:** the pedestrian sign with AHEAD 30 m (100 ft) before the crossing,
+    and with the arrow at the crossing;
+  - **the BUS STOP flag** stands by the shelter.
+- **The pedestrian:**
+  - `convert_mixamo.py` gives him Ethan's Breathing Idle, and `pedestrian.glb` is
+    re-exported; Ethan's file is byte-identical;
+  - he waits at the kerb (`wait_at()`), then walks (`step_out()`);
+  - **after a near miss** (the van stops short), he finishes crossing and walks up the
+    footpath.
+- **The mission** (`first_drive.gd`; the app passes it the crossing):
+  - **the encounter** starts at road sample 934 (it was 970), so the oncoming van, still
+    spawned beyond the valley S-bend, meets the player 16 m before the crossing;
+  - **the pedestrian** waits at the kerb from then on;
+  - **the step-out:** he leaves the kerb when the van's time to the crossing equals his walk
+    into its path, whatever its speed. This amends C29's 25 km/h floor (#76). Braking stays
+    capped at 3 m/s² once he steps out;
+  - **measured:** he steps out at 25 km/h with the bumper 4.7 m short, and is struck on the
+    crossing. He is also struck on it at 20, 40 and 54 km/h;
+  - **below about 15 km/h,** an instant stop can avoid him: at 9 km/h the van stops short.
+    With a human reaction time of half a second he is still hit at 10 km/h.
+- **Test changes, with reasons (#76, #80):**
+  - **`test_collision.gd`** (30 checks):
+    - the run-up moves to the new site (trigger 930, wait and run from 976);
+    - it steers with a new lane keeper (`game/tests/lane_keeper.gd`), because the road
+      bends before the crossing;
+    - "No one is on the road while the oncoming van passes" now adds "he is still at the
+      kerb", and a new check has him waiting at the crossing;
+    - "He steps out only once the van is doing 25 km/h" and "He steps out from the right
+      verge" become "He steps off the kerb onto the crossing, X m before the van's bumper";
+    - new: "He is struck on the crossing";
+    - the lean check judges each body part against the hood line, because his hips can lie
+      short of it while his head lies beyond.
+  - **`test_oncoming_van.gd`** and **`capture_oncoming.gd`:** the trigger spot moves from 966
+    to 930.
+  - **New `test_crossing.gd`** (11 checks):
+    - the shelter and its fittings, the paint, the signs both ways and the flag;
+    - the footpath and its clearing;
+    - the dark stretch;
+    - he keeps waiting while the van stands still;
+    - at 20 km/h he is still struck on the crossing.
+- **Mutations:** both exit 1 (`logs/phase_1/run22/step1/mutation_*`):
+  - with no paint, `test_crossing.gd` fails 10/11;
+  - stepping out 2 s early fails `test_collision.gd`: the van stops, and he walks on across.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures. Logs are in `logs/phase_1/run22/step1/`.
+- **Evidence:** `evidence/phase_1/collision/run22/`, 19 stills:
+  - the crossing from above, at night and in debug light;
+  - the approach at 44 m and at 20 m, with him waiting at the kerb;
+  - the step-out at 57 km/h, then an unbraked hit at 60 km/h.
+- **Next, each step approved on its own:** the smaller, more realistic van, and the fall onto
+  the windshield.
+
+## Revision 2026-11-01 (Run 22 step 2 and Run 23 step 1: the van choice and its inspection)
+
+- **Author:** "maybe lets reduce the van size?? and make it more realsitic to look at from
+  outside? and do over the windshield and movie style type?" (#76), then "Iveco Daily
+  (Recommended)" and "I'll open Blender's add-on" (#82, #83).
+- **The shortlist:** a private page, https://claude.ai/artifact/EMZWF2L7Fkv3GcJTqGmJbX. The
+  Iveco Daily van (2014) by Max was chosen. It is CC BY, plus Max's note "You must inform me
+  of your usage"; a Discord message was drafted for the author to send.
+- **Inspection** (nothing in the game changed):
+  - imported through the Blender add-on into a separate scene, set to real size from the
+    real Daily's 1.996 m body width, and compared with today's van;
+  - it is 0.9 m lower and 0.45 m narrower. The eye drops from 2.03 m to 1.72 m, and the road
+    shows from about 4 m instead of 7 m;
+  - its nose (hood edge 1.1 m, glass from 1.38 m raked about 45°) makes the fall onto the
+    windshield realistic.
+- **Files:**
+  - `.gitignore`: keeps `source_assets/sketchfab/*/*` out of Git, apart from each folder's
+    README;
+  - `source_assets/sketchfab/iveco_daily_2014/README.md`: source, licence and size;
+  - `evidence/phase_1/van/run23_step1/`: five renders.
+- **Open:** whether the van keeps the Honda e cockpit (refitted lower and narrower) or uses
+  the Iveco's own cab.
+
+## Revision 2026-11-01 (Run 23, step 2: the Iveco made ours, C31)
+
+- **Author:** "Iveco's own cab (Recommended)" (#84), then "Yes, start step 2 (Recommended)" (#85).
+  Nothing in the game uses the van yet; step 3 puts it in.
+- **The converter** (`tools/art/convert_iveco.py`, new): Blender makes the game files from the
+  raw copy. It stops with an error if a part it removes or splits is not found.
+  - **Size and direction:** the real-size transform is baked in, and the van is turned to face
+    -Z with the driver on the left.
+  - **Branding removed:**
+    - raised IVECO letters on the grille (318 triangles) and on the left rear door (319). The
+      rear door's were found when a render still showed the name after its texture was cleaned;
+    - the name painted in the textures behind the grille letters (two areas), on the rear door
+      and on the steering-wheel badge. Each is cleaned in the colour, gloss and bump maps, since
+      the gloss map carried the name too, blurred over about 28 pixels;
+    - texels that only the removed letters used are made plain grey.
+  - **Plates:** the model's French plate ("MA-222-AX", with "DAILY" on its strip) becomes a
+    cream "BLACKRIDGE / BR 048" plate, drawn by `tools/make_number_plate.py` (new). The same
+    plate is added in the recess on the left rear door, which had none. "BLACKRIDGE" along the
+    top is Claude Code's reading of "a Blackridge plate"; the author may change it.
+  - **Wipers:** the model's own wipers (1,530 triangles) are removed.
+  - **Parts,** each with its own origin:
+    - `DriverDoor` and `PassengerDoor` swing about their hinges (local Y), with `DriverWindow`
+      and `PassengerWindow` as children;
+    - `WheelFrontLeft`, `WheelFrontRight`, `WheelRearLeft` and `WheelRearRight` turn about
+      their centres (local X);
+    - `SteeringWheel` (rim, spokes, hub, badge and buttons; 2,748 triangles) turns about its
+      column, local Z, which points up the column at the driver, 44.7° from level. A right turn
+      is a negative turn about local Z. The column, stalks and key stay in the cab;
+    - the `Windshield` glass is separate from the other glass.
+  - **Textures:** 2048 pixels outside and 1024 in the cab, down from 4096, as WebP.
+- **Files** in `game/features/vehicles/freight_van/art/iveco/`:
+  - `iveco_exterior.glb` (5.5 MB, 56,107 triangles): `Body`, the doors, wheels and windshield;
+  - `iveco_cab.glb` (1.9 MB, 31,630 triangles): `Cab` and `SteeringWheel`;
+  - the 35 WebP textures Godot extracted on import. `tools/assets/configure_imports.py` sets
+    them to VRAM compression with mipmaps, 11 of them as normal maps; it now also recognises
+    `*_normal.webp`;
+  - `ATTRIBUTION.md`.
+
+  The van is 5.53 m long, 2.08 m tall and 2.0 m wide, and the tyres stand on y = 0. The
+  converter gives the same bytes on every run.
+- **Art check exception (like the cockpit's, Run 12):** `check_first_drive_art.py` gains an
+  Iveco section, 15 checks:
+  - the two files hold their parts, and no part or material is named as a badge;
+  - finite geometry, valid vertex references and unit normals;
+  - inverted triangles within the source model's own: 49 outside and 17 in the cab. The export
+    has 49 and 13, and none are new;
+  - WebP textures of at most 2048 and 1024 pixels;
+  - the wheels on their centres at the right corners, the van facing -Z with the driver's door
+    on the left, and the steering wheel's column axis;
+  - a budget of under 100,000 triangles, and every file under 25 MB.
+
+  **Mutation:** with the van exported facing +Z, it fails three checks and exits 1
+  (`logs/phase_1/run23/step2/mutation_faces_plus_z/`). A first attempt, which left out the
+  half turn, crashed in Blender, and Blender still exited 0. The converter's usage now passes
+  `--python-exit-code 1`.
+- **Tests:** all suites pass (64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31,
+  12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures). Logs are in `logs/phase_1/run23/step2/`.
+- **Godot:** the headless import gives exit 0 with no errors. A probe loads both files: the
+  driver's door is at (-0.962, 1.102, -1.909), the front-left wheel at (-0.872, 0.359, -2.007),
+  and the steering wheel at (-0.476, 1.313, -1.642), with local Z (0, 0.703, 0.711). The glass
+  is transparent.
+- **Evidence:** `evidence/phase_1/van/run23_step2/`:
+  - `before_after_sheet.png`: the grille and plate, the rear door, and the steering-wheel badge;
+  - `van_sheet.png`: front and rear, the driver's door open with the front wheels steered, and
+    the steering wheel turned 90°.
+- **Seen in the renders:** at 2048 pixels the finest outside detail, such as the lower grille's
+  honeycomb, is softer than in the 4096 original.
+- **Not done (step 3, its own approval):** the van in the game, with its lights, mirrors,
+  glass, wipers, camera eye, collision and tests. The author messages Max before the van files
+  are committed.
+
+## Revision 2026-11-01 (Run 23, step 3: the Iveco in the game, C31–C32)
+
+- **Author:** "and proceed with step 3" (#86); for the cab, "Cut one in (Recommended)" and "No
+  inside mirror (Recommended)" (#88, C32).
+- **The van** (`van_presentation.gd`, rebuilt around the two Iveco files):
+  - **Placement:** the Iveco sits 0.16 m up and 0.5 m back in the van's frame. Its tyres rest
+    on the road (the old ones sank 13 cm into it), and its front axle stays where the old
+    one was.
+  - **Collision** (`freight_van.tscn`): the box is the Iveco's real size, 2.0 × 2.09 × 5.53 m
+    (it was 2.4 × 2.8 × 5.3 m).
+  - **Layers:** the outside is on the body layer, which the mirrors draw; the cab, the glass
+    and the screens are on the cabin layer. The driving camera now draws the body too (cull
+    mask 7), so from the seat the driver sees the Iveco's real bonnet, door cards and
+    mirrors. Run 20's hood copy is gone.
+  - **Wheels:** the four Iveco wheels steer and roll on their own centres (radius 0.359 m),
+    and the ground rays use their places.
+  - **Steering wheel:** the Iveco's own wheel turns on its column, which leans 44.7° toward the
+    driver.
+  - **Driver's door:** it swings on its hinge, 31° as before, with its window and its mirror.
+  - **Eye:** (−0.45, 1.88, −0.72), from the Iveco's seat. Leaning over the wheel moves it 42 cm
+    forward and 5 cm up (it was 55 and 15), which keeps it 11 cm behind the raked windshield.
+  - **Lamps:** the Iveco's own lenses light up: the headlights warm white with either beam, the
+    tail lamps red and brighter when braking, and each indicator amber on its own side. The
+    two shadowed headlights move to the Iveco's lamps, 0.99 m above the road.
+  - **Glass:** the windshield and both side windows are the Iveco's own glass. Each gets flat
+    UVs, so the rain, wipers, glare and crack work on it as before. The windshield is
+    1.77 × 1.0 m, raked 45.65°. Assignment 5's light fog sits on the windshield's own shape,
+    12 mm inside.
+  - **Wipers:** the pivots are where the Iveco's own wipers were; the arms are 42 and 40 cm, the
+    blades 65 and 53 cm.
+  - **Screens:**
+    - our gauges sit on the Iveco's cluster, seen through the wheel;
+    - the map sits on its centre screen, where the reverse camera shows in reverse;
+    - with the engine off both go dark, instead of showing the model's lit dials and picture.
+  - **Mirrors:** each door mirror shows its live view on both its glasses, the main one and the
+    wide-angle one, and the driver's swings with the door. The Honda's dash-end and centre
+    mirror screens are gone, and so is the inside-mirror camera (C32).
+  - **Moon roof (C32):** `convert_iveco.py` cuts the opening (1.04 × 0.44 m) through the roof and
+    the headliner over the front seats. The game adds tinted glass with rain on it, a dark
+    frame inside and a rubber seal outside.
+  - **Cab light:** a dim fill at chest height. Under the headliner it lit a hot spot in front of
+    the moon roof.
+- **Converter** (`tools/art/convert_iveco.py`): it now splits the lamp lenses from the clear
+  glass (`Headlights`, `TailLamps`, the four indicators by side, and `BodyGlass`) and cuts the
+  moon roof. The art check's parts list follows. The van is 88,428 triangles, and the cut adds
+  no inverted triangle.
+- **Other files:**
+  - the mission's `BUMPER_AHEAD` is 2.52;
+  - the pedestrian's `BUMPER_REACH` is 2.67 and `VAN_HALF_WIDTH` 1.25;
+  - the oncoming van's `BUMPERS` is 4.77;
+  - the app's boarding and exit spots fit the narrower van;
+  - `capture_cockpit.gd` aims at the Iveco's screens and mirrors, and looks up.
+- **Found and fixed:** freeing the Iveco's original windshield node in the frame it was made
+  left Godot's light pairing inconsistent, so a windowed run printed four "indexing did not
+  unpair geometries from light" errors at exit. The node is now freed at the end of the frame,
+  and the errors are gone.
+- **Test changes, with reasons (C31, C32):**
+  - **`test_cockpit.gd`** is rewritten for the Iveco cab, 25 checks:
+    - the Iveco's files are drawn and no old part is, and the triangle count;
+    - layers and shadows;
+    - the gauges and the map on the Iveco's screens, facing the driver, the gauges seen
+      through the wheel; both dark with the engine off;
+    - each door mirror's live view on both its glasses, the driver's swinging with the door;
+      no inside mirror;
+    - the moon roof open to the sky, with glass, rain, frame and seal;
+    - the wheel on its column, and both steering directions.
+  - **`first_drive_regression.gd`:** the collision check expects the Iveco's real size, and the
+    wall beside the van is placed from the van's own width. The turning check still has a wall
+    right beside the van.
+  - **`first_drive_integration.gd`:** two live mirror viewports (it was three).
+  - **`test_on_foot.gd`:** two dash screens go dark with the engine (it was five).
+  - **Mutations:** both exit 1 (`logs/phase_1/run23/step3/mutation_*`):
+    - with the steering reversed, the cockpit test fails 23/25;
+    - with the gauges sunk 3 cm into the dash, 24/25.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures. Logs are in
+  `logs/phase_1/run23/step3/suites/`.
+- **Measured** (`capture_beams.gd`, at the start, from the seat):
+
+  | | Road 10–46 m | Road 50–100 m | White-out |
+  | --- | --- | --- | --- |
+  | Low beams | 88.7 | 44.7 | 0.00% |
+  | High beams | 134.9 | 103.9 | 0.00% |
+  | Lights off | 18.6 | 24.8 | 0.00% |
+
+  The Mac was on battery; the captures ran at 72.8–80.9 FPS, which is not comparable with
+  earlier runs on power.
+- **Evidence:**
+  - `evidence/phase_1/cockpit/run23/` (`cockpit_sheet.png`): the cab from the seat, looking
+    left, right, up and down, steering, the gauges, the map, the reverse camera and both
+    mirrors;
+  - `evidence/phase_1/characters/run23/`: Ethan walking to the Iveco, reaching for its handle,
+    the door open, and the ignition;
+  - `evidence/phase_1/beams/run23/`: the three beam stills;
+  - `evidence/phase_1/collision/run23_step3/` (`collision_sheet.png`): the crossing, the hit at
+    59 km/h, leaning over the bonnet, and the depot;
+  - `evidence/phase_1/moon_roof/run23/`: the moon and the trees through the moon roof's glass.
+- **Not done:**
+  - the oncoming van is still the old code-built van;
+  - the fall onto the windshield (step 4, its own approval);
+  - the frame rate on power.
+
+## Revision 2026-11-01 (Run 23, step 4: blinded, carried on, and the fall onto the windshield, C33)
+
+- **Author:** "yes start step 4 and it should kind of look more natural. i mean the truck upcoming
+  should blind us with their headlights and the van should continously go and the pedestrian
+  should walk in fornt and our car should hit. make it natual and unavoidable by the user to play
+  the game." (#89); for the oncoming vehicle, "Iveco, dark colour (Recommended)" (#90).
+- **The oncoming van** (`oncoming_van.gd`, rebuilt):
+  - **Model:** the player's Iveco (`iveco_exterior.glb`), its paint textures tinted dark grey
+    (`4a545e`), with its own plate, "BR 731", front and rear (`art/number_plate.png`). The
+    headlight lenses glow and the tail lamps are lit.
+  - **Plate tool:** `tools/make_number_plate.py` gained `--registration`, `--width` and `--out`;
+    run without them it writes the player's plate byte-identically.
+  - **Size:** the Iveco's collision box (2.0 × 2.09 × 5.53 m). It keeps 1.40 m right of the
+    centre line, and brakes for the player's van only when the bodies would touch (2.15 m
+    between centres; it was 2.55 m).
+  - **High beams:** on from the start and kept on; it no longer flashes them back. The glare
+    and eye adaptation code is unchanged, so the high beams' 3.2× power applies all the way in.
+  - **Timing:** each tick the mission tells it where and when the player's van will reach the
+    meeting point, 16 m before the crossing, and it sets its speed to meet the player there
+    (0.6–1.6× its 40 km/h cruise, still slowed for bends). It slows to squeeze past.
+- **The van carries on** (`freight_van.gd`; mission `first_drive.gd`):
+  - **When:** the encounter starts when the van drives forward, on the road, at 3 m/s or more,
+    through samples 927–960 below the last hairpin. It used to start within 14 m of sample 934,
+    even parked. Parked there, nothing happens.
+  - **The takeover:** from then until the impact the mission drives (`scripted_throttle`,
+    `scripted_brake`, `scripted_steer`), and the player's brake, throttle and wheel do nothing.
+    - **Lane:** 1.25 m right of the centre line, by pure pursuit through the van's own steering
+      limit (`steering_for()`); the worst error in the probes was 0.25–0.49 m.
+    - **Speed:** 42–45 km/h, the speed it arrives with, clamped. It coasts or dabs the brakes if
+      faster.
+    - **Length:** about 150 m, 12 s at 43 km/h.
+  - **Stuck:** if the van stays below 2 m/s for 1.5 s, against an obstacle say, the encounter is
+    cleared and the player has control. It starts again when they drive through the span.
+  - **After the impact:**
+    - the van coasts on for half a second (`REACTION`), carrying him on the bonnet;
+    - then Ethan brakes hard, and the hold, the lean and "DRIVE." follow as before;
+    - C29's 3 m/s² braking is gone: the brake does nothing before the impact anyway.
+- **He walks out:**
+  - **Timing:** he steps off the kerb when the van's time to the crossing equals his walk to its
+    path plus his 0.35 s freeze in the headlights. The freeze was not counted before, so he
+    stopped 0.6 m short and was hit by the van's right corner.
+  - **Aim:** he heads for the van's centre line (`IMPACT_RIGHT` 0; it was 0.4 m right).
+  - **Order:** in every run he stepped out 0.6–0.7 s after the oncoming van's tail passed him.
+- **The fall onto the windshield** (`pedestrian.gd`, `van_presentation.gd`):
+  - **Front shell:** the Iveco's front, from its own profile, as two convex shapes on an
+    `AnimatableBody3D` that follows the van:
+    - the bumper face up to the bonnet edge, 1.26 m above the road;
+    - the 15° bonnet, the 45.6° windshield and the roof edge.
+
+    It is on its own layer (16), so only the ragdoll collides with it. The wet paint's
+    friction is 0.3.
+  - **At contact:**
+    - the bumper sweeps his shins at the van's speed, his thighs at 0.9×, his hips at 0.6× and his
+      arms at 0.5–0.9×;
+    - his legs get 3 m/s upward and his hips 2.5 m/s;
+    - his torso and head get nothing, so he folds onto the bonnet.
+  - **Against the physics, as with Run 20's crack:**
+    - with the shell alone his head lands on the bonnet 25 cm short of the glass, because the
+      Iveco's bonnet edge (1.26 m) is above his hips;
+    - C31's note that the nose makes the fall onto the windshield real was too strong;
+    - the upward sweep is what puts his head at the glass.
+  - **The head strike:** `watch_head()` follows his head for a second. When it comes within 16 cm
+    of the glass, or of the cowl in the 10 cm below it, the crack is placed there at the
+    impact's strength. In the test it strikes 0.07 s after the impact, 9 cm from the glass, at
+    x −0.09 m and low on the windshield (y −0.40).
+  - **Damping:** 0.3 linear and 4 angular for the body (it was 0.15 and 2), and 25 angular for
+    the arms and shins.
+- **Found and fixed (since Run 20): knees that folded through.**
+  - **The fault:** the knee and elbow hinges measured their range from the standing pose, where
+    his knees are already bent 39–43° and his elbows 19–26°. So a knee could fold to about 184°,
+    the shin through the thigh, and could never straighten.
+  - **The fix:** `_pose_bend()` measures the pose, and the hinges allow −2° to 140° (knees) and
+    to 145° (elbows) from a straight limb.
+  - **Why now:** Run 22's 25 km/h hit never reached the fold; at 42–45 km/h it did.
+- **Still there:** tumbling on the road at 42–45 km/h, his knees and elbows can bend up to about
+  25° the wrong way for a moment. In 24 probe hits one elbow reached 51°.
+  - **Where:** it happens 2–4 m ahead of the bumper, below the bonnet line from the seat.
+  - **Tried without success:** Godot's hinge limits give way under those impacts. More solver
+    iterations, a stiffer limit bias, lower friction and a per-tick limit guard did not stop it.
+- **Capture changes:**
+  - **`capture_collision.gd`:**
+    - it drives in from sample 905 and lets the takeover run;
+    - new stills: the high beams, blinded as it passes, and the head strike;
+    - the side stills are timed from the impact frame and taken in debug light (ambient 6.0,
+      fog off), because at night they showed nothing.
+  - **`capture_oncoming.gd`:** it drives through the trigger and hands control back to watch
+    parked. The flash-back still is gone.
+- **Test changes, with reasons (#89, #90):**
+  - **`test_collision.gd`** (35 checks; it had 30):
+    - **The run-up:** it drives in from sample 905 at 43 km/h. From the takeover to the impact
+      it holds the brake and turns the wheel left.
+    - **New checks:**
+      - the oncoming van keeps its high beams on and the view darkens below 0.4;
+      - the van carries on by itself;
+      - it cannot be stopped or steered away (hit at 39–46 km/h);
+      - his head strikes the base of the windshield;
+      - the van carries him on for half a second;
+      - knees and elbows never fold past their range.
+    - **"No one is on the road while the oncoming van passes":** now checks that he steps out
+      only once it is past him. It used to park the van until the oncoming van had passed.
+    - **"No witness":** now checks that the oncoming van is behind, more than 15 m away and
+      driving away. It passes the crossing about a second before the hit now (26 m away when
+      checked), not long before (94 m in Run 19).
+    - **"Knees and elbows only bend the right way":** allows 30° (it allowed 15° at 25 km/h,
+      when the bent-pose limits stopped them short of straight).
+    - **The crack check:** "cracks low in front of where he struck the van" becomes "where his
+      head struck it".
+    - **A guard:** if the encounter is cleared mid-way, the test fails with a message instead of
+      reading a freed pedestrian.
+  - **`test_crossing.gd`** (12; it had 11):
+    - "While the van stands 16 m short of the crossing, he keeps waiting" becomes "Stopped on the
+      valley road, nothing starts until the van drives on";
+    - "At 20 km/h he still steps out" becomes "Arriving at 20 km/h with the brake held, the van
+      still carries on and hits him at 43 km/h";
+    - new: "He waits at the crossing's kerb as the encounter begins".
+  - **`test_oncoming_van.gd`** (21):
+    - new: it is an Iveco painted dark, with its own plates;
+    - its two lamps are high beams (they were low beams);
+    - "It keeps its high beams on all the way in" replaces "It flashes its high beams twice" and
+      "The player's lights are back on low beam";
+    - the vans never touch, mirrors included: 2.47 m between centres (it was 2.45 m for the old
+      box vans);
+    - the trigger is driven through at 8 m/s.
+- **Mutations:** all exit 1 (`logs/phase_1/run23/step4/mutation_*`):
+  - with the takeover removed, the collision test fails at its first check (0/1);
+  - with the brake working during the takeover, 2/5: the van slows to 0 km/h;
+  - with Run 20's bent-pose hinge limits, 33/35: the knees reach 177°;
+  - with the old uniform push, the head never reaches the glass and the van ends up over him;
+  - with the oncoming van on low beams, the oncoming test fails 19/21.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 25/25, 21/21, 35/35, 12/12; art 0 failures. Logs are in
+  `logs/phase_1/run23/step4/suites/`.
+- **Measured:**
+  - **Parked and watching** (`capture_oncoming.gd`):
+    - glare per lamp: 0.27 at 84 m, 0.91 at 60 m, 1.35 at 35 m, 2.4 at 20 m, 2.7 at 10 m. Run
+      19's low beams gave 0.28 at 60 m and 0.76 at 20 m;
+    - windshield brightness: 50 before, 108 at 60 m, 159 at 20 m, 43 after.
+  - **In the drive** (`capture_collision.gd`): windshield brightness 131 with the high beams 70 m
+    out and 33 as the vans pass, with the eyes adapted. The hit was at 43 km/h.
+- **Evidence:**
+  - `evidence/phase_1/collision/run23_step4/`:
+    - `collision_sheet.png`: the drive from the seat;
+    - `thrown_sheet.png`: the fall from the side, in debug light;
+    - `collision_captures.txt`;
+  - `evidence/phase_1/oncoming/run23_step4/`: `oncoming_sheet.png` and `oncoming_captures.txt`.
+- **For the author:**
+  - the takeover lasts about 12 s. A later trigger would shorten it, but the oncoming van would
+    come into view sooner;
+  - from the seat the crack sits along the bottom of the windshield, where his head struck.
+    Leaning shows it clearly;
+  - he lies 2–5 m ahead in the lane, and the van does not collide with his body, so the player
+    steers around him;
+  - the frame rate on power is still to be measured.
+
+## Revision 2026-11-01 (Run 24, step 1: Maya's call and the quiet ending, C34)
+
+- **Author:** "start with maya's call and the quiet ending. start with mission flow. do this
+  also - - Option 1: move the crossing further back up the valley road, so running away is a
+  real drive. also, i want the game user to control the driving when hes near the pedestrian i
+  guess idk? we are taking away control too much maybe? make it natural and professional game."
+  (#92). Answers: "Lose only the last second (Recommended)", "Draft A: big brother" and "Stay in
+  the cab (Recommended)". The plan runs in three steps, each approved on its own: this one; the
+  mission flow; then the crossing moved up the road with the wheel given back.
+- **Maya's call** (the prologue's "short, familiar call with Maya"):
+  - **When:** once per drive, in the first stage, when the van passes road sample 91, where the
+    climb begins, 182 m from the start. It plays over the first climb and hairpin, long before
+    the crossing.
+  - **How it plays:** the phone rings through the van's speakers twice (4.4 s) and the dash
+    screen shows "MAYA / Incoming call" with a pulsing green dot. It connects hands-free, with
+    no new key. The dash then shows the call timer, and the 13 approved lines play as
+    subtitles at the bottom of the screen. Each line stays up 1.0 s plus 0.06 s per letter
+    (at most 3.6 s), with 0.35 s between lines: 34 s in all. The music dips 13 dB while she
+    talks. Then two falling beeps, and the map comes back.
+  - **Voices:** none yet; the author's ElevenLabs pass comes later (C06).
+  - **Files:**
+    - `game/features/missions/night_freight/phone_call.gd` (new): rings, connects and times
+      each line;
+    - the mission's `first_drive.gd`: the approved lines (`MAYA_CALL`) and the trigger
+      (`CALL_AT`);
+    - `driving_hud.gd`: subtitles;
+    - `navigation_display.gd`: the call card;
+    - `driving_audio.gd`: the ring, the beeps and the music dip;
+    - `game/app/first_drive.gd`: wires them together.
+- **The quiet ending** (replaces "DRIVE COMPLETE" and Run 19's getting out at the depot):
+  - **When:** parked in the depot bay. The van can no longer be driven, and E and R do nothing.
+  - **What happens:**
+    - the engine goes off and winds down;
+    - the lights go out, the wipers park and the dash screens go dark;
+    - the objective and the hints disappear;
+    - after the hit, there is only the rain on the roof, the engine ticking as it cools, and
+      Ethan's breathing.
+  - **The fade:** after 9 s the picture fades to black over 3 s, the sound fades over 2 s, and
+    the menu returns with "Drive again", which starts a new drive.
+  - **No title:** no game title appears (C04).
+  - **Removed:** `_exit_at_depot()` and its constants.
+- **Sounds** (`source_assets/audio/first_drive/synthesize.py`): five new synthesized sounds,
+  `phone_ring`, `call_connect`, `call_end`, `breathing` and `engine_tick`. The 13 older WAVs are
+  byte-identical, and `docs/AUDIO.md` lists all 18.
+- **Found and fixed:** after the ending, resuming the game from a physics-frame coroutine (as
+  the test does) printed an engine error, `Condition "p_elem->_root" is true` (`self_list.h`).
+  - **Cause:** the ending paused from a timer between physics steps, so Godot's physics left a
+    body in its query list. Resuming in the middle of a step added it again.
+  - **Fix:** the ending now pauses on a physics-frame boundary, and the error is gone.
+  - **Not affected:** a plain pause and resume mid-drive never showed the error.
+- **Test changes, with reasons (#92):**
+  - **New `game/tests/test_maya_call.gd`, 8 checks:**
+    - a quiet start;
+    - the ring and the dash card on the climb;
+    - connecting after two rings with the music dipped;
+    - the 13 approved lines in order, each compared word for word;
+    - a short call (20–40 s);
+    - everything restored after she hangs up;
+    - no second call;
+    - a new drive brings it back.
+  - **`test_collision.gd`** (38 checks; it had 35). Run 19's three depot checks ("Ethan gets
+    out", "Exiting Car", "stands clear") become five quiet-ending checks:
+    - engine, lights and wipers off;
+    - Ethan stays in his seat, and the van no longer drives;
+    - only the rain and his breathing;
+    - no objective and no "DRIVE COMPLETE";
+    - the fade to black and the "Drive again" menu.
+
+    New: "New drive leaves the ending behind".
+- **Mutations:** both exit 1 (`logs/phase_1/run24/step1/mutation_*`):
+  - with one approved line changed ("Lock it anyway." to "Lock it."), the call test fails 7/8;
+  - with the "DRIVE COMPLETE" banner back, the collision test fails 37/38.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 25/25, 21/21, 38/38, 12/12, 8/8; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run24/step1/suites/`.
+- **Captures** (windowed, `tools/captures/capture_call.gd` new, `capture_collision.gd` updated):
+  - `evidence/phase_1/call/run24_step1/`:
+    - the ringing, and the dash card zoomed: incoming, then 00:03;
+    - the subtitles;
+    - after the call;
+    - `call_and_ending_sheet.png`;
+  - `evidence/phase_1/collision/run24_step1/`: the drive and hit as in Run 23, then the quiet
+    ending in the cab with the crack low on the glass, fading to black, and the menu.
+- **Not done (steps 2 and 3, each approved on its own):**
+  - the end-of-shift start;
+  - controls taught when needed;
+  - a checkpoint after the hit;
+  - the crossing moved up the road, with the wheel given back except the last second.
+- **Seen, not changed:** the dash map labels its distance "DEPOT" whatever the current
+  destination, so on the climb it reads "DEPOT / 132 m" for the next checkpoint.
+
+## Revision 2026-11-01 (Run 24, step 2: the end-of-shift start and controls taught when needed, C35)
+
+- **Author:** "... and go ahead with step 2 as well. remember to do all these" (#93), with the run
+  sheet approved as drafted ("Use this run sheet").
+- **The start** (`industrial_loop.gd`, `game/app/first_drive.gd`):
+  - **A site office:** a raised portacabin by the lumber yard gate, 13 m from the van. It has a
+    door with a step, a lit window, a wall lamp with shadows, and a clipboard by the door. Its
+    clearing keeps the forest out. The yard's shed was dark and 42 m away, and signing there
+    meant walking back. The world exposes `run_sheet_at` and `run_sheet_spot`.
+  - **Where Ethan starts:** at the office door, facing the clipboard. The objective is "SIGN THE
+    RUN SHEET", and the hint "E  Sign the run sheet".
+  - **Signing:** E shows the approved run sheet as paper on screen, in a typewriter face. After
+    1.2 s, "E. Cole" is written in, in blue handwriting. The faces are the Mac's own fonts
+    (`SystemFont`), so no font file is added. The objective becomes "GET IN THE VAN". E or
+    walking away puts the sheet away; otherwise it closes after 6 s.
+  - **The van waits:** until he signs, E at the van only says "Sign the run sheet at the office
+    first." This applies only at the start of a drive. Getting out and back in mid-drive works as
+    before.
+  - **Removed:** `START_SPOT` and `START_FACING`.
+- **Controls taught when needed** (`drive_lessons.gd` new, in the HUD's folder; the app decides
+  when):
+  - **One hint at a time** replaces the permanent controls line. Each lesson shows until it is
+    learned or for a set time, once per drive:
+    - walking, after signing, until he has walked 3 m;
+    - the pedals and the wheel, until the van has driven 25 m;
+    - "ESC  Pause and all controls", for 5 s;
+    - high beams, after Maya's call, until he switches to them;
+    - the wipers, the first time above 45 km/h;
+    - "MOUSE  Look around", near the viewpoint;
+    - "R  Recover the van", whenever the throttle is held and the van is stuck for 3 s.
+  - **Prompts:** "E  Sign the run sheet" and "E  Get in the van" show whenever they apply.
+  - **Quiet moments:** no hint shows during the encounter, the hold after the hit, "DRIVE." or
+    the ending.
+  - **The full list** stays in the pause menu.
+- **Test changes, with reasons (#93):**
+  - **`test_on_foot.gd`** (31 checks; it had 25):
+    - **The start:** "Ethan starts on the van's left" becomes "Ethan starts at the site office
+      door, by the clipboard". The objective and hint checks follow the run sheet.
+    - **New checks:**
+      - before signing, E at the van only reminds him;
+      - the run sheet appears as approved, compared word for word;
+      - he signs it "E. Cole", and the objective changes;
+      - E puts it away, and the walking lesson shows;
+      - near the van, "E  Get in the van" (moved here from the start);
+      - in the seat, the pedals-and-wheel lesson.
+    - **Walking:** it starts from beside the van, facing along it, as before. At the office he
+      faces the wall.
+    - **"New drive":** starts at the office again.
+  - **`test_maya_call.gd`** (9 checks): new, after the call the hint teaches the high beams.
+- **Found on the way:** the integration test's "Nearby driver can reenter" failed. The first
+  version also asked for the run sheet when getting back in mid-drive. The check now applies
+  only at the start.
+- **Mutations:** both exit 1 (`logs/phase_1/run24/step2/mutation_*`):
+  - with no run-sheet check at the van, the on-foot test fails its start and run-sheet checks;
+  - with one line of the sheet changed ("14 pallets" to "12 pallets"), it fails 29/31.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 31/31, 21/21, 38/38, 12/12, 9/9; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run24/step2/suites/`.
+- **Capture** (windowed, `capture_on_foot.gd`, now starting at the office):
+  `evidence/phase_1/start/run24_step2/` and `start_sheet.png`. It shows:
+  - the office door lit at night;
+  - the sheet, then signed;
+  - the walk to the van;
+  - at the van;
+  - the first driving lesson.
+- **Seen, not changed:** by the van it is very dark (mean brightness 9 of 255), because the
+  office lamp does not reach the parking spot. A yard floodlight on the office corner, aimed at
+  the van, would fix it; that is left for the author to decide.
+- **Next, each approved on its own:**
+  - step 3: the crossing up the road, the wheel given back except the last second, and a
+    checkpoint after the hit;
+  - then the dash screen, the cutscenes with the film look, and the studio intro (C35).
+
+## Revision 2026-11-01 (Run 24: the timber site office from Blender, and the yard floodlight, C36)
+
+- **Author:** "the shed looks so fake, do it in blender and make it realstic home. the office i
+  mean." (#94), then "Timber yard office (Recommended)" and "Yes, light the van (Recommended)".
+- **The office** (`tools/art/build_site_office.py`, new, run in Blender 5.2.2;
+  `game/features/environments/industrial_loop/art/office/site_office.glb`, 3,448 triangles):
+  - **Made from scratch by a script,** so no licence is needed and it rebuilds to the same bytes
+    (three exports, SHA-256 `4a056a52...`).
+  - **The building:**
+    - 6.0 × 3.6 m on a 35 cm concrete plinth, with walls 2.6 m high and 14 cm thick;
+    - a 22° gable roof of corrugated iron with 35 cm eaves and a ridge cap;
+    - gutters, a downpipe with a splash block, and a stovepipe with a rain cap;
+    - corner boards, fascia and barge boards, and louvred vents in both gables.
+  - **The front:**
+    - a plank door, with casing and a knob, under a bracketed hood, with a timber landing and a
+      step;
+    - a sliding window whose venetian blinds are lit from inside;
+    - right of the door, a green OFFICE board, and the clipboard under a gooseneck barn lamp.
+  - **The side:** a second window with blinds, and a meter box with its conduit.
+  - **The floodlight:** on the front right corner under the eave, turned 26° toward the road and
+    12° down, at the van's parking place.
+  - **Textures:**
+    - Poly Haven CC0: Weathered Plank Siding, Corrugated Iron, Rough Pine Door, Stair Planks and
+      Brushed Concrete 03;
+    - fetched with checksums from `tools/assets/site_office_assets.json`; `fetch_polyhaven.py` now
+      keeps the earlier rows of its manifest;
+    - the model's UVs are in metres, so each texture lies at its real size;
+    - the file names each part's material ("siding", "roof" and so on) and carries no image.
+  - **Markers:**
+    - empties mark the clipboard, the two lamps and the window;
+    - two boxes named with Godot's "-convcolonly" suffix import as the walls' and the landing's
+      collision.
+- **Claude Code's calls:**
+  - **No porch:** a bracketed hood and a landing instead of a porch with posts, so Ethan signs
+    standing on the ground, and no porch beam crosses the camera behind him;
+  - **The board:** it says only "OFFICE"; no company name is invented;
+  - **The floodlight:** it is cool white, against the warm lamp and window.
+- **In the game** (`industrial_loop.gd`):
+  - **The model:** `_site_office()` puts it where the old office stood.
+  - **Materials:** each part gets its own:
+    - the five textures;
+    - painted trim, a dark green board with cream letters, and see-through glass;
+    - blinds that glow faintly, lit from the room behind them.
+  - **Lights:**
+    - the gooseneck lamp: a warm spot with shadows on the board and the clipboard (energy 4.0,
+      8 m, 55°);
+    - the floodlight: a cool white spot with shadows on the van (9.0, 32 m, 30°);
+    - a soft warm glow in front of the window (0.8, 4 m), without shadows.
+  - **The run sheet:** `run_sheet_at` is the clipboard's paper, read from the model's marker, and
+    `run_sheet_spot` is 0.7 m in front of it, on the ground.
+  - **Textures in code:** `_surface()` and `_texture()` take a resolution, because four of the
+    textures are 1k.
+  - **The forest:** the clearing is unchanged, so the forest is unchanged.
+- **Found and fixed while building:**
+  - **Walls with no thickness:** bmesh's solidify needs face normals, and new faces have none.
+    The first walls came out as two coincident faces that rendered black. The normals are now
+    updated first.
+  - **Exports that differed:** solidify creates faces in memory order, so two exports differed.
+    The faces are now sorted before the mesh is written.
+- **Imports:**
+  - `configure_imports.py` set the 15 new textures to VRAM compression with mipmaps, with the
+    normal maps marked as normal maps;
+  - it also changed `rock_wall_02` and `rustic_stone_wall`, which have imported without mipmaps
+    since Run 15. Those six files were put back, because that is not this step's change.
+- **Test changes, with reasons (#94):**
+  - **`test_on_foot.gd`** (36 checks; it had 31). Five are new:
+    - the office is the Blender building, with its five textured parts at real size;
+    - the clipboard hangs on the front wall (1.44 m up, 1.8 cm proud of it);
+    - the lamp lights the clipboard and Ethan standing at it;
+    - the floodlight shines on the van, 11.8 m away, with nothing in between;
+    - walking at the wall, Ethan stops 0.31 m short of it.
+  - **`check_first_drive_art.py`:** an office section of 10 checks:
+    - the parts, markers and collision boxes;
+    - the 15 material names, and no image;
+    - finite geometry and no inverted triangles;
+    - UVs in metres (siding 0.999; door, landing and plinth 1.000);
+    - the office facing +Z, with its lights turned the right way;
+    - the collision box matching the walls;
+    - under 30,000 triangles and 25 MB.
+
+    The model sits in its own `art/office/` folder, like the cockpit and the Iveco, so the
+    general section and its three depot props are unchanged.
+- **Mutations:** both exit 1 (`logs/phase_1/run24/office/mutation_*`):
+  - with the office's collision removed, Ethan walks through the wall (35/36);
+  - with the floodlight turned away, the floodlight check fails (35/36).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 36/36, 21/21, 38/38, 12/12, 9/9; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run24/office/suites/`.
+- **Captures** (windowed):
+  - **`tools/captures/capture_site_office.gd`** (new), into `evidence/phase_1/start/run24_office/`:
+    - the office from the road;
+    - the door, the board and the clipboard;
+    - the side;
+    - a debug-lit view (ambient 6.0, fog off);
+    - the van with and without the floodlight. The van's mean brightness goes from 13.0 to 52.8
+      (4.1×).
+
+    No still has a pure-white pixel.
+  - **`capture_on_foot.gd`**, into `evidence/phase_1/start/run24_office/on_foot/`: the start at
+    the office, the signed sheet, the walk, and at the van.
+  - **Blender preview renders** are in the agent's scratch folder, not in the repository.
+- **Seen, not changed:**
+  - **The driver's door is dark:** it faces away from the office, so the van's own body shades
+    it. It stays dark until the ignition turns the lamps on.
+  - **A pine at the corner:** a big pine stands just in front of the office's right corner, at
+    the clearing's edge.
+- **Next:** step 3, the crossing up the road (#93), with its own approval.
+
+## Revision 2026-11-01 (Run 24: fixes from the author's play test, C37)
+
+- **Author:** "i found couple of bugs ... when i am rolling down the side windows ... its glitching
+  ... i wasnt able to find the van in the start, add a map to guide user to van ... i lost control
+  of the vechile before 5-10 seconds before hitting the pedestrian? ... when i am opening the door
+  my hand is going off into the door and when i exit the door, exit animation isnt coming ... make
+  sure the cabin light turns on when the door is open. and also let the gamer choose if he wants
+  to switch on the cabin light or off", then "the glass after coming down compeltely can be seen
+  from inside" (#95). Answers: "Both", "I (Recommended)", "In step 3 (Recommended)", "Yes, start
+  (Recommended)".
+- **Side windows** (`van_presentation.gd`; `side_glass.gdshader`, `window_slide.gdshaderinc` new;
+  `side_window_rain.gdshader`; all in the van's folder, not `game/shaders/`):
+  - **The cause:**
+    - each window moved 88 cm straight down as one piece, and nothing hid the glass below the
+      sill, so it stayed in view inside the door;
+    - the small front pane by the mirror post slid down with it.
+  - **Now:**
+    - **The front pane stays fixed,** as on a real Daily.
+    - **The main pane slides down:** in the shaders, so the nodes no longer move.
+    - **Below the sill nothing draws:** the glass and its rain are cut at the pane's own bottom
+      edge, measured from the mesh in 32 samples.
+    - **It drops its own height:** 0.607 m with a 2 cm margin, so fully down none of it shows.
+  - **The moon roof's rain** uses the same shader with the slide off, so it is unchanged.
+- **Getting in, the hand on the handle** (`driver.gd`, `game/app/first_drive.gd`,
+  `van_presentation.gd`):
+  - **The cause:** Mixamo's Entering Car grabs with the left hand but brings the wrist to the
+    handle, so the fingers sank 10.5 cm into the door and then slid along it as it opened.
+  - **Now:** Godot's `TwoBoneIK3D` on Ethan's left arm (`grip()`), with the hand extended
+    17 cm to the fingers.
+    - **When:** it blends in from 0.75 s, reaches the handle at 1.05 s, holds it while the door
+      swings, and lets go at the cut.
+    - **The grip point:** `door_handle()`, 4 cm out from the handle.
+    - **Measured:** the fingers stay within 9 cm of the handle as the door opens.
+  - **Reading the result:** Godot 4.7 shows a modifier's result only inside `skeleton_updated`,
+    so `grip_point()` remembers it there.
+- **Getting out** (`game/app/first_drive.gd`):
+  - **The animation:** E at a stop now plays Exiting Car from 2.6 s, after a fade from the seat.
+  - **The door:** it opens to 70°; at the Iveco's 31° his body would pass through it.
+  - **The push:** from 3.25 s the door eases toward his hand, and from 3.55 s it follows his
+    fingertips round the hinge (`door_opening_toward()`), within 5.4 cm of its outer face. At
+    4.35 s it shuts.
+  - **Control:** it returns when the clip ends, about 3.5 s in all.
+  - **The passenger side:** if the driver's side is blocked he leaves that way, as before
+    (no animation).
+- **Cabin light** (`van_presentation.gd`, `freight_van.gd`; `game/project.godot`, with the
+  author's OK, #95):
+  - **The lamp:** a dome lamp on the headliner in front of the moon roof: a warm light on the
+    cab and body layers, and a lens that glows.
+  - **With the door:** it comes on in 0.12 s whenever the driver's door is open, and fades out
+    over 2 s after it shuts.
+  - **The I key:** the new `cabin_light` action switches it on and off from the seat, with the
+    usual switch click. `switch_off()` turns it off, so the quiet ending stays dark.
+  - **The pause menu** lists "I   Cabin light".
+- **The guide to the van** (`van_guide.gd` new, in the HUD's folder; `driving_hud.gd`;
+  `industrial_loop.gd` gives the office's transform):
+  - **The corner map:** a round, heading-up map at the top right. It shows the road, the
+    office, the van in amber, Ethan's arrow, a north mark, and "VAN 13 m".
+  - **The marker:** "VAN · 13 m" over the van. When the van is out of view it sits at the
+    screen's edge with an arrow, and it fades out within 4–7 m of the van.
+  - **When:** whenever the van is where he needs to go: on foot after signing the run sheet,
+    or after getting out. It hides before signing, while he gets in or out, in the van and
+    during the ending.
+- **Not changed here:** the loss of control before the hit is Run 23's takeover; step 3 replaces
+  it, as the author chose ("In step 3").
+- **Test changes, with reasons (#95):**
+  - **`test_materials.gd`** (Assignment 5's suite, 92 checks, the same count):
+    - "Driver-window rain overlay is a child of the left window; its glass is unchanged"
+      becomes "... the glass and its rain slide into the door together";
+    - "Real J press lowers the window and its fog overlay by 0.88 m" becomes "Real J press
+      lowers the driver's window 0.607 m into the door: none of the sliding pane is left above
+      the sill, its rain goes with it, and the fixed front pane stays". It uses the shader's own
+      rule on every corner of the pane.
+  - **`first_drive_regression.gd`** (Assignment 5's suite): "Clear doors allow exit" waits for
+    the exit to finish, because getting out now takes the length of the clip.
+  - **`first_drive_integration.gd`:** "Stopped van allows safe exit" waits for the exit to
+    finish, for the same reason.
+  - **`test_on_foot.gd`** (46 checks; it had 36). Ten are new:
+    - no guide before signing, the guide after signing, and none in the van;
+    - the hand on the handle;
+    - the lamp with the door open, faded after it shuts, and switched by I;
+    - the exit clip with the door shut behind him;
+    - the door opening wide;
+    - the hand on the door as he pushes it shut;
+    - the lamp during the exit.
+
+    "E at a stop lets Ethan out" became "E at a stop plays Exiting Car".
+- **Mutations:** all exit 1 (`logs/phase_1/run24/fixes/mutation_*`):
+  - with half the drop, 7 of 25 corners stay above the sill (91/92);
+  - with no grip, the hand is 43 cm off the handle (45/46);
+  - with the old instant exit, 42/46;
+  - with a lamp that ignores the door, 44/46;
+  - with no guide, 45/46.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 46/46, 21/21, 38/38, 12/12, 9/9; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run24/fixes/suites/`.
+- **Captures** (windowed):
+  - **`tools/captures/capture_play_fixes.gd`** (new), into `evidence/phase_1/fixes/run24/`:
+    - the guide after signing, and the marker over the van;
+    - the hand on the handle at 1.05 s and 1.45 s;
+    - the dome lamp off and on;
+    - the window at half and fully down;
+    - getting out, the push from the side, and the door shut.
+  - **The window before and after,** from the seat: in the agent's scratch folder.
+- **Seen, not changed:** at the start the driver's door faces away from the office's
+  floodlight, so getting in and out happens in the van's shadow, lit by the dome lamp.
+
+## Revision 2026-11-01 (Run 24, step 3: the crossing up the hill, the wheel given back, a checkpoint after the hit, C38)
+
+- **Author:** "Option 1: move the crossing further back up the valley road, so running away is a
+  real drive. also, i want the game user to control the driving when hes near the pedestrian i
+  guess idk? we are taking away control too much maybe? make it natural and professional game."
+  and "Lose only the last second (Recommended)" (#92); "i lost control of the vechile before 5-10
+  seconds before hitting the pedestrian?" and "In step 3 (Recommended)" (#95); then "okay
+  proceed" (#96).
+- **The crossing moves up the hill** (`industrial_loop.gd`, `CROSSING_AT`):
+  - **Where:** road sample 785, at (63.3, 32.7, -79.5), on the straight between the second and
+    third hairpins down. It was at sample 1002, at the foot of the hill road, 80 m before the
+    depot.
+  - **The place:** a 9.4% downgrade heading west, with no lamp within 156 m. The shelter stands on
+    the uphill right, 9.9 m before the crossing. The footpath leads 31 m from the far side, down
+    toward the town. The signs stand both ways, as before.
+  - **Running away:** the depot is 511 m further on by road, through the last two hairpins and
+    32.7 m lower.
+- **The encounter** (mission `first_drive.gd`):
+  - **When:** in stage 3 (`ENCOUNTER_STAGE`, toward THE DESCENT), as the van drives forward
+    through the second hairpin down (samples 680–730), once it is close enough for the oncoming
+    van to meet it in time.
+  - **The oncoming van:**
+    - it starts at the foot of the straight (`SPAWN_AT`, sample 815), where the hill hides it
+      until the player is round the hairpin;
+    - it is timed to pass the player 30 m before the crossing (`MEETING_BEFORE`);
+    - it keeps its high beams on (C33).
+- **The wheel given back (C34; this replaces C33's takeover):**
+  - **Before he steps out,** the throttle, the brake and the wheel are the player's. The mission
+    no longer drives the van; `_carry_on()` and its constants are gone.
+  - **He steps out** only when all of these hold:
+    - the oncoming van is past him;
+    - the van is doing at least 16 km/h (`MIN_STEP_SPEED`);
+    - the van is no more than 1.9 s from the crossing (`STEP_HORIZON`).
+
+    He walks to the van's own path, 0.4 m right of where its centre will cross (`IMPACT_RIGHT`).
+    His walk plus his 0.35 s freeze in the headlights ends as the bumper arrives.
+  - **"Ethan brakes too late":** from his first step, the wheels lock on the wet paint
+    (`FreightVan.locked`):
+    - braking slows the van by only 1.5 m/s² (`LOCKED_GRIP`; 9 m/s² otherwise);
+    - the tyres skid, with a new sound;
+    - the wheel does nothing, and the van holds its heading.
+
+    The lock ends at the impact, when the van stops, or 10 m past the crossing.
+  - **How long the lock lasts:** from his first step to the impact, 1.6–2.0 s, not one second.
+    That is how long he takes to walk into the van's path. With the wheel back for those seconds,
+    a player who saw him step out could stop.
+  - **After the impact,** as in C33:
+    - the van carries him on for half a second;
+    - Ethan brakes hard and holds for 4 s;
+    - then "DRIVE.".
+- **Ethan keeps his foot on the brake** (`freight_van.gd`, `foot_on_brake`):
+  - **Found in the first capture:** on the 9% grade the van rolled forward as soon as "DRIVE."
+    appeared, and through him within about 3 s, because it does not collide with his body (C33).
+    On the valley road it had stayed where it stopped. The stills are in
+    `evidence/phase_1/collision/run24_step3_before_brake_hold/`.
+  - **Now:** after the hit, and after a recovery or a continue while fleeing, the van stays braked
+    with its brake lights on until the player touches the pedals, the handbrake or the wheel.
+    Everywhere else it rolls on slopes as before.
+- **A checkpoint after the hit** (mission `first_drive.gd`, `game/app/first_drive.gd`):
+  - **When:** as "DRIVE." appears, without the "checkpoint saved" notice.
+  - **What it keeps:**
+    - the van's place;
+    - where he lies (`Pedestrian.lying_pose()`, 11 bodies);
+    - the crack (`crack_state()`).
+  - **Continuing from the menu** (`_continue_in_van()`):
+    - Ethan is in the cab where the van stopped, with the engine running, "DRIVE." and no music;
+    - he lies where he fell (`lie_as()`), and the crack is on the glass (`restore_crack()`);
+    - nothing replays.
+
+    A saved drive past the start also continues in the van; a drive from the start begins at the
+    office.
+  - **Recovery (R)** after the hit puts the van back at that place.
+  - **Found and fixed:** the first suite run printed two engine errors ("Couldn't find the given
+    section "drive" and key "body""), from an older checkpoint without the new keys. The loader
+    now checks for them first.
+- **The pedestrian** (`pedestrian.gd`):
+  - he stops where his path meets the van's (`_stop_at`);
+  - he freezes in the headlights only when he is in the van's path;
+  - if the van stops or passes, he walks on;
+  - he goes limp only when struck faster than 1 m/s (`MIN_IMPACT`), so walking into a stopped
+    van is not a hit.
+- **The skid sound** (`skid.wav`, from `skid()` in
+  `source_assets/audio/first_drive/synthesize.py`):
+  - a 2 s loop of tyre hiss, rubber scrub and a squeal near 960 Hz;
+  - `driving_audio.gd` plays it while the locked wheels brake above 1 m/s, louder with speed;
+  - the other 18 WAVs are byte-identical, and `docs/AUDIO.md` lists 19.
+- **Tools:**
+  - `game/tests/lane_keeper.gd` looks 0.7 s ahead at speed (at least 6 m), because it weaved on
+    the descent;
+  - `capture_collision.gd` drives in from sample 672 at 8 m/s with the lane keeper, and brakes as
+    he steps out, as a player would;
+  - `capture_oncoming.gd` triggers at sample 729 and watches from sample 750.
+- **Test changes, with reasons (#92, #95, #96):**
+  - **`test_collision.gd`** (43 checks; it had 38):
+    - **The run-up:** stage 3, from sample 672 at 8 m/s with the lane keeper. At the step-out it
+      holds the brake and turns the wheel left.
+    - "With the brake held and the wheel turned, the van carries on by itself" becomes "You
+      drive all the way: the wheel and the pedals are yours until he steps out".
+    - "The van cannot be stopped or steered away" becomes two checks:
+      - "Braking hard, the wheels lock on the wet paint: the tyres skid, the van slows only from
+        36 to 32 km/h, and it hits him 2.0 s after he steps out";
+      - "Turning the wheel does nothing in the skid".
+    - **The lean check** asks that leaning shows more of him than the seat does (11 of 11 parts
+      against 2 of 11). It used to ask for none from the seat, but on this downgrade, with him
+      3.2 m out, two parts show from the seat.
+    - **New:**
+      - "On the 9% grade Ethan keeps his foot on the brake until you drive, so the van never
+        rolls onto him";
+      - "When he can drive on, a checkpoint keeps the van's place, where the man lies and the
+        crack";
+      - "Continuing the drive after the hit starts in the van at that checkpoint, held on the
+        brake: DRIVE., and no music";
+      - "He still lies where he fell, the crack is on the glass, and nothing replays".
+  - **`test_crossing.gd`** (12 checks):
+    - "Stopped on the valley road, nothing starts" becomes "Stopped in the hairpin above the
+      crossing, nothing starts";
+    - "Arriving at 20 km/h with the brake held, the van still carries on and hits him" becomes
+      "Crawling down at 20 km/h, braking as he steps out, the van still skids into him on the
+      crossing at 18 km/h".
+  - **`test_oncoming_van.gd`** (21 checks):
+    - **The site:** the trigger is at sample 729 and the wait at 795. "Below the last hairpin
+      ..." and "It starts beyond the valley S-bend, out of sight" become "In the second hairpin
+      down ..." and "It starts at the foot of the descent straight, where the hill hides it".
+    - **A fix to the sight-line check:** it ignored only the player's van, so its ray always hit
+      the oncoming van's own collision box and read "hidden" wherever the van started. It now
+      ignores both vans, and the real spawn is still hidden. A mutation exposed this (below).
+    - **Eye recovery:** the eyes get 8 s (it was 6 s), because the head-on high beams up the
+      straight darken the view further (0.24) than on the valley road.
+    - **Arrival:** if the van does not arrive properly, the test stops after the arrival checks
+      instead of reading a freed van.
+- **Mutations:** all exit 1 (`logs/phase_1/run24/step3/mutation_*`):
+  - with no wheel lock, the van stops and he walks across (21/40);
+  - with the takeover back, "You drive all the way" fails (1/5);
+  - with steering in the skid, the van turns 59° and misses him (18/40);
+  - with no checkpoint after the hit, 40/42;
+  - with "continue" starting on foot, 42/43;
+  - with the oncoming van spawned in view (sample 745), 7/8. Before the sight-line fix, the
+    "hidden" check passed this mutation;
+  - with no brake hold, the van rolls 3.01 m toward him in 3 s (40/43).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 46/46, 21/21, 43/43, 12/12, 9/9; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run24/step3/suites/`.
+- **Captures** (windowed, on battery):
+  - **`capture_collision.gd`,** into `evidence/phase_1/collision/run24_step3/`
+    (`collision_sheet.png`, `thrown_sheet.png`):
+    - the crossing from above, at night and in debug light;
+    - the high beams 70 m out (windshield brightness 127), and blinded as it passes (32);
+    - the step-out at 36 km/h, 21 m ahead, and the skid with him 4 m ahead;
+    - the impact at 32 km/h, the head strike, and the fall from the side;
+    - leaning over the wheel, and "DRIVE." with the van held 4.7 m short of him;
+    - driving on, and the quiet ending.
+  - **`capture_oncoming.gd`,** into `evidence/phase_1/oncoming/run24_step3/`
+    (`oncoming_sheet.png`), parked at the top of the straight:
+    - glare per lamp: 0.38 at 110 m, 1.02 at 60 m, 1.91 at 35 m, 2.65 at 20 m and 2.9 at 10 m;
+    - windshield brightness: 98, 130, 152, 157 and 146, then 44 after it passes.
+- **Speed sweep** (a probe in the agent's scratch folder, at a fixed 60 FPS, braking at the
+  step-out; logs in `logs/phase_1/run24/step3/speed_sweep/`):
+
+  | Hit at | Step-out to hit | Crack | Where he ends | Elbows and knees, first 3 s |
+  | --- | --- | --- | --- | --- |
+  | 30 km/h | 2.0 s | 0.91 | 4.3 m ahead | within 30° the wrong way and 150° |
+  | 32 km/h | 2.0 s | 0.98 | 4.3 m ahead | within 30° the wrong way and 150° |
+  | 37 km/h | 2.0 s | 1.00 | 3.0 m ahead | the left elbow folds to 160°, then flips to −143° |
+  | 40 km/h | 2.0 s | none | 2.1 m ahead | an elbow 35° the wrong way |
+  | 46 km/h | 2.0 s | 1.00 | 1.0 m ahead | elbows 45° and 49° the wrong way |
+  | 54 km/h | 1.7 s | none | under the van | an elbow 43° the wrong way, one to 151° |
+  | 62 km/h | 1.6 s | none | under the van | an elbow 97° the wrong way |
+
+- **For the author:**
+  - **The hit holds up at 30–36 km/h,** where the tests run (32 and 18 km/h).
+  - **Faster, it does not:**
+    - above about 50 km/h he goes under the van, and the glass does not crack;
+    - at 37–62 km/h an elbow can bend or flip the wrong way for a moment.
+
+    Coming down the 9% straight, a player can easily arrive faster than 50 km/h. Making the hit
+    hold up at 40–65 km/h would be its own step.
+  - **The lock** lasts about 2 s from his first step, not one second.
+  - **The van still passes through him** if the player drives straight at him after "DRIVE."
+    (C33).
+  - **From the seat,** two of his eleven body parts show on this downgrade (none did on the
+    valley road).
+  - **Frame rate:** the captures ran on battery at 45–61 FPS, which is not comparable with
+    earlier runs on power.
+
+## Revision 2026-11-01 (Run 25: the hit holds up at any speed, C39)
+
+- **Author:** asked "Should the next step make the hit hold up at 40–65 km/h, or go on to the
+  dash screen?", the author answered "ok", and then "Fix the hit at speed (Recommended)" (#97).
+- **Test first** (`game/tests/test_hit_speeds.gd`, new, 12 checks):
+  - **The set-up:** for each of 30, 45 and 60 km/h it builds a fresh game, puts him at the
+    crossing's kerb and holds the van at that speed until the impact.
+  - **The checks:** at each speed:
+    - he is thrown onto the bonnet;
+    - his head cracks the glass;
+    - he never passes over or through the cab, and he ends up ahead of the bumper;
+    - his knees and elbows never stay bent the wrong way, and he comes to rest with them in
+      range.
+  - **On Run 24 step 3's code it failed 7/12** (`logs/phase_1/run25/before/`):
+    - at 45 km/h he ended 0.3 m behind the bumper;
+    - at 60 km/h the glass did not crack, and he ended 18 m behind the van.
+- **The cause** (traced tick by tick at 60 km/h):
+  - **A bend before the crossing:** the straight has a gentle S just before it. The road's
+    heading swings from 104.8° at sample 765 to 95.0° at 785.
+  - **The lock went straight:** step 3's lock froze the van's heading at his first step, so a
+    locked van ran straight off its lane. He aimed at where that straight line crossed the road.
+  - **Too far to walk:** at speed he steps out up to 1.9 s ahead (`STEP_HORIZON`), 31 m at
+    60 km/h, so that point lay up to 4 m across the road, and he could not reach it in time.
+    Even at 36 km/h his walk was 2.8 m, which is why step 3's lock lasted 2.0 s.
+  - **Caught by the corner:** the van's right corner caught him mid-walk, 1.15–1.4 m right of
+    its centre. The hit counts within 1.25 m of the centre, but the front shell that throws him
+    is only ±0.99 m wide. Nothing pushed him forward, and the braking van passed down his side
+    or over him.
+- **The fix** (mission `first_drive.gd`, `freight_van.gd`):
+  - **The locked van keeps its lane** (`_watch_lock()`, `FreightVan.lock_curvature`):
+    - the player's wheel still does nothing;
+    - each tick, the van curves toward a point 12 m ahead (`LOCK_LOOK`, 6 samples) at its own
+      lane offset (`_lock_lane`), so it follows the road's bend;
+    - it used to hold its heading.
+  - **He aims at the van's lane** (`_watch_crossing()`): the impact point is the van's offset
+    in its lane, 0.4 m to its right as before. The straight-line guess is gone.
+  - **So his walk is about 1.2 m,** and the lock is about one second:
+    - 1.1 s in the collision test, where step 3 gave 2.0 s;
+    - 0.93–1.07 s across the encounter sweep below.
+
+    That is closer to C34's "Lose only the last second".
+- **Tried, and not kept** (`pedestrian.gd` is unchanged): two changes to the hit itself, each
+  measured with a sweep of 30–65 km/h in 5 km/h steps (`logs/phase_1/run25/hit_sweep/`):
+  - **carrying each body part** at the van's speed less its 32 km/h shortfall;
+  - **triggering the hit a tick early.**
+
+  On step 3's aim they gave 21/32 and 20/32, against 18/32 before. With the lane fix, the sweep
+  gave 28/32 with or without them, and the four failures were the limb check in both cases. So
+  they were dropped.
+- **The limbs:**
+  - **Spikes:** at every speed, a knee or an elbow can still spike past its range for a single
+    physics tick, at most two in a row: up to −59° in the test sweep and −110° once in the
+    encounter sweep. This is the Godot hinge weakness noted in C33.
+  - **Resting:** no limb ever stays bent the wrong way, and every resting pose is within the
+    hinges' ranges.
+  - **The new check:** it fails if a knee or elbow is out of range for more than 3 ticks
+    (0.05 s), or if he comes to rest with one out of range. The peaks are printed in each check.
+  - **Sweep logs 1–6** used the old check, which counted any single tick. Log 6 shows each run
+    lasting at most one tick.
+- **Measured:**
+  - **The new test's sweep, 30–65 km/h** (`hit_sweep/7_final.log`): 32/32. He is thrown onto the
+    bonnet (hips 1.37–1.84 m up) and his head cracks the glass (0.93 at 30 km/h, 1.00 above). No
+    part of him gets past the windshield: at most 1.43 m ahead of the van's origin, where the
+    roof's front edge is 0.5 m ahead. He lies 1.3–2.9 m ahead of the bumper.
+  - **The full encounter** (oncoming van, step-out, braking), approaches of 5–18 m/s
+    (`encounter_sweep/`):
+
+    | Hit at | Step-out to hit | Crack | Ahead of the van's origin 1.5 s later |
+    | --- | --- | --- | --- |
+    | 32 km/h | 1.07 s | 1.00 | 4.2 m ahead |
+    | 34 km/h | 1.05 s | 1.00 | 4.2 m ahead |
+    | 39 km/h | 1.03 s | 1.00 | 3.8 m ahead |
+    | 42 km/h | 1.03 s | 1.00 | 3.8 m ahead |
+    | 49 km/h | 1.00 s | 1.00 | 3.7 m ahead |
+    | 56 km/h | 0.95 s | 1.00 | 3.6 m ahead |
+    | 63 km/h | 0.93 s | 1.00 | 1.9 m ahead |
+
+    Before the fix, at 40, 54 and 62 km/h the glass did not crack, and at 54 and 62 km/h he went
+    under the van.
+- **Tool:** `capture_collision.gd` takes an optional run speed after the output folder (8 m/s by
+  default). Its side camera now follows the van, so a fast van stays in frame.
+- **Test changes, with reasons (#97):**
+  - **`test_hit_speeds.gd`** is new (above).
+  - **`test_collision.gd`** (43 checks, the same count): "Turning the wheel does nothing in the
+    skid (the van turns 0.00 degrees)" measured the van's heading. The locked van now turns
+    with the road (2.38° here), so the check measures what the wheel would change, the lane:
+    "the van slides on in its lane (0.15 m across)". The test still holds the wheel hard left;
+    with steering working, the van swerves 7.03 m (mutation below). Elsewhere its numbers
+    change with the shorter lock:
+    - he steps out 10.5 m before the bumper (it was 18.9 m);
+    - the van slows from 36 to 34 km/h (it was 32), and hits him 1.1 s after he steps out (it
+      was 2.0 s).
+- **Mutations:** all exit 1 (`logs/phase_1/run25/mutation_*`):
+  - with the locked van going straight again, 5/9: at 45 km/h he passes through the cab, and
+    at 60 km/h the van misses him;
+  - with step 3's straight-line aim, 10/12: at 60 km/h he passes through the cab;
+  - with steering working in the skid, the collision test fails 18/40: the van swerves 7.03 m
+    and misses him;
+  - with the knee and elbow limits reversed, 9/12: limbs stay bent the wrong way for 117–244
+    ticks.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 46/46, 21/21, 43/43, 12/12, 9/9, 12/12; art 0 failures. The only "ERROR:" lines are the
+  engine's "resources still in use at exit". Logs are in `logs/phase_1/run25/suites/`.
+- **Capture** (windowed, on battery): `capture_collision.gd -- evidence/phase_1/collision/run25
+  15.3`, at about 55 km/h (`collision_sheet.png`, `thrown_sheet.png`):
+  - he steps out of the glare 16.9 m ahead at 55 km/h, and is in the headlights through the skid;
+  - he is hit at 53 km/h, lands on the bonnet against the glass, and is carried about a second;
+  - he slides off as Ethan brakes, and lies on his back 4.8 m ahead of the stopped van.
+
+  The capture printed no "ERROR:" line.
+- **Not changed:** the van still passes through his body if the player drives straight at him
+  after "DRIVE." (C33).
+
+## Revision 2026-11-02 (Run 26: the dash screen, built into the van, C40)
+
+- **Author:** after three mockups on a private canvas
+  (https://claude.ai/artifact/XrjFWwDyNwrsBHUzRWT7aq):
+  - "i like B idea but i love details in C. so combine both of them give me final design" (#99);
+  - then, on the final design, "its perfect. make sure it looks like an actual screen in the van
+    and not like some block ... include it nicely. and make sure the map works as in real life.
+    also, i want the user to pickup the call by clicking a button.";
+  - and the answers "prompt the user to click a key on keyboard to answer the call" and "she calls
+    back and if user doesnt answer upto 2 times then automaticallly pick up third time" (#101).
+- **Why today's screen looked like a block:** it was a 17.2 × 11.3 cm picture stuck in front of the
+  dash. The van's own display is 13.6 × 7.1 cm, so the picture covered the head unit's buttons and
+  its PUSH knob, and it was tilted 2.3° too far.
+- **Fitted into the van's own display** (`van_presentation.gd`):
+  - **Measured from the model:**
+    - the head unit's screen picture is the triangles that map onto it in the dashboard
+      texture, 18 of them;
+    - they give its centre, its 23.7° tilt toward the driver and its size, 13.61 × 7.08 cm.
+  - **The picture** sits there, at 768 × 400 pixels in the display's own shape. It was 384 × 256.
+  - **A matte black copy of those 18 triangles** sits 0.5 mm in front of the model's glass, so the
+    model's painted picture never shows at the edges.
+  - **Like a real LCD** (`cockpit_screen.gdshader`, new settings that leave the gauges and mirrors
+    as they were):
+    - a thin black border round the lit area;
+    - backlit blacks, not pure black;
+    - a little dimmer seen from the side, up to 25% at a grazing angle;
+    - a 1.2 s fade-in when the engine starts, and dark glass with the engine off.
+  - **Glass and glow:** a glossy, lightly tinted glass pane in front, and a faint blue glow on the
+    dash around it, cab only.
+- **A map that works like real navigation** (`navigation_display.gd`, rewritten as the final
+  design):
+  - **Movement:**
+    - heading-up, centred on the van and turning with it;
+    - zoomed in when slow (3.0 px/m) and out at speed (1.8 px/m at 61 km/h);
+    - drawn from the real road 30 times a second, with the route ahead in blue.
+  - **Instructions:**
+    - real navigation does not announce bends on a road with no junctions, so the card shows the
+      next real turn: a turn-left arrow, the distance and "Freight depot", as on the in-game
+      "FREIGHT DEPOT / NEXT LEFT" sign;
+    - the distance is measured along the road. The old screen showed the straight-line distance
+      to the next checkpoint and always called it the depot ("DEPOT / 174 m");
+    - "Turn around" after 1.5 s driving the wrong way, or past the depot;
+    - "Arrived" in the depot bay.
+  - **The hairpin warning:** a yellow bend sign with the distance, within 150 m of each hairpin.
+  - **The run-sheet card:**
+    - only the approved run sheet's words;
+    - a progress bar from the lumber yard to the depot;
+    - the arrival time and minutes left, worked out at 40 km/h on the legs and 18 km/h in the
+      hairpins.
+  - **Road names:** from the in-game signs, "Hill Road" and "Valley Road".
+- **Reverse** (`parking_guides.gd`, new): the reverse camera now fills the display (576 × 300),
+  with red, yellow and green parking guide lines.
+- **The van's clock** (`freight_van.gd`, `instruments.gd`): it starts at 23:42 and runs, and the
+  gauges and the screen show the same time. The gauges used to show a fixed 23:42. "New drive"
+  resets it.
+- **Answering Maya** (`phone_call.gd`, `game/app/first_drive.gd`, `driving_audio.gd`,
+  `driving_hud.gd`):
+  - **It waits for T:** the call rings until the player presses T (the new `answer_call` action
+    in `game/project.godot`, by the author's request #101). The screen shows "T Answer" and the
+    hint says "T  Answer the call".
+  - **Missed calls:**
+    - a call that rings 6 times (13.2 s) unanswered is missed: "Missed call · Maya";
+    - she calls back 8 s later;
+    - the third call picks up by itself after two rings: "Answering automatically".
+  - **Worst case:** with both calls missed, the conversation starts 46.8 s after the first ring
+    and ends 80.3 s after it.
+    - The encounter can start 1,178 m further on by road (sample 680), 132 s away at the map's
+      own pace.
+    - Only a driver averaging over 52.8 km/h through the hairpins would still be on the call
+      when it starts. The encounter does not wait for the call (measured by a scratch probe;
+      step 2 changes this).
+  - **The pause menu** lists "T   Answer a call".
+- **Claude Code's calls:**
+  - the screen's shape: the approved design was drawn at 768 × 512 (3:2), and the van's display
+    is 1.92:1, so the same layout is 112 pixels shorter (768 × 400);
+  - T for the key;
+  - six rings, and calling back after 8 s;
+  - the depot as the destination;
+  - the 150 m warning;
+  - the running clock;
+  - metric units, matching the gauges, although the road signs use miles;
+  - the Mac's system font, like the run sheet, so no font file is added.
+- **Test changes, with reasons (#101):**
+  - **`test_maya_call.gd`** (11 checks; it had 9):
+    - "It connects hands-free after two rings" becomes "Pressing T answers: it connects
+      hands-free at once, the dash shows the call, and the music dips 13 dB";
+    - new: "It keeps ringing until answered: the dash asks for T, and the hint says T  Answer
+      the call";
+    - new: "Unanswered, the call is missed and she calls back; after two missed calls the third
+      picks up by itself after two rings (4.4 s)";
+    - its game-time limit is 180 s (it was 120 s).
+  - **`test_ghat_road.gd`** (31, the same count): "The map screen draws the real road inside its
+    panel" checked a fixed outline of the whole loop. It becomes "The map screen draws the real
+    road around the van, heading-up (68 points on the map, tracked 0 m from the van)".
+  - **`test_dash_screen.gd`** (new, 14 checks):
+    - **The fit:** the picture fills the van's own display, covering its glass to within 0.0 mm
+      and stopping 0.1 mm short of the buttons and the knob; it faces the driver.
+    - **The display:** the LCD settings; the glass and the glow; the start-up fade (50% after
+      0.6 s).
+    - **The map:** heading-up (0.0° behind); zoom; the distance along the road (1,822 m, not the
+      366 m straight line); the clock and the arrival time.
+    - **Directions:** the hairpin warning (96 m before, none on the open road); "Turn around";
+      "Arrived".
+    - **The rest:** the run sheet's words; reverse with its guides.
+- **Mutations:** all exit 1 (`logs/phase_1/run26/mutation_*`):
+  - with the old screen placement, the picture overhangs the head unit by 26.9 mm (12/14);
+  - with the straight-line distance, 13/14;
+  - with a north-up map, it lags the van by 80° (13/14);
+  - with the first call answering itself, the call test fails 9/11;
+  - with no calling back, 10/11.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 14/14,
+  31/31, 12/12, 46/46, 21/21, 43/43, 12/12, 11/11, 12/12; art 0 failures. The only "ERROR:" lines
+  are the engine's "resources still in use at exit". Logs are in `logs/phase_1/run26/suites/`.
+- **Import:** the headless import exits 0 with no errors or warnings, and creates only the two new
+  scripts' `.uid` files (`logs/phase_1/run26/import/`).
+- **Capture** (windowed, on battery; `tools/captures/capture_dash_screen.gd`, new;
+  `evidence/phase_1/dash/run26/`, `dash_sheet.png`):
+  - from the seat: driving, ringing, and looking down at the screen;
+  - close-ups from the driver's eye: driving, ringing with "T Answer", hands-free 00:04 with the
+    subtitles, the hairpin warning at 80 m, reverse with the guides, engine off and starting up.
+- **Seen:**
+  - the glass catches a small bright reflection of the cab's fill light, which shows in close-ups;
+  - from the seat the screen is small, as a real 6-inch screen is at arm's length, so its text
+    reads only when the player looks down at it.
+
+## Revision 2026-11-02 (Run 26, step 2: the pedestrian scene waits for Maya's call, C41)
+
+- **Author:** "yes  pedestrian scene wait until Maya's call ends?" (#102), answering "Should the
+  pedestrian scene wait until Maya's call ends? It only matters in that rare fast case."
+- **The problem, measured:** a scratch probe drove flat out from the lumber yard with the lane
+  keeper, never answering (`logs/phase_1/run26/step2/flat_out/`):
+  - the call rang at 18.0 s, was missed twice, and picked up by itself at 64.8 s;
+  - the encounter started at 88.8 s, with about 9.5 s of her call still to come.
+- **Why waiting alone is not enough:**
+  - **Where it can start:** the encounter can only start in the hairpin above the crossing
+    (samples 680–730), because the oncoming van must meet the player before the crossing.
+  - **The risk:** if the scene only waited, a van that passed that hairpin during a late call
+    would reach the crossing with no encounter at all.
+  - **The van's limits:** its top speed is 19 m/s (68 km/h), even downhill, and its steering
+    takes every hairpin at that speed. So no van covers the 1,178 m by road from the call's ring
+    point (sample 91) to the start of that hairpin in less than 62.0 s.
+  - **The call:** left to ring out twice, it ran 80.3 s from the first ring.
+- **The fix:**
+  - **The scene waits** (mission `first_drive.gd`): the encounter starts only when no call is
+    active (`not phone_call.active`).
+  - **The call fits** (`phone_call.gd`, Claude Code's call):
+    - a call is missed after 4 rings, 8.8 s (it was 6 rings, 13.2 s);
+    - she calls back 2 s later (it was 8 s), as people redial straight away;
+    - the third call still answers itself after two rings (C40).
+  - **The worst case now:** with both calls missed, the conversation starts 26.0 s after the
+    first ring and ends 59.5 s after it. That is 2.5 s before even a flat-out van could reach the
+    encounter.
+  - **After the fix,** the same probe has the call end at 77.6 s and the encounter start at
+    88.8 s, 11.2 s later, with no call.
+- **Test changes, with reasons (#102):** `test_maya_call.gd` (13 checks; it had 11).
+  - **New:** "Left to ring out twice, her call still ends before even a flat-out van could reach
+    the pedestrian scene (59.5 s after the first ring; 1178 m at 68 km/h takes 62.0 s)".
+    - It works this out from the call's own timings, the 13 approved lines, the road and the
+      van's top speed.
+    - So a slower call, a faster van or a shorter road fails it.
+  - **New:** "While she is on the line, the pedestrian scene waits, and it begins once the call
+    ends". Here the van drives through the encounter's hairpin at 58 km/h with the call ringing.
+  - **Unchanged:** the existing checks. The missed-call check reads its timings from
+    `phone_call.gd`.
+- **Mutations:** both exit 1 (`logs/phase_1/run26/step2/mutation_*`):
+  - with the scene not waiting, 12/13;
+  - with the old pacing (6 rings, 8 s), 12/13: the worst case is 80.3 s, against 62.0 s.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 46/46, 21/21, 43/43, 12/12, 13/13, 12/12, 14/14; art 0 failures. The only "ERROR:" lines
+  are the engine's "resources still in use at exit". Logs are in `logs/phase_1/run26/step2/suites/`.
+
 ## Revision 2026-11-02 (the save rules, written before any save code)
 
 - **Author:** "yes start with the save rules" (#105), after Claude Code proposed missions in a row

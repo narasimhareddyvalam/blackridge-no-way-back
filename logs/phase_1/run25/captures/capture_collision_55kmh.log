@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved crossing_overview_night.png: van 15.3 m/s, pedestrian -63.7 m ahead and 53.1 m right, windshield brightness 13.8, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved crossing_overview_debug_light.png: van 15.3 m/s, pedestrian -71.3 m ahead and 56.1 m right, windshield brightness 80.7, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved oncoming_high_beams.png: van 15.3 m/s, pedestrian 67.8 m ahead and -10.3 m right, windshield brightness 125.7, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved blinded_as_it_passes.png: van 15.4 m/s, pedestrian 31.7 m ahead and 4.4 m right, windshield brightness 31.8, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved he_steps_out.png: van 15.4 m/s, pedestrian 16.9 m ahead and 2.4 m right, windshield brightness 39.1, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved skidding_on_the_paint.png: van 14.9 m/s, pedestrian 3.8 m ahead and 0.6 m right, windshield brightness 41.2, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved impact.png: van 14.8 m/s, pedestrian 2.4 m ahead and 0.6 m right, windshield brightness 35.5, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved head_strikes_the_windshield.png: van 14.8 m/s, pedestrian 2.4 m ahead and 0.5 m right, windshield brightness 35.8, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_167_ms_debug_light.png: van 14.8 m/s, pedestrian 2.3 m ahead and 0.5 m right, windshield brightness 91.7, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_300_ms_debug_light.png: van 14.8 m/s, pedestrian 2.1 m ahead and 0.5 m right, windshield brightness 92.8, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_433_ms_debug_light.png: van 14.3 m/s, pedestrian 2.0 m ahead and 0.4 m right, windshield brightness 92.0, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_600_ms_debug_light.png: van 13.2 m/s, pedestrian 1.9 m ahead and 0.4 m right, windshield brightness 88.5, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_1000_ms_debug_light.png: van 10.8 m/s, pedestrian 2.3 m ahead and 0.4 m right, windshield brightness 85.0, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved leaning_over_the_wheel.png: van 0.0 m/s, pedestrian 4.8 m ahead and 0.4 m right, windshield brightness 68.2, eye 0.42 m forward, objective RETURN TO THE DEPOT
+saved drive_objective.png: van 0.0 m/s, pedestrian 4.8 m ahead and 0.4 m right, windshield brightness 68.4, eye 0.42 m forward, objective DRIVE.
+saved sitting_back.png: van 0.0 m/s, pedestrian 4.8 m ahead and 0.4 m right, windshield brightness 51.0, eye 0.00 m forward, objective DRIVE.
+saved on_the_road_night.png: van 0.0 m/s, pedestrian 4.8 m ahead and 0.4 m right, windshield brightness 42.7, eye 0.00 m forward, objective DRIVE.
+saved on_the_road_debug_light.png: van 0.0 m/s, pedestrian 4.8 m ahead and 0.4 m right, windshield brightness 89.5, eye 0.00 m forward, objective DRIVE.
+saved driving_on_with_the_crack.png: van 6.1 m/s, pedestrian -0.4 m ahead and 0.4 m right, windshield brightness 56.5, eye 0.00 m forward, objective DRIVE.
+saved quiet_ending_in_the_cab.png: van 0.0 m/s, pedestrian -171.8 m ahead and -67.9 m right, windshield brightness 29.3, eye 0.00 m forward, objective 
+saved fading_to_black.png: van 0.0 m/s, pedestrian -171.8 m ahead and -67.9 m right, windshield brightness 14.3, eye 0.00 m forward, objective 
+saved menu_after_the_ending.png: van 0.0 m/s, pedestrian -171.8 m ahead and -67.9 m right, windshield brightness 16.1, eye 0.00 m forward, objective 
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

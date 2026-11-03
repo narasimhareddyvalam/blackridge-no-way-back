@@ -5,12 +5,13 @@ const LOOKS := {
 	"look_left": Vector2(-0.12, 1.0),
 	"look_right": Vector2(-0.12, -1.0),
 	"look_down": Vector2(-0.45, 0.0),
+	"look_up": Vector2(1.05, 0.0),
 }
 const ZOOMS := {
-	"zoom_cluster": [Vector2(-0.1655, 0.0019), 24.0],
-	"zoom_map": [Vector2(-0.1597, -0.3833), 24.0],
-	"zoom_mirror_left": [Vector2(-0.1179, 0.6166), 24.0],
-	"zoom_mirror_right": [Vector2(0.0097, -1.1385), 14.0],
+	"zoom_cluster": [Vector2(-0.433, 0.054), 26.0],
+	"zoom_map": [Vector2(-0.32, -0.668), 14.0],
+	"zoom_mirror_left": [Vector2(-0.146, 0.898), 24.0],
+	"zoom_mirror_right": [Vector2(-0.009, -1.238), 14.0],
 }
 
 var _app: Node3D

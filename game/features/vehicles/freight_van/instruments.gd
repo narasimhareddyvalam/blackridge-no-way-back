@@ -102,7 +102,8 @@ func _centre_display(speed_kmh: float) -> void:
 	var panel := Rect2(270.0, 34.0, 100.0, 188.0)
 	draw_rect(panel.grow(3.0), Color("1b2328"))
 	draw_rect(panel, Color("08161b"))
-	draw_string(_font, Vector2(278, 52), "23:42", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, DIM_INK)
+	draw_string(_font, Vector2(278, 52), vehicle.clock_text(), HORIZONTAL_ALIGNMENT_LEFT, -1, 12,
+		DIM_INK)
 	draw_string(_font, Vector2(334, 52), "7°C", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, DIM_INK)
 	var gear := "D" if vehicle.gear > 0 else "R"
 	var x := 282.0

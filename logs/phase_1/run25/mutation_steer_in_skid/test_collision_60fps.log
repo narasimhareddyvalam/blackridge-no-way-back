@@ -1,0 +1,54 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+PASS: The oncoming van keeps its high beams on and blinds the driver (the view darkens to 0.24)
+PASS: No one is on the road while the oncoming van passes: he steps out only once it is past him
+PASS: You drive all the way: the wheel and the pedals are yours until he steps out (36 km/h)
+PASS: He steps off the kerb onto the crossing, 10.5 m before the van's bumper reaches it (36 km/h)
+FAIL: Braking hard, the wheels lock on the wet paint: the tyres skid, the van slows only from 36 to 0 km/h, and it hits him 4.0 s after he steps out
+FAIL: Turning the wheel does nothing in the skid: the van slides on in its lane (7.03 m across)
+PASS: He is struck on the crossing (-0.03 m along, -1.63 m across)
+FAIL: His head strikes the base of the windshield 1.00 s after the impact (-2.58 m out from the glass)
+FAIL: The van carries him on for half a second (0 km/h), before Ethan brakes
+PASS: He freezes in the headlights just before the impact
+FAIL: At the impact he goes limp: a physics ragdoll takes over from the animation
+FAIL: The body strikes the van with a heavy impact sound
+FAIL: The music cuts out
+PASS: The oncoming van is behind, 94 m away and driving off: no witness
+FAIL: Thrown by the van, he tumbles and comes to rest (-1.0 s)
+FAIL: He is thrown clear and lies -inf m ahead of the bumper, in the beams
+FAIL: He lies on the road (hips inf m up)
+PASS: His body never sinks into the road (lowest 0.93 m)
+PASS: Knees and elbows bend no more than 30 degrees the wrong way as he tumbles (worst 12 and 16 degrees)
+PASS: Knees and elbows never fold past their range (most 68 and 59 degrees)
+FAIL: The van skids to a stop and holds there (0.0 s) despite the throttle
+FAIL: The cab rocks on its springs at the impact (0.00 degrees)
+FAIL: Leaning over the wheel, Ethan looks for him
+PASS: E does nothing: Ethan does not get out
+FAIL: The objective reads DRIVE.
+PASS: On the 9% grade Ethan keeps his foot on the brake until you drive, so the van never rolls onto him (0.00 m in 3 s)
+FAIL: Then the van drives again (0.0 m/s)
+PASS: Ethan sits back in his seat to drive (eye 0.00 m from the seat position)
+ERROR: Couldn't find the given section "drive" and key "recovery", and no default was given.
+   at: get_value (core/io/config_file.cpp:61)
+   GDScript backtrace (most recent call first):
+       [0] _check_checkpoint (res://tests/test_collision.gd:435)
+       [1] _run (res://tests/test_collision.gd:95)
+       [2] _check_aftermath (res://tests/test_collision.gd:293)
+       [3] _seconds (res://tests/test_collision.gd:589)
+FAIL: When he can drive on, a checkpoint keeps the van's place, where the man lies and the crack (body within inf m)
+FAIL: Parked at the depot, the engine goes off, the lights go out and the wipers stop
+FAIL: Ethan stays in his seat, and the van no longer drives
+FAIL: In the silence there is only the rain on the roof and his breathing
+FAIL: No objective and no "DRIVE COMPLETE" on screen
+FAIL: After 25 s the screen fades to black and the menu offers to drive again
+PASS: The crack stays for the rest of the drive (0.00 at the depot)
+FAIL: Continuing the drive after the hit starts in the van at that checkpoint
+PASS: New drive brings back an unbroken windshield
+PASS: New drive clears the pedestrian and brings the music back
+PASS: New drive leaves the ending behind: the screen is clear and the objective is back
+COLLISION RESULT: 18/40 passed; 22 failed
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

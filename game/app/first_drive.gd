@@ -2,20 +2,39 @@ extends Node3D
 
 const Driver = preload("res://features/characters/driver/driver.gd")
 const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
-const START_SPOT := Vector3(-3.4, 0.0, 0.6)
-const START_FACING := Vector3(1.0, 0.0, -0.37)
-const BOARD_SPOT := Vector3(-2.25, 0.0, -0.35)
+const Mission = preload("res://features/missions/night_freight/first_drive.gd")
+const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
+const SHEET_RANGE := 1.6
+const SIGN_DELAY := 1.2
+const SHEET_HOLD := 6.0
+const SHEET_WALK_AWAY := 1.5
+const WALK_LESSON := 3.0
+const DRIVE_LESSON := 25.0
+const FAST := 12.5
+const VIEWPOINT_NEAR := 40.0
+const STUCK_HINT := 3.0
+const BOARD_SPOT := Vector3(-2.02, 0.0, -0.51)
 const BOARD_RANGE := 4.5
 const DOOR_GRAB := 1.05
+const REACH_FROM := 0.75
+const GRIP_ELBOW := Vector3(-1.85, 0.85, -0.95)
 const DOOR_OPENED := 1.6
 const CUT := 1.75
 const FADE_OUT := 0.25
 const FADE_IN := 0.5
 const IGNITION_DELAY := 0.6
 const EXIT_FROM := 2.6
-const EXIT_SPOT := Vector3(-1.6, 0.0, -0.35)
-const SEAT_FLOOR := Vector3(-0.52, 0.0, -0.32)
-const DOOR_SHUT := Vector2(3.7, 4.3)
+const EXIT_SPOT := Vector3(-1.88, 0.0, -0.5)
+const SEAT_FLOOR := Vector3(-0.45, 0.0, -0.5)
+const PASSENGER_EXIT := Vector3(1.85, 0.2, -0.72)
+const EXIT_DOOR := 2.26
+const PUSH := Vector2(3.55, 4.35)
+const SLAM := 0.2
+const REACH_DOOR := 0.3
+const IMPACT_SPEED := 9.0
+const ENDING_HOLD := 9.0
+const ENDING_FADE := 3.0
+const ENDING_BLACK := 2.0
 
 @onready var van: CharacterBody3D = $FreightVan
 @onready var route: Node = $DrivingTrial
@@ -31,6 +50,16 @@ var _boarding_token: int = 0
 var _awaiting_van: bool = false
 var _route_title: String = ""
 var _route_detail: String = ""
+var _ending: bool = false
+var _ended: bool = false
+var _ending_token: int = 0
+var _signed: bool = false
+var _sheet_token: int = 0
+var _lessons := DriveLessons.new()
+var _walk_from := Vector3.ZERO
+var _odometer: float = 0.0
+var _stuck_for: float = 0.0
+var _call_done: bool = false
 
 
 func _ready() -> void:
@@ -51,9 +80,18 @@ func _ready() -> void:
 	route.checkpoint_save_failed.connect(_checkpoint_save_failed)
 	route.drive_completed.connect(_drive_completed)
 	route.struck.connect(_struck)
+	route.phone_call.ringing.connect(_call_ringing)
+	route.phone_call.missed.connect(_call_missed)
+	route.phone_call.connected.connect(_call_connected)
+	route.phone_call.line_started.connect(hud.show_subtitle)
+	route.phone_call.ended.connect(_call_ended)
 	route.road = world.road
+	route.crossing = world.crossing
 	route.configure(van)
-	van.get_node("VanPresentation").navigation.road = world.road_points
+	_navigation().follow(world.road, Mission.TARGETS[Mission.TARGETS.size() - 1],
+		Mission.START.origin)
+	hud.van_guide.road = world.road_points
+	hud.van_guide.office = world.office_transform
 	hud.resume_requested.connect(_begin)
 	hud.pause_requested.connect(_toggle_pause)
 	hud.restart_requested.connect(_new_drive)
@@ -62,10 +100,25 @@ func _ready() -> void:
 
 
 func _begin() -> void:
+	if _ended:
+		_new_drive()
+		return
 	if not _begun:
 		_begun = true
-		_begin_on_foot()
+		if route.stage > 0 or route.fleeing:
+			_continue_in_van()
+		else:
+			_begin_on_foot()
 	_resume()
+
+
+func _continue_in_van() -> void:
+	_awaiting_van = false
+	_signed = true
+	_enter_van()
+	van.start_engine()
+	if route.fleeing:
+		_audio.silence_music()
 
 
 func _resume() -> void:
@@ -73,54 +126,127 @@ func _resume() -> void:
 
 
 func _new_drive() -> void:
+	_ending_token += 1
+	_ending = false
+	_ended = false
+	hud.set_ended(false)
+	hud.set_cinematic(false)
+	_audio.restore()
 	_restart()
 	_audio.play_music()
 	_begin_on_foot()
 
 
-func _struck() -> void:
+func _struck(speed: float) -> void:
 	_audio.silence_music()
-	van.get_node("VanPresentation").jolt(1.0)
+	_audio.body_impact()
+	var presentation := van.get_node("VanPresentation")
+	var strength := clampf(speed / IMPACT_SPEED, 0.3, 1.0)
+	presentation.jolt(strength)
+	presentation.watch_head(route.pedestrian.head_body(), strength)
+	presentation.look_target_node = route.pedestrian.hips_body()
+
+
+func _call_ringing(caller: String) -> void:
+	_audio.ring()
+	_navigation().ring(caller, route.phone_call.answers_itself())
+
+
+func _call_connected() -> void:
+	_audio.answer()
+	_navigation().talk()
+
+
+func _call_missed(caller: String) -> void:
+	_audio.stop_ringing()
+	_navigation().miss(caller)
+
+
+func _call_ended() -> void:
+	_call_done = true
+	_audio.hang_up()
+	hud.clear_subtitle()
+	_navigation().end_call()
+
+
+func _navigation() -> Control:
+	return van.get_node("VanPresentation").navigation
 
 
 func _drive_completed() -> void:
+	_ending_token += 1
+	var token := _ending_token
+	_ending = true
+	van.held = true
+	van.get_node("VanPresentation").look_target_node = null
+	hud.set_cinematic(true)
+	van.switch_off()
+	_audio.silence_music()
+	_audio.cool_down()
 	if route.fleeing:
-		_exit_at_depot()
-	else:
-		hud.notify("Depot reached. Drive complete.")
-
-
-func _exit_at_depot() -> void:
-	_boarding = true
-	await hud.fade(1.0, FADE_OUT).finished
-	van.occupied = false
-	van.driver_door = 1.0
-	driver.set_active(true)
-	driver.global_position = _on_ground(van.to_global(EXIT_SPOT))
-	var shift := van.to_global(SEAT_FLOOR) - van.to_global(EXIT_SPOT)
-	driver.play_clip("ExitVan", -van.global_basis.z, EXIT_FROM, Vector3(shift.x, 0.0, shift.z))
-	driver.look_toward(van.global_basis.x)
-	hud.fade(0.0, FADE_IN)
-	while not driver.clip_finished():
-		van.driver_door = 1.0 - smoothstep(DOOR_SHUT.x, DOOR_SHUT.y, driver.clip_time())
-		await get_tree().process_frame
-	van.driver_door = 0.0
-	driver.finish_clip()
-	_boarding = false
+		_audio.breathe()
+	await get_tree().create_timer(ENDING_HOLD, false).timeout
+	if token != _ending_token:
+		return
+	await hud.fade(1.0, ENDING_FADE).finished
+	if token != _ending_token:
+		return
+	_audio.fade_out(ENDING_BLACK)
+	await get_tree().create_timer(ENDING_BLACK, false).timeout
+	await get_tree().physics_frame
+	if token != _ending_token:
+		return
+	_ending = false
+	_ended = true
+	hud.set_ended(true)
+	_set_paused(true)
 
 
 func _begin_on_foot() -> void:
 	_cancel_boarding()
+	_close_run_sheet()
 	van.switch_off()
 	van.occupied = false
 	_awaiting_van = true
-	hud.set_objective("GET IN THE VAN", "Walk to the driver's door, on the left, and press E.")
-	driver.global_position = _on_ground(van.to_global(START_SPOT))
+	_signed = false
+	_call_done = false
+	_odometer = 0.0
+	_stuck_for = 0.0
+	_lessons.reset()
+	hud.set_objective("SIGN THE RUN SHEET", "Take the run sheet from the clipboard by the office door.")
+	driver.global_position = _on_ground(world.run_sheet_spot)
 	driver.velocity = Vector3.ZERO
 	driver.set_active(true)
-	var facing := van.global_basis * START_FACING
+	var facing: Vector3 = world.run_sheet_at - world.run_sheet_spot
+	facing = Vector3(facing.x, 0.0, facing.z).normalized()
 	driver.face(facing)
 	driver.look_toward(facing)
+	_walk_from = driver.global_position
+
+
+func _sign_run_sheet() -> void:
+	_sheet_token += 1
+	var token := _sheet_token
+	hud.show_document(Mission.RUN_SHEET)
+	await get_tree().create_timer(SIGN_DELAY, false).timeout
+	if token != _sheet_token:
+		return
+	hud.sign_document(Mission.RUN_SHEET_SIGNATURE)
+	_signed = true
+	_walk_from = driver.global_position
+	hud.set_objective("GET IN THE VAN", "Walk to the driver's door, on the left, and press E.")
+	await get_tree().create_timer(SHEET_HOLD, false).timeout
+	if token == _sheet_token:
+		_close_run_sheet()
+
+
+func _needs_sheet() -> bool:
+	return _awaiting_van and not _signed
+
+
+func _close_run_sheet() -> void:
+	_sheet_token += 1
+	hud.hide_document()
 
 
 func _route_objective(title: String, detail: String) -> void:
@@ -135,6 +261,8 @@ func _checkpoint_save_failed(_error: int) -> void:
 
 
 func _toggle_pause() -> void:
+	if _ended:
+		return
 	_set_paused(not get_tree().paused)
 
 
@@ -147,6 +275,9 @@ func _set_paused(value: bool) -> void:
 
 func _restart() -> void:
 	_cancel_boarding()
+	var presentation := van.get_node("VanPresentation")
+	presentation.clear_crack()
+	presentation.look_target_node = null
 	_enter_van()
 	van.start_engine()
 	route.restart()
@@ -154,6 +285,8 @@ func _restart() -> void:
 
 
 func _recover() -> void:
+	if _ending or _ended:
+		return
 	_cancel_boarding()
 	_enter_van()
 	van.start_engine()
@@ -163,33 +296,89 @@ func _recover() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_echo():
+	if event.is_echo() or _ending or _ended:
 		return
 	if event.is_action_pressed("recover"):
 		_recover()
+	elif event.is_action_pressed("answer_call"):
+		if van.occupied and route.phone_call.can_answer():
+			route.phone_call.answer()
 	elif event.is_action_pressed("interact") and not _boarding:
 		if van.occupied and (route.fleeing or van.held):
 			return
 		if van.occupied:
 			_exit_van()
+		elif hud.document_visible():
+			if _signed:
+				_close_run_sheet()
+		elif _needs_sheet() and driver.global_position.distance_to(world.run_sheet_spot) \
+				< SHEET_RANGE:
+			_sign_run_sheet()
 		elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
-			_board_van()
+			if _needs_sheet():
+				hud.notify("Sign the run sheet at the office first.")
+			else:
+				_board_van()
 
 
 func _exit_van() -> void:
 	if absf(van.speed) > 0.4:
 		hud.notify("Stop before leaving the van")
 		return
-	for side in [-1, 1]:
-		var at := van.to_global(Vector3(side * 2.05, 0.2, -0.4))
-		_exit_query.transform = Transform3D(Basis.IDENTITY, at + Vector3.UP * 0.9)
-		if get_world_3d().direct_space_state.intersect_shape(_exit_query, 1).is_empty():
-			van.occupied = false
-			driver.global_position = at
-			driver.velocity = Vector3.ZERO
-			driver.set_active(true)
-			return
+	if _clear(van.to_global(EXIT_SPOT) + Vector3.UP * 0.2):
+		_step_out()
+		return
+	var other := van.to_global(PASSENGER_EXIT)
+	if _clear(other):
+		van.occupied = false
+		driver.global_position = other
+		driver.velocity = Vector3.ZERO
+		driver.set_active(true)
+		return
 	hud.notify("Both doors are obstructed. Move the van before leaving.")
+
+
+func _clear(at: Vector3) -> bool:
+	_exit_query.transform = Transform3D(Basis.IDENTITY, at + Vector3.UP * 0.9)
+	return get_world_3d().direct_space_state.intersect_shape(_exit_query, 1).is_empty()
+
+
+func _step_out() -> void:
+	_boarding = true
+	hud.set_hint("")
+	_boarding_token += 1
+	var token := _boarding_token
+	await hud.fade(1.0, FADE_OUT).finished
+	if token != _boarding_token:
+		return
+	van.occupied = false
+	van.driver_door = EXIT_DOOR
+	driver.set_active(true)
+	driver.global_position = _on_ground(van.to_global(EXIT_SPOT))
+	driver.velocity = Vector3.ZERO
+	var shift := van.to_global(SEAT_FLOOR) - van.to_global(EXIT_SPOT)
+	driver.play_clip("ExitVan", -van.global_basis.z, EXIT_FROM, Vector3(shift.x, 0.0, shift.z))
+	driver.look_toward(van.global_basis.x)
+	hud.fade(0.0, FADE_IN)
+	while not driver.clip_finished():
+		van.driver_door = _door_under_hand(driver.clip_time())
+		await get_tree().process_frame
+		if token != _boarding_token:
+			return
+	van.driver_door = 0.0
+	driver.finish_clip()
+	_boarding = false
+
+
+func _door_under_hand(time: float) -> float:
+	var pushed := clampf(van.door_opening_toward(driver.grip_point()), 0.0, EXIT_DOOR)
+	if time < PUSH.x - REACH_DOOR:
+		return EXIT_DOOR
+	if time < PUSH.x:
+		return lerpf(EXIT_DOOR, pushed, smoothstep(PUSH.x - REACH_DOOR, PUSH.x, time))
+	if time > PUSH.y:
+		return maxf(0.0, van.driver_door - get_process_delta_time() * EXIT_DOOR / SLAM)
+	return minf(van.driver_door, pushed)
 
 
 func _enter_van() -> void:
@@ -213,13 +402,17 @@ func _board_van() -> void:
 			return
 	driver.play_clip("EnterVan", van.global_basis.x)
 	while driver.clip_time() < CUT:
-		van.driver_door = smoothstep(DOOR_GRAB, DOOR_OPENED, driver.clip_time())
+		var time: float = driver.clip_time()
+		van.driver_door = smoothstep(DOOR_GRAB, DOOR_OPENED, time)
+		driver.grip(van.door_handle(), van.to_global(GRIP_ELBOW),
+			smoothstep(REACH_FROM, DOOR_GRAB, time))
 		await get_tree().process_frame
 		if token != _boarding_token:
 			return
 	await hud.fade(1.0, FADE_OUT).finished
 	if token != _boarding_token:
 		return
+	driver.grip(Vector3.ZERO, Vector3.ZERO, 0.0)
 	van.driver_door = 0.0
 	_boarding = false
 	_enter_van()
@@ -234,6 +427,7 @@ func _board_van() -> void:
 func _cancel_boarding() -> void:
 	_boarding_token += 1
 	_boarding = false
+	driver.grip(Vector3.ZERO, Vector3.ZERO, 0.0)
 	van.driver_door = 0.0
 	hud.fade(0.0, 0.0)
 
@@ -241,7 +435,7 @@ func _cancel_boarding() -> void:
 func _path_to(spot: Vector3) -> Array[Vector3]:
 	var local := van.to_local(driver.global_position)
 	var path: Array[Vector3] = []
-	if local.x > -1.4:
+	if local.x > -1.15:
 		var end := -3.3 if local.z < 0.3 else 3.6
 		if local.x > 0.0:
 			path.append(_on_ground(van.to_global(Vector3(1.9, 0.0, end))))
@@ -258,6 +452,9 @@ func _on_ground(point: Vector3) -> Vector3:
 
 
 func _process(delta: float) -> void:
+	_guide_to_van()
+	if route.phone_call.talking:
+		_navigation().call_seconds = route.phone_call.elapsed
 	_hint_time += delta
 	if _hint_time < 0.2:
 		return
@@ -265,11 +462,64 @@ func _process(delta: float) -> void:
 	var ground := Vector2(van.global_position.x, van.global_position.z)
 	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
 		_recover()
-	if _boarding:
-		hud.set_hint("")
-	elif van.occupied:
-		hud.set_hint("W / S  Drive / brake    Q  D / R (stopped)    E  Exit    ESC  All controls")
-	elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
-		hud.set_hint("E  Get in the van    WASD  Walk    SHIFT  Run    MOUSE  Look    ESC  Pause")
+	if hud.document_visible() and driver.global_position.distance_to(world.run_sheet_spot) \
+			> SHEET_WALK_AWAY + SHEET_RANGE and _signed:
+		_close_run_sheet()
+	hud.set_hint(_hint(0.2))
+
+
+func _guide_to_van() -> void:
+	if driver.active and not van.occupied and not _boarding and not _needs_sheet() \
+			and not _ending and not _ended:
+		hud.van_guide.guide(driver.get_camera(), van, driver.global_position)
 	else:
-		hud.set_hint("WASD  Walk    SHIFT  Run    R  Recover van    ESC  Pause")
+		hud.van_guide.hide_guide()
+
+
+func _hint(delta: float) -> String:
+	if _boarding or _ending or _ended or hud.document_visible():
+		return ""
+	if not van.occupied:
+		if _needs_sheet():
+			if driver.global_position.distance_to(world.run_sheet_spot) < SHEET_RANGE:
+				return "E  Sign the run sheet"
+			return ""
+		if driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
+			return "E  Get in the van"
+		if driver.global_position.distance_to(_walk_from) > WALK_LESSON:
+			_lessons.learn("walk")
+		_lessons.offer("walk")
+		return _lessons.tick(delta)
+	_lessons.learn("walk")
+	if route.phone_call.can_answer() and not route.phone_call.answers_itself():
+		return "T  Answer the call"
+	if not van.engine_on or van.scripted or van.held or route.fleeing:
+		return ""
+	_teach_driving(delta)
+	return _lessons.tick(delta)
+
+
+func _teach_driving(delta: float) -> void:
+	_odometer += absf(van.speed) * delta
+	if not _lessons.done("drive"):
+		if _odometer > DRIVE_LESSON:
+			_lessons.learn("drive")
+		_lessons.offer("drive")
+	_lessons.offer("pause")
+	if van.high_beams:
+		_lessons.learn("high_beams")
+	if _call_done and van.headlights_on:
+		_lessons.offer("high_beams")
+	if absf(van.speed) > FAST:
+		if _lessons.showing() == "wipers" and van.wiper_setting != 1:
+			_lessons.learn("wipers")
+		_lessons.offer("wipers")
+	var viewpoint: Vector3 = Mission.TARGETS[1]
+	if route.stage == 1 and van.global_position.distance_to(viewpoint) < VIEWPOINT_NEAR:
+		_lessons.offer("look")
+	var pushing := Input.is_action_pressed("accelerate") and absf(van.speed) < 0.5
+	_stuck_for = _stuck_for + delta if pushing else 0.0
+	if _stuck_for > STUCK_HINT:
+		_stuck_for = 0.0
+		_lessons.again("recover")
+		_lessons.offer("recover")

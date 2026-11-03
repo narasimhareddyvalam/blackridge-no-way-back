@@ -136,8 +136,11 @@ on the entire road"). Those are in scope. These stay protected:
   chosen after Linear clipped lit trunks to white (stills in `evidence/phase_1/forest_road/`).
 - `project.godot` changes only its rendering method and, with the author's OK of
   2026-10-31, MetalFX upscaling on macOS (`scaling_3d/mode.macos=4`,
-  `scaling_3d/scale.macos=0.75`; see `PERFORMANCE.md`). No autoloads and no new controls
-  without the author's OK.
+  `scaling_3d/scale.macos=0.75`; see `PERFORMANCE.md`), and, with the author's OK of
+  2026-11-01 (#77), ETC2/ASTC texture import for the macOS export
+  (`textures/vram_compression/import_etc2_astc=true`), and, with the author's OK of 2026-11-01
+  (#95), the `cabin_light` action on I. No autoloads and no new controls without the author's
+  OK.
 
 ## Unconfirmed
 

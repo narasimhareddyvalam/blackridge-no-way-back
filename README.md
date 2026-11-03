@@ -229,6 +229,25 @@ Assignment 10 asks for the renderer to be settled early. The export target is ma
 state. Godot documents the
 [renderer tradeoffs](https://docs.godotengine.org/en/stable/tutorials/rendering/renderers.html).
 
+**macOS export (2026-11-01, Run 21).**
+- **The preset:** `game/export_presets.cfg` holds one preset, "macOS":
+  - universal, so the app runs on Intel and natively on Apple Silicon;
+  - version 0.1.0, ad-hoc signed, not notarized, with no credentials;
+  - it leaves out the tests, `experiments/` and the visual benchmark scene.
+- **The template:** Godot's official 4.7.2 macOS template, checked against the published
+  SHA-512, is installed in `~/Library/Application Support/Godot/export_templates/4.7.2.stable/`.
+- **The command,** from the repository root:
+
+  ```sh
+  /Applications/Godot.app/Contents/MacOS/Godot --headless --path game \
+    --export-release "macOS" ../builds/macos/Blackridge.zip
+  ```
+
+  It writes `builds/macos/Blackridge.zip`, which Git ignores. The ZIP holds
+  `Blackridge- No Way Back.app`; macOS turns the title's colon into a dash in the file name.
+- **Gatekeeper:** an ad-hoc signed app copied to another Mac is blocked by Gatekeeper until
+  the game is signed with a Developer ID and notarized.
+
 From the repository root, the installed macOS application can open the editor:
 
 ```sh

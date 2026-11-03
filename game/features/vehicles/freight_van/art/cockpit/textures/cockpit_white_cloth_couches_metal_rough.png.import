@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsc3wy6vbdjer"
 path.s3tc="res://.godot/imported/cockpit_white_cloth_couches_metal_rough.png-62159f5b8a4f5b446f658a621612d6b4.s3tc.ctex"
+path.etc2="res://.godot/imported/cockpit_white_cloth_couches_metal_rough.png-62159f5b8a4f5b446f658a621612d6b4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/cockpit/textures/cockpit_white_cloth_couches_metal_rough.png"
-dest_files=["res://.godot/imported/cockpit_white_cloth_couches_metal_rough.png-62159f5b8a4f5b446f658a621612d6b4.s3tc.ctex"]
+dest_files=["res://.godot/imported/cockpit_white_cloth_couches_metal_rough.png-62159f5b8a4f5b446f658a621612d6b4.s3tc.ctex", "res://.godot/imported/cockpit_white_cloth_couches_metal_rough.png-62159f5b8a4f5b446f658a621612d6b4.etc2.ctex"]
 
 [params]
 

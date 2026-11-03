@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buvyl3v06k3yi"
 path.s3tc="res://.godot/imported/cockpit_interior_floor_color.png-d4c5927b535a4d0d19f01273e5f2aa4e.s3tc.ctex"
+path.etc2="res://.godot/imported/cockpit_interior_floor_color.png-d4c5927b535a4d0d19f01273e5f2aa4e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/cockpit/textures/cockpit_interior_floor_color.png"
-dest_files=["res://.godot/imported/cockpit_interior_floor_color.png-d4c5927b535a4d0d19f01273e5f2aa4e.s3tc.ctex"]
+dest_files=["res://.godot/imported/cockpit_interior_floor_color.png-d4c5927b535a4d0d19f01273e5f2aa4e.s3tc.ctex", "res://.godot/imported/cockpit_interior_floor_color.png-d4c5927b535a4d0d19f01273e5f2aa4e.etc2.ctex"]
 
 [params]
 

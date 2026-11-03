@@ -1,9 +1,953 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 19 (on foot, the oncoming van, the collision; C27–C29), all four
-steps done, 2026-10-31, on branch `develop`. At the author's request ("commit and push to
-develop", #71), Run 19 is committed in the commit after `b1e5785`, and `develop` is pushed to
-`origin`. `main` is untouched. Final logs: `logs/phase_1/run19/step4/`.
+**Last run:** Phase 1, Run 26 step 2: the pedestrian scene waits for Maya's call (#102, C41),
+2026-11-02, on branch `develop`. Step 1 built the dash screen (#98–#101, C40). Run 19 is committed
+as `3d257a2`. After it, the save rules are committed on their own as `301c250` (#107), and Runs
+20–26 are committed together after that, once the author had told Max about the van on
+2026-11-03 (#109). `develop` is pushed; `main` is untouched.
+
+**The author's agreed order (#108–#109), each step approved on its own:**
+
+1. ~~Runs 20–26 committed and pushed~~ (done);
+2. saving, built to the committed save rules (the last revision of `CHANGE-BRIEF.md`), test
+   first;
+3. the keyboard-only menu, Assignment 10's front door;
+4. Mission 2, The Wrong Cargo, planned with the author on a map before it is built;
+5. Mission 3, Last Run, with the combat encounter and the story scenes;
+6. the author's own full playtest, then the story changes, the "gamify" pass and the polish.
+
+**The bar for every step (#109):** realistic down to the minor details, built to best practice.
+
+**Set aside until the author returns to them (#103–#104):** the opening cutscene, the live title
+screen with the game logo (C42), the film look in cutscenes, the filmed ending and the studio
+intro.
+
+No slow motion. No title card before the end shows the game's title (C04).
+
+## Run 26, step 2: the pedestrian scene waits for Maya's call (approved: #102; C41)
+
+**Files:**
+
+- **Changed:**
+  - mission `first_drive.gd`: the encounter starts only when `not phone_call.active`;
+  - mission `phone_call.gd`: `RINGS` 4 (was 6), `CALL_BACK` 2.0 (was 8.0);
+  - `game/tests/test_maya_call.gd`: `_check_fits()`, `_check_scene_waits()` and `_coast()`
+    (13 checks).
+- **Docs:**
+  - `CHANGE-BRIEF.md` (Run 26 step 2);
+  - `docs/DESIGN_DECISIONS.md` (C41);
+  - the prompt log (#102).
+  - The Run 26 notes now give the old worst case as 80.3 s. The talk is 33.5 s, not 34 s.
+
+**What the next run can rely on:**
+
+- **The call's worst case:** a call ignored twice ends 59.5 s after its first ring. Flat out, the
+  van cannot reach the encounter's first sample (680) in less than 62.0 s. `test_maya_call.gd`
+  recomputes both numbers from the code, so any change to the call, the lines, the road or the
+  van's top speed is checked.
+- **The scene waits:** while any call is active, the encounter does not start.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| scratch probe, flat out from the lumber yard, never answering (`logs/phase_1/run26/step2/flat_out/before.log`) | call rang 18.0 s, picked up 64.8 s; encounter started 88.8 s with the call active |
+| the same probe after the fix (`flat_out/after.log`) | call ended 77.6 s; encounter started 88.8 s with no call |
+| `LOG_DIR=logs/phase_1/run26/step2/first scripts/run-test.sh test_maya_call.gd 60` | 13/13, exit 0 |
+| two mutations (`logs/phase_1/run26/step2/mutation_*`) | both exit 1: the scene not waiting 12/13; the old pacing 12/13 (80.3 s against 62.0 s) |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run26/step2/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 43/43, 12/12, 13/13, 12/12, 14/14; art 0 failures; only "resources still in use at exit" ERROR lines |
+
+**Unverified:**
+
+- **The new ring pacing in play:** whether four rings and a 2 s call-back feel right.
+
+## Run 26: the dash screen, built into the van (approved: #99–#101; C40)
+
+**Files:**
+
+- **New:**
+  - `game/features/vehicles/freight_van/parking_guides.gd`, the reverse camera's guide lines;
+  - `game/tests/test_dash_screen.gd` (14 checks);
+  - `tools/captures/capture_dash_screen.gd`;
+  - `parking_guides.gd.uid` and `test_dash_screen.gd.uid`, which the import created.
+- **Rewritten:**
+  - `navigation_display.gd`, the final design at 768 × 400;
+  - mission `phone_call.gd`: rings until answered, missed calls, the call-back and the third call
+    answering itself.
+- **Changed:**
+  - `van_presentation.gd`:
+    - the map's place and size, measured from the cab model (`MAP_SCREEN`, `MAP_SIZE`, `MAP_TURN`);
+    - `MAP_PIXELS` and `REVERSE_PIXELS`;
+    - `_cover_screen()` (the black cover) and `_screen_glass()` (the glass and the glow);
+    - `_lcd()`, and the start-up fade (`_screen_power`, `BOOT_SECONDS`);
+  - `cockpit_screen.gdshader` (in the van's folder): `power`, `border`, `black_level` and
+    `view_falloff`, neutral by default, so the gauges and mirrors are unchanged;
+  - `freight_van.gd`: `clock`, `clock_text()` and `reset_clock()`;
+  - `instruments.gd`: the gauges show `clock_text()`;
+  - mission `first_drive.gd`: no `destination` or `instruction` for the map; "New drive" resets
+    the clock;
+  - `game/app/first_drive.gd`: the map follows the road to the depot; the call's `missed` and
+    `connected` signals; T answers; the hint "T  Answer the call";
+  - `driving_audio.gd`: `stop_ringing()`;
+  - `driving_hud.gd`: the pause menu lists "T   Answer a call";
+  - `game/project.godot`: the `answer_call` action on T (#101);
+  - tests: `test_maya_call.gd` (11 checks, 180 s limit) and `test_ghat_road.gd` (the map check).
+- **Docs:**
+  - `CHANGE-BRIEF.md` (Run 26);
+  - `docs/DESIGN_DECISIONS.md` (C40);
+  - the prompt log (#98–#101).
+
+**What the next run can rely on:**
+
+- **The map:**
+  - `navigation.follow(road, depot, start)` once per world;
+  - after that it reads only `vehicle` and the road.
+  - **Its state is public:** `route_index`, `to_turn` (metres along the road),
+    `seconds_left`, `next_hairpin` (−1 when none within 150 m), `wrong_way`, `arrived`,
+    `progress`, `map_yaw`, `map_scale` and `drawn_road`.
+- **The call** (`phone_call.gd`):
+  - `answer()` works only while `can_answer()`;
+  - `answers_itself()` is true on the third attempt;
+  - signals: `ringing`, `missed`, `connected`, `line_started` and `ended`.
+  - The map shows it through `ring()`, `talk()`, `miss()` and `end_call()`.
+- **The screen:**
+  - the presentation's `_map_screen` and `reverse_screen` share `MAP_SCREEN`;
+  - `_screen_power` runs from 0 to 1 over 1.2 s after the ignition.
+- **The clock:** `FreightVan.clock` is in seconds and starts at 23:42; `reset_clock()` sets it
+  back.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run26/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 43/43, 12/12, 11/11, 12/12, 14/14; art 0 failures; only "resources still in use at exit" ERROR lines |
+| five mutations (`logs/phase_1/run26/mutation_*`) | all exit 1: old screen place 12/14 (26.9 mm overhang); straight-line distance 13/14; north-up map 13/14 (80.4° behind); first call answers itself 9/11; no call-back 10/11 |
+| `capture_dash_screen.gd` (windowed, on battery) | exit 0, no ERROR lines; 10 stills, `dash_captures.txt` and `dash_sheet.png` in `evidence/phase_1/dash/run26/` |
+| `Godot --headless --editor --path game --import` (`logs/phase_1/run26/import/`) | exit 0, no ERROR or WARNING lines; it created only the two `.uid` files, and `project.godot` is unchanged |
+
+**Unverified:**
+
+- **The author's own look and drive:** the screen from the seat, answering with T, and letting
+  the call ring out.
+- **A late call at speed:** with both calls missed, the conversation ended 80.3 s after the first
+  ring, and a driver averaging over 52.8 km/h could still be on the call when the encounter
+  started. Fixed in step 2.
+- **The glass:** it catches a small bright reflection of the cab's fill light in close-ups.
+- **The frame rate on power.**
+
+## Run 25: the hit holds up at any speed (approved: #97; C39)
+
+**Files:**
+
+- **New:** `game/tests/test_hit_speeds.gd` (12 checks).
+- **Changed:**
+  - mission `first_drive.gd`: `LOCK_LOOK`, `_lock_lane`; `_watch_lock()` steers the locked van
+    along its lane; `_watch_crossing()` aims at the van's lane offset;
+  - `freight_van.gd`: `lock_curvature`, which sets the locked van's yaw, and `recover()` clears it;
+  - `game/tests/test_collision.gd`: the skid's wheel check measures the lane (`LANE_HOLD`,
+    `_lane()`) instead of the heading;
+  - `tools/captures/capture_collision.gd`: an optional run speed after the folder, and a side
+    camera that follows the van.
+- **Unchanged:** `pedestrian.gd`. Two changes to the hit itself were tried and dropped
+  (`logs/phase_1/run25/hit_sweep/`).
+- **Docs:**
+  - `CHANGE-BRIEF.md` (Run 25);
+  - `docs/DESIGN_DECISIONS.md` (C39);
+  - the prompt log (#97).
+
+**What the next run can rely on:**
+
+- **The lock:**
+  - while `FreightVan.locked` is set, its yaw is `speed * lock_curvature`. The mission sets
+    `lock_curvature` each tick, and the player's steering is ignored;
+  - the lock runs from his first step to the impact, about one second.
+- **The aim:** the impact point is the van's lane offset at the step-out, plus `IMPACT_RIGHT`.
+- **Tests:** `test_hit_speeds.gd` places the van 60 m short of the crossing and holds its
+  speed. The full encounter is covered by `test_collision.gd` and `test_crossing.gd`.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `LOG_DIR=logs/phase_1/run25/before scripts/run-test.sh test_hit_speeds.gd 60`, on Run 24 step 3's code | exit 1, 7/12: at 45 km/h he ends 0.3 m behind the bumper; at 60 km/h no crack, 18.1 m behind |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run25/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 43/43, 12/12, 9/9, 12/12; art 0 failures; only "resources still in use at exit" ERROR lines |
+| four mutations (`logs/phase_1/run25/mutation_*`) | all exit 1: straight lock 5/9; old aim 10/12; steering in the skid 18/40 (collision test); reversed limb limits 9/12 |
+| hit sweep at 30–65 km/h, a scratch copy of the new test (`logs/phase_1/run25/hit_sweep/`) | before 18/32; push changes only 21/32 and 20/32; lane fix 28/32 with or without them (limb check only); final check 32/32 |
+| encounter sweep, a scratch probe, approaches 5–18 m/s (`logs/phase_1/run25/encounter_sweep/`) | hits at 32–63 km/h, crack 1.00 every time, 0.93–1.07 s from step-out to hit, ahead of the van every time |
+| `capture_collision.gd -- evidence/phase_1/collision/run25 15.3` (windowed, on battery) | exit 0, no ERROR lines; step-out 16.9 m ahead at 55 km/h, hit at 53 km/h, carried on the bonnet, lies 4.8 m ahead |
+
+**Unverified:**
+
+- **Limb spikes:** a knee or an elbow can still spike past its range for a single tick (up to
+  −110° once). None lasts, and every resting pose is in range.
+- **The author's own drive** at speed.
+- **The frame rate on power.**
+
+## Run 24, step 3: the crossing up the hill, the wheel given back, a checkpoint after the hit (approved: #96; C38)
+
+**Files:**
+
+- **New:** `game/features/audio/first_drive/skid.wav` and its `.import`.
+- **Changed:**
+  - `industrial_loop.gd`: `CROSSING_AT` is (64, -79), road sample 785;
+  - mission `first_drive.gd`:
+    - the encounter: `ENCOUNTER_STAGE` 3, `ENCOUNTER_SPAN`, `SPAWN_AT` 815, `MEETING_BEFORE`,
+      `ETA_FLOOR`, `_entering_encounter()` (with the arrival check), `_time_the_meeting()`;
+    - the step-out: `MIN_STEP_SPEED`, `STEP_HORIZON`, `IMPACT_RIGHT` and `_watch_crossing()`,
+      which sets `vehicle.locked`;
+    - the lock: `LOCK_PAST`, `_watch_lock()`, `_release_van()`;
+    - after the hit: the post-hit checkpoint in `_save_checkpoint()` and `_load_checkpoint()`,
+      and `vehicle.foot_on_brake` after the hold, a recovery and a load;
+    - removed: C33's takeover (`_carry_on()`, `_stop_carrying()`, `CARRY_*`, `_stuck_for`);
+  - `freight_van.gd`: `locked` with `LOCKED_GRIP`, and `foot_on_brake`, which `recover()` clears;
+  - `pedestrian.gd`: `MIN_IMPACT`, `IN_PATH`, `_stop_at`, `lying_pose()`, `lie_as()`;
+  - `van_presentation.gd`: `crack_state()`, `restore_crack()`;
+  - `driving_audio.gd`: the skid (`skidding()`);
+  - `game/app/first_drive.gd`: `_begin()` and `_continue_in_van()`;
+  - `source_assets/audio/first_drive/synthesize.py`: `skid()`;
+  - tests: `test_collision.gd`, `test_crossing.gd`, `test_oncoming_van.gd`,
+    `game/tests/lane_keeper.gd`;
+  - captures: `capture_collision.gd`, `capture_oncoming.gd`.
+- **Docs:**
+  - `CHANGE-BRIEF.md` (Run 24 step 3);
+  - `docs/DESIGN_DECISIONS.md` (C38);
+  - the prompt log (#96's outcome);
+  - `docs/AUDIO.md` (19 sounds);
+  - `CLAUDE.md` (the I key in the `project.godot` rule, #96).
+
+**What the next run can rely on:**
+
+- **The encounter:**
+  - it runs in stage 3, from the second hairpin down;
+  - the oncoming van starts at sample 815 and meets the player at sample 770;
+  - he steps out at the crossing, sample 785, and the depot is 511 m on by road.
+- **The lock:** `FreightVan.locked` is true from his first step until the impact, the stop, or
+  10 m past the crossing.
+- **Fleeing:** while `route.fleeing`, `FreightVan.foot_on_brake` keeps the van braked until a
+  pedal, the handbrake or the wheel is touched.
+- **The post-hit checkpoint:** it has the keys `recovery`, `body` and `crack` in section
+  `drive`. The loader checks for them before reading.
+- **Tests that drive to the crossing:**
+  - set the stage to `Mission.ENCOUNTER_STAGE`;
+  - start at sample 672 with `lane_keeper.gd`;
+  - stay at about 8 m/s, where the hit holds up.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run24/step3/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 43/43, 12/12, 9/9; art 0 failures; only "resources still in use at exit" ERROR lines |
+| seven mutations (`logs/phase_1/run24/step3/mutation_*`) | all exit 1: no lock 21/40; takeover back 1/5; steering in the skid 18/40; no post-hit checkpoint 40/42; continue on foot 42/43; spawn in view 7/8; no brake hold 40/43 |
+| `capture_collision.gd -- evidence/phase_1/collision/run24_step3` (windowed, on battery) | exit 0, no ERROR lines; step-out at 36 km/h 21 m ahead, hit at 32 km/h, van held 4.7 m short of him after "DRIVE." |
+| `capture_oncoming.gd -- evidence/phase_1/oncoming/run24_step3` (windowed, on battery) | exit 0, no ERROR lines; glare per lamp 0.38 at 110 m to 2.9 at 10 m; windshield brightness 98 to 157, then 44 |
+| speed sweep (a scratch probe, `--fixed-fps 60`; `logs/phase_1/run24/step3/speed_sweep/`) | hits at 30–62 km/h; the crack at 30, 32, 37 and 46 km/h, none at 40, 54 and 62; under the van at 54 and 62 km/h; elbows past 30° the wrong way from 37 km/h |
+
+**Superseded logs, kept:**
+
+- `logs/phase_1/run24/step3/suites_before_loader_fix/`: the regression log shows the two
+  checkpoint ERROR lines;
+- `suites_before_brake_hold/`: the suites before the brake hold;
+- `first/` and `first_hold/`: single-suite runs during the step.
+
+**Unverified:**
+
+- **Above about 36 km/h** the hit does not hold up:
+  - an elbow flips from 37 km/h;
+  - there is no crack at 40, 54 and 62 km/h;
+  - from about 54 km/h he goes under the van.
+
+  The tests run at 32 and 18 km/h.
+- **The author's own drive** down the hill: how the lock and the skid feel, and whether 511 m is
+  enough of a run.
+- **The frame rate on power.**
+
+## Run 24: fixes from the author's play test (approved: #95; C37)
+
+**Files:**
+
+- **New:**
+  - `game/features/vehicles/freight_van/side_glass.gdshader` and `window_slide.gdshaderinc`;
+  - `game/features/ui/driving_hud/van_guide.gd`;
+  - `tools/captures/capture_play_fixes.gd`.
+- **Changed:**
+  - `van_presentation.gd`:
+    - `_slide_into_door()`, the window drop and its uniforms;
+    - the dome lamp: `_dome_lamp()`, `_light_the_cab()`, `cabin_lamp`;
+    - `door_handle()`, `door_opening_toward()`;
+    - `WINDOW_DROP` and `_window_rest` are gone;
+  - `side_window_rain.gdshader`: the slide and the cut at the sill;
+  - `freight_van.gd`: `cabin_light`, the I key, `door_handle()`, `door_opening_toward()`;
+    `switch_off()` turns the lamp off;
+  - `driver.gd`: `grip()`, `grip_point()` and the left-arm `TwoBoneIK3D`;
+  - `game/app/first_drive.gd`:
+    - the grip while getting in;
+    - `_step_out()`, `_door_under_hand()`, `_clear()`;
+    - `_guide_to_van()`;
+  - `driving_hud.gd`: `van_guide`, and the controls list gains I;
+  - `industrial_loop.gd`: `office_transform`;
+  - `game/project.godot`: the `cabin_light` action on I, with the author's OK (#95);
+  - tests:
+    - `test_materials.gd`;
+    - `tools/tests/first_drive_regression.gd`;
+    - `tools/tests/first_drive_integration.gd`;
+    - `test_on_foot.gd`.
+- **Docs:** `CHANGE-BRIEF.md` (Run 24, the play-test fixes), `docs/DESIGN_DECISIONS.md` (C37),
+  the prompt log (#95).
+
+**What the next run can rely on:**
+
+- **Lowering a window** sets `lowered` on the pane's `side_glass` material and its rain;
+  the nodes stay where they are.
+- **The exit:** E at a stop takes about 3.5 s through `_step_out()`. `_boarding` is true
+  meanwhile, and tests wait for it to clear.
+- **The cabin lamp:** it follows `vehicle.cabin_light` and the driver's door; `cabin_lamp` is
+  the light.
+- **The guide:** `hud.van_guide.shown()`, `distance()` and `label()` say what it shows.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run24/fixes/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 38/38, 12/12, 9/9; art 0 failures; only "resources still in use at exit" ERROR lines |
+| five mutations (`logs/phase_1/run24/fixes/mutation_*`) | all exit 1: half drop 91/92; no grip 45/46; instant exit 42/46; lamp ignores door 44/46; no guide 45/46 |
+| `capture_play_fixes.gd` (windowed) | exit 0; 14 stills in `evidence/phase_1/fixes/run24/` |
+
+**Unverified:**
+
+- How the exit and the hand on the handle look in the author's own play, from the third-person
+  camera.
+- `CLAUDE.md`'s `project.godot` rule does not yet name the I key. The wording is drafted for the
+  author's OK.
+
+## Run 24: the timber site office from Blender, and the yard floodlight (approved: #94; C36)
+
+**Files:**
+
+- **New:**
+  - `tools/art/build_site_office.py` (Blender script);
+  - `game/features/environments/industrial_loop/art/office/site_office.glb` and its `.import`;
+  - five Poly Haven texture folders in `industrial_loop/polyhaven/textures/` (`weathered_plank_siding`
+    2k; `corrugated_iron`, `rough_pine_door`, `stair_planks`, `brushed_concrete_03` 1k), with
+    `.import` files set by `configure_imports.py`;
+  - `tools/assets/site_office_assets.json`;
+  - `tools/captures/capture_site_office.gd`.
+- **Changed:**
+  - `industrial_loop.gd`: `SiteOffice`, `OFFICE_TEXTURES`, `OFFICE_PAINT`, `LAMP_COLOR`,
+    `FLOODLIGHT_COLOR`; `_site_office()`, `_office_material()`, `_office_lights()`; `_surface()`
+    and `_texture()` take a resolution. `OFFICE_SIZE`, `OFFICE_RAISE` and `CLIPBOARD` are gone;
+  - `tools/assets/fetch_polyhaven.py`: keeps the manifest's earlier rows;
+  - `industrial_loop/polyhaven/POLYHAVEN.md`: five rows;
+  - tests: `test_on_foot.gd` (5 checks), `tools/tests/check_first_drive_art.py` (office section).
+- **Docs:** `CHANGE-BRIEF.md` (Run 24, the site office), `docs/DESIGN_DECISIONS.md` (C36), the
+  prompt log (#94's outcome), `SOURCES.md` (five textures and the model).
+
+**What the next run can rely on:**
+
+- **Rebuilding the office:** `Blender -b --factory-startup --python-exit-code 1 --python
+  tools/art/build_site_office.py` rebuilds the model to the same bytes.
+- **Its parts:** the model's materials are named, and Godot replaces each one by name. Its
+  markers are `RunSheet`, `NoticeLamp`, `Floodlight` and `WindowLight`. A light marker's local +Y
+  in Blender is the light's -Z in Godot.
+- **Placement:** the office stands at `SITE_OFFICE`, facing +Z (the road). In the game, the
+  lights are its children `NoticeLight`, `FloodLight` and `WindowGlow`, and its collision is the
+  bodies `Building` and `Landing`.
+- **The run sheet:** `run_sheet_at` and `run_sheet_spot` keep their meaning: the clipboard, and
+  where Ethan stands, on the ground.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Blender -b --factory-startup --python-exit-code 1 --python tools/art/build_site_office.py` ×3 | 3,448 triangles; the same SHA-256 each time (`4a056a5232ed...`) |
+| `Godot --headless --editor --path game --import` | exit 0, no errors |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run24/office/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 36/36, 21/21, 38/38, 12/12, 9/9; art 0 failures; only "resources still in use at exit" ERROR lines |
+| `test_on_foot.gd` with the office's collision removed | 35/36, exit 1 (`mutation_no_office_collision/`) |
+| `test_on_foot.gd` with the floodlight turned away | 35/36, exit 1 (`mutation_floodlight_away/`) |
+| `capture_site_office.gd` and `capture_on_foot.gd` (windowed) | both exit 0; `evidence/phase_1/start/run24_office/`; the van's brightness goes from 13.0 to 52.8 with the floodlight; no pure-white pixel |
+
+**Unverified:**
+
+- How the office and the floodlight look in the author's own play, on power.
+- The driver's door is in the van's own shadow until the ignition. Whether that is too dark is
+  the author's call.
+
+## Run 24, step 2: the end-of-shift start and controls taught when needed (approved: #93; C35)
+
+**Files:**
+
+- **New:** `game/features/ui/driving_hud/drive_lessons.gd`.
+- **Changed:**
+  - `industrial_loop.gd`: `_site_office()`, `SITE_OFFICE`, `run_sheet_at`, `run_sheet_spot`;
+  - the mission's `first_drive.gd`: `RUN_SHEET`, `RUN_SHEET_SIGNATURE`;
+  - `driving_hud.gd`: `show_document()`, `sign_document()`, `hide_document()`,
+    `document_visible()`, `document_text()`;
+  - `game/app/first_drive.gd`: the start at the office, `_sign_run_sheet()`, `_needs_sheet()`,
+    `_hint()`, `_teach_driving()`; `START_SPOT` and `START_FACING` are gone;
+  - tests: `test_on_foot.gd`, `test_maya_call.gd`; capture: `capture_on_foot.gd`.
+- **Docs:** `CHANGE-BRIEF.md` (Run 24, step 2), `docs/DESIGN_DECISIONS.md` (C35), the prompt log
+  (#93 with the answers, the approved run sheet and the agreed list).
+
+**What the next run can rely on:**
+
+- **The start:** `_begin_on_foot()` puts Ethan at `world.run_sheet_spot`. `_needs_sheet()` is
+  true only before the first boarding of a drive. Tests that start with `_resume()` skip it.
+- **Hints:** `_hint()` decides each 0.2 s; lessons live in `DriveLessons` (`offer`, `learn`,
+  `again`, `tick`). Hints are empty during boarding, the run sheet, the encounter, the hold,
+  "DRIVE." and the ending.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run24/step2/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 31/31, 21/21, 38/38, 12/12, 9/9; art 0 failures; only "resources still in use at exit" ERROR lines |
+| `test_on_foot.gd` with no run-sheet check at the van | exit 1 (`mutation_no_sheet_gate/`) |
+| `test_on_foot.gd` with "14 pallets" changed to "12" | 29/31, exit 1 (`mutation_changed_sheet/`) |
+| `capture_on_foot.gd` (windowed) | exit 0; `evidence/phase_1/start/run24_step2/start_sheet.png` |
+
+**Unverified:**
+
+- How dark the walk to the van feels in play (mean brightness 9 of 255 by the van).
+- Whether the lessons appear at the right moments in a real drive (high beams, wipers, viewpoint).
+
+## Run 24, step 1: Maya's call and the quiet ending (approved: #92 and its answers; C34)
+
+**Files:**
+
+- **New:**
+  - `game/features/missions/night_freight/phone_call.gd`;
+  - `game/tests/test_maya_call.gd`;
+  - `tools/captures/capture_call.gd`;
+  - `phone_ring`, `call_connect`, `call_end`, `breathing` and `engine_tick` WAVs with their
+    `.import` files.
+- **Changed:**
+  - the mission's `first_drive.gd`: `MAYA_CALL` (the approved lines), `CALL_AT` 91,
+    `CALL_SEARCH`, `phone_call`; the completion objective is empty; `_nearest_index()` takes a
+    span;
+  - `game/app/first_drive.gd`: the call wiring, the quiet ending (`ENDING_HOLD` 9 s,
+    `ENDING_FADE` 3 s, `ENDING_BLACK` 2 s, a token against a new drive mid-ending), "Drive
+    again"; `_exit_at_depot()` is gone;
+  - `driving_hud.gd`: `show_subtitle()`, `clear_subtitle()`, `subtitle()`, `set_cinematic()`,
+    `set_ended()`;
+  - `navigation_display.gd`: `caller`, `call_seconds`, the call card;
+  - `driving_audio.gd`: `ring()`, `answer()`, `hang_up()`, `breathe()`, `cool_down()`,
+    `fade_out()`, `restore()`, the engine run-down;
+  - `source_assets/audio/first_drive/synthesize.py`: the five sounds; the 13 older WAVs are
+    byte-identical;
+  - `test_collision.gd` (the depot part), `capture_collision.gd` (the ending stills).
+- **Docs:** `CHANGE-BRIEF.md` (Run 24, step 1), `docs/DESIGN_DECISIONS.md` (C34), the prompt log
+  (#91–#92 with the answers and Draft A verbatim), `docs/AUDIO.md` (18 sounds).
+
+**What the next run can rely on:**
+
+- **The call:** `route.phone_call` emits `ringing(caller)`, `connected`, `line_started(speaker,
+  words)` and `ended`. `active` and `talking` say where it is; `elapsed` counts from the
+  connection. The mission starts it once per drive in stage 0, at road sample 91.
+- **The ending:** `drive_completed` now runs the quiet ending. While it plays, `_ending` is true;
+  afterwards `_ended` is true, the tree is paused, and `_begin()` starts a new drive. Pause,
+  recovery and E do nothing during or after it.
+- **Pausing:** pause on a physics-frame boundary when code pauses from a timer, or a later
+  resume during a physics step prints `Condition "p_elem->_root" is true`.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `python3 -I source_assets/audio/first_drive/synthesize.py` | 18 sounds; the 13 older WAVs byte-identical (SHA-256 compared) |
+| the headless import | exit 0; 18 sound sidecars |
+| every suite under "Test suite to rerun" plus `test_maya_call.gd`, with `LOG_DIR=logs/phase_1/run24/step1/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 25/25, 21/21, 38/38, 12/12, 8/8; art 0 failures; only "resources still in use at exit" ERROR lines |
+| `test_maya_call.gd` with "Lock it anyway." changed | 7/8, exit 1 (`mutation_changed_line/`) |
+| `test_collision.gd` with "DRIVE COMPLETE" back | 37/38, exit 1 (`mutation_old_banner/`) |
+| `capture_call.gd`, `capture_collision.gd` (windowed, default folders) | both exit 0; the call at 3.2 s shows "MAYA 00:03"; the ending stills at the depot |
+
+**Unverified:**
+
+- How the call and the ending sound: the ring, beeps and breathing are synthesized placeholders,
+  and the levels (ring −14 dB, breathing −11 dB) are untested by ear.
+- Whether 9 s in the cab before the fade feels right in play.
+
+## Run 23, step 4: blinded, carried on, and the fall onto the windshield (approved: #89, #90; C33)
+
+**Files:**
+
+- **Changed:**
+  - `game/features/vehicles/oncoming_van/oncoming_van.gd`: rebuilt from `iveco_exterior.glb`,
+    dark paint, own plates, high beams always on, `meet()` timing, Iveco-size box;
+  - `game/features/missions/night_freight/first_drive.gd`: the encounter span and trigger
+    (`ENCOUNTER_SPAN`, `ENCOUNTER_SPEED`), the takeover (`_carry_on()`, `CARRY_*`), the stuck
+    abort, the half-second coast (`REACTION`), the step-out with the freeze counted; the 3 m/s²
+    skid braking is gone;
+  - `game/features/vehicles/freight_van/freight_van.gd`: `scripted`, `scripted_throttle`,
+    `scripted_brake`, `scripted_steer`, `steering_for()`, `_steering_limit()`;
+  - `game/features/vehicles/freight_van/van_presentation.gd`: the front shell (`FRONT_LAYER` 16,
+    `FRONT_PROFILE`, `GLASS_PROFILE`), `watch_head()` (`HEAD_REACH`, `COWL`, `HEAD_WATCH`);
+  - `game/features/characters/pedestrian/pedestrian.gd`: `SWEEP`, `SCOOP`, `VAN_FRONT_LAYER`,
+    damping (`LINEAR_DAMP` 0.3, `ANGULAR_DAMP` 4, `LIMB_DAMP` 25), hinge limits from a straight
+    limb (`_pose_bend()`), `head_body()`;
+  - `game/app/first_drive.gd`: `_struck()` calls `watch_head()` instead of `crack_at()`;
+  - `tools/make_number_plate.py`: `--registration`, `--width`, `--out` (default output
+    unchanged, byte-identical);
+  - tests: `test_collision.gd`, `test_crossing.gd`, `test_oncoming_van.gd`;
+  - captures: `capture_collision.gd`, `capture_oncoming.gd`.
+- **New:** `game/features/vehicles/oncoming_van/art/number_plate.png` and its `.import`
+  (VRAM-compressed, mipmaps, both texture formats).
+- **Docs:** `CHANGE-BRIEF.md` (Run 23, step 4), `docs/DESIGN_DECISIONS.md` (C33), the prompt log
+  (#89 outcome), `SOURCES.md` (Iveco use, the new plate) and the Iveco `ATTRIBUTION.md` (second
+  use).
+- **Evidence:** `evidence/phase_1/collision/run23_step4/` and `evidence/phase_1/oncoming/run23_step4/`.
+- **Unused now, kept in the repository:** `body.glb`, `door.glb` and `tire.glb` (the oncoming
+  van no longer uses them), `cabin.glb`, `steering.glb` and the Honda cockpit files.
+
+**What the next run can rely on:**
+
+- **Encounter:** it starts only when the van drives forward through road samples 927–960, on the
+  road, at 3 m/s or more, in stage 4. Tests and captures must give the van speed
+  (`_van.set("speed", ...)`) or drive it there; placing it parked starts nothing.
+- **Takeover:** while `vehicle.scripted` is true, the van ignores the player's brake, throttle
+  and wheel. It ends at the impact (plus a 0.5 s coast), past the crossing (+5 samples), when
+  the van leaves the driver's seat, on a stall (below 2 m/s for 1.5 s), on recovery or on a new
+  drive. `_stop_carrying()` hands control back.
+- **Speeds:** `CARRY_SPEED` 11.8–12.5 m/s (42–45 km/h). The hit is tuned for this range; the
+  head reached the glass in all 12 probe hits at 42–45 km/h.
+- **The van's front for the ragdoll:** `_front` in `van_presentation.gd`, layer 16, only in the
+  ragdoll's mask. Nothing else should use layer 16.
+- **The crack:** placed by `watch_head()` where his head meets the glass base, not at the moment
+  of contact.
+- **The oncoming van:** `high_beams` is always true; `meet(at_distance, in_seconds)` steers its
+  speed; `meet(-INF, 0)` releases it. `BUMPERS` 5.04, `LENGTH` 5.53, `KEEP_RIGHT` 0.85,
+  `CLEARANCE` 2.15.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `python3 -I tools/make_number_plate.py` | the player's plate unchanged (SHA-256 `5bf7ebdb…27c2` before and after) |
+| `python3 -I tools/make_number_plate.py --registration "BR 731" --width 768 --out game/features/vehicles/oncoming_van/art/number_plate.png` | 768×160 |
+| the headless import, `configure_imports.py` on `oncoming_van/art`, the import again | exit 0, no errors |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run23/step4/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 25/25, 21/21, 35/35, 12/12; art 0 failures; the only ERROR lines are "resources still in use at exit" |
+| `test_collision.gd` with the takeover removed | 0/1, exit 1 (`mutation_no_takeover/`) |
+| `test_collision.gd` with the brake working during the takeover | 2/5, exit 1 (`mutation_brake_works/`) |
+| `test_collision.gd` with Run 20's bent-pose hinge limits | 33/35, exit 1, knees 177° (`mutation_bent_limits/`) |
+| `test_collision.gd` with the old uniform push | head never at the glass, exit 1 (`mutation_old_push/`) |
+| `test_oncoming_van.gd` with the oncoming van on low beams | 19/21, exit 1 (`mutation_low_beams/`) |
+| `capture_collision.gd`, `capture_oncoming.gd` (windowed, default folders) | both exit 0; glare per lamp 0.27 at 84 m, 2.4 at 20 m; windshield 131 at 70 m, 33 as the vans pass; hit at 43 km/h |
+
+**Unverified:**
+
+- How the takeover feels in the author's own drive (about 12 s with no control).
+- The frame rate on power.
+- Rare ragdoll outliers: in 24 probe hits one elbow bent 51° the wrong way while tumbling.
+- Driving on: the van does not collide with his body, so it can pass through it.
+
+## Run 23, step 3: the Iveco in the game (approved: "proceed with step 3"; C32 from #88)
+
+**Files:**
+
+- **Changed:**
+  - `game/features/vehicles/freight_van/van_presentation.gd`: rebuilt around
+    `art/iveco/iveco_exterior.glb` and `iveco_cab.glb`;
+  - `freight_van.tscn`: the Iveco-size collision box;
+  - `windshield_wipe_map.gd`: the Iveco glass (1.77 × 1.0 m), pivots, arms and blades;
+  - `game/app/first_drive.gd`: boarding and exit spots;
+  - the mission's `first_drive.gd` (`BUMPER_AHEAD`), `pedestrian.gd` (`BUMPER_REACH`,
+    `VAN_HALF_WIDTH`) and `oncoming_van.gd` (`BUMPERS`);
+  - `tools/art/convert_iveco.py`: lamp lenses split, and the moon roof cut; the two `.glb` files
+    and their textures re-exported and re-imported;
+  - `tools/tests/check_first_drive_art.py`: the Iveco parts list;
+  - tests: `test_cockpit.gd` (rewritten), `first_drive_regression.gd`,
+    `first_drive_integration.gd`, `test_on_foot.gd`;
+  - `tools/captures/capture_cockpit.gd`: Iveco view angles and a look up.
+- **Docs:** `CHANGE-BRIEF.md` (Run 23, step 3), `docs/DESIGN_DECISIONS.md` (C32), the prompt log
+  (#86–#88), `SOURCES.md` and the van's `ATTRIBUTION.md`.
+- **Evidence:** `evidence/phase_1/cockpit/run23/`, `characters/run23/`, `beams/run23/`,
+  `collision/run23_step3/` and `moon_roof/run23/`.
+- **Unused now, kept in the repository:** `body.glb`, `door.glb`, `tire.glb`, `cabin.glb`,
+  `steering.glb` and the Honda cockpit files. The oncoming van still uses `body.glb`,
+  `door.glb` and `tire.glb`.
+
+**What the next run can rely on** (the van's frame: front -Z, driver's side -X):
+
+- **Placement:** the Iveco is placed at `IVECO_PLACE` (0, 0.16, 0.5); the road is at y 0.15–0.16.
+  Its front bumper is 2.52 m ahead of the van's origin and its rear 3.01 m behind.
+- **Eye:** `EYE` (-0.45, 1.88, -0.72). `LEAN` is (0, 0.05, -0.42).
+- **Glass frame** (`WINDSHIELD_CENTRE`, `WINDSHIELD_RAKE`): (0, 1.8493, -1.3888), 0.7967 rad.
+  `_windshield` is a mesh in that frame with UVs over `WipeMap.GLASS_SIZE`. `CRACK_AREA` is
+  Rect2(-0.7, -0.42, 1.2, 0.82).
+- **Nodes:**
+  - `_door` is the Iveco `DriverDoor`, whose origin is its hinge;
+  - `_door_glass` (cabin layer) holds the driver's window and mirror glass, and turns with it;
+  - `_wheel` is the Iveco `SteeringWheel`, and `rotation.z` steers it;
+  - `_tires` are the four Iveco wheel nodes: `rotation.y` steers and `rotation.x` rolls;
+  - `_front_lenses`, `_rear_lamps` and `_indicators` are the Iveco lens meshes. Their
+    `material_override` is set when lit and is null when off.
+- **Screens:** `_powered_screens` are the cluster and the map, `_dark_screens` the matching dark
+  faces, and `mirrors` the two door mirror viewports. There is no inside mirror.
+- **Moon roof:** `MOON_ROOF` is Rect2(-0.52, -0.8, 1.04, 0.44) at `MOON_ROOF_HEIGHT` 2.226. The
+  opening is cut in the `.glb` files themselves.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Blender -b --factory-startup --python-exit-code 1 --python tools/art/convert_iveco.py` | exit 0; moon roof cut 158 roof and 60 headliner faces; 88,428 triangles |
+| the headless import, then `configure_imports.py` on `art/iveco`, then the import again | exit 0, no errors; 35 textures VRAM-compressed |
+| `python3 tools/tests/check_first_drive_art.py` | 0 failures |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run23/step3/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures |
+| `test_cockpit.gd` with the steering reversed | 23/25, exit 1 (`mutation_steering_sign/`) |
+| `test_cockpit.gd` with the gauges sunk 3 cm | 24/25, exit 1 (`mutation_cluster_sunk/`) |
+| `capture_cockpit.gd`, `capture_on_foot.gd`, `capture_beams.gd`, `capture_collision.gd`, `capture_moon_roof.gd` (windowed, `-- <run folder>`) | all exit 0, no "unpair" errors; beams low 88.7/44.7, high 134.9/103.9, off 18.6/24.8, white-out 0.00% |
+
+**Unverified:**
+
+- The frame rate on power (the captures ran on battery at 72.8–80.9 FPS).
+- How the van feels in the author's own drive: the narrower body, the lower eye, the mirrors.
+- Ethan's hand on the Iveco's handle, checked only in dark stills.
+- The oncoming van is still the old code-built van.
+
+## Run 23, step 2: the Iveco made ours (approved: "Yes, start step 2 (Recommended)")
+
+**Files:**
+
+- **New:**
+  - `tools/art/convert_iveco.py`, the Blender converter;
+  - `tools/make_number_plate.py` and `source_assets/artwork/number_plate.png`;
+  - `game/features/vehicles/freight_van/art/iveco/`: `iveco_exterior.glb`, `iveco_cab.glb`,
+    the 35 WebP textures Godot extracted, every `.import` sidecar, and `ATTRIBUTION.md`;
+  - `game/tests/lane_keeper.gd.uid` and `game/tests/test_crossing.gd.uid`, which the import
+    created for Run 22's scripts.
+- **Changed:**
+  - `tools/tests/check_first_drive_art.py`: the Iveco section (15 checks);
+  - `tools/assets/configure_imports.py`: also treats `*_normal.webp` as normal maps;
+  - `SOURCES.md` (two rows), `source_assets/sketchfab/iveco_daily_2014/README.md`,
+    `CHANGE-BRIEF.md` (Run 23, step 2) and the prompt log #85.
+- **Evidence:** `evidence/phase_1/van/run23_step2/`: `before_after_sheet.png`,
+  `van_sheet.png` and the ten renders in them.
+- **Blender:** the author's open Blender gained an `IvecoGame` scene with the exported files,
+  a `Shot` camera, `Sun`, `CabLight` and `Ground`. The `IvecoInspection` scene is as it was:
+  its root was turned for the "before" renders and turned back. Nothing was saved.
+- **Nothing in the game uses the van yet.**
+
+**What the next run can rely on** (Godot space: front -Z, driver's side -X, metres):
+
+- **`iveco_exterior.glb`:**
+  - `Body` and `Windshield` sit at the origin. The body spans x ±1.002, y 0.235–2.081 and
+    z -3.021–2.512; the windshield glass spans y 1.345–1.987 and z -2.254 to -1.48;
+  - `DriverDoor` has its hinge at (-0.962, 1.102, -1.909) and `PassengerDoor` at (0.978, 1.102,
+    -1.910), each with its window as a child. The driver's door opens with a negative turn
+    about its local Y;
+  - the wheels are at (∓0.872, 0.359, -2.007) at the front and (∓0.872, 0.359, 1.497) at the
+    rear. They have a radius of 0.359 and turn about local X.
+- **`iveco_cab.glb`:** `Cab` sits at the origin. `SteeringWheel`'s hub is at (-0.476, 1.313,
+  -1.642), and its local Z (0, 0.703, 0.711) points up the column at the driver. A right turn
+  is a negative turn about local Z.
+- **Rebuilding the van:**
+  1. `/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup
+     --python-exit-code 1 --python tools/art/convert_iveco.py`;
+  2. the headless import;
+  3. `python3 -I tools/assets/configure_imports.py game/features/vehicles/freight_van/art/iveco`;
+  4. the import again.
+
+  The converter gives the same bytes on every run.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `python3 -I tools/make_number_plate.py` | 1536×320 plate |
+| the converter, above | exit 0; removed 318 grille-letter, 319 rear-door letter and 1,530 wiper faces; `iveco_exterior.glb` 5.5 MB, 56,107 triangles; `iveco_cab.glb` 1.9 MB, 31,630 triangles |
+| `Godot --headless --editor --path game --import`, `configure_imports.py` on `art/iveco`, the import again | exit 0, no errors; 35 textures VRAM-compressed with mipmaps, 11 as normal maps |
+| `Godot --headless --path game -s <scratch>/probe_iveco.gd` | both files load; positions as above (`logs/phase_1/run23/step2/probe_iveco_in_godot.log`) |
+| `python3 tools/tests/check_first_drive_art.py` | 0 failures, Iveco 87,737 triangles |
+| the art check with the van exported facing +Z | 3 failures, exit 1 (`mutation_faces_plus_z/`) |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run23/step2/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures |
+
+**Unverified:**
+
+- How the van looks in the game's night, rain and headlights, and its frame rate (step 3).
+- **Two-sided materials:** every material is two-sided, as in the source. What that costs is
+  unmeasured.
+- **The plate:** "BLACKRIDGE" along its top is Claude Code's reading of "a Blackridge plate".
+- **Max:** whether he replies.
+
+## Run 23, step 1: the Iveco Daily inspected (approved: "I'll open Blender's add-on")
+
+- **Nothing in the game changed.**
+- **Raw model:** `source_assets/sketchfab/iveco_daily_2014/` holds Blender's glTF export of the
+  imported model (37 files, 260 MB), kept out of Git; its README is tracked.
+- **Measurements** are in that README and in `CHANGE-BRIEF.md`. Renders are in
+  `evidence/phase_1/van/run23_step1/`.
+- **Blender:** the author's open Blender, an unsaved default file, now has an `IvecoInspection`
+  scene with the Iveco, today's van (`TodaysVan`) and a `DriverEye` camera. The original
+  "Scene" is untouched, and nothing was saved.
+- **Sketchfab:** the add-on's switch and key are stored per scene. The key was copied inside
+  Blender and never printed. Sketchfab's own download API refused that key (401), so the raw
+  copy is a Blender export.
+- **Unverified:** whether Max replies; how the Iveco's textures look once shrunk for the game.
+
+## Run 22, step 1: the bus stop and zebra crossing (approved: "Yes, start step 1 (Recommended)")
+
+**Files:**
+
+- **New:**
+  - `game/features/environments/industrial_loop/bus_stop.gd` (with its `.uid`);
+  - `game/tests/lane_keeper.gd` and `game/tests/test_crossing.gd` (with their `.uid` files).
+- **Changed:**
+  - `industrial_loop.gd`: `CROSSING_AT`, `crossing`, the stop built and painted, and its
+    clearings;
+  - `ghat_dressing.gd`: `_crossing_signs()`, the five-row atlas, the "flag" shape;
+  - `wet_asphalt.gdshader`: `crossing_*` uniforms and `crossing_paint()`;
+  - `tools/make_road_signs.py` and `art/road_signs.png` (fifth row);
+  - `tools/art/convert_mixamo.py` and `pedestrian.glb` (Idle);
+  - `pedestrian.gd`: `waiting`, `wait_at()`, the near-miss `_resume()`, `MAX_WALK`;
+  - the mission's `first_drive.gd`: `crossing`, `ENCOUNTER_INDEX` 934, `MEETING_BEFORE` 8,
+    `_watch_crossing()`, `_spawn_pedestrian()`;
+  - `game/app/first_drive.gd`: `route.crossing`;
+  - `test_collision.gd`, `test_oncoming_van.gd`, `capture_oncoming.gd`, `capture_collision.gd`.
+- **Docs:** `CHANGE-BRIEF.md` (Run 22, step 1), `docs/DESIGN_DECISIONS.md` (C30),
+  `game/features/characters/ATTRIBUTION.md` and the prompt log #80.
+
+**What the next run can rely on:**
+
+- **`world.crossing` (the bus stop node):** `index` (1002), `centre`, `forward`, `right`,
+  `half_width`, `kerb` (where he waits) and `clearings`.
+- **The pedestrian** exists from the encounter's start, `waiting` at the kerb until
+  `_watch_crossing()` sends him.
+- **Tests** that drive toward the crossing must steer: `LaneKeeper.new(road, start_index)`,
+  then `steer(van, lateral)` every physics frame and `release()` at the end.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Blender -b --factory-startup --python tools/art/convert_mixamo.py` | exit 0; `pedestrian.glb` has HitByVan, Walk and Idle; `ethan.glb` byte-identical |
+| `python3 -I tools/make_road_signs.py` | 20 cells; the 15 older faces pixel-identical |
+| `Godot --headless --editor --path game --import` | exit 0; no errors |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run22/step1` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 30/30, 11/11; art 0 failures |
+| `test_crossing.gd` with no crossing paint | 10/11, exit 1 (`mutation_no_paint/`) |
+| `test_collision.gd` with the step-out 2 s early | fails, exit 1 (`mutation_early_step/`) |
+| `capture_collision.gd -- evidence/phase_1/collision/run22` (windowed) | 19 stills, including both overviews, the approach at 44 m and 20 m, and the step-out at 57 km/h |
+
+**Unverified:**
+
+- How the crossing reads in play, and the pedestrian's waiting pose up close.
+- **Below about 15 km/h,** an instantly braking driver can stop short; a human reaction time
+  still hits at 10 km/h. Whether that edge case is acceptable is the author's call.
+- Frame rate with the shelter and path (a few hundred triangles; no new lights).
+
+## Run 21, step 2: the release export (approved: "Yes, start step 2 (Recommended)"; then "Switch to universal (Recommended)")
+
+**Files:**
+
+- **Changed:**
+  - `game/export_presets.cfg`: `binary_format/architecture="universal"`;
+  - `README.md`: the macOS export note and command;
+  - `CLAUDE.md`: the `project.godot` rule includes the texture setting.
+- **Outside the repository:** the macOS template in
+  `~/Library/Application Support/Godot/export_templates/4.7.2.stable/` (`macos.zip` and
+  `version.txt`).
+- **Generated, ignored by Git:** `builds/macos/Blackridge.zip` and the unzipped
+  `Blackridge- No Way Back.app`.
+- **Evidence:** `evidence/phase_1/export/run21/release_export.txt` and both release logs.
+- **Docs:** `CHANGE-BRIEF.md` (Run 21, step 2) and the prompt log #78.
+
+**What the next run can rely on:**
+
+- **Export command:** `Godot --headless --path game --export-release "macOS"
+  ../builds/macos/Blackridge.zip`, exit 0 in about 20 s.
+- **Official templates** ship universal macOS binaries only; an arm64-only preset fails.
+- **The app's data folder** is `~/Library/Application Support/Godot/app_userdata/Blackridge-
+  No Way Back/`, the same one the editor and tests use. Its log is written when the app
+  quits.
+- **An open Godot editor can undo outside edits.** On "Ignore external changes" it rewrote
+  `project.godot` and re-imported the textures (#81). Check
+  `grep -c import_etc2_astc=true game/project.godot` and the 160 `path.etc2` sidecars before
+  an export.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `shasum -a 512` of the templates file against the official `SHA512-SUMS.txt` | match |
+| `--export-release "macOS"` with the arm64 preset | exit 1: "Requested template binary "godot_macos_release.arm64" not found" |
+| the same after switching to universal | exit 0, 20 s; 350,894,372 bytes; SHA-256 `a547b5ea…90ae7` |
+| `open "builds/macos/Blackridge- No Way Back.app"` | the app starts and keeps running (process found) |
+
+**Unverified:**
+
+- How the exported game plays, and its frame rate (the author's check).
+- The app's log, until the app quits.
+
+## Run 21, step 1: the macOS export preset and pack listing (approved: "Yes, start step 1 (Recommended)")
+
+**Files:**
+
+- **New:** `game/export_presets.cfg` (one preset, "macOS").
+- **Changed:**
+  - `game/project.godot`: `rendering/textures/vram_compression/import_etc2_astc=true`, with
+    the author's OK (#77);
+  - 160 texture `.import` sidecars, rewritten by the import to list the ETC2/ASTC copy.
+- **Evidence:** `evidence/phase_1/export/run21/` (listings, the difference, export logs).
+- **Docs:** `CHANGE-BRIEF.md` (Run 21, step 1) and the prompt log #76–#77.
+
+**What the next run can rely on:**
+
+- **Preset:** "macOS": arm64, "Testing" distribution, built-in ad-hoc signing, no notarization,
+  version 0.1.0, `../builds/macos/Blackridge.zip`, excluding `tests/*`, `experiments/*` and
+  `app/visual_benchmark.*`.
+- **Textures:** every compressed texture exists in both formats in `game/.godot/imported/`.
+- **Templates:** the 4.7.2 templates file is in the agent's scratch folder,
+  `godot-templates/Godot_v4.7.2-stable_export_templates.tpz` (1,281,349,702 bytes), with
+  `SHA512-SUMS.txt`. They are not installed yet.
+- **`CLAUDE.md`** still says `project.godot` changes only its renderer and MetalFX lines. The
+  wording for the new texture line is for the author to approve.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Godot --headless --editor --path game --import` | exit 0; 160 textures re-imported with an `.etc2.ctex` copy |
+| `Godot --headless --path game --export-pack "macOS" <scratch>/pack_filtered.zip` | exit 0, 20 s; 703 entries, 482.7 MB; no tests, experiments or benchmark |
+| the same with a temporary "macOS (no filters)" preset | exit 0; 737 entries; the 34 extra are tests, the hint experiment and the benchmark; the temporary preset was removed (`cmp` identical) |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run21/step1` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 29/29; art 0 failures |
+
+**Unverified:**
+
+- Whether the release export succeeds and the app launches (step 2).
+- How the app's file name treats the colon in "Blackridge: No Way Back".
+- Whether the arm64 app uses the ASTC or the desktop copies of the textures.
+
+## Run 20, step 3: the hood in the cab view (approved: "Yes, start step 3 (Recommended)")
+
+**Files:**
+
+- **Changed:**
+  - `van_presentation.gd`: `_hood_from_cab()`, `_hood_faces()`, `HOOD`, `HOOD_LIFT`,
+    `HOOD_LAYER`; the driving camera's cull mask is `5 | HOOD_LAYER` (13);
+  - `test_collision.gd`: 29 checks; the sight lines use the driving camera's cull mask.
+- **Docs:** `CHANGE-BRIEF.md` (Run 20, step 3) and the prompt log #75.
+
+**What the next run can rely on:**
+
+- **`HoodFromCab`:** a child of the presentation on render layer value 8, holding the body's
+  hood triangles 3 mm outside the real hood. No other camera or light uses layer value 8.
+- **The driving camera** draws layers 1 and 3 plus the hood copy, never the whole body.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run20/step3` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 29/29; art 0 failures; no script, shader or load errors |
+| `test_collision.gd` with the hood left out of the cab view | 28/29, exit 1 (`mutation_no_hood/`) |
+| `test_collision.gd` with `LEAN` zero | 27/29, exit 1 (`mutation_no_lean/`) |
+| `capture_collision.gd -- evidence/phase_1/collision/run20_step3` (windowed) | 15 stills at 1280×800; leaning, the hood covers the ground and only a sliver of him shows 2.25 m past the bumper; seated views unchanged |
+
+**Unverified:**
+
+- How the hood looks in motion, and in the on-foot view (it sits 3 mm outside the real hood).
+- Frame rate on power (the copy is 1,002 triangles with no shadow).
+
+## Run 20, step 2: the van takes the hit (approved: "Yes, all of it (Recommended)"; crack: "Put it in anyway")
+
+**Files:**
+
+- **New:** `game/features/audio/first_drive/impact_body.wav` (with its `.import`).
+- **Changed:**
+  - `source_assets/audio/first_drive/synthesize.py`: `body_impact()`; the other 12 WAVs are
+    byte-identical;
+  - `driving_audio.gd`: `body_impact()`;
+  - the mission's `struck(speed)` signal carries the impact speed, and the hit no longer
+    emits the van's `collided`;
+  - `game/app/first_drive.gd`: `_struck(speed)` plays the sound, jolts the cab and cracks the
+    glass by impact speed (`IMPACT_SPEED`), and gives the presentation the body to look at;
+    `_restart()` clears both;
+  - `van_presentation.gd`: the rock spring (`ROCK_*`), `look_target_node`, `_lean_to_look()`
+    (`LEAN`, `LEAN_RATE`, `LOOK_DOWN`, `CAMERA_TILT`), `crack_at()`, `clear_crack()`
+    (`CRACK_AREA`, `CRACK_GROWTH`);
+  - `windshield.gdshader` (the van's folder, not `game/shaders/`): `crack_point`,
+    `crack_amount`, `crack_seed`, `crack_ray()` and `crack_lines()`;
+  - `pedestrian.gd`: `hips_body()`, `head_position()`;
+  - `test_collision.gd`: 28 checks;
+  - `tools/captures/capture_collision.gd`: `leaning_over_the_wheel`, `drive_objective`,
+    `sitting_back` and `driving_on_with_the_crack` stills, the eye's lean in each report line,
+    and a 1280×800 window.
+- **Docs:** `CHANGE-BRIEF.md` (Run 20, step 2), `docs/AUDIO.md` (13 WAVs) and the prompt log
+  #73–#74.
+
+**What the next run can rely on:**
+
+- **Lean:** `look_target_node` is the pedestrian's hips body after a hit, and `null` after
+  "New drive". The lean happens only while `vehicle.held` and nearly stopped.
+- **Rock:** `_rock` is the cab's extra pitch in radians. Only `jolt()` kicks it, and only the
+  hit calls `jolt()`.
+- **Crack:** `crack_amount` on the windshield material is 0 until a hit, then the impact
+  strength (0.3–1.0), and it stays until `clear_crack()`.
+- **Hood:** the driving camera does not draw the van's body (layer 2), so the hood is
+  invisible from the cab. Counting the hood, leaning shows 0 of 11 body parts when he lies
+  1.6 m ahead, and 10 of 11 at 2.8 m. Drawing the whole body from the cab would put the body's
+  solid roof over the moon roof.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Godot --headless --editor --path game --import` | `impact_body.wav.import` created; exit 0 |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run20/step2` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 28/28; art 0 failures; no script, shader or load errors; only "resources still in use at exit" errors |
+| `test_collision.gd` with `LEAN` zero | 27/28, exit 1 (`mutation_no_lean/`) |
+| `test_collision.gd` with the crack at the glass's bottom edge | 27/28, exit 1 (`mutation_hidden_crack/`) |
+| `python3 source_assets/audio/first_drive/synthesize.py` | 13 WAVs; all byte-identical to the run before the code tidy |
+| `capture_collision.gd -- evidence/phase_1/collision/run20_step2` (windowed) | 15 stills at 1280×800; unbraked impact at 8.3 m/s; leaning shows him on the verge; the crack shows low on the right from the seat |
+
+**Unverified:**
+
+- How the shudder, the lean and the crack feel in motion.
+- Frame rate on power, and the crack's cost (one more loop of 14 radial lines, only inside its
+  circle).
+
+## Run 20, step 1: the hit by physics (approved: "Yes, start step 1 (Recommended)")
+
+**Files:**
+
+- **Changed:**
+  - `game/features/characters/pedestrian/pedestrian.gd`: the ragdoll (`BONES`,
+    `_build_ragdoll()`, `_joint()`, `_shape()`), the freeze (`_freeze()`), the hit
+    (`_go_limp()`) and the settling (`_settle()`); `frozen`, `settled`, `bones`,
+    `simulating()`, `hips_position()`;
+  - `tools/art/convert_mixamo.py` (`REAL_SIZE`, `real_size()`) and the re-exported
+    `pedestrian.glb`, now at real size;
+  - `game/tests/test_collision.gd`: the ragdoll checks, 22 in all;
+  - `tools/captures/capture_collision.gd`: a side-on sequence, cameras aimed at his hips,
+    output `evidence/phase_1/collision/run20`.
+- **Docs:** `CHANGE-BRIEF.md` (Run 20), `game/features/characters/ATTRIBUTION.md` and the
+  prompt log #72–#73.
+
+**What the next run can rely on:**
+
+- **Bodies:** `pedestrian.bones` maps "Hips", "Spine", "Head", "LeftArm", "LeftForeArm",
+  "RightArm", "RightForeArm", "LeftUpLeg", "LeftLeg", "RightUpLeg" and "RightLeg" to
+  `PhysicalBone3D`s.
+- **Layers:** the bones are on layer 8 and collide with layer 1 only. The van ignores them.
+- **Joint types:** knees and elbows are hinges with their limits as (−bend, +2°), because
+  Godot measures the hinge angle with the opposite sign to the walk-clip axis. Other joints are
+  6DOF. Cone joints and limits near 90° made the ragdoll blow up.
+- **Build pose and push:** the ragdoll is built in the standing pose (Hit By Car at 1.6 s).
+  Every body gets the same push; giving joined bodies different velocities blew it up.
+- **Settling:** after settling the bodies are static (`settled`).
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `Blender -b --factory-startup --python tools/art/convert_mixamo.py` | only `pedestrian.glb` changed; `ethan.glb` byte-identical |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run20` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 29/29, 31/31, 12/12, 25/25, 21/21, 22/22; art 0 failures; only "resources still in use at exit" errors |
+| `test_collision.gd` with no push | 20/22, exit 1 (`mutation_no_push/`) |
+| `test_collision.gd` with the knee limits reversed | 21/22, exit 1 (`mutation_knees_backward/`) |
+| `capture_collision.gd -- evidence/phase_1/collision/run20` (windowed) | 13 stills: impact at 8.1 m/s; he lands about 5.6 m down the road and rests about 2 m ahead of the stopped bumper, on the verge to the right |
+
+**Unverified:**
+
+- How it feels in play.
+- Whether the author wants the body visible from the driver's seat. It lies in the cab-over
+  blind spot.
+- Frame rate with the ragdoll; it runs only after the hit.
 
 ## Run 19, step 4: the collision, the flight and the depot (approved: "Yes, unavoidable (Recommended)")
 
@@ -845,6 +1789,10 @@ LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_wipers.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_on_foot.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_oncoming_van.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_collision.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_crossing.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_maya_call.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_hit_speeds.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_dash_screen.gd 60
 python3 tools/tests/check_first_drive_art.py
 ```
 

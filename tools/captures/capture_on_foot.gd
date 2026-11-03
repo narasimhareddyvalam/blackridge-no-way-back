@@ -3,6 +3,7 @@ extends SceneTree
 const SIDE_VIEW := Vector3(-5.2, 1.7, -2.6)
 const SIDE_TARGET := Vector3(-1.4, 1.3, -0.6)
 const CLIP_SHOTS := {1.05: "reach_for_handle", 1.6: "door_open"}
+const NEAR_DOOR := Vector3(-3.4, 0.0, 0.6)
 
 
 class InputGate extends Node:
@@ -33,17 +34,26 @@ func _run() -> void:
 	await process_frame
 	_app.get_node("DrivingHud").emit_signal("resume_requested")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	_folder = _output_folder("evidence/phase_1/characters/step2")
+	_folder = _output_folder("evidence/phase_1/start/run24_step2")
 	DirAccess.make_dir_recursive_absolute(_folder)
 	_van = _app.get_node("FreightVan")
 	_driver = _app.get("driver")
 	await _seconds(2.0)
-	await _shot("start_on_foot")
-	_hold("accelerate", true)
-	await _seconds(0.6)
-	await _shot("walking_to_the_van")
-	_hold("accelerate", false)
+	await _shot("start_at_the_site_office")
+	await _press("interact")
 	await _seconds(0.5)
+	await _shot("run_sheet")
+	await _seconds(1.5)
+	await _shot("run_sheet_signed")
+	await _press("interact")
+	var path: Array[Vector3] = [_van.to_global(NEAR_DOOR)]
+	_driver.call("walk_to", path)
+	await _seconds(2.5)
+	await _shot("walking_to_the_van")
+	while _driver.call("walking"):
+		await process_frame
+	await _seconds(0.5)
+	await _shot("at_the_van")
 	await _press("interact")
 	var side := Camera3D.new()
 	side.fov = 50.0

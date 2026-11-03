@@ -1,8 +1,9 @@
 """Draw the American mountain-road signs used on the ghat road into one texture atlas.
 
-Each 256-pixel cell holds one sign face. Warning signs are black on yellow diamonds,
-chevrons and advisory-speed plates are black on yellow rectangles, ROAD CLOSED is black
-on white, and SCENIC VIEW is white on brown. Corners outside each sign are transparent.
+Each 256-pixel cell holds one sign face, four to a row. Warning signs are black on yellow
+diamonds, chevrons and advisory-speed plates are black on yellow rectangles, ROAD CLOSED is
+black on white, SCENIC VIEW is white on brown, and the bus stop flag is white on blue.
+Corners outside each sign are transparent.
 
 Usage, from the repository root:
     python3 -I tools/make_road_signs.py
@@ -19,10 +20,13 @@ YELLOW = (250, 196, 18, 255)
 BLACK = (18, 18, 18, 255)
 WHITE = (238, 238, 232, 255)
 BROWN = (92, 58, 38, 255)
+BLUE = (18, 70, 140, 255)
+COLUMNS = 4
 CELLS = ["hairpin_left", "hairpin_right", "curve_left", "curve_right",
          "chevron_left", "chevron_right", "speed_15", "speed_20",
          "speed_25", "steep_grade", "grade_9", "road_closed",
-         "landslide", "scenic_view", "low_gear", "blank"]
+         "landslide", "scenic_view", "low_gear", "pedestrian",
+         "ahead", "arrow_down_left", "bus_stop", "blank"]
 
 
 def font(size):
@@ -123,8 +127,59 @@ def landslide(draw):
         draw.ellipse([x - r, y - r, x + r, y + r], fill=BLACK)
 
 
+def pedestrian(draw):
+    diamond(draw)
+    c = CELL / 2
+    draw.ellipse([c + 2, c - 72, c + 26, c - 48], fill=BLACK)
+    limbs = [
+        [(c + 8, c - 40), (c, c + 4)],
+        [(c + 6, c - 34), (c + 22, c - 14), (c + 30, c + 2)],
+        [(c + 6, c - 34), (c - 12, c - 18), (c - 22, c - 4)],
+        [(c, c + 4), (c + 16, c + 28), (c + 22, c + 56), (c + 36, c + 56)],
+        [(c, c + 4), (c - 14, c + 28), (c - 34, c + 50), (c - 42, c + 42)],
+    ]
+    for index, limb in enumerate(limbs):
+        draw.line(limb, fill=BLACK, width=18 if index == 0 else 12, joint="curve")
+        for x, y in limb:
+            r = 9 if index == 0 else 6
+            draw.ellipse([x - r, y - r, x + r, y + r], fill=BLACK)
+
+
+def arrow_down_left(draw):
+    rectangle(draw, YELLOW, BLACK)
+    c = CELL / 2
+    draw.line([(c + 54, c - 36), (c - 30, c + 26)], fill=BLACK, width=16)
+    arrow_head(draw, (c - 58, c + 46), (-0.8, 0.6), size=40)
+
+
+def bus(draw, left, top, width, height, fill, ink):
+    draw.rounded_rectangle([left, top, left + width, top + height], radius=8, fill=fill)
+    pane = (width - 20) / 3
+    for step in range(3):
+        x = left + 6 + step * (pane + 4)
+        draw.rectangle([x, top + 7, x + pane, top + height * 0.45], fill=ink)
+    for x in (left + width * 0.22, left + width * 0.78):
+        draw.ellipse([x - 9, top + height - 9, x + 9, top + height + 9], fill=ink)
+        draw.ellipse([x - 4, top + height - 4, x + 4, top + height + 4], fill=fill)
+
+
+def bus_stop(draw):
+    draw.rounded_rectangle([48, 8, 208, 248], radius=10, fill=WHITE)
+    draw.rounded_rectangle([54, 14, 202, 242], radius=8, fill=BLUE)
+    draw.ellipse([106, 22, 150, 66], fill=WHITE)
+    face = font(34)
+    width = draw.textlength("4", font=face)
+    draw.text((128 - width / 2, 24), "4", font=face, fill=BLUE)
+    bus(draw, 76, 78, 104, 48, WHITE, BLUE)
+    for line, y, size in (("BUS", 142, 38), ("STOP", 182, 38), ("BLACKRIDGE TRANSIT", 226, 11)):
+        face = font(size)
+        width = draw.textlength(line, font=face)
+        draw.text((128 - width / 2, y), line, font=face, fill=WHITE)
+
+
 def main():
-    atlas = Image.new("RGBA", (CELL * 4, CELL * 4), (0, 0, 0, 0))
+    rows = (len(CELLS) + COLUMNS - 1) // COLUMNS
+    atlas = Image.new("RGBA", (CELL * COLUMNS, CELL * rows), (0, 0, 0, 0))
     for index, name in enumerate(CELLS):
         cell = Image.new("RGBA", (CELL, CELL), (0, 0, 0, 0))
         draw = ImageDraw.Draw(cell)
@@ -150,7 +205,15 @@ def main():
             text_cell(draw, ["SCENIC", "VIEW"], BROWN, WHITE, WHITE, [52, 52])
         elif name == "low_gear":
             text_cell(draw, ["TRUCKS", "USE LOW", "GEAR"], WHITE, BLACK, BLACK, [44, 44, 44])
-        atlas.paste(cell, ((index % 4) * CELL, (index // 4) * CELL))
+        elif name == "pedestrian":
+            pedestrian(draw)
+        elif name == "ahead":
+            text_cell(draw, ["AHEAD"], YELLOW, BLACK, BLACK, [58])
+        elif name == "arrow_down_left":
+            arrow_down_left(draw)
+        elif name == "bus_stop":
+            bus_stop(draw)
+        atlas.paste(cell, ((index % COLUMNS) * CELL, (index // COLUMNS) * CELL))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     atlas.save(OUT)
     print(f"Wrote {OUT} with {len(CELLS)} cells: {', '.join(CELLS)}")

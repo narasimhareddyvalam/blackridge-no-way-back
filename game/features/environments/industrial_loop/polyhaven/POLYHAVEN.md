@@ -17,3 +17,8 @@ Attribution is not required; authors are recorded for credits.
 | textures | [pine_bark](https://polyhaven.com/a/pine_bark) | Pine Bark | 2k | Dimitrios Savva | 10889524 |
 | textures | [rock_wall_02](https://polyhaven.com/a/rock_wall_02) | Rock Wall 02 | 2k | Rob Tuytel | 2821782 |
 | textures | [rustic_stone_wall](https://polyhaven.com/a/rustic_stone_wall) | Rustic Stone Wall | 1k | Dimitrios Savva | 2779719 |
+| textures | [weathered_plank_siding](https://polyhaven.com/a/weathered_plank_siding) | Weathered Plank Siding | 2k | Dimitrios Savva | 6733776 |
+| textures | [corrugated_iron](https://polyhaven.com/a/corrugated_iron) | Corrugated Iron | 1k | Jenelle van Heerden, Dimitrios Savva | 1988227 |
+| textures | [rough_pine_door](https://polyhaven.com/a/rough_pine_door) | Rough Pine Door | 1k | Dimitrios Savva | 1640882 |
+| textures | [stair_planks](https://polyhaven.com/a/stair_planks) | Stair Planks | 1k | Rob Tuytel | 1907913 |
+| textures | [brushed_concrete_03](https://polyhaven.com/a/brushed_concrete_03) | Brushed Concrete 03 | 1k | Amal Kumar | 2727836 |

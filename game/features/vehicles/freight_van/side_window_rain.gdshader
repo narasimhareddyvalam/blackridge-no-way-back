@@ -18,6 +18,13 @@ uniform float seed = 0.0;
 uniform vec2 glass_size = vec2(1.48, 0.9);
 
 #include "rain_drops.gdshaderinc"
+#include "window_slide.gdshaderinc"
+
+void vertex() {
+	rest_position = VERTEX;
+	sliding = pane_slides(VERTEX);
+	VERTEX.y -= lowered * sliding;
+}
 
 vec4 runner_layer(vec2 flow_space, vec2 across, vec2 flow, float wind) {
 	float width = mix(0.075, 0.035, wind);
@@ -52,6 +59,9 @@ vec4 bin_layer(vec2 metres, vec2 travel, float radius, float salt) {
 }
 
 void fragment() {
+	if (below_sill(rest_position, sliding)) {
+		discard;
+	}
 	vec2 metres = vec2((UV.x - 0.5) * glass_size.x, (0.5 - UV.y) * glass_size.y);
 	float wind = smoothstep(3.0, 15.0, speed);
 	vec2 flow = normalize(flow_dir);

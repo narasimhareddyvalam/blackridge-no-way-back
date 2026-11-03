@@ -3,36 +3,40 @@ extends AnimatableBody3D
 signal passed
 
 const Build = preload("res://shared/components/mesh_builder.gd")
-const BODY_ART = preload("res://features/vehicles/freight_van/art/body.glb")
-const DOOR_ART = preload("res://features/vehicles/freight_van/art/door.glb")
-const TIRE_ART = preload("res://features/vehicles/freight_van/art/tire.glb")
+const EXTERIOR_ART = preload("res://features/vehicles/freight_van/art/iveco/iveco_exterior.glb")
+const PLATE = preload("art/number_plate.png")
 const LOW_BEAM = preload("res://features/vehicles/freight_van/art/low_beam_pattern.png")
 const HIGH_BEAM = preload("res://features/vehicles/freight_van/art/high_beam_pattern.png")
+const IVECO_PLACE := Vector3(0.0, 0.01, 0.5)
+const PAINTED: Array[String] = ["Back_door", "Body_exterior_1", "Lateral_door", "Front_door"]
+const PAINT := Color("4a545e")
+const TYRES: Array[String] = ["WheelFrontLeft", "WheelRearLeft", "WheelFrontRight",
+	"WheelRearRight"]
+const TYRE_RADIUS := 0.359
+const PLATES: Array[Transform3D] = [
+	Transform3D(Basis(Vector3.UP, PI), Vector3(0.0, 0.428, -2.5235)),
+	Transform3D(Basis(), Vector3(-0.3, 0.631, 2.837))]
+const PLATE_SIZE := Vector2(0.415, 0.089)
 const SPACING := 2.0
 const CRUISE := 11.1
+const MEET_RANGE := Vector2(0.6, 1.6)
 const BEND_GRIP := 2.5
 const LOOK_AHEAD := 15.0
 const ACCELERATION := 2.0
 const BRAKING := 6.0
 const EASE := 3.0
-const KEEP_RIGHT := 0.95
-const CLEARANCE := 2.55
-const LENGTH := 5.3
-const BUMPERS := 4.7
+const KEEP_RIGHT := 0.85
+const CLEARANCE := 2.15
+const LENGTH := 5.53
+const BUMPERS := 5.04
 const STOP_GAP := 2.5
-const LAMPS: Array[Vector3] = [Vector3(-0.86, 1.18, -2.44), Vector3(0.86, 1.18, -2.44)]
-const WHEELS: Array[Vector3] = [Vector3(-1.15, 0.48, -1.52), Vector3(1.15, 0.48, -1.52),
-	Vector3(-1.15, 0.48, 1.85), Vector3(1.15, 0.48, 1.85)]
+const LAMPS: Array[Vector3] = [Vector3(-0.64, 1.0, -2.31), Vector3(0.64, 1.0, -2.31)]
 const LOW_RANGE := 120.0
 const HIGH_RANGE := 220.0
 const HIGH_POWER := 3.2
-const SEES := 150.0
-const FLASHES := 2
-const FLASH_SECONDS := 0.35
 const FLARE_SIZE := 0.045
 const FLARE_LEVEL := 6.0
 const FLARE_FALLOFF := 30.0
-const PAINT := Color("2b3238")
 const LENS_GLOW := 30.0
 
 var road: RefCounted
@@ -45,9 +49,9 @@ var end_distance: float = 0.0
 var _flares: Array[MeshInstance3D] = []
 var _flare_material := StandardMaterial3D.new()
 var _wheels: Array[Node3D] = []
-var _flash_time: float = -1.0
-var _flashed: bool = false
 var _passed: bool = false
+var _meet_at: float = -INF
+var _meet_in: float = 0.0
 
 
 func configure(ghat_road: RefCounted, player: Node3D, start_index: int, end_index: int) -> void:
@@ -66,32 +70,38 @@ func beam_power() -> float:
 	return HIGH_POWER if high_beams else 1.0
 
 
+func meet(at_distance: float, in_seconds: float) -> void:
+	_meet_at = at_distance
+	_meet_in = in_seconds
+
+
 func _build() -> void:
 	var collision := CollisionShape3D.new()
 	var box := BoxShape3D.new()
-	box.size = Vector3(2.4, 2.8, 5.3)
+	box.size = Vector3(2.0, 2.091, 5.533)
 	collision.shape = box
-	collision.position = Vector3(0.0, 1.55, 0.3)
+	collision.position = Vector3(0.0, 1.0455, 0.2455)
 	add_child(collision)
-	var paint := StandardMaterial3D.new()
-	paint.albedo_color = PAINT
-	paint.roughness = 0.34
-	for art: PackedScene in [BODY_ART, DOOR_ART]:
-		var part := art.instantiate()
-		add_child(part)
-		for mesh: MeshInstance3D in part.find_children("*", "MeshInstance3D", true, false):
-			for surface in range(mesh.mesh.get_surface_count()):
-				var material := mesh.mesh.surface_get_material(surface)
-				if material != null and material.resource_name.ends_with("Paint"):
-					mesh.set_surface_override_material(surface, paint)
-	for spot in WHEELS:
-		var pivot := Node3D.new()
-		pivot.position = spot
-		add_child(pivot)
-		pivot.add_child(TIRE_ART.instantiate())
-		_wheels.append(pivot)
-	var lens := Build.luminous(Color("e9ebdc"), LENS_GLOW)
-	var tail := Build.luminous(Color("68251e"))
+	var van := EXTERIOR_ART.instantiate() as Node3D
+	van.name = "Iveco"
+	van.position = IVECO_PLACE
+	add_child(van)
+	_paint(van)
+	(van.get_node("Headlights") as MeshInstance3D).material_override = Build.luminous(
+		Color("e9ebdc"), LENS_GLOW)
+	(van.get_node("TailLamps") as MeshInstance3D).material_override = Build.luminous(
+		Color("68251e"))
+	for label in TYRES:
+		_wheels.append(van.get_node(label) as Node3D)
+	var plate := StandardMaterial3D.new()
+	plate.albedo_texture = PLATE
+	plate.roughness = 0.45
+	var plate_mesh := QuadMesh.new()
+	plate_mesh.size = PLATE_SIZE
+	for at in PLATES:
+		var shown := Build.instance(self, at.origin, plate_mesh, plate)
+		shown.basis = at.basis
+		shown.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var halo := GradientTexture2D.new()
 	halo.gradient = Gradient.new()
 	halo.gradient.set_color(0, Color(1.0, 0.97, 0.9, 1.0))
@@ -109,8 +119,6 @@ func _build() -> void:
 	var flare := QuadMesh.new()
 	flare.size = Vector2.ONE * FLARE_SIZE
 	for at in LAMPS:
-		Build.box(self, at + Vector3(0.0, 0.0, 0.03), Vector3(0.24, 0.07, 0.02), lens)
-		Build.box(self, Vector3(at.x * 1.2, 1.35, 2.91), Vector3(0.18, 0.36, 0.06), tail)
 		var lamp := SpotLight3D.new()
 		lamp.position = at
 		lamp.rotation_degrees.x = -2.0
@@ -126,19 +134,35 @@ func _build() -> void:
 		var glow := Build.instance(self, at, flare, _flare_material)
 		glow.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		_flares.append(glow)
-	_set_high(false)
+	_set_high(true)
+
+
+func _paint(van: Node3D) -> void:
+	var painted := {}
+	for mesh: MeshInstance3D in van.find_children("*", "MeshInstance3D", true, false):
+		for surface in range(mesh.mesh.get_surface_count()):
+			var material := mesh.get_active_material(surface) as BaseMaterial3D
+			if material == null or not material.resource_name in PAINTED:
+				continue
+			if not painted.has(material):
+				var dark := material.duplicate() as BaseMaterial3D
+				dark.albedo_color = PAINT
+				painted[material] = dark
+			mesh.set_surface_override_material(surface, painted[material])
 
 
 func _physics_process(delta: float) -> void:
 	var target := minf(CRUISE, _bend_speed())
+	if _meet_in > 0.0 and distance > _meet_at:
+		target = minf(clampf((distance - _meet_at) / _meet_in, CRUISE * MEET_RANGE.x,
+			CRUISE * MEET_RANGE.y), _bend_speed())
 	var room := _room_ahead()
 	target = minf(target, sqrt(2.0 * EASE * maxf(room - STOP_GAP, 0.0)))
 	speed = move_toward(speed, target, (ACCELERATION if target > speed else BRAKING) * delta)
 	distance -= speed * delta
 	global_transform = _pose()
 	for wheel in _wheels:
-		wheel.rotation.x -= speed * delta / 0.46
-	_signal_high_beams(delta)
+		wheel.rotation.x -= speed * delta / TYRE_RADIUS
 	if not _passed and to_local(opponent.global_position).z > LENGTH:
 		_passed = true
 		passed.emit()
@@ -187,7 +211,7 @@ func _bend_speed() -> float:
 	var later := _point_at(distance - LOOK_AHEAD + 2.0) - _point_at(distance - LOOK_AHEAD - 2.0)
 	var turn := absf(Vector2(here.x, here.z).angle_to(Vector2(later.x, later.z)))
 	if turn < 0.01:
-		return CRUISE
+		return CRUISE * MEET_RANGE.y
 	return sqrt(BEND_GRIP * LOOK_AHEAD / turn)
 
 
@@ -196,21 +220,6 @@ func _room_ahead() -> float:
 	if local.z > 0.0 or absf(local.x) > CLEARANCE:
 		return INF
 	return -local.z - BUMPERS
-
-
-func _signal_high_beams(delta: float) -> void:
-	var to_player := opponent.global_position - global_position
-	var sees := to_player.length() < SEES and (-global_basis.z).dot(to_player.normalized()) > 0.85
-	if not _flashed and sees and opponent.get("headlights_on") and opponent.get("high_beams"):
-		_flashed = true
-		_flash_time = 0.0
-	if _flash_time < 0.0:
-		return
-	_flash_time += delta
-	var phase := int(_flash_time / FLASH_SECONDS)
-	_set_high(phase < FLASHES * 2 and phase % 2 == 0)
-	if phase >= FLASHES * 2:
-		_flash_time = -1.0
 
 
 func _set_high(value: bool) -> void:

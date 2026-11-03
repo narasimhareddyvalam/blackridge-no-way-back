@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+FAIL: The oncoming van keeps its high beams on and blinds the driver (the view darkens to 1.00)
+FAIL: No one is on the road while the oncoming van passes: he steps out only once it is past him
+FAIL: You drive all the way: the wheel and the pedals are yours until he steps out (0 km/h)
+FAIL: He steps out onto the crossing as the van comes
+COLLISION RESULT: 1/5 passed; 4 failed
+WARNING: 19 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,14 @@
+saved guide_after_signing.png: door 0 deg, cabin lamp 0.00, window 0.00, guide VAN  13 m, hand to handle 13.82 m
+saved guide_marker_over_the_van.png: door 0 deg, cabin lamp 0.00, window 0.00, guide VAN  13 m, hand to handle 13.57 m
+saved hand_on_the_handle_1.05.png: door 0 deg, cabin lamp 0.15, window 0.00, guide hidden, hand to handle 0.09 m
+saved hand_on_the_handle_1.45.png: door 26 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.03 m
+saved seat_cabin_lamp_off.png: door 0 deg, cabin lamp 0.00, window 0.00, guide hidden, hand to handle 1.05 m
+saved seat_cabin_lamp_on.png: door 0 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 1.11 m
+saved window_50.png: door 0 deg, cabin lamp 0.00, window 0.50, guide hidden, hand to handle 1.05 m
+saved window_100.png: door 0 deg, cabin lamp 0.00, window 1.00, guide hidden, hand to handle 1.08 m
+saved getting_out_2.90.png: door 70 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.94 m
+saved getting_out_3.60.png: door 54 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.27 m
+saved getting_out_3.95.png: door 42 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.29 m
+saved pushing_the_door_side.png: door 41 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.41 m
+saved getting_out_4.25.png: door 14 deg, cabin lamp 1.10, window 0.00, guide hidden, hand to handle 0.28 m
+saved out_with_the_door_shut.png: door 0 deg, cabin lamp 0.08, window 0.00, guide VAN  2 m, hand to handle 1.44 m

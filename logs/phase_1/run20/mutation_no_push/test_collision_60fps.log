@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: No one is on the road while the oncoming van passes
+PASS: He steps out only once the van is doing 25 km/h (6.9 m/s)
+PASS: He steps out from the right verge, just ahead of the van ((1.699997, 0.0, -7.633992))
+PASS: Braking at once cannot stop the van on the wet road
+PASS: He freezes in the headlights just before the impact
+PASS: At the impact he goes limp: a physics ragdoll takes over from the animation
+PASS: The van's collision thud plays
+PASS: The music cuts out
+PASS: The oncoming van is behind and 94 m away: no witness
+PASS: Thrown by the van, he tumbles and comes to rest (5.7 s)
+FAIL: He is thrown clear and lies -3.1 m ahead of the bumper, in the beams
+PASS: He lies on the road (hips 0.17 m up)
+PASS: His body never sinks into the road (lowest 0.10 m)
+FAIL: Knees and elbows only bend the right way (worst -180 and -4 degrees)
+PASS: The van skids to a stop and holds there (4.0 s) despite the throttle
+PASS: E does nothing: Ethan does not get out
+PASS: The objective reads DRIVE.
+PASS: Then the van drives again (7.6 m/s)
+PASS: Parked at the depot, Ethan gets out (3.5 s)
+PASS: He plays Exiting Car through the open door and shuts it
+PASS: He stands clear of the van afterwards ((-2.405617, 0.148958, -0.522552))
+PASS: New drive clears the pedestrian and brings the music back
+COLLISION RESULT: 20/22 passed; 2 failed
