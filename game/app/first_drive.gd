@@ -5,6 +5,7 @@ const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
+const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
 const PROGRESS_PATH := "user://progress.cfg"
 const SETTINGS_PATH := "user://settings.cfg"
 const SHEET_RANGE := 1.6
@@ -38,13 +39,21 @@ const IMPACT_SPEED := 9.0
 const ENDING_HOLD := 9.0
 const ENDING_FADE := 3.0
 const ENDING_BLACK := 2.0
+const TITLE_FADE_OUT := 0.35
+const TITLE_FADE_IN := 0.8
+const DAY := 86400
+const MONTHS: Array[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+	"Oct", "Nov", "Dec"]
 
 @onready var van: CharacterBody3D = $FreightVan
 @onready var route: Node = $DrivingTrial
 @onready var hud: CanvasLayer = $DrivingHud
 @onready var world: Node3D = $IndustrialLoop
 var driver: CharacterBody3D
+var title_camera: Camera3D
 var _audio: Node
+var _on_title: bool = false
+var _changing: bool = false
 var _exit_query := PhysicsShapeQueryParameters3D.new()
 var _hint_time: float = 0.0
 var _begun: bool = false
@@ -105,7 +114,87 @@ func _ready() -> void:
 	hud.pause_requested.connect(_toggle_pause)
 	hud.restart_requested.connect(_new_drive)
 	hud.recovery_requested.connect(_recover)
-	_set_paused(true)
+	var menu: Node = hud.menu
+	menu.continue_chosen.connect(func() -> void: _through_black(_begin))
+	menu.new_game_chosen.connect(_new_game_from_title)
+	menu.resume_chosen.connect(_resume)
+	menu.recover_chosen.connect(_recover)
+	menu.main_menu_chosen.connect(func() -> void: _through_black(_back_to_title))
+	title_camera = Camera3D.new()
+	title_camera.name = "TitleCamera"
+	title_camera.fov = Mission.TITLE_FOV
+	title_camera.cull_mask = 0xFFFFF & ~Presentation.MIRROR_LAYER
+	add_child(title_camera)
+	_show_title()
+
+
+func _show_title() -> void:
+	_on_title = true
+	get_tree().paused = true
+	van.input_enabled = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	driver.set_active(false)
+	van.recover(Mission.START)
+	van.engine_on = true
+	van.headlights_on = true
+	van.high_beams = false
+	van.get_node("VanPresentation").settle()
+	title_camera.look_at_from_position(Mission.START * Mission.TITLE_EYE,
+		Mission.START * Mission.TITLE_LOOK, Vector3.UP)
+	title_camera.make_current()
+	_audio.title_ambience(true)
+	hud.show_title(_continue_place(), _saved_when())
+
+
+func _leave_title() -> void:
+	if not _on_title:
+		return
+	_on_title = false
+	_audio.title_ambience(false)
+	van.get_camera().make_current()
+
+
+func _through_black(action: Callable) -> void:
+	if _changing:
+		return
+	_changing = true
+	await hud.fade(1.0, TITLE_FADE_OUT).finished
+	action.call()
+	hud.reveal(TITLE_FADE_IN)
+	_changing = false
+
+
+func _new_game_from_title() -> void:
+	_through_black(_new_drive if route.stage > 0 or route.fleeing else _begin)
+
+
+func _back_to_title() -> void:
+	_reset_session()
+	route.reload()
+	_show_title()
+
+
+func _reset_session() -> void:
+	_ending_token += 1
+	_ending = false
+	_ended = false
+	_begun = false
+	_boarding_token += 1
+	_boarding = false
+	driver.grip(Vector3.ZERO, Vector3.ZERO, 0.0)
+	van.driver_door = 0.0
+	_close_run_sheet()
+	_awaiting_van = false
+	_signed = false
+	_call_done = false
+	_odometer = 0.0
+	_stuck_for = 0.0
+	_lessons.reset()
+	hud.set_cinematic(false)
+	hud.clear_subtitle()
+	hud.van_guide.hide_guide()
+	_audio.restore()
+	van.get_node("VanPresentation").look_target_node = null
 
 
 func _begin() -> void:
@@ -114,6 +203,9 @@ func _begin() -> void:
 		return
 	if not _begun:
 		_begun = true
+		_leave_title()
+		van.recover(route.recovery_pose)
+		van.foot_on_brake = route.fleeing
 		if route.stage > 0 or route.fleeing:
 			_continue_in_van()
 		else:
@@ -131,14 +223,16 @@ func _continue_in_van() -> void:
 
 
 func _resume() -> void:
+	_leave_title()
 	_set_paused(false)
 
 
 func _new_drive() -> void:
+	_begun = true
+	_leave_title()
 	_ending_token += 1
 	_ending = false
 	_ended = false
-	hud.set_ended(false)
 	hud.set_cinematic(false)
 	_audio.restore()
 	_restart()
@@ -205,10 +299,8 @@ func _drive_completed() -> void:
 	await get_tree().physics_frame
 	if token != _ending_token:
 		return
-	_ending = false
-	_ended = true
-	hud.set_ended(true)
-	_set_paused(true)
+	_back_to_title()
+	hud.reveal(TITLE_FADE_IN)
 
 
 func _begin_on_foot() -> void:
@@ -281,7 +373,7 @@ func _checkpoint_save_failed(_error: int) -> void:
 
 
 func _toggle_pause() -> void:
-	if _ended:
+	if _ended or _on_title or _changing:
 		return
 	_set_paused(not get_tree().paused)
 
@@ -289,8 +381,58 @@ func _toggle_pause() -> void:
 func _set_paused(value: bool) -> void:
 	get_tree().paused = value
 	van.input_enabled = not value
-	hud.set_menu(value)
+	if value:
+		hud.show_pause(Mission.NAME, _next_checkpoint(), _last_saved())
+	else:
+		hud.set_menu(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if value else Input.MOUSE_MODE_CAPTURED
+
+
+func _continue_place() -> String:
+	if route.stage == 0 and not route.fleeing:
+		return ""
+	return "%s · %s" % [Mission.NAME, _last_place()]
+
+
+func _last_place() -> String:
+	if route.fleeing:
+		return "Where the van stopped"
+	if route.stage == 0:
+		return "The lumber yard"
+	return _sentence(Mission.DIRECTIONS[route.stage - 1])
+
+
+func _last_saved() -> String:
+	var path: String = route.checkpoint_path
+	if path.is_empty() or not FileAccess.file_exists(path):
+		return "Nothing saved yet"
+	return _last_place()
+
+
+func _next_checkpoint() -> String:
+	return _sentence(Mission.DIRECTIONS[mini(route.stage, Mission.DIRECTIONS.size() - 1)])
+
+
+func _saved_when() -> String:
+	var path: String = route.checkpoint_path
+	if path.is_empty() or not FileAccess.file_exists(path):
+		return ""
+	var bias := int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+	var saved := int(FileAccess.get_modified_time(path)) + bias
+	var now := int(Time.get_unix_time_from_system()) + bias
+	var when := Time.get_datetime_dict_from_unix_time(saved)
+	var clock := "%02d:%02d" % [when.hour, when.minute]
+	var days_ago := floori(float(now) / DAY) - floori(float(saved) / DAY)
+	if days_ago == 0:
+		return "Saved today, " + clock
+	if days_ago == 1:
+		return "Saved yesterday, " + clock
+	return "Saved %d %s, %s" % [when.day, MONTHS[int(when.month) - 1], clock]
+
+
+func _sentence(words: String) -> String:
+	var lower := words.to_lower()
+	return lower.left(1).to_upper() + lower.substr(1)
 
 
 func _restart() -> void:

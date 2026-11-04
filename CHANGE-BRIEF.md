@@ -3663,3 +3663,139 @@ logs, and commit.
 - **What it looks like at night:** the passenger mirror sits in the window's front corner. At the
   start it reflects dark forest, so it reads as dark glass. A van behind shows as a bright
   headlight in it.
+
+## Revision 2026-11-04 (Run 34: the front door, design A, C50)
+
+- **Author:** "Menu mockups first (Recommended)" (#122). Shown three designs on a private canvas
+  (https://claude.ai/artifact/KMksj4rmd9VUdFjXt7koKN), the author answered "i want A style with
+  the image changing on the right based on the user misson", then "Yes, start (Recommended)"
+  (#123).
+- **Why:** Assignment 10's front door asks for "a start or pause menu usable by keyboard alone,
+  with focus set when the scene starts", and for controls that carry accessible names. The old
+  menu was one panel at launch and in pause. It was headed "NIGHT FREIGHT / First drive · vehicle
+  and atmosphere prototype", and its sliders had no names.
+- **The title screen** (`game/app/first_drive.gd`, `game/features/ui/menus/front_menu.gd`, new):
+  - **When:** at launch, after "Quit to main menu", and at the end of a drive.
+  - **The scene:** the live scene of the saved mission, between black bars (the film look, C35).
+    For Night Freight it is the van on the forecourt by the office, low beams on, with the rain
+    falling through them under the floodlight.
+  - **The picture follows the mission:** the scene is the mission's own (`TITLE_EYE`,
+    `TITLE_LOOK`, `TITLE_FOV`), so Missions 2 and 3 bring their own. Until Mission 2 exists it is
+    always this one.
+  - **The title:** "BLACKRIDGE / NO WAY BACK" is typed text standing where the author's logo will
+    go (C42).
+  - **The menu:** Continue, New game, Settings, Credits and Quit.
+    - Continue appears only with a save past the start. It shows the mission, the last
+      checkpoint, and when it was saved, taken from the file's own date.
+    - Focus is set on the first item whenever a screen opens.
+  - **Sound:** while the title waits, the rain and the music keep playing (`title_ambience()`).
+    The old menu at launch was silent.
+  - **Into the drive:** Continue and New game fade through black.
+    - Continue puts the van back at the saved checkpoint, with Ethan in it.
+    - New game starts at the office. With a save it asks first: "Start a new game? Your saved
+      progress will be replaced."
+- **Pause (Esc):**
+  - **The screen:** the frozen game behind a blur (`menu_blur.gdshader`, new, in the menus
+    folder, not `game/shaders/`), with the objective, the next checkpoint and the last save.
+  - **The options:** Resume, Recover van, Settings, and Quit to main menu.
+  - **Quit to main menu** asks first, and names the checkpoint you will continue from.
+  - **Esc** resumes.
+- **Settings:**
+  - **Audio:** the four volumes, at the same defaults. ← and → change a volume by 5% a press.
+    The volumes are saved when you leave Settings, as the save rules say.
+  - **Controls:** every key.
+- **Credits:**
+  - "A game by NRVALAM WORKS" (C42);
+  - then every outside asset that ships, from the attribution files:
+    - the Iveco Daily by Max (CC BY 4.0);
+    - the Mixamo characters;
+    - Poly Haven's textures, trees, plants and rocks (CC0);
+    - the Honda e interior by Alex Murias (CC BY 4.0), whose files still ship although the game
+      no longer draws them;
+  - then Godot Engine's MIT license and its third-party components and licenses, read from the
+    engine itself, as Godot asks of exported games.
+- **Keyboard and screen readers:**
+  - **Keys:** ↑ and ↓ choose, Enter confirms, Esc goes back, and ← and → change a volume or switch
+    the tab. Key hints in the bottom bar say which keys work on each screen.
+  - **Names:** every control a player can reach (18) has an `accessibility_name`.
+- **Back to the title, in place:**
+  - **How:** "Quit to main menu" and the end of a drive reset the session, reload the mission from
+    its save (`reload()`, new in the mission script), then show the title. The scene is not
+    reloaded.
+  - **The ending:** after the fade to black, the title now returns; before, a paused menu offered
+    "Drive again". The drive's save went back to its start, so New game is offered.
+- **Wording:**
+  - **Removed:** "DRIVING PROTOTYPE", "First drive · vehicle and atmosphere prototype", "Follow the
+    industrial loop" and "Follow the freight loop".
+  - **The objective** now reads "Freight depot, bay 2. Next: the switchbacks.", from the approved
+    run sheet.
+- **Claude Code's calls:**
+  - **The title scene:** the van is parked on the forecourt with its low beams on, whatever the
+    save says. Continue puts it back where the save says.
+  - **Fonts:** the Mac's own (DIN Condensed for headings, SF Pro for the rest), so no font file is
+    added.
+  - **Wording:** "New drive" is now "New game" on the title, and it leaves the pause menu.
+    Controls moved into Settings.
+  - **Accent colour:** amber (#e3a33b) marks the focused item.
+  - **Save times** read "Saved today, 16:27"; with no save, "Nothing saved yet".
+  - **No version number:** the mockup's version label is left out, because it would need a version
+    line in `project.godot`.
+- **Found while building:**
+  - **Volume keys:** Godot 4.7's HSlider has no keyboard-step setting, so the menu moves a volume
+    5% itself.
+  - **Lamps:** the title first showed the van with its lamps off. The game is paused there, and the
+    lamps only update while it runs. `settle()` in `van_presentation.gd` now refreshes the van once
+    without advancing time.
+  - **Readability:** the first stills made text over the van hard to read, so every screen except
+    the title itself now blurs the scene.
+  - **Captures:** a windowed capture stalls when macOS stops drawing a covered window.
+    `capture_menus.gd` therefore draws each still itself.
+- **Test changes, with reasons (#123):**
+  - **New `game/tests/test_menus.gd`,** 20 checks, by real key presses, in the scratch home:
+    - **The title:** the title scene, focus at launch, and the rain and music while it waits.
+    - **Names and wording:** every control named; no prototype wording on any screen.
+    - **Esc on the title** does nothing.
+    - **Settings:** the volume by keyboard, saved on leaving; the Controls tab.
+    - **Credits:** their content and scrolling.
+    - **Starting:** New game starts at the office.
+    - **Pause and back:** pause and resume; Quit to main menu asking first; Continue from the saved
+      checkpoint.
+    - **Asking first:** New game asks before it replaces a save.
+    - **Recover van, and Quit.**
+  - **Test first:** on the old code it failed 0/1, because the HUD had no front menu
+    (`logs/phase_1/run34/before/`).
+  - **`test_collision.gd`** (44 checks, the same count), because the menu changed:
+    - "After N s the screen fades to black and the menu offers to drive again" becomes "... returns
+      to the title, which offers a new game, since the drive's save went back to its start";
+    - "The crack stays for the rest of the drive" reads the crack at the depot, before the title
+      resets the glass for the next drive;
+    - "New drive leaves the ending behind" checks that the menu is closed, instead of reading the
+      old button's text.
+  - **Unchanged:** Assignment 5's suites, which pass.
+- **Mutations:** all exit 1 (`logs/phase_1/run34/mutation_*`):
+  - with no focus set when a screen opens, 4/20;
+  - with a volume slider unnamed, 19/20;
+  - with Esc on the title passed to the game, 12/20;
+  - with the title camera not made current, 17/20.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26, 13/13, 20/20; art 0 failures.
+  - **Logs:** `logs/phase_1/run34/suites/`.
+  - **Error lines:** the only "ERROR:" lines are the engine's "resources still in use at exit" and
+    the expected parse error for a deliberately damaged file.
+- **Import:** exit 0, with no errors or warnings.
+  - **New files:** three `.uid` files, for `front_menu.gd`, `menu_blur.gdshader` and
+    `test_menus.gd`.
+  - **The real save folder** did not change (`logs/phase_1/run34/import/`).
+- **Evidence** (windowed): `evidence/phase_1/menu/run34/`, with `menu_sheet.png`. The stills show:
+  - the title with and without a save;
+  - Settings (Audio and Controls) and Credits;
+  - the pause screen on foot and in the van;
+  - both "ask first" prompts;
+  - the drive after Continue.
+- **Not done:**
+  - **The author's checks** (Assignment 10): start, play, pause and quit by keyboard alone, and
+    what a screen reader says, if tried.
+  - **The author's save check:** quit at a checkpoint, relaunch, continue.
+  - **The author's logo** in place of the typed title (set aside, #104).
+  - **A version number** on the title.
+  - **Frame rate** on the title and pause screens: not measured.

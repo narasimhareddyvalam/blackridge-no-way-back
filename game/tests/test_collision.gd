@@ -29,6 +29,7 @@ var _hud: CanvasLayer
 var _presentation: Node3D
 var _head_on_glass := Vector3.ZERO
 var _crack: float = 0.0
+var _depot_crack: float = -1.0
 var _scratch: String
 var _after_hit := PackedByteArray()
 
@@ -95,8 +96,8 @@ func _run() -> void:
 	await _check_aftermath(pedestrian, oncoming)
 	_check_checkpoint(pedestrian)
 	await _check_depot()
-	_check(is_equal_approx(_amount(), _crack),
-		"The crack stays for the rest of the drive (%.2f at the depot)" % _amount())
+	_check(is_equal_approx(_depot_crack, _crack),
+		"The crack stays for the rest of the drive (%.2f at the depot)" % _depot_crack)
 	var finished := ConfigFile.new()
 	_check(finished.load(_scratch) == OK and finished.get_value("drive", "stage", -1) == 0
 		and not finished.has_section_key("drive", "body"),
@@ -111,7 +112,7 @@ func _run() -> void:
 		"New drive clears the pedestrian and brings the music back")
 	_check(not paused and (_hud.get("_heading") as Control).visible
 		and (_hud.get("_fade") as ColorRect).modulate.a < 0.01
-		and (_hud.get("_resume") as Button).text == "Begin / continue drive",
+		and not bool(_hud.get("menu_visible")),
 		"New drive leaves the ending behind: the screen is clear and the objective is back")
 	_finish()
 
@@ -509,6 +510,7 @@ func _check_depot() -> void:
 	await _until(func() -> bool: return bool(_route.get("complete")), 3.0)
 	_hold("brake", false)
 	await _seconds(2.0)
+	_depot_crack = _amount()
 	_check(bool(_route.get("complete")) and not bool(_van.get("engine_on"))
 		and not bool(_van.get("headlights_on")) and int(_van.get("wiper_setting")) == 0,
 		"Parked at the depot, the engine goes off, the lights go out and the wipers stop")
@@ -529,10 +531,15 @@ func _check_depot() -> void:
 	while not paused and waited < 25.0:
 		await physics_frame
 		waited += 1.0 / 60.0
-	_check(paused and bool(_hud.get("menu_visible"))
-		and (_hud.get("_fade") as ColorRect).modulate.a > 0.99
-		and (_hud.get("_resume") as Button).text == "Drive again",
-		"After %.0f s the screen fades to black and the menu offers to drive again" % waited)
+	var menu: Control = _hud.get("menu")
+	await process_frame
+	var focus := root.gui_get_focus_owner()
+	_check(paused and bool(_hud.get("menu_visible")) and menu != null
+		and String(menu.call("screen")) == "title" and focus != null
+		and focus.name == "NewGame" and not (menu.find_child("Continue", true, false)
+		as Control).visible,
+		"After %.0f s the screen fades to black and returns to the title, which offers a new "
+		% waited + "game, since the drive's save went back to its start")
 
 
 func _bend(bones: Dictionary, upper: String, lower: String, axis: Vector3) -> float:

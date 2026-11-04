@@ -1,0 +1,11 @@
+ M docs/AUTHOR_PROMPTS_AND_DECISIONS.md
+ M game/app/first_drive.gd
+ M game/features/audio/first_drive/driving_audio.gd
+ M game/features/missions/night_freight/first_drive.gd
+ M game/features/ui/driving_hud/driving_hud.gd
+ M game/features/vehicles/freight_van/van_presentation.gd
+ M game/tests/test_collision.gd
+?? game/features/ui/menus/
+?? game/tests/test_menus.gd
+?? logs/phase_1/run34/
+?? tools/captures/capture_menus.gd

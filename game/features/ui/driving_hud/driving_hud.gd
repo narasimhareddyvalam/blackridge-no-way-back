@@ -8,24 +8,18 @@ signal pause_requested
 const SaveFile = preload("res://shared/save/save_file.gd")
 const SETTINGS_VERSION := 1
 const VanGuide = preload("van_guide.gd")
-const CONTROLS := "W / S   Accelerate / brake     A / D   Steer\n" + \
-	"Q   Select forward / reverse (stop first)     SPACE   Handbrake\n" + \
-	"Z / C   Left / right indicator     X   Hazard lights\n" + \
-	"V   Wipers: low / high / off     L   Headlights     I   Cabin light\n" + \
-	"J / K   Driver / passenger window     H   Horn     MOUSE   Look     F   Center view\n" + \
-	"E   Get in / out of the van (stop first)     SHIFT   Run     T   Answer a call\n" + \
-	"R   Recover to checkpoint     ESC   Pause / controls / audio"
+const FrontMenu = preload("res://features/ui/menus/front_menu.gd")
 
 var menu_visible: bool = true
 var settings_path: String = ""
 var van_guide := VanGuide.new()
+var menu: Control
 var _heading: VBoxContainer
 var _objective: Label
 var _detail: Label
 var _hint: Label
 var _notice: Label
-var _menu: PanelContainer
-var _resume: Button
+var _cinematic: bool = false
 var _notice_timer: float = 0.0
 var _fade: ColorRect
 var _subtitles: PanelContainer
@@ -35,7 +29,6 @@ var _document: PanelContainer
 var _sheet: RichTextLabel
 var _typewriter := SystemFont.new()
 var _handwriting := SystemFont.new()
-var _warning: Label
 var _warnings: Dictionary = {}
 var _sliders: Dictionary = {}
 var _defaults: Dictionary = {}
@@ -53,13 +46,13 @@ func _ready() -> void:
 	_heading.position = Vector2(32, 28)
 	_heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(_heading)
-	var eyebrow := _label("NIGHT FREIGHT   /   DRIVING PROTOTYPE", 14, Color("bcad89"))
+	var eyebrow := _label("NIGHT FREIGHT", 14, Color("bcad89"))
 	_heading.add_child(eyebrow)
 	_objective = _label("RETURN TO THE DEPOT", 25)
 	_heading.add_child(_objective)
-	_detail = _label("Follow the freight loop. Keep right.", 16, Color("c0c9cc"))
+	_detail = _label("", 16, Color("c0c9cc"))
 	_heading.add_child(_detail)
-	_hint = _label("W / S  Drive / brake    A / D  Steer    ESC  Controls & audio", 15)
+	_hint = _label("", 15)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	_hint.position = Vector2(32, -45)
 	root.add_child(_hint)
@@ -70,13 +63,19 @@ func _ready() -> void:
 	root.add_child(van_guide)
 	_build_subtitles(root)
 	_build_document(root)
+	menu = FrontMenu.new()
+	menu.name = "FrontMenu"
+	root.add_child(menu)
+	menu.settings_left.connect(save_settings)
+	menu.quit_chosen.connect(_quit)
+	for bus in ["Master", "Vehicle", "Ambience", "Music"]:
+		_audio_slider(bus)
 	_fade = ColorRect.new()
 	_fade.color = Color.BLACK
 	_fade.modulate.a = 0.0
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(_fade)
-	_build_menu(root)
 
 
 func _label(words: String, size: int, color: Color = Color("e2e5df")) -> Label:
@@ -151,69 +150,16 @@ func _build_document(root: Control) -> void:
 	_document.visible = false
 
 
-func _build_menu(root: Control) -> void:
-	_menu = PanelContainer.new()
-	_menu.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	_menu.position = Vector2(-335, -330)
-	_menu.size = Vector2(670, 660)
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = Color(0.025, 0.045, 0.06, 0.97)
-	panel.border_color = Color("67766f")
-	panel.set_border_width_all(1)
-	panel.set_content_margin_all(24)
-	_menu.add_theme_stylebox_override("panel", panel)
-	root.add_child(_menu)
-	var rows := VBoxContainer.new()
-	rows.add_theme_constant_override("separation", 10)
-	_menu.add_child(rows)
-	rows.add_child(_label("NIGHT FREIGHT", 30))
-	rows.add_child(_label("First drive · vehicle and atmosphere prototype", 17, Color("bcad89")))
-	var intro := _label("Follow the industrial loop and park at the freight depot.\n" +
-		"The dashboard map and roadside signs show the way.", 16)
-	rows.add_child(intro)
-	_warning = _label("", 15, Color("e3c799"))
-	_warning.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_warning.visible = false
-	rows.add_child(_warning)
-	_resume = _button("Begin / continue drive", func() -> void: resume_requested.emit())
-	rows.add_child(_resume)
-	rows.add_child(_label(CONTROLS, 15, Color("c4cdca")))
-	rows.add_child(HSeparator.new())
-	for bus in ["Master", "Vehicle", "Ambience", "Music"]:
-		_audio_slider(rows, bus)
-	var buttons := HBoxContainer.new()
-	rows.add_child(buttons)
-	buttons.add_child(_button("Recover van", func() -> void: recovery_requested.emit()))
-	buttons.add_child(_button("New drive", func() -> void: restart_requested.emit()))
-	buttons.add_child(_button("Quit", _quit))
-	_resume.grab_focus()
-
-
-func _button(title: String, callback: Callable) -> Button:
-	var button := Button.new()
-	button.text = title
-	button.custom_minimum_size.y = 36
-	button.add_theme_font_size_override("font_size", 17)
-	button.pressed.connect(callback)
-	return button
-
-
-func _audio_slider(parent: Control, bus: String) -> void:
-	var row := HBoxContainer.new()
-	parent.add_child(row)
-	var title := _label(bus, 15)
-	title.custom_minimum_size.x = 100
-	row.add_child(title)
+func _audio_slider(bus: String) -> void:
 	var slider := HSlider.new()
 	slider.min_value = 0
 	slider.max_value = 100
 	slider.step = 1
-	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_defaults[bus] = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(bus)))
 	slider.value = _defaults[bus] * 100
 	slider.value_changed.connect(_volume_changed.bind(bus))
 	_sliders[bus] = slider
-	row.add_child(slider)
+	menu.add_volume(bus, slider)
 
 
 func _volume_changed(percent: float, bus: String) -> void:
@@ -275,12 +221,11 @@ func warn(source: String, words: String) -> void:
 		_warnings.erase(source)
 	else:
 		_warnings[source] = words
-	_warning.text = "\n".join(_warnings.values())
-	_warning.visible = not _warning.text.is_empty()
+	menu.set_warning(warning())
 
 
 func warning() -> String:
-	return _warning.text
+	return "\n".join(_warnings.values())
 
 
 func _quit() -> void:
@@ -295,8 +240,9 @@ func _notification(what: int) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not event.is_echo():
-		pause_requested.emit()
 		get_viewport().set_input_as_handled()
+		if not menu.back():
+			pause_requested.emit()
 
 
 func _process(delta: float) -> void:
@@ -306,13 +252,33 @@ func _process(delta: float) -> void:
 			_notice.text = ""
 
 
+func show_title(place: String, saved: String) -> void:
+	menu_visible = true
+	menu.show_title(place, saved)
+	_refresh_overlays()
+
+
+func show_pause(mission: String, next: String, last: String) -> void:
+	menu_visible = true
+	menu.show_pause(mission, _objective.text, _detail.text, next, last)
+	_refresh_overlays()
+
+
 func set_menu(value: bool) -> void:
-	menu_visible = value
-	_menu.visible = value
 	if value:
-		_resume.grab_focus()
-	else:
-		save_settings()
+		show_pause("", "", "")
+		return
+	menu_visible = false
+	menu.close()
+	save_settings()
+	_refresh_overlays()
+
+
+func _refresh_overlays() -> void:
+	var shown := not _cinematic and not menu_visible
+	_heading.visible = shown
+	_hint.visible = shown
+	_notice.visible = shown
 
 
 func set_objective(title: String, detail: String) -> void:
@@ -369,18 +335,19 @@ func document_text() -> String:
 
 
 func set_cinematic(value: bool) -> void:
-	_heading.visible = not value
-	_hint.visible = not value
-	_notice.visible = not value
-
-
-func set_ended(value: bool) -> void:
-	_resume.text = "Drive again" if value else "Begin / continue drive"
+	_cinematic = value
+	_refresh_overlays()
 
 
 func fade(to: float, seconds: float) -> Tween:
 	var tween := create_tween()
 	tween.tween_property(_fade, "modulate:a", to, seconds)
+	return tween
+
+
+func reveal(seconds: float) -> Tween:
+	var tween := create_tween()
+	tween.tween_property(_fade, "modulate:a", 0.0, seconds).from(1.0)
 	return tween
 
 

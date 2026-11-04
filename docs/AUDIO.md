@@ -38,7 +38,9 @@ recordings of a real vehicle, and have no third-party asset source.
 | `skid.wav` | Locked tyres skidding on the wet crossing paint: tyre hiss, rubber scrub and a squeal near 960 Hz (added 2026-11-01, Run 24 step 3) | 2.0 s | Loop while the locked wheels brake, louder with speed |
 
 These files can be opened individually for audition. The in-game mix has Master,
-Vehicle, Ambience, and Music sliders in the pause menu. Headless checks confirm
+Vehicle, Ambience, and Music sliders under Settings, reached from the title screen or the pause
+menu (Run 34). While the title screen waits, the rain and the music keep playing. Headless checks
+confirm
 that window opening changes mix parameters; they do not prove perceived realism
 or audio quality. No subjective listening approval is recorded yet.
 

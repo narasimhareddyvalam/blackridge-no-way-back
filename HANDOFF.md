@@ -1,7 +1,9 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 33: real door mirrors and the yard gravel at real size (#119, C48),
-then the passenger mirror turned toward the driver (#120, C49), 2026-11-04, on branch `develop`.
+**Last run:** Phase 1, Run 34: the front door in design A (#122–#123, C50), 2026-11-04, on branch
+`develop`, committed on its own and pushed (#124). Before it, Run 33: real door mirrors and the
+yard gravel at real size (#119, C48), then the passenger mirror turned toward the driver (#120,
+C49).
 Runs 27 to 33 are committed together on `develop` and pushed (#121): saving (C43), Ethan's step,
 the beam shape and wet bark (C44), the beam reach (C45), the forecourt start (C46), the reversing
 lamps (C47) and this run. Committed before them, in order:
@@ -16,7 +18,8 @@ lamps (C47) and this run. Committed before them, in order:
 1. ~~Runs 20–26 committed and pushed~~ (done);
 2. ~~saving, built to the committed save rules, test first~~ (done, Run 27); the author's check
    (quit at a checkpoint, relaunch, continue) is still to come;
-3. the keyboard-only menu, Assignment 10's front door;
+3. ~~the keyboard-only menu, Assignment 10's front door~~ (done, Run 34); the author's keyboard
+   check is still to come;
 4. Mission 2, The Wrong Cargo, planned with the author on a map before it is built;
 5. Mission 3, Last Run, with the combat encounter and the story scenes;
 6. the author's own full playtest, then the story changes, the "gamify" pass and the polish.
@@ -28,6 +31,68 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Run 34: the front door, design A (approved: #123; C50)
+
+**Files:**
+
+- **New:**
+  - `game/features/ui/menus/front_menu.gd`: the title, pause, settings, credits and "ask first"
+    screens;
+  - `game/features/ui/menus/menu_blur.gdshader`: the blur behind every screen but the title;
+  - `game/tests/test_menus.gd`: 20 checks;
+  - `tools/captures/capture_menus.gd`.
+- **Changed:**
+  - `driving_hud.gd`: the old panel is gone. It builds the front menu and keeps the settings
+    logic, and gains `show_title()`, `show_pause()` and `reveal()`;
+  - `game/app/first_drive.gd`: the title camera and scene, the title's choices, back to the title
+    in place, and the pause facts;
+  - the mission script: `NAME`, `TITLE_EYE`, `TITLE_LOOK` and `TITLE_FOV`, `reload()`, and the new
+    objective line;
+  - `van_presentation.gd`: `settle()`;
+  - `driving_audio.gd`: `title_ambience()`;
+  - `test_collision.gd`: three checks, with the reasons in `CHANGE-BRIEF.md`.
+- **Docs:** `CHANGE-BRIEF.md`, this file, C50, #122–#123 and `docs/AUDIO.md`.
+- **Evidence:** `evidence/phase_1/menu/run34/` (`menu_sheet.png`). The mockups are on the private
+  canvas https://claude.ai/artifact/KMksj4rmd9VUdFjXt7koKN.
+
+**What the next run can rely on:**
+
+- **Launch:** the app opens on the title, paused. `_resume()` and `resume_requested` still start the
+  drive the old way, so the tests that skip the menu are unaffected.
+- **The menu's API:**
+  - `hud.menu` is the front menu. `screen()` names the open screen: "title", "pause", "settings",
+    "credits", "confirm", or "" when it is closed.
+  - Its signals are `continue_chosen`, `new_game_chosen`, `resume_chosen`, `recover_chosen`,
+    `main_menu_chosen`, `quit_chosen` and `settings_left`.
+- **Each mission's title scene** is `TITLE_EYE`, `TITLE_LOOK` and `TITLE_FOV`, around its
+  `START`. Mission 2 needs the same three.
+- **Back to the title:** `_back_to_title()` resets the session and calls the mission's `reload()`.
+  The ending uses it too.
+- **The volumes** move 5% per ← or →, through the menu's own handler. Godot 4.7's HSlider has no
+  keyboard-step setting.
+- **Windowed captures** of the menus draw each still themselves (`RenderingServer.force_draw`),
+  because macOS stops drawing a covered Godot window.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite before the build (`logs/phase_1/run34/baseline/`) | all pass |
+| `LOG_DIR=logs/phase_1/run34/before scripts/run-test.sh test_menus.gd 60` | 0/1, exit 1: the HUD had no front menu |
+| `LOG_DIR=logs/phase_1/run34/suites scripts/run-test.sh test_menus.gd 60` | 20/20, exit 0 |
+| `mutate_run34.py` (in the agent's scratch folder; logs in `logs/phase_1/run34/mutation_*`) | no focus 4/20; unnamed slider 19/20; Esc on the title starting the game 12/20; title camera not current 17/20; each exit 1 |
+| every suite (`logs/phase_1/run34/suites/`) | all pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26, 13/13, 20/20; art 0 failures |
+| `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import` (`import/`) | exit 0, no errors or warnings; three new `.uid` files; the real folder unchanged |
+| `HOME="$PWD/.scratch-home" Godot --path game --script ../tools/captures/capture_menus.gd -- ../evidence/phase_1/menu/run34` (windowed) | ten stills and `menu_sheet.png`; two earlier tries stalled while the window was covered |
+
+**Not verified:**
+
+- **The author's checks** (Assignment 10): start, play, pause and quit by keyboard alone, and what a
+  screen reader announces, if tried. The save check (#110) is also still to come.
+- **Frame rate:** not measured on the title or pause screens.
+- **Fonts:** DIN Condensed and SF Pro are system fonts. They were seen in the windowed stills, but
+  not on another Mac.
 
 ## Run 33, step 2: the passenger mirror turned toward the driver (approved: #120; C49)
 

@@ -8,6 +8,10 @@ signal struck(speed: float)
 
 const SaveFile = preload("res://shared/save/save_file.gd")
 const MISSION := "night_freight"
+const NAME := "Night Freight"
+const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
+const TITLE_LOOK := Vector3(1.3, 1.3, 0.7)
+const TITLE_FOV := 32.0
 const PROGRESS_VERSION := 1
 const AFTER_HIT: Array[String] = ["recovery", "body", "crack"]
 const TARGETS: Array[Vector3] = [Vector3(482.24, 25.4, -24.37), Vector3(458.48, 43.6, -114.17),
@@ -256,7 +260,7 @@ func _on_struck(speed: float) -> void:
 
 func _update_objective() -> void:
 	var title := "RETURN TO THE DEPOT"
-	var detail := "Follow the freight loop via " + DIRECTIONS[stage].to_lower() + "."
+	var detail := "Freight depot, bay 2. Next: " + DIRECTIONS[stage].to_lower() + "."
 	if stage == 4:
 		detail = "Turn into the depot yard. Stop inside the marked parking bay."
 	if fleeing:
@@ -312,6 +316,21 @@ func restart() -> void:
 	vehicle.recover(recovery_pose)
 	vehicle.reset_clock()
 	_save_checkpoint()
+	_update_objective()
+
+
+func reload() -> void:
+	_clear_oncoming()
+	_called = false
+	phone_call.stop()
+	stage = 0
+	complete = false
+	recovery_pose = START
+	vehicle.reset_clock()
+	vehicle.get_node("VanPresentation").clear_crack()
+	_load_checkpoint()
+	vehicle.recover(recovery_pose)
+	vehicle.foot_on_brake = fleeing
 	_update_objective()
 
 

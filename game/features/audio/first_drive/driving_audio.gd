@@ -11,6 +11,7 @@ const TICKS := 12
 const TICK_GAP := Vector2(0.5, 1.8)
 const SKID_DB := -6.0
 const SKID_FULL := 10.0
+const TITLE_RAIN_DB := -7.0
 var vehicle: CharacterBody3D
 var _engine: AudioStreamPlayer
 var _rain: AudioStreamPlayer
@@ -197,6 +198,15 @@ func _duck(by: float) -> void:
 func play_music() -> void:
 	if not _music.playing:
 		_music.play()
+
+
+func title_ambience(value: bool) -> void:
+	var mode := Node.PROCESS_MODE_ALWAYS if value else Node.PROCESS_MODE_INHERIT
+	_rain.process_mode = mode
+	_music.process_mode = mode
+	if value:
+		_rain.volume_db = TITLE_RAIN_DB
+		play_music()
 
 
 func _indicator(high: bool) -> void:

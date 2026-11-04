@@ -1729,6 +1729,64 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **What Claude Code did:** committed Runs 27–33 together on `develop` and pushed `develop` to
        `origin`. `main` is untouched.
 
+122. **What next; the save check later.**
+     - **The author's message (2026-11-04):** "will do it later - Your save check is still pending:
+       drive to a checkpoint, quit, relaunch and continue. whats next"
+     - **Claude Code proposed** the front door (Assignment 10): a main menu and a pause menu usable by
+       keyboard alone, with focus set at launch and accessible names, plus settings, credits and the
+       prototype wording removed, starting with mockups.
+     - **Claude Code asked:** "What should come next?"
+     - **The author's answer:** "Menu mockups first (Recommended)"
+     - **Shown (2026-11-04):** today's menu and three designs on a private canvas
+       (https://claude.ai/artifact/KMksj4rmd9VUdFjXt7koKN), each with a main menu, a pause menu and
+       settings:
+       - A · Film: the live shot of the van, letterboxed;
+       - B · Run sheet: the menu on the clipboard;
+       - C · Title card: black and centred.
+
+       Nothing in the game changed.
+
+123. **The menu design: A, with the picture following the mission.**
+     - **Claude Code asked:** "Which menu design should I build?" (A · Film, recommended; B · Run
+       sheet; C · Title card)
+     - **The author's answer (2026-11-04):** "i want A style with the image changing on the right
+       based on the user misson"
+     - **Claude Code proposed** Run 34, the front door in design A:
+       - a title screen with the live scene of the saved mission on the right (Night Freight: the van
+         on the forecourt under the floodlight; Missions 2 and 3 bring their own);
+       - Continue, New game, Settings, Credits and Quit, with New game asking before it replaces a
+         save;
+       - a blurred pause with the objective, the next checkpoint and the last save;
+       - Settings with Audio and Controls; Credits from the attribution files;
+       - keyboard only, focus on the first item, a name on every control, and the prototype wording
+         removed.
+     - **Claude Code asked:** "Start Run 34, the front door in design A, as described?"
+     - **The author's answer:** "Yes, start (Recommended)"
+     - **What Claude Code did (Run 34, C50):**
+       - **The front door:** built as proposed, test first;
+       - **New:** `front_menu.gd`, `menu_blur.gdshader` and `test_menus.gd` (20 checks, by real key
+         presses);
+       - **The title scene:** the van on the forecourt, low beams on, rain in the beams;
+       - **Tests:** every suite passes, and four deliberate breakages each fail the new test;
+       - **Evidence:** in `evidence/phase_1/menu/run34/`;
+       - **Not committed.**
+     - **For the author:** the keyboard check (Assignment 10) and the save check are still yours.
+       The typed title stands where your logo goes.
+
+124. **What next, after the front door.**
+     - **The author's message (2026-11-04):** "whats next for us?"
+     - **Claude Code proposed:**
+       - commit and push Run 34, and the author's two checks;
+       - then Mission 2, The Wrong Cargo, planned on a map first, as agreed (#108–#109). The
+         roadmap's target for it is a draft playable by December 3;
+       - it also listed the Assignment 10 items that need the author's input: the Assignment 9
+         technique and Assignment 6's particles, both waiting for those assignments; a `LICENSE`
+         file; the pitch ledger; and how the earlier assignments' layers are carried.
+     - **Claude Code asked:** "What should we start?"
+     - **The author's answer:** "Commit, then plan M2 (Recommended)"
+     - **What Claude Code did:** committed Run 34 on its own on `develop` and pushed `develop`;
+       `main` is untouched. Then Mission 2's planning began.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
@@ -1736,5 +1794,7 @@ tag `a5`. Pictures the author approved or rejected are filed in
 - Any pull request from `develop` to `main`, only with the author's approval.
 - The author's check of saving (Assignment 10): drive to a checkpoint, quit, relaunch, continue,
   and say what happened (#110).
+- The author's check of the front door (Assignment 10): start, play, pause and quit by keyboard
+  alone, and what a screen reader announced, if one was tried (#123).
 - Set aside until the author returns to it: the game logo without its painted scene, and the
   studio intro and title-screen stills (#103–#104).

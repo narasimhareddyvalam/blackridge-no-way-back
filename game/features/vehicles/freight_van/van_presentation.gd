@@ -62,6 +62,7 @@ const TAIL_GLOW_RANGE := 5.0
 const INDICATORS: Array[String] = ["FrontIndicatorLeft", "RearIndicatorLeft",
 	"FrontIndicatorRight", "RearIndicatorRight"]
 const TILT_RATE := 10.0
+const SETTLE := 60.0
 const BLADE_FLIP := 0.14
 const LIGHT_FOG = preload("res://materials/windshield/light_fog.tres")
 const SIDE_RAIN = preload("side_window_rain.gdshader")
@@ -1154,6 +1155,11 @@ func _follow_ground(delta: float) -> void:
 	_tilt = _tilt.lerp(target, 1.0 - exp(-delta * TILT_RATE))
 	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x + _rock, 0.0, _tilt.z)),
 		Vector3(0.0, _tilt.y, 0.0))
+
+
+func settle() -> void:
+	_follow_ground(SETTLE)
+	update_vehicle(0.0)
 
 
 func _lean_to_look(delta: float) -> void:
