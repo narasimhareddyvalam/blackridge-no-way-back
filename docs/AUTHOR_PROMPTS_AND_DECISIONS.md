@@ -1466,11 +1466,275 @@ tag `a5`. Pictures the author approved or rejected are filed in
        - brought `HANDOFF.md`'s agreed order up to date;
        - committed Runs 20–26 together on `develop` and pushed `develop`. `main` is untouched.
 
+110. **Saving built (Run 27; C43).**
+     - **Claude Code described step 2:** check that Godot follows `HOME`; write
+       `game/tests/test_save_rules.gd` and show it fails; build the saving to the committed rules
+       (`game/shared/save/save_file.gd`, the mission, the app, the HUD, `scripts/run-test.sh`,
+       `.gitignore`); break it three ways on purpose; run every suite and the import; add the T key
+       to `CLAUDE.md`.
+     - **The author's message (2026-11-03):** "okay proceed"
+     - **What Claude Code did:**
+       - checked that Godot on this Mac follows `HOME`, and that one run of the old test runner
+         rotated Godot's own logs in the real save folder (the player's save did not change);
+       - wrote the test first: 4/26 on the old code. It found that a save made after a hit with
+         no crack would carry an empty crack point, which the new rules would reject;
+       - built the saving: the version read first, newer files never touched, the whole file
+         checked, damaged files kept as `.corrupt`, warnings on the menu, `.tmp` then rename,
+         saving off unless the game is launched normally, and a scratch `HOME` with a check of the
+         real folder on every test run;
+       - 26/26 after the build. Each deliberate breakage fails the test;
+       - changed `test_collision.gd`, with the reason in `CHANGE-BRIEF.md`: the rules end a
+         mission by saving the next start, so its continue check now uses the save kept right
+         after the hit, and a new check covers the end-of-drive save (44 checks);
+       - every suite passes; the import is clean; a real headless launch set a damaged save aside
+         in the scratch home; the real save folder never changed;
+       - added the T key to `CLAUDE.md`'s approved settings, with the runner and the `HOME` fact;
+       - recorded C43. Nothing is committed.
+
+111. **Ethan cannot reach the van; a play-test asked for.**
+     - **The author's message (2026-11-03),** with a screenshot of Ethan stopped beside the road
+       short of the van: "hes not able to get closer to the van. make sure theres are no bugs,
+       play it yourself and find bugs and gaps that isnt making our game realistic"
+     - **Then, after interrupting a run by accident:** "i think i closed it bymistakenly"
+     - **What Claude Code did** (investigation only; nothing in the game changed):
+       - **the cause:** a headless probe walked Ethan at the van from 17 directions. The gravel
+         verge's collision is a flat strip about 11 cm above the ground beside it. Ethan's 0.3 m
+         capsule meets its edge at about 50°, steeper than the 45° he can climb, so it acts as a
+         wall along every road edge. E works within 4.5 m of the van, and the scripted walk then
+         teleports him to the door after a second stuck, which hid the bug from the tests;
+       - **a full play-through with real key presses,** headless: signing, walking, boarding, the
+         climb, Maya's call, the hit at 41 km/h, the depot bay and the ending all work. The van
+         never stuck, left the road or tipped;
+       - **the same drive in a window** (warned beforehand), with 21 screenshots in Claude Code's
+         scratch folder, for realism gaps.
+     - **Found, beyond the reported bug:**
+       - trunk bottoms glow white in the low beams, and the man lying in the road looks white;
+         the bark texture is a realistic dark brown, so the cause is over-exposure;
+       - mirror-smooth puddles at the start read as white blotches under the floodlight;
+       - the van starts parked in the road lane, outside the lumber yard;
+       - prototype wording on screen ("DRIVING PROTOTYPE", "vehicle and atmosphere prototype",
+         "freight loop");
+       - the run sheet says bay 3, but the painted bay is in front of door 02;
+       - the engine sound and rev counter rise as if the van had one gear;
+       - the hillside's ground texture visibly repeats;
+       - Ethan wears a suit for a night freight shift (C28's character).
+
+112. **The walking fix (Run 28).**
+     - **Claude Code proposed:** a step height of about 30 cm for Ethan, test first, in
+       `driver.gd` and `test_on_foot.gd`.
+     - **The author's message (2026-11-03):** "ok"
+     - **What Claude Code did:**
+       - a new check walks Ethan by keyboard from the office door round the van's front to the
+         driver's door. It failed on the old code (5.85 m short);
+       - Ethan now steps up anything up to 0.3 m onto walkable ground: verges, kerbs, the office
+         step. Walls, barriers, the van and steep slopes still stop him;
+       - 48/48, and removing the step height fails the test again;
+       - from every direction he now reaches the van, and E from 4 m walks him round with no
+         teleport;
+       - every suite passes. Nothing is committed.
+
+113. **The lighting: white trunks (Run 29, options).**
+     - **The author's message (2026-11-03):** "yes start on the lighting"
+     - **What Claude Code found:**
+       - the low-beam pattern keeps full strength out to 9° on each side and half strength at
+         20°. Real low beams fall to about a tenth there;
+       - a trunk 4 m off the road, 10 m ahead, faces the lamps square-on, while the road is lit
+         at a grazing angle. So it gets hundreds of times the light of the road at 40 m and
+         clips to white below the cutoff line;
+       - the bark texture is a realistic dry brown, but it is raining and the bark is not shown
+         wet.
+     - **Experiments,** all at runtime with no game file changed: four forest spots, eight
+       variants, three windows (each announced first).
+     - **The options shown to the author:** `evidence/phase_1/beams/run29_options/`
+       (`options.png`, `options_closeup_the_pass.png`, `measurements.txt`):
+       - **recommended:**
+         - the beam keeps its centre and dims toward the sides as real low beams do;
+         - less light on the ground just ahead;
+         - bark darkened to 60% for rain;
+         - near-white area 0.17–0.28% down to 0.00–0.09%;
+         - the road on straights as bright as before (104.4 to 104.7), about 22% dimmer on bends;
+       - **stronger:** a narrower beam and wet bark. Similar trunks, but the road 10–35% dimmer
+         everywhere.
+
+114. **The lighting chosen: Recommended (C44, not yet built).**
+     - **The author's message (2026-11-03):** "show me options to choose from ?"
+     - **Claude Code** opened the two comparison images in Preview and asked which look to use.
+     - **The author's answer:** "Recommended"
+     - **To build next (its own run):**
+       - `tools/make_low_beam_pattern.py`: horizontal `[0, 9, 13, 18, 24, 35]` deg to
+         `[1.0, 1.0, 0.55, 0.25, 0.12, 0.06]`; vertical `[0, 1.5, 4, 8, 15, 27]` deg to
+         `[1.0, 1.0, 0.5, 0.2, 0.06, 0.03]`; `STRAY` 0.03. Then regenerate both patterns: the
+         high beam adds to the low one;
+       - mature bark `albedo_color` 0.6 for rain (`roadside_forest.gd`, `_bark_material()`; the
+         young firs keep their own shade);
+       - energy 650 and exposure 1.3 unchanged;
+       - test first in `test_headlights.gd`, check the man lying in the road, rerun every suite.
+     - The usage limit ended the session there, before anything in the game changed.
+     - **Built afterwards as Run 29** (C44), as planned:
+       - the test first: 17/19 on the old beam;
+       - then 19/19, and the old beam images put back fail it again;
+       - every suite passes; at the start straight the road reads as before (88.4/42.8 on low
+         beams);
+       - the man in the road keeps his dark clothes
+         (`evidence/phase_1/collision/run29/before_after_the_man_in_the_road.png`).
+
+115. **Low beams that reach less, high beams a little more (options).**
+     - **The author's message (2026-11-03):** "i also want it to be more like low bream, user
+       shouldnt see much road ahead, higher beam should be little more (like how it works in real
+       life. )"
+     - **What Claude Code found:** the low beam's cutoff met the road about 95 m ahead, so low beams
+       lit almost as far as high beams. A van's low beams are aimed lower and die out around
+       40–50 m.
+     - **Runtime experiments** (no game file changed; two windows, each announced first), measured at
+       the start straight. Lights off, the road beyond 50 m reads about 25:
+
+       | | Low beam, road 10–46 m | Low beam, beyond 50 m | High beam, beyond 50 m |
+       | --- | --- | --- | --- |
+       | Today | 88.9 | 41.7 | 69.7 |
+       | A | 85.9 | 33.1 | 74.4 |
+       | C | 81.8 | 28.8 | 77.1 |
+       | D | 77.8 | 28.6 | 76.8 |
+
+       - **A:** the low beam's cutoff meets the road at about 50 m;
+       - **C:** the cutoff meets the road at about 40 m and the low beam fades out by 70 m
+         (recommended);
+       - **D:** about 35 m, fading out by 55 m;
+       - **high beams in A, C and D:** stronger and reaching further (C and D: energy 850, range
+         260 m).
+     - **Shown to the author:** `evidence/phase_1/beams/run30_options/options.png`.
+     - **The author's answer:** "C (Recommended)"
+     - **Built as Run 30** (C45):
+       - the test first: 19/21 on the old beams;
+       - then 21/21, and the old beam images and reach put back fail it again;
+       - every suite passes;
+       - low beams now light the road to about 37 m and fade out by 70 m;
+       - at the start straight the road beyond 50 m reads 29.1 on low beams (it was 42.8)
+         and 106.1 on high beams.
+
+116. **How the author wants the details.**
+     - **The author's message (2026-11-03):** "perfect looks so good. but i hope you are
+       understanding how i want the details in the game to be??"
+     - **Claude Code's answer:** restated the standard it works to, with examples from the author's
+       own feedback:
+       - real life is the reference;
+       - minor details count as much as big features;
+       - nothing reads as fake;
+       - the world agrees with itself;
+       - the game feels natural and professional.
+
+       It said how it applies the standard: ask how a thing works in real life before building it;
+       play the game itself after each step and hunt for fakes and mismatches; show side-by-side
+       options for anything about looks.
+
+117. **The start area, and three new reports.**
+     - **The author's message (2026-11-03),** quoting Claude Code's suggestion first: "Next I'd suggest
+       the start area: the van parked in the yard instead of in the road lane, and the white
+       puddles. It also needs your choice on the depot bay, since the run sheet says bay 3 but the
+       painted bay is at door 02. Shall I start on that? -> proceed. also, the side mirrors dont look
+       nice, they dont fit it and look real and also the reverse camera isnt working, also one bug
+       is when i go off the road not able to come back onto the road."
+     - **Claude Code asked:** which should change, the run sheet or the painted bay.
+     - **The author's answer:** "Sheet says bay 2 (Recommended)"
+     - **What Claude Code did (Run 31, C46):**
+       - **back onto the road:** found the gravel verge's 11 cm edge stopping the van (a probe at
+         five places), and gave the shoulder a gentle gravel slope into the ground. The van now
+         drives back on from either side;
+       - **the start:** the van starts on a gravel forecourt beside the road, lit by the
+         re-aimed office floodlight, and the white puddle patches at the start are gone;
+       - **bay 2:** the run sheet and the dash screen say bay 2;
+       - **kerbs:** found Ethan bobbing on steps of 20–30 cm, and fixed it;
+       - **tests:** written first; every suite passes;
+       - **investigated, not changed:**
+         - the reverse camera sees black because nothing behind the van is lit (no
+           reversing lamps);
+         - the mirrors are self-lit flat screens that glow from outside and are mostly
+           hidden from the driver's seat. Both are proposed as the next steps.
+
+118. **The reverse camera, then the mirrors.**
+     - **The author's message (2026-11-03):** "alright proceed with reverse camera first and then
+       mirrors"
+     - **What Claude Code did (Run 32, C47):**
+       - added white reversing lamps: the clear band of each rear cluster glows, and two lamps light
+         the ground behind the van in reverse;
+       - gave the reverse camera a low-light boost;
+       - wrote the test first; it failed on the old van and passes now;
+       - every suite passes. At night the reverse screen now shows the road behind instead of black
+         (`evidence/phase_1/dash/run32/reverse_before_after.png`).
+     - **Next:** the mirrors, with options first.
+
+119. **The mirrors: real reflections, curved glass, but clear.**
+     - **Shown (2026-11-04):** today's camera pictures beside two prototypes with real
+       reflections fitted to the Iveco's own glass: A with a curved main glass (recommended) and
+       B with a flat one (`evidence/phase_1/mirror/run33_options/mirror_options.png`).
+     - **The author's message (2026-11-04):** "i like A but it doesnt look realistic. fix it and
+       they dont look clear. things arent looking clear to look at of whats coming behind."
+     - **What Claude Code found, in throwaway prototypes:**
+       - A's reflection was tone-mapped twice, which washed dark areas to grey and dulled lamps;
+         it was drawn at a low resolution, and had raindrops on the mirror glass itself;
+       - the lumber yard's and the forecourt's gravel is stretched about 100 times, which made
+         the black-and-white blotches in the mirror and the white "puddles" at the start;
+       - the moon's shadow, drawn again for every mirror picture, is about two thirds of a
+         mirror's cost.
+     - **Shown (2026-11-04):** today against the fixed A, with a van 28 m behind, at the start
+       and from outside, and the gravel before and after
+       (`evidence/phase_1/mirror/run33_fix/`).
+     - **Claude Code asked:** "Build the fixed mirrors and the gravel fix into the game now
+       (Run 33)?"
+     - **The author's answer:** "Yes, both (Recommended)"
+     - **What Claude Code did (Run 33, C48):**
+       - **The mirror glass:** each door mirror now reflects onto the Iveco's own glass (55 main and
+         46 wide-angle triangles per door), found once in the model's texture by a new tool;
+       - **The reflection:** in HDR and tone-mapped once, so headlights behind stay bright and the
+         night stays dark. The main glass is slightly curved, the wide-angle glass below shows
+         more, and both are set as a driver sets them;
+       - **Clear glass:** the mirror glass is heated, so it carries no rain;
+       - **Smoother:** the driver's mirror updates 30 times a second and the passenger's 15;
+       - **From outside:** dark glass, and the driver's mirror swings with the door;
+       - **Cost:** the mirror cameras skip the moon's shadow, which was most of their cost, so the
+         new mirrors cost about 0.85 ms a frame more than the old ones;
+       - **Tail lamps:** they cast a soft red glow on the road behind, stronger when braking;
+       - **Gravel:** the lumber yard's and the forecourt's gravel lies at real size;
+       - **Tests:** written first (0/11 on the old mirrors); five deliberate breakages each fail it;
+         every suite passes. Evidence is in `evidence/phase_1/mirror/run33/`.
+     - **Found, not changed:** from the driver's seat the passenger mirror is mostly hidden: it
+       sits just past the front edge of the passenger window (#120).
+
+120. **The passenger mirror, turned toward the driver.**
+     - **The author's message (2026-11-04):** "alright proceed"
+     - **What Claude Code found:** from the driver's eye only a thin strip of the passenger mirror
+       shows, at the front edge of the passenger window. The model's glass faces almost straight
+       back, so it is seen nearly edge-on, 66° off its face. The door's front frame hides about half
+       of what is left: 25 of the main glass's 55 triangles and 23 of the wide glass's 46 are in
+       sight, against 49 and 38 for the driver's mirror.
+     - **Claude Code asked:** "From your seat the passenger mirror shows only as a thin strip
+       (magenta in the picture). Should I turn it toward you?"
+     - **The author's answer:** "Turn it toward me (Recommended)"
+     - **Shown (2026-11-04):** today against the head turned 25° toward the cab, from the seat (with
+       the glass marked) and from outside (`evidence/phase_1/mirror/run33_step2_proposal/`).
+     - **Claude Code asked:** "Build the turned passenger mirror into the game?"
+     - **The author's answer:** "Yes, build it (Recommended)"
+     - **What Claude Code did (Run 33, step 2, C49):**
+       - **The turn:** the passenger mirror head now swivels 25° toward the cab when the van is
+         built. From the seat, 62 of its 101 glass triangles are in sight (it was 48), seen 42° off
+         its face (it was 65°);
+       - **A bug found while building:** the turned mirror first looked into the van's own side,
+         because its view was not turned with it. Fixed, and the aim check now covers both mirrors;
+       - **Tests:** written first (they failed on the old mirror); two deliberate breakages each
+         fail it; every suite passes. Evidence is in `evidence/phase_1/mirror/run33_step2/`.
+     - **For the author:** at night the passenger mirror mostly reflects dark forest, so it reads
+       as dark glass; headlights behind show in it.
+
+121. **Runs 27–33 committed and pushed.**
+     - **The author's message (2026-11-04):** "commit and push to remote"
+     - **What Claude Code did:** committed Runs 27–33 together on `develop` and pushed `develop` to
+       `origin`. `main` is untouched.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
   was on battery or charging).
 - Any pull request from `develop` to `main`, only with the author's approval.
-- The `CLAUDE.md` wording for the new T key (`answer_call`), drafted in Run 26.
+- The author's check of saving (Assignment 10): drive to a checkpoint, quit, relaunch, continue,
+  and say what happened (#110).
 - Set aside until the author returns to it: the game logo without its painted scene, and the
   studio intro and title-screen stills (#103–#104).

@@ -54,6 +54,7 @@ func _run() -> void:
 	await _check_directions()
 	_check_run_sheet()
 	await _check_reverse()
+	await _check_reversing_lamps()
 	_finish()
 
 
@@ -201,6 +202,42 @@ func _check_reverse() -> void:
 	await _seconds(0.2)
 	_check(guides and shown and absf(aspect - display) < 0.05,
 		"In reverse the camera fills the display with parking guide lines")
+
+
+func _check_reversing_lamps() -> void:
+	_van.set("gear", 1)
+	await _seconds(0.2)
+	var off_in_drive := _backward_lights().is_empty()
+	_van.set("gear", -1)
+	await _seconds(0.2)
+	var lamps := _backward_lights()
+	var lit := lamps.size() == 2
+	for lamp in lamps:
+		var aim := _van.global_basis.inverse() * -lamp.global_basis.z
+		lit = lit and lamp.light_energy > 0.0 and lamp.light_cull_mask & 1 != 0 and aim.y < -0.05
+	var lens := _van.find_child("ReversingLenses", true, false) as GeometryInstance3D
+	var glowing := lens != null and lens.visible
+	var gain := 1.0
+	var view: SubViewport = _presentation.get("reverse_view")
+	for child in view.get_children():
+		if child is Camera3D and (child as Camera3D).attributes is CameraAttributesPractical:
+			gain = ((child as Camera3D).attributes as CameraAttributesPractical).exposure_multiplier
+	_van.set("gear", 1)
+	await _seconds(0.2)
+	_check(off_in_drive and lit and glowing and gain > 1.5 and _backward_lights().is_empty(),
+		"In reverse, white reversing lamps glow in both rear clusters and light the ground "
+		+ "behind, and the camera brightens its picture for the dark (%.1fx); in drive they "
+		% gain + "are off (%d lamps found)" % lamps.size())
+
+
+func _backward_lights() -> Array[SpotLight3D]:
+	var found: Array[SpotLight3D] = []
+	for node in _van.find_children("*", "SpotLight3D", true, false):
+		var lamp := node as SpotLight3D
+		var aim := _van.global_basis.inverse() * -lamp.global_basis.z
+		if lamp.is_visible_in_tree() and aim.z > 0.8 and lamp.light_color.g > 0.5:
+			found.append(lamp)
+	return found
 
 
 func _place(index: int, right: float, backwards: bool) -> void:

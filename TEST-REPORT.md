@@ -248,3 +248,67 @@ Session 1 (CLAUDE.md draft, `sessions/session-1.jsonl`):
 - read-only `cat` and `grep` still ran, so the checksum comparison is the real guarantee.
 
 The shader sha256 sums were unchanged after every agent step.
+
+## Final project, 2026-11-03: saving (Assignment 10 persistence)
+
+| Field | Value |
+| --- | --- |
+| Source | `develop`, Run 27; the save rules were committed first, as `301c250` |
+| Godot | 4.7.2.stable.official.ed1daf0bf |
+| Renderer | Forward+ |
+| Machine | MacBook Air, Apple M4, macOS 26.6.2 |
+
+### Tests isolated from the real save, verified on macOS
+
+1. **Godot follows `HOME`.** Run with `HOME="$PWD/.scratch-home"`, a script printing
+   `OS.get_user_data_dir()` gave
+   `.scratch-home/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back`
+   (`logs/phase_1/run27/home_check/scratch_home.log`). The first check of
+   `test_save_rules.gd` repeats this on every run.
+2. **Before the change,** one run of `test_wipers.gd` through the old wrapper changed the real
+   folder: Godot rotated its own logs there (`logs/phase_1/run27/before_isolation/`, the
+   listings before and after).
+3. **Every run now** goes through `scripts/run-test.sh`:
+   - it sets `HOME` to `.scratch-home/`;
+   - it fingerprints the real save folder (every file's path, size and time) before and after;
+   - any difference fails the run with "REAL SAVE FOLDER CHANGED".
+
+   No run reported it: not the baseline, the final suites, the mutations or the import.
+4. **Saving is off unless a path is given.** A game that a test builds has no save paths:
+   `test_save_rules.gd` checks that `user://` is unchanged after a checkpoint and a volume change.
+   Only the scene Godot launches uses `user://progress.cfg` and `user://settings.cfg`. A headless
+   launch of the real main scene, in the scratch home, set aside a damaged `progress.cfg` there
+   (`logs/phase_1/run27/real_launch/`).
+
+### The prediction (written in the save rules, before any code)
+
+| Prediction | Result |
+| --- | --- |
+| The existing tests' runs save to their own scratch checkpoint files | Confirmed: every game test sets `checkpoint_path` to a file in the system's temporary folder |
+| Today's runs touch the real folder: the HUD reads the real volumes, and Godot probably writes its log to `user://logs/` | Confirmed: one run rotated Godot's logs in the real folder. With the scratch home and saving off by default, no run changes it |
+
+### `test_save_rules.gd` (26 checks)
+
+| Rule | What is checked |
+| --- | --- |
+| Round trip | Continuing from a save made after the hit restores the checkpoint, the van's place, the body and the crack. It is saved again as version 1 with the mission's name, and quitting and loading again gives the same. Volumes are saved when the menu is left, load back, and are saved on quitting too |
+| Missing | A new drive at the default volumes, with no warning and no file created |
+| Corrupt | Text that is not a save; no version, a version in quotes, 1.5 or 0; nine single bad values among good ones; damaged settings. Nothing from the file is used, each is kept as `.corrupt`, and the game warns. A damaged file that cannot be moved stays where it is and is never saved over |
+| Newer | Progress and settings from version 2 are not loaded or moved, and are byte-for-byte unchanged after a checkpoint and after leaving the menu. A newer file that appears after loading is not written over either |
+| Unwritable | In a read-only folder, the game warns, the old file is unchanged, no `.tmp` is left, and the game plays on with recovery working |
+| Isolation | `user://` is in the scratch home; a game built by a test writes nothing; launched as the game, it uses `user://` there |
+
+Before the build: 4/26 (`logs/phase_1/run27/before/`). After: 26/26 (`logs/phase_1/run27/suites/`).
+
+### Mutations
+
+| Mutation | Result |
+| --- | --- |
+| The version read after the other fields | 24/26, exit 1 |
+| A file applied before it is checked | 21/26, exit 1 |
+| A newer file written over | 21/26, exit 1 |
+| No save at the end of the drive (`test_collision.gd`) | 43/44, exit 1 |
+
+### Human check (Assignment 10)
+
+Author to confirm: drive to a checkpoint, quit, relaunch, continue, and say what happened.

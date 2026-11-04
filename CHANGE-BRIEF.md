@@ -3106,3 +3106,560 @@ logs, and commit.
     and the HUD (settings);
   - `scripts/run-test.sh` and `.gitignore`;
   - the new test.
+
+## Revision 2026-11-03 (Run 27: saving, built to the save rules)
+
+- **Author:** "okay proceed" (#110), for step 2 as described: the `HOME` check, the test first,
+  the build, three deliberate breakages, every suite and the import, and the T key in
+  `CLAUDE.md`. The rules are the revision above, approved and committed as `301c250` (#107).
+- **Checked first:**
+  - **Godot follows `HOME`:** with `HOME=.scratch-home`, `user://` is
+    `.scratch-home/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back/`
+    (`logs/phase_1/run27/home_check/`). The real folder is the same path under the real home.
+  - **The old runner touched the real folder:** one run of `test_wipers.gd` rotated Godot's own
+    logs there (a new `godot.log`, the oldest log deleted). The player's save,
+    `driving_prototype.cfg`, did not change, because every test gives the game its own
+    checkpoint file (`logs/phase_1/run27/before_isolation/`).
+  - **The new runner on unchanged code:** every suite passed with `HOME` in the scratch home, and
+    the real folder stayed the same across all 19 runs (`logs/phase_1/run27/baseline/`).
+- **Test first** (`game/tests/test_save_rules.gd`, new, 26 checks). On the old code it failed
+  22/26 (`logs/phase_1/run27/before/`). It also found a bug: with no crack on the glass, the
+  crack the game would save had no point or seed, because those shader values were never set.
+  Under the new rules such a save would be thrown away as damaged.
+- **The build:**
+  - **`game/shared/save/save_file.gd` (new),** the rules in one place for both files:
+    - `read()` takes the version before anything else. A newer file is left alone, and saving it
+      is off for the session.
+    - No version, a version that is not a whole number or is below 1, text that is not a save, or
+      any bad value makes the file damaged. It is renamed `.corrupt`, replacing an older one. If
+      it cannot be moved, it stays in place and saving it is off.
+    - Only a file that passes the caller's whole check comes back.
+    - `write()` refuses while saving is off, or when the file on disk is from a newer version,
+      whatever happened since loading. It writes `[save] version` first, to a `.tmp` file, then
+      renames it. On any failure it removes the `.tmp` file and keeps the old one.
+    - Every warning also goes to the log, with `push_warning`.
+  - **The mission** (`first_drive.gd`):
+    - its progress file comes from the app (`checkpoint_path`), empty by default, so a game a
+      test builds saves and reads nothing;
+    - `_valid_progress()` checks the whole file before anything is applied: the mission
+      `night_freight`; checkpoint 0–4; the after-the-hit values all or none, only at checkpoint
+      3 or 4; every transform finite, a true rotation and inside the playable area; 11 body
+      parts; a crack from 0 to 1 with a finite point and seed;
+    - finishing the drive saves the start (`_save_finished()`), as the rules say until Mission 2
+      exists;
+    - `progress_read` tells the app what it found.
+  - **The HUD** (`driving_hud.gd`): the volumes load by the same rules (`load_settings()`). They
+    are saved when the menu is left or the game quits (the Quit button or closing the window),
+    not on every slider movement. Warnings show on the menu (`warn()`, `warning()`).
+  - **The app** (`game/app/first_drive.gd`):
+    - it gives `user://progress.cfg` and `user://settings.cfg` only when it is the scene Godot
+      launched (`get_tree().current_scene == self`);
+    - it passes the playable area to the mission, and shows the progress warnings.
+  - **`van_presentation.gd`:** the windshield's crack point and seed start at the shader's own
+    defaults (`NO_CRACK`, 0.0), so a crack that never happened saves as finite values. The look
+    is unchanged.
+  - **`scripts/run-test.sh`:**
+    - Godot runs with `HOME` in `.scratch-home/`, which Git ignores;
+    - before and after each run it fingerprints the real save folder (each file's path, size and
+      time), and the run fails with "REAL SAVE FOLDER CHANGED" if anything differs.
+- **Claude Code's calls:**
+  - **Two warnings the rules did not word:**
+    - settings from a newer version: "These settings are from a newer version of the game. The
+      default volumes are in use, and volume changes will not be saved this session.";
+    - settings that could not be written: "Settings could not be saved. These volumes last until
+      you quit."
+  - **Checkpoints while saving is off:** for a newer or unmovable file, each checkpoint shows
+    today's "Checkpoint could not be saved..." notice, so nothing claims a save. A game built by
+    a test with no path shows nothing.
+  - **Squashed transforms:** a transform with a squashed or mirrored rotation also counts as
+    damaged. The rules say finite; a squashed body part would break the ragdoll.
+  - **The warning's place:** it sits on the menu, under the introduction.
+- **Test changes, with reasons:**
+  - **`test_save_rules.gd` is new** (above). It also launches the game the way Godot does
+    (`change_scene_to_packed`), only inside the scratch home, and checks that the game uses
+    `user://progress.cfg` and `user://settings.cfg` there.
+  - **`test_collision.gd`** (44 checks; it had 43):
+    - **Why it changes:** the rules end a mission by saving the next start, so after the depot
+      the save no longer holds the hit.
+    - **The continue check:** it now continues from the save made right after the hit, as a
+      player who quit before the depot would. The test keeps that save when "When he can drive
+      on, a checkpoint keeps ..." passes.
+    - **New:** "With the drive over, the save goes back to its start, so the next launch begins
+      a new drive".
+  - **Assignment 5's suites are unchanged and pass.** The regression suite still reads
+    `[drive] stage`, finds no `.tmp`, keeps the old file on a failed write, ignores bad stages,
+    and sees "Checkpoint saved" and "could not be saved". Its bad-stage files have no version,
+    so the game now sets them aside as damaged.
+- **Mutations:** all exit 1 (`logs/phase_1/run27/mutation_*`):
+  - the version read after the other fields: 24/26, newer files moved aside as damaged;
+  - a file applied before it is checked: 21/26;
+  - a newer file written over: 21/26;
+  - no save at the end of the drive: the collision test fails 43/44.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 46/46, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures. The real save
+  folder never changed. Logs are in `logs/phase_1/run27/suites/`. The only "ERROR:" lines are:
+  - the engine's "resources still in use at exit";
+  - the expected parse error for a deliberately damaged file.
+- **Import:** the headless import, run with the scratch home, exits 0 with no errors or warnings.
+  It creates only the two new scripts' `.uid` files, and the real save folder is unchanged
+  (`logs/phase_1/run27/import/`).
+- **A real launch:** the game, launched headless as the main scene with a damaged `progress.cfg`
+  in the scratch home, set it aside as `progress.cfg.corrupt` and warned
+  (`logs/phase_1/run27/real_launch/`).
+- **The prediction, checked:** the existing tests save to their own temporary checkpoint files,
+  as predicted. A game a test builds no longer reads the real volumes, and Godot's own log now
+  lands in the scratch home.
+- **Not done:**
+  - the author's check (Assignment 10): drive to a checkpoint, quit, relaunch, continue;
+  - the menu with a warning on it has not been seen in a window;
+  - the keyboard-only menu is the next step.
+
+## Revision 2026-11-03 (Run 28: Ethan steps up road edges and kerbs)
+
+- **Author:** "hes not able to get closer to the van. make sure theres are no bugs, play it yourself
+  and find bugs and gaps that isnt making our game realistic", with a screenshot of Ethan stopped
+  beside the road short of the van (#111); then "ok" to the proposed fix (#112).
+- **The cause,** found with a headless probe that walked Ethan at the van from 17 directions:
+  - the gravel verge's collision is a flat strip about 11 cm above the forest floor beside it;
+  - Ethan's capsule (0.3 m radius) meets its edge at about 50°, steeper than the 45° he can walk
+    up, so every road edge acted as a wall;
+  - E works within 4.5 m of the van, and the scripted walk to the door then teleported him there
+    after a second stuck. That hid the bug from the tests, which also placed him beside the van
+    instead of walking him there.
+- **The fix** (`driver.gd`, Claude Code's call on the numbers):
+  - Ethan has a step height of 0.3 m, as third-person characters usually do (`STEP_HEIGHT`,
+    `_step_up()`). Before each move, when something is in his way within 0.1 m, he steps up onto
+    it only if:
+    - lifted 0.3 m he could move on;
+    - the surface he would land on is walkable (45° or less).
+  - So he steps onto verges, kerbs and the office step. Walls, barriers, the van (its body spans
+    0.15 to 2.24 m above the road) and steep rock still stop him.
+  - He keeps to the ground going down a step, too (`floor_snap_length` 0.3 m).
+- **Test change, with its reason (#111):** `test_on_foot.gd` (48 checks; it had 46). Two are new:
+  - **The walk to the van:** "From the office door, W and the mouse take Ethan round the van's
+    front to the driver's door". It fails if he ends more than 0.5 m from the door, or moves
+    more than 0.1 m in one frame, which would be a teleport. He steps up 0.11 m on the way.
+  - **The van's side:** "Walking into the van's side, he stops against it and cannot climb it".
+  - **Unchanged:** the test then places him beside the van as before, for the walking, boarding
+    and later checks.
+- **Test first:** on the old code the walk check failed. He stopped 5.85 m from the door, stepping
+  up 0.00 m (47/48, `logs/phase_1/run28/before/`).
+- **Mutation:** with `_step_up()` removed, the test fails 47/48 and exits 1
+  (`logs/phase_1/run28/mutation_no_step/`).
+- **Probes** (in the agent's scratch folder):
+  - **All directions:** walking straight at the van from all 17 directions, he now reaches its
+    body every time. Before, he stopped 2.6 m short from 15 of them.
+  - **Boarding:** from where the author's screenshot showed him, 4 m from the van on the forest
+    floor, E walks him round to the door in 7.9 s. His largest single step is 3.8 cm, so there
+    is no teleport.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures. The real save
+  folder never changed. Logs are in `logs/phase_1/run28/suites/`.
+- **The play-test** (#111), a full drive played twice by key presses, with no shortcuts:
+  - **Headless:** signing, walking to the van, boarding, the climb, Maya's call, the hit at
+    41 km/h, the depot bay and the ending all work. The van never stuck, left the road or tipped.
+  - **In a window,** with 21 screenshots in the agent's scratch folder. Gaps found, to fix one
+    step at a time with the author's approval:
+    1. trunk bottoms glow white in the low beams, and the man lying in the road looks white. The
+       bark texture is a realistic dark brown (linear albedo 0.13, 0.08, 0.05), so the cause is
+       over-exposure near the road;
+    2. the van starts parked in the road lane, outside the lumber yard;
+    3. prototype wording on screen: "NIGHT FREIGHT / DRIVING PROTOTYPE", "vehicle and atmosphere
+       prototype", "Follow the freight loop";
+    4. the run sheet says bay 3, but the painted bay is in front of door 02;
+    5. mirror-smooth puddles at the start reflect the floodlight as white patches;
+    6. the engine sound and the rev counter rise as if the van had one gear;
+    7. the hillside's ground texture visibly repeats;
+    8. Ethan wears a suit for a night freight shift (C28's character; the author's call).
+
+## Revision 2026-11-03 (Run 29: low beams shaped like real ones, and wet bark, C44)
+
+- **Author:** "yes start on the lighting" (#113). Shown three options side by side, the author chose
+  "Recommended" (#114). The options are in `evidence/phase_1/beams/run29_options/`.
+- **The cause of the white trunks:**
+  - the low-beam pattern kept full strength out to 9° on each side and half at 20°. Real low
+    beams fall to about a tenth there;
+  - a trunk beside the road faces the lamps square-on, while the road is lit at a glancing angle,
+    so the trunk took far more light than the road and burned to white below the cutoff;
+  - the bark texture is a realistic dry brown (linear albedo 0.13, 0.08, 0.05), but in the rain
+    it should be wet, and wet bark is darker.
+- **How the option was chosen:**
+  - runtime experiments in the agent's scratch folder: eight variants at four forest spots,
+    measured and photographed;
+  - the runtime copy of the generator matched today's pattern exactly (0/255).
+- **The change:**
+  - **`tools/make_low_beam_pattern.py`:** the horizontal fade becomes 1.0, 1.0, 0.55, 0.25, 0.12
+    and 0.06 at 0, 9, 13, 18, 24 and 35°. The fade below the cutoff becomes 1.0, 1.0, 0.5, 0.2,
+    0.06 and 0.03 at 0, 1.5, 4, 8, 15 and 27°. The stray light above the cutoff is 0.03 (it was
+    0.05).
+  - **The images:** both patterns are regenerated, the low beam's and then the high beam's, which
+    adds its hot spot to the low beam.
+  - **`roadside_forest.gd`:** the mature trunks' bark is darkened to 60% (`WET_BARK`). The young
+    firs keep their own shade.
+  - **Unchanged:** the headlights' energy (650), the exposure (1.3), the tonemap and the beam's
+    reach.
+- **Test change, with its reason (#113–#114):** `test_headlights.gd` (19 checks; it had 17). Two
+  are new:
+  - "The low beam fades as a real one does": at most a quarter of its centre at 20° to the side,
+    and at most a tenth on the ground just ahead. Today it gives 21% and 6%;
+  - "The trunks' bark is darkened for the rain" (60%).
+- **Test first:** on the old beam and bark, both new checks failed: 50% and 16%, and the bark at
+  100% (17/19, `logs/phase_1/run29/before/`).
+- **Mutation:** with the old beam images put back, the test fails 18/19 and exits 1
+  (`logs/phase_1/run29/mutation_old_beam/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 19/19, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures. Logs are in
+  `logs/phase_1/run29/suites/`. The headless import was run with the scratch home, and the real
+  save folder did not change (`logs/phase_1/run29/import/`).
+- **Measured** at the start straight (`capture_beams.gd`, `evidence/phase_1/beams/run29/`), against
+  Run 23:
+
+  | | Road 10–46 m | Road 50–100 m | White-out |
+  | --- | --- | --- | --- |
+  | Low beams | 88.4 (88.7) | 42.8 (44.7) | 0.00% |
+  | High beams | 133.0 (134.9) | 102.3 (103.9) | 0.00% |
+  | Lights off | 18.1 (18.6) | 25.4 (24.8) | 0.00% |
+
+  At the four forest spots, the share of near-white pixels fell from 0.17–0.28% to 0.00–0.09%. On
+  bends the road is about a fifth dimmer, as with real low beams.
+- **The man in the road** (`capture_collision.gd`, `evidence/phase_1/collision/run29/`): he keeps
+  his dark top and blue jeans instead of looking white (`before_after_the_man_in_the_road.png`,
+  against Run 25).
+- **Frame rates** are not compared: the Mac was not on mains power.
+
+## Revision 2026-11-03 (Run 30: low beams reach about 40 m, high beams further, C45)
+
+- **Author:** "i also want it to be more like low bream, user shouldnt see much road ahead, higher
+  beam should be little more (like how it works in real life. )" (#115). Shown four options side by
+  side (`evidence/phase_1/beams/run30_options/`), the author chose "C (Recommended)".
+- **Before:**
+  - the low beam's cutoff sat 1.4° above the lamp's axis. With the lamp aimed 2° down, the cutoff
+    line met the road about 95 m ahead, and the beam was at a tenth of full about 63 m ahead (as
+    measured by the new check);
+  - both beams used the same energy (650); the low beam's reach was 120 m and the high beam's
+    220 m.
+- **The change:**
+  - **`tools/make_low_beam_pattern.py`:** the cutoff moves to 0.6° above the axis, and the stray
+    light above it to 0.02. Both images are regenerated, the low then the high.
+  - **`van_presentation.gd`:** each beam has its own energy and reach (`_aim_beam()`). Low beams
+    keep 650 and reach 70 m (`LOW_BEAM_RANGE`, `LOW_BEAM_ENERGY`); high beams get 850 and reach
+    260 m (`HIGH_BEAM_RANGE`, `HIGH_BEAM_ENERGY`).
+  - **Knock-on effects:** the rain in the beams uses each beam's reach. The oncoming van, which
+    uses the high-beam image, keeps its own energy.
+- **Test change, with its reason (#115):** `test_headlights.gd` (21 checks; it had 19). Two are
+  new:
+  - **"Low beams light the road to about 37 m ahead and fade out by 70 m".** It finds where the
+    beam image reaches a tenth of full and uses the lamp's real aim and height above the road. It
+    asks for 30–50 m and a reach of at most 80 m.
+  - **"High beams reach 260 m, with more light than the low beams (850 against 650)".**
+  - **The shape check** samples relative to the new cutoff (`CUTOFF` 0.6).
+- **Test first:** on the old beams, both new checks failed: 63 m and 120 m; 220 m with equal light
+  (19/21, `logs/phase_1/run30/before/`).
+- **Mutation:** with the committed beam images and the 120 m reach put back, the test fails 19/21
+  and exits 1 (`logs/phase_1/run30/mutation_old_reach/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 31/31,
+  12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures. The import was
+  run with the scratch home, and the real save folder did not change. Logs are in
+  `logs/phase_1/run30/`.
+- **Measured** at the start straight (`capture_beams.gd`, `evidence/phase_1/beams/run30/`),
+  against Run 29:
+
+  | | Road 10–46 m | Road 50–100 m | White-out |
+  | --- | --- | --- | --- |
+  | Low beams | 80.8 (88.4) | 29.1 (42.8) | 0.00% |
+  | High beams | 144.1 (133.0) | 106.1 (102.3) | 0.00% |
+  | Lights off | 18.3 (18.1) | 24.6 (25.4) | 0.00% |
+
+  Beyond 50 m, the low beams leave the road nearly as dark as with the lights off. High beams light
+  it 3.6 times as brightly as low beams (it was 2.4 times).
+
+## Revision 2026-11-03 (Run 31: back onto the road, the van on the forecourt, bay 2, kerbs, C46)
+
+- **Author:**
+  - "Next I'd suggest the start area ... Shall I start on that? -> proceed. also, the side mirrors
+    dont look nice, they dont fit it and look real and also the reverse camera isnt working, also
+    one bug is when i go off the road not able to come back onto the road."
+  - For the depot bay, the author chose "Sheet says bay 2 (Recommended)" (#117).
+- **Back onto the road (the reported bug):**
+  - **The cause:** a headless probe drove the van off the road and back. On flat stretches the
+    van's body met the gravel verge's edge, about 11 cm above the ground, as a wall. It is the
+    edge that stopped Ethan in Run 28; he has a step height, but the van is a sliding box.
+  - **The fix** (`industrial_loop.gd`, `_shoulder()`): the verge strip gains a sloping outer edge,
+    0.6 m wide and dropping 0.3 m (about 27°), in the same gravel. It carries the collision too.
+    Below its top few centimetres it runs under the ground, so the shoulder now meets the ground
+    as real gravel shoulders do.
+  - **Measured:** at both flat stretches tested, the van now drives back onto the asphalt in
+    3.5–6 s from either side. Guardrails and tree trunks still stop it.
+- **The van on the forecourt:**
+  - **Where:** a gravel forecourt (36 × 5.4 m, cleared of plants) now lies between the site office
+    and the road. The van starts parked on it beside the road, facing west as before (mission
+    `START`, 6.5 m from the road's centre), and pulls out into the lane.
+  - **The floodlight:** the office floodlight is aimed at the van's new place (`VAN_PARKING`, in
+    `_office_lights()`). It now lights gravel instead of the road, so the white puddle patches at
+    the start are gone.
+  - **Plants:** clearing the forecourt changes where some plants are placed elsewhere; the counts
+    are unchanged.
+- **Bay 2:** the run sheet and the dash screen's run-sheet card now say "Freight depot, bay 2",
+  the painted bay in front of door 02.
+- **Kerbs (found while testing):**
+  - **The bug:** Run 28's step only lifted Ethan onto a step's corner. It worked up to about 15 cm.
+    At 20–30 cm he rode up the edge, slid back and bobbed on the spot.
+  - **The fix** (`driver.gd`, `_step_up()` and `_hold_step()`): once a walkable step is found
+    0.35 m ahead, he is lifted to its top and held there until he stands on it, at most 0.6 s.
+  - **Measured:** steps of 10, 15, 20, 25 and 30 cm are each climbed in one rise, and he steps down
+    off the far side.
+- **Test changes, with reasons (#117):**
+  - **`test_ghat_road.gd`** (33 checks; it had 31):
+    - new: "From the ground beside the road, the van drives back onto it on either side";
+    - "The van starts level on the valley road" becomes "The van starts level, parked on the
+      forecourt beside the road, out of the lane";
+    - new: "From the forecourt the van pulls out into the road's lane".
+  - **`test_on_foot.gd`** (49 checks; it had 48):
+    - **The walk check:** it no longer crosses the road's edge, so it no longer reports a step
+      height;
+    - **New:** "Ethan steps up a 20 cm kerb onto the pavement behind it and walks on, but a 50 cm
+      ledge stops him", using a test-built kerb and ledge in the lumber yard;
+    - **The run sheet:** it is compared with "bay 2".
+- **Test first and mutations:**
+  - **The road check:** on the old road the van stayed off the asphalt on both sides (31/32,
+    `logs/phase_1/run31/before/`). That is the same code as the fix removed.
+  - **The kerb check:** with the step removed, the on-foot test fails 48/49 and exits 1
+    (`logs/phase_1/run31/mutation_no_step/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures
+  (`logs/phase_1/run31/suites/`). Both Assignment 5 suites pass unchanged with the new start.
+- **Evidence:** `evidence/phase_1/start/run31/`: walking to the van on the forecourt, reaching it,
+  and the cab at ignition.
+- **Found, for the next steps:**
+  - **The reverse camera works but sees black.** At night nothing behind the van is lit: the van
+    has no white reversing lamps.
+  - **The mirrors are flat screens.** Each is a self-lit rectangle showing a fixed wide camera.
+    From outside it glows like a TV. From the seat, only the driver's mirror shows, through the
+    rain-covered front pane; the passenger mirror and both wide-angle glasses are hidden behind
+    the doors from the driver's eye.
+
+## Revision 2026-11-03 (Run 32: reversing lamps and a reverse camera that works at night, C47)
+
+- **Author:** "the reverse camera isnt working" (#117), then "alright proceed with reverse camera first
+  and then mirrors" (#118).
+- **The cause:** the reverse camera worked, but at night it saw only black. The van had no white
+  reversing lamps, so nothing behind it was lit. The camera rendered with the same night exposure
+  as the driver's view.
+- **The fix** (`van_presentation.gd`, `_reversing_lamps()`):
+  - **Lamps:** two white reversing lamps (`REVERSE_LAMP`, energy 6, reach 14 m, 55°, aimed 12°
+    down) light the ground behind the van whenever it is in reverse with the engine running.
+  - **Lens glow:** the clear band of each rear lamp cluster glows white in reverse. It is the
+    Iveco's own lens geometry between 0.92 and 1.08 m (`REVERSE_LENS`), the most neutral band of
+    the lens texture when sampled band by band. It is copied 1.5 mm proud of the lens and added
+    to the van's body, not to the converted model.
+  - **The camera:** the reverse camera boosts its picture 3x (`REVERSE_GAIN`), as real backup
+    cameras do in low light.
+- **Test changes, with reasons (#117–#118):**
+  - **`test_dash_screen.gd`** (15 checks; it had 14). New: "In reverse, white reversing lamps glow in
+    both rear clusters and light the ground behind, and the camera brightens its picture for the
+    dark; in drive they are off". On the old van it failed with no lamps and 1.0x
+    (`logs/phase_1/run32/before/`).
+  - **`test_headlights.gd`** (21, the same count): `_headlights()` counted every spotlight on the van
+    as a headlight. It now counts the forward-pointing ones, because the van also has reversing
+    lamps.
+- **Mutation:** with the lamps kept off, the dash screen test fails 14/15 and exits 1
+  (`logs/phase_1/run32/mutation_lamps_off/`).
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26; art 0 failures
+  (`logs/phase_1/run32/suites/`).
+- **Evidence:** `evidence/phase_1/dash/run32/` (`reverse_before_after.png`):
+  - **before:** in reverse the screen was black apart from one distant light;
+  - **after:** it shows the road behind lit by the lamps: the asphalt, the gravel edge, ferns, a
+    trunk and a post, under the guide lines;
+  - **the picture's mean brightness:** 26.6 before, 45.0 after.
+
+## Revision 2026-11-04 (Run 33: real door mirrors, and the yard gravel at real size, C48)
+
+- **Author:** "the side mirrors dont look nice, they dont fit it and look real" (#117) and "then
+  mirrors" (#118). Shown today's mirrors beside two prototypes, the author answered "i like A but
+  it doesnt look realistic. fix it and they dont look clear. things arent looking clear to look at
+  of whats coming behind." Shown the fixed A, then "Yes, both (Recommended)" (#119).
+- **What was wrong with today's mirrors:**
+  - each glass showed a fixed 62° camera picture on a flat quad, 2–3 cm in front of the Iveco's
+    own glass, which is turned 5° toward the cab. So the picture floated in the housing;
+  - the main and the wide-angle glass showed the same picture;
+  - the picture was self-lit, so from outside the mirrors glowed like screens.
+- **What made the first A unclear and unreal** (found in throwaway prototypes, logged with #119):
+  - the reflection was tone-mapped twice, by the mirror camera and again by the driver's view.
+    Dark areas washed out to grey, and lamps dulled;
+  - it was drawn at 384 pixels, with raindrops on the mirror glass itself;
+  - the yard's gravel showed as black-and-white blotches (below).
+- **The mirrors now** (`van_presentation.gd`, `_mirrors()`; `mirror_glass.gdshader` new, in the
+  van's folder, not `game/shaders/`):
+  - **The glass:** the reflections sit on the Iveco's own mirror glass, 2 mm in front of it, with
+    its rounded corners: 55 main and 46 wide-angle triangles per door.
+    - The glass is found in the model's full-quality texture (metallic, smooth and facing back),
+      by the new `tools/art/extract_mirror_glass.gd`, and saved as
+      `art/iveco/mirror_glass_left.tres` and `mirror_glass_right.tres`.
+    - The game cannot find it itself: the imported texture is compressed, which finds only 73 of
+      the 101 triangles, or picks up 40–60 housing triangles with a looser threshold. The
+      selection rule lives in `mirror_glass.gd`, which the tool and the test share.
+  - **Real reflections:** one camera per mirror, at the glass, set as a driver sets a mirror.
+    - **The main glass** is slightly curved, like the Iveco's European mirrors (1.6 m radius). It
+      shows from 4.5° inside the van's side, so the side shows along its inner edge, to 13° outside,
+      with the horizon about a third from the top.
+    - **The wide-angle glass below** has a 0.4 m radius. It shows the van's side, the rear wheel and
+      the ground beside it, 52.8° across against 18° for the main glass.
+    - The picture is spread over each glass as a curved mirror spreads it, and flipped as a mirror
+      flips it.
+  - **Brightness:**
+    - the mirror cameras render in HDR with a linear tonemap, and the driver's view tone-maps the
+      result once, as it does everything else. So the headlights of a van behind stay bright, and
+      their reflection on the wet road shows (screen-space reflections in the driver's mirror);
+    - with nothing lit behind at night, the mirror is dark, as real mirrors are;
+    - the glass reflects 60%, like chrome.
+  - **Clear glass:** the mirror glass is heated, as on the Daily, so it carries no rain. The rain
+    stays on the side window in front of it.
+  - **Sharper and smoother:**
+    - each mirror camera renders at 640 pixels (today: 256 × 320);
+    - the driver's mirror updates 30 times a second and the passenger's 15. Today both shared 45,
+      22.5 each.
+  - **From outside:**
+    - the reflections are drawn on their own render layer (8), which only the driving camera sees;
+    - they show only while someone is in the driver's seat, so Ethan walking round the van sees
+      the Iveco's own dark glass;
+    - the driver's mirror, its glass and its view all swing with the door.
+- **The moon and the mirrors' cost** (`industrial_loop.gd`, `MOON_LAYER`):
+  - **The finding:** the moon's shadow, drawn again for every mirror picture, was about two thirds
+    of a mirror's cost.
+  - **The change:**
+    - the moon is now on render layer 4, the layer the mirrors never draw (the cab's layer). The
+      driving camera, Ethan's camera and the depot's reflection probe still see it, and its
+      shadows;
+    - each mirror camera gets a copy of the world's lighting with a little more soft fill
+      (`MIRROR_FILL`, +0.05) in the moon's place. At mirror size, moonlight and fill cannot be
+      told apart;
+    - the reverse camera now draws layers 1–3, so it keeps the moon.
+- **The tail lamps** (`_tail_glow_lights()`): with the engine running they cast a faint red glow
+  on the road behind, four times brighter when braking, as brake lamps are. They are two soft red
+  lights (0.25, braking 1.0, 5 m, 85°), so the mirrors at night show the road behind tinted red.
+- **The yard gravel** (`industrial_loop.gd`):
+  - **The bug:** the lumber yard (since Run 15) and the forecourt (since Run 31) are boxes whose
+    texture coordinates are not in metres. The gravel was stretched about 100 times: a 5 cm leaf
+    became a 5 m blotch, and the stretched gloss map made the white "puddles" of #111.
+  - **The fix:** both are projected in metres, 1.8 m to a tile, like the verges.
+- **Claude Code's calls:**
+  - the glass radii, the aim (4.5° and 8° inside, 16° down) and the 60% reflectance;
+  - the heated glass;
+  - 30 and 15 updates a second;
+  - 640 pixels, and the mirrors' level-of-detail threshold of 12 (a narrow mirror camera
+    otherwise picks finer models than it needs);
+  - the fill;
+  - the tail glow's strength, softened twice after captures showed it as a red floodlight.
+- **Test changes, with reasons (#117–#119):**
+  - **New `game/tests/test_mirrors.gd`, 11 checks:**
+    - each mirror is the Iveco's own glass, 2 mm in front of it;
+    - from outside, dark glass, the reflections only for the driver in the seat;
+    - HDR, tone-mapped once, 640 pixels, 60%;
+    - the driver's mirror set as a driver sets it, and the wide-angle glass wider and lower;
+    - the mirror swings with the door;
+    - 30 and 15 updates a second;
+    - the moon skipped by the mirror cameras, with a fill;
+    - the tail glow;
+    - the gravel at real size.
+  - **`test_cockpit.gd`** (25 checks, the same count):
+    - **Cameras:** the camera check reads the layers it names (world, body, cab) instead of the
+      whole cull mask, because the driving camera also sees the mirror layer now.
+    - **Mirrors:** "shows its live view, mirrored, on both its glasses, facing back" becomes
+      "reflects onto both of its own glasses, the main and the wide-angle one".
+    - **Screens:** they number 3, not 7, because the mirrors are glass, not screens.
+  - **`test_dash_screen.gd`** (15): its reversing-lamp check took every backward-pointing light for
+    a reversing lamp. The red tail glow also points back, so it now takes the white ones.
+- **Test first:** on the old mirrors the new test failed 0/11 (`logs/phase_1/run33/before/`).
+- **Mutations:** all exit 1, each failing only its own check (`logs/phase_1/run33/mutation_*`):
+  - the old non-HDR picture;
+  - the mirror aimed 2° outside the van's side instead of 4.5° inside: the side no longer shows;
+  - the moon left in the mirrors;
+  - the forecourt gravel stretched again;
+  - the reflections left showing with no one in the seat.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26, 11/11; art 0 failures. The only
+  error line other than "resources still in use" is the save test's deliberately damaged file.
+  Logs are in `logs/phase_1/run33/suites/`.
+- **Import:** the headless import with the scratch home exits 0 with no errors or warnings. It adds
+  only the `.uid` files of `mirror_glass.gd`, `mirror_glass.gdshader` and `test_mirrors.gd`, and
+  the real save folder is unchanged (`logs/phase_1/run33/import/`).
+- **Measured** (windowed, 1280×800, vsync off, on battery, so not comparable with runs on power):
+  - **Today against the new mirrors,** in one prototype session: 12.40 ms (80.6 FPS) against
+    13.25 ms (75.5 FPS), +0.85 ms. Updating the driver's mirror every frame would cost +3.7 ms, so
+    it updates 30 times a second.
+  - **One mirror at 30 Hz,** looking into the forest: 2.65 ms with the moon's shadows, 0.65–1.3 ms
+    without.
+  - **The final build** (`capture_mirrors.gd`): 69.8 FPS at the start and 74.8 FPS with a van
+    behind.
+- **Evidence:**
+  - `evidence/phase_1/mirror/run33_options/`: today, A and B, as first shown;
+  - `evidence/phase_1/mirror/run33_fix/`: today against the fixed A, and the gravel before and
+    after;
+  - `evidence/phase_1/mirror/run33/` (`mirrors_sheet.png`), from the new
+    `tools/captures/capture_mirrors.gd`:
+    - a van 28 m behind, glancing and zoomed;
+    - the start;
+    - from outside;
+    - the door open;
+    - braking;
+    - the forecourt gravel.
+- **For the author:**
+  - at night, with nothing lit behind, the mirror is dark. What shows are lights: a van behind,
+    the office and yard lamps, and the red glow of your own tail lamps;
+  - from the driver's seat the passenger mirror is hard to see: it sits just past the front edge
+    of the passenger window, nearly edge-on. That is its own step (#120);
+  - the mirrors copy the world's lighting once, when the van is built. A later change to the
+    world's lighting, such as a capture's debug light, does not reach them.
+
+## Revision 2026-11-04 (Run 33, step 2: the passenger mirror turned toward the driver, C49)
+
+- **Author:** "alright proceed", then "Turn it toward me (Recommended)" and, after seeing the renders,
+  "Yes, build it (Recommended)" (#120).
+- **The finding:**
+  - from the driver's eye only a thin strip of the passenger mirror showed, at the front edge of the
+    passenger window;
+  - the model's mirror glass faces almost straight back, so from the seat it was seen 65° off its
+    face, nearly edge-on;
+  - the door's front frame hid most of what was left: 48 of the passenger glass's 101 triangles
+    were in sight, against 87 for the driver's mirror.
+- **The change** (`van_presentation.gd`, `_turn_passenger_mirror()`):
+  - when the van is built, the passenger mirror head is separated from the door mesh. That is the
+    1,055 triangles outboard of the door skin in `MIRROR_HEAD`: the housing, the glass and the
+    arm's outer part;
+  - it is swivelled 25° toward the cab (`MIRROR_TURN`) about the arm's root, as a driver sets a van
+    mirror on its pivot. The model files are unchanged;
+  - the passenger reflection and its camera follow the turned glass, and the view is still set as a
+    driver sets it: from 4.7° inside the van's right side to 10.6° outside.
+- **Result:**
+  - from the seat, 62 of the 101 glass triangles are in sight, seen 42° off the glass's face. On
+    screen that is about two and a half times the area it was;
+  - turning further does not help, because the door frame keeps hiding the mirror's inboard third.
+    The van's right side, which shows along that edge, is mostly behind the frame.
+- **Found and fixed while building:** the mirror camera's view direction was worked out in the van's
+  frame but applied in the turned holder's frame, so the passenger mirror looked 25° into the van's
+  own side. The view is now turned into the holder's frame. The extended aim check caught it.
+- **Test changes, with reasons (#120):** `game/tests/test_mirrors.gd` (13 checks; it had 11):
+  - **new:** "The passenger mirror is turned toward the driver, so it shows through the window's
+    front corner: 62 of its 101 glass triangles in sight from the seat, seen 42 degrees off its
+    face". It casts a ray from each glass triangle to the eye against everything the driving
+    camera draws. On step 1's code it failed: 48 and 65° (`logs/phase_1/run33/step2_before/`);
+  - **the aim check** now covers the passenger mirror too;
+  - **the glass-fit check** reads the glass from the turned head when there is one.
+- **Mutations:** both exit 1, each failing only its own check (`logs/phase_1/run33/mutation_*`):
+  - with no turn, 48 of 101 in sight;
+  - with the view direction left in the van's frame, the passenger mirror looks 29.7° into the
+    van's side.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26, 13/13; art 0 failures. The only
+  other error line is the save test's deliberately damaged file
+  (`logs/phase_1/run33/step2_suites/`).
+- **Evidence:**
+  - `evidence/phase_1/mirror/run33_step2_proposal/`: today against the turn, as shown before the
+    build, with the glass marked;
+  - `evidence/phase_1/mirror/run33_step2/` (`passenger_mirror_sheet.png`), from
+    `capture_mirrors.gd`, which now also takes the passenger mirror. 70.2 FPS at the start and
+    75.3 FPS with a van behind, on battery.
+- **What it looks like at night:** the passenger mirror sits in the window's front corner. At the
+  start it reflects dark forest, so it reads as dark glass. A van behind shows as a bright
+  headlight in it.

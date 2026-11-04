@@ -46,3 +46,6 @@ __pycache__/
 # Raw Sketchfab downloads (hundreds of MB). Each folder's README.md stays tracked.
 /source_assets/sketchfab/*/*
 !/source_assets/sketchfab/*/README.md
+
+# The scratch home that scripts/run-test.sh gives Godot, so tests never touch the real save.
+/.scratch-home/

@@ -18,6 +18,7 @@ const SAPLING_SHADOW_RANGE := 25.0
 const SAPLING_SEED := 500
 const EDGE_DEPTH := 18.0
 const YOUNG_BARK_SHADE := Color(0.5, 0.47, 0.44)
+const WET_BARK := Color(0.6, 0.6, 0.6)
 const EDGE_BOOST := 1.5
 const FAR_SAPLINGS := 0.3
 const ROADSIDE_BAND := 19.0
@@ -274,6 +275,7 @@ func _bark_material() -> ORMMaterial3D:
 	material.normal_enabled = true
 	material.normal_texture = BARK_NORMAL
 	material.orm_texture = BARK_ORM
+	material.albedo_color = WET_BARK
 	return material
 
 

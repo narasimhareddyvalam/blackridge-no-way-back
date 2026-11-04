@@ -24,7 +24,7 @@ const HAIRPIN_PACE := 18.0 / 3.6
 const VALLEY_FROM := 950
 const DESTINATION := "Freight depot"
 const RUN_SHEET: Array[String] = ["RUN SHEET · NIGHT", "BR 048 · E. COLE",
-	"Freight depot, bay 3", "14 pallets, sawn timber", "Over the pass · valley road closed"]
+	"Freight depot, bay 2", "14 pallets, sawn timber", "Over the pass · valley road closed"]
 const LAND := Color("15191c")
 const ROAD := Color("2e3439")
 const ROUTE := Color("4c8dff")

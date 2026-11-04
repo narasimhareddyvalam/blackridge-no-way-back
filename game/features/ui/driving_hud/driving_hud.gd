@@ -5,7 +5,8 @@ signal restart_requested
 signal recovery_requested
 signal pause_requested
 
-const SETTINGS_PATH := "user://driving_audio.cfg"
+const SaveFile = preload("res://shared/save/save_file.gd")
+const SETTINGS_VERSION := 1
 const VanGuide = preload("van_guide.gd")
 const CONTROLS := "W / S   Accelerate / brake     A / D   Steer\n" + \
 	"Q   Select forward / reverse (stop first)     SPACE   Handbrake\n" + \
@@ -16,6 +17,7 @@ const CONTROLS := "W / S   Accelerate / brake     A / D   Steer\n" + \
 	"R   Recover to checkpoint     ESC   Pause / controls / audio"
 
 var menu_visible: bool = true
+var settings_path: String = ""
 var van_guide := VanGuide.new()
 var _heading: VBoxContainer
 var _objective: Label
@@ -33,12 +35,16 @@ var _document: PanelContainer
 var _sheet: RichTextLabel
 var _typewriter := SystemFont.new()
 var _handwriting := SystemFont.new()
-var _settings := ConfigFile.new()
+var _warning: Label
+var _warnings: Dictionary = {}
+var _sliders: Dictionary = {}
+var _defaults: Dictionary = {}
+var _settings: SaveFile
+var _settings_changed: bool = false
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_settings.load(SETTINGS_PATH)
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -165,6 +171,10 @@ func _build_menu(root: Control) -> void:
 	var intro := _label("Follow the industrial loop and park at the freight depot.\n" +
 		"The dashboard map and roadside signs show the way.", 16)
 	rows.add_child(intro)
+	_warning = _label("", 15, Color("e3c799"))
+	_warning.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_warning.visible = false
+	rows.add_child(_warning)
 	_resume = _button("Begin / continue drive", func() -> void: resume_requested.emit())
 	rows.add_child(_resume)
 	rows.add_child(_label(CONTROLS, 15, Color("c4cdca")))
@@ -175,7 +185,7 @@ func _build_menu(root: Control) -> void:
 	rows.add_child(buttons)
 	buttons.add_child(_button("Recover van", func() -> void: recovery_requested.emit()))
 	buttons.add_child(_button("New drive", func() -> void: restart_requested.emit()))
-	buttons.add_child(_button("Quit", func() -> void: get_tree().quit()))
+	buttons.add_child(_button("Quit", _quit))
 	_resume.grab_focus()
 
 
@@ -199,28 +209,88 @@ func _audio_slider(parent: Control, bus: String) -> void:
 	slider.max_value = 100
 	slider.step = 1
 	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var index := AudioServer.get_bus_index(bus)
-	var default_volume := db_to_linear(AudioServer.get_bus_volume_db(index))
-	var stored: Variant = _settings.get_value("audio", bus, default_volume)
-	var volume := default_volume
-	if (stored is float or stored is int) and is_finite(float(stored)):
-		volume = clampf(float(stored), 0.0, 1.0)
-	slider.value = volume * 100
-	AudioServer.set_bus_volume_db(index, linear_to_db(maxf(volume, 0.0001)))
-	AudioServer.set_bus_mute(index, volume <= 0)
+	_defaults[bus] = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(bus)))
+	slider.value = _defaults[bus] * 100
 	slider.value_changed.connect(_volume_changed.bind(bus))
+	_sliders[bus] = slider
 	row.add_child(slider)
 
 
 func _volume_changed(percent: float, bus: String) -> void:
-	var volume := percent / 100.0
+	_set_volume(bus, percent / 100.0)
+	_settings_changed = true
+
+
+func _set_volume(bus: String, volume: float) -> void:
+	(_sliders[bus] as HSlider).set_value_no_signal(volume * 100)
 	var index := AudioServer.get_bus_index(bus)
 	AudioServer.set_bus_volume_db(index, linear_to_db(maxf(volume, 0.0001)))
 	AudioServer.set_bus_mute(index, volume <= 0)
-	_settings.set_value("audio", bus, volume)
-	var result := _settings.save(SETTINGS_PATH)
-	if result != OK:
-		push_warning("Could not save audio preferences: %s" % error_string(result))
+
+
+func load_settings() -> SaveFile.Read:
+	_settings = SaveFile.new(settings_path, SETTINGS_VERSION)
+	var config := _settings.read(_valid_settings)
+	for bus: String in _sliders:
+		var volume: float = _defaults[bus]
+		if config != null and config.has_section_key("audio", bus):
+			volume = float(config.get_value("audio", bus))
+		_set_volume(bus, volume)
+	_settings_changed = false
+	var words := ""
+	if _settings.status == SaveFile.Read.CORRUPT:
+		words = "Settings could not be read, so the default volumes are in use."
+	elif _settings.status == SaveFile.Read.NEWER:
+		words = "These settings are from a newer version of the game. The default volumes are " \
+			+ "in use, and volume changes will not be saved this session."
+	warn("settings", words)
+	return _settings.status
+
+
+func save_settings() -> Error:
+	if not _settings_changed or _settings == null:
+		return OK
+	var config := ConfigFile.new()
+	for bus: String in _sliders:
+		config.set_value("audio", bus, (_sliders[bus] as HSlider).value / 100.0)
+	var result := _settings.write(config)
+	if result == OK:
+		_settings_changed = false
+	elif result != ERR_UNAVAILABLE:
+		notify("Settings could not be saved. These volumes last until you quit.")
+	return result
+
+
+func _valid_settings(config: ConfigFile) -> bool:
+	for bus: String in _sliders:
+		if config.has_section_key("audio", bus):
+			var volume: Variant = config.get_value("audio", bus)
+			if not (volume is float or volume is int) or not (volume >= 0.0 and volume <= 1.0):
+				return false
+	return true
+
+
+func warn(source: String, words: String) -> void:
+	if words.is_empty():
+		_warnings.erase(source)
+	else:
+		_warnings[source] = words
+	_warning.text = "\n".join(_warnings.values())
+	_warning.visible = not _warning.text.is_empty()
+
+
+func warning() -> String:
+	return _warning.text
+
+
+func _quit() -> void:
+	save_settings()
+	get_tree().quit()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		save_settings()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -241,6 +311,8 @@ func set_menu(value: bool) -> void:
 	_menu.visible = value
 	if value:
 		_resume.grab_focus()
+	else:
+		save_settings()
 
 
 func set_objective(title: String, detail: String) -> void:

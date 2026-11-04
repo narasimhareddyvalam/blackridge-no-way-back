@@ -30,6 +30,7 @@ var _presentation: Node3D
 var _head_on_glass := Vector3.ZERO
 var _crack: float = 0.0
 var _scratch: String
+var _after_hit := PackedByteArray()
 
 
 func _initialize() -> void:
@@ -96,6 +97,11 @@ func _run() -> void:
 	await _check_depot()
 	_check(is_equal_approx(_amount(), _crack),
 		"The crack stays for the rest of the drive (%.2f at the depot)" % _amount())
+	var finished := ConfigFile.new()
+	_check(finished.load(_scratch) == OK and finished.get_value("drive", "stage", -1) == 0
+		and not finished.has_section_key("drive", "body"),
+		"With the drive over, the save goes back to its start, so the next launch begins a new "
+		+ "drive")
 	await _check_continue()
 	_hud.restart_requested.emit()
 	await _seconds(0.3)
@@ -447,9 +453,13 @@ func _check_checkpoint(pedestrian: Node3D) -> void:
 		and is_equal_approx(float(crack.get("amount", 0.0)), _crack),
 		"When he can drive on, a checkpoint keeps the van's place, where the man lies and the "
 		+ "crack (body within %.2f m)" % apart)
+	_after_hit = FileAccess.get_file_as_bytes(_scratch)
 
 
 func _check_continue() -> void:
+	var quit_after_hit := FileAccess.open(_scratch, FileAccess.WRITE)
+	quit_after_hit.store_buffer(_after_hit)
+	quit_after_hit.close()
 	var saved := ConfigFile.new()
 	saved.load(_scratch)
 	if not saved.has_section_key("drive", "recovery") \

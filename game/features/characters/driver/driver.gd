@@ -9,6 +9,10 @@ const ARRIVE := 0.06
 const STUCK_SECONDS := 1.0
 const FACE_SECONDS := 0.25
 const GRIP_REACH := 0.17
+const STEP_HEIGHT := 0.3
+const STEP_PROBE := 0.1
+const STEP_REACH := 0.35
+const STEP_HOLD := 0.6
 
 var active: bool = false
 var _pivot: Node3D
@@ -26,6 +30,8 @@ var _grip_target := Node3D.new()
 var _grip_pole := Node3D.new()
 var _grip_seen := Vector3.ZERO
 var _hand := -1
+var _step_top := INF
+var _step_time: float = 0.0
 
 
 func _ready() -> void:
@@ -39,6 +45,7 @@ func _ready() -> void:
 	add_child(collision)
 	collision_layer = 4
 	collision_mask = 3
+	floor_snap_length = STEP_HEIGHT
 	_model = ETHAN.instantiate() as Node3D
 	_model.name = "Ethan"
 	add_child(_model)
@@ -188,13 +195,55 @@ func _physics_process(delta: float) -> void:
 			pace = RUN_SPEED
 	velocity.x = direction.x * pace
 	velocity.z = direction.z * pace
-	velocity.y = -0.5 if is_on_floor() else velocity.y - 18 * delta
+	if _step_top < INF:
+		velocity.y = 0.0
+	else:
+		velocity.y = -0.5 if is_on_floor() else velocity.y - 18 * delta
+		_step_up(Vector3(velocity.x, 0.0, velocity.z))
 	move_and_slide()
+	_hold_step(delta)
 	var moving := direction.length_squared() > 0.1
 	if moving:
 		_model.rotation.y = lerp_angle(_model.rotation.y, atan2(direction.x, direction.z),
 			1.0 - exp(-delta * TURN_RATE))
 	_play(("Run" if pace > WALK_SPEED else "Walk") if moving else "Idle")
+
+
+func _step_up(heading: Vector3) -> void:
+	if not is_on_floor() or heading.length_squared() < 0.01:
+		return
+	var forward := heading.normalized()
+	if not test_move(global_transform, forward * STEP_PROBE):
+		return
+	var lift := Vector3.UP * STEP_HEIGHT
+	var raised := global_transform.translated(lift)
+	var over := forward * STEP_REACH
+	if test_move(global_transform, lift) or test_move(raised, over):
+		return
+	var landing := KinematicCollision3D.new()
+	if not test_move(raised.translated(over), -lift, landing) \
+			or landing.get_normal().y < cos(floor_max_angle):
+		return
+	var rise := STEP_HEIGHT - landing.get_travel().length()
+	if rise < 0.02:
+		return
+	_step_top = global_position.y + rise + 0.01
+	_step_time = 0.0
+	global_position.y = _step_top
+	floor_snap_length = 0.0
+
+
+func _hold_step(delta: float) -> void:
+	if _step_top == INF:
+		return
+	_step_time += delta
+	global_position.y = maxf(global_position.y, _step_top)
+	var below := KinematicCollision3D.new()
+	var landed := test_move(global_transform, Vector3.DOWN * 0.03, below) \
+		and below.get_normal().y >= cos(floor_max_angle)
+	if landed or _step_time > STEP_HOLD:
+		_step_top = INF
+		floor_snap_length = STEP_HEIGHT
 
 
 func _route_direction(delta: float) -> Vector3:

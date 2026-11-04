@@ -2,6 +2,9 @@ extends SceneTree
 
 const PROJECTOR_PATH := "res://features/vehicles/freight_van/art/low_beam_pattern.png"
 const HIGH_PATH := "res://features/vehicles/freight_van/art/high_beam_pattern.png"
+const HALF_ANGLE := 35.0
+const CUTOFF := 0.6
+const WET_BARK := 0.6
 
 var _checks: int = 0
 var _failures: int = 0
@@ -45,6 +48,8 @@ func _run() -> void:
 	_check(_van.get("headlights_on") and _van.get("high_beams") and _all_visible(lights, true)
 		and _all_patterns(lights, HIGH_PATH) and lights[0].spot_range > 200.0,
 		"A real L press switches both headlights to high beams")
+	var high_energy := lights[0].light_energy
+	var high_range := lights[0].spot_range
 	await _press("headlights")
 	await _wait_physics(3)
 	_check(not _van.get("headlights_on") and not _van.get("high_beams")
@@ -54,7 +59,13 @@ func _run() -> void:
 	_check(_van.get("headlights_on") and not _van.get("high_beams")
 		and _all_visible(lights, true) and _all_patterns(lights, PROJECTOR_PATH),
 		"A third L press brings the low beams back")
+	_check(high_range >= 250.0 and high_energy > lights[0].light_energy,
+		"High beams reach %.0f m, with more light than the low beams (%.0f against %.0f)"
+		% [high_range, high_energy, lights[0].light_energy])
+	_check_reach(lights[0])
 	_check_patterns()
+	_check_low_beam_shape()
+	_check_wet_bark()
 	await _check_beam_rain()
 	_finish()
 
@@ -106,6 +117,72 @@ func _check_patterns() -> void:
 		+ "and keep the low beam's near light (%.1fx brighter at the horizon)" % gain)
 
 
+func _check_reach(lamp: SpotLight3D) -> void:
+	var low := Image.load_from_file(ProjectSettings.globalize_path(PROJECTOR_PATH))
+	var column := low.get_width() / 2
+	var band := 0.0
+	for row in range(low.get_height()):
+		band = maxf(band, low.get_pixel(column, row).srgb_to_linear().r)
+	var edge := 0
+	while edge < low.get_height() and low.get_pixel(column, edge).srgb_to_linear().r < band * 0.1:
+		edge += 1
+	var tan_half := tan(deg_to_rad(HALF_ANGLE))
+	var above_axis := rad_to_deg(atan(-((edge + 0.5) / (low.get_height() / 2.0) - 1.0) * tan_half))
+	var pitch := rad_to_deg(asin(clampf(-lamp.global_basis.z.y, -1.0, 1.0)))
+	var below := -(pitch + above_axis)
+	var query := PhysicsRayQueryParameters3D.create(lamp.global_position,
+		lamp.global_position + Vector3.DOWN * 5.0, 1, [_van.get_rid()])
+	var hit := lamp.get_world_3d().direct_space_state.intersect_ray(query)
+	var height := lamp.global_position.y - (hit["position"] as Vector3).y if not hit.is_empty() \
+		else 1.0
+	var reach := height / tan(deg_to_rad(below)) if below > 0.05 else INF
+	_check(reach > 30.0 and reach < 50.0 and lamp.spot_range <= 80.0,
+		"Low beams light the road to about %.0f m ahead and fade out by %.0f m" % [reach,
+		lamp.spot_range])
+
+
+func _check_low_beam_shape() -> void:
+	var low := Image.load_from_file(ProjectSettings.globalize_path(PROJECTOR_PATH))
+	var centre := _beam(low, 0.0, 1.3)
+	var side := _beam(low, -20.0, 1.3)
+	var ground := _beam(low, 0.0, 15.0)
+	_check(side <= centre * 0.25 and ground <= centre * 0.1,
+		"The low beam fades as a real one does: %.0f%% of its centre at 20 degrees to the side, "
+		% (100.0 * side / maxf(centre, 0.001)) + "%.0f%% on the ground just ahead"
+		% (100.0 * ground / maxf(centre, 0.001)))
+
+
+func _beam(image: Image, side: float, below: float) -> float:
+	var tan_half := tan(deg_to_rad(HALF_ANGLE))
+	var cutoff := CUTOFF + clampf(side * tan(deg_to_rad(15.0)), 0.0, 1.0)
+	var column := (tan(deg_to_rad(side)) / tan_half + 1.0) * image.get_width() / 2.0
+	var row := (-tan(deg_to_rad(cutoff - below)) / tan_half + 1.0) * image.get_height() / 2.0
+	return image.get_pixel(clampi(int(column), 0, image.get_width() - 1),
+		clampi(int(row), 0, image.get_height() - 1)).srgb_to_linear().r
+
+
+func _check_wet_bark() -> void:
+	var shades: Array[float] = []
+	var forest := _app.get_node("IndustrialLoop/RoadsideForest")
+	for node in forest.find_children("*", "GeometryInstance3D", true, false):
+		var mesh: Mesh = null
+		if node is MeshInstance3D:
+			mesh = (node as MeshInstance3D).mesh
+		elif node is MultiMeshInstance3D and (node as MultiMeshInstance3D).multimesh != null:
+			mesh = (node as MultiMeshInstance3D).multimesh.mesh
+		if mesh == null:
+			continue
+		for surface in range(mesh.get_surface_count()):
+			var bark := mesh.surface_get_material(surface) as ORMMaterial3D
+			if bark != null and bark.albedo_texture != null \
+					and bark.albedo_texture.resource_path.contains("pine_bark"):
+				shades.append(bark.albedo_color.r)
+	var lightest: float = shades.max() if not shades.is_empty() else 1.0
+	_check(not shades.is_empty() and absf(lightest - WET_BARK) < 0.01,
+		"The trunks' bark is darkened for the rain (the lightest bark is %.0f%% of the dry "
+		% (100.0 * lightest) + "texture)")
+
+
 func _mean(image: Image, region: Rect2i) -> float:
 	var total := 0.0
 	for y in range(region.position.y, region.end.y):
@@ -129,7 +206,9 @@ func _start_game() -> void:
 func _headlights() -> Array[SpotLight3D]:
 	var result: Array[SpotLight3D] = []
 	for node in _van.find_children("*", "SpotLight3D", true, false):
-		result.append(node as SpotLight3D)
+		var light := node as SpotLight3D
+		if (_van.global_basis.inverse() * -light.global_basis.z).z < -0.8:
+			result.append(light)
 	return result
 
 

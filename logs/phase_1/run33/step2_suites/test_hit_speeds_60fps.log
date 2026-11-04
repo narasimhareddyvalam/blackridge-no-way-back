@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: At 30 km/h he is thrown onto the bonnet (hips 1.38 m up)
+PASS: At 30 km/h his head strikes the windshield and cracks it (0.93)
+PASS: At 30 km/h he never passes over or through the cab, and lies 1.7 m ahead of the bumper (furthest back -1.90 m)
+PASS: At 30 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -35 and 144 degrees, for 1 tick)
+PASS: At 45 km/h he is thrown onto the bonnet (hips 1.39 m up)
+PASS: At 45 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 45 km/h he never passes over or through the cab, and lies 0.7 m ahead of the bumper (furthest back -1.93 m)
+PASS: At 45 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -29 and 153 degrees, for 0 ticks)
+PASS: At 60 km/h he is thrown onto the bonnet (hips 1.85 m up)
+PASS: At 60 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 60 km/h he never passes over or through the cab, and lies 2.7 m ahead of the bumper (furthest back -1.52 m)
+PASS: At 60 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -98 and 148 degrees, for 2 ticks)
+HIT SPEEDS RESULT: 12/12 passed; 0 failed

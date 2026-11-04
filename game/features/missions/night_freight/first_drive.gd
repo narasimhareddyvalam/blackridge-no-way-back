@@ -6,13 +6,16 @@ signal checkpoint_save_failed(error: int)
 signal drive_completed
 signal struck(speed: float)
 
-const SAVE_PATH := "user://driving_prototype.cfg"
+const SaveFile = preload("res://shared/save/save_file.gd")
+const MISSION := "night_freight"
+const PROGRESS_VERSION := 1
+const AFTER_HIT: Array[String] = ["recovery", "body", "crack"]
 const TARGETS: Array[Vector3] = [Vector3(482.24, 25.4, -24.37), Vector3(458.48, 43.6, -114.17),
 	Vector3(164.28, 64.42, -206.81), Vector3(-20.05, 24.98, -50.67), Vector3(-28, 0, 93)]
 const HEADINGS: Array[float] = [0.2508, 0.2966, 1.5538, -2.6609, PI]
 const DIRECTIONS: Array[String] = ["THE SWITCHBACKS", "THE VIEWPOINT", "THE PASS",
 	"THE DESCENT", "PARK AT THE DEPOT"]
-const START := Transform3D(Basis(Vector3.UP, PI / 2), Vector3(560, 0.1, 130))
+const START := Transform3D(Basis(Vector3.UP, PI / 2), Vector3(568.0, -0.02, 123.5))
 const OncomingVan = preload("res://features/vehicles/oncoming_van/oncoming_van.gd")
 const ENCOUNTER_STAGE := 3
 const ENCOUNTER_SPAN := Vector2i(680, 730)
@@ -30,7 +33,7 @@ const CALL_SEARCH := Vector2i(0, 300)
 const RUN_SHEET := "BLACKRIDGE FREIGHT DEPOT\nRUN SHEET - NIGHT\n\n" \
 	+ "Driver ......... E. COLE\nVan ............ BR 048\n" \
 	+ "Pick-up ........ Lumber yard, Hill Road\nLoad ........... 14 pallets, sawn timber\n" \
-	+ "Deliver to ..... Freight depot, bay 3\nRoute .......... Over the pass\n" \
+	+ "Deliver to ..... Freight depot, bay 2\nRoute .......... Over the pass\n" \
 	+ "                 (valley road closed)\n\nSigned ........."
 const RUN_SHEET_SIGNATURE := "E. Cole"
 const MAYA_CALL: Array = [
@@ -64,7 +67,9 @@ var crossing: Node3D
 var oncoming: Node3D
 var pedestrian: Node3D
 var fleeing: bool = false
-var checkpoint_path: String = SAVE_PATH
+var checkpoint_path: String = ""
+var playable_area := Rect2()
+var progress_read: SaveFile.Read = SaveFile.Read.OFF
 var stage: int = 0
 var complete: bool = false
 var recovery_pose := START
@@ -75,6 +80,7 @@ var _called: bool = false
 var _held_for: float = -1.0
 var _coast_for: float = -1.0
 var _lock_lane: float = 0.0
+var _progress: SaveFile
 
 
 func _ready() -> void:
@@ -113,6 +119,7 @@ func _process(delta: float) -> void:
 			complete = true
 			_update_objective()
 			drive_completed.emit()
+			_save_finished()
 		return
 	recovery_pose = Transform3D(Basis(Vector3.UP, HEADINGS[stage]), target + Vector3.UP * 0.1)
 	stage += 1
@@ -316,48 +323,93 @@ func recover() -> void:
 
 
 func _save_checkpoint(announce: bool = true) -> Error:
-	var config := ConfigFile.new()
-	config.set_value("drive", "stage", stage)
+	var config := _progress_at(stage)
 	if fleeing and is_instance_valid(pedestrian):
 		config.set_value("drive", "recovery", recovery_pose)
 		config.set_value("drive", "body", pedestrian.lying_pose())
 		config.set_value("drive", "crack", vehicle.get_node("VanPresentation").crack_state())
-	var temporary_path := checkpoint_path + ".tmp"
-	var result := config.save(temporary_path)
-	if result == OK:
-		result = DirAccess.rename_absolute(temporary_path, checkpoint_path)
+	return _write_progress(config, announce)
+
+
+func _save_finished() -> void:
+	_write_progress(_progress_at(0), false)
+
+
+func _progress_at(at_stage: int) -> ConfigFile:
+	var config := ConfigFile.new()
+	config.set_value("save", "mission", MISSION)
+	config.set_value("drive", "stage", at_stage)
+	return config
+
+
+func _write_progress(config: ConfigFile, announce: bool) -> Error:
+	if checkpoint_path.is_empty():
+		return ERR_UNAVAILABLE
+	if _progress == null or _progress.path != checkpoint_path:
+		_progress = SaveFile.new(checkpoint_path, PROGRESS_VERSION)
+	var result := _progress.write(config)
 	if result == OK:
 		if announce:
 			checkpoint_saved.emit()
 	else:
-		if FileAccess.file_exists(temporary_path):
-			DirAccess.remove_absolute(temporary_path)
 		checkpoint_save_failed.emit(result)
-		push_warning("Could not save driving checkpoint: %s" % error_string(result))
 	return result
 
 
 func _load_checkpoint() -> void:
-	var config := ConfigFile.new()
-	if config.load(checkpoint_path) != OK:
+	_progress = SaveFile.new(checkpoint_path, PROGRESS_VERSION)
+	var config := _progress.read(_valid_progress)
+	progress_read = _progress.status
+	if config == null:
 		return
-	var value: Variant = config.get_value("drive", "stage", 0)
-	if not value is int or value < 0 or value > 4:
-		return
-	stage = value
+	stage = config.get_value("drive", "stage")
 	if stage > 0:
 		recovery_pose = Transform3D(Basis(Vector3.UP, HEADINGS[stage - 1]),
 			TARGETS[stage - 1] + Vector3.UP * 0.1)
-	if not config.has_section_key("drive", "body") \
-			or not config.has_section_key("drive", "recovery"):
+	if not config.has_section_key("drive", "body") or crossing == null:
 		return
-	var body: Variant = config.get_value("drive", "body")
-	var pose: Variant = config.get_value("drive", "recovery")
-	if body is Array and (body as Array).size() == Pedestrian.BONES.size() \
-			and pose is Transform3D and crossing != null:
-		_encounter_done = true
-		fleeing = true
-		recovery_pose = pose
-		_spawn_pedestrian()
-		pedestrian.lie_as(body)
-		vehicle.get_node("VanPresentation").restore_crack(config.get_value("drive", "crack", {}))
+	_encounter_done = true
+	fleeing = true
+	recovery_pose = config.get_value("drive", "recovery")
+	_spawn_pedestrian()
+	pedestrian.lie_as(config.get_value("drive", "body"))
+	vehicle.get_node("VanPresentation").restore_crack(config.get_value("drive", "crack"))
+
+
+func _valid_progress(config: ConfigFile) -> bool:
+	var value: Variant = config.get_value("drive", "stage", -1)
+	if config.get_value("save", "mission", "") != MISSION or not value is int or value < 0 \
+			or value >= TARGETS.size():
+		return false
+	var found := AFTER_HIT.filter(func(key: String) -> bool:
+		return config.has_section_key("drive", key))
+	if found.is_empty():
+		return true
+	return found.size() == AFTER_HIT.size() and value >= ENCOUNTER_STAGE \
+		and _placed(config.get_value("drive", "recovery")) \
+		and _lying(config.get_value("drive", "body")) \
+		and _cracked(config.get_value("drive", "crack"))
+
+
+func _placed(value: Variant) -> bool:
+	if not value is Transform3D:
+		return false
+	var place: Transform3D = value
+	return place.is_finite() and absf(place.basis.determinant() - 1.0) < 0.01 \
+		and playable_area.has_point(Vector2(place.origin.x, place.origin.z))
+
+
+func _lying(value: Variant) -> bool:
+	return value is Array and (value as Array).size() == Pedestrian.BONES.size() \
+		and (value as Array).all(_placed)
+
+
+func _cracked(value: Variant) -> bool:
+	if not value is Dictionary:
+		return false
+	var amount: Variant = (value as Dictionary).get("amount")
+	var point: Variant = (value as Dictionary).get("point")
+	var seed: Variant = (value as Dictionary).get("seed")
+	return (amount is float or amount is int) and amount >= 0.0 and amount <= 1.0 \
+		and point is Vector2 and (point as Vector2).is_finite() \
+		and (seed is float or seed is int) and is_finite(float(seed))

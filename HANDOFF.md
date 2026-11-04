@@ -1,16 +1,21 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 26 step 2: the pedestrian scene waits for Maya's call (#102, C41),
-2026-11-02, on branch `develop`. Step 1 built the dash screen (#98–#101, C40). Run 19 is committed
-as `3d257a2`. After it, the save rules are committed on their own as `301c250` (#107), and Runs
-20–26 are committed together after that, once the author had told Max about the van on
-2026-11-03 (#109). `develop` is pushed; `main` is untouched.
+**Last run:** Phase 1, Run 33: real door mirrors and the yard gravel at real size (#119, C48),
+then the passenger mirror turned toward the driver (#120, C49), 2026-11-04, on branch `develop`.
+Runs 27 to 33 are committed together on `develop` and pushed (#121): saving (C43), Ethan's step,
+the beam shape and wet bark (C44), the beam reach (C45), the forecourt start (C46), the reversing
+lamps (C47) and this run. Committed before them, in order:
+- `3d257a2`: Run 19;
+- `301c250`: the save rules, on their own (#107);
+- `573862b`: Runs 20–26, after the author had told Max about the van on 2026-11-03 (#109).
+
+`develop` is pushed, including Runs 27–33; `main` is untouched.
 
 **The author's agreed order (#108–#109), each step approved on its own:**
 
 1. ~~Runs 20–26 committed and pushed~~ (done);
-2. saving, built to the committed save rules (the last revision of `CHANGE-BRIEF.md`), test
-   first;
+2. ~~saving, built to the committed save rules, test first~~ (done, Run 27); the author's check
+   (quit at a checkpoint, relaunch, continue) is still to come;
 3. the keyboard-only menu, Assignment 10's front door;
 4. Mission 2, The Wrong Cargo, planned with the author on a map before it is built;
 5. Mission 3, Last Run, with the combat encounter and the story scenes;
@@ -23,6 +28,370 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Run 33, step 2: the passenger mirror turned toward the driver (approved: #120; C49)
+
+**Files:**
+
+- `van_presentation.gd`:
+  - `MIRROR_HEAD`, `MIRROR_ARM`, `MIRROR_TURN` and `_turn_passenger_mirror()`;
+  - the passenger holder's transform;
+  - the mirror camera's pose turned into its holder's frame.
+- `game/tests/test_mirrors.gd` (13 checks).
+- `tools/captures/capture_mirrors.gd`, now with passenger views.
+- Docs: `CHANGE-BRIEF.md`, this file, C49 and #120.
+- Evidence: `evidence/phase_1/mirror/run33_step2_proposal/` and `run33_step2/`.
+
+**What the next run can rely on:**
+
+- **The door mesh:** `PassengerDoor`'s mesh is rebuilt when the van is built, without the mirror
+  head. The head is `PassengerMirrorHead`, a sibling under the `Iveco` node, turned 25° about the
+  arm's root (`_passenger_turn`).
+- **Triangle counts** under the `Iveco` node are unchanged.
+- **The passenger reflection's holder** (`PassengerMirror`) carries that turn. Mirror camera poses
+  are built in their holder's frame, so any future turned holder works too.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `LOG_DIR=logs/phase_1/run33/step2_before scripts/run-test.sh test_mirrors.gd 60` | 11/12, exit 1: 48 of 101 in sight, 65° off its face |
+| after the turn, aim check extended (`step2_aim_before/`) | 12/13, exit 1: the passenger mirror looked 29.7° into the van's side |
+| after turning the view into the holder's frame (`step2_first/`) | 13/13: 62 of 101, 42°; passenger aim 4.7° inside to 10.6° outside |
+| `mutation_passenger_not_turned`, `mutation_view_not_turned` | each 12/13, exit 1 |
+| every suite (`step2_suites/`) | all pass, the same counts as step 1 with mirrors 13/13; art 0 failures |
+| `capture_mirrors.gd -- ../evidence/phase_1/mirror/run33_step2` (windowed, on battery) | `passenger_mirror_sheet.png`; 70.2 FPS at the start, 75.3 FPS with a van behind |
+
+**Not verified:** the author's look in play. At night the passenger mirror mostly reflects dark
+forest; the van's lit right side, along its inner edge, is mostly behind the door frame.
+
+## Run 33: real door mirrors and the yard gravel at real size (approved: #119; C48)
+
+**Files:**
+
+- `game/features/vehicles/freight_van/van_presentation.gd`:
+  - `_mirrors()`, `_mirror()`, `_glass_piece()`, `_field()`, `_reflection()`,
+    `_reflected_light()`: the reflections, their cameras and their lighting;
+  - `_tail_glow_lights()`: the tail lamps' glow;
+  - the mirror schedule in `update_vehicle()` (`MIRROR_RATES`, `REVERSE_RATE`,
+    `mirror_updates`);
+  - the reverse camera's cull mask (7);
+  - removed: `MIRROR_CAMERA`, `MIRROR_GLASS` (the old position), `MIRROR_GLASS_SIZE`,
+    `WIDE_GLASS`, `WIDE_GLASS_SIZE`, `MIRROR_UPDATES_PER_SECOND`, `_mirror_glass()`,
+    `_mirror_timer` and `_mirror_turn`.
+- New in the van's folder:
+  - `mirror_glass.gdshader`, the glass;
+  - `mirror_glass.gd`, the rule that finds the mirror glass in the model;
+  - `art/iveco/mirror_glass_left.tres` and `mirror_glass_right.tres`, the glass it found.
+- `game/features/environments/industrial_loop/industrial_loop.gd`: `MOON_LAYER`; the probe's cull
+  mask; the yard and forecourt gravel projected in metres.
+- New tools:
+  - `tools/art/extract_mirror_glass.gd` makes the two `.tres` files;
+  - `tools/captures/capture_mirrors.gd` takes the evidence.
+- Tests:
+  - new `game/tests/test_mirrors.gd` (11 checks);
+  - `game/tests/test_cockpit.gd` (25) and `game/tests/test_dash_screen.gd` (15), with the reasons
+    in `CHANGE-BRIEF.md`.
+- Docs: `CHANGE-BRIEF.md`, this file, `PERFORMANCE.md`, C48 and #119.
+- Evidence: `evidence/phase_1/mirror/run33_options/`, `run33_fix/` and `run33/`.
+
+**What the next run can rely on:**
+
+- **Viewports and cameras:** `mirrors` holds the two door-mirror viewports, driver's first. Each has
+  one HDR camera with its own linear-tonemapped copy of the world's lighting. `mirror_cameras`
+  holds the reverse camera first, then the two mirror cameras; each camera's pose follows its
+  frame in `_mirror_frames`.
+- **Glass and layers:** the reflections are `MainGlass` and `WideGlass` under `DriverDoorGlass`
+  and `PassengerMirror`, on render layer 8 (`MIRROR_LAYER`). They are hidden while the van is not
+  occupied. The driving camera's cull mask is 15.
+- **The moon** is on render layer 4. A camera that should see moonlight must draw layer 4; the
+  door-mirror cameras do not.
+- **Rebuilding the glass:** if the Iveco model is converted again, rerun
+  `Godot --headless --path game --script ../tools/art/extract_mirror_glass.gd` (with the scratch
+  home). `test_mirrors.gd` fails if the saved glass no longer matches the model.
+- **Spotlights on the van:** besides the headlights (forward), the reversing lamps (white, back)
+  and the tail glow (red, back, `TailGlowLeft` and `TailGlowRight`).
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `HOME="$PWD/.scratch-home" Godot --headless --path game --script ../tools/art/extract_mirror_glass.gd` | 55 main and 46 wide-angle triangles per door, both saved |
+| `LOG_DIR=logs/phase_1/run33/before scripts/run-test.sh test_mirrors.gd 60` | 0/11, exit 1 |
+| the same after (`first/`, `check/`) | 11/11 |
+| five mutations (`mutation_ldr_screen`, `mutation_straight_back`, `mutation_moon_in_mirrors`, `mutation_stretched_gravel`, `mutation_shown_from_outside`) | each 10/11, exit 1, failing only its own check |
+| every suite (`suites/`) | 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26, 11/11; art 0 failures; the real save folder unchanged |
+| `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import` (`import/`) | exit 0, no errors or warnings; only three new `.uid` files; the real folder unchanged |
+| `HOME="$PWD/.scratch-home" Godot --path game --script ../tools/captures/capture_mirrors.gd -- ../evidence/phase_1/mirror/run33` (windowed, on battery) | 11 stills and `mirrors_sheet.png`; 69.8 FPS at the start, 74.8 FPS with a van behind |
+| the prototypes' frame times, in one session on battery | today's mirrors 12.40 ms, the new ones 13.25 ms (+0.85); the driver's mirror every frame +3.7 ms |
+
+**Not verified:**
+
+- the author's look at the mirrors in play;
+- the frame rate on mains power;
+- the passenger mirror from the seat, which is mostly hidden: it sits just past the front edge of
+  the passenger window (#120).
+
+## Run 32: reversing lamps and a working reverse camera (approved: #118; C47)
+
+**Files:**
+
+- `van_presentation.gd`: `REVERSE_LENS`, `REVERSE_LAMP`, `REVERSE_ENERGY`, `REVERSE_RANGE`,
+  `REVERSE_GAIN`, `_reversing_lamps()`, and the reverse camera's `CameraAttributesPractical`.
+- `game/tests/test_dash_screen.gd` (15 checks) and `game/tests/test_headlights.gd`, which counts
+  only forward-pointing lights as headlights.
+- Evidence: `evidence/phase_1/dash/run32/`.
+
+**What the next run can rely on:**
+
+- In reverse with the engine running, `ReversingLenses` (on the van's body) glows, and two backward
+  `SpotLight3D`s are visible. In drive both are hidden.
+- The reverse camera's exposure is 3x.
+- Tests that look for spotlights on the van must now tell headlights (pointing forward) from
+  reversing lamps (pointing back).
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `LOG_DIR=logs/phase_1/run32/before scripts/run-test.sh test_dash_screen.gd 60` | 14/15, exit 1: 0 lamps, 1.0x |
+| the same after (`first/`) | 15/15 |
+| lamps kept off (`mutation_lamps_off/`) | 14/15, exit 1 |
+| the first full run | `test_headlights.gd` 21/29 (it took all four spotlights for headlights); `test_cockpit.gd` 24/25 (the lens copy sat inside the converted model) |
+| after moving the lens copy to the body and selecting forward lights; every suite (`suites/`) | 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 26/26; art 0 failures |
+| `capture_dash_screen.gd -- evidence/phase_1/dash/run32` | the reverse picture's mean brightness 26.6 before, 45.0 after |
+
+**Unverified:** the rear of the van in reverse seen from outside, in a window.
+
+## Run 31: back onto the road, the van on the forecourt, bay 2, kerbs (approved: #117; C46)
+
+**Files:**
+
+- **`industrial_loop.gd`:**
+  - `SHOULDER` and `_shoulder()`: the verge's sloping outer edge;
+  - `FORECOURT`, `VAN_PARKING`, the forecourt's gravel and clearing;
+  - the floodlight aimed at the van.
+- **Mission `first_drive.gd`:** `START` on the forecourt (568, -0.02, 123.5), facing west; the run
+  sheet says bay 2.
+- **`navigation_display.gd`:** bay 2.
+- **`driver.gd`:** `STEP_REACH`, `STEP_HOLD`, `_step_top` and `_hold_step()`.
+- **Tests:** `test_ghat_road.gd` (33 checks) and `test_on_foot.gd` (49 checks).
+- **Evidence:** `evidence/phase_1/start/run31/`.
+
+**What the next run can rely on:**
+
+- **The road's edge:** the shoulder slopes into the ground, so nothing gets stuck coming back onto
+  the road on flat stretches.
+- **The start:** the van starts on the forecourt, out of the lane. Every suite, both Assignment 5
+  suites included, passes with it.
+- **Ethan's step:** he climbs steps up to 30 cm in one rise; 50 cm stops him.
+- **Next, waiting for the author's OK:**
+  - **reverse camera:** white reversing lamps and a low-light camera;
+  - **mirrors:** real reflections instead of self-lit screens.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| off-road probe at samples 40, 120, 330, 640 and 760, both sides (before) | stuck at 40 and 120, blocked by the verge strip with a level normal |
+| `LOG_DIR=logs/phase_1/run31/before scripts/run-test.sh test_ghat_road.gd 60` | 31/32, exit 1: the van stays off the asphalt on both sides |
+| the same after the shoulder (`first/`), and the probe | 32/32; back on the asphalt in 3.5–6 s at 40 and 120 |
+| step probe at 10–30 cm, before and after `_hold_step()` | before: 20–30 cm bobbed; after: one rise each |
+| `test_on_foot.gd`, with the step removed (`mutation_no_step/`) | 48/49, exit 1 |
+| every suite, with `LOG_DIR=logs/phase_1/run31/suites` | 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures |
+
+**Unverified:** pulling out of the forecourt by hand in a window, and puddles under the street lamps
+near the depot.
+
+## Run 30: low beams reach about 40 m, high beams further (approved: #115; C45)
+
+**Files:**
+
+- **Changed:**
+  - `tools/make_low_beam_pattern.py`: `CUTOFF_ABOVE_AXIS` 0.6, `STRAY` 0.02;
+  - both beam images, regenerated;
+  - `van_presentation.gd`:
+    - `LOW_BEAM_RANGE` 70 and `HIGH_BEAM_RANGE` 260;
+    - `LOW_BEAM_ENERGY` 650 and `HIGH_BEAM_ENERGY` 850, set by `_aim_beam()`;
+  - `game/tests/test_headlights.gd`: `_check_reach()` and the high-beam check (21 checks).
+- **Evidence:** `evidence/phase_1/beams/run30_options/` and `evidence/phase_1/beams/run30/`.
+
+**What the next run can rely on:**
+
+- **Low beams:** they light the road to about 37 m, measured where the light falls to a tenth, and
+  fade out by 70 m.
+- **High beams:** 850 against 650, with a reach of 260 m.
+- **The road beyond 50 m** at the start straight reads 29.1 on low beams and 106.1 on high beams;
+  lights off, it reads 24.6.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `LOG_DIR=logs/phase_1/run30/before scripts/run-test.sh test_headlights.gd 60` | 19/21, exit 1: 63 m and 120 m; 220 m with 650 against 650 |
+| the same after (`logs/phase_1/run30/first/`) | 21/21: 37 m, fading out by 70 m; 260 m with 850 against 650 |
+| the committed images and the 120 m reach put back (`mutation_old_reach/`) | 19/21, exit 1 |
+| every suite, with `LOG_DIR=logs/phase_1/run30/suites` | 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures |
+| `capture_beams.gd -- evidence/phase_1/beams/run30` | low 80.8/29.1, high 144.1/106.1, off 18.3/24.6; white-out 0.00% |
+
+**Unverified:** the author's look in motion, and the frame rate on mains power.
+
+## Run 29: low beams shaped like real ones, and wet bark (approved: #113–#114; C44)
+
+**Files:**
+
+- **Changed:**
+  - `tools/make_low_beam_pattern.py`: the new horizontal and vertical fades, and `STRAY` 0.03;
+  - `game/features/vehicles/freight_van/art/low_beam_pattern.png` and `high_beam_pattern.png`,
+    regenerated in that order;
+  - `roadside_forest.gd`: `WET_BARK` 0.6 for the mature trunks;
+  - `game/tests/test_headlights.gd`: `_check_low_beam_shape()` and `_check_wet_bark()` (19 checks).
+- **Evidence:**
+  - `evidence/phase_1/beams/run29_options/` (the options shown to the author);
+  - `evidence/phase_1/beams/run29/` (the standard beam measurements);
+  - `evidence/phase_1/collision/run29/` (the crossing, and the man in the road before and after).
+- **Docs:** `CHANGE-BRIEF.md` (Run 29), `docs/DESIGN_DECISIONS.md` (C44) and the prompt log
+  (#113–#114).
+
+**What the next run can rely on:**
+
+- **The low beam:**
+  - at 20° to the side it gives 21% of its centre, and 6% on the ground just ahead;
+  - the road on straights is as bright as before; on bends it is about a fifth dimmer;
+  - after any change to the generator, regenerate the low pattern, then the high one, then run
+    the headless import with `HOME="$PWD/.scratch-home"`.
+- **The bark:** mature trunks are drawn at 60% for the rain.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| `LOG_DIR=logs/phase_1/run29/before scripts/run-test.sh test_headlights.gd 60` | 17/19, exit 1: 50% at the side, 16% on the ground, bark 100% |
+| `python3 -I tools/make_low_beam_pattern.py`, then `make_high_beam_pattern.py` | both images written; high beams 20.6x brighter at the horizon (it was 12.6x) |
+| `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import` | exit 0, no errors; the real save folder unchanged |
+| the same test after (`logs/phase_1/run29/first/`) | 19/19, exit 0 |
+| the old beam images put back (`logs/phase_1/run29/mutation_old_beam/`) | 18/19, exit 1 |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run29/suites` | 64/64, 0 failures, 92/92, 19/19, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures |
+| `capture_beams.gd -- evidence/phase_1/beams/run29` | low 88.4/42.8, high 133.0/102.3, off 18.1/25.4; white-out 0.00% |
+| `capture_collision.gd -- evidence/phase_1/collision/run29` | the man in the road keeps his dark clothes |
+
+**Unverified:**
+
+- **The author's look in motion,** in a window.
+- **The frame rate on mains power.**
+
+## Run 28: Ethan steps up road edges and kerbs (approved: #112)
+
+**Files:**
+
+- **Changed:**
+  - `driver.gd`: `STEP_HEIGHT` 0.3 m, `STEP_PROBE` 0.1 m, `_step_up()` before each
+    `move_and_slide()`, and `floor_snap_length` 0.3 m;
+  - `game/tests/test_on_foot.gd`: `ROUND_THE_FRONT` and `_check_walk_to_van()` (48 checks).
+- **Docs:** `CHANGE-BRIEF.md` (Run 28, with the play-test's eight gaps) and the prompt log
+  (#111–#112).
+
+**What the next run can rely on:**
+
+- **On foot:** Ethan walks from the office to the driver's door by keyboard, up the road's 11 cm
+  gravel edge, and E from 4 m away walks him round with no teleport. The scripted walk's
+  stuck-then-arrive fallback (`_route_direction()`) is still there as a safety net.
+- **What still stops him:** walls, barriers, the van and anything steeper than 45°.
+- **The play-test gaps,** listed in `CHANGE-BRIEF.md` Run 28, are waiting for the author's
+  approval, one step at a time. The suggested order is lighting (white trunks), then the start
+  (the van in the yard, the bay number, the puddles), then gears and the hillside texture. The
+  prototype wording goes with the keyboard-only menu.
+- **The scratch probes** (`probe_van_approach.gd`, `probe_playthrough.gd`,
+  `capture_playthrough.gd`, `probe_boarding.gd`) are in the agent's scratch folder, not the
+  repository.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| the approach probe from 17 directions, before | stopped 2.6 m short from 15 directions; blocked by the verge strip's collision (contact normal y 0.64) |
+| a headless play-through by key presses | the whole drive completes; Ethan stuck 5.85 m from the door; E from 4.15 m, then a teleport |
+| the same drive in a window (21 screenshots) | the eight gaps in `CHANGE-BRIEF.md` Run 28 |
+| `LOG_DIR=logs/phase_1/run28/before scripts/run-test.sh test_on_foot.gd 60` | 47/48, exit 1: 5.85 m from the door |
+| the same after the fix (`logs/phase_1/run28/first/`) | 48/48, exit 0: 0.30 m from the door after 9.1 s, up 0.11 m |
+| with `_step_up()` removed (`logs/phase_1/run28/mutation_no_step/`) | 47/48, exit 1 |
+| the approach probe after the fix; the boarding probe | the van's body reached from every direction; boarding from 4 m in 7.9 s, largest step 3.8 cm |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run28/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 48/48, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures |
+
+**Unverified:**
+
+- **The author's checks:** walking to the van in a window, then the save check (quit at a
+  checkpoint, relaunch, continue).
+- **Other low edges** (the bus stop pad, plot edges) are covered by the same step height, but only
+  the road's edge and the office were walked.
+
+## Run 27: saving, built to the save rules (approved: #110; C43)
+
+**Files:**
+
+- **New:**
+  - `game/shared/save/save_file.gd` (the rules: version first, whole-file check through the
+    caller's `valid` callable, `.corrupt`, newer files locked, `.tmp` then rename) and its `.uid`;
+  - `game/tests/test_save_rules.gd` (26 checks) and its `.uid`.
+- **Changed:**
+  - mission `first_drive.gd`: `checkpoint_path` empty by default, `playable_area`,
+    `progress_read`, `MISSION`, `PROGRESS_VERSION`, `_valid_progress()`, `_save_finished()`;
+    `SAVE_PATH` is gone;
+  - `driving_hud.gd`: `settings_path`, `load_settings()`, `save_settings()` on leaving the menu
+    and on quitting, `warn()` and `warning()`, `_sliders` and `_defaults`; `SETTINGS_PATH` is
+    gone;
+  - `game/app/first_drive.gd`: `PROGRESS_PATH` and `SETTINGS_PATH`, given only when
+    `get_tree().current_scene == self`; `_warn_about_progress()`;
+  - `van_presentation.gd`: `NO_CRACK`, the crack point and seed set when the glass is made;
+  - `game/tests/test_collision.gd`: 44 checks (the continue check uses the save kept after the
+    hit; a new check for the end-of-drive save);
+  - `scripts/run-test.sh`: `HOME=.scratch-home` and the real-folder fingerprint;
+  - `.gitignore`: `/.scratch-home/`.
+- **Docs:**
+  - `CHANGE-BRIEF.md` (Run 27);
+  - `TEST-REPORT.md` (a dated final-project section);
+  - `CLAUDE.md`: the runner, the `HOME` fact and the T key (#101);
+  - `docs/DESIGN_DECISIONS.md` (C43);
+  - the prompt log (#110).
+
+**What the next run can rely on:**
+
+- **The save files:**
+  - the real files are `user://progress.cfg` and `user://settings.cfg`, used only when the app is
+    the scene Godot launched. A game built by a test saves nothing unless the test sets
+    `checkpoint_path` or the HUD's `settings_path`;
+  - the old `driving_prototype.cfg` and `driving_audio.cfg` are never read or deleted.
+- **The runner:** `scripts/run-test.sh` keeps every run out of the real save folder. Captures run
+  by hand should use `HOME="$PWD/.scratch-home"` too.
+- **Adding to a save file:** add the new values to the save's validator and raise its version
+  (`PROGRESS_VERSION` or `SETTINGS_VERSION`). A file of the old version then needs an upgrade
+  step in `save_file.gd`'s `read()`; today a version below the current one counts as damaged.
+- **Mission 2:** today the mission's validator accepts only `night_freight`. The app must read
+  `[save] mission` before choosing a mission, or an M2 save would be set aside as damaged.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| a script printing `OS.get_user_data_dir()`, with `HOME="$PWD/.scratch-home"` (`logs/phase_1/run27/home_check/`) | `user://` is `.scratch-home/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back` |
+| `test_wipers.gd` through the old runner, the real folder listed before and after (`logs/phase_1/run27/before_isolation/`) | Godot's logs in the real folder rotated; `driving_prototype.cfg` unchanged |
+| every suite through the new runner on the unchanged game (`logs/phase_1/run27/baseline/`) | all pass, as in Run 26; no "REAL SAVE FOLDER CHANGED" |
+| `LOG_DIR=logs/phase_1/run27/before scripts/run-test.sh test_save_rules.gd 60` | 4/26, exit 1 |
+| the same after the build (`logs/phase_1/run27/first/`), with the regression suite | 26/26 and 64/64, exit 0 |
+| three mutations of the save code (`logs/phase_1/run27/mutation_*`) | all exit 1: 24/26, 21/26, 21/26 |
+| the first full run | `test_collision.gd` 41/42: its continue check read the save after the depot, which now holds the start |
+| `test_collision.gd` after its change (`logs/phase_1/run27/collision_fix/`); with no end-of-drive save (`mutation_no_end_save/`) | 44/44, exit 0; 43/44, exit 1 |
+| every suite under "Test suite to rerun", with `LOG_DIR=logs/phase_1/run27/suites` | 64/64, 0 failures, 92/92, 17/17, 12/12, 30/30 ×3, 25/25, 31/31, 12/12, 46/46, 21/21, 44/44, 12/12, 13/13, 12/12, 14/14, 26/26; art 0 failures; the only "ERROR:" lines are "resources still in use at exit" and the expected parse error |
+| `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import` (`logs/phase_1/run27/import/`) | exit 0, no errors or warnings; only the two new `.uid` files; the real folder unchanged |
+| the main scene launched headless with `--quit-after 30`, a damaged `progress.cfg` in the scratch home (`logs/phase_1/run27/real_launch/`) | set aside as `progress.cfg.corrupt`, with the warning |
+
+**Unverified:**
+
+- **The author's check:** drive to a checkpoint, quit, relaunch, continue.
+- **The menu with a warning on it,** in a window: the panel grows downward, which may crowd a
+  1280×800 window when both warnings show. The keyboard-only menu step will lay it out.
+- **Settings on Cmd+Q:** saving on quit relies on Godot sending the close request, which the
+  test sends directly.
 
 ## Run 26, step 2: the pedestrian scene waits for Maya's call (approved: #102; C41)
 
@@ -1793,6 +2162,7 @@ LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_crossing.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_maya_call.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_hit_speeds.gd 60
 LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_dash_screen.gd 60
+LOG_DIR=logs/phase_1/<run> scripts/run-test.sh test_save_rules.gd 60
 python3 tools/tests/check_first_drive_art.py
 ```
 

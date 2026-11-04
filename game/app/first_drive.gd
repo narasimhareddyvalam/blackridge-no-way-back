@@ -4,6 +4,9 @@ const Driver = preload("res://features/characters/driver/driver.gd")
 const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
+const SaveFile = preload("res://shared/save/save_file.gd")
+const PROGRESS_PATH := "user://progress.cfg"
+const SETTINGS_PATH := "user://settings.cfg"
 const SHEET_RANGE := 1.6
 const SIGN_DELAY := 1.2
 const SHEET_HOLD := 6.0
@@ -63,6 +66,9 @@ var _call_done: bool = false
 
 
 func _ready() -> void:
+	if get_tree().current_scene == self:
+		route.checkpoint_path = PROGRESS_PATH
+		hud.settings_path = SETTINGS_PATH
 	driver = Driver.new()
 	driver.name = "Driver"
 	add_child(driver)
@@ -87,7 +93,10 @@ func _ready() -> void:
 	route.phone_call.ended.connect(_call_ended)
 	route.road = world.road
 	route.crossing = world.crossing
+	route.playable_area = world.playable_area
 	route.configure(van)
+	_warn_about_progress()
+	hud.load_settings()
 	_navigation().follow(world.road, Mission.TARGETS[Mission.TARGETS.size() - 1],
 		Mission.START.origin)
 	hud.van_guide.road = world.road_points
@@ -254,6 +263,17 @@ func _route_objective(title: String, detail: String) -> void:
 	_route_detail = detail
 	if not _awaiting_van:
 		hud.set_objective(title, detail)
+
+
+func _warn_about_progress() -> void:
+	var words := ""
+	if route.progress_read == SaveFile.Read.CORRUPT:
+		words = "Saved progress could not be read, so a new drive has started. The old file was " \
+			+ "kept."
+	elif route.progress_read == SaveFile.Read.NEWER:
+		words = "This save is from a newer version of the game. It was not loaded or changed, " \
+			+ "and progress will not be saved this session."
+	hud.warn("progress", words)
 
 
 func _checkpoint_save_failed(_error: int) -> void:

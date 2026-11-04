@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: At 30 km/h he is thrown onto the bonnet (hips 1.38 m up)
+PASS: At 30 km/h his head strikes the windshield and cracks it (0.93)
+PASS: At 30 km/h he never passes over or through the cab, and lies 2.1 m ahead of the bumper (furthest back -1.89 m)
+PASS: At 30 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -34 and 97 degrees, for 1 tick)
+PASS: At 45 km/h he is thrown onto the bonnet (hips 1.37 m up)
+PASS: At 45 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 45 km/h he never passes over or through the cab, and lies 2.0 m ahead of the bumper (furthest back -1.92 m)
+PASS: At 45 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -28 and 139 degrees, for 0 ticks)
+PASS: At 60 km/h he is thrown onto the bonnet (hips 1.84 m up)
+PASS: At 60 km/h his head strikes the windshield and cracks it (1.00)
+PASS: At 60 km/h he never passes over or through the cab, and lies 2.5 m ahead of the bumper (furthest back -1.51 m)
+PASS: At 60 km/h his knees and elbows never stay bent the wrong way, and he comes to rest with them in range (peak -59 and 146 degrees, for 1 tick)
+HIT SPEEDS RESULT: 12/12 passed; 0 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

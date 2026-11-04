@@ -100,9 +100,9 @@ func _check_layers_and_shadows() -> void:
 		% (inside.size() + 3) + "the mirrors never draw")
 	var camera: Camera3D = _presentation.get("driving_camera")
 	var mirrors_ok := true
-	for mirror: Camera3D in _presentation.get("mirror_cameras"):
-		mirrors_ok = mirrors_ok and mirror.cull_mask == 3
-	_check(camera.cull_mask == 7 and mirrors_ok,
+	for view: SubViewport in _presentation.get("mirrors"):
+		mirrors_ok = mirrors_ok and view.get_camera_3d().cull_mask & 7 == 3
+	_check(camera.cull_mask & 7 == 7 and mirrors_ok,
 		"From the seat the driver sees the world, the van's own body and the cab; the mirrors see "
 		+ "the world and the body")
 	var body := (scenes.get(EXTERIOR) as Node).get_node_or_null("Body") as MeshInstance3D
@@ -147,26 +147,33 @@ func _check_mirrors() -> void:
 		+ "mirror (C32)")
 	for index in range(mini(views.size(), 2)):
 		var side := -1.0 if index == 0 else 1.0
-		var glass := _screens_showing(views[index])
+		var glass := _reflections_of(views[index])
 		var fits := glass.size() == 2
-		for screen in glass:
-			var at := _local(screen)
-			fits = fits and at.origin.x * side > 1.05 and at.origin.x * side < 1.25 \
-				and at.basis.z.z > 0.99 \
-				and bool((screen.material_override as ShaderMaterial).get_shader_parameter("mirrored"))
+		for surface in glass:
+			var box := _local(surface) * surface.mesh.get_aabb()
+			fits = fits and box.get_center().x * side > 1.05 and box.get_center().x * side < 1.25
 		var swings := index != 0 or (glass.size() > 0
 			and (_presentation.get("_door_glass") as Node).is_ancestor_of(glass[0]))
-		_check(fits and swings, "The %s door mirror shows its live view, mirrored, on both its "
-			% ("left" if index == 0 else "right") + "glasses, facing back%s"
-			% (" and swinging with the door" if index == 0 else ""))
+		_check(fits and swings, "The %s door mirror reflects onto both of its own glasses, the main "
+			% ("left" if index == 0 else "right") + "and the wide-angle one%s"
+			% (" and swings with the door" if index == 0 else ""))
 	var others := 0
 	for found in _presentation.find_children("*", "MeshInstance3D", true, false):
 		var surface := (found as MeshInstance3D).material_override as ShaderMaterial
 		if surface != null and surface.shader != null \
 				and surface.shader.resource_path == SCREEN_SHADER:
 			others += 1
-	_check(others == 7, "The screens are the cluster, the map, the reverse camera and the four "
-		+ "mirror glasses (%d)" % others)
+	_check(others == 3, "The screens are the cluster, the map and the reverse camera (%d); the "
+		% others + "mirrors are glass, not screens")
+
+
+func _reflections_of(view: SubViewport) -> Array[MeshInstance3D]:
+	var found: Array[MeshInstance3D] = []
+	for node in _presentation.find_children("*", "MeshInstance3D", true, false):
+		var surface := (node as MeshInstance3D).material_override as ShaderMaterial
+		if surface != null and surface.get_shader_parameter("reflection") == view.get_texture():
+			found.append(node as MeshInstance3D)
+	return found
 
 
 func _check_moon_roof() -> void:

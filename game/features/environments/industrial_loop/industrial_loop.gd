@@ -36,6 +36,10 @@ const FENCE_FROM := -40
 const FENCE_TO := 130
 const FENCE_PLOT := Rect2(FENCE_FROM - 2, FENCE_Z - 1.5, FENCE_TO - FENCE_FROM + 4, 3)
 const LUMBER_YARD := Rect2(520, 72, 80, 40)
+const SHOULDER := Vector2(0.6, 0.3)
+const FORECOURT := Rect2(544.0, 120.8, 36.0, 5.4)
+const MOON_LAYER := 4
+const VAN_PARKING := Vector3(568.0, -0.02, 123.5)
 const SITE_OFFICE := Vector3(552.0, -0.12, 117.5)
 const SHEET_STAND := 0.7
 const OFFICE_TEXTURES := {
@@ -131,6 +135,7 @@ func _environment() -> void:
 	moon.shadow_enabled = true
 	moon.directional_shadow_max_distance = 40.0
 	moon.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+	moon.layers = MOON_LAYER
 	add_child(moon)
 	_concrete.albedo_texture = CONCRETE_COLOR
 	_concrete.normal_enabled = true
@@ -194,6 +199,7 @@ func _road_strip(extra: float, height: float, surface: Material, solid: bool) ->
 	var lefts := PackedVector3Array()
 	var rights := PackedVector3Array()
 	var normals := PackedVector3Array()
+	var across := PackedVector3Array()
 	for index in range(count):
 		var along := points[(index + 1) % count] - points[(index - 1 + count) % count]
 		var right := Vector3(along.x, 0.0, along.z).normalized().cross(Vector3.UP)
@@ -201,6 +207,7 @@ func _road_strip(extra: float, height: float, surface: Material, solid: bool) ->
 		lefts.append(centre - right * (widths[index] + extra))
 		rights.append(centre + right * (widths[index] + extra))
 		normals.append(right.cross(along).normalized())
+		across.append(right)
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for index in range(count):
@@ -211,8 +218,34 @@ func _road_strip(extra: float, height: float, surface: Material, solid: bool) ->
 		_road_vertex(tool, rights[index], normals[index])
 		_road_vertex(tool, lefts[next], normals[next])
 		_road_vertex(tool, rights[next], normals[next])
+	if solid:
+		_shoulder(tool, rights, across, 1.0)
+		_shoulder(tool, lefts, across, -1.0)
 	tool.generate_tangents()
 	Build.instance(self, Vector3.ZERO, tool.commit(), surface, solid)
+
+
+func _shoulder(tool: SurfaceTool, edge: PackedVector3Array, across: PackedVector3Array,
+		side: float) -> void:
+	var count := edge.size()
+	var drop := Vector3.DOWN * SHOULDER.y
+	for index in range(count):
+		var next := (index + 1) % count
+		var outer := edge[index] + across[index] * side * SHOULDER.x + drop
+		var outer_next := edge[next] + across[next] * side * SHOULDER.x + drop
+		var normal := (Vector3.UP * SHOULDER.x + across[index] * side * SHOULDER.y).normalized()
+		var normal_next := (Vector3.UP * SHOULDER.x + across[next] * side * SHOULDER.y).normalized()
+		var inner_first := side > 0.0
+		var a := edge[index] if inner_first else outer
+		var b := edge[next] if inner_first else outer_next
+		var c := outer if inner_first else edge[index]
+		var d := outer_next if inner_first else edge[next]
+		_road_vertex(tool, a, normal)
+		_road_vertex(tool, b, normal_next)
+		_road_vertex(tool, c, normal)
+		_road_vertex(tool, c, normal)
+		_road_vertex(tool, b, normal_next)
+		_road_vertex(tool, d, normal_next)
 
 
 func _road_vertex(tool: SurfaceTool, vertex: Vector3, normal: Vector3) -> void:
@@ -465,10 +498,15 @@ func _nearest_road(near: Vector2) -> int:
 
 func _lumber_yard() -> void:
 	clearings.append(LUMBER_YARD)
+	clearings.append(FORECOURT)
 	clearings.append_array(VIEW_CLEARINGS)
 	var yard := LUMBER_YARD
 	Build.box(self, Vector3(yard.get_center().x, 0.01, yard.get_center().y),
-		Vector3(yard.size.x, 0.02, yard.size.y), _surface("leaf_scattered_gravel", 1.8, false))
+		Vector3(yard.size.x, 0.02, yard.size.y), _surface("leaf_scattered_gravel", 1.8, true))
+	var court := FORECOURT.get_center()
+	Build.box(self, Vector3(court.x, SITE_OFFICE.y + 0.005, court.y),
+		Vector3(FORECOURT.size.x, 0.02, FORECOURT.size.y),
+		_surface("leaf_scattered_gravel", 1.8, true))
 	var bark := ORMMaterial3D.new()
 	bark.albedo_texture = _texture("pine_bark", "diff")
 	bark.normal_enabled = true
@@ -564,6 +602,8 @@ func _office_lights(office: Node3D) -> void:
 	var flood := SpotLight3D.new()
 	flood.name = "FloodLight"
 	flood.transform = (office.get_node("Floodlight") as Node3D).transform
+	flood.transform = flood.transform.looking_at(office.transform.affine_inverse()
+		* (VAN_PARKING + Vector3.UP * 1.0), Vector3.UP)
 	flood.light_color = FLOODLIGHT_COLOR
 	flood.light_energy = 9.0
 	flood.spot_range = 32.0
@@ -621,7 +661,7 @@ func _reflections() -> void:
 	probe.origin_offset = Vector3(0, 2, 0)
 	probe.max_distance = 95.0
 	probe.box_projection = true
-	probe.cull_mask = 1
+	probe.cull_mask = 1 | MOON_LAYER
 	probe.intensity = 0.8
 	probe.update_mode = ReflectionProbe.UPDATE_ONCE
 	add_child(probe)

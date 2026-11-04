@@ -171,6 +171,41 @@ That run held about 60 FPS in every state, so this shows no difference between t
 the game's top speed (`measure_performance.gd` gave 76.0 FPS parked in step 2). Evidence:
 `evidence/phase_1/beams/run16/beam_captures.txt`.
 
+## 2026-11-04: real door mirrors (Run 33)
+
+Measured in a window at 1280×800, vsync off, on battery (66–53%), so these compare only with each
+other.
+
+**What a mirror costs.** Each mirror picture redraws the world from the mirror. One picture 30
+times a second, looking into the forest beside the road:
+
+| Mirror view, 30 Hz | Added frame time |
+| --- | --- |
+| like today's (62°, looking back along the road) | 1.85 ms |
+| one camera for both glasses (43°) | 2.7 ms |
+| the main glass alone (26°) | 3.2 ms |
+| the wide-angle glass alone (37°, 20 m deep) | 4.1 ms |
+
+- **The moon's shadow is most of it.** With the moon's shadows off, the same mirror costs
+  0.65–1.3 ms instead of 2.65 ms. The moon's shadow is drawn again for every mirror picture. So
+  the moon moved to a render layer the mirror cameras skip, and they use a little more soft fill
+  instead.
+- **A narrower camera costs more:** it picks finer models. The mirror viewports use a
+  level-of-detail threshold of 12 (the reverse camera keeps 4).
+- **Pixels matter little:** 768 × 656 against 256 × 320 added 0.85 ms at 45 pictures a second.
+
+**Today against the new mirrors**, in one prototype session:
+
+| Mirrors | Frame time | FPS |
+| --- | --- | --- |
+| today's, 2 × 22.5 pictures a second | 12.40 ms | 80.6 |
+| new: one HDR camera per mirror at 640 px; driver's 30, passenger's 15 a second | 13.25 ms | 75.5 |
+| new, with the driver's mirror redrawn every frame | 16.10 ms | 62.1 |
+
+So the driver's mirror updates 30 times a second. In the final build `capture_mirrors.gd` measured
+69.8 FPS parked at the start and 74.8 FPS with a van behind. Evidence:
+`evidence/phase_1/mirror/run33/mirror_captures.txt`.
+
 ## Not yet verified
 
 - A 10-minute windowed drive on a warm Mac (P9). The slowest 5% of frames (17–19 ms) sit

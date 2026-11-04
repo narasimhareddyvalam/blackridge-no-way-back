@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved start_left_mirror_glance
+saved start_left_mirror_zoom
+start: 70.2 FPS with the mirrors updating (vsync off)
+saved start_passenger_mirror_glance
+saved start_passenger_mirror_closer
+saved start_ahead
+saved start_outside_mirror
+saved start_outside_gravel
+saved start_outside_passenger_mirror
+saved door_open_mirror
+saved tail_glow_braking
+behind: a van stands 28.0 m behind, its headlights on
+saved behind_left_mirror_glance
+saved behind_left_mirror_zoom
+behind: 75.3 FPS with the mirrors updating (vsync off)
+saved behind_passenger_mirror_glance
+saved behind_passenger_mirror_closer
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

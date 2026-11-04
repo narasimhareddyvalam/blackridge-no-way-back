@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved seat_driving.png: call , depot turn 1922 m, hairpin 138 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_driving.png: call , depot turn 1922 m, hairpin 138 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved seat_ringing.png: call ringing, depot turn 1896 m, hairpin 112 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved seat_looking_at_the_ringing_screen.png: call ringing, depot turn 1896 m, hairpin 112 m, wrong way false, screen power 1.00, clock 23:42, 46 FPS
+saved screen_ringing.png: call ringing, depot turn 1896 m, hairpin 112 m, wrong way false, screen power 1.00, clock 23:42, 46 FPS
+saved screen_talking.png: call talking, depot turn 1896 m, hairpin 112 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_hairpin_ahead.png: call ringing, depot turn 1864 m, hairpin 80 m, wrong way false, screen power 1.00, clock 23:42, 57 FPS
+saved screen_reverse.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_engine_off.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 0.00, clock 23:42, 57 FPS
+saved screen_starting_up.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 0.62, clock 23:42, 50 FPS
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

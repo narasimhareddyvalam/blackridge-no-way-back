@@ -19,9 +19,9 @@ from PIL import Image
 OUT = pathlib.Path("game/features/vehicles/freight_van/art/low_beam_pattern.png")
 SIZE = 256
 HALF_ANGLE = 35.0
-CUTOFF_ABOVE_AXIS = 1.4
+CUTOFF_ABOVE_AXIS = 0.6
 STEP_RISE = 1.0
-STRAY = 0.05
+STRAY = 0.02
 EDGE_SOFTNESS = 1.2
 
 
@@ -37,9 +37,11 @@ def main() -> None:
     up = np.degrees(np.arctan(-centres[:, None] * tan_half))
     cutoff = CUTOFF_ABOVE_AXIS + np.clip(side * math.tan(math.radians(15.0)), 0.0, STEP_RISE)
     below = cutoff - up
-    vertical = np.interp(below, [0.0, 1.5, 4.0, 8.0, 27.0], [1.0, 1.0, 0.45, 0.2, 0.08])
+    vertical = np.interp(below, [0.0, 1.5, 4.0, 8.0, 15.0, 27.0],
+                         [1.0, 1.0, 0.5, 0.2, 0.06, 0.03])
     vertical = STRAY + (vertical - STRAY) * np.clip(below / EDGE_SOFTNESS, 0.0, 1.0)
-    horizontal = np.interp(np.abs(side), [0.0, 9.0, 20.0, 35.0], [1.0, 1.0, 0.5, 0.22])
+    horizontal = np.interp(np.abs(side), [0.0, 9.0, 13.0, 18.0, 24.0, 35.0],
+                           [1.0, 1.0, 0.55, 0.25, 0.12, 0.06])
     linear = np.where(below >= 0.0, vertical, STRAY) * horizontal
     grey = np.round(to_srgb(np.clip(linear, 0.0, 1.0)) * 255.0).astype(np.uint8)
     OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -4,6 +4,7 @@ const GhatRoad = preload("res://features/environments/industrial_loop/ghat_road.
 const Dressing = preload("res://features/environments/industrial_loop/ghat_dressing.gd")
 const WipeMap = preload("res://features/vehicles/freight_van/windshield_wipe_map.gd")
 const Van = preload("res://features/vehicles/freight_van/freight_van.gd")
+const LaneKeeper = preload("res://tests/lane_keeper.gd")
 
 var _checks: int = 0
 var _failures: int = 0
@@ -36,6 +37,7 @@ func _run() -> void:
 	_check_wipers()
 	await _check_start()
 	await _check_climb()
+	await _check_back_onto_road()
 	_finish()
 
 
@@ -277,9 +279,35 @@ func _check_mission() -> void:
 
 
 func _check_start() -> void:
-	_check(_van.is_on_floor() and absf(_presentation.rotation.x) < deg_to_rad(0.5),
-		"The van starts level on the valley road")
-	await process_frame
+	var road: RefCounted = _world.get("road")
+	var points: PackedVector3Array = road.points
+	var index := _nearest_around(points, _van.global_position, 0)
+	var heading: float = road.heading_at(index)
+	var right := Basis(Vector3.UP, heading).x
+	var edge: float = (road.half_widths as PackedFloat32Array)[index] + GhatRoad.VERGE
+	var off_road := (_van.global_position - points[index]).dot(right)
+	_check(_van.is_on_floor() and absf(_presentation.rotation.x) < deg_to_rad(0.5)
+		and off_road > edge,
+		"The van starts level, parked on the forecourt beside the road, out of the lane (%.1f m "
+		% off_road + "from the road's centre)")
+	var keeper := LaneKeeper.new(road, index)
+	var time := 0.0
+	var lateral := off_road
+	Input.action_press("accelerate", 0.5)
+	while time < 8.0:
+		keeper.steer(_van, 1.0)
+		await physics_frame
+		time += 1.0 / 60.0
+		index = _nearest_around(points, _van.global_position, index)
+		lateral = (_van.global_position - points[index]).dot(Basis(Vector3.UP,
+			road.heading_at(index)).x)
+		if absf(lateral - 1.0) < 0.6 and float(_van.get("speed")) > 2.0 and time > 2.0:
+			break
+	Input.action_release("accelerate")
+	keeper.release()
+	_check(absf(lateral - 1.0) < 0.6,
+		"From the forecourt the van pulls out into the road's lane (%.1f m from the centre after "
+		% lateral + "%.1f s)" % time)
 
 
 func _check_climb() -> void:
@@ -316,6 +344,62 @@ func _check_climb() -> void:
 	_check(_van.get("speed") > 3.0 and _van.global_position.y - start.y > 0.5,
 		"From a stop the van climbs the steepest leg (%.1f m/s, %.1f m higher)" % [
 		_van.get("speed"), _van.global_position.y - start.y])
+
+
+func _check_back_onto_road() -> void:
+	var road: RefCounted = _world.get("road")
+	var points: PackedVector3Array = road.points
+	var index := 40
+	var heading: float = road.heading_at(index)
+	var right := Basis(Vector3.UP, heading).x
+	var half: float = (road.half_widths as PackedFloat32Array)[index]
+	var results: Array[String] = []
+	var all_back := true
+	for side: float in [1.0, -1.0]:
+		var start := points[index] + right * side * (half + GhatRoad.VERGE + 2.5)
+		_van.recover(Transform3D(Basis(Vector3.UP, heading), _ground(start) + Vector3.UP * 0.1))
+		_van.set("foot_on_brake", false)
+		await _wait_physics(30)
+		var steer := "steer_left" if side > 0.0 else "steer_right"
+		var time := 0.0
+		var lateral := INF
+		Input.action_press("accelerate", 0.6)
+		while time < 8.0:
+			var near := _nearest_around(points, _van.global_position, index)
+			lateral = (_van.global_position - points[near]).dot(right)
+			if absf(lateral) < half:
+				break
+			var facing := absf(angle_difference(_van.global_rotation.y, heading))
+			if absf(lateral) > 1.0 and facing < 0.5:
+				Input.action_press(steer, 0.8)
+			else:
+				Input.action_release(steer)
+			await physics_frame
+			time += 1.0 / 60.0
+		Input.action_release("accelerate")
+		Input.action_release("steer_left")
+		Input.action_release("steer_right")
+		var back := absf(lateral) < half
+		all_back = all_back and back
+		results.append("%s side %s after %.1f s" % ["right" if side > 0.0 else "left",
+			"back on the asphalt" if back else "still off it", time])
+	_check(all_back, "From the ground beside the road, the van drives back onto it on either side "
+		+ "(%s)" % ", ".join(results))
+
+
+func _nearest_around(points: PackedVector3Array, at: Vector3, around: int) -> int:
+	var best := around
+	for index in range(maxi(around - 30, 0), mini(around + 30, points.size())):
+		if at.distance_squared_to(points[index]) < at.distance_squared_to(points[best]):
+			best = index
+	return best
+
+
+func _ground(at: Vector3) -> Vector3:
+	var query := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 30.0,
+		at + Vector3.DOWN * 30.0, 1, [_van.get_rid()])
+	var hit := _van.get_world_3d().direct_space_state.intersect_ray(query)
+	return hit["position"] if not hit.is_empty() else at
 
 
 func _right(points: PackedVector3Array, index: int) -> Vector3:

@@ -7,7 +7,7 @@ const WALK_FACING := Vector3(1.0, 0.0, -0.37)
 const RUN_SHEET := "BLACKRIDGE FREIGHT DEPOT\nRUN SHEET - NIGHT\n\n" \
 	+ "Driver ......... E. COLE\nVan ............ BR 048\n" \
 	+ "Pick-up ........ Lumber yard, Hill Road\nLoad ........... 14 pallets, sawn timber\n" \
-	+ "Deliver to ..... Freight depot, bay 3\nRoute .......... Over the pass\n" \
+	+ "Deliver to ..... Freight depot, bay 2\nRoute .......... Over the pass\n" \
 	+ "                 (valley road closed)\n\nSigned ........."
 const OFFICE_TEXTURES := {
 	"siding": ["weathered_plank_siding", 1.57], "roof": ["corrugated_iron", 1.12],
@@ -15,6 +15,8 @@ const OFFICE_TEXTURES := {
 	"concrete": ["brushed_concrete_03", 2.0],
 }
 const OFFICE_FRONT := 1.8
+const ROUND_THE_FRONT: Array[Vector3] = [Vector3(1.9, 0.0, -3.3), Vector3(-1.9, 0.0, -3.3),
+	Vector3(-2.02, 0.0, -0.51)]
 
 var _checks: int = 0
 var _failures: int = 0
@@ -56,6 +58,7 @@ func _run() -> void:
 	_check_office()
 	await _check_unsigned_van()
 	await _check_run_sheet()
+	await _check_walk_to_van()
 	await _go_to_van()
 	await _check_walking()
 	await _check_boarding()
@@ -171,6 +174,96 @@ func _check_run_sheet() -> void:
 		and guide.distance() < 20.0,
 		"After signing, a corner map and a marker over the van guide him to it (%s)"
 		% guide.label())
+
+
+func _check_walk_to_van() -> void:
+	var widest_step := 0.0
+	var time := 0.0
+	var last := _driver.global_position
+	for waypoint in ROUND_THE_FRONT:
+		var target := _van.to_global(waypoint)
+		var still := 0.0
+		Input.action_press("accelerate")
+		while _flat(target - _driver.global_position).length() > 0.3 and still < 1.0 \
+				and time < 30.0:
+			_driver.call("look_toward", _flat(target - _driver.global_position).normalized())
+			await physics_frame
+			time += 1.0 / 60.0
+			var moved := _flat(_driver.global_position - last).length()
+			widest_step = maxf(widest_step, moved)
+			still = still + 1.0 / 60.0 if moved < 0.004 else 0.0
+			last = _driver.global_position
+		Input.action_release("accelerate")
+	var gap := _flat(_van.to_global(ROUND_THE_FRONT[-1]) - _driver.global_position).length()
+	_check(gap < 0.5 and widest_step < 0.1,
+		"From the office door, W and the mouse take Ethan round the van's front to the driver's "
+		+ "door (%.2f m from it after %.1f s)" % [gap, time])
+	await _check_kerb()
+	var side := _van.to_global(Vector3(-1.6, 0.0, 1.2))
+	_driver.global_position = side
+	_driver.velocity = Vector3.ZERO
+	for frame in range(15):
+		await physics_frame
+	var feet := _driver.global_position.y
+	Input.action_press("accelerate")
+	for frame in range(60):
+		_driver.call("look_toward", _flat(_van.global_position - _driver.global_position)
+			.normalized())
+		await physics_frame
+	Input.action_release("accelerate")
+	var inside := _van.to_local(_driver.global_position)
+	_check(absf(_driver.global_position.y - feet) < 0.05 and absf(inside.x) > 1.2,
+		"Walking into the van's side, he stops against it and cannot climb it (%.2f m from its "
+		% (absf(inside.x) - 1.0) + "side, feet %.2f m up)" % (_driver.global_position.y - feet))
+
+
+func _check_kerb() -> void:
+	var base := _ground_point(Vector3(585.0, 0.0, 100.0))
+	var kerb := _block(base + Vector3(0.0, 0.1, -2.0), Vector3(1.6, 0.2, 2.0))
+	var ledge := _block(base + Vector3(4.0, 0.25, -1.5), Vector3(1.6, 0.5, 0.4))
+	var over := await _walk_into(base)
+	var stopped := await _walk_into(base + Vector3(4.0, 0.0, 0.0))
+	kerb.queue_free()
+	ledge.queue_free()
+	_check(over.x > 0.18 and over.y > 2.0 and stopped.x < 0.05 and stopped.y < 1.2,
+		"Ethan steps up a 20 cm kerb onto the pavement behind it (%.2f m) and walks on, but a 50 "
+		% over.x + "cm ledge stops him (%.2f m on)" % stopped.y)
+
+
+func _walk_into(start: Vector3) -> Vector2:
+	_driver.global_position = start
+	_driver.velocity = Vector3.ZERO
+	_driver.call("face", Vector3.FORWARD)
+	_driver.call("look_toward", Vector3.FORWARD)
+	for frame in range(10):
+		await physics_frame
+	var feet := _driver.global_position.y
+	var rise := 0.0
+	Input.action_press("accelerate")
+	for frame in range(120):
+		await physics_frame
+		rise = maxf(rise, _driver.global_position.y - feet)
+	Input.action_release("accelerate")
+	return Vector2(rise, start.z - _driver.global_position.z)
+
+
+func _block(at: Vector3, size: Vector3) -> StaticBody3D:
+	var body := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = size
+	shape.shape = box
+	body.add_child(shape)
+	root.add_child(body)
+	body.global_position = at
+	return body
+
+
+func _ground_point(at: Vector3) -> Vector3:
+	var query := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 20.0,
+		at + Vector3.DOWN * 20.0, 1)
+	var hit := _van.get_world_3d().direct_space_state.intersect_ray(query)
+	return (hit["position"] as Vector3) + Vector3.UP * 0.02 if not hit.is_empty() else at
 
 
 func _go_to_van() -> void:

@@ -53,9 +53,12 @@
 - Test runner: `scripts/run-test.sh <test-file.gd> <fps>` runs Godot headless on
   `game/` with `--fixed-fps`, a 120 s `timeout`, `game/tests/` first then
   `tools/tests/`, logs to `logs/<name>_<fps>fps.log`, and fails on `SHADER ERROR` or
-  `SCRIPT ERROR` (`scripts/run-test.sh:1-11`). Godot comes from `$GODOT`, `godot` on
-  `PATH`, or `/Applications/Godot.app/Contents/MacOS/Godot` (`scripts/run-test.sh:6`).
-  New Assignment 5 tests go in `game/tests/`.
+  `SCRIPT ERROR` (`scripts/run-test.sh:1-30`). Godot comes from `$GODOT`, `godot` on
+  `PATH`, or `/Applications/Godot.app/Contents/MacOS/Godot` (`scripts/run-test.sh:9`).
+  Since Run 27 it runs Godot with `HOME=.scratch-home` (ignored by Git), so `user://` is a
+  scratch folder. It fails with "REAL SAVE FOLDER CHANGED" if the player's real save folder
+  changes during the run (`scripts/run-test.sh:11-29`). New Assignment 5 tests go in
+  `game/tests/`.
 - Exact test commands, from the repository root:
 
   ```sh
@@ -87,6 +90,9 @@ Checked on this machine on 2026-10-28 (Godot 4.7.2, macOS 26.6.2):
   what the shader draws with it is checked by a capture.
 - Exit code 0 is not proof of a clean run: both baseline logs end with an engine
   "resources still in use at exit" ERROR, which the wrapper does not fail on.
+- Checked 2026-11-03: Godot follows `HOME` for `user://`. The real save folder is
+  `~/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back/`, and every
+  Godot run writes its own `logs/godot.log` there unless `HOME` points elsewhere.
 
 ## Current change
 
@@ -139,8 +145,8 @@ on the entire road"). Those are in scope. These stay protected:
   `scaling_3d/scale.macos=0.75`; see `PERFORMANCE.md`), and, with the author's OK of
   2026-11-01 (#77), ETC2/ASTC texture import for the macOS export
   (`textures/vram_compression/import_etc2_astc=true`), and, with the author's OK of 2026-11-01
-  (#95), the `cabin_light` action on I. No autoloads and no new controls without the author's
-  OK.
+  (#95), the `cabin_light` action on I, and, at the author's request of 2026-11-02 (#101), the
+  `answer_call` action on T. No autoloads and no new controls without the author's OK.
 
 ## Unconfirmed
 

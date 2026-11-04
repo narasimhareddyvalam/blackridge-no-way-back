@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The left mirror shows its reflection on the Iveco's own glass: 55 main and 46 wide-angle triangles, at most 2.0 mm in front of it
+PASS: The right mirror shows its reflection on the Iveco's own glass: 55 main and 46 wide-angle triangles, at most 2.0 mm in front of it
+PASS: From outside the mirrors are the van's own dark glass, not screens: the 4 reflections draw only for the driver's eye, and only while he sits in the seat
+PASS: Lamps behind stay bright and the dark stays dark: each mirror renders in HDR at 640 pixels, tone-mapped once, reflecting 60% like chrome glass
+PASS: The driver's mirror is set as a driver sets it: from 5.0 degrees inside the van's side, so the side shows along its inner edge, to 13.0 outside, with the horizon in its upper part
+PASS: The wide-angle glass below shows a wider, smaller view of the van's side and the ground: 52.8 degrees across, against 18.0 for the main glass
+FAIL: The passenger mirror is turned toward the driver, so it shows through the window's front corner: 48 of its 101 glass triangles in sight from the seat, seen 65 degrees off its face
+PASS: The driver's mirror swings with the door, glass and view together (30 degrees)
+PASS: The driver's mirror updates 30 times a second and the passenger's 15 (60 and 30 in 2.0 s); today's mirrors shared 45 between them
+PASS: The mirror cameras skip the moon and its shadow pass, with a soft fill in its place; the driver's own view keeps the moonlight and its shadows
+PASS: The tail lamps cast a faint red glow on the road behind (0.5), brighter when braking (2.0), and none with the engine off
+PASS: The lumber yard's and the forecourt's gravel lies at real size, 1.8 m to a tile, projected in metres (2 surfaces)
+MIRRORS RESULT: 11/12 passed; 1 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
