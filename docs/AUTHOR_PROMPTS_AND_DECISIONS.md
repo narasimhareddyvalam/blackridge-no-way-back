@@ -1823,6 +1823,25 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **What Claude Code did:** committed the brief with C51 and this log on `develop` before any
        Mission 2 code, and pushed `develop`.
 
+127. **Step 1a: the save rules for version 2.**
+     - **Claude Code proposed** splitting step 1:
+       - 1a: a dated revision of the save rules for version 2, document only, committed before
+         any code, because Assignment 10 grades the rules as written first;
+       - 1b: the code, test first.
+     - **Claude Code asked:** "Should I write 1a?"
+     - **The author's message (2026-11-04):** "ok"
+     - **What Claude Code did:** wrote "the save rules, version 2" as a dated revision at the end of
+       `CHANGE-BRIEF.md`. It is document only, shown to the author before any commit.
+       - **The gap it found:** today's `save_file.gd` has no upgrade step. A game expecting version
+         2 would set a version 1 file aside as damaged, although the rules always required an
+         upgrade. Step 1b builds it.
+
+128. **The version 2 save rules committed.**
+     - **Claude Code asked:** "Should I commit and push this to `develop`?"
+     - **The author's message (2026-11-04):** "okay"
+     - **What Claude Code did:** committed the version 2 save rules on `develop`, before any step 1b
+       code, and pushed `develop`.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac

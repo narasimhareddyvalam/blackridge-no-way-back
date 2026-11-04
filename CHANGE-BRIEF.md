@@ -3962,3 +3962,128 @@ logs, and commit.
   may miss December 3.
 - **The fallback:** Mission 1 is already a small complete loop, from the title through the drive,
   the hit and the ending, back to the title. So Assignment 10's December 3 target still holds.
+
+## Revision 2026-11-04 (the save rules, version 2, written before any code)
+
+- **Author:** "ok" (#127), for step 1a of the Phase 2 brief: the save rules for version 2, written
+  and committed before any code. Assignment 10 grades save rules that were written first.
+- **Why a new version:**
+  - **The rule:** the save rules say any change to what a file holds raises its version,
+    including adding a mission. Mission 2 adds one.
+  - **Today's check:** it accepts only `night_freight`, so without a new version a Mission 2 save
+    would be set aside as damaged.
+- **Found while writing these rules:**
+  - **The gap:** `save_file.gd` reads only its own version, with no upgrade step. A game
+    expecting version 2 would set a version 1 file aside as damaged, and the player would lose
+    Mission 1's progress.
+  - **What the rules already said:** "older: upgraded in memory, one version at a time". Step 1b
+    builds that upgrade.
+
+### What changes, and what does not
+
+- **Progress** (`user://progress.cfg`) moves to version 2.
+- **Settings** (`user://settings.cfg`) stay at version 1. Nothing in them changes.
+- **Every other save rule stays:**
+  - the path and the format;
+  - the version read first, and newer files never written over;
+  - the whole file checked before use, and damaged files kept as `.corrupt`;
+  - warn and keep playing;
+  - a temporary file, then a rename;
+  - tests in the scratch home, with the real save folder fingerprinted.
+
+### Progress, version 2
+
+```ini
+[save]
+version=2
+mission="the_wrong_cargo"   ; or "night_freight"
+
+[cargo]                     ; Mission 2's own section, only when it is the mission
+stage=1                     ; 0 its start, 1 loaded, 2 in the dark van, 3 the escape's start
+```
+
+- **The mission** is `night_freight` or `the_wrong_cargo`. The file holds the current mission and
+  that mission's own section:
+  - **Night Freight:** `[drive]`, exactly as in version 1: the checkpoint from 0 to 4, and after
+    the hit the van's place, where the man lies and the crack.
+  - **The Wrong Cargo:** `[cargo] stage`, from 0 to 3. Everything else at each of its checkpoints
+    is fixed by the mission's design, such as where the vans stand and where Ethan is, so nothing
+    else is saved.
+- **Unknown keys,** and the other mission's section, are ignored, as before.
+
+### When
+
+- **At every checkpoint,** as now. Mission 2's are:
+  - its start;
+  - loaded, at the transfer shed;
+  - in the dark van;
+  - the escape's start.
+- **Finishing Mission 1** saves Mission 2's start (`the_wrong_cargo`, stage 0), as the rules
+  said a mission's end would once Mission 2 exists.
+- **Finishing Mission 2** saves its own start until Mission 3 exists.
+- **New game** saves Mission 1's start, after asking (Run 34).
+
+### Reading, in this order
+
+1. **Missing:** a new game, with no warning (unchanged).
+2. **The version, before any other field:**
+   - **newer than 2:** not loaded, never written over, and saving off for the session
+     (unchanged);
+   - **1:** upgraded in memory to version 2:
+     - a version 1 file only ever held Night Freight, in the same keys, so the upgrade changes
+       only the version number;
+     - it is then checked by version 2's rules;
+     - the file on disk stays version 1 until the next checkpoint writes version 2, so loading
+       never writes;
+   - **no version, not a whole number, or below 1:** damaged (unchanged).
+3. **The whole file is checked before anything in the game changes:**
+   - a known mission;
+   - that mission's own section, by its own rules: Night Freight's as in version 1, and The
+     Wrong Cargo's stage a whole number from 0 to 3.
+
+   One failure makes the whole file damaged, and nothing from it is used (unchanged).
+4. **Only then** is it applied: the game starts that mission at that checkpoint.
+
+### An older game and a version 2 file
+
+- **What happens:** a game built for version 1 (Runs 27–34) reads a version 2 file as **newer**.
+  It does not load it, never writes over it, and warns. The player's Mission 2 progress waits
+  safely for the newer game.
+- **Nothing to build:** that is today's behaviour, and the save test already checks it with a
+  version 2 file.
+
+### The title screen
+
+- **Continue** appears for any save past the very start of Mission 1, so Mission 2's start
+  offers it.
+- **It names** the mission and the last checkpoint's place, for example "The Wrong Cargo · The
+  container yard".
+- **The scene** behind the title is the saved mission's own (C50).
+
+### How it is checked (step 1b, with its own approval)
+
+- **`test_save_rules.gd`:**
+  - **the upgrade:** a version 1 file at Mission 1's checkpoint 3, after the hit, loads with every
+    value kept, and the next checkpoint writes version 2 (Q1);
+  - **Mission 2:** a version 2 Mission 2 file loads at its checkpoint;
+  - **damaged files,** each set aside as `.corrupt` with nothing applied:
+    - an unknown mission;
+    - a Mission 2 stage out of range;
+    - a Mission 2 file without its section;
+  - **newer files:** a version 3 file is left byte for byte the same.
+    - **A test change, with its reason:** the test's "newer" file today is a version 2 file. It
+      becomes version 3, because version 2 is now the game's own.
+- **Mutations:**
+  - with no upgrade step, a version 1 file is set aside and the test fails;
+  - with the mission's name not checked, the test fails.
+- **`test_menus.gd`:** when the save holds Mission 2, the title shows Mission 2's scene and names
+  it.
+- **Unchanged:** Assignment 5's suites, which pass. They read `[drive] stage`, which version 2
+  keeps.
+
+### Claude Code's calls
+
+- **The names:** the section `[cargo]`, and Mission 2's four checkpoints, taken from the beats.
+- **One section:** only the current mission's section is kept.
+- **No write on load:** a version 1 file is not rewritten when it loads, only at the next
+  checkpoint.
