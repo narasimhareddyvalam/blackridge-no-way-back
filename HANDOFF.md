@@ -20,7 +20,9 @@ lamps (C47) and this run. Committed before them, in order:
    (quit at a checkpoint, relaunch, continue) is still to come;
 3. ~~the keyboard-only menu, Assignment 10's front door~~ (done, Run 34); the author's keyboard
    check is still to come;
-4. Mission 2, The Wrong Cargo, planned with the author on a map before it is built;
+4. Mission 2, The Wrong Cargo: planned on a map (#124–#125, C51), and its brief written as the
+   Phase 2 revision at the end of `CHANGE-BRIEF.md` (#126). It is built one approved step at a
+   time, starting with missions in a row and the progress file's version 2;
 5. Mission 3, Last Run, with the combat encounter and the story scenes;
 6. the author's own full playtest, then the story changes, the "gamify" pass and the polish.
 

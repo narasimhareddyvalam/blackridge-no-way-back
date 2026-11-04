@@ -3799,3 +3799,166 @@ logs, and commit.
   - **The author's logo** in place of the typed title (set aside, #104).
   - **A version number** on the title.
   - **Frame rate** on the title and pause screens: not measured.
+
+## Revision 2026-11-04 (Phase 2 brief: Mission 2, The Wrong Cargo, written before any code)
+
+- **Status:** drafted by Claude Code on 2026-11-04 from the plan canvas and the author's answers
+  (#124–#126, C51). It changes nothing in the game. It is committed only with the author's OK, and
+  before any Mission 2 code, as the save rules were.
+- **The plan canvas:** https://claude.ai/artifact/BZ1XPVUWHt439SF6TRnj1Q (a private page): the
+  map, drawn from the game's own road data; the beats; the decisions.
+- **Read first:** `GAME_STORY.md`, `GAME_DESIGN.md` and `DESIGN_DECISIONS.md`, in full.
+
+### What changes
+
+1. **A second playable mission,** the design doc's "M2 — The Wrong Cargo":
+   - the player collects a sealed load, inspects anomalies, retrieves a vehicle and escapes the
+     warehouse guards;
+   - in the story, routine work becomes criminal, and the links to Vale emerge.
+2. **Its places, in the valley as drawn (C51),** each built to the realism bar from the start.
+3. **Missions in a row:** finishing Mission 1 leads to Mission 2's start, as the save rules
+   say.
+
+### Why now
+
+- **The agreed order (#108–#109):** saving, then the menu, then Mission 2, planned on a map
+  first. Those steps are done.
+- **Assignment 10:** it asks for "a small complete playable loop" by December 3.
+
+### The route and beats (the numbers match the map)
+
+0. **Opening:**
+   - the title card "THE WRONG CARGO" (C35: mission names only);
+   - a short staged scene at the depot, days after the accident.
+1. **The freight depot:**
+   - sign a new dispatcher's run sheet (S2);
+   - Maya's check-in call on the drive (S3), answered with T as in Mission 1.
+2. **The transfer shed,** at the north-west warehouse (-71, 26), reached by a new spur north
+   from the road:
+   - a guard checks the run sheet at the gate;
+   - the van backs onto the dock;
+   - the sealed load goes in, and the doors are sealed.
+3. **The inspection:**
+   - the seal number, the manifest and how low the van sits do not agree;
+   - the first trace of Vale Freight appears (S4);
+   - the seal stays unbroken.
+4. **The container yard,** behind today's fence (x 64–136, z 132–158), through a new gate with
+   a keypad:
+   - leave your van and the load there;
+   - take the dark van to the warehouse.
+5. **The warehouse compound,** round two of today's warehouses (x 140–262, z 92–140), with a new
+   fence, gate and guard booth: the guards recognize the shipment. Why is decided later (S1).
+6. **On foot:**
+   - move past the patrols, helped by an anonymous warning (S3), which is secretly Maya;
+   - through the gap in the fence and back to your van;
+   - if a guard catches Ethan, the game goes back to the start of the escape.
+7. **Clear:** out of the container yard, west past the depot and up the hill road. The mission
+   ends near road sample 990.
+8. **Ending:** a quiet beat in the cab, with no title (C04).
+
+### Decisions
+
+- **The author's (C51):**
+  - the valley route as drawn;
+  - no gun in Mission 2;
+  - realistic from the start;
+  - why the guards turn on Ethan is decided later.
+- **Claude Code's calls, open to change:**
+  - **D1:** night, in the rain.
+  - **D3:** the dark van is our Iveco in dark paint, and only one van is drivable at a time. The
+    one left behind stays as a parked copy.
+  - **D6:** the guards are Assignment 9's game-AI technique. Until it arrives they are stand-ins
+    that only see straight ahead, and they are labelled as stand-ins.
+  - **D7:** the progress file moves to version 2 (below).
+  - **Mission 2's title scene** (C50, the picture follows the mission): the van parked at the
+    depot where Mission 1 ended, under the depot lamps.
+  - **Where this brief lives:** a dated revision here, because Assignment 10 asks for dated
+    revisions rather than rewrites. Phase 1's brief stays above.
+
+### Build order (each step approved on its own, test first, as in Phase 1)
+
+1. **Missions in a row, and the progress file's version 2.**
+   - **Why first:** today's file check accepts only `night_freight`. A Mission 2 save would be set
+     aside as damaged, so the file must move to version 2 before Mission 2 can be saved.
+   - **Version 2:**
+     - it adds `the_wrong_cargo` and its checkpoints;
+     - a version 1 file is upgraded in memory to version 2, as the save rules require;
+     - a newer file is still never read or written over.
+   - **The app** takes its mission from the save, and each mission keeps its own script under
+     `game/features/missions/<id>/`.
+   - **Finishing Mission 1** saves Mission 2's start.
+   - **The title screen** shows the saved mission's own scene.
+   - **The save rules** get a dated revision for version 2 first.
+2. **The transfer shed:**
+   - the spur road, the gate and booth, the building, the dock and its leveller, the floodlights;
+   - backing onto the dock;
+   - the forklift and the load;
+   - the bolt seal.
+3. **The inspection:** the paper view, the seal number, the weight in how low the van sits. It
+   needs S4.
+4. **The container yard and the swap:** the fence, the gate and keypad, the dark van, and one
+   drivable van at a time.
+5. **The warehouse compound:** the fence, gate and booth, floodlights, stacks, a loading bay, and
+   the arrival. Its words need S1.
+6. **The escape:**
+   - the guards, as Assignment 9's technique or the stand-ins;
+   - being caught, and the retry;
+   - the anonymous warning (S3);
+   - the gap.
+7. **The getaway and the ending.** Mission 2's end saves the next mission's start, or its own
+   start until Mission 3 exists.
+8. **The opening, the depot's new job and Maya's call.** They need S2, S3 and S5.
+
+### Predictions (written before any code)
+
+| # | Prediction | How it is checked |
+| --- | --- | --- |
+| Q1 | A version 1 file at Mission 1's checkpoint 3, after the hit, loads under version 2 with everything kept, and is written as version 2 at the next save. A version 3 file is left alone | `test_save_rules.gd` |
+| Q2 | Finishing Mission 1 saves Mission 2's start. The next launch's title shows Mission 2's scene, and Continue names The Wrong Cargo | A new `game/tests/test_mission_two.gd`; `test_menus.gd` |
+| Q3 | The van backs onto the dock with the reverse camera alone, and the dock check passes within 0.3 m | `test_mission_two.gd`, by real key presses |
+| Q4 | Caught in the escape, everything returns to the escape's start: Ethan, the guards, the dark van and the gate | `test_mission_two.gd` |
+| Q5 | With the swap, one van is drivable at a time: two mirror cameras, as today, and the parked copy stands within 1 cm of where the van stopped | `test_mission_two.gd`, `test_mirrors.gd` |
+| Q6 | The compound with its floodlights and guards keeps at least 60 FPS at 1280×800 on the M4, on mains power | A windowed measurement, in `PERFORMANCE.md` |
+
+### Failure cases, and how they are caught
+
+1. **A Mission 2 save written as Mission 1,** or a version 1 game reading a version 2 file as
+   damaged. Caught by the save test, both ways.
+2. **State leaking into a retry:** a guard left alerted, a gate left shut, or the dark van left in
+   the wrong place. Caught by Q4.
+3. **The title showing the wrong mission's scene.** Caught by `test_menus.gd`.
+4. **Floodlight shadows costing too much.** Caught by measuring. Shadows go first on the far
+   lights.
+5. **Stand-in guards mistaken for Assignment 9's technique.** They are labelled as stand-ins in
+   the code, the tests and the docs, and Assignment 9 replaces them.
+
+### How it is tested
+
+- **New `game/tests/test_mission_two.gd`,** grown step by step, playing by real key presses where
+  the player acts.
+- **`test_save_rules.gd`:** checks for version 2. **`test_menus.gd`:** the title per mission.
+- **Every existing suite passes.** A test changes only when a step changes what it checks, and the
+  change is written down with its reason.
+- **Each step:** deliberate breakages, the import check with the scratch home, and windowed
+  captures, announced before a window opens.
+
+### Open story questions (C03), and the steps they block
+
+- **S1:** why the guards turn on Ethan. It blocks step 5's words, not the building.
+- **S2:** the dispatcher's name, and how the job reaches Ethan. It blocks step 8.
+- **S3:** the words: Maya's check-in, the dispatcher's instructions and the anonymous warning.
+  Claude Code drafts them for approval in the step that uses them.
+- **S4:** what names Vale Freight, and whether the sealed load is ever seen. It blocks step 3.
+- **S5:** the van days later: still cracked from Mission 1, or a new windshield? It blocks step 8.
+
+### Not in this phase
+
+- **Left out:** a gun (Mission 3); car chases; interiors beyond one loading bay.
+- **Their own briefs:** Assignment 6's particles; Assignment 9's technique, which Mission 2 hosts.
+
+### The schedule
+
+- **The risk:** built realistic from the start, each place takes longer, so a playable Mission 2
+  may miss December 3.
+- **The fallback:** Mission 1 is already a small complete loop, from the title through the drive,
+  the hit and the ending, back to the title. So Assignment 10's December 3 target still holds.

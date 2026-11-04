@@ -1786,6 +1786,42 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **The author's answer:** "Commit, then plan M2 (Recommended)"
      - **What Claude Code did:** committed Run 34 on its own on `develop` and pushed `develop`;
        `main` is untouched. Then Mission 2's planning began.
+     - **Shown (2026-11-04):** the Mission 2 plan on a private canvas
+       (https://claude.ai/artifact/BZ1XPVUWHt439SF6TRnj1Q). Nothing in the game changed.
+       - **Read first:** `GAME_STORY.md`, `GAME_DESIGN.md` and `DESIGN_DECISIONS.md`, in full.
+       - **The map:** drawn from the game's own road data. Mission 2 stays in the valley: the
+         depot, a transfer shed at the north-west warehouse, the container yard behind the
+         fence, and a warehouse compound round the other warehouses. The way out runs west past
+         the depot and up the hill road.
+       - **The beats:** what happens at each stop, the story lines each one carries (quoted),
+         the realism details, and the saves and failure.
+       - **The decisions:**
+         - five story questions for the author (S1–S5);
+         - seven design calls with Claude Code's recommendation (D1–D7).
+
+125. **Mission 2's first decisions (C51).**
+     - **Claude Code asked** four questions with the plan:
+       - "Why do the warehouse guards turn on Ethan?" The author's answer: "Decide later
+         (Recommended)".
+       - "How rough may Mission 2's first build be?" The author's answer: "Realistic from the
+         start". It was not the recommended greybox, so the December 3 draft may slip.
+       - "Does Ethan have a gun in Mission 2?" The author's answer: "No, he flees (Recommended)".
+       - "Does the route on the map work?" The author's answer: "Yes, as drawn (Recommended)".
+
+126. **Mission 2's brief.**
+     - **Claude Code proposed** writing Mission 2's brief before any code, as a dated revision
+       of `CHANGE-BRIEF.md`. It covers the route and beats, the decisions, a build order of one
+       approved step per place, predictions, failure cases and tests, and the open story
+       questions with the steps they block.
+     - **Claude Code asked:** "Write Mission 2's brief now?"
+     - **The author's answer:** "Yes, write it (Recommended)"
+     - **What Claude Code did:** wrote the brief as the dated revision "Phase 2 brief: Mission 2, The
+       Wrong Cargo, written before any code" at the end of `CHANGE-BRIEF.md`. It is shown to the
+       author before any commit.
+     - **Claude Code asked:** "Commit Mission 2's brief?"
+     - **The author's answer:** "Commit and push (Recommended)"
+     - **What Claude Code did:** committed the brief with C51 and this log on `develop` before any
+       Mission 2 code, and pushed `develop`.
 
 ## Waiting for the author
 
