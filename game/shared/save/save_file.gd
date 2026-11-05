@@ -16,7 +16,7 @@ func _init(file_path: String, file_version: int) -> void:
 	version = file_version
 
 
-func read(valid: Callable) -> ConfigFile:
+func read(valid: Callable, upgrade := Callable()) -> ConfigFile:
 	if path.is_empty():
 		status = Read.OFF
 		return null
@@ -31,6 +31,10 @@ func read(valid: Callable) -> ConfigFile:
 		push_warning("%s is from a newer version (%d); it is left as it is, and not saved this "
 			% [path, found] + "session.")
 		return null
+	if found is int and found >= 1 and found < version and upgrade.is_valid():
+		for step in range(found, version):
+			upgrade.call(config, step)
+		found = config.get_value(SECTION, KEY)
 	if found is int and found == version and valid.call(config):
 		status = Read.LOADED
 		return config

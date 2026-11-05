@@ -1,17 +1,22 @@
 # HANDOFF.md
 
-**Last run:** Phase 1, Run 34: the front door in design A (#122–#123, C50), 2026-11-04, on branch
-`develop`, committed on its own and pushed (#124). Before it, Run 33: real door mirrors and the
-yard gravel at real size (#119, C48), then the passenger mirror turned toward the driver (#120,
-C49).
+**Last run:** Phase 2, step 1b: missions in a row, and the progress file's version 2 (#129),
+2026-11-04, on branch `develop`. It is not committed. Before it, each committed on `develop` and
+pushed:
+- `b4650fd`: the version 2 save rules, before any code (#127–#128);
+- `2ebd682`: the Phase 2 brief, Mission 2, before any code (#126);
+- `31840c9`: Phase 1, Run 34, the front door in design A (#122–#124, C50).
+
+Before those, Run 33: real door mirrors and the yard gravel at real size (#119, C48), then the
+passenger mirror turned toward the driver (#120, C49).
 Runs 27 to 33 are committed together on `develop` and pushed (#121): saving (C43), Ethan's step,
 the beam shape and wet bark (C44), the beam reach (C45), the forecourt start (C46), the reversing
-lamps (C47) and this run. Committed before them, in order:
+lamps (C47) and Run 33. Committed before them, in order:
 - `3d257a2`: Run 19;
 - `301c250`: the save rules, on their own (#107);
 - `573862b`: Runs 20–26, after the author had told Max about the van on 2026-11-03 (#109).
 
-`develop` is pushed, including Runs 27–33; `main` is untouched.
+`develop` is pushed up to `b4650fd`; `main` is untouched.
 
 **The author's agreed order (#108–#109), each step approved on its own:**
 
@@ -22,7 +27,10 @@ lamps (C47) and this run. Committed before them, in order:
    check is still to come;
 4. Mission 2, The Wrong Cargo: planned on a map (#124–#125, C51), and its brief written as the
    Phase 2 revision at the end of `CHANGE-BRIEF.md` (#126). It is built one approved step at a
-   time, starting with missions in a row and the progress file's version 2;
+   time:
+   - step 1a, the version 2 save rules, is committed (#128);
+   - step 1b, missions in a row and the version 2 code, is built and not committed (#129);
+   - step 2, the transfer shed, comes next;
 5. Mission 3, Last Run, with the combat encounter and the story scenes;
 6. the author's own full playtest, then the story changes, the "gamify" pass and the polish.
 
@@ -33,6 +41,68 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Phase 2, step 1b: missions in a row, and the progress file's version 2 (approved: #129)
+
+**Files:**
+
+- **New:**
+  - `game/features/missions/the_wrong_cargo/the_wrong_cargo.gd` and its `.uid`: Mission 2's name,
+    places, checkpoint check, start save and title scene. Nothing in it is playable yet;
+  - `game/tests/test_mission_two.gd` and its `.uid`: 7 checks.
+- **Changed:**
+  - `game/shared/save/save_file.gd`: `read(valid, upgrade)`, the upgrade step;
+  - the Night Freight mission script: version 2, `_upgrade()`, `handed_on`, Mission 2's check by
+    name, and finishing into Mission 2's start;
+  - `game/app/first_drive.gd`: `cargo`, `_mission`, `_pick_mission()` and `_has_progress()`. The
+    title, Continue, pause, Recover van and the start follow the current mission;
+  - `driving_hud.gd`: `_eyebrow` and `set_mission()`;
+  - `test_save_rules.gd` (29 checks) and `test_collision.gd` (44), with the reasons in
+    `CHANGE-BRIEF.md`.
+- **Docs:** `CHANGE-BRIEF.md`, this file and #129.
+
+**What the next run can rely on:**
+
+- **Versions:** progress is version 2 (`PROGRESS_VERSION` in Mission 1); settings stay version 1.
+- **Reading:** `SaveFile.read(valid, upgrade)` upgrades an older file in memory, one version at a
+  time, then reads the version again. The file on disk is rewritten only at the next checkpoint.
+- **Which mission runs:**
+  - Mission 1 (`$DrivingTrial`) still reads the progress file;
+  - a Mission 2 save leaves Mission 1 `complete`, with the file in `handed_on`;
+  - the app then runs Mission 2 (`cargo`, the `TheWrongCargo` node), and `_mission` is whichever
+    is current.
+- **Mission 2's interface,** as the app uses it:
+  - `MISSION`, `NAME`, `START`, `TITLE_EYE`, `TITLE_LOOK` and `TITLE_FOV`;
+  - `stage`, `recovery_pose` and `fleeing`;
+  - `configure(van, config)`, `recover()`, `place_reached()` and `place_next()`;
+  - the `objective_changed` signal;
+  - the static `valid_progress()` and `start_progress()`, which Mission 1 calls. Mission 2 must
+    not preload Mission 1, which preloads it.
+- **For now,** every Mission 2 checkpoint starts the van in the depot bay.
+
+**Commands and real results:**
+
+| Command | Result |
+| --- | --- |
+| every suite before the build (`logs/phase_2/step1b/baseline/`) | all pass |
+| the new and changed tests on the old code (`before/`) | `test_mission_two` 0/1, `test_save_rules` 26/29, `test_collision` 42/44; each exit 1 |
+| the same three on the new code (in the agent's scratch folder) | 7/7 and 44/44; `test_save_rules` 28/29, because its launch check still expected version 1 |
+| `test_save_rules.gd` once that check expected version 2 (scratch folder) | 29/29, exit 0 |
+| `mutation_no_upgrade/`: Mission 1 reads without its upgrade step | 24/29, exit 1 |
+| `mutation_name_unchecked/`: any `[cargo]` section taken as Mission 2 | 28/29, exit 1: "harbour_run" loads as Mission 2 |
+| every suite (`suites/`) | all pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7; art 0 failures; the real save folder never changed |
+| `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import` (`import/`) | exit 0, no errors or warnings; the two new `.uid` files; the real folder unchanged |
+
+**Found, not changed:** `scripts/run-test.sh` exits 0 when the test file does not exist. The first
+suite loop here ran under zsh, which gave every test a wrong name, and every run exited 0 with no
+result line. Those logs were deleted and the suites run again with bash. A fix to the wrapper is
+its own step.
+
+**Not verified:**
+
+- **Mission 2's title shot** was checked headless only, by the camera's place. It has not been
+  seen in a window.
+- **The author's checks** of saving and the keyboard (Assignment 10) are still to come.
 
 ## Run 34: the front door, design A (approved: #123; C50)
 

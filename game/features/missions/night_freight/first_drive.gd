@@ -7,12 +7,13 @@ signal drive_completed
 signal struck(speed: float)
 
 const SaveFile = preload("res://shared/save/save_file.gd")
+const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
 const MISSION := "night_freight"
 const NAME := "Night Freight"
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
 const TITLE_LOOK := Vector3(1.3, 1.3, 0.7)
 const TITLE_FOV := 32.0
-const PROGRESS_VERSION := 1
+const PROGRESS_VERSION := 2
 const AFTER_HIT: Array[String] = ["recovery", "body", "crack"]
 const TARGETS: Array[Vector3] = [Vector3(482.24, 25.4, -24.37), Vector3(458.48, 43.6, -114.17),
 	Vector3(164.28, 64.42, -206.81), Vector3(-20.05, 24.98, -50.67), Vector3(-28, 0, 93)]
@@ -74,6 +75,7 @@ var fleeing: bool = false
 var checkpoint_path: String = ""
 var playable_area := Rect2()
 var progress_read: SaveFile.Read = SaveFile.Read.OFF
+var handed_on: ConfigFile
 var stage: int = 0
 var complete: bool = false
 var recovery_pose := START
@@ -312,6 +314,7 @@ func restart() -> void:
 	phone_call.stop()
 	stage = 0
 	complete = false
+	handed_on = null
 	recovery_pose = START
 	vehicle.recover(recovery_pose)
 	vehicle.reset_clock()
@@ -325,6 +328,7 @@ func reload() -> void:
 	phone_call.stop()
 	stage = 0
 	complete = false
+	handed_on = null
 	recovery_pose = START
 	vehicle.reset_clock()
 	vehicle.get_node("VanPresentation").clear_crack()
@@ -351,7 +355,7 @@ func _save_checkpoint(announce: bool = true) -> Error:
 
 
 func _save_finished() -> void:
-	_write_progress(_progress_at(0), false)
+	_write_progress(WrongCargo.start_progress(), false)
 
 
 func _progress_at(at_stage: int) -> ConfigFile:
@@ -377,9 +381,13 @@ func _write_progress(config: ConfigFile, announce: bool) -> Error:
 
 func _load_checkpoint() -> void:
 	_progress = SaveFile.new(checkpoint_path, PROGRESS_VERSION)
-	var config := _progress.read(_valid_progress)
+	var config := _progress.read(_valid_progress, _upgrade)
 	progress_read = _progress.status
 	if config == null:
+		return
+	if config.get_value("save", "mission") != MISSION:
+		complete = true
+		handed_on = config
 		return
 	stage = config.get_value("drive", "stage")
 	if stage > 0:
@@ -395,7 +403,13 @@ func _load_checkpoint() -> void:
 	vehicle.get_node("VanPresentation").restore_crack(config.get_value("drive", "crack"))
 
 
+func _upgrade(config: ConfigFile, from: int) -> void:
+	config.set_value("save", "version", from + 1)
+
+
 func _valid_progress(config: ConfigFile) -> bool:
+	if config.get_value("save", "mission", "") == WrongCargo.MISSION:
+		return WrongCargo.valid_progress(config)
 	var value: Variant = config.get_value("drive", "stage", -1)
 	if config.get_value("save", "mission", "") != MISSION or not value is int or value < 0 \
 			or value >= TARGETS.size():

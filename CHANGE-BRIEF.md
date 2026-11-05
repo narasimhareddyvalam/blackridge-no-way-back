@@ -4087,3 +4087,124 @@ stage=1                     ; 0 its start, 1 loaded, 2 in the dark van, 3 the es
 - **One section:** only the current mission's section is kept.
 - **No write on load:** a version 1 file is not rewritten when it loads, only at the next
   checkpoint.
+
+## Revision 2026-11-04 (Phase 2, step 1b: missions in a row, and the progress file's version 2)
+
+- **Author:** "ok" (#129), to "Should I start 1b?". The step builds the version 2 save rules,
+  committed before any code as `b4650fd` (#128), test first.
+- **The upgrade step** (`game/shared/save/save_file.gd`):
+  - **How:** `read()` takes an optional upgrade step. For a file older than the game's version
+    (from 1 up), it runs the step once per version and then reads the version again. Only a file
+    that comes out at the game's version and passes the whole check is used.
+  - **Without a step:** the settings file, still at version 1, has none, so an older settings
+    file would still be damaged.
+  - **On disk:** the upgrade happens in memory. The file is rewritten as version 2 only at the
+    next checkpoint.
+- **Mission 1** (`game/features/missions/night_freight/first_drive.gd`):
+  - **Version:** it writes version 2 (`PROGRESS_VERSION`).
+  - **The upgrade from version 1** (`_upgrade()`) raises only the version number, because a
+    version 1 file only ever held Night Freight, in the same keys.
+  - **The check:** a file naming `the_wrong_cargo` goes to Mission 2's own check. Every other file
+    is checked by Night Freight's rules, as before.
+  - **A Mission 2 save:** Mission 1 does not apply it. It stays finished, with no call, no
+    encounter and no checkpoint of its own, and hands the file on (`handed_on`).
+  - **The end of the drive** saves Mission 2's start (`_save_finished()`), as the rules say.
+- **Mission 2** (`game/features/missions/the_wrong_cargo/the_wrong_cargo.gd`, new; nothing
+  playable yet):
+  - **Its places:** four checkpoints, each with where it leads: the freight depot, the transfer
+    shed, the container yard and the warehouse compound, then the hill road.
+  - **Its check** (`valid_progress()`): the mission's name, and `[cargo] stage` a whole number from
+    0 to 3.
+  - **Its start** (`start_progress()`): the save Mission 1 writes at its end.
+  - **Its title scene:** the van in the depot bay where Mission 1 ends, at (−28, 93), facing the
+    depot. The camera sits where Mission 1's does, relative to the van.
+  - **For now,** every checkpoint starts the van in the depot bay, because the places are built in
+    steps 2–7. The objective says so: "MISSION 2 IS BEING BUILT / Next: the transfer shed."
+- **The app** (`game/app/first_drive.gd`):
+  - **Which mission:** it takes the mission from the save (`_pick_mission()`). That is Mission 2
+    when Mission 1 hands a save on, and Mission 1 otherwise. It decides at launch, on going back
+    to the title, and at New game.
+  - **What follows the mission:**
+    - the title scene and Continue;
+    - the pause screen's mission, next checkpoint and last save;
+    - Recover van;
+    - where the drive starts.
+  - **Continue** appears for any save past Mission 1's start (`_has_progress()`), so for every
+    Mission 2 save.
+  - **New game** goes back to Mission 1's start, asking first.
+- **The HUD** (`driving_hud.gd`): the mission's name above the objective follows the mission
+  (`set_mission()`). It always read "NIGHT FREIGHT".
+- **Claude Code's calls:**
+  - **Mission 2's objective** says it is being built, instead of naming a goal that does not
+    exist yet.
+  - **Mission 2's title shot** reuses Mission 1's camera placing around the depot bay. It has not
+    been seen in a window yet. It is tuned when the depot scene is built, or sooner if the author
+    asks.
+  - **Where the title checks live:** Mission 2's title checks are in the new
+    `test_mission_two.gd`, because they need Mission 2's own script. The brief named
+    `test_menus.gd`, which keeps Mission 1's title.
+  - **The version is read again after an upgrade,** so a step that forgets to raise it leaves the
+    file damaged instead of passing.
+- **Test changes, with reasons (#127–#129):**
+  - **New `game/tests/test_mission_two.gd`, 7 checks,** by real key presses where the player acts:
+    - finishing Mission 1 saves Mission 2's start: version 2, `the_wrong_cargo`, checkpoint 0, and
+      no Mission 1 section;
+    - with that save, the title shows Mission 2's scene through the title camera;
+    - Continue comes first and names it ("The Wrong Cargo · The freight depot");
+    - Mission 1 stays finished while the save is on Mission 2;
+    - Continue from Mission 2's third checkpoint names it ("The Wrong Cargo · The container yard").
+      It starts Mission 2 with Ethan in his van at the depot bay, headed "THE WRONG CARGO";
+    - paused, Mission 2 names itself, its next checkpoint (the warehouse compound) and its last
+      save (the container yard);
+    - New game, asked first, goes back to Mission 1's start at the office, saved as version 2.
+  - **`test_save_rules.gd`** (29 checks; it had 26):
+    - **The newer file** is version 3. It was version 2, which is now the game's own, as the
+      version 2 rules said.
+    - **New checks:**
+      - a version 2 Mission 2 save loads as it is, and loading writes nothing;
+      - a version 1 save is upgraded as it loads, and the file is not rewritten;
+      - four version 2 files that break its rules are set aside: an unknown mission, Mission 2 at
+        checkpoint 4, Mission 2 without its section, and its checkpoint in words.
+    - **The round trip** starts from a version 1 save made after the hit, at checkpoint 3, and the
+      next checkpoint writes version 2 (Q1). Its two checks are reworded to say so.
+    - **The launch check** now expects progress at version 2 and settings still at version 1. It
+      expected version 1, and the first run on the new code failed it. Claude Code had missed this
+      check when changing the test first.
+  - **`test_collision.gd`** (44, the same count), because finishing Mission 1 now saves Mission 2's
+    start:
+    - "With the drive over, the save goes back to its start, so the next launch begins a new
+      drive" becomes "... the save moves on to Mission 2's start (version 2, the_wrong_cargo,
+      checkpoint 0), so the next launch continues the story";
+    - "... returns to the title, which offers a new game, since the drive's save went back to its
+      start" becomes "... returns to the title, which now offers to continue into Mission 2, The
+      Wrong Cargo".
+  - **Unchanged:** Assignment 5's suites and `test_menus.gd`, which pass.
+- **Test first** (`logs/phase_2/step1b/before/`), on the old code:
+  - `test_mission_two.gd` failed 0/1, because there was no Mission 2 script;
+  - `test_save_rules.gd` failed 26/29;
+  - `test_collision.gd` failed 42/44.
+- **Mutations:** both exit 1 (`logs/phase_2/step1b/mutation_*`):
+  - **with no upgrade step,** `test_save_rules.gd` fails 24/29. Every version 1 file is set aside as
+    damaged, so the upgrade, the round trip, the unwritable folder and the newer-file checks fail;
+  - **with the mission's name not checked** (any file with a `[cargo]` section taken as Mission 2),
+    28/29: a "harbour_run" file loads as Mission 2.
+- **Tests:** all suites pass: 64/64, 0 failures, 92/92, 21/21, 12/12, 30/30 ×3, 25/25, 33/33,
+  12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7; art 0 failures.
+  Logs are in `logs/phase_2/step1b/suites/`.
+  - **Error lines:** the only "ERROR:" lines are the engine's "resources still in use at exit" and
+    the expected parse error for a deliberately damaged file.
+  - **The real save folder** never changed.
+- **Import:** the headless import with the scratch home exits 0 with no errors or warnings. It
+  creates only the `.uid` files of `the_wrong_cargo.gd` and `test_mission_two.gd`, and the real
+  save folder is unchanged (`logs/phase_2/step1b/import/`).
+- **Found, not changed:** `scripts/run-test.sh` exits 0 when the test file does not exist.
+  - **Why:** Godot prints "Can't load script" and exits 0, and the wrapper fails only on "SCRIPT
+    ERROR" or "SHADER ERROR". So a misspelt test name passes silently.
+  - **How it showed:** Claude Code's first suite loop in this step gave every test a wrong name (a
+    zsh word-splitting mistake). Every run "passed" with no result line. The logs were deleted and
+    the suites run again.
+  - **A fix** (fail when no result line is printed, or on "Can't load script") is its own step.
+- **Not done:**
+  - Mission 2's places and play (steps 2–8);
+  - Mission 2's title shot, seen in a window;
+  - the author's save and keyboard checks.

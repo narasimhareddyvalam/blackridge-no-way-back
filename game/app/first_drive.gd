@@ -3,6 +3,7 @@ extends Node3D
 const Driver = preload("res://features/characters/driver/driver.gd")
 const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
+const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -50,6 +51,7 @@ const MONTHS: Array[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
 @onready var hud: CanvasLayer = $DrivingHud
 @onready var world: Node3D = $IndustrialLoop
 var driver: CharacterBody3D
+var cargo: Node
 var title_camera: Camera3D
 var _audio: Node
 var _on_title: bool = false
@@ -72,6 +74,7 @@ var _walk_from := Vector3.ZERO
 var _odometer: float = 0.0
 var _stuck_for: float = 0.0
 var _call_done: bool = false
+var _mission: Node
 
 
 func _ready() -> void:
@@ -103,7 +106,12 @@ func _ready() -> void:
 	route.road = world.road
 	route.crossing = world.crossing
 	route.playable_area = world.playable_area
+	cargo = WrongCargo.new()
+	cargo.name = "TheWrongCargo"
+	add_child(cargo)
+	cargo.objective_changed.connect(_route_objective)
 	route.configure(van)
+	_pick_mission()
 	_warn_about_progress()
 	hud.load_settings()
 	_navigation().follow(world.road, Mission.TARGETS[Mission.TARGETS.size() - 1],
@@ -122,7 +130,6 @@ func _ready() -> void:
 	menu.main_menu_chosen.connect(func() -> void: _through_black(_back_to_title))
 	title_camera = Camera3D.new()
 	title_camera.name = "TitleCamera"
-	title_camera.fov = Mission.TITLE_FOV
 	title_camera.cull_mask = 0xFFFFF & ~Presentation.MIRROR_LAYER
 	add_child(title_camera)
 	_show_title()
@@ -134,13 +141,14 @@ func _show_title() -> void:
 	van.input_enabled = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	driver.set_active(false)
-	van.recover(Mission.START)
+	van.recover(_mission.START)
 	van.engine_on = true
 	van.headlights_on = true
 	van.high_beams = false
 	van.get_node("VanPresentation").settle()
-	title_camera.look_at_from_position(Mission.START * Mission.TITLE_EYE,
-		Mission.START * Mission.TITLE_LOOK, Vector3.UP)
+	title_camera.fov = _mission.TITLE_FOV
+	title_camera.look_at_from_position(_mission.START * _mission.TITLE_EYE,
+		_mission.START * _mission.TITLE_LOOK, Vector3.UP)
 	title_camera.make_current()
 	_audio.title_ambience(true)
 	hud.show_title(_continue_place(), _saved_when())
@@ -165,13 +173,26 @@ func _through_black(action: Callable) -> void:
 
 
 func _new_game_from_title() -> void:
-	_through_black(_new_drive if route.stage > 0 or route.fleeing else _begin)
+	_through_black(_new_drive if _has_progress() else _begin)
 
 
 func _back_to_title() -> void:
 	_reset_session()
 	route.reload()
+	_pick_mission()
 	_show_title()
+
+
+func _pick_mission() -> void:
+	_mission = route
+	if route.handed_on != null:
+		_mission = cargo
+		cargo.configure(van, route.handed_on)
+	hud.set_mission(_mission.NAME)
+
+
+func _has_progress() -> bool:
+	return _mission == cargo or route.stage > 0 or route.fleeing
 
 
 func _reset_session() -> void:
@@ -204,9 +225,9 @@ func _begin() -> void:
 	if not _begun:
 		_begun = true
 		_leave_title()
-		van.recover(route.recovery_pose)
-		van.foot_on_brake = route.fleeing
-		if route.stage > 0 or route.fleeing:
+		van.recover(_mission.recovery_pose)
+		van.foot_on_brake = _mission.fleeing
+		if _has_progress():
 			_continue_in_van()
 		else:
 			_begin_on_foot()
@@ -218,7 +239,7 @@ func _continue_in_van() -> void:
 	_signed = true
 	_enter_van()
 	van.start_engine()
-	if route.fleeing:
+	if _mission.fleeing:
 		_audio.silence_music()
 
 
@@ -382,19 +403,21 @@ func _set_paused(value: bool) -> void:
 	get_tree().paused = value
 	van.input_enabled = not value
 	if value:
-		hud.show_pause(Mission.NAME, _next_checkpoint(), _last_saved())
+		hud.show_pause(_mission.NAME, _next_checkpoint(), _last_saved())
 	else:
 		hud.set_menu(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if value else Input.MOUSE_MODE_CAPTURED
 
 
 func _continue_place() -> String:
-	if route.stage == 0 and not route.fleeing:
+	if not _has_progress():
 		return ""
-	return "%s · %s" % [Mission.NAME, _last_place()]
+	return "%s · %s" % [_mission.NAME, _last_place()]
 
 
 func _last_place() -> String:
+	if _mission == cargo:
+		return cargo.place_reached()
 	if route.fleeing:
 		return "Where the van stopped"
 	if route.stage == 0:
@@ -410,6 +433,8 @@ func _last_saved() -> String:
 
 
 func _next_checkpoint() -> String:
+	if _mission == cargo:
+		return cargo.place_next()
 	return _sentence(Mission.DIRECTIONS[mini(route.stage, Mission.DIRECTIONS.size() - 1)])
 
 
@@ -443,6 +468,7 @@ func _restart() -> void:
 	_enter_van()
 	van.start_engine()
 	route.restart()
+	_pick_mission()
 	_set_paused(false)
 
 
@@ -452,7 +478,7 @@ func _recover() -> void:
 	_cancel_boarding()
 	_enter_van()
 	van.start_engine()
-	route.recover()
+	_mission.recover()
 	_set_paused(false)
 	hud.notify("Van recovered to the last safe checkpoint")
 

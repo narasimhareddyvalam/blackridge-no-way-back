@@ -6,8 +6,18 @@ const PROGRESS := "user://progress.cfg"
 const SETTINGS := "user://settings.cfg"
 const LEGACY := "user://driving_prototype.cfg"
 const BUSES: Array[String] = ["Master", "Vehicle", "Ambience", "Music"]
-const NEWER := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[drive]\nstage=9\n\n" \
+const NEWER := "[save]\nversion=3\nmission=\"last_run\"\n\n[drive]\nstage=9\n\n" \
 	+ "[cargo]\nsealed=true\n"
+const CARGO_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=2\n"
+const CARGO_BROKEN := {
+	"an unknown mission": "[save]\nversion=2\nmission=\"harbour_run\"\n\n[cargo]\nstage=1\n",
+	"Mission 2 at checkpoint 4": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
+		+ "[cargo]\nstage=4\n",
+	"Mission 2 without its section": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
+		+ "[drive]\nstage=1\n",
+	"Mission 2's checkpoint in words": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
+		+ "[cargo]\nstage=\"two\"\n",
+}
 const NEWER_SETTINGS := "[save]\nversion=2\n\n[audio]\nMusic=0.2\n\n[video]\ngamma=1.1\n"
 const DAMAGED_SETTINGS := "[save]\nversion=1\n\n[audio]\nMaster=0.8\nMusic=\"loud\"\n"
 const READ_ONLY := FileAccess.UNIX_READ_OWNER | FileAccess.UNIX_EXECUTE_OWNER \
@@ -59,6 +69,7 @@ func _run() -> void:
 	_check_corrupt()
 	_check_locked()
 	_check_newer()
+	_check_version_two()
 	_check_unwritable()
 	_check_settings()
 	await _free_app()
@@ -171,6 +182,35 @@ func _check_newer() -> void:
 	_done(trial)
 
 
+func _check_version_two() -> void:
+	var path := _scratch.path_join("cargo.cfg")
+	var bytes := _store(path, CARGO_SAVE.to_utf8_buffer())
+	var trial := _trial(path)
+	var handed: Variant = trial.get("handed_on")
+	_check(trial.get("progress_read") == _status("LOADED") and handed is ConfigFile
+		and (handed as ConfigFile).get_value("cargo", "stage", -1) == 2
+		and bool(trial.get("complete")) and _bytes(path) == bytes,
+		"A version 2 save on Mission 2 loads as it is: Mission 1 hands it on at Mission 2's third "
+		+ "checkpoint, and loading writes nothing")
+	_done(trial)
+	var older := _scratch.path_join("older.cfg")
+	_good(2).save(older)
+	var before := _bytes(older)
+	trial = _trial(older)
+	_check(trial.stage == 2 and trial.get("progress_read") == _status("LOADED")
+		and _bytes(older) == before,
+		"A version 1 save is upgraded as it loads, at the same checkpoint, and the file is not "
+		+ "rewritten until the next checkpoint")
+	_done(trial)
+	var missed: Array[String] = []
+	for name: String in CARGO_BROKEN:
+		if not _set_aside(path, (CARGO_BROKEN[name] as String).to_utf8_buffer()):
+			missed.append(name)
+	_check(missed.is_empty(), "Version 2 files that break its rules (%s) are kept aside, and "
+		% ", ".join(CARGO_BROKEN.keys()) + "nothing from them is used (failed: %s)"
+		% ", ".join(missed))
+
+
 func _check_unwritable() -> void:
 	var folder := _scratch.path_join("read_only")
 	DirAccess.make_dir_absolute(folder)
@@ -262,14 +302,14 @@ func _check_round_trip(config: ConfigFile) -> void:
 	await _build(path, "")
 	_app.call("_begin")
 	await physics_frame
-	_check(_matches(config), "Continuing from a save made after the hit restores the checkpoint, "
-		+ "the van's place, where he lies and the crack")
+	_check(_matches(config), "A version 1 save made after the hit is upgraded as it loads: "
+		+ "continuing restores the checkpoint, the van's place, where he lies and the crack")
 	_route.call("_save_checkpoint", false)
 	var written := ConfigFile.new()
-	_check(written.load(path) == OK and written.get_value("save", "version", 0) == 1
+	_check(written.load(path) == OK and written.get_value("save", "version", 0) == 2
 		and written.get_value("save", "mission", "") == "night_freight"
 		and not FileAccess.file_exists(path + ".tmp"),
-		"The game saves it again as version 1 with the mission's name, leaving no .tmp")
+		"The next checkpoint saves it again as version 2 with the mission's name, leaving no .tmp")
 	await _free_app()
 	await _build(path, "")
 	_app.call("_begin")
@@ -309,12 +349,13 @@ func _check_launch() -> void:
 	_app.call("_set_paused", false)
 	var progress := ConfigFile.new()
 	var settings := ConfigFile.new()
-	_check(progress.load(PROGRESS) == OK and progress.get_value("save", "version", 0) == 1
-		and settings.load(SETTINGS) == OK
+	_check(progress.load(PROGRESS) == OK and progress.get_value("save", "version", 0) == 2
+		and settings.load(SETTINGS) == OK and settings.get_value("save", "version", 0) == 1
 		and is_equal_approx(float(settings.get_value("audio", "Music", -1.0)), 0.45)
 		and not FileAccess.file_exists(PROGRESS + ".tmp")
 		and not FileAccess.file_exists(SETTINGS + ".tmp"),
-		"Its next checkpoint and leaving the menu write both files there, with no .tmp left")
+		"Its next checkpoint and leaving the menu write both files there, progress as version 2 "
+		+ "and settings still as version 1, with no .tmp left")
 	await _quit_launch()
 	_clear_user()
 	var newer := _store(PROGRESS, NEWER.to_utf8_buffer())

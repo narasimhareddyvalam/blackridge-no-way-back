@@ -15,6 +15,7 @@ var settings_path: String = ""
 var van_guide := VanGuide.new()
 var menu: Control
 var _heading: VBoxContainer
+var _eyebrow: Label
 var _objective: Label
 var _detail: Label
 var _hint: Label
@@ -46,8 +47,8 @@ func _ready() -> void:
 	_heading.position = Vector2(32, 28)
 	_heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(_heading)
-	var eyebrow := _label("NIGHT FREIGHT", 14, Color("bcad89"))
-	_heading.add_child(eyebrow)
+	_eyebrow = _label("NIGHT FREIGHT", 14, Color("bcad89"))
+	_heading.add_child(_eyebrow)
 	_objective = _label("RETURN TO THE DEPOT", 25)
 	_heading.add_child(_objective)
 	_detail = _label("", 16, Color("c0c9cc"))
@@ -256,6 +257,10 @@ func show_title(place: String, saved: String) -> void:
 	menu_visible = true
 	menu.show_title(place, saved)
 	_refresh_overlays()
+
+
+func set_mission(mission: String) -> void:
+	_eyebrow.text = mission.to_upper()
 
 
 func show_pause(mission: String, next: String, last: String) -> void:

@@ -1842,6 +1842,37 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **What Claude Code did:** committed the version 2 save rules on `develop`, before any step 1b
        code, and pushed `develop`.
 
+129. **Step 1b: the version 2 code, test first.**
+     - **Claude Code proposed:**
+       - **the build:** the upgrade step in `save_file.gd`; version 2 in Mission 1; Mission 2's
+         script, with its checkpoint check and title scene and nothing playable yet; the app
+         taking its mission from the save;
+       - **the tests:** the new and changed tests run first; two deliberate breakages; every suite;
+         the import check;
+       - **two `test_collision.gd` checks change,** because finishing Mission 1 now saves Mission
+         2's start.
+     - **Claude Code asked:** "Should I start 1b?"
+     - **The author's message (2026-11-04):** "ok"
+     - **What Claude Code did:** built step 1b, test first, without committing:
+       - **test first:** on the old code the new Mission 2 test failed 0/1, the save test 26/29 and
+         the collision test 42/44;
+       - **the build:** the upgrade step; version 2 in Mission 1; Mission 2's script, with nothing
+         playable yet; the app taking its mission from the save;
+       - **a test fix:** the save test's launch check still expected version 1, which Claude Code
+         had missed when changing the test first. It now expects progress at version 2 and
+         settings still at version 1;
+       - **the checks:** both deliberate breakages fail the save test (24/29 and 28/29), every
+         suite passes, and the import adds only the two new `.uid` files;
+       - **found:** `scripts/run-test.sh` passes a test file that does not exist. The first suite
+         loop gave every test a wrong name and "passed"; it was run again.
+
+130. **Step 1b committed, and the test runner next.**
+     - **Claude Code asked:** "Commit step 1b?" and "What should come next?"
+     - **The author's answers (2026-11-04):** "Commit and push (Recommended)" and "Fix the test
+       runner (Recommended)"
+     - **What Claude Code did:** committed step 1b on `develop` and pushed `develop`. The test
+       runner fix is described for its own approval before any change.
+
 ## Waiting for the author
 
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac

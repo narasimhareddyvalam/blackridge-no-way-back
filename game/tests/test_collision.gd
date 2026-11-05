@@ -99,10 +99,11 @@ func _run() -> void:
 	_check(is_equal_approx(_depot_crack, _crack),
 		"The crack stays for the rest of the drive (%.2f at the depot)" % _depot_crack)
 	var finished := ConfigFile.new()
-	_check(finished.load(_scratch) == OK and finished.get_value("drive", "stage", -1) == 0
-		and not finished.has_section_key("drive", "body"),
-		"With the drive over, the save goes back to its start, so the next launch begins a new "
-		+ "drive")
+	_check(finished.load(_scratch) == OK and finished.get_value("save", "version", 0) == 2
+		and finished.get_value("save", "mission", "") == "the_wrong_cargo"
+		and finished.get_value("cargo", "stage", -1) == 0 and not finished.has_section("drive"),
+		"With the drive over, the save moves on to Mission 2's start (version 2, the_wrong_cargo, "
+		+ "checkpoint 0), so the next launch continues the story")
 	await _check_continue()
 	_hud.restart_requested.emit()
 	await _seconds(0.3)
@@ -534,12 +535,13 @@ func _check_depot() -> void:
 	var menu: Control = _hud.get("menu")
 	await process_frame
 	var focus := root.gui_get_focus_owner()
+	var place: Variant = menu.find_child("ContinuePlace", true, false) if menu != null else null
 	_check(paused and bool(_hud.get("menu_visible")) and menu != null
 		and String(menu.call("screen")) == "title" and focus != null
-		and focus.name == "NewGame" and not (menu.find_child("Continue", true, false)
-		as Control).visible,
-		"After %.0f s the screen fades to black and returns to the title, which offers a new "
-		% waited + "game, since the drive's save went back to its start")
+		and focus.name == "Continue" and place is Label
+		and (place as Label).text == "The Wrong Cargo · The freight depot",
+		"After %.0f s the screen fades to black and returns to the title, which now offers to "
+		% waited + "continue into Mission 2, The Wrong Cargo")
 
 
 func _bend(bones: Dictionary, upper: String, lower: String, axis: Vector3) -> float:
