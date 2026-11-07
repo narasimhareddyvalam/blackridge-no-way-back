@@ -1,0 +1,47 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+PASS: The oncoming van keeps its high beams on and blinds the driver (the view darkens to 0.24)
+PASS: No one is on the road while the oncoming van passes: he steps out only once it is past him
+PASS: You drive all the way: the wheel and the pedals are yours until he steps out (36 km/h)
+PASS: He steps off the kerb onto the crossing, 10.5 m before the van's bumper reaches it (36 km/h)
+PASS: Braking hard, the wheels lock on the wet paint: the tyres skid, the van slows only from 36 to 34 km/h, and it hits him 1.1 s after he steps out
+PASS: Turning the wheel does nothing in the skid: the van slides on in its lane (0.14 m across)
+PASS: He is struck on the crossing (0.09 m along, 1.43 m across)
+PASS: His head strikes the base of the windshield 0.05 s after the impact (0.10 m out from the glass)
+PASS: The van carries him on for half a second (35 km/h), before Ethan brakes
+PASS: He freezes in the headlights just before the impact
+PASS: At the impact he goes limp: a physics ragdoll takes over from the animation
+PASS: The body strikes the van with a heavy impact sound
+PASS: The music cuts out
+PASS: The oncoming van is behind, 68 m away and driving off: no witness
+PASS: Thrown by the van, he tumbles and comes to rest (3.2 s)
+PASS: He is thrown clear and lies 2.3 m ahead of the bumper, in the beams
+PASS: He lies on the road (hips 0.13 m up)
+PASS: His body never sinks into the road (lowest 0.12 m)
+PASS: Knees and elbows bend no more than 30 degrees the wrong way as he tumbles (worst -13 and -4 degrees)
+PASS: Knees and elbows never fold past their range (most 129 and 152 degrees)
+PASS: The van skids to a stop and holds there (4.0 s) despite the throttle
+PASS: The cab rocks on its springs at the impact (0.35 degrees)
+PASS: The windshield cracks low where his head struck it, in view from the seat (100% of full size, at x 0.50 m; his head was at x 0.57 m)
+PASS: Leaning 42 cm over the wheel, Ethan looks at him: 8 of 11 parts show, 0 from the seat; the hood hides the road nearer than 2.1 m past the bumper (his hips lie 2.3 m out)
+PASS: Leaning shows the road from 2.1 m past the bumper, where a harder hit leaves him (3.2 m from the seat)
+PASS: E does nothing: Ethan does not get out
+PASS: The objective reads DRIVE.
+PASS: On the 9% grade Ethan keeps his foot on the brake until you drive, so the van never rolls onto him (0.00 m in 3 s)
+PASS: Then the van drives again (5.6 m/s)
+PASS: Ethan sits back in his seat to drive (eye 0.00 m from the seat position)
+PASS: When he can drive on, a checkpoint keeps the van's place, where the man lies and the crack (body within 0.00 m)
+PASS: Parked at the depot, the engine goes off, the lights go out and the wipers stop
+PASS: Ethan stays in his seat, and the van no longer drives
+PASS: In the silence there is only the rain on the roof and his breathing
+PASS: No objective and no "DRIVE COMPLETE" on screen
+PASS: After 14 s the screen fades to black and returns to the title, which now offers to continue into Mission 2, The Wrong Cargo
+PASS: The crack stays for the rest of the drive (1.00 at the depot)
+PASS: With the drive over, the save moves on to Mission 2's start (version 2, the_wrong_cargo, checkpoint 0), so the next launch continues the story
+PASS: Continuing the drive after the hit starts in the van at that checkpoint, held on the brake (0.00 m from it after 1 s): DRIVE., and no music
+PASS: He still lies where he fell (within 0.00 m), the crack is on the glass, and nothing replays
+PASS: New drive brings back an unbroken windshield
+PASS: New drive clears the pedestrian and brings the music back
+PASS: New drive leaves the ending behind: the screen is clear and the objective is back
+COLLISION RESULT: 44/44 passed; 0 failed
