@@ -2,97 +2,59 @@
 
 ## Project context
 
-- Engine: Godot 4.7.2 stable (`README.md:142`), tag `"4.7"` (`game/project.godot:15`).
-- Renderer: Forward+ on desktop, `renderer/rendering_method="forward_plus"`
-  (`game/project.godot:125`), since Phase 1 Run 1 (C12). Mobile stays `gl_compatibility`
-  (`:126`). Tag `a5` was Compatibility. No `rendering/viewport/hdr_2d` key is set.
-- Main scene: `res://app/first_drive.tscn` (`game/project.godot:14`). It instances
-  the van as node `FreightVan` (`game/app/first_drive.tscn:5,14`).
-- How the shaded object (dashboard cluster) is drawn:
-  - `instruments.gd` is a `Control` that draws everything in `_draw()`: a
-    `Color("080e12")` 640×256 background rect, two dials, gear/speed text,
-    indicators, `LIGHTS` and `BRAKE` text
-    (`game/features/vehicles/freight_van/instruments.gd:15-36`). The speed dial
-    centre is `(155, 136)` and each dial hub is a radius-7 `Color("879c94")` circle
-    (`instruments.gd:20,54`). It redraws every 0.05 s (`instruments.gd:8-12`).
-  - `van_presentation.gd` creates it in `_displays()` and parents it to a 640×256
-    `SubViewport` with `disable_3d = true` and `UPDATE_ALWAYS`; `use_hdr_2d` is not
-    set (`game/features/vehicles/freight_van/van_presentation.gd:133-135,159-166`).
-  - That viewport texture is shown in the cockpit on a `QuadMesh` with an unshaded
-    `StandardMaterial3D` (`van_presentation.gd:136,190-203`).
-- Game state that drives the effect: `freight_van.gd` (the `FreightVan`
-  `CharacterBody3D`) owns `var headlights_on: bool = true`
-  (`game/features/vehicles/freight_van/freight_van.gd:23`), cycled (low beam, high beam,
-  off) by the `headlights` action (`freight_van.gd:117-119`), bound to L
-  (`game/project.godot:57-59`).
-  Input is ignored unless `occupied` and `input_enabled` (`freight_van.gd:112`). Each
-  physics tick (60 per second, not every rendered frame) `_physics_process` calls
-  `_visual.update_vehicle(delta)` (`freight_van.gd:63,100`). Lamps, lenses and `LIGHTS`
-  read `headlights_on` (`van_presentation.gd:257-260`, `instruments.gd:33-34`).
-- Pause: `get_tree().paused` is set in `game/app/first_drive.gd:52-53`; Escape is
-  `pause` (`game/project.godot:112-114`). No `process_mode` is set in
-  `game/features/vehicles/freight_van/freight_van.tscn`.
-- Recovery: R (`game/project.godot:107-109`) calls `_recover()` (`first_drive.gd:65-76`);
-  `FreightVan.recover()` leaves `headlights_on` alone (`freight_van.gd:180-190`).
-- 3D objects for the textured (foggy windshield) shader, built in code in
-  `_windows_and_wipers()` (`van_presentation.gd:206-228`):
-  - Front windshield: 2.12×1.08 `QuadMesh` at `(0, 2.17, -1.34)`, `rotation.x = 0.32`,
-    with a code-made `ShaderMaterial` from `windshield.gdshader`
-    (`van_presentation.gd:6,215-220`); `wetness`, `wipers_on` and `sweep_angle` are set
-    every physics tick (`van_presentation.gd:273-276`).
-  - Side windows: two `Build.box` panes (0.015×0.9×1.48) at `x = ±1.13` sharing one
-    code-made transparent `StandardMaterial3D` (`van_presentation.gd:207-214`). Index 0
-    (`side = -1`) is the driver's (camera at `x = -0.52`, `van_presentation.gd:120`),
-    lowered by `left_window` (`van_presentation.gd:254-256`) on J
-    (`game/project.godot:82-84`; `tools/tests/first_drive_integration.gd:66-68`).
-- Night environment: built in code with `fog_enabled = true` and no tonemap setting,
-  so Godot's default Linear tonemap at exposure 1.0 applies
-  (`game/features/environments/industrial_loop/industrial_loop.gd:42-53`).
-- Asset folders: `game/assets/textures/windshield/`, `game/materials/windshield/`
-  (author's choice in `CHANGE-BRIEF.md` §5.6; an exception to `AGENTS.md`).
-- Test runner: `scripts/run-test.sh <test-file.gd> <fps>` runs Godot headless on
-  `game/` with `--fixed-fps`, a 120 s `timeout`, `game/tests/` first then
-  `tools/tests/`, logs to `logs/<name>_<fps>fps.log`, and fails on `SHADER ERROR` or
-  `SCRIPT ERROR` (`scripts/run-test.sh:1-30`). Godot comes from `$GODOT`, `godot` on
-  `PATH`, or `/Applications/Godot.app/Contents/MacOS/Godot` (`scripts/run-test.sh:9`).
-  Since Run 27 it runs Godot with `HOME=.scratch-home` (ignored by Git), so `user://` is a
-  scratch folder. It fails with "REAL SAVE FOLDER CHANGED" if the player's real save folder
-  changes during the run (`scripts/run-test.sh:11-29`). New Assignment 5 tests go in
-  `game/tests/`.
-- Exact test commands, from the repository root:
+- Engine: Godot 4.7.2 stable (`README.md:205`). Renderer: Forward+ on desktop, Godot's default,
+  since `game/project.godot` sets only `renderer/rendering_method.mobile="gl_compatibility"`
+  (`:135`); `config/features` still lists "GL Compatibility" (`:15`). MetalFX draws at 75% on
+  macOS (`:137-138`).
+- Main scene: `res://app/first_drive.tscn` (`game/project.godot:14`), holding the world
+  `IndustrialLoop` and the van `FreightVan` (`game/app/first_drive.tscn:12,14`). The title screen
+  and the pause menu pause the tree (`game/app/first_drive.gd:138-140`, `:402-403`).
+- Cameras: driving `game/features/vehicles/freight_van/van_presentation.gd:362`, on foot
+  `game/features/characters/driver/driver.gd:66`, title `game/app/first_drive.gd:131-134`.
+- Assignment 6's four effects, all `GPUParticles3D` (`CHANGE-BRIEF.md` §1–§5):
+  - **A1 wiper flick:** `wiper_swept` (`game/features/vehicles/freight_van/freight_van.gd:5`),
+    emitted every half stroke (`:279-284`); the wipers are built in `van_presentation.gd:541-590`
+    from `wiper.gd`, whose blade is at `:27-30`.
+  - **A2 roof spill:** `braking` (`freight_van.gd:100`), 9 m/s² (`:22`, `:106-108`), 1.5 m/s²
+    with locked wheels (`:16`); the van's speed is `actual_speed` (`:123`).
+  - **B1 lamp rain:** the active camera within 65 m of a lamp. Lamp posts are in
+    `game/features/environments/industrial_loop/industrial_loop.gd:632-653` (fading from 65 m,
+    `:647`); the office lights at `:592-619`.
+  - **B2 exhaust vapour:** `engine_on` (`freight_van.gd:27`), `engine_started` (`:8`, `:242`),
+    `switch_off()` (`:228`); the throttle is `accelerate` (`:89`) or `scripted_throttle` (`:94`).
+- Effect scenes go in `game/effects/`, previews in `game/previews/`, tests in `game/tests/`
+  (`CHANGE-BRIEF.md` §6). The export leaves out `tests/*`, `experiments/*` and the visual
+  benchmark (`game/export_presets.cfg:11`).
+- Test runner: `scripts/run-test.sh <test.gd> <fps|realtime> [timeout-seconds]` runs Godot
+  headless on `game/` with `--fixed-fps <fps>`, or without it for `realtime`; the timeout defaults
+  to 120 s; it looks in `game/tests/`, then `tools/tests/`. Logs go to `$LOG_DIR` (default `logs/`)
+  as `<test>_<fps>fps.log` or `<test>_realtime.log`. It runs with `HOME=.scratch-home` and fails on
+  `SHADER ERROR`, `SCRIPT ERROR`, a missing test file, or any change to the player's real save
+  folder (`scripts/run-test.sh:1-47`).
+- Commands, from the repository root. Assignment 6's logs go under `logs/particles/`, so
+  Assignment 5's `logs/*.log` are never overwritten:
 
   ```sh
-  scripts/run-test.sh first_drive_regression.gd 60
-  scripts/run-test.sh first_drive_integration.gd 60
+  LOG_DIR=logs/particles/<step> scripts/run-test.sh first_drive_regression.gd 60
+  LOG_DIR=logs/particles/<step> scripts/run-test.sh test_night_dimming.gd 30  # also 60 and 144
+  LOG_DIR=logs/particles/<step> scripts/run-test.sh <test>.gd realtime  # tests that wait on audio
+  LOG_DIR=logs/particles/<step> scripts/run-test.sh cost_effects.gd 60 300
+  python3 tools/tests/check_first_drive_art.py
   ```
 
-  They print `REGRESSION RESULT: n/m passed` (`tools/tests/first_drive_regression.gd:58-60`)
-  and `BEHAVIOR RESULT: n failures`; the integration suite already presses `headlights`
-  (`tools/tests/first_drive_integration.gd:57-59,121`). Use `30` or `144` as the second
-  argument for other rates. Baseline 2026-10-28 at 60 FPS: 64/64 and 29/29, exit 0
-  (`logs/first_drive_*_60fps.log`). `capture_scene.gd` (needs a window) and
-  `check_first_drive_art.py` (Python) are not wrapper tests.
+  `first_drive_integration.gd` and every `game/tests/test_*.gd` run at 60 too. The baseline of
+  2026-11-07, all exit 0: 64/64, 0 failures, 92/92, 21/21, 12/12, 25/25, 33/33, 12/12, 49/49,
+  21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7, 30/30 ×3; art 0 failures
+  (`logs/particles/baseline/SUMMARY.txt`).
 
 ## Headless facts
 
-Checked on this machine on 2026-10-28 (Godot 4.7.2, macOS 26.6.2):
-
-- `godot` is not on `PATH`, so the wrapper uses the `/Applications` binary;
-  `timeout` is `/opt/homebrew/bin/timeout`.
 - A headless run draws nothing; whether anything looks right is a human check.
-- `get_shader_uniform_list()` works headless; a shader that fails to parse prints
-  `SHADER ERROR` and returns an empty list.
-- Defaults are not reported headless (`shader_get_parameter_default` returns null),
-  so tests read them from the shader source text.
-- `set_shader_parameter()` with an undeclared name raises no error and reads back;
-  only the uniform-list check catches a renamed uniform.
-- A `ShaderMaterial` stores 2.0 for a `hint_range(0.0, 1.0)` uniform unclamped;
-  what the shader draws with it is checked by a capture.
-- Exit code 0 is not proof of a clean run: both baseline logs end with an engine
-  "resources still in use at exit" ERROR, which the wrapper does not fail on.
-- Checked 2026-11-03: Godot follows `HOME` for `user://`. The real save folder is
-  `~/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back/`, and every
-  Godot run writes its own `logs/godot.log` there unless `HOME` points elsewhere.
+- `get_shader_uniform_list()` works headless; a shader that fails to parse prints `SHADER ERROR`.
+- Exit 0 is not proof of a clean run: logs end with the engine's "resources still in use at
+  exit" error, which the runner does not fail on.
+- Godot follows `HOME` for `user://`. The real save folder is
+  `~/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back/`.
 
 ## Current change
 
@@ -100,58 +62,53 @@ Checked on this machine on 2026-10-28 (Godot 4.7.2, macOS 26.6.2):
 
 ## Working rule
 
-- The author approves every step before it happens: "at each step take my approval and
-  then only do it" (2026-10-30). For each step:
-  1. Describe it: the files and the commands.
-  2. Wait for approval.
-  3. Do only that step and show the real output.
-  4. Stop.
-- All work happens on the `develop` branch. `main` stays exactly as the last graded
-  submission, and it changes only through a pull request the author approves.
-- Each agent run ends by writing `HANDOFF.md`. It lists the files changed, the exact test
-  commands with their real results, what the next run may rely on, and what is
-  unverified.
-- Each run starts by reading `HANDOFF.md` and rerunning every test it lists. The file
-  does not exist until Run 1 ends.
+- The author approves every step before it happens: "at each step take my approval and then
+  only do it" (2026-10-30). For Assignment 6 the author asked Claude Code to finish its own parts
+  and leave the author's tasks for the end (`docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142).
+- All work happens on `develop`. `main` stays as the last graded submission and changes only
+  through a pull request the author approves.
+- Each run ends by writing `HANDOFF.md`: the files changed, the exact test commands with their
+  real results, what the next run may rely on, and what is unverified. Each run starts by reading
+  it and rerunning every test it lists.
 
 ## Ownership
 
-- Every file in `game/shaders/` is hand-written by the human. Agents never create,
-  edit, reformat, rename or delete files there, even to fix an error; report shader
-  problems to the human instead.
+- Every file in `game/shaders/` is hand-written by the human. Agents never create, edit,
+  reformat, rename or delete files there, even to fix an error; report shader problems instead.
+- Effect settings live in scene files in `game/effects/`, not in code. Code places, starts and
+  stops effects, and drives `amount_ratio`; it does not set their look.
 
-## Out of scope (Phase 1)
+## Godot 4 names
 
-On 2026-10-30 the author asked for the road, forest, headlights, rain and interior to
-be made realistic now ("show me after making the road,car more realstic add lot of trees
-on the entire road"). Those are in scope. These stay protected:
+- Use Godot 4.7.2's class and property names; `docs/PARTICLE_RESEARCH.md` §7 lists them from the
+  engine's own API dump. Never use Godot 3 names such as `ParticlesMaterial` or `scale_random`.
+  In 4.7.2, `initial_velocity`, `scale` and `damping` are Vector2 ranges beside their `_min` and
+  `_max` floats, not single values.
+- If unsure whether a property exists in 4.7.2, say so instead of guessing.
 
-- `headlights_on` (true while either beam is on), the `headlights` action (L), the
-  `LIGHTS` text and the switch click. At the author's request of 2026-10-31 (#50), L
-  cycles low beam → high beam → off, and the game starts on low beams. Since Run 19
-  (#68), a drive begun from the menu starts on foot beside the dark van, and the
-  ignition (`FreightVan.start_engine()`) turns the low beams and wipers on once. The
-  dimming driver and `night_cluster` only read `headlights_on` and never set it.
-- Every file in `game/shaders/` (see Ownership). Assignment 5's evidence in `logs/*.log`
-  and `evidence/captures/` is never overwritten. New runs use `LOG_DIR` and output folders.
-- The fog materials (`light_fog.tres`, `heavy_fog.tres`) change only with the author's OK.
-  If they change, `test_materials.gd` follows, recorded in `CHANGE-BRIEF.md`.
-- Existing tests keep passing. A test changes only when the author's request changes what
-  it checks, and the change is written down.
-- Volumetric fog stays off in front of the headlights. The tonemap is AgX at exposure 1.3,
-  chosen after Linear clipped lit trunks to white (stills in `evidence/phase_1/forest_road/`).
-- `project.godot` changes only its rendering method and, with the author's OK of
-  2026-10-31, MetalFX upscaling on macOS (`scaling_3d/mode.macos=4`,
-  `scaling_3d/scale.macos=0.75`; see `PERFORMANCE.md`), and, with the author's OK of
-  2026-11-01 (#77), ETC2/ASTC texture import for the macOS export
-  (`textures/vram_compression/import_etc2_astc=true`), and, with the author's OK of 2026-11-01
-  (#95), the `cabin_light` action on I, and, at the author's request of 2026-11-02 (#101), the
-  `answer_call` action on T. No autoloads and no new controls without the author's OK.
+## Out of scope
+
+- The effects are presentation only: they read game state and never write it. Collision,
+  movement, input mappings, the mission's state machine and timings, the save rules, existing
+  test expectations, the Assignment 5 shaders and every other object stay as they are
+  (`CHANGE-BRIEF.md` §6).
+- Still protected:
+  - `headlights_on` and L's low, high, off cycle; the `LIGHTS` text and the switch click;
+  - the fog materials, which change only with the author's OK;
+  - volumetric fog stays off, and AgX at exposure 1.3 (`industrial_loop.gd:121-122`) stays;
+  - `project.godot` changes only as the author has approved (the renderer, MetalFX, ETC2/ASTC,
+    `cabin_light` on I, `answer_call` on T); no autoloads and no new controls without the
+    author's OK;
+  - Assignment 5's evidence in `logs/*.log` and `evidence/captures/` is never overwritten.
 
 ## Unconfirmed
 
-- Whether the night-cluster colours stay exactly at the Assignment 5 values under
-  Forward+ (prediction P3). Run 1 measures it.
-- The final low-beam values. The 2026-10-30 test values are starting points.
-- What a Godot 4.7.2 macOS export needs on this Mac (signing mode, the `.zip`
-  contents). Run 3 checks it.
+- The three Assignment 6 headless facts (no particles are drawn and no GPU particle process runs
+  headless; a GPU effect's headless CPU price is near zero; strips come from a windowed Movie
+  Maker run the author starts): the author adds them under "Headless facts" once confirmed.
+- How 4.7.2 applies `gravity` with `local_coords` on (A2), `transform_align` with the material's
+  billboard disabled (A2, B1), and whether preprocess re-runs on `restart()` (B1).
+- The tailpipe's position on the Iveco model (B2), and the roof lip's (A2).
+- Whether the Visual Profiler shows GPU time on Metal: Godot's GPU timer read 0 in Run 17
+  (`docs/PHASE_BRIEF.md:1151`).
+- Where the chapter's Example 09 cost script is; it is not in this repository.
