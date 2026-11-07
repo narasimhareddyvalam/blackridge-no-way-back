@@ -1994,12 +1994,70 @@ tag `a5`. Pictures the author approved or rejected are filed in
          course reads the submission from that tag, so it comes last, after the fresh-clone
          check.
 
+140. **The VS Code tab, and the push.**
+     - **The author's message:** "whats this? why is this coming up to me?", with a screenshot of
+       VS Code's "PHASE_BRIEF.md (Index)" comparison tab.
+     - **Claude Code's answer:** VS Code's Git comparison, opened from the Source Control list while
+       the move was staged. It showed the new template beside the moved brief, so the whole brief
+       looked replaced; Git recorded a 100% rename. The tab was out of date after the commits.
+     - **The author's message:** "yes push it"
+     - **What Claude Code did:** pushed `develop` (`5d5ca7e..c1ee48f`).
+
+141. **The author's brief: the draft, the review, the fixes and the decisions.**
+     - **The author's message:** "can you write it for me ?"
+     - **Claude Code's answer:** it declined, because the assignment says "You write:
+       CHANGE-BRIEF.md, every prediction, every verdict"; it offered to interview the author, bring
+       the facts and check the result.
+     - **The author's message:** "no tell me what to do exactly i will do and write and give it to
+       you."
+     - **What Claude Code did:** gave step-by-step instructions for every section of the brief.
+     - **The author's message:** "open change-brief-completed in downloads"
+     - **What Claude Code did:** read `~/Downloads/CHANGE-BRIEF-completed.md` and reviewed it against
+       the assignment and the code: 8 must-fix and 10 should-fix items. It asked whether another AI
+       tool had written any of it; the author has not said.
+     - **The author's message:** "can you fix them for me"
+     - **What Claude Code did:**
+       - corrected 14 technical errors in a copy, now `CHANGE-BRIEF.md`; the Downloads original is
+         unchanged;
+       - asked the remaining decisions in two question forms and one follow-up. The author's
+         answers: "Both" (graded B), "Within range (Recommended)", "Collision + splashes
+         (Recommended)", "Already falling (Recommended)"; "From my descriptions (Recommended)",
+         "Backlit rain, Drops reach the ground, Streak length, Streaks follow motion", "Yes, spill
+         then (Recommended)", "AI-generated"; and "Move with the van (Recommended)";
+       - wrote those decisions in, proposed 59 values marked †, and added a "How it was made" line.
+     - **The author's message:** Claude Code's five checks, pasted back, then "check for me and
+       fill them following best practices"
+     - **What Claude Code did:**
+       - re-derived every † value; one wording fix, A2's gravity;
+       - tried to read Godot's generated particle shader headless; 4.7.2 does not expose it to
+         scripts, so the assignment's Step 6 will show how gravity works with local coordinates;
+       - added a facts-only entry and an empty entry for the author's own notes to
+         `FRICTIONAL.md`;
+       - left the B1 price predictions and the author's own notes to the author, and recommended
+         textures drawn by a script instead of AI-generated ones.
+
+142. **Everything else finished first; the author's tasks last.**
+     - **The author's message:** "what all we need to do from assignment yet?"
+     - **Claude Code's answer:** the remaining work in the assignment's order, with who does each
+       part.
+     - **The author's message:** "you leave the tasks that i need to do for last before submission.
+       everything else finish it off following best practices"
+     - **What Claude Code decided under that instruction:**
+       - the brief is committed now, before any build, as the assignment requires; the author's
+         later checks of the † values become dated revisions;
+       - the B1 price predictions stay as the author wrote them, to be compared with measurements;
+       - the textures are drawn by a script (`tools/make_particle_textures.py`) instead of
+         AI-generated, because generating them would need the author and would block the build;
+       - the author's own tasks (the review of `CLAUDE.md`, frame strips and tuning verdicts, the
+         checks in the game, the GPU price, Step 6's shader, `FRICTIONAL.md` notes, the film and
+         the submission) are collected for the end.
+
 ## Waiting for the author
 
-- The Assignment 6 brief in `CHANGE-BRIEF.md`, in the author's words, committed before any agent
-  prompt (#138).
-- Where the chapter's Example 09 is, when Assignment 6 is due, and whether the two B effects are
-  graded too (#131, #136).
+- The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
+  the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
+  agent prompt.
+- Where the chapter's Example 09 is, and when Assignment 6 is due (#131).
 - Whether Mission 2 waits until `a6` is tagged (Claude Code's recommendation, #131).
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
   was on battery or charging).

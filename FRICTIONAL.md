@@ -1,10 +1,11 @@
-# FRICTIONAL — Assignment 5 honest log
+# FRICTIONAL — honest log
 
 The author's log of what they tried, expected, saw, checked and learned, with
 human and AI work kept apart. Each entry is dated and points to a commit,
 prompt, test log or capture. AI may organise these notes, but it does not
 write the author's experiences. Entries marked "recorded by Claude Code"
-contain facts only.
+contain facts only. Assignment 5's entries come first, as submitted at tag
+`a5`; Assignment 6's begin under "Assignment 6" at the end.
 
 ## Entry format
 
@@ -165,3 +166,56 @@ the driver's window went down with the fog.
   `hint_experiment_forward_plus.png` and `hint_diagnose_results.txt`; playtest
   screenshot `evidence/playtest/os_screenshot_cockpit_headlights_on.png`;
   results in `TEST-REPORT.md`.
+
+## Assignment 6
+
+## 2026-11-07 — From choosing the effects to the brief (recorded by Claude Code, facts only)
+
+- Claude Code checked the project: nothing for Assignment 6 existed (no particle
+  node, no `a6` tag).
+- It offered effects tied to the game's own events. The author chose A1 the wiper
+  flick and A2 the roof spill on hard braking as Effect A, and B1 rain in every
+  lamp's light and B2 exhaust vapour as Effect B, all four graded (C52; prompt
+  log #131–#141).
+- It wrote `docs/PARTICLE_RESEARCH.md`, moved the old brief to
+  `docs/PHASE_BRIEF.md` (`7bbf0a4`) and added a headings-only template
+  (`c1ee48f`).
+- Asked to write the brief, it declined, quoting the assignment ("You write:
+  CHANGE-BRIEF.md, every prediction, every verdict and the process-shader
+  notes"), and gave step-by-step instructions instead.
+- The author then supplied a completed draft
+  (`~/Downloads/CHANGE-BRIEF-completed.md`, 2026-11-07 17:18). How the draft was
+  written is not recorded here; the author's own entry below says.
+- Claude Code reviewed the draft against the assignment and the code, and listed
+  8 must-fix and 10 should-fix items.
+- At the author's request it then:
+  - corrected 14 technical errors: the billboard mode, vertex colour, size
+    units, exact Godot names, A1's summary keys and the Assignment 5 shader
+    names;
+  - wrote in the author's decisions, chosen from its questions: both B effects
+    graded, B1's condition (within 65 m of a lamp) and feature (collision with
+    splashes), rain that appears already falling, four realism fixes, A2 moving
+    with the van, the spill at the hit, AI-generated textures (later drawn by a
+    script instead, #142), and having Claude Code propose the exact values;
+  - proposed 59 values, marked † in the brief, from the author's descriptions
+    and the research, for the author to check: directions, colours, visibility
+    boxes, the previews' second triggers, the splash emitter and collider, B1's
+    lifetime and streak size, and A2's gravity. Four of B1's frame-strip
+    expectations and the two retrigger lines it wrote are marked † too;
+  - left the price predictions and the other predictions as the author wrote
+    them, except the peak-particle arithmetic (†).
+- Still open: the author's check of the † values; the B1 price predictions,
+  made for 160 drops per lamp; the textures' model and prompts; and three points
+  that only a windowed run or Step 6 can confirm.
+- Trace: `7bbf0a4`, `c1ee48f`; `docs/AUTHOR_PROMPTS_AND_DECISIONS.md`
+  #131–#141; C52; the brief's "How it was made" line.
+
+## 2026-11-07 — My own notes (to write)
+
+- **Tried / expected:**
+- **What happened:**
+- **Checked or changed in response:**
+- **Learned / still unresolved:**
+- **Human vs AI:** how the draft was written; what I accepted, modified or
+  rejected of Claude Code's fixes and † proposals
+- **Trace:**
