@@ -111,6 +111,7 @@ const LOW_BEAM_ENERGY := 650.0
 const HIGH_BEAM_ENERGY := 850.0
 const WipeMap = preload("windshield_wipe_map.gd")
 const Wiper = preload("wiper.gd")
+const VanParticles = preload("van_particles.gd")
 const WIPE_MAP_SIZE := Vector2i(512, 256)
 const DOOR_SWING := 0.541
 const GLARE_FALLOFF := 40.0
@@ -168,6 +169,7 @@ var _passenger_turn := Transform3D.IDENTITY
 var _look: Node3D
 var _wheel: Node3D
 var _wipers: Array[Node3D] = []
+var particles := VanParticles.new()
 var _blades: Array[Node3D] = []
 var _last_wiper: float = 0.0
 var _last_swing: float = 0.0
@@ -253,6 +255,9 @@ func configure(van: CharacterBody3D) -> void:
 	_front_shell()
 	_mark_layer(_body, 2)
 	_mark_layer(_cabin, 4)
+	particles.name = "VanParticles"
+	add_child(particles)
+	particles.setup(van, _wipers[0], WipeMap.ARMS[0] + WipeMap.BLADES[0] * 0.5, _body)
 	_mirrors()
 
 

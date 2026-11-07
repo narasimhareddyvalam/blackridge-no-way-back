@@ -32,6 +32,7 @@ var locked: bool = false
 var foot_on_brake: bool = false
 var lock_curvature: float = 0.0
 var scripted_throttle: float = 0.0
+var throttle: float = 0.0
 var scripted_brake: float = 0.0
 var scripted_steer: float = 0.0
 var driver_door: float = 0.0
@@ -86,7 +87,7 @@ func _physics_process(delta: float) -> void:
 	clock += delta
 	_collision_cooldown = maxf(0.0, _collision_cooldown - delta)
 	var active := occupied and input_enabled and not held and not scripted
-	var throttle := Input.get_action_strength("accelerate") if active and engine_on else 0.0
+	throttle = Input.get_action_strength("accelerate") if active and engine_on else 0.0
 	var brake := Input.get_action_strength("brake") if active else 0.0
 	var handbrake := Input.is_action_pressed("handbrake") if active else not scripted
 	var requested_steer := Input.get_axis("steer_right", "steer_left") if active else 0.0

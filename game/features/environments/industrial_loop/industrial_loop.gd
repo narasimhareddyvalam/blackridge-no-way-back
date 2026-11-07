@@ -14,6 +14,7 @@ const GhatRoad = preload("ghat_road.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
+const LampRain = preload("lamp_rain.gd")
 const SiteOffice = preload("art/office/site_office.glb")
 const GROUND = preload("hill_ground.gdshader")
 const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/textures/"
@@ -81,6 +82,7 @@ var run_sheet_spot := Vector3.ZERO
 var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
+var lamp_rain := LampRain.new()
 var _metal := Build.material(Color("343d43"), 0.48)
 var _concrete := Build.material(Color("4b5254"))
 var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
@@ -100,6 +102,8 @@ func _ready() -> void:
 	_boundary()
 	_reflections()
 	_forest()
+	lamp_rain.name = "LampRain"
+	add_child(lamp_rain)
 
 
 func _environment() -> void:
@@ -617,6 +621,17 @@ func _office_lights(office: Node3D) -> void:
 	glow.light_energy = 0.8
 	glow.omni_range = 4.0
 	office.add_child(glow)
+	var beam_from := office.transform * flood.position
+	var beam_to := VAN_PARKING + Vector3.UP
+	var beam := Vector2(beam_to.x - beam_from.x, beam_to.z - beam_from.z)
+	var middle := Vector3((beam_from.x + beam_to.x) * 0.5, VAN_PARKING.y + LampRain.FLOOD_HEIGHT,
+		(beam_from.z + beam_to.z) * 0.5)
+	lamp_rain.add_volume(LampRain.FLOODLIGHT, Transform3D(Basis(Vector3.UP, atan2(beam.x, beam.y)),
+		middle))
+	var notice := office.get_node("NoticeLamp") as Node3D
+	var sheet := office.get_node("RunSheet") as Node3D
+	lamp_rain.add_volume(LampRain.DOOR, Transform3D(Basis.IDENTITY, office.transform * Vector3(
+		notice.position.x, LampRain.DOOR_HEIGHT, sheet.position.z + LampRain.DOOR_OUT)))
 
 
 func _street_furniture() -> void:
@@ -647,6 +662,8 @@ func _lamp_post(at: Vector3, heading: float) -> void:
 	light.distance_fade_begin = 65.0
 	light.distance_fade_length = 25.0
 	post.add_child(light)
+	lamp_rain.add_volume(LampRain.POST, Transform3D(Basis.IDENTITY,
+		post.transform * LampRain.POST_HEAD))
 	if at.z > 100.0:
 		light.shadow_enabled = true
 		light.light_energy = 4.0

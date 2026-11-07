@@ -1,0 +1,15 @@
+Shader leak probe, 2026-11-07 18:43, 4.7.2.stable.official.ed1daf0bf, headless, HOME=.scratch-home
+Command per case: Godot --headless --path game -s logs/particles/leak_probe/probe.gd -- <case>
+Each case adds the node, waits 5 frames, frees it, waits 5 frames, quits.
+
+default                                       (no ERROR or WARNING line)
+default_turbulence                            (no ERROR or WARNING line)
+code_one_draw                                 (no ERROR or WARNING line)
+code_two_draw                                 (no ERROR or WARNING line)
+logs/particles/leak_probe/one_emitter_no_draw.tscn (no ERROR or WARNING line)
+logs/particles/leak_probe/two_emitters_no_draw.tscn (no ERROR or WARNING line)
+logs/particles/leak_probe/two_default_emitters.tscn ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+res://effects/exhaust_vapour.tscn             (no ERROR or WARNING line)
+res://effects/wiper_flick.tscn                ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+res://effects/roof_spill.tscn                 ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+res://effects/lamp_rain_post.tscn             ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

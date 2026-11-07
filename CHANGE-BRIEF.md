@@ -337,3 +337,13 @@ _Add future adjustments below this line with a date, reason, changed setting, an
   brief's direction, backward and 15° down. This is an assumption, not the model's tailpipe.
 - **Evidence:** `TAILPIPE` in `game/features/vehicles/freight_van/van_particles.gd`.
 
+### 2026-11-07, revision 3 (build): what freeing the van does to A2 (Claude Code)
+
+- **Changed:** A2's rule "If the followed node is freed: No new spawn. The detached, world-space
+  spill completes its lifetime and is then freed safely" becomes: the spill moves with the van
+  (`local_coords = true`, the author's choice), so when the van is freed the spill goes with it,
+  and nothing is spawned or dereferenced afterwards.
+- **Why:** the rule was written for the draft's world-space spill. Since A2 moved into the van's
+  frame, there is no detached spill left to finish.
+- **Evidence:** `game/tests/test_roof_spill_state.gd`.
+
