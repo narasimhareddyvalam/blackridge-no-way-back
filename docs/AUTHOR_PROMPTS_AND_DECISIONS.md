@@ -1873,8 +1873,134 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **What Claude Code did:** committed step 1b on `develop` and pushed `develop`. The test
        runner fix is described for its own approval before any change.
 
+131. **Assignment 6 begins: is it done already?**
+     - **The author's message (2026-11-07):** "alright we should do our assignment 6. check if we
+       already finished it in our codebase? -", followed by the Assignment 6 handout, pasted in
+       full.
+     - **What Claude Code found:** nothing for Assignment 6 existed: no particle node anywhere in
+       `game/` or `tools/`, no `a6` tag, no effect or preview scenes, no frame strips, no
+       `TUNING.md` and no generated particle shader. The rain in the headlight beams is a shader
+       by design (C26).
+     - **Claude Code asked** where the old brief should go, where the chapter's Example 09 is,
+       when the assignment is due, and whether to start with the test runner.
+
+132. **What the assignment asks.**
+     - **The author's message:** "alright we need to satisfy all the assignment requirements
+       without missing out on anything. and also make sure to follow best practices. what are we
+       suppose to do in this assignment?"
+     - **What Claude Code did:** explained each step for this repository: who writes what; `game/`
+       in place of the assignment's `godot/`; keeping the scratch home and the save-folder check in
+       the test runner; not overwriting Assignment 5's logs, prompts and sessions. It named the
+       risks:
+       - Godot's GPU timer read 0 on Metal in Run 17, and the GPU price is graded;
+       - render layers, the windshield's drops, MetalFX, the paused title and pause screens, AgX;
+       - the course's film skill is not installed in this session.
+
+133. **Ideas for the effects.**
+     - **The author's messages:** "alright how to finish all the requirements of this assignment
+       and fit it in our game? give me ideas", "what were your questions sorry?" and "lets do one
+       by one question. give me ideas for which effects"
+     - **What Claude Code did:** offered effects tied to the game's own events: a hit burst on
+       `collided`, the wiper flick and footstep splashes for Effect A; rain on foot, road splashes
+       in the headlights, tyre spray, steam off the hot van and water off the mirrors for Effect B.
+
+134. **Effect A: the wiper flick.**
+     - **The author's message:** "lets do this - 2. Wiper flick.", with Claude Code's description
+       pasted back, then "and for effect B - give more ideas"
+     - **What Claude Code did:** played back how the wiper flick behaves, and offered more Effect B
+       ideas: rain in every lamp's light, exhaust vapour, smoke from the office stovepipe, drain
+       steam and wind-blown needles.
+
+135. **Effect B: lamp rain and exhaust vapour.**
+     - **The author's message:** Claude Code's descriptions of rain in every lamp's light and of
+       exhaust vapour, pasted back, then "lets do these both for effect B. and in effect A lets do
+       one more give more ideas"
+     - **What Claude Code did:** said that each extra effect needs the full evidence, and offered a
+       second Effect A: the hit burst, footstep splashes, a puddle splash, gravel off the verge, or
+       the roof spill on hard braking.
+
+136. **Effect A: the roof spill too.**
+     - **The author's message:** "the more the gettre for relative grading. and lets do this as
+       well - Roof spill on hard braking.", with Claude Code's description pasted back, then "now
+       tell me what all we have selected"
+     - **Claude Code's note:** the relative grade weighs evidence and understanding, not the number
+       of effects; and both A effects need a lamp to be seen, which risks Effect A's "visible"
+       points. It suggested the hit burst as a safe graded Effect A.
+     - **The author's messages:** "whats the issue? give me in one liner", then "i want it to be
+       visible even when theres no lamp"
+     - **Claude Code's proposal:** draw each drop as a tiny lens that shows the headlight-lit road
+       and the sky glow behind it, as the drops on the glass already do. With the lights off on an
+       unlit road it fades, as real water does.
+
+137. **Both A effects graded, and real physics (C52).**
+     - **The author's messages:** "both the effects in A should be graded. and make sure everything
+       is realisitc as if its real life world.", then "is that how physics works in real life??
+       make it realisitic and make sure physics work as real life. if you are confident then
+       proceed", then "make sure to do the same for two effects in B"
+     - **What Claude Code did:** checked each effect against the van's code and published numbers,
+       and corrected what it had said:
+       - the wiper water runs on ahead of the slowing blade and leaves by the glass's left edge,
+         not off the blade tip, and falls beside the door, not onto the bonnet;
+       - braking at 9 m/s² tips the effective "down" to within about 3° of the windshield's slope,
+         so the spilled water barely presses on the glass and races down it;
+       - refilling the roof takes tens of seconds, not a quarter of a minute;
+       - rain falls at a speed set by each drop's size (Gunn and Kinzer, 1949), not at one speed.
+     - **Found, not changed in Assignment 6:** the beam rain moves with the van, so at speed it
+       doesn't rush at the driver as real rain does; and the van's own rear lamps light no rain.
+     - **Corrected:** the order of work. The brief comes before the test runner change, because the
+       assignment wants the brief committed before any agent work.
+
+138. **The brief: the old one moved, and a template.**
+     - **Claude Code asked:** "Shall I move the old brief to `docs/PHASE_BRIEF.md` and leave a
+       blank Assignment 6 template in `CHANGE-BRIEF.md` for you to fill?"
+     - **The author's message:** "yes move it and add the template. fill it for me for assignment 6
+       and make sure we are satisfying all assignment requirements"
+     - **What Claude Code did:**
+       - moved the old brief to `docs/PHASE_BRIEF.md`, byte for byte (SHA-256 `6ed86df9…`),
+         staged as a rename on its own;
+       - wrote `CHANGE-BRIEF.md` as a template: a heading for everything the assignment asks of
+         the brief, one block per effect, with nothing filled in. As in Assignment 5 (`42048ca`,
+         then the author's `2729c26`), the agent writes the skeleton and the author the text;
+       - did not fill in the brief, because the assignment says "You write: CHANGE-BRIEF.md, every
+         prediction, every verdict and the process-shader notes".
+     - **The author's messages:** "what is considered as rename? tell me what you are doing? you
+       had lot of questions right?? make sure to not lose my progress and etc till now", then
+       "maybe create change brief for assignments and an entire change brief that we had till
+       now?? or what do you think is the best practices?", then "no thats not what i mean -
+       change-brief-assignment 6 something like that maybe? idk?/ what will make us satisfy all
+       assignment requirements"
+     - **Claude Code's answer:** the brief must be named exactly `CHANGE-BRIEF.md`, at the root:
+       `CLAUDE.md` imports it with a line reading exactly `@CHANGE-BRIEF.md`, the grader and the
+       course's prompts look for that name, and the assignment says to replace its contents. Each
+       assignment's copy stays in its tag (`git show a5:CHANGE-BRIEF.md`).
+     - **The author's message:** "yes go ahead"
+     - **What Claude Code did:** wrote `docs/PARTICLE_RESEARCH.md` (facts from the code, published
+       numbers and Godot 4.7.2's property names, for the author's brief), these entries, C52 and
+       `HANDOFF.md`.
+
+139. **The groundwork committed; the tag waits for the submission.**
+     - **Claude Code asked:** "Shall I commit this groundwork now as one commit labelled as mine,
+       so your brief lands as its own commit after it?"
+     - **The author's message:** "yes commit it and make sure we are following all assignment
+       guidelines. we need to add a tag or something i guess"
+     - **What Claude Code did:**
+       - ran the checks the assignment asks for after every agent session: nothing changed in
+         `game/shaders/` or in `scripts/run-test.sh`;
+       - committed on `develop`, labelled as the agent's, in two commits rather than the one it
+         had offered: the old brief's rename on its own (`7bbf0a4`), so Git keeps that file's
+         history, then the template, the research notes, these entries, C52 and `HANDOFF.md`.
+         Nothing was pushed;
+       - added no tag. The assignment tags only the final submission commit, `a6`, and the
+         course reads the submission from that tag, so it comes last, after the fresh-clone
+         check.
+
 ## Waiting for the author
 
+- The Assignment 6 brief in `CHANGE-BRIEF.md`, in the author's words, committed before any agent
+  prompt (#138).
+- Where the chapter's Example 09 is, when Assignment 6 is due, and whether the two B effects are
+  graded too (#131, #136).
+- Whether Mission 2 waits until `a6` is tagged (Claude Code's recommendation, #131).
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
   was on battery or charging).
 - Any pull request from `develop` to `main`, only with the author's approval.

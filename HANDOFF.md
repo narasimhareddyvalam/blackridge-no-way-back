@@ -1,8 +1,10 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 1b: missions in a row, and the progress file's version 2 (#129),
-2026-11-04, on branch `develop`. It is not committed. Before it, each committed on `develop` and
+**Last run:** Assignment 6, step 1: the old brief moved, and a template for the Assignment 6
+brief (#138–#139), 2026-11-07, on branch `develop`. It is committed in two commits, the rename
+(`7bbf0a4`) and then the groundwork, and not pushed. Before it, each committed on `develop` and
 pushed:
+- `5d5ca7e`: Phase 2, step 1b, missions in a row and the progress file's version 2 (#129–#130);
 - `b4650fd`: the version 2 save rules, before any code (#127–#128);
 - `2ebd682`: the Phase 2 brief, Mission 2, before any code (#126);
 - `31840c9`: Phase 1, Run 34, the front door in design A (#122–#124, C50).
@@ -16,7 +18,11 @@ lamps (C47) and Run 33. Committed before them, in order:
 - `301c250`: the save rules, on their own (#107);
 - `573862b`: Runs 20–26, after the author had told Max about the van on 2026-11-03 (#109).
 
-`develop` is pushed up to `b4650fd`; `main` is untouched.
+`develop` is pushed up to `5d5ca7e`; `main` is untouched.
+
+**Assignment 6 (particles) began on 2026-11-07 (#131–#138, C52):** four effects, the author's
+brief first, then the test runner, the baseline and the assignment's Step 1. See the section
+below.
 
 **The author's agreed order (#108–#109), each step approved on its own:**
 
@@ -26,11 +32,12 @@ lamps (C47) and Run 33. Committed before them, in order:
 3. ~~the keyboard-only menu, Assignment 10's front door~~ (done, Run 34); the author's keyboard
    check is still to come;
 4. Mission 2, The Wrong Cargo: planned on a map (#124–#125, C51), and its brief written as the
-   Phase 2 revision at the end of `CHANGE-BRIEF.md` (#126). It is built one approved step at a
-   time:
+   Phase 2 revision at the end of the old brief, now `docs/PHASE_BRIEF.md` (#126). It is built
+   one approved step at a time:
    - step 1a, the version 2 save rules, is committed (#128);
-   - step 1b, missions in a row and the version 2 code, is built and not committed (#129);
-   - step 2, the transfer shed, comes next;
+   - step 1b, missions in a row and the version 2 code, is committed (`5d5ca7e`, #130);
+   - step 2, the transfer shed, waits until Assignment 6 is tagged (Claude Code's
+     recommendation; the author has not confirmed it);
 5. Mission 3, Last Run, with the combat encounter and the story scenes;
 6. the author's own full playtest, then the story changes, the "gamify" pass and the polish.
 
@@ -41,6 +48,52 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Assignment 6, step 1: the old brief moved, and the brief template (approved: #138)
+
+**The effects (C52):** A1 the wiper flick and A2 the roof spill on hard braking, both graded as
+Effect A; B1 rain in every lamp's light and B2 exhaust vapour as Effect B. Real-life physics
+throughout. Whether the B effects are graded is open.
+
+**Files:**
+
+- **Moved, unchanged:** `CHANGE-BRIEF.md` to `docs/PHASE_BRIEF.md` (SHA-256 `6ed86df9…`, the same
+  as at `5d5ca7e`), committed as a rename on its own (`7bbf0a4`).
+- **New:**
+  - `CHANGE-BRIEF.md`: the Assignment 6 template, headings only, for the author's text;
+  - `docs/PARTICLE_RESEARCH.md`: facts from the code, published numbers and Godot 4.7.2's
+    property names, for the author's brief. It is not the brief.
+- **Changed:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` (#131–#138), `docs/DESIGN_DECISIONS.md`
+  (C52) and this file.
+
+**Tests:** none run. Only documents changed. Nothing in the game, tests or tools reads the
+brief's contents; three checks name it in their labels only (`test_materials.gd:111`,
+`test_night_dimming.gd:85`, `check_first_drive_art.py:136,247`). The Assignment 6 baseline is
+run with the test runner change, after the brief.
+
+**What the next run may rely on:**
+
+- `CLAUDE.md` still imports `@CHANGE-BRIEF.md`, which is now the Assignment 6 template. Its other
+  mentions of the old brief's sections now mean `docs/PHASE_BRIEF.md`. The assignment's Step 1
+  rewrites `CLAUDE.md`.
+- The property names in `docs/PARTICLE_RESEARCH.md` §7 come from Godot 4.7.2's own API dump
+  (`--dump-extension-api`, run with a scratch home in Claude Code's scratch folder).
+
+**Unverified:**
+
+- Everything marked "estimate" or "suggestion" in `docs/PARTICLE_RESEARCH.md`.
+- Whether the Visual Profiler shows GPU time on Metal (Run 17 found Godot's GPU timer at 0).
+
+**Next, each step approved on its own:**
+
+1. The author writes the brief and commits it as the author's own commit, before any agent
+   prompt.
+2. The test runner: `realtime` mode and a timeout argument added, keeping the scratch home and
+   the save-folder check, and failing when the test file does not exist. Then the baseline.
+3. The assignment's Step 1: `CLAUDE.md`, from the author's `claude -p` run.
+
+**No tag yet (#139):** `a6` goes on the final submission commit only, after the film records
+and a fresh clone of that commit passes every test.
 
 ## Phase 2, step 1b: missions in a row, and the progress file's version 2 (approved: #129)
 
