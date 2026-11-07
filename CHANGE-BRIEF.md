@@ -316,4 +316,24 @@ B1 uses `preprocess = 1.1 s`†, one full lifetime, so when its condition is alr
 
 ## Revisions
 
-_No revisions yet. Add future adjustments below this line with a date, reason, changed setting, and evidence. Do not rewrite the original predictions above after the initial commit._
+_Add future adjustments below this line with a date, reason, changed setting, and evidence. Do not rewrite the original predictions above after the initial commit._
+
+### 2026-11-07, revision 1 (build): B1's splash emitter keeps emitting (Claude Code)
+
+- **Changed:** `LampSplash` `emitting = false`† becomes `emitting = true`, in all three B1 scenes.
+- **Why:** a particle node that is not emitting can fall idle and drop the splashes its parent
+  sends it, while Godot documents that a node used as another emitter's `sub_emitter` no longer
+  emits on its own. So `true` is the safe value; the † value was Claude Code's mistake.
+- **To confirm in B1's first windowed strip:** splashes appear where drops land, and none rise
+  from the emitter itself.
+- **Evidence:** `game/effects/lamp_rain_*.tscn`, `game/tests/test_lamp_rain_config.gd`.
+
+### 2026-11-07, revision 2 (build): where the exhaust leaves the van (Claude Code)
+
+- **Found:** the Iveco model has no tailpipe. Its rear underside is symmetrical, with no pipe on
+  either side, and a parts-catalogue search did not settle where the 2014 Daily's exits.
+- **Until the author confirms it from a photo of a real Daily:** the plume starts under the rear
+  bumper on the driver's side, at (−0.6, 0.46, 2.85) in the van's frame, and leaves in the
+  brief's direction, backward and 15° down. This is an assumption, not the model's tailpipe.
+- **Evidence:** `TAILPIPE` in `game/features/vehicles/freight_van/van_particles.gd`.
+
