@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://effects/textures/water_bead.png" id="1_bead"]
+[ext_resource type="Texture2D" path="res://effects/textures/fine_spray.png" id="2_spray"]
+
+[sub_resource type="Curve" id="Curve_big_alpha"]
+_data = [Vector2(0, 0.75), 0.0, 0.0, 0, 0, Vector2(0.15, 0.9), 0.0, 0.0, 0, 0, Vector2(0.55, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_big_alpha"]
+curve = SubResource("Curve_big_alpha")
+
+[sub_resource type="Curve" id="Curve_big_scale"]
+_data = [Vector2(0, 0.75), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_big_scale"]
+curve = SubResource("Curve_big_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_big"]
+emission_shape = 1
+emission_sphere_radius = 0.025
+inherit_velocity_ratio = 0.0
+direction = Vector3(-0.94, 0.09, -0.32)
+spread = 28.0
+initial_velocity_min = 1.2
+initial_velocity_max = 2.8
+gravity = Vector3(0, -9.8, 0)
+damping_min = 0.3
+damping_max = 0.7
+scale_min = 0.3
+scale_max = 0.7
+scale_curve = SubResource("CurveTexture_big_scale")
+color = Color(0.78, 0.86, 0.91, 1)
+alpha_curve = SubResource("CurveTexture_big_alpha")
+
+[sub_resource type="StandardMaterial3D" id="Draw_bead"]
+transparency = 1
+blend_mode = 0
+shading_mode = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_bead")
+billboard_mode = 3
+
+[sub_resource type="QuadMesh" id="Quad_bead"]
+material = SubResource("Draw_bead")
+size = Vector2(0.01, 0.01)
+
+[sub_resource type="Curve" id="Curve_spray_alpha"]
+_data = [Vector2(0, 0.35), 0.0, 0.0, 0, 0, Vector2(0.2, 0.45), 0.0, 0.0, 0, 0, Vector2(0.65, 0.15), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_spray_alpha"]
+curve = SubResource("Curve_spray_alpha")
+
+[sub_resource type="Curve" id="Curve_spray_scale"]
+max_value = 2.0
+_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.4), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_spray_scale"]
+curve = SubResource("Curve_spray_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_spray"]
+emission_shape = 1
+emission_sphere_radius = 0.035
+inherit_velocity_ratio = 0.0
+direction = Vector3(-0.94, 0.09, -0.32)
+spread = 48.0
+initial_velocity_min = 0.35
+initial_velocity_max = 1.1
+gravity = Vector3(0, -1, 0)
+damping_min = 0.8
+damping_max = 1.6
+scale_min = 0.15
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_spray_scale")
+color = Color(0.82, 0.87, 0.91, 1)
+alpha_curve = SubResource("CurveTexture_spray_alpha")
+
+[sub_resource type="StandardMaterial3D" id="Draw_spray"]
+transparency = 1
+blend_mode = 0
+shading_mode = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_spray")
+billboard_mode = 3
+
+[sub_resource type="QuadMesh" id="Quad_spray"]
+material = SubResource("Draw_spray")
+size = Vector2(0.01, 0.01)
+
+[node name="WiperFlick" type="Node3D"]
+
+[node name="BigDrops" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 22
+lifetime = 0.65
+one_shot = true
+preprocess = 0.0
+explosiveness = 1.0
+visibility_aabb = AABB(-2, -2, -1.5, 3, 3, 3)
+local_coords = false
+process_material = SubResource("Process_big")
+draw_pass_1 = SubResource("Quad_bead")
+
+[node name="FineSpray" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 36
+lifetime = 1.2
+one_shot = true
+preprocess = 0.0
+explosiveness = 0.9
+visibility_aabb = AABB(-2, -2, -1.5, 3, 3, 3)
+local_coords = false
+process_material = SubResource("Process_spray")
+draw_pass_1 = SubResource("Quad_spray")
