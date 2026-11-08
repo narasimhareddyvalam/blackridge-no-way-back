@@ -2852,12 +2852,17 @@ tag `a5`. Pictures the author approved or rejected are filed in
        moved, while `develop`, `a5` and `a6` are unchanged; the local `main` brought up to it.
        Recorded after `a6`.
 
+181. **Submitted**
+     - **The author's messages:** "what should i submit in canvas??"; the Canvas comment pasted for
+       a check ("am i doing it correctly?"), identical to `CANVAS-NOTE.txt`, its SHA the `a6` tag's
+       on GitHub; then "submitted on canvas".
+     - **Recorded:** Assignment 6 submitted on Canvas by the author, 2026-11-08: the ZIP of `a6`
+       (`0216d23`), `SUBMISSION.md` with the SHA, and the note with the tag and film links.
+
 ## Waiting for the author
 
-- Assignment 6, the author's parts (the list, #166): the film is made (#174); watching it,
-  uploading it to the course's media storage and sending the link, the summary in
-  `SUBMISSION.md`, the OK to push, and Canvas. The own notes in `FRICTIONAL.md` are committed
-  (#175). Step 6 is Codex's, at the author's
+- Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it
+  (#180). Step 6 is Codex's, at the author's
   direction, kept (#171).
 - The world changes (#150–#158), kept with the effects (#164): their GPU price on power.
 - The lay-by walls stand on the inside of their curves, where `_outer_side()` puts them (#157);

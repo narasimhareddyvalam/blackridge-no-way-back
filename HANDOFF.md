@@ -1,5 +1,7 @@
 # HANDOFF.md
 
+**Assignment 6 is submitted** on Canvas by the author (#181, 2026-11-08): the ZIP of `a6`
+(`0216d23`), `SUBMISSION.md` with the SHA, and the note with the tag and film links.
 **After `a6` (#180):** `main` brought up to `a6` by pull request #1, merged by the author as
 `f968a49` (a merge commit; `main`'s files identical to `a6`'s, none deleted; `develop`, `a5` and
 `a6` unchanged). This note and prompt-log #180 are local commits after the submission.
