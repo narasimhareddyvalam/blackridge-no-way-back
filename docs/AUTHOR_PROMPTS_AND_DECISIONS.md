@@ -2697,6 +2697,15 @@ tag `a5`. Pictures the author approved or rejected are filed in
          its 0.30 budget), all four 1.47 against 1.45. The frame itself takes about 26 ms of GPU
          time from the driver's seat.
 
+166. **The author's list**
+     - **The author's message:** "give me clear list of all the things that i need to do and what
+       i need to do"
+     - **Claude Code's answer:** a checklist of the author's parts, in order. Before the film:
+       Step 6's shader, its line references and answer; the human checks in the author's words;
+       the author's own notes in `FRICTIONAL.md`; three quick decisions (B2 over its GPU budget,
+       the † values, the lay-by walls). After the film: watching it, uploading it to the course's
+       media storage, the OK to push, and the Canvas submission.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (#164): the brief revisions for the kept r1 changes
