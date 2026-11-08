@@ -78,6 +78,7 @@ albedo_texture = ExtResource("2_bead")
 backlight_enabled = true
 backlight = Color(0.8, 0.8, 0.8, 1)
 billboard_mode = 3
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="Quad_splash"]
 material = SubResource("Draw_splash")

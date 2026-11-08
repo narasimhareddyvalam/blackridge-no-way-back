@@ -7,7 +7,8 @@ const BOX := AABB(Vector3(-2.0, -2.0, -1.5), Vector3(3.0, 3.0, 3.0))
 const DRAW := {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA,
 	"blend_mode": BaseMaterial3D.BLEND_MODE_MIX,
 	"shading_mode": BaseMaterial3D.SHADING_MODE_PER_PIXEL,
-	"billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES, "vertex_color_use_as_albedo": true}
+	"billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES, "billboard_keep_scale": true,
+	"vertex_color_use_as_albedo": true}
 const BIG_DROPS := {
 	"node": {"amount": 22, "one_shot": true, "explosiveness": 1.0, "lifetime": 0.65,
 		"local_coords": false, "visibility_aabb": BOX, "preprocess": 0.0},

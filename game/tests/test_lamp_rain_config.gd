@@ -114,7 +114,8 @@ func _splash(variant: Dictionary) -> Dictionary:
 			"blend_mode": BaseMaterial3D.BLEND_MODE_MIX,
 			"shading_mode": BaseMaterial3D.SHADING_MODE_PER_PIXEL,
 			"vertex_color_use_as_albedo": true, "backlight_enabled": true,
-			"backlight": BACKLIGHT, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES},
+			"backlight": BACKLIGHT, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES,
+			"billboard_keep_scale": true},
 		"mesh": {"size": Vector2(0.01, 0.01)},
 		"texture": "res://effects/textures/water_bead.png",
 	}

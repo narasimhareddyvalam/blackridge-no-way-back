@@ -41,6 +41,7 @@ shading_mode = 1
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("1_bead")
 billboard_mode = 3
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="Quad_bead"]
 material = SubResource("Draw_bead")
@@ -85,6 +86,7 @@ shading_mode = 1
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_spray")
 billboard_mode = 3
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="Quad_spray"]
 material = SubResource("Draw_spray")

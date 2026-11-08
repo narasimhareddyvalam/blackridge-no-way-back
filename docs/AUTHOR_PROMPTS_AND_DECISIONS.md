@@ -2052,6 +2052,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
          checks in the game, the GPU price, Step 6's shader, `FRICTIONAL.md` notes, the film and
          the submission) are collected for the end.
 
+143. **Carry on after the context break.**
+     - **The author's message:** "continue"
+     - **What Claude Code did:** committed the effects' wiring, the mutation evidence and a fix
+       to B1's hide time, then built the four preview scenes and checked them headless and in
+       short windowed renders of its own, kept out of the record.
+
+144. **All four effects clearly visible.**
+     - **The author's message:** "whats happening?? make sure its clearly visible like in real
+       world. all the four effects!"
+     - **Claude Code's answer:** the effects fire on the right frames, but at night they are too
+       dark or too thin to see: drawn solid red for one check they render where they should; with
+       their real materials the drops are dark specks, the lamp rain is under a pixel wide, and
+       the vapour is lit only from behind, which its material does not pass through.
+     - **What follows, under the handout's tuning loop:** the author captures the r0 strips
+       (`scripts/capture-strips.sh 0`); Claude Code then proposes one change per effect with a
+       written prediction, the author captures r1, Claude Code compares, and the author judges in
+       the game.
+
 ## Waiting for the author
 
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,

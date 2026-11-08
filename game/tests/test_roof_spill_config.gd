@@ -13,7 +13,8 @@ const STREAM_DRAW := {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA,
 const BEAD_DRAW := {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA,
 	"blend_mode": BaseMaterial3D.BLEND_MODE_MIX,
 	"shading_mode": BaseMaterial3D.SHADING_MODE_PER_PIXEL,
-	"vertex_color_use_as_albedo": true, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES}
+	"vertex_color_use_as_albedo": true, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES,
+	"billboard_keep_scale": true}
 const ROOF_STREAMS := {
 	"node": {"amount": 32, "one_shot": true, "explosiveness": 0.8, "lifetime": 0.85,
 		"local_coords": true, "visibility_aabb": BOX, "preprocess": 0.0,

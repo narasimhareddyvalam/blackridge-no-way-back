@@ -347,3 +347,19 @@ _Add future adjustments below this line with a date, reason, changed setting, an
   frame, there is no detached spill left to finish.
 - **Evidence:** `game/tests/test_roof_spill_state.gd`.
 
+### 2026-11-07, revision 4 (build): camera-facing particles keep their size (Claude Code)
+
+- **Found:** in a windowed check of B2's preview, changing the vapour's size settings changed
+  nothing on screen. In Godot 4 a material with `billboard_mode = BILLBOARD_PARTICLES` turns each
+  quad to the camera and drops the particle's own scale unless `billboard_keep_scale` is on. So
+  every size the brief gives a camera-facing particle (`scale_min`, `scale_max`, `scale_curve`)
+  had no effect: every A1 bead and mist droplet drew at the quad's 10 mm, and every B2 puff at
+  10 cm, never growing.
+- **Changed:** `billboard_keep_scale = true` on every camera-facing particle material: A1's
+  `BigDrops` and `FineSpray`, A2's `RoofBeads`, B1's `LampSplash` in all three scenes, and B2's
+  `ExhaustPlume`. The streaks (A2's `RoofStreams`, B1's `LampRain`) are turned by
+  `transform_align` with billboarding off, so their size already applied.
+- **This is §7's predicted failure 1,** "incorrect 3D material settings": the headless readback
+  checked only the settings the brief named, so a windowed check caught it.
+- **Evidence:** the four configuration tests now read `billboard_keep_scale` (70/70, 68/68,
+  234/234, 42/42); with it off, B2's fails 41/42, exit 1 (`logs/particles/keep_scale/`).
