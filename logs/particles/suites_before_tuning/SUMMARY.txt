@@ -1,0 +1,32 @@
+first_drive_regression.gd          60   exit 0   REGRESSION RESULT: 64/64 passed; 0 failed | bad lines 0, ERROR: lines 1
+first_drive_integration.gd         60   exit 0   BEHAVIOR RESULT: 0 failures | bad lines 0, ERROR: lines 1
+test_materials.gd                  60   exit 0   MATERIALS RESULT: 92/92 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_headlights.gd                 60   exit 0   HEADLIGHTS RESULT: 21/21 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_rain_physics.gd               60   exit 0   RAIN PHYSICS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 0
+test_cockpit.gd                    60   exit 0   COCKPIT RESULT: 25/25 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_ghat_road.gd                  60   exit 0   GHAT ROAD RESULT: 33/33 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_wipers.gd                     60   exit 0   WIPERS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_on_foot.gd                    60   exit 0   ON FOOT RESULT: 49/49 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_oncoming_van.gd               60   exit 0   ONCOMING VAN RESULT: 21/21 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_collision.gd                  60   exit 0   COLLISION RESULT: 44/44 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_crossing.gd                   60   exit 0   CROSSING RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_maya_call.gd                  60   exit 0   CALL RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_hit_speeds.gd                 60   exit 0   HIT SPEEDS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_dash_screen.gd                60   exit 0   DASH SCREEN RESULT: 15/15 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_save_rules.gd                 60   exit 0   SAVE RULES RESULT: 29/29 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_mirrors.gd                    60   exit 0   MIRRORS RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_menus.gd                      60   exit 0   MENUS RESULT: 20/20 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_mission_two.gd                60   exit 0   MISSION TWO RESULT: 7/7 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_wiper_flick_config.gd         60   exit 0   WIPER FLICK CONFIG RESULT: 70/70 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_roof_spill_config.gd          60   exit 0   ROOF SPILL CONFIG RESULT: 68/68 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_lamp_rain_config.gd           60   exit 0   LAMP RAIN CONFIG RESULT: 234/234 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_exhaust_vapour_config.gd      60   exit 0   EXHAUST VAPOUR CONFIG RESULT: 42/42 passed; 0 failed | bad lines 0, ERROR: lines 0
+test_wiper_flick_state.gd          60   exit 0   WIPER FLICK STATE RESULT: 9/9 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_roof_spill_state.gd           60   exit 0   ROOF SPILL STATE RESULT: 11/11 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_lamp_rain_state.gd            60   exit 0   LAMP RAIN STATE RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_exhaust_vapour_state.gd       60   exit 0   EXHAUST VAPOUR STATE RESULT: 10/10 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_night_dimming.gd              30   exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_night_dimming.gd              60   exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_night_dimming.gd              144  exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 1
+check_first_drive_art.py exit 0 ART RESULT: 0 failures
+DONE

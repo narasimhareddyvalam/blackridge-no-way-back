@@ -55,6 +55,34 @@ The chronological [development record](fractional.md) tracks requests, approvals
 problems, solutions, and actual checks. Git history starts at the 2026-10-28
 baseline commit `e81ec92`.
 
+## Assignment 6 — Particle effects
+
+Four particle effects, all `GPUParticles3D`, designed in [CHANGE-BRIEF.md](CHANGE-BRIEF.md).
+Their scenes and textures are in `game/effects/`.
+
+- **A1, wiper flick:** water thrown off the driver's blade at each top turn of its stroke.
+  `van_particles.gd` fires it from `wiper_swept`.
+- **A2, roof spill:** water pours off the front of the roof onto the glass on a hard brake from
+  8 m/s, with a 20 s refill.
+- **B1, lamp rain:** rain in every lamp's light while the camera is within 65 m, with splashes
+  where the drops land. Driven by `game/features/environments/industrial_loop/lamp_rain.gd`.
+- **B2, exhaust vapour:** follows the engine and the throttle through `amount_ratio`.
+
+To check them:
+
+```sh
+LOG_DIR=logs/particles/<step> scripts/run-test.sh test_wiper_flick_config.gd 60  # one per effect
+LOG_DIR=logs/particles/<step> scripts/run-test.sh test_wiper_flick_state.gd 60   # one per effect
+LOG_DIR=logs/particles/<step> scripts/run-test.sh cost_effects.gd 60 300         # headless price
+scripts/capture-strips.sh <round>   # frame strips: opens a window per effect
+```
+
+Each effect has a preview scene in `game/previews/` that puts its event on the brief's frames.
+The export leaves the previews out.
+- Tuning: [TUNING.md](TUNING.md).
+- Results: the Assignment 6 section of [TEST-REPORT.md](TEST-REPORT.md).
+- Sources: [SOURCES.md](SOURCES.md).
+
 ## Assignment 5 — Shaders, materials and the Godot shading language
 
 This layer adds three hand-written shaders in `game/shaders/` and the code and tests

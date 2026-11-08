@@ -1,4 +1,59 @@
-# SOURCES — Assignment 5
+# SOURCES
+
+Assignment 6 comes first. Assignment 5's record follows with its text unchanged; its graded copy
+is at tag `a5`.
+
+# Assignment 6 — particle effects (2026-11-07)
+
+## Tools
+
+- Godot 4.7.2 stable, standard build, Forward+ (MetalFX upscaling at 75% on macOS).
+- Claude Code (model Claude Opus 5.5), through the author's Claude account.
+- Python 3 with NumPy and Pillow, used by `tools/make_particle_textures.py`.
+
+## Textures
+
+| Asset | Source | Authors (roles) | Licence | Date | Used in |
+| --- | --- | --- | --- | --- | --- |
+| `water_bead.png`, `fine_spray.png`, `roof_stream.png`, `exhaust_puff.png` | Written by code: `tools/make_particle_textures.py` (Claude Code), seed 6; every run writes the same bytes | Claude Code (script) | Original, no licence needed | 2026-11-07 | A1's beads and mist, A2's streams and beads, B1's splashes, B2's puffs |
+| `rain_streak.png` | The same script; redrawn as wide as its quad in brief revision 5 | Claude Code (script) | Original, no licence needed | 2026-11-07 | B1's streaks |
+
+All five are in `game/effects/textures/`, imported with mipmaps. The script is their provenance
+record: it draws each shape from formulas and fixed-seed noise, and fetches nothing.
+
+## Generative models
+
+None. The author first chose AI-generated textures for the effects, then asked for everything
+else to follow best practice, and Claude Code drew them with a script instead (#142).
+
+## Human and AI contributions
+
+### Written or decided by the author
+
+- The choice of the four effects, which are graded, and the realism bar (#131–#141).
+- The draft of `CHANGE-BRIEF.md`, with its intent, timings, contrast, scale and predictions,
+  and the decisions written into it on 2026-11-07: both B effects graded; B1's condition, its
+  collision with splashes and its rain already falling; A2 moving with the van and firing at
+  the hit.
+- The request that all four effects be clearly visible, as in the real world (#144).
+- To come: the frame strips, the verdicts in `TUNING.md`, the checks in the running game, the GPU
+  price, Step 6's process shader and its answers, and the film.
+
+### Written by Claude Code
+
+- Corrections to the brief's Godot names, units and flags, and the values marked †, all
+  disclosed in the brief's "How it was made" line; the brief's dated revisions 1–5.
+- `docs/PARTICLE_RESEARCH.md`.
+- The effect scenes in `game/effects/` and the five textures with their script.
+- The controllers `van_particles.gd` and `lamp_rain.gd`, and the throttle member in
+  `freight_van.gd`.
+- The configuration, state and cost tests, `particle_readback.gd`, and the mutations.
+- The preview scenes in `game/previews/`, `scripts/capture-strips.sh`, the runner changes in
+  `scripts/run-test.sh`, and the leak probe in `logs/particles/leak_probe/`.
+- The Assignment 6 sections of `TEST-REPORT.md`, `TUNING.md` (its predictions and comparisons),
+  this file, `README.md` and `HANDOFF.md`.
+
+# Assignment 5 — shaders, materials and the Godot Shading Language
 
 ## Starting point
 

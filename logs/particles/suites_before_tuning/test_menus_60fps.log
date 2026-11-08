@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: At launch the title screen shows the live scene of the saved mission, Night Freight: the van on the forecourt with its low beams on, seen through the title camera, between black bars (van 0.00 m from its spot)
+PASS: With no save, focus starts on New game and Continue is not offered (focus: NewGame)
+PASS: While the title waits, the rain and the music keep playing
+PASS: Every control a player can reach has a name a screen reader can read (18 named; unnamed: )
+PASS: No prototype wording is left on any screen (none found)
+PASS: Esc on the title does nothing: the game stays on the title, paused, with focus kept
+PASS: Down and Enter open Settings over the blurred scene, with focus on the Master volume, and Right raises it 5% (71 to 76)
+PASS: Up reaches the tabs, and Right shows Controls, which lists every key (focus AudioTab then ControlsTab; missing: )
+PASS: Esc goes back to the title with focus on Settings, and leaving Settings saves the volume
+PASS: Credits name the studio, the van, the characters, the textures, the cockpit model and the engine's licence, and Down scrolls them (missing: )
+PASS: Esc leaves Credits for the title, with focus back on Credits
+PASS: Enter on New game starts the drive at the office, on foot, with the menu closed and nothing left holding the keyboard focus
+PASS: Esc pauses: the game freezes behind a blur, with the objective, the next checkpoint and the last save, and focus on Resume (SIGN THE RUN SHEET / The switchbacks / Nothing saved yet)
+PASS: Esc on the pause screen resumes the drive
+PASS: Quit to main menu asks first, with focus on Cancel; Esc cancels and keeps the game paused
+PASS: Confirming returns to the title, which offers Continue from the last checkpoint (Night Freight · The viewpoint; Saved today, 20:17)
+PASS: With a save, New game asks first, and Cancel keeps the save as it was
+PASS: Enter on Continue puts Ethan in the van at the viewpoint (0.00 m from it)
+PASS: Recover van, from the pause menu, puts the van back at the last checkpoint (focus RecoverVan, 0.00 m from it, notice "Van recovered to the last safe checkpoint")
+PASS: From the title, Down to Quit and Enter asks the game to close (focus: Quit)
+MENUS RESULT: 20/20 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
