@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Headless CPU price: wall time between frames, 240 measured after 60 to warm up, at a fixed 60 fps; the game's cases in 3 alternating rounds
+case                            mean ms     rounds' means       sd      p95      max
+empty scene, first (control)      0.002    0.002-0.002       0.001    0.003    0.009   
+game, every effect off            0.512    0.470-0.575       0.265    1.185    4.663   GPU emitters emitting: 0
+A1, two bursts alive              0.505    0.469-0.551       0.217    1.019    1.721   bursts alive at the end: 2
+A2, one burst alive               0.529    0.468-0.614       0.250    1.327    2.356   bursts alive at the end: 1
+B1, eight lamp volumes            0.583    0.470-0.705       0.406    1.664    9.771   lamp volumes shown and raining: 8
+B2, full throttle                 0.560    0.472-0.607       0.283    1.335    2.225   exhaust amount_ratio 0.80, emitting true, amount 300
+empty scene, last (control)       0.005    0.005-0.005       0.005    0.017    0.036   
+A1, two bursts alive against every effect off: -0.007 ms; the rounds vary by up to 0.105 ms (reads the same as every effect off)
+A2, one burst alive against every effect off: +0.017 ms; the rounds vary by up to 0.145 ms (reads the same as every effect off)
+B1, eight lamp volumes against every effect off: +0.070 ms; the rounds vary by up to 0.235 ms (reads the same as every effect off)
+B2, full throttle against every effect off: +0.048 ms; the rounds vary by up to 0.135 ms (reads the same as every effect off)
+The controls read 0.002 and 0.005 ms; the game with every effect off reads 0.512 ms.
+COST RESULT: 7 cases measured
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

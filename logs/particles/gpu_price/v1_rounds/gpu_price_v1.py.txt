@@ -1,0 +1,136 @@
+"""gpu_price.py <run.log>: the GPU price of Assignment 6's effects from a windowed run of
+game/tests/gpu_price.gd with Apple's Metal Performance HUD logging (MTL_HUD_ENABLED=1,
+MTL_HUD_LOG_ENABLED=1).
+
+Once a second the HUD writes to stderr "metal-HUD: <first frame>,<graphics memory>,<process
+memory>," then a (present interval, GPU time) pair for each frame since the last line, both in
+milliseconds. The script prints each case's frames, Godot's frame count, which the HUD's frame
+numbers are not used: each case takes the HUD frames that ended within its wall-clock window, so a
+gap in the HUD's log (it logs only while the window is in front) costs frames, not alignment. Each
+effect's price is its
+case's mean GPU time minus the matching "off" case's in the same round and view, set against the
+budgets in CHANGE-BRIEF.md section 8.
+"""
+import re
+import statistics
+import sys
+from datetime import datetime
+
+BUDGETS = {
+    "A1, two bursts alive": 0.25,
+    "A2, one burst alive": 0.20,
+    "B1, eight lamp volumes": 0.70,
+    "B1, eight lamp volumes, at the valley lamp": 0.70,
+    "B2, full throttle": 0.30,
+    "B2, full throttle, behind the van": 0.30,
+}
+TOTAL_BUDGET = 1.45
+OFF = "every effect off"
+REAR_OFF = "every effect off, behind the van"
+VALLEY_OFF = "every effect off, at the valley lamp"
+HUD = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+) .*metal-HUD: (.*)$")
+CASE = re.compile(r"GPU PRICE CASE\|(.*?)\|round (\d+)\|frames (\d+)-(\d+)\|time ([\d.]+)-([\d.]+)"
+                  r"\|particles (\d+)\|godot gpu ms ([\d.]+)\|(.*)$")
+
+
+def read(path):
+    frames, cases, notes = {}, [], []
+    for line in open(path, encoding="utf-8", errors="replace"):
+        line = line.rstrip("\n")
+        hud = HUD.match(line)
+        if hud:
+            stamp = datetime.strptime(hud.group(1), "%Y-%m-%d %H:%M:%S.%f").timestamp()
+            values = [float(v) for v in hud.group(2).split(",") if v.strip()]
+            first, pairs = int(values[0]), values[3:]
+            count = len(pairs) // 2
+            ends, elapsed = [], 0.0
+            for index in range(count - 1, -1, -1):
+                ends.append(stamp - elapsed / 1000.0)
+                elapsed += pairs[2 * index]
+            ends.reverse()
+            for index in range(count):
+                frames[first + index] = (pairs[2 * index], pairs[2 * index + 1], ends[index])
+            continue
+        case = CASE.search(line)
+        if case:
+            cases.append({
+                "label": case.group(1), "round": int(case.group(2)),
+                "first": int(case.group(3)), "last": int(case.group(4)),
+                "began": float(case.group(5)), "ended": float(case.group(6)),
+                "particles": int(case.group(7)), "godot_gpu": float(case.group(8)),
+                "state": case.group(9),
+            })
+        elif line.startswith("GPU PRICE:"):
+            notes.append(line)
+    return frames, cases, notes
+
+
+def hud_lines(path):
+    return sum(1 for line in open(path, encoding="utf-8", errors="replace") if "metal-HUD:" in line)
+
+
+def summary(values):
+    ordered = sorted(values)
+    return {
+        "n": len(values),
+        "mean": statistics.fmean(values),
+        "median": statistics.median(values),
+        "p95": ordered[min(len(ordered) - 1, int(0.95 * len(ordered)))],
+        "sd": statistics.pstdev(values),
+    }
+
+
+def main(*paths):
+    frames, cases, notes = {}, [], []
+    for path in paths:
+        more_frames, more_cases, more_notes = read(path)
+        frames.update({(path, n): v for n, v in more_frames.items()})
+        cases += more_cases
+        notes += more_notes
+    print("GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)")
+    for note in notes:
+        print(note)
+    print("HUD frames logged: %d, from %d HUD lines" % (
+        len(frames), sum(hud_lines(path) for path in paths)))
+    print()
+    rounds = {}
+    print("%-36s %5s %5s %8s %8s %8s %6s %9s %10s  %s" % (
+        "case", "round", "n", "mean ms", "median", "p95", "sd", "particles", "godot gpu", "state"))
+    for case in cases:
+        times = [frames[n][1] for n in frames if case["began"] < frames[n][2] <= case["ended"]]
+        if not times:
+            print("%-36s %5d  no HUD frames" % (case["label"], case["round"]))
+            continue
+        stats = summary(times)
+        rounds[(case["label"], case["round"])] = stats["mean"]
+        print("%-36s %5d %5d %8.3f %8.3f %8.3f %6.2f %9d %10.3f  %s" % (
+            case["label"], case["round"], stats["n"], stats["mean"], stats["median"], stats["p95"],
+            stats["sd"], case["particles"], case["godot_gpu"], case["state"]))
+    print()
+    print("%-36s %10s %22s %8s  %s" % ("effect", "price ms", "rounds' prices", "budget", "verdict"))
+    total = 0.0
+    for label, budget in BUDGETS.items():
+        base = (REAR_OFF if label.endswith("behind the van")
+                else VALLEY_OFF if label.endswith("at the valley lamp") else OFF)
+        prices = [rounds[(label, r)] - rounds[(base, r)]
+                  for (name, r) in rounds if name == label and (base, r) in rounds]
+        if not prices:
+            continue
+        price = statistics.fmean(prices)
+        if label not in ("B2, full throttle", "B1, eight lamp volumes"):
+            total += price
+        spread = "%.3f to %.3f" % (min(prices), max(prices))
+        verdict = "within" if price <= budget else "over"
+        print("%-36s %10.3f %22s %8.2f  %s" % (label, price, spread, budget, verdict))
+    print("%-36s %10.3f %22s %8.2f  %s" % (
+        "all four (B1 at the lamp, B2 behind)", total, "", TOTAL_BUDGET,
+        "within" if total <= TOTAL_BUDGET else "over"))
+    offs = [rounds[(OFF, r)] for (name, r) in rounds if name == OFF]
+    if offs:
+        print()
+        print("Every effect off, from the driver's seat: %.3f ms a frame (rounds %.3f to %.3f)" % (
+            statistics.fmean(offs), min(offs), max(offs)))
+
+
+if __name__ == "__main__":
+    main(*sys.argv[1:])

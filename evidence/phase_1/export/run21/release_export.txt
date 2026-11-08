@@ -1,0 +1,17 @@
+Run 21 step 2, 2026-11-01. Release export of the working tree on develop (Runs 20-21 uncommitted).
+
+builds/macos/Blackridge.zip: 350894372 bytes
+SHA-256: a547b5eae4e68f4935fbc6a1242efb4bd2c80d863b83fa4bfca848150e690ae7
+
+App: Blackridge- No Way Back.app
+Architectures: x86_64 arm64
+Pack: 384666856 bytes
+Identifier=com.blackridge.nowayback
+Format=app bundle with Mach-O universal (x86_64 arm64)
+Signature=adhoc
+TeamIdentifier=not set
+CFBundleName: Blackridge: No Way Back
+CFBundleShortVersionString: 0.1.0
+Extended attributes: com.apple.provenance 
+
+Template: ~/Library/Application Support/Godot/export_templates/4.7.2.stable/macos.zip (123597580 bytes), from Godot_v4.7.2-stable_export_templates.tpz, SHA-512 matching the official SHA512-SUMS.txt.

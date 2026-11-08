@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bav6e6u2vptcb"
 path.s3tc="res://.godot/imported/modular_chainlink_fence_wire_arm_1k.jpg-fb452faa7b326c252c4663f259241d74.s3tc.ctex"
+path.etc2="res://.godot/imported/modular_chainlink_fence_wire_arm_1k.jpg-fb452faa7b326c252c4663f259241d74.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/modular_chainlink_fence/textures/modular_chainlink_fence_wire_arm_1k.jpg"
-dest_files=["res://.godot/imported/modular_chainlink_fence_wire_arm_1k.jpg-fb452faa7b326c252c4663f259241d74.s3tc.ctex"]
+dest_files=["res://.godot/imported/modular_chainlink_fence_wire_arm_1k.jpg-fb452faa7b326c252c4663f259241d74.s3tc.ctex", "res://.godot/imported/modular_chainlink_fence_wire_arm_1k.jpg-fb452faa7b326c252c4663f259241d74.etc2.ctex"]
 
 [params]
 

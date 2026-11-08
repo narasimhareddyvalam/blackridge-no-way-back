@@ -1,0 +1,44 @@
+GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75
+HUD frames logged: 10936, from 252 HUD lines
+
+case                                 round     n  mean ms   median      p95     sd particles  godot gpu  state
+every effect off                         1   398   25.831   25.970   28.700   2.27         0      0.000  
+A1, two bursts alive                     1  no HUD frames
+A2, one burst alive                      1   389   25.896   25.930   28.800   2.25       264      0.000  
+B1, eight lamp volumes                   1  no HUD frames
+B2, full throttle                        1    49   23.164   23.280   26.530   2.47       300      0.000  exhaust amount_ratio 0.80
+every effect off, behind the van         1   446   22.554   22.660   26.250   2.53         0      0.000  
+B2, full throttle, behind the van        1   182   24.103   24.150   27.220   2.31       300      0.000  exhaust amount_ratio 0.80
+every effect off                         2   434   23.663   24.010   26.950   2.41         0      0.000  
+A1, two bursts alive                     2   165   23.042   23.270   26.070   2.39      1052      0.000  flicks visible 2
+A2, one burst alive                      2   429   23.577   23.840   26.690   2.32       264      0.000  
+B1, eight lamp volumes                   2   434   23.743   24.030   26.980   2.45     48050      0.000  volumes raining 8, in view 0
+B2, full throttle                        2   365   23.405   23.540   26.630   2.50       300      0.000  exhaust amount_ratio 0.80
+every effect off, behind the van         2     8   22.195   22.685   25.450   2.38         0      0.000  
+B2, full throttle, behind the van        2   395   25.381   25.550   28.670   2.58       300      0.000  exhaust amount_ratio 0.80
+every effect off                         3   498   20.487   20.850   24.390   2.68         0      0.000  
+A1, two bursts alive                     3   479   20.695   20.890   24.430   2.61      1052      0.000  flicks visible 2
+A2, one burst alive                      3   465   21.337   21.530   25.020   2.56       264      0.000  
+B1, eight lamp volumes                   3   470   21.511   21.865   25.540   2.75     48050      0.000  volumes raining 8, in view 0
+B2, full throttle                        3   450   21.451   21.570   25.170   2.75       300      0.000  exhaust amount_ratio 0.80
+every effect off, behind the van         3   371   27.464   27.560   30.870   2.67         0      0.000  
+B2, full throttle, behind the van        3   354   28.239   28.100   31.370   2.51       300      0.000  exhaust amount_ratio 0.80
+every effect off, at the valley lamp     1   397   26.101   26.310   29.750   2.71         0      0.000  
+B1, eight lamp volumes, at the valley lamp     1   419   24.548   24.730   28.220   2.69     48050      0.000  volumes raining 8, in view 3
+every effect off, at the valley lamp     2   437   23.574   23.890   27.330   2.74         0      0.000  
+B1, eight lamp volumes, at the valley lamp     2   423   24.484   24.630   28.080   2.58     48050      0.000  volumes raining 8, in view 3
+every effect off, at the valley lamp     3   441   23.471   23.810   27.220   2.76         0      0.000  
+B1, eight lamp volumes, at the valley lamp     3   420   24.542   24.775   28.050   2.56     48050      0.000  volumes raining 8, in view 3
+
+effect                                 price ms         rounds' prices   budget  verdict
+A1, two bursts alive                     -0.206        -0.621 to 0.208     0.25  within
+A2, one burst alive                       0.276        -0.086 to 0.850     0.20  over
+B1, eight lamp volumes                    0.552         0.080 to 1.024     0.70  within
+B1, eight lamp volumes, at the valley lamp      0.142        -1.554 to 1.071     0.70  within
+B2, full throttle                        -0.654        -2.667 to 0.964     0.30  within
+B2, full throttle, behind the van         1.836         0.775 to 3.186     0.30  over
+all four (B1 at the lamp, B2 behind)      2.049                            1.45  over
+
+Every effect off, from the driver's seat: 23.327 ms a frame (rounds 20.487 to 25.831)

@@ -1,0 +1,11 @@
+import a exit 0
+Updated 2 texture import files under game/features/environments/industrial_loop/art/conifer
+import b exit 0
+first_drive_regression.gd 60 exit 0
+first_drive_integration.gd 60 exit 0
+test_materials.gd 60 exit 0
+test_headlights.gd 60 exit 0
+test_night_dimming.gd 30 exit 0
+test_night_dimming.gd 60 exit 0
+test_night_dimming.gd 144 exit 0
+check_first_drive_art exit 0

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqsl54da0tkyr"
 path.s3tc="res://.godot/imported/metal_plate_02_nor_gl_2k.jpg-718bd61bc920d9911006f317987ebd45.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_plate_02_nor_gl_2k.jpg-718bd61bc920d9911006f317987ebd45.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/metal_plate_02/metal_plate_02_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/metal_plate_02_nor_gl_2k.jpg-718bd61bc920d9911006f317987ebd45.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_plate_02_nor_gl_2k.jpg-718bd61bc920d9911006f317987ebd45.s3tc.ctex", "res://.godot/imported/metal_plate_02_nor_gl_2k.jpg-718bd61bc920d9911006f317987ebd45.etc2.ctex"]
 
 [params]
 

@@ -1,0 +1,264 @@
+extends SceneTree
+## The GPU price of Assignment 6's effects (CHANGE-BRIEF.md §8), for a windowed run on macOS with
+## Apple's Metal Performance HUD logging each frame's GPU time to stderr (MTL_HUD_ENABLED=1 and
+## MTL_HUD_LOG_ENABLED=1). Godot's own GPU timer reads 0 on Metal, so this script only sets each
+## case and prints the frames it covers; tools/tests/gpu_price.py pairs them with the HUD's lines.
+## The cases are the cost script's, each at its heaviest: every effect off; A1 with two bursts
+## alive, each with its passenger water, and one spill's water; A2 with one burst; B1 with eight
+## lamp volumes raining; B2 at full throttle, from the driver's seat and again from behind the van,
+## where its plume is drawn. They run in alternating rounds, each held for the same time, with the
+## first second of each left out; the window is brought to the front at each case, since the HUD
+## logs only while it is in front. The wipers are off, so only this script fires the flicks. With
+## `-- --valley`, it measures B1 alone from the B1 strip's view of the valley lamp instead, with the
+## eight volumes nearest that view raining, since Godot runs no particles whose box is off screen.
+## It changes no effect or gameplay file: it shows, hides and starts nodes in the running game.
+
+const SETTLE := 1.0
+const HOLD := 10.0
+const ROUNDS := 3
+const MOST_VOLUMES := 8
+const FLICK_EVERY := 0.6
+const SPILL_EVERY := 1.3
+const BURST := ["WaterSheet", "BigDrops", "HeavyDrops", "FineSpray", "PillarRunoff"]
+const OFF := "every effect off"
+const REAR_OFF := "every effect off, behind the van"
+const CASES := [OFF, "A1, two bursts alive", "A2, one burst alive", "B1, eight lamp volumes",
+	"B2, full throttle", REAR_OFF, "B2, full throttle, behind the van"]
+const TAILPIPE := Vector3(-0.6, 0.46, 2.85)
+const VALLEY_OFF := "every effect off, at the valley lamp"
+const VALLEY_CASES := [VALLEY_OFF, "B1, eight lamp volumes, at the valley lamp"]
+const VALLEY_LAMP := Vector2(-15.0, 63.8)
+const VALLEY_VIEW := [Vector3(15.0, -4.7, 3.6), Vector3(0.0, -3.6, 0.3), 40.0]
+
+var _app: Node3D
+var _van: CharacterBody3D
+var _effects: Node3D
+var _rain: Node3D
+var _rear: Camera3D
+var _cab: Camera3D
+var _valley: Camera3D
+var _godot_gpu: Array[float] = []
+
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
+	_app = (load("res://app/first_drive.tscn") as PackedScene).instantiate()
+	root.add_child(_app)
+	await process_frame
+	_app.call("_resume")
+	_van = _app.get_node("FreightVan")
+	_effects = _van.get_node("VanPresentation").get("particles")
+	_rain = _app.get_node("IndustrialLoop").get("lamp_rain")
+	_van.wiper_setting = 0
+	Input.action_press("handbrake")
+	RenderingServer.viewport_set_measure_render_time(root.get_viewport_rid(), true)
+	_cab = root.get_camera_3d()
+	_rear = Camera3D.new()
+	_rear.name = "GpuPriceRear"
+	root.add_child(_rear)
+	_valley = Camera3D.new()
+	_valley.name = "GpuPriceValley"
+	_valley.fov = VALLEY_VIEW[2]
+	_valley.cull_mask = (_app.get("title_camera") as Camera3D).cull_mask
+	root.add_child(_valley)
+	var lamp := _valley_volume().global_position
+	_valley.look_at_from_position(lamp + VALLEY_VIEW[0], lamp + VALLEY_VIEW[1], Vector3.UP)
+	var cases: Array = VALLEY_CASES if "--valley" in OS.get_cmdline_user_args() else CASES
+	_all_off()
+	await _hold(3.0, Callable())
+	print("GPU PRICE: window %s, vsync %s, MetalFX scale %.2f" % [root.get_visible_rect().size,
+		DisplayServer.window_get_vsync_mode(), root.scaling_3d_scale])
+	for round in range(ROUNDS):
+		for label: String in cases:
+			await _case(label, round)
+	Input.action_release("handbrake")
+	print("GPU PRICE DONE")
+	quit()
+
+
+func _case(label: String, round: int) -> void:
+	DisplayServer.window_move_to_foreground()
+	_view(label)
+	var step := Callable()
+	var count := 0
+	match label:
+		"A1, two bursts alive":
+			_show_flicks(true)
+			step = _keep_two_flicks
+			count = 2 * (_amounts(_effects.flicks[0], BURST + ["PassengerWater", "PassengerLine"])) \
+				+ _amounts(_effects.flicks[0], ["SpillWater"])
+		"A2, one burst alive":
+			(_effects.spill as Node3D).visible = true
+			step = _keep_spill
+			count = _amounts(_effects.spill, ["WaterWash", "RoofStreams", "RoofBeads", "Rivulets"])
+		"B1, eight lamp volumes":
+			count = _volumes(true)
+		"B1, eight lamp volumes, at the valley lamp":
+			count = _volumes(true, _valley.global_position)
+		"B2, full throttle", "B2, full throttle, behind the van":
+			_exhaust_node().visible = true
+			Input.action_press("accelerate")
+			count = _effects.exhaust.amount
+	await _hold(SETTLE, step)
+	_godot_gpu.clear()
+	var first := Engine.get_frames_drawn()
+	var began := Time.get_unix_time_from_system()
+	await _hold(HOLD, step, true)
+	var last := Engine.get_frames_drawn() - 1
+	var ended := Time.get_unix_time_from_system()
+	var godot_gpu := 0.0
+	for value in _godot_gpu:
+		godot_gpu += value / maxi(1, _godot_gpu.size())
+	print("GPU PRICE CASE|%s|round %d|frames %d-%d|time %.3f-%.3f|particles %d|godot gpu ms %.3f|%s"
+		% [label, round + 1, first, last, began, ended, count, godot_gpu, _state(label)])
+	_all_off()
+	Input.action_release("accelerate")
+	await _hold(0.5, Callable())
+
+
+func _hold(seconds: float, step: Callable, sample := false) -> void:
+	var start := Time.get_ticks_msec()
+	var last_step := -1000000.0
+	while Time.get_ticks_msec() - start < seconds * 1000.0:
+		if step.is_valid():
+			last_step = step.call(Time.get_ticks_msec(), last_step)
+		if _rear.current:
+			_rear.global_transform = _behind()
+		await process_frame
+		if sample:
+			_godot_gpu.append(RenderingServer.viewport_get_measured_render_time_gpu(
+				root.get_viewport_rid()))
+
+
+func _view(label: String) -> void:
+	if label.ends_with("behind the van"):
+		_rear.global_transform = _behind()
+		_rear.make_current()
+	elif label.ends_with("at the valley lamp"):
+		_valley.make_current()
+	else:
+		_cab.make_current()
+
+
+func _behind() -> Transform3D:
+	var from: Vector3 = _van.global_transform * Vector3(-0.6, 1.6, 7.5)
+	var at: Vector3 = _van.global_transform * (TAILPIPE + Vector3(0.0, 0.1, 0.0))
+	return Transform3D(Basis(), from).looking_at(at, Vector3.UP)
+
+
+func _state(label: String) -> String:
+	match label:
+		"A1, two bursts alive":
+			return "flicks visible %d" % _effects.flicks.filter(func(f): return f.visible).size()
+		"B1, eight lamp volumes", "B1, eight lamp volumes, at the valley lamp":
+			return "volumes raining %d, in view %d" % [_raining(), _in_view()]
+		"B2, full throttle", "B2, full throttle, behind the van":
+			return "exhaust amount_ratio %.2f" % _effects.exhaust.amount_ratio
+	return ""
+
+
+func _amounts(burst: Node3D, names: Array) -> int:
+	var total := 0
+	for name: String in names:
+		total += (burst.get_node(name) as GPUParticles3D).amount
+	return total
+
+
+func _all_off() -> void:
+	_show_flicks(false)
+	(_effects.spill as Node3D).visible = false
+	_exhaust_node().visible = false
+	_volumes(false)
+
+
+func _exhaust_node() -> Node3D:
+	return _effects.exhaust.get_parent() as Node3D
+
+
+func _show_flicks(shown: bool) -> void:
+	for flick: Node3D in _effects.flicks:
+		flick.visible = shown
+
+
+## Both bursts kept alive at the blade tip, as the wipers' top turns place them, one every 0.6 s,
+## so each is restarted within its 1.2 s life; the first also throws one spill's water.
+func _keep_two_flicks(now: int, last: float) -> float:
+	if now - last < FLICK_EVERY * 1000.0:
+		return last
+	var index: int = int(now / (FLICK_EVERY * 1000.0)) % _effects.flicks.size()
+	var flick: Node3D = _effects.flicks[index]
+	flick.global_position = _effects.tip()
+	var names: Array = BURST + (["SpillWater"] if index == 0 else [])
+	for name: String in names:
+		(flick.get_node(name) as GPUParticles3D).restart()
+	var water := flick.get_node("PassengerWater") as GPUParticles3D
+	var line := flick.get_node("PassengerLine") as GPUParticles3D
+	water.global_transform = _effects.passenger_water_at()
+	line.global_transform = _effects.passenger_water_at(true)
+	water.restart()
+	line.restart()
+	return float(now)
+
+
+func _keep_spill(now: int, last: float) -> float:
+	if now - last < SPILL_EVERY * 1000.0:
+		return last
+	for name in ["WaterWash", "RoofStreams", "RoofBeads", "Rivulets"]:
+		(_effects.spill.get_node(name) as GPUParticles3D).restart()
+	return float(now)
+
+
+func _volumes(shown: bool, near := Vector3.INF) -> int:
+	var total := 0
+	_rain.visible = shown
+	_rain.set_physics_process(not shown)
+	var order: Array = range(_rain.volumes.size())
+	if near != Vector3.INF:
+		var distance := {}
+		for index: int in order:
+			distance[index] = _rain.volumes[index].global_position.distance_to(near)
+		order.sort_custom(func(a: int, b: int) -> bool: return distance[a] < distance[b])
+	for index: int in (order.slice(0, MOST_VOLUMES) if shown else order):
+		_rain.volumes[index].visible = shown
+		if shown:
+			_rain.rain(index).restart()
+			total += _rain.rain(index).amount
+			var splash: Node = _rain.rain(index).get_node_or_null(_rain.rain(index).sub_emitter)
+			if splash is GPUParticles3D:
+				total += (splash as GPUParticles3D).amount
+		else:
+			_rain.rain(index).emitting = false
+	return total
+
+
+func _raining() -> int:
+	var count := 0
+	for index in range(_rain.volumes.size()):
+		if _rain.volumes[index].is_visible_in_tree() and _rain.rain(index).emitting:
+			count += 1
+	return count
+
+
+func _in_view() -> int:
+	var count := 0
+	var camera := root.get_camera_3d()
+	for index in range(_rain.volumes.size()):
+		var at: Vector3 = _rain.volumes[index].global_position
+		if _rain.volumes[index].is_visible_in_tree() and (camera.is_position_in_frustum(at)
+				or camera.is_position_in_frustum(at + Vector3(0.0, -4.0, 0.0))):
+			count += 1
+	return count
+
+
+func _valley_volume() -> Node3D:
+	var best: Node3D = null
+	var best_distance := INF
+	for volume: Node3D in _rain.volumes:
+		var flat := Vector2(volume.global_position.x, volume.global_position.z)
+		if flat.distance_to(VALLEY_LAMP) < best_distance:
+			best_distance = flat.distance_to(VALLEY_LAMP)
+			best = volume
+	return best

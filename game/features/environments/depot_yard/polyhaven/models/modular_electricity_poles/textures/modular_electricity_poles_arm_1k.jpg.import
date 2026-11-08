@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://g11h80ytryqg"
 path.s3tc="res://.godot/imported/modular_electricity_poles_arm_1k.jpg-78657caa92df34b8fb3c411e61560d50.s3tc.ctex"
+path.etc2="res://.godot/imported/modular_electricity_poles_arm_1k.jpg-78657caa92df34b8fb3c411e61560d50.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/modular_electricity_poles/textures/modular_electricity_poles_arm_1k.jpg"
-dest_files=["res://.godot/imported/modular_electricity_poles_arm_1k.jpg-78657caa92df34b8fb3c411e61560d50.s3tc.ctex"]
+dest_files=["res://.godot/imported/modular_electricity_poles_arm_1k.jpg-78657caa92df34b8fb3c411e61560d50.s3tc.ctex", "res://.godot/imported/modular_electricity_poles_arm_1k.jpg-78657caa92df34b8fb3c411e61560d50.etc2.ctex"]
 
 [params]
 

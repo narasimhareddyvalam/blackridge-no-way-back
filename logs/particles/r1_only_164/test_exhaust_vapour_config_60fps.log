@@ -1,0 +1,47 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: res://effects/exhaust_vapour.tscn loads
+PASS: One ExhaustVapour root holds its emitter (1 children)
+PASS: ExhaustPlume is a GPUParticles3D
+PASS: ExhaustPlume uses a ParticleProcessMaterial
+PASS: ExhaustPlume draws a QuadMesh
+PASS: ExhaustPlume's quad uses a ShaderMaterial
+PASS: ExhaustPlume.amount = 300 (found 300)
+PASS: ExhaustPlume.one_shot = false (found false)
+PASS: ExhaustPlume.explosiveness = 0.0 (found 0.0)
+PASS: ExhaustPlume.lifetime = 1.6 (found 1.6)
+PASS: ExhaustPlume.local_coords = false (found false)
+PASS: ExhaustPlume.preprocess = 0.0 (found 0.0)
+PASS: ExhaustPlume.layers = 1 (found 1)
+PASS: ExhaustPlume.visibility_aabb = [P: (-3.0, -1.0, -11.0), S: (6.0, 5.0, 60.0)] (found [P: (-3.0, -1.0, -11.0), S: (6.0, 5.0, 60.0)])
+PASS: ExhaustPlume process.emission_shape = 1 (found 1)
+PASS: ExhaustPlume process.emission_sphere_radius = 0.025 (found 0.02500000037253)
+PASS: ExhaustPlume process.initial_velocity_min = 4.0 (found 4.0)
+PASS: ExhaustPlume process.initial_velocity_max = 7.0 (found 7.0)
+PASS: ExhaustPlume process.direction = (0.0, -0.26, 0.97) (found (0.0, -0.26, 0.97))
+PASS: ExhaustPlume process.spread = 10.0 (found 10.0)
+PASS: ExhaustPlume process.gravity = (0.0, 0.8, 0.0) (found (0.0, 0.8, 0.0))
+PASS: ExhaustPlume process.damping_min = 12.0 (found 12.0)
+PASS: ExhaustPlume process.damping_max = 18.0 (found 18.0)
+PASS: ExhaustPlume process.color = (0.92, 0.93, 0.94, 1.0) (found (0.92, 0.93, 0.94, 1.0))
+PASS: ExhaustPlume process.scale_min = 0.6 (found 0.60000002384186)
+PASS: ExhaustPlume process.scale_max = 1.0 (found 1.0)
+PASS: ExhaustPlume process.turbulence_enabled = true (found true)
+PASS: ExhaustPlume process.turbulence_noise_strength = 0.35 (found 0.34999999403954)
+PASS: ExhaustPlume process.turbulence_noise_scale = 1.6 (found 1.60000002384186)
+PASS: ExhaustPlume process.turbulence_noise_speed = (0.3, 0.25, 0.3) (found (0.3, 0.25, 0.3))
+PASS: ExhaustPlume alpha_curve keys [(0.0, 0.0), (0.02, 0.22), (0.3, 0.14), (0.7, 0.05), (1.0, 0.0)] (found [(0.0, 0.0), (0.02, 0.22), (0.3, 0.14), (0.7, 0.05), (1.0, 0.0)])
+PASS: ExhaustPlume scale_curve keys [(0.0, 1.0), (0.3, 3.0), (1.0, 6.0)] (found [(0.0, 1.0), (0.3, 3.0), (1.0, 6.0)])
+PASS: ExhaustPlume quad.size = (0.1, 0.1) (found (0.1, 0.1))
+PASS: ExhaustPlume material runs res://effects/scatter_particle.gdshader (found res://effects/scatter_particle.gdshader)
+PASS: ExhaustPlume material face_camera = true (found true)
+PASS: ExhaustPlume material min_pixels = 0.0 (found 0.0)
+PASS: ExhaustPlume material forward_scatter = 0.75 (found 0.75)
+PASS: ExhaustPlume material scatter = 0.8 (found 0.8)
+PASS: ExhaustPlume material diffuse = 0.25 (found 0.25)
+PASS: ExhaustPlume material glint = 0.0 (found 0.0)
+PASS: ExhaustPlume material sky = 0.0 (found 0.0)
+PASS: ExhaustPlume texture is res://effects/textures/exhaust_puff.png (found res://effects/textures/exhaust_puff.png)
+PASS: The plume has amount_ratio for the throttle, and waits for the engine (emitting off)
+PASS: Its scale curve can reach 6 (max_value 7.0)
+EXHAUST VAPOUR CONFIG RESULT: 44/44 passed; 0 failed

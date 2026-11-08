@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://jbdj34m0sujw"
 path.s3tc="res://.godot/imported/asphalt_02_nor_gl_2k.jpg-c2173be43f40680716e7ac64456f5a07.s3tc.ctex"
+path.etc2="res://.godot/imported/asphalt_02_nor_gl_2k.jpg-c2173be43f40680716e7ac64456f5a07.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/asphalt_02/asphalt_02_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/asphalt_02_nor_gl_2k.jpg-c2173be43f40680716e7ac64456f5a07.s3tc.ctex"]
+dest_files=["res://.godot/imported/asphalt_02_nor_gl_2k.jpg-c2173be43f40680716e7ac64456f5a07.s3tc.ctex", "res://.godot/imported/asphalt_02_nor_gl_2k.jpg-c2173be43f40680716e7ac64456f5a07.etc2.ctex"]
 
 [params]
 

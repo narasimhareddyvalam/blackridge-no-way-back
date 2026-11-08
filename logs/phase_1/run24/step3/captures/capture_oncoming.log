@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+debug camera at (11.75184, 30.01132, -75.5053), oncoming van at (4.488562, 27.06387, -68.11292)
+saved oncoming_van_night.png: oncoming 163 m away, glare (0.0, 0.0) at (9.0, 9.0, 9.0, 9.0), lamps on screen (586.0, 451.0) (475.0, 436.0), windshield brightness 18.7, 55 FPS
+saved oncoming_van_debug_light.png: oncoming 162 m away, glare (0.0, 0.0) at (9.0, 9.0, 9.0, 9.0), lamps on screen (586.0, 451.0) (475.0, 436.0), windshield brightness 70.7, 55 FPS
+saved before_it_comes.png: oncoming 111 m away, glare (0.37694, 0.377431) at (-0.560905, 0.022812, -0.568886, 0.022575), lamps on screen (549.0, 332.0) (543.0, 332.0), windshield brightness 97.6, 45 FPS
+saved oncoming_120m.png: oncoming 110 m away, glare (0.38587, 0.38631) at (-0.56073, 0.022728, -0.56881, 0.022499), lamps on screen (549.0, 332.0) (543.0, 332.0), windshield brightness 96.0, 45 FPS
+saved oncoming_60m.png: oncoming 60 m away, glare (1.022327, 1.009949) at (-0.59095, 0.016586, -0.6064, 0.016319), lamps on screen (525.0, 336.0) (513.0, 336.0), windshield brightness 130.1, 59 FPS
+saved oncoming_35m.png: oncoming 35 m away, glare (1.911914, 1.915551) at (-0.595634, 0.00692, -0.624001, 0.005661), lamps on screen (523.0, 341.0) (500.0, 342.0), windshield brightness 151.6, 61 FPS
+saved oncoming_20m.png: oncoming 20 m away, glare (2.65607, 2.640636) at (-0.587006, -0.011925, -0.641594, -0.014313), lamps on screen (532.0, 351.0) (489.0, 352.0), windshield brightness 157.2, 60 FPS
+saved oncoming_10m.png: oncoming 10 m away, glare (2.903632, 2.543499) at (-0.662407, -0.082733, -0.814285, -0.088387), lamps on screen (485.0, 385.0) (376.0, 388.0), windshield brightness 145.5, 60 FPS
+saved after_it_passed.png: oncoming 14 m away, glare (0.0, 0.0) at (9.0, 9.0, 9.0, 9.0), lamps on screen (784.0, 290.0) (829.0, 290.0), windshield brightness 44.0, 60 FPS
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

@@ -1,4 +1,59 @@
-# SOURCES — Assignment 5
+# SOURCES
+
+Assignment 6 comes first. Assignment 5's record follows with its text unchanged; its graded copy
+is at tag `a5`.
+
+# Assignment 6 — particle effects (2026-11-07)
+
+## Tools
+
+- Godot 4.7.2 stable, standard build, Forward+ (MetalFX upscaling at 75% on macOS).
+- Claude Code (model Claude Opus 5.5), through the author's Claude account.
+- Python 3 with NumPy and Pillow, used by `tools/make_particle_textures.py`.
+
+## Textures
+
+| Asset | Source | Authors (roles) | Licence | Date | Used in |
+| --- | --- | --- | --- | --- | --- |
+| `water_bead.png`, `fine_spray.png`, `roof_stream.png`, `exhaust_puff.png` | Written by code: `tools/make_particle_textures.py` (Claude Code), seed 6; every run writes the same bytes | Claude Code (script) | Original, no licence needed | 2026-11-07 | A1's beads and mist, A2's streams and beads, B1's splashes, B2's puffs |
+| `rain_streak.png` | The same script; redrawn as wide as its quad in brief revision 5 | Claude Code (script) | Original, no licence needed | 2026-11-07 | B1's streaks |
+
+All five are in `game/effects/textures/`, imported with mipmaps. The script is their provenance
+record: it draws each shape from formulas and fixed-seed noise, and fetches nothing.
+
+## Generative models
+
+None. The author first chose AI-generated textures for the effects, then asked for everything
+else to follow best practice, and Claude Code drew them with a script instead (#142).
+
+## Human and AI contributions
+
+### Written or decided by the author
+
+- The choice of the four effects, which are graded, and the realism bar (#131–#141).
+- The draft of `CHANGE-BRIEF.md`, with its intent, timings, contrast, scale and predictions,
+  and the decisions written into it on 2026-11-07: both B effects graded; B1's condition, its
+  collision with splashes and its rain already falling; A2 moving with the van and firing at
+  the hit.
+- The request that all four effects be clearly visible, as in the real world (#144).
+- To come: the frame strips, the verdicts in `TUNING.md`, the checks in the running game, the GPU
+  price, Step 6's process shader and its answers, and the film.
+
+### Written by Claude Code
+
+- Corrections to the brief's Godot names, units and flags, and the values marked †, all
+  disclosed in the brief's "How it was made" line; the brief's dated revisions 1–5.
+- `docs/PARTICLE_RESEARCH.md`.
+- The effect scenes in `game/effects/` and the five textures with their script.
+- The controllers `van_particles.gd` and `lamp_rain.gd`, and the throttle member in
+  `freight_van.gd`.
+- The configuration, state and cost tests, `particle_readback.gd`, and the mutations.
+- The preview scenes in `game/previews/`, `scripts/capture-strips.sh`, the runner changes in
+  `scripts/run-test.sh`, and the leak probe in `logs/particles/leak_probe/`.
+- The Assignment 6 sections of `TEST-REPORT.md`, `TUNING.md` (its predictions and comparisons),
+  this file, `README.md` and `HANDOFF.md`.
+
+# Assignment 5 — shaders, materials and the Godot Shading Language
 
 ## Starting point
 
@@ -22,9 +77,47 @@ Assignments 2–4 used a different game; see `FRICTIONAL.md`.
 | `fog_color.png`, `fog_data.png`, `fog_normal.png` | Written by code: `tools/make_fog_textures.py` (Claude Code), seed 20261029 | Claude Code (script); no other contributors | Original, no licence needed | 2026-10-29 | OpenGL (green up) | fog overlays (`light_fog.tres`, `heavy_fog.tres`) |
 | `greys_3x1.png` | Written by code: `tools/make_hint_png.gd` (Claude Code) | Claude Code (script) | Original, no licence needed | 2026-10-29 | n/a | hint experiment |
 | `box_profile_metal_sheet_nor_gl_1k.png`, `_nor_dx_1k.png` | https://polyhaven.com/a/box_profile_metal_sheet | Amal Kumar ("All", per the Poly Haven API) | CC0 1.0 | 2026-10-29 | GL and DX pair | curl-check calibration only |
+| `tarred_gravel` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/tarred_gravel | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | forest road surface |
+| `leaf_scattered_gravel` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/leaf_scattered_gravel | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | road edges |
+| `forest_leaves_04` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/forest_leaves_04 | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | forest floor |
+| `pine_bark` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/pine_bark | Dimitrios Savva | CC0 1.0 | 2026-10-30 | OpenGL | pine trunks; lumber-yard logs |
+| `conifer_branch_diff.png`, `conifer_branch_nor_gl.png`, `conifer_deadwood_diff.png`, `conifer_deadwood_nor_gl.png` | Built by code from the twig atlas of https://polyhaven.com/a/fir_tree_01 (`twig_diff`, `twig_alpha`, `twig_nor_gl`, 2k): `tools/make_conifer_cards.py` (Claude Code), seed 20261030 | Rob Tuytel, Rico Cilliers (scan); Claude Code (script) | CC0 1.0 | 2026-10-31 | OpenGL (green up) | live branch cards; dead lower branches |
+| `low_beam_pattern.png` | Written by code: `tools/make_low_beam_pattern.py` (Claude Code) | Claude Code (script) | Original, no licence needed | 2026-10-30 | n/a | headlight low-beam pattern |
+| `high_beam_pattern.png` | Written by code: `tools/make_high_beam_pattern.py` (Claude Code), from the low-beam pattern plus a hot spot on the horizon | Claude Code (script) | Original, no licence needed | 2026-10-31 | n/a | headlight high-beam pattern |
+| `rock_wall_02` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/rock_wall_02 | Rob Tuytel | CC0 1.0 | 2026-10-31 | OpenGL | rock faces on the hill's steep cuts (`hill_ground.gdshader`) |
+| `rustic_stone_wall` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/rustic_stone_wall | Dimitrios Savva | CC0 1.0 | 2026-10-31 | OpenGL | dry-stone walls at the hairpins and the viewpoint |
+| `weathered_plank_siding` (diff, nor_gl, arm, 2k) | https://polyhaven.com/a/weathered_plank_siding | Dimitrios Savva | CC0 1.0 | 2026-11-01 | OpenGL | the site office's walls and its landing's sides (C36) |
+| `corrugated_iron` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/corrugated_iron | Jenelle van Heerden, Dimitrios Savva | CC0 1.0 | 2026-11-01 | OpenGL | the site office's roof and door hood |
+| `rough_pine_door` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/rough_pine_door | Dimitrios Savva | CC0 1.0 | 2026-11-01 | OpenGL | the site office's door |
+| `stair_planks` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/stair_planks | Rob Tuytel | CC0 1.0 | 2026-11-01 | OpenGL | the site office's landing and step |
+| `brushed_concrete_03` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/brushed_concrete_03 | Amal Kumar | CC0 1.0 | 2026-11-01 | OpenGL | the site office's plinth and splash block |
+| `road_signs.png` | Written by code: `tools/make_road_signs.py` (Claude Code). The lettering is drawn with the macOS system font Arial Bold, which is not copied into the repository | Claude Code (script) | Original, no licence needed | 2026-10-31 | n/a | warning signs, chevrons, plates and boards on the ghat road |
+| `fern_02` model (1k) | https://polyhaven.com/a/fern_02 | Rob Tuytel, Rico Cilliers | CC0 1.0 | 2026-10-30 | OpenGL | roadside ferns |
+| `dry_branches_medium_01` model (1k) | https://polyhaven.com/a/dry_branches_medium_01 | Rico Cilliers | CC0 1.0 | 2026-10-30 | OpenGL | fallen branches |
+| `tree_stump_01` model (1k) | https://polyhaven.com/a/tree_stump_01 | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | stumps |
+| `rock_moss_set_02` model (1k) | https://polyhaven.com/a/rock_moss_set_02 | Kless Gyzen | CC0 1.0 | 2026-10-30 | OpenGL | mossy rocks; the landslide |
+| `dead_tree_trunk` model (1k) | https://polyhaven.com/a/dead_tree_trunk | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | fallen trunks |
+| `security_light` model (1k), in `game/features/environments/depot_yard/polyhaven/models/` (recorded in its `POLYHAVEN.md`) | https://polyhaven.com/a/security_light | Maximilian Schuster | CC0 1.0 | 2026-11-08 | OpenGL (glTF) | the freight depot's wall lights, one above each roller door, its glass drawn as a lit lens (#151) |
+| `green_metal_rust` (diff, nor_gl, arm, 1k; the diffuse is not used) | https://polyhaven.com/a/green_metal_rust | Rob Tuytel | CC0 1.0 | 2026-11-08 | OpenGL | the street lamps' pole and head: its relief and roughness under a grey paint (#154) |
+| `streetlight.glb` in `game/features/environments/industrial_loop/art/streetlight/` | Written by code: `tools/art/build_streetlight.py` (Claude Code), run in Blender 5.2.2 | Claude Code (script) | Original, no licence needed | 2026-11-08 | n/a (no images embedded) | the roadside street lamps: pole, davit arm, cobra head, refractor, footing (#154) |
+| `leafy_grass` (diff, nor_gl, arm, 1k) | https://polyhaven.com/a/leafy_grass | Charlotte Baglioni | CC0 1.0 | 2026-11-08 | OpenGL | the mowed grass strip along the valley road, blended into the ground beyond the gravel verge (#157) |
+| `cabin.glb`, `steering.glb` (rebuilt) | Written by code: `tools/art/build_first_drive_art.py` (Codex; cabin and wheel parts changed by Claude Code on 2026-10-30) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-30 | OpenGL | van interior |
+| `body.glb` and `door.glb` (the driver's door split out) | Written by code: `tools/art/build_first_drive_art.py` (Codex; the driver's door, its lowered handle and its share of the trim moved into `door.glb` by Claude Code on 2026-10-31, Run 19) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-31 | OpenGL | van body; the driver's door that swings open when Ethan gets in |
+| `cockpit/` in `game/features/vehicles/freight_van/art/`: `cockpit_front`, `cockpit_back`, `cockpit_roof` and `cockpit_wheel` (glTF), 27 textures, two shadow stand-ins | "FREE // Honda E (Detailed Interior) 2021", https://sketchfab.com/3d-models/free-honda-e-detailed-interior-2021-814cf3f8cfd64594b1c4f96e873c3cef | Alex Murias (Sketchfab: Xlay3D), model and textures. Changed by Claude Code in Blender on 2026-10-31: fitted to the van's cab (dash widened to the windshield, doors and seats moved, roof stretched, cab closed behind the seats), Honda badges and screen pictures removed, slimmed with no visible change, textures resized to 1k and 2k, split into four files; its own sunroof frame reopened as a moon roof on 2026-10-31 (Run 16) | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) | 2026-10-31 | OpenGL (glTF) | van cockpit (C22); `cabin.glb` and `steering.glb` stay in the repository, unused |
+| `ethan.glb` and `pedestrian.glb` in `game/features/characters/`, with six extracted WebP textures | Adobe Mixamo, https://www.mixamo.com: characters "Ch33" (Ethan, C28) and "Ch01" (the pedestrian); animations Breathing Idle, Walking, Walking Backwards, Running, Entering Car, Exiting Car and Hit By Car, downloaded by the author on 2026-10-31 (`source_assets/mixamo/README.md`) | Adobe Mixamo (characters, rigs and motion). Converted by Claude Code with `tools/art/convert_mixamo.py` on 2026-10-31: one material per part with its own roughness, no metal, Mixamo's gloss and specular maps dropped, hair clipped, the pedestrian's polo tinted charcoal, textures halved to 2048 pixels as WebP, one bone prefix, walk and run in place | Adobe Mixamo terms: free in games, including sold games; not to be shared on their own. Committed as an exception to C10 (C27) | 2026-10-31 | glTF; Mixamo's convention not checked | Ethan on foot at the start of Mission 1; the pedestrian in the collision |
+| `iveco/` in `game/features/vehicles/freight_van/art/`: `iveco_exterior.glb` and `iveco_cab.glb`, with 35 extracted WebP textures | "Iveco Daily Van 2014", https://sketchfab.com/3d-models/iveco-daily-van-2014-30003fba5b074d6eb7bc74fd5e1e7d19, imported through the Blender MCP add-on on 2026-11-01; the raw copy is in `source_assets/sketchfab/iveco_daily_2014/`, not in Git | Max (Sketchfab: Max-7215), model and textures. Converted by Claude Code with `tools/art/convert_iveco.py` on 2026-11-01: real size, turned to face -Z, the raised IVECO letters (grille, rear door) and the wipers removed, the name painted out of the textures (grille, rear door, steering-wheel badge), the French plate replaced by "BR 048" and a rear plate added, the doors, wheels, steering wheel, windshield and lamp lenses split out, a moon roof opening cut over the front seats (C32), textures 2048 (outside) and 1024 (cab) as WebP | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), plus the author's note "You must inform me of your usage"; the Blackridge author informs Max before the van ships | 2026-11-01 | glTF (OpenGL) | the player's van and its cab (C31), since Run 23 step 3; also, painted dark grey with its own plate, the oncoming van (C33), since Run 23 step 4 |
+| `number_plate.png` in `source_assets/artwork/` | Written by code: `tools/make_number_plate.py` (Claude Code). The lettering uses the macOS system font DIN Condensed Bold, which is not copied into the repository | Claude Code (script) | Original, no licence needed | 2026-11-01 | n/a | the Iveco van's front and rear plates |
+| `number_plate.png` in `game/features/vehicles/oncoming_van/art/` | Written by code: `tools/make_number_plate.py --registration "BR 731" --width 768` (Claude Code), with the same font | Claude Code (script) | Original, no licence needed | 2026-11-01 | n/a | the oncoming van's front and rear plates (C33) |
+| `office/site_office.glb` in `game/features/environments/industrial_loop/art/` | Written by code: `tools/art/build_site_office.py` (Claude Code), run in Blender 5.2.2. The "OFFICE" letters are geometry from Blender's built-in text font; no font file is copied into the repository | Claude Code (script) | Original, no licence needed | 2026-11-01 | n/a (the Poly Haven textures above are applied in Godot) | the lumber yard's site office (C36) |
 
-Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
-`game/tests/calibration/ATTRIBUTION.md`.
+Credits files: `game/assets/textures/windshield/ATTRIBUTION.md`,
+`game/tests/calibration/ATTRIBUTION.md` and
+`game/features/environments/industrial_loop/polyhaven/POLYHAVEN.md`,
+`source_assets/polyhaven/POLYHAVEN.md` (checksums and authors) and
+`game/features/vehicles/freight_van/art/cockpit/ATTRIBUTION.md`,
+`game/features/characters/ATTRIBUTION.md`, `source_assets/mixamo/README.md`,
+`game/features/vehicles/freight_van/art/iveco/ATTRIBUTION.md` and
+`source_assets/sketchfab/iveco_daily_2014/README.md`.
 
 ## Generative models
 
@@ -81,6 +174,8 @@ Credits files: `game/assets/textures/windshield/ATTRIBUTION.md` and
   as course requirements.
 
 ### Suggestions adopted, modified or rejected
+
+From the final-project work on, every author prompt, approval and decline is recorded verbatim in [`docs/AUTHOR_PROMPTS_AND_DECISIONS.md`](docs/AUTHOR_PROMPTS_AND_DECISIONS.md).
 
 - Night dimming was one of Claude's suggested effects. The author picked it.
 - The author first chose rain-wet metal cladding, then a foggy windshield. The

@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://effects/textures/exhaust_puff.png" id="1_puff"]
+[ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
+
+[sub_resource type="Curve" id="Curve_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.02, 0.22), 0.0, 0.0, 0, 0, Vector2(0.3, 0.14), 0.0, 0.0, 0, 0, Vector2(0.7, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
+curve = SubResource("Curve_alpha")
+
+[sub_resource type="Curve" id="Curve_scale"]
+max_value = 7.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3, 3), 0.0, 0.0, 0, 0, Vector2(1, 6), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_scale"]
+curve = SubResource("Curve_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_plume"]
+emission_shape = 1
+emission_sphere_radius = 0.025
+direction = Vector3(0, -0.26, 0.97)
+spread = 10.0
+initial_velocity_min = 4.0
+initial_velocity_max = 7.0
+gravity = Vector3(0, 0.8, 0)
+damping_min = 12.0
+damping_max = 18.0
+scale_min = 0.6
+scale_max = 1.0
+scale_curve = SubResource("CurveTexture_scale")
+color = Color(0.92, 0.93, 0.94, 1)
+alpha_curve = SubResource("CurveTexture_alpha")
+turbulence_enabled = true
+turbulence_noise_strength = 0.35
+turbulence_noise_scale = 1.6
+turbulence_noise_speed = Vector3(0.3, 0.25, 0.3)
+
+[sub_resource type="ShaderMaterial" id="Draw_puff"]
+render_priority = 0
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("1_puff")
+shader_parameter/face_camera = true
+shader_parameter/min_pixels = 0.0
+shader_parameter/forward_scatter = 0.75
+shader_parameter/scatter = 0.8
+shader_parameter/diffuse = 0.25
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.0
+
+[sub_resource type="QuadMesh" id="Quad_puff"]
+material = SubResource("Draw_puff")
+size = Vector2(0.1, 0.1)
+
+[node name="ExhaustVapour" type="Node3D"]
+
+[node name="ExhaustPlume" type="GPUParticles3D" parent="."]
+layers = 1
+emitting = false
+amount = 300
+lifetime = 1.6
+one_shot = false
+preprocess = 0.0
+explosiveness = 0.0
+visibility_aabb = AABB(-3, -1, -11, 6, 5, 60)
+local_coords = false
+process_material = SubResource("Process_plume")
+draw_pass_1 = SubResource("Quad_puff")

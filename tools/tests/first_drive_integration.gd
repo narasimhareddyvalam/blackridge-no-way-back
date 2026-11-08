@@ -44,7 +44,8 @@ func _run() -> void:
 	presentation = van.get_node("VanPresentation")
 	await create_timer(0.25).timeout
 	check(not van.call("_rotation_blocked", 0.04), "Steering clearance accepts open level ground")
-	check(presentation.get("mirrors").size() == 3, "Three live mirror viewports exist")
+	check(presentation.get("mirrors").size() == 2,
+		"Two live door-mirror viewports exist (the Iveco has no inside mirror)")
 	for camera in presentation.get("mirror_cameras"):
 		check(camera.get_world_3d() == van.get_world_3d(), "Mirror/rear camera shares live world")
 	await tap("indicator_left")
@@ -55,13 +56,18 @@ func _run() -> void:
 	check(van.get("hazards_on") and van.get("indicator_lit"), "Hazards activate")
 	await tap("hazards")
 	await tap("headlights")
+	check(van.get("headlights_on") and van.get("high_beams"), "Headlight switch selects high beams")
+	await tap("headlights")
 	check(not van.get("headlights_on"), "Headlight switch turns lamps off")
 	await tap("headlights")
+	check(van.get("headlights_on") and not van.get("high_beams"),
+		"Headlight switch returns to low beams")
 	await tap("wipers")
 	check(van.get("wiper_setting") == 2, "Wipers select high speed")
 	await tap("wipers")
 	await create_timer(0.85).timeout
-	check(van.get("wiper_setting") == 0 and absf(van.get("wiper_angle") + 0.9) < 0.02,
+	var park: float = van.get_script().get_script_constant_map()["WIPER_PARK"]
+	check(van.get("wiper_setting") == 0 and absf(van.get("wiper_angle") - park) < 0.02,
 		"Wipers switch off and park")
 	await tap("window_left")
 	await create_timer(2.1).timeout
@@ -105,9 +111,17 @@ func _run() -> void:
 	await create_timer(1).timeout
 	Input.action_release("brake")
 	await tap("interact")
+	var leaving := 0.0
+	while bool(app.get("_boarding")) and leaving < 8.0:
+		await create_timer(0.1).timeout
+		leaving += 0.1
 	check(not van.get("occupied") and app.get("driver").get("active"),
 		"Stopped van allows safe exit")
 	await tap("interact")
+	var boarding := 0.0
+	while not van.get("occupied") and boarding < 8.0:
+		await create_timer(0.1).timeout
+		boarding += 0.1
 	check(van.get("occupied") and not app.get("driver").get("active"),
 		"Nearby driver can reenter")
 	await tap("pause")

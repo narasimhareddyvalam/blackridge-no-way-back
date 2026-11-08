@@ -62,13 +62,14 @@ func _run() -> void:
 
 func _test_steering() -> void:
 	var collision: CollisionShape3D = _van.get_node("CollisionShape3D")
-	_check(collision.shape.size == Vector3(2.4, 2.8, 5.3),
-		"Physical vehicle collision dimensions are preserved")
+	_check(collision.shape.size.is_equal_approx(Vector3(2.0, 2.091, 5.533)),
+		"Physical vehicle collision matches the Iveco van's real size (2.0 x 2.09 x 5.53 m)")
 	_check(not _van.call("_rotation_blocked", 0.16),
 		"Ground contact permits a left turn")
 	_check(not _van.call("_rotation_blocked", -0.16),
 		"Ground contact permits a right turn")
-	var wall := _obstruction(_van.to_global(Vector3(-1.42, 1.6, -2)),
+	var beside: float = collision.shape.size.x * 0.5 + 0.22
+	var wall := _obstruction(_van.to_global(Vector3(-beside, 1.6, -2)),
 		Vector3(0.1, 2.7, 0.3), _van.global_basis)
 	await physics_frame
 	await physics_frame
@@ -260,6 +261,10 @@ func _test_exit_and_collision() -> void:
 	await physics_frame
 	await physics_frame
 	_app.call("_exit_van")
+	var leaving := 0.0
+	while bool(_app.get("_boarding")) and leaving < 8.0:
+		await physics_frame
+		leaving += 1.0 / 60.0
 	_check(not _van.occupied, "Clear doors allow exit")
 	_app.call("_enter_van")
 	_check(_van.occupied, "Driver can reenter the van")

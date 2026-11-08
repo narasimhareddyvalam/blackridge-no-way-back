@@ -1,0 +1,3 @@
+renderer forward_plus, 3D scaling mode 4 at 0.75, window (1280.0, 800.0), vsync off
+parked   FPS  69.3 | frame median  12.29 ms, slowest 5%  18.07 ms | 1355 draws, 1.65M triangles per frame
+driving  FPS  57.0 | frame median  16.94 ms, slowest 5%  26.75 ms | 1348 draws, 1.82M triangles per frame

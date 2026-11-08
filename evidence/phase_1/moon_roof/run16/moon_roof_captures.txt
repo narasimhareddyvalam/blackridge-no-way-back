@@ -1,0 +1,3 @@
+saved parked_look_up.png: look (1.0, 0.0), speed 0.0 m/s, roof water flows (0.0, -1.0)
+saved parked_look_up_right.png: look (0.95, -0.45), speed 0.0 m/s, roof water flows (0.0, -1.0)
+saved driving_look_up_right.png: look (0.95, -0.45), speed 12.4 m/s, roof water flows (0.0, -1.0)

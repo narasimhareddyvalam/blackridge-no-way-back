@@ -1,0 +1,7 @@
+{
+	"destination": "source_assets/polyhaven",
+	"maps": {
+		"fir_tree_01": "2k"
+	},
+	"map_names": ["twig_diff", "twig_alpha", "twig_nor_gl"]
+}

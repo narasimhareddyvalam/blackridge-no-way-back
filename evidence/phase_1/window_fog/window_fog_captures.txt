@@ -1,0 +1,4 @@
+saved driver_window_opacity_0.60.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.45.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.35.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.25.png (runtime only; heavy_fog.tres unchanged)

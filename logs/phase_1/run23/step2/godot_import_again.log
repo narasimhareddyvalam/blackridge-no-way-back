@@ -1,0 +1,137 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Scanning actions... (35 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | iveco_cab_Body_Interior_baseColor.webp[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | iveco_cab_Body_Interior_metallicRoughness.webp[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | iveco_cab_Body_Interior_normal.webp[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | iveco_cab_Dashboard_baseColor.webp[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | iveco_cab_Dashboard_metallicRoughness.webp[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | iveco_cab_Dashboard_normal.webp[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_2_baseColor.webp[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_2_metallicRoughness.webp[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_2_normal.webp[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_baseColor.webp[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_metallicRoughness.webp[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | iveco_cab_Interior_normal.webp[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Back_door_baseColor.webp[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Back_door_metallicRoughness.webp[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Back_door_normal.webp[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_1_baseColor.webp[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_1_metallicRoughness.webp[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_1_normal.webp[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_2_baseColor.webp[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_2_metallicRoughness.webp[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Body_exterior_2_normal.webp[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Front_door_baseColor.webp[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Front_door_metallicRoughness.webp[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Lateral_door_baseColor.webp[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Lateral_door_metallicRoughness.webp[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Lateral_door_normal.webp[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Other_baseColor.webp[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Other_metallicRoughness.webp[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Other_normal.webp[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Wheel_baseColor.webp[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Wheel_metallicRoughness.webp[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Wheel_normal.webp[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Window_baseColor.webp[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Window_metallicRoughness.webp[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | iveco_exterior_Window_normal.webp[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (35 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   2% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   5% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   8% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  11% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  16% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  19% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  22% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  25% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  27% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  30% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  33% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  36% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  38% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  41% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  44% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  50% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  55% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  58% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  61% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  63% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  66% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  69% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  72% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  75% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  77% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  80% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  83% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  88% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  91% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  94% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing pre-reimport operations...[39m[0m
+[   0% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_2_baseColor.webp[39m[0m
+[   2% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_2_metallicRoughness.webp[39m[0m
+[   5% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_2_normal.webp[39m[0m
+[   8% ] [90m[1mreimport[22m | iveco_exterior_Front_door_baseColor.webp[39m[0m
+[  11% ] [90m[1mreimport[22m | iveco_exterior_Front_door_metallicRoughness.webp[39m[0m
+[  13% ] [90m[1mreimport[22m | iveco_exterior_Lateral_door_baseColor.webp[39m[0m
+[  16% ] [90m[1mreimport[22m | iveco_exterior_Lateral_door_metallicRoughness.webp[39m[0m
+[  19% ] [90m[1mreimport[22m | iveco_exterior_Lateral_door_normal.webp[39m[0m
+[  22% ] [90m[1mreimport[22m | iveco_exterior_Other_baseColor.webp[39m[0m
+[  25% ] [90m[1mreimport[22m | iveco_exterior_Other_metallicRoughness.webp[39m[0m
+[  27% ] [90m[1mreimport[22m | iveco_exterior_Other_normal.webp[39m[0m
+[  30% ] [90m[1mreimport[22m | iveco_exterior_Wheel_baseColor.webp[39m[0m
+[  33% ] [90m[1mreimport[22m | iveco_exterior_Wheel_metallicRoughness.webp[39m[0m
+[  36% ] [90m[1mreimport[22m | iveco_exterior_Wheel_normal.webp[39m[0m
+[  38% ] [90m[1mreimport[22m | iveco_exterior_Window_baseColor.webp[39m[0m
+[  41% ] [90m[1mreimport[22m | iveco_exterior_Window_metallicRoughness.webp[39m[0m
+[  44% ] [90m[1mreimport[22m | iveco_exterior_Window_normal.webp[39m[0m
+[  47% ] [90m[1mreimport[22m | iveco_cab_Body_Interior_baseColor.webp[39m[0m
+[  50% ] [90m[1mreimport[22m | iveco_cab_Body_Interior_metallicRoughness.webp[39m[0m
+[  52% ] [90m[1mreimport[22m | iveco_cab_Body_Interior_normal.webp[39m[0m
+[  55% ] [90m[1mreimport[22m | iveco_cab_Dashboard_baseColor.webp[39m[0m
+[  58% ] [90m[1mreimport[22m | iveco_cab_Dashboard_metallicRoughness.webp[39m[0m
+[  61% ] [90m[1mreimport[22m | iveco_cab_Dashboard_normal.webp[39m[0m
+[  63% ] [90m[1mreimport[22m | iveco_cab_Interior_2_baseColor.webp[39m[0m
+[  66% ] [90m[1mreimport[22m | iveco_cab_Interior_2_metallicRoughness.webp[39m[0m
+[  69% ] [90m[1mreimport[22m | iveco_cab_Interior_2_normal.webp[39m[0m
+[  72% ] [90m[1mreimport[22m | iveco_cab_Interior_baseColor.webp[39m[0m
+[  75% ] [90m[1mreimport[22m | iveco_cab_Interior_metallicRoughness.webp[39m[0m
+[  77% ] [90m[1mreimport[22m | iveco_cab_Interior_normal.webp[39m[0m
+[  80% ] [90m[1mreimport[22m | iveco_exterior_Back_door_baseColor.webp[39m[0m
+[  83% ] [90m[1mreimport[22m | iveco_exterior_Back_door_metallicRoughness.webp[39m[0m
+[  86% ] [90m[1mreimport[22m | iveco_exterior_Back_door_normal.webp[39m[0m
+[  88% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_1_baseColor.webp[39m[0m
+[  91% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_1_metallicRoughness.webp[39m[0m
+[  94% ] [90m[1mreimport[22m | iveco_exterior_Body_exterior_1_normal.webp[39m[0m
+[  97% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (35 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | Reopening scenes...[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | Loading central editor layout...[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | Loading plugin window layout...[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | Editor layout ready.[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

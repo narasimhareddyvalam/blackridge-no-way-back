@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://clplcmhfom5c8"
 path.s3tc="res://.godot/imported/water_manhole_cover_diff_1k.jpg-8eaee57e15042db4a47bcc540373c559.s3tc.ctex"
+path.etc2="res://.godot/imported/water_manhole_cover_diff_1k.jpg-8eaee57e15042db4a47bcc540373c559.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/water_manhole_cover/textures/water_manhole_cover_diff_1k.jpg"
-dest_files=["res://.godot/imported/water_manhole_cover_diff_1k.jpg-8eaee57e15042db4a47bcc540373c559.s3tc.ctex"]
+dest_files=["res://.godot/imported/water_manhole_cover_diff_1k.jpg-8eaee57e15042db4a47bcc540373c559.s3tc.ctex", "res://.godot/imported/water_manhole_cover_diff_1k.jpg-8eaee57e15042db4a47bcc540373c559.etc2.ctex"]
 
 [params]
 

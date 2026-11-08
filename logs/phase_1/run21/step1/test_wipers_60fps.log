@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Two wipers are built (2)
+PASS: Each wiper has a pivot cap, spring cover, arm and hook, and a blade with spoiler, rubber lip, end caps and adapter
+PASS: The blades are about 2 cm wide (2.0 and 2.0 cm)
+PASS: The driver's blade is longer than the passenger's (70 and 55 cm)
+PASS: Every wiper part sits outside the glass
+PASS: The wiped area on the glass matches where the blades lie (worst 0.0 mm)
+PASS: The windshield takes the blade's motion, the dumped water and the wiper layout (missing: )
+PASS: New drops land in new places after each wipe (three resting layers reseeded)
+PASS: Wiped glass stays clear long enough to see (re-wets over 2.0 s parked, 0.67 s at 72 km/h)
+PASS: The glass follows each blade's swing (fastest 4.0 rad/s)
+PASS: Water is dumped where the blades turn at the top, then breaks up (0.18 after 1.2 s)
+PASS: Parked wipers push no water
+WIPERS RESULT: 12/12 passed; 0 failed

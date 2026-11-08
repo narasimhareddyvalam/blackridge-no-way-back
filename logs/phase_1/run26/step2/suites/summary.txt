@@ -1,0 +1,19 @@
+first_drive_regression exit 0
+first_drive_integration exit 0
+test_materials exit 0
+test_headlights exit 0
+test_rain_physics exit 0
+test_cockpit exit 0
+test_ghat_road exit 0
+test_wipers exit 0
+test_on_foot exit 0
+test_oncoming_van exit 0
+test_collision exit 0
+test_crossing exit 0
+test_maya_call exit 0
+test_hit_speeds exit 0
+test_dash_screen exit 0
+test_night_dimming 30 exit 0
+test_night_dimming 60 exit 0
+test_night_dimming 144 exit 0
+art exit 0

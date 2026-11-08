@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+PASS: No one is on the road while the oncoming van passes: he is still at the kerb
+PASS: He steps off the kerb onto the crossing, 4.7 m before the van's bumper reaches it (25 km/h)
+PASS: Braking at once cannot stop the van on the wet road
+PASS: He is struck on the crossing (0.08 m along, 1.93 m across)
+PASS: He freezes in the headlights just before the impact
+PASS: At the impact he goes limp: a physics ragdoll takes over from the animation
+PASS: The body strikes the van with a heavy impact sound
+PASS: The music cuts out
+PASS: The oncoming van is behind and 127 m away: no witness
+PASS: Thrown by the van, he tumbles and comes to rest (3.1 s)
+PASS: He is thrown clear and lies 2.0 m ahead of the bumper, in the beams
+PASS: He lies on the road (hips 0.16 m up)
+PASS: His body never sinks into the road (lowest 0.11 m)
+PASS: Knees and elbows only bend the right way (worst 35 and 13 degrees)
+PASS: The van skids to a stop and holds there (4.0 s) despite the throttle
+PASS: The cab rocks on its springs at the impact (0.40 degrees)
+PASS: The windshield cracks low in front of where he struck the van, in view from the seat (52% of full size, at x 0.55 m; his head was at x 0.88 m)
+PASS: Leaning 55 cm over the wheel, Ethan looks: the hood hides every part of him nearer than 2.3 m past the bumper; 2 of 11 parts show beyond it (his hips lie 2.0 m out; none from the seat)
+PASS: Leaning shows the road from 2.3 m past the bumper, where a harder hit leaves him (6.1 m from the seat)
+PASS: E does nothing: Ethan does not get out
+PASS: The objective reads DRIVE.
+PASS: Then the van drives again (4.4 m/s)
+PASS: Ethan sits back in his seat to drive (eye 0.00 m from the seat position)
+PASS: Parked at the depot, Ethan gets out (3.5 s)
+PASS: He plays Exiting Car through the open door and shuts it
+PASS: He stands clear of the van afterwards ((-2.405617, 0.148958, -0.522552))
+PASS: The crack stays for the rest of the drive (0.52 at the depot)
+PASS: New drive brings back an unbroken windshield
+PASS: New drive clears the pedestrian and brings the music back
+COLLISION RESULT: 30/30 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

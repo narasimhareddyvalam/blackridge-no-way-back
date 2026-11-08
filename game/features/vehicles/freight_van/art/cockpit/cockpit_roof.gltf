@@ -1,0 +1,965 @@
+{
+ "asset": {
+  "generator": "Khronos glTF Blender I/O v5.2.40",
+  "version": "2.0"
+ },
+ "extensionsUsed": [
+  "KHR_materials_emissive_strength",
+  "KHR_materials_specular",
+  "KHR_texture_transform"
+ ],
+ "extensionsRequired": [
+  "KHR_texture_transform"
+ ],
+ "scene": 0,
+ "scenes": [
+  {
+   "name": "Scene",
+   "nodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "mesh": 0,
+   "name": "Cockpit_Buttons_Detailtext_Roof"
+  },
+  {
+   "mesh": 1,
+   "name": "Cockpit_Plastic25_Roof"
+  },
+  {
+   "mesh": 2,
+   "name": "Cockpit_Plastic45_Roof"
+  },
+  {
+   "mesh": 3,
+   "name": "Cockpit_RoofCloth_Roof"
+  },
+  {
+   "mesh": 4,
+   "name": "Cockpit_RoofLights_Roof"
+  },
+  {
+   "mesh": 5,
+   "name": "Cockpit_WhiteMetalShiny_Roof"
+  },
+  {
+   "mesh": 6,
+   "name": "Cockpit_WhitePlastic_Roof"
+  },
+  {
+   "mesh": 7,
+   "name": "Cockpit_WindowsBlackSticker_Roof"
+  }
+ ],
+ "materials": [
+  {
+   "alphaMode": "BLEND",
+   "emissiveFactor": [
+    1,
+    1,
+    1
+   ],
+   "emissiveTexture": {
+    "index": 0
+   },
+   "name": "Buttons-Detailtext.game",
+   "normalTexture": {
+    "index": 1
+   },
+   "pbrMetallicRoughness": {
+    "baseColorTexture": {
+     "index": 2
+    },
+    "metallicFactor": 0,
+    "metallicRoughnessTexture": {
+     "index": 3
+    }
+   }
+  },
+  {
+   "name": "Plastic25.game",
+   "normalTexture": {
+    "extensions": {
+     "KHR_texture_transform": {
+      "scale": [
+       15,
+       15
+      ]
+     }
+    },
+    "index": 4,
+    "scale": 0.10000000149011612
+   },
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.005570049863308668,
+     0.005570049863308668,
+     0.005570049863308668,
+     1
+    ],
+    "metallicFactor": 0,
+    "metallicRoughnessTexture": {
+     "index": 5
+    }
+   }
+  },
+  {
+   "name": "Plastic45.game",
+   "normalTexture": {
+    "extensions": {
+     "KHR_texture_transform": {
+      "scale": [
+       5,
+       5
+      ]
+     }
+    },
+    "index": 6,
+    "scale": 0.18981926143169403
+   },
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.005570049863308668,
+     0.005570049863308668,
+     0.005570049863308668,
+     1
+    ],
+    "metallicFactor": 0,
+    "metallicRoughnessTexture": {
+     "index": 7
+    }
+   }
+  },
+  {
+   "name": "RoofCloth.game",
+   "normalTexture": {
+    "extensions": {
+     "KHR_texture_transform": {
+      "scale": [
+       5,
+       5
+      ]
+     }
+    },
+    "index": 8,
+    "scale": 0.3901081681251526
+   },
+   "pbrMetallicRoughness": {
+    "baseColorTexture": {
+     "extensions": {
+      "KHR_texture_transform": {
+       "scale": [
+        5,
+        5
+       ]
+      }
+     },
+     "index": 9
+    },
+    "metallicFactor": 0,
+    "metallicRoughnessTexture": {
+     "index": 10
+    }
+   }
+  },
+  {
+   "doubleSided": true,
+   "emissiveFactor": [
+    1,
+    0.6941643357276917,
+    0.5399202108383179
+   ],
+   "extensions": {
+    "KHR_materials_emissive_strength": {
+     "emissiveStrength": 10
+    }
+   },
+   "name": "RoofLights.game",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.800000011920929,
+     0.800000011920929,
+     0.800000011920929,
+     1
+    ],
+    "metallicFactor": 0,
+    "roughnessFactor": 0.14126437902450562
+   }
+  },
+  {
+   "doubleSided": true,
+   "name": "WhiteMetalShiny.game",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.7874119877815247,
+     0.7874119877815247,
+     0.7874119877815247,
+     1
+    ],
+    "metallicFactor": 0,
+    "roughnessFactor": 0
+   }
+  },
+  {
+   "name": "WhitePlastic.game",
+   "normalTexture": {
+    "extensions": {
+     "KHR_texture_transform": {
+      "scale": [
+       10,
+       10
+      ]
+     }
+    },
+    "index": 11,
+    "scale": 0.15000000596046448
+   },
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.6128690242767334,
+     0.6128690242767334,
+     0.6128690242767334,
+     1
+    ],
+    "metallicFactor": 0,
+    "metallicRoughnessTexture": {
+     "index": 12
+    }
+   }
+  },
+  {
+   "doubleSided": true,
+   "extensions": {
+    "KHR_materials_specular": {
+     "specularFactor": 0.038085248321294785
+    }
+   },
+   "name": "WindowsBlackSticker.game",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [
+     0.003935940098017454,
+     0.003935940098017454,
+     0.003935940098017454,
+     1
+    ],
+    "metallicFactor": 0,
+    "roughnessFactor": 0.0805707722902298
+   }
+  }
+ ],
+ "meshes": [
+  {
+   "name": "Cockpit_Buttons_Detailtext_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 0,
+      "NORMAL": 1,
+      "TEXCOORD_0": 2
+     },
+     "indices": 3,
+     "material": 0
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_Plastic25_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 4,
+      "NORMAL": 5,
+      "TEXCOORD_0": 6
+     },
+     "indices": 7,
+     "material": 1
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_Plastic45_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 8,
+      "NORMAL": 9,
+      "TEXCOORD_0": 10
+     },
+     "indices": 11,
+     "material": 2
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_RoofCloth_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 12,
+      "NORMAL": 13,
+      "TEXCOORD_0": 14
+     },
+     "indices": 15,
+     "material": 3
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_RoofLights_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 16,
+      "NORMAL": 17,
+      "TEXCOORD_0": 18
+     },
+     "indices": 19,
+     "material": 4
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_WhiteMetalShiny_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 20,
+      "NORMAL": 21,
+      "TEXCOORD_0": 22
+     },
+     "indices": 23,
+     "material": 5
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_WhitePlastic_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 24,
+      "NORMAL": 25,
+      "TEXCOORD_0": 26
+     },
+     "indices": 27,
+     "material": 6
+    }
+   ]
+  },
+  {
+   "name": "Cockpit_WindowsBlackSticker_Roof",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 28,
+      "NORMAL": 29,
+      "TEXCOORD_0": 30
+     },
+     "indices": 31,
+     "material": 7
+    }
+   ]
+  }
+ ],
+ "textures": [
+  {
+   "sampler": 0,
+   "source": 0
+  },
+  {
+   "sampler": 0,
+   "source": 1
+  },
+  {
+   "sampler": 0,
+   "source": 2
+  },
+  {
+   "sampler": 0,
+   "source": 3
+  },
+  {
+   "sampler": 0,
+   "source": 4
+  },
+  {
+   "sampler": 0,
+   "source": 5
+  },
+  {
+   "sampler": 0,
+   "source": 6
+  },
+  {
+   "sampler": 0,
+   "source": 7
+  },
+  {
+   "sampler": 0,
+   "source": 8
+  },
+  {
+   "sampler": 0,
+   "source": 9
+  },
+  {
+   "sampler": 0,
+   "source": 10
+  },
+  {
+   "sampler": 0,
+   "source": 4
+  },
+  {
+   "sampler": 0,
+   "source": 7
+  }
+ ],
+ "images": [
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_buttons_detailtext_emission",
+   "uri": "textures/cockpit_buttons_detailtext_emission.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_buttons_detailtext_nor_gl",
+   "uri": "textures/cockpit_buttons_detailtext_nor_gl.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_buttons_detailtext_color",
+   "uri": "textures/cockpit_buttons_detailtext_color.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_buttons_detailtext_metal_rough",
+   "uri": "textures/cockpit_buttons_detailtext_metal_rough.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_plastic25_nor_gl",
+   "uri": "textures/cockpit_plastic25_nor_gl.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_plastic25_metal_rough",
+   "uri": "textures/cockpit_plastic25_metal_rough.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_plastic45_nor_gl",
+   "uri": "textures/cockpit_plastic45_nor_gl.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_plastic45_metal_rough",
+   "uri": "textures/cockpit_plastic45_metal_rough.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_roof_cloth_nor_gl",
+   "uri": "textures/cockpit_roof_cloth_nor_gl.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_roof_cloth_color",
+   "uri": "textures/cockpit_roof_cloth_color.png"
+  },
+  {
+   "mimeType": "image/png",
+   "name": "cockpit_roof_cloth_metal_rough",
+   "uri": "textures/cockpit_roof_cloth_metal_rough.png"
+  }
+ ],
+ "accessors": [
+  {
+   "bufferView": 0,
+   "componentType": 5126,
+   "count": 24419,
+   "max": [
+    1.066093921661377,
+    2.681201457977295,
+    -0.9769679307937622
+   ],
+   "min": [
+    -1.0658442974090576,
+    2.5333497524261475,
+    -1.1801198720932007
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 1,
+   "componentType": 5126,
+   "count": 24419,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 2,
+   "componentType": 5126,
+   "count": 24419,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 3,
+   "componentType": 5123,
+   "count": 74382,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 4,
+   "componentType": 5126,
+   "count": 1644,
+   "max": [
+    0.0887264683842659,
+    2.61844801902771,
+    -1.0782663822174072
+   ],
+   "min": [
+    -0.10297412425279617,
+    2.5607433319091797,
+    -1.1510190963745117
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 5,
+   "componentType": 5126,
+   "count": 1644,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 6,
+   "componentType": 5126,
+   "count": 1644,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 7,
+   "componentType": 5123,
+   "count": 2655,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 8,
+   "componentType": 5126,
+   "count": 2167,
+   "max": [
+    1.1050000190734863,
+    2.859999895095825,
+    0.08500000089406967
+   ],
+   "min": [
+    -1.1050000190734863,
+    2.5643718242645264,
+    -1.1777070760726929
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 9,
+   "componentType": 5126,
+   "count": 2167,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 10,
+   "componentType": 5126,
+   "count": 2167,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 11,
+   "componentType": 5123,
+   "count": 6423,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 12,
+   "componentType": 5126,
+   "count": 62276,
+   "max": [
+    1.1260000467300415,
+    2.7750000953674316,
+    0.1145513653755188
+   ],
+   "min": [
+    -1.1260000467300415,
+    2.562000036239624,
+    -1.184999942779541
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 13,
+   "componentType": 5126,
+   "count": 62276,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 14,
+   "componentType": 5126,
+   "count": 62276,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 15,
+   "componentType": 5123,
+   "count": 75528,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 16,
+   "componentType": 5126,
+   "count": 2820,
+   "max": [
+    0.6786465048789978,
+    2.7291111946105957,
+    -0.18742842972278595
+   ],
+   "min": [
+    -0.6724442839622498,
+    2.7273497581481934,
+    -0.3896212577819824
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 17,
+   "componentType": 5126,
+   "count": 2820,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 18,
+   "componentType": 5126,
+   "count": 2820,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 19,
+   "componentType": 5123,
+   "count": 4512,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 20,
+   "componentType": 5126,
+   "count": 945,
+   "max": [
+    0.6983233094215393,
+    2.7445082664489746,
+    -0.5113693475723267
+   ],
+   "min": [
+    -0.6920368671417236,
+    2.717134714126587,
+    -0.9441094994544983
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 21,
+   "componentType": 5126,
+   "count": 945,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 22,
+   "componentType": 5126,
+   "count": 945,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 23,
+   "componentType": 5123,
+   "count": 945,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 24,
+   "componentType": 5126,
+   "count": 41867,
+   "max": [
+    1.125,
+    2.734055280685425,
+    0.08500000089406967
+   ],
+   "min": [
+    -1.125,
+    2.3600876331329346,
+    -1.2814961671829224
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 25,
+   "componentType": 5126,
+   "count": 41867,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 26,
+   "componentType": 5126,
+   "count": 41867,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 27,
+   "componentType": 5123,
+   "count": 102765,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 28,
+   "componentType": 5126,
+   "count": 332,
+   "max": [
+    1.1349999904632568,
+    2.814523696899414,
+    -0.5103210806846619
+   ],
+   "min": [
+    -1.1349999904632568,
+    2.6427173614501953,
+    -1.1799031496047974
+   ],
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 29,
+   "componentType": 5126,
+   "count": 332,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 30,
+   "componentType": 5126,
+   "count": 332,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 31,
+   "componentType": 5123,
+   "count": 348,
+   "type": "SCALAR"
+  }
+ ],
+ "bufferViews": [
+  {
+   "buffer": 0,
+   "byteLength": 293028,
+   "byteOffset": 0,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 293028,
+   "byteOffset": 293028,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 195352,
+   "byteOffset": 586056,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 148764,
+   "byteOffset": 781408,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 19728,
+   "byteOffset": 930172,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 19728,
+   "byteOffset": 949900,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 13152,
+   "byteOffset": 969628,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 5310,
+   "byteOffset": 982780,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 26004,
+   "byteOffset": 988092,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 26004,
+   "byteOffset": 1014096,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 17336,
+   "byteOffset": 1040100,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 12846,
+   "byteOffset": 1057436,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 747312,
+   "byteOffset": 1070284,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 747312,
+   "byteOffset": 1817596,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 498208,
+   "byteOffset": 2564908,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 151056,
+   "byteOffset": 3063116,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 33840,
+   "byteOffset": 3214172,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 33840,
+   "byteOffset": 3248012,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 22560,
+   "byteOffset": 3281852,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 9024,
+   "byteOffset": 3304412,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 11340,
+   "byteOffset": 3313436,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 11340,
+   "byteOffset": 3324776,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 7560,
+   "byteOffset": 3336116,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 1890,
+   "byteOffset": 3343676,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 502404,
+   "byteOffset": 3345568,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 502404,
+   "byteOffset": 3847972,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 334936,
+   "byteOffset": 4350376,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 205530,
+   "byteOffset": 4685312,
+   "target": 34963
+  },
+  {
+   "buffer": 0,
+   "byteLength": 3984,
+   "byteOffset": 4890844,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 3984,
+   "byteOffset": 4894828,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 2656,
+   "byteOffset": 4898812,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteLength": 696,
+   "byteOffset": 4901468,
+   "target": 34963
+  }
+ ],
+ "samplers": [
+  {
+   "magFilter": 9729,
+   "minFilter": 9987
+  }
+ ],
+ "buffers": [
+  {
+   "byteLength": 4902164,
+   "uri": "cockpit_roof.bin"
+  }
+ ]
+}

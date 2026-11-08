@@ -1,0 +1,4 @@
+saved driving_headlights_on_cluster.png 1280x512 speed 26.9 km/h braking false headlights true
+saved driving_headlights_on_cockpit.png
+saved braking_headlights_on.png 1280x512 speed 13.4 km/h braking true headlights true
+saved stopped_headlights_off.png 1280x512 speed 0.0 km/h braking false headlights false

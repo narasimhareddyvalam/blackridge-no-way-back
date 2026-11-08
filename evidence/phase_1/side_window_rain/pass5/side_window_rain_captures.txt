@@ -1,0 +1,3 @@
+saved parked.png speed 0.0 km/h
+saved parked_zoom.png speed 0.0 km/h
+saved driving_zoom.png speed 37.4 km/h

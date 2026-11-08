@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwywug47k6n0o"
 path.s3tc="res://.godot/imported/security_light_nor_gl_1k.jpg-4eda17793215c35991d78e87c828940c.s3tc.ctex"
+path.etc2="res://.godot/imported/security_light_nor_gl_1k.jpg-4eda17793215c35991d78e87c828940c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/security_light_nor_gl_1k.jpg-4eda17793215c35991d78e87c828940c.s3tc.ctex"]
+dest_files=["res://.godot/imported/security_light_nor_gl_1k.jpg-4eda17793215c35991d78e87c828940c.s3tc.ctex", "res://.godot/imported/security_light_nor_gl_1k.jpg-4eda17793215c35991d78e87c828940c.etc2.ctex"]
 
 [params]
 

@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: One lap is about 3 km (3007 m)
+PASS: The road climbs a real hill (64.4 m)
+PASS: Four hairpins up and four down (8)
+PASS: No stretch is steeper than 10% (9.7%)
+PASS: Hairpins are flatter than the legs (6.5%)
+PASS: Hairpins are widened to at least 6 m of asphalt (6.50 m)
+PASS: The road closes into one loop
+PASS: The whole road lies at least 25 m inside the playable area
+PASS: The map screen draws the real road inside its panel (503 points)
+PASS: The hillside never pokes through the road (worst -0.005 m)
+PASS: The van drives on the road's own surface (worst 0.012 m)
+PASS: A barrier stands at every drop beside the road (51 spots, 0 missing)
+PASS: Guardrails and stone walls line the drops (156 and 145 pieces)
+PASS: Every hairpin has a warning sign before it and chevrons round it (8 of 8, 8 of 8)
+PASS: Convex mirrors stand at the two tightest hairpins
+PASS: The landslide blocks the valley road
+PASS: The drive starts far from the depot (589 m)
+PASS: Checkpoint 0 sits on the road, facing along it
+PASS: Checkpoint 1 sits on the road, facing along it
+PASS: Checkpoint 2 sits on the road, facing along it
+PASS: Checkpoint 3 sits on the road, facing along it
+PASS: The depot yard stays flat
+PASS: The depot yard stops at the road's edge (closest -0.00 m beyond it)
+PASS: Wipers park flat along the glass and sweep 99 degrees
+PASS: The wiped area on the glass follows the real wiper pivots
+PASS: The van starts level on the valley road
+PASS: With no brake the van rolls back down a 8.3% grade
+PASS: The brake holds the van on the hill
+PASS: The van's body pitches with the road (4.7 degrees on a 4.8 degree grade)
+PASS: From a stop the van climbs the steepest leg (5.9 m/s, 0.7 m higher)
+GHAT ROAD RESULT: 30/30 passed; 0 failed
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

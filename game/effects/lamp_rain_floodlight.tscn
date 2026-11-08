@@ -1,0 +1,148 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Texture2D" path="res://effects/textures/rain_streak.png" id="1_streak"]
+[ext_resource type="Texture2D" path="res://effects/textures/water_bead.png" id="2_bead"]
+[ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
+
+[sub_resource type="Curve" id="Curve_rain_alpha"]
+_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.15, 0.8), 0.0, 0.0, 0, 0, Vector2(0.75, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
+curve = SubResource("Curve_rain_alpha")
+
+[sub_resource type="Curve" id="Curve_rain_scale"]
+_data = [Vector2(0, 0.9), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.9), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
+curve = SubResource("Curve_rain_scale")
+
+[sub_resource type="Curve" id="Curve_rain_flat"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rain_blur_along"]
+max_value = 210.0
+_data = [Vector2(0, 1), 0.0, 200.0, 0, 1, Vector2(1, 201), 200.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_rain_blur"]
+curve_x = SubResource("Curve_rain_flat")
+curve_y = SubResource("Curve_rain_blur_along")
+curve_z = SubResource("Curve_rain_flat")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_rain"]
+emission_shape = 3
+emission_box_extents = Vector3(3.5, 0.1, 6.5)
+direction = Vector3(0.023, -0.997, 0.077)
+spread = 4.0
+initial_velocity_min = 3.5
+initial_velocity_max = 8.5
+gravity = Vector3(0, -0.5, 0)
+damping_min = 0.0
+damping_max = 0.15
+scale_min = 0.1
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_rain_scale")
+scale_over_velocity_min = 0.0
+scale_over_velocity_max = 9.0
+scale_over_velocity_curve = SubResource("Curve_rain_blur")
+color = Color(0.88, 0.89, 0.9, 1)
+alpha_curve = SubResource("CurveTexture_rain_alpha")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 3
+
+[sub_resource type="ShaderMaterial" id="Draw_streak"]
+render_priority = 0
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("1_streak")
+shader_parameter/face_camera = false
+shader_parameter/min_pixels = 1.0
+shader_parameter/forward_scatter = 0.5
+shader_parameter/scatter = 60.0
+shader_parameter/diffuse = 0.3
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.0
+shader_parameter/still_fade = 1.0
+
+[sub_resource type="QuadMesh" id="Quad_streak"]
+material = SubResource("Draw_streak")
+size = Vector2(0.01, 0.01)
+
+[sub_resource type="Curve" id="Curve_splash_alpha"]
+_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_splash_alpha"]
+curve = SubResource("Curve_splash_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_splash"]
+emission_shape_offset = Vector3(0, 0.03, 0)
+emission_shape = 0
+direction = Vector3(0, 1, 0)
+spread = 70.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.3
+gravity = Vector3(0, -9.8, 0)
+scale_min = 0.03
+scale_max = 0.1
+color = Color(0.88, 0.89, 0.9, 1)
+alpha_curve = SubResource("CurveTexture_splash_alpha")
+
+[sub_resource type="ShaderMaterial" id="Draw_splash"]
+render_priority = 0
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("2_bead")
+shader_parameter/face_camera = true
+shader_parameter/min_pixels = 1.0
+shader_parameter/forward_scatter = 0.5
+shader_parameter/scatter = 60.0
+shader_parameter/diffuse = 0.3
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.0
+
+[sub_resource type="QuadMesh" id="Quad_splash"]
+material = SubResource("Draw_splash")
+size = Vector2(0.01, 0.01)
+
+[node name="LampRainFloodlight" type="Node3D"]
+
+[node name="LampRain" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 3200
+sub_emitter = NodePath("../LampSplash")
+lifetime = 1.1
+fixed_fps = 60
+one_shot = false
+preprocess = 1.1
+explosiveness = 0.0
+collision_base_size = 0.01
+visibility_aabb = AABB(-4.5, -5, -7.5, 9, 6, 15)
+local_coords = false
+transform_align = 3
+process_material = SubResource("Process_rain")
+draw_pass_1 = SubResource("Quad_streak")
+
+[node name="LampSplash" type="GPUParticles3D" parent="."]
+emitting = true
+amount = 1800
+lifetime = 0.2
+one_shot = false
+preprocess = 0.0
+explosiveness = 0.0
+visibility_aabb = AABB(-4.5, -5, -7.5, 9, 6, 15)
+local_coords = false
+process_material = SubResource("Process_splash")
+draw_pass_1 = SubResource("Quad_splash")
+
+[node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
+cull_mask = 4294967293
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+size = Vector3(9, 6, 15)
+resolution = 0
+update_mode = 1
+follow_camera_enabled = false

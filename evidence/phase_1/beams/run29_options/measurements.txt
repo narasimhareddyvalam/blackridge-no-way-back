@@ -1,0 +1,14 @@
+mature bark materials found: 1
+port check: runtime pattern A vs the file, max difference 0/255
+spot   60 A_today           road near  99.6 far  51.4 | near-white  0.28% | white  0.00%
+spot   60 K_recommended     road near  77.0 far  30.9 | near-white  0.09% | white  0.00%
+spot   60 J_stronger        road near  64.8 far  31.4 | near-white  0.06% | white  0.00%
+spot  252 A_today           road near  78.3 far   0.0 | near-white  0.19% | white  0.00%
+spot  252 K_recommended     road near  61.0 far   0.0 | near-white  0.00% | white  0.00%
+spot  252 J_stronger        road near  50.2 far   0.0 | near-white  0.01% | white  0.00%
+spot  560 A_today           road near  71.6 far  72.3 | near-white  0.23% | white  0.00%
+spot  560 K_recommended     road near  68.4 far  65.8 | near-white  0.05% | white  0.01%
+spot  560 J_stronger        road near  54.4 far  54.1 | near-white  0.03% | white  0.01%
+spot  772 A_today           road near 104.4 far  48.5 | near-white  0.17% | white  0.02%
+spot  772 K_recommended     road near 104.7 far  48.0 | near-white  0.08% | white  0.00%
+spot  772 J_stronger        road near  94.2 far  49.2 | near-white  0.05% | white  0.00%

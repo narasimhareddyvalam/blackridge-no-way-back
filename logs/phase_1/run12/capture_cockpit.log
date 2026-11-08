@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved driver_view.png 1280x800 look (0.0, 0.0) fov 74 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved look_left.png 1280x800 look (-0.12, 1.0) fov 74 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved look_right.png 1280x800 look (-0.12, -1.0) fov 74 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved look_down.png 1280x800 look (-0.45, 0.0) fov 74 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved steering_left.png 1280x800 look (0.0, 0.0) fov 74 wheel 2.20 rad speed 0.0 km/h gear 1 lights true
+saved steering_right.png 1280x800 look (0.0, 0.0) fov 74 wheel -2.20 rad speed 0.0 km/h gear 1 lights true
+saved zoom_cluster.png 1280x800 look (-0.1655, 0.0019) fov 24 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved zoom_map.png 1280x800 look (-0.1597, -0.3833) fov 24 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved zoom_mirror_left.png 1280x800 look (-0.1179, 0.6166) fov 24 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved zoom_mirror_right.png 1280x800 look (0.0097, -1.1385) fov 14 wheel 0.00 rad speed 0.0 km/h gear 1 lights true
+saved zoom_cluster_lights_off.png 1280x800 look (-0.1655, 0.0019) fov 24 wheel 0.00 rad speed 0.0 km/h gear 1 lights false
+saved zoom_map_reverse.png 1280x800 look (-0.1597, -0.3833) fov 24 wheel 0.00 rad speed 0.0 km/h gear -1 lights true
+saved driving.png 1280x800 look (0.0, 0.0) fov 74 wheel 0.00 rad speed 29.7 km/h gear 1 lights true
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

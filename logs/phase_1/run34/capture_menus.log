@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved title_new_game: screen "title", focus NewGame
+saved settings_audio: screen "settings", focus Master
+saved settings_controls: screen "settings", focus ControlsTab
+saved credits: screen "credits", focus CreditsText
+saved pause_on_foot: screen "pause", focus Resume
+saved pause_in_van: screen "pause", focus Resume
+saved confirm_main_menu: screen "confirm", focus ConfirmNo
+saved title_continue: screen "title", focus Continue
+saved confirm_new_game: screen "confirm", focus ConfirmNo
+saved continued_in_van: screen "", focus (nothing)

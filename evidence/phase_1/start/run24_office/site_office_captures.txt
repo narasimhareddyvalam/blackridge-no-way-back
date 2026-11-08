@@ -1,0 +1,9 @@
+saved office_from_the_road.png: pure white 0.00%
+saved door_board_and_clipboard.png: pure white 0.00%
+saved office_side_and_floodlight.png: pure white 0.00%
+saved floodlight_on_the_van.png: pure white 0.00%
+van area [P: (487, 322), S: (342, 160)] on screen
+saved van_without_the_floodlight.png: pure white 0.00%
+van area [P: (487, 322), S: (342, 160)] on screen
+van brightness: 52.8 with the floodlight, 13.0 without (4.1x)
+saved office_debug_light.png: pure white 0.00%

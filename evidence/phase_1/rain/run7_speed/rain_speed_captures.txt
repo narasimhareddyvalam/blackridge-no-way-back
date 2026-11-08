@@ -1,0 +1,6 @@
+saved parked_wipers_off.png at 0.0 km/h, wipers 0
+saved speed_30.png at 30.2 km/h, wipers 0
+saved speed_45.png at 45.4 km/h, wipers 0
+saved speed_60.png at 60.1 km/h, wipers 0
+saved speed_top_later.png at 62.4 km/h, wipers 0
+saved side_window_speed.png at 66.3 km/h, wipers 0

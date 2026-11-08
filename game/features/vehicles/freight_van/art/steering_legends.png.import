@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buuvmlrl0f8ry"
 path.s3tc="res://.godot/imported/steering_legends.png-8c48de103adaf24d28c559761e0ab3ad.s3tc.ctex"
+path.etc2="res://.godot/imported/steering_legends.png-8c48de103adaf24d28c559761e0ab3ad.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://features/vehicles/freight_van/art/steering_legends.png"
-dest_files=["res://.godot/imported/steering_legends.png-8c48de103adaf24d28c559761e0ab3ad.s3tc.ctex"]
+dest_files=["res://.godot/imported/steering_legends.png-8c48de103adaf24d28c559761e0ab3ad.s3tc.ctex", "res://.godot/imported/steering_legends.png-8c48de103adaf24d28c559761e0ab3ad.etc2.ctex"]
 
 [params]
 

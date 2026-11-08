@@ -1,0 +1,6 @@
+a1_godot3_name
+- edit: game/effects/wiper_flick.tscn line 50: `initial_velocity_min = 0.2` -> `initial_velocity = 0.2`
+- test_wiper_flick_config.gd: WIPER FLICK CONFIG RESULT: 338/339 passed; 1 failed, exit 1
+- first failure: FAIL: BigDrops process.initial_velocity_min = 0.2 (found 0.0) 
+- state: WIPER FLICK STATE RESULT: 22/22 passed; 0 failed, exit 0
+- restored, byte-identical from a copy taken before the edit (the tuned scene is uncommitted)

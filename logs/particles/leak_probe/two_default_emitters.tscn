@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[sub_resource type="ParticleProcessMaterial" id="PA"]
+spread = 20.0
+
+[sub_resource type="ParticleProcessMaterial" id="PB"]
+spread = 30.0
+
+[sub_resource type="StandardMaterial3D" id="DA"]
+
+
+[sub_resource type="QuadMesh" id="QA"]
+material = SubResource("DA")
+
+[sub_resource type="StandardMaterial3D" id="DB"]
+
+
+[sub_resource type="QuadMesh" id="QB"]
+material = SubResource("DB")
+
+[node name="Two" type="Node3D"]
+
+[node name="One" type="GPUParticles3D" parent="."]
+process_material = SubResource("PA")
+draw_pass_1 = SubResource("QA")
+
+[node name="Other" type="GPUParticles3D" parent="."]
+process_material = SubResource("PB")
+draw_pass_1 = SubResource("QB")

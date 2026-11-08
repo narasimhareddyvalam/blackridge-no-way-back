@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buxm2pnovqnue"
 path.s3tc="res://.godot/imported/rubber_tiles_nor_gl_1k.jpg-d21ee84907ca90ef95992eb9e913d526.s3tc.ctex"
+path.etc2="res://.godot/imported/rubber_tiles_nor_gl_1k.jpg-d21ee84907ca90ef95992eb9e913d526.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/rubber_tiles/rubber_tiles_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/rubber_tiles_nor_gl_1k.jpg-d21ee84907ca90ef95992eb9e913d526.s3tc.ctex"]
+dest_files=["res://.godot/imported/rubber_tiles_nor_gl_1k.jpg-d21ee84907ca90ef95992eb9e913d526.s3tc.ctex", "res://.godot/imported/rubber_tiles_nor_gl_1k.jpg-d21ee84907ca90ef95992eb9e913d526.etc2.ctex"]
 
 [params]
 

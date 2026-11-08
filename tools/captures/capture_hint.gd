@@ -16,7 +16,7 @@ func _run() -> void:
 		await process_frame
 	await RenderingServer.frame_post_draw
 	var image := root.get_texture().get_image()
-	var folder := ProjectSettings.globalize_path("res://").path_join("../evidence/captures")
+	var folder := _output_folder("evidence/captures")
 	DirAccess.make_dir_recursive_absolute(folder)
 	image.save_png(folder.path_join("hint_experiment.png"))
 	var scale := Vector2(image.get_size()) / root.get_visible_rect().size
@@ -40,3 +40,11 @@ func _run() -> void:
 	file.store_string(text + "\n")
 	file.close()
 	quit(0)
+
+
+func _output_folder(default_folder: String) -> String:
+	var args := OS.get_cmdline_user_args()
+	var folder: String = args[0] if args.size() > 0 else default_folder
+	if folder.is_absolute_path():
+		return folder
+	return ProjectSettings.globalize_path("res://").path_join("..").path_join(folder)

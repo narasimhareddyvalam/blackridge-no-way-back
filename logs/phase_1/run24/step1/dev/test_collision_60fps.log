@@ -1,0 +1,47 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+PASS: The oncoming van keeps its high beams on and blinds the driver (the view darkens to 0.23)
+PASS: No one is on the road while the oncoming van passes: he steps out only once it is past him
+PASS: With the brake held and the wheel turned, the van carries on by itself (never below 43 km/h)
+PASS: He steps off the kerb onto the crossing, 14.3 m before the van's bumper reaches it (44 km/h)
+PASS: The van cannot be stopped or steered away: it hits him at 43 km/h
+PASS: He is struck on the crossing (0.11 m along, 1.22 m across)
+PASS: His head strikes the base of the windshield 0.07 s after the impact (0.09 m out from the glass)
+PASS: The van carries him on for half a second (42 km/h), before Ethan brakes
+PASS: He freezes in the headlights just before the impact
+PASS: At the impact he goes limp: a physics ragdoll takes over from the animation
+PASS: The body strikes the van with a heavy impact sound
+PASS: The music cuts out
+PASS: The oncoming van is behind, 27 m away and driving off: no witness
+PASS: Thrown by the van, he tumbles and comes to rest (3.7 s)
+PASS: He is thrown clear and lies 1.8 m ahead of the bumper, in the beams
+PASS: He lies on the road (hips 0.18 m up)
+PASS: His body never sinks into the road (lowest 0.09 m)
+PASS: Knees and elbows bend no more than 30 degrees the wrong way as he tumbles (worst -9 and -21 degrees)
+PASS: Knees and elbows never fold past their range (most 139 and 145 degrees)
+PASS: The van skids to a stop and holds there (4.0 s) despite the throttle
+PASS: The cab rocks on its springs at the impact (0.35 degrees)
+PASS: The windshield cracks low where his head struck it, in view from the seat (100% of full size, at x -0.09 m; his head was at x -0.09 m)
+PASS: Leaning 42 cm over the wheel, Ethan looks: the hood hides every part of him nearer than 1.9 m past the bumper; 5 of 11 parts show beyond it (his hips lie 1.8 m out; none from the seat)
+PASS: Leaning shows the road from 1.9 m past the bumper, where a harder hit leaves him (3.1 m from the seat)
+PASS: E does nothing: Ethan does not get out
+PASS: The objective reads DRIVE.
+PASS: Then the van drives again (4.4 m/s)
+PASS: Ethan sits back in his seat to drive (eye 0.00 m from the seat position)
+PASS: Parked at the depot, the engine goes off, the lights go out and the wipers stop
+PASS: Ethan stays in his seat, and the van no longer drives
+PASS: In the silence there is only the rain on the roof and his breathing
+PASS: No objective and no "DRIVE COMPLETE" on screen
+PASS: After 14 s the screen fades to black and the menu offers to drive again
+PASS: The crack stays for the rest of the drive (1.00 at the depot)
+ERROR: Condition "p_elem->_root" is true.
+   at: add (./core/templates/self_list.h:46)
+PASS: New drive brings back an unbroken windshield
+PASS: New drive clears the pedestrian and brings the music back
+PASS: New drive leaves the ending behind: the screen is clear and the objective is back
+COLLISION RESULT: 38/38 passed; 0 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

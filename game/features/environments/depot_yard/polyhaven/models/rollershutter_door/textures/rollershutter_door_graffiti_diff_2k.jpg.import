@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4ey86cej8lpe"
 path.s3tc="res://.godot/imported/rollershutter_door_graffiti_diff_2k.jpg-ac9de6d777e8fe592bbf454644288153.s3tc.ctex"
+path.etc2="res://.godot/imported/rollershutter_door_graffiti_diff_2k.jpg-ac9de6d777e8fe592bbf454644288153.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/rollershutter_door/textures/rollershutter_door_graffiti_diff_2k.jpg"
-dest_files=["res://.godot/imported/rollershutter_door_graffiti_diff_2k.jpg-ac9de6d777e8fe592bbf454644288153.s3tc.ctex"]
+dest_files=["res://.godot/imported/rollershutter_door_graffiti_diff_2k.jpg-ac9de6d777e8fe592bbf454644288153.s3tc.ctex", "res://.godot/imported/rollershutter_door_graffiti_diff_2k.jpg-ac9de6d777e8fe592bbf454644288153.etc2.ctex"]
 
 [params]
 

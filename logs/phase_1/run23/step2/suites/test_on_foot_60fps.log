@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The drive begins on foot: the van is empty, its engine off, lights off, wipers parked
+PASS: Ethan starts on the van's left, within 2 m of the driver's door ((-3.402313, 0.148855, 0.610596))
+PASS: The player sees Ethan through his own camera
+PASS: Ethan is the Mixamo character, standing in his Idle clip
+PASS: The objective says to get in the van
+PASS: Near the van the hint says E gets him in
+PASS: The cluster, map and camera-mirror screens are off with the engine
+PASS: W walks Ethan at the Walk clip's own pace (Walk, 1.71 m/s)
+PASS: He covers 0.85 m in half a second
+PASS: SHIFT runs at the Run clip's pace (Run, 4.53 m/s)
+PASS: Letting go returns him to Idle
+PASS: E near the van starts boarding and clears the hint
+PASS: Ethan walks to the door and plays Entering Car
+PASS: The driver's door swings outward about 31 degrees as he pulls it (-31.0)
+PASS: The door glass swings with the door
+PASS: After the cut the player sits in the driver's seat (2.3 s)
+PASS: The door is shut behind him
+PASS: The route's objective returns (RETURN TO THE DEPOT)
+PASS: The engine starts and the gauge needles sweep to the top (1.00)
+PASS: After the sweep the low beams and the wipers come on (2.0 s after the cut)
+PASS: The dash screens come on with the engine
+PASS: The van drives after Ethan gets in (4.3 m/s)
+PASS: E at a stop lets Ethan out
+PASS: Getting back into the running van needs no second ignition (2.2 s)
+PASS: New drive starts on foot beside the dark van again
+ON FOOT RESULT: 25/25 passed; 0 failed
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

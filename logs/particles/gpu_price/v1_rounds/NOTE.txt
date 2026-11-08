@@ -1,0 +1,15 @@
+The first design of the GPU price (2026-11-08), kept as evidence of why it was replaced.
+
+Each case was held 10 s in three alternating rounds. Apple's Metal Performance HUD logged every
+frame's GPU time, but:
+- the HUD logs only while the game's window is in front. It stopped after 32 s in the first run
+  (first_run_hud_stopped.log), and left gaps of 7-13 s in the second, some while Claude Code ran
+  commands. Some cases got no frames;
+- with every effect off, GPU time drifted between rounds by more than the budgets: 20.5 to
+  25.8 ms a frame from the driver's seat, 22.2 to 27.5 ms behind the van (RESULT.txt). The
+  rounds' prices therefore ranged across zero, from -2.7 to +3.2 ms.
+
+So the measurement was redesigned: each effect is shown and hidden in alternating short blocks,
+kept running while hidden, and priced by the difference between neighbouring blocks
+(../RESULT.txt). This first design's script and parser are kept here as gpu_price_v1.gd.txt
+and gpu_price_v1.py.txt; the RESULT.txt here came from the parser as of the second run.

@@ -1,0 +1,41 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: He waits at the bus stop's crossing, breathing, as the oncoming van comes
+PASS: The oncoming van keeps its high beams on and blinds the driver (the view darkens to 0.23)
+PASS: No one is on the road while the oncoming van passes: he steps out only once it is past him
+PASS: With the brake held and the wheel turned, the van carries on by itself (never below 43 km/h)
+PASS: He steps off the kerb onto the crossing, 14.3 m before the van's bumper reaches it (44 km/h)
+PASS: The van cannot be stopped or steered away: it hits him at 43 km/h
+PASS: He is struck on the crossing (0.21 m along, 1.22 m across)
+FAIL: His head strikes the base of the windshield 1.00 s after the impact (-1.47 m out from the glass)
+FAIL: The van carries him on for half a second (26 km/h), before Ethan brakes
+PASS: He freezes in the headlights just before the impact
+PASS: At the impact he goes limp: a physics ragdoll takes over from the animation
+PASS: The body strikes the van with a heavy impact sound
+PASS: The music cuts out
+PASS: The oncoming van is behind, 37 m away and driving off: no witness
+PASS: Thrown by the van, he tumbles and comes to rest (2.1 s)
+FAIL: He is thrown clear and lies -4.9 m ahead of the bumper, in the beams
+PASS: He lies on the road (hips 0.18 m up)
+PASS: His body never sinks into the road (lowest 0.18 m)
+PASS: Knees and elbows bend no more than 30 degrees the wrong way as he tumbles (worst 2 and -1 degrees)
+PASS: Knees and elbows never fold past their range (most 137 and 143 degrees)
+PASS: The van skids to a stop and holds there (4.0 s) despite the throttle
+PASS: The cab rocks on its springs at the impact (0.16 degrees)
+SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Vector2'.
+          at: _check_lean (res://tests/test_collision.gd:299)
+          GDScript backtrace (most recent call first):
+              [0] _check_lean (res://tests/test_collision.gd:299)
+PASS: E does nothing: Ethan does not get out
+PASS: The objective reads DRIVE.
+PASS: Then the van drives again (4.4 m/s)
+PASS: Ethan sits back in his seat to drive (eye 0.00 m from the seat position)
+PASS: Parked at the depot, Ethan gets out (3.5 s)
+PASS: He plays Exiting Car through the open door and shuts it
+PASS: He stands clear of the van afterwards ((-2.335615, 0.148958, -0.922554))
+SCRIPT ERROR: Invalid type in utility function "is_equal_approx()". Cannot convert argument 1 from Nil to float.
+          at: _run (res://tests/test_collision.gd:95)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_collision.gd:95)
+              [1] _check_depot (res://tests/test_collision.gd:413)
+FAIL: Collision test finished within 150 s of game time

@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: Mission 2, The Wrong Cargo, has its own mission script (res://features/missions/the_wrong_cargo/the_wrong_cargo.gd)
+MISSION TWO RESULT: 0/1 passed; 1 failed

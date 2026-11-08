@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The drive starts quietly: no call, and the dash shows the map
+PASS: Driving onto the climb, the phone rings through the van and the dash shows MAYA, incoming
+PASS: It keeps ringing until answered: the dash asks for T, and the hint says "T  Answer the call"
+PASS: Pressing T answers: it connects hands-free at once, the dash shows the call, and the music dips -13 dB
+PASS: Her call plays the 13 approved lines in order, as subtitles (13 heard; first "MAYA: Hey. Still working?", last "MAYA: Drive safe, okay?")
+PASS: The call is short: 34 s once connected
+PASS: When she hangs up, the subtitles clear, the music comes back and the dash shows the map
+PASS: After the call, on the dark climb, the hint teaches the high beams (L  High beams     L again  Lights off     L again  Low beams)
+PASS: Driving onto the climb again, she does not call twice
+PASS: A new drive brings the call back
+PASS: Unanswered, the call is missed and she calls back; after two missed calls the third picks up by itself after two rings (4.4 s)
+PASS: Left to ring out twice, her call still ends before even a flat-out van could reach the pedestrian scene (59.5 s after the first ring; 1178 m at 68 km/h takes 62.0 s)
+PASS: While she is on the line, the pedestrian scene waits, and it begins once the call ends
+CALL RESULT: 13/13 passed; 0 failed
+ERROR: 5 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

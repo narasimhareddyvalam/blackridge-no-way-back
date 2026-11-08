@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buw513oqs1amd"
 path.s3tc="res://.godot/imported/modular_metal_gutter_arm_1k.jpg-a3a71e5e5240bcb647475f21e4a6050f.s3tc.ctex"
+path.etc2="res://.godot/imported/modular_metal_gutter_arm_1k.jpg-a3a71e5e5240bcb647475f21e4a6050f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/modular_metal_gutter/textures/modular_metal_gutter_arm_1k.jpg"
-dest_files=["res://.godot/imported/modular_metal_gutter_arm_1k.jpg-a3a71e5e5240bcb647475f21e4a6050f.s3tc.ctex"]
+dest_files=["res://.godot/imported/modular_metal_gutter_arm_1k.jpg-a3a71e5e5240bcb647475f21e4a6050f.s3tc.ctex", "res://.godot/imported/modular_metal_gutter_arm_1k.jpg-a3a71e5e5240bcb647475f21e4a6050f.etc2.ctex"]
 
 [params]
 

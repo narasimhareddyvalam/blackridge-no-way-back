@@ -1,0 +1,10 @@
+saved seat_driving.png: call , depot turn 1922 m, hairpin 138 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_driving.png: call , depot turn 1922 m, hairpin 138 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved seat_ringing.png: call ringing, depot turn 1894 m, hairpin 110 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved seat_looking_at_the_ringing_screen.png: call ringing, depot turn 1894 m, hairpin 110 m, wrong way false, screen power 1.00, clock 23:42, 45 FPS
+saved screen_ringing.png: call ringing, depot turn 1894 m, hairpin 110 m, wrong way false, screen power 1.00, clock 23:42, 45 FPS
+saved screen_talking.png: call talking, depot turn 1894 m, hairpin 110 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_hairpin_ahead.png: call ringing, depot turn 1864 m, hairpin 80 m, wrong way false, screen power 1.00, clock 23:42, 55 FPS
+saved screen_reverse.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 1.00, clock 23:42, 60 FPS
+saved screen_engine_off.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 0.00, clock 23:42, 58 FPS
+saved screen_starting_up.png: call ringing, depot turn 1862 m, hairpin 78 m, wrong way false, screen power 0.64, clock 23:42, 50 FPS

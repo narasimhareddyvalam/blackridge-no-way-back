@@ -1,0 +1,6 @@
+a2_value_drift
+- edit: game/effects/roof_spill.tscn line 107: `spread = 24.0` -> `spread = 30.0`
+- test_roof_spill_config.gd: ROOF SPILL CONFIG RESULT: 216/217 passed; 1 failed, exit 1
+- first failure: FAIL: RoofBeads process.spread = 24.0 (found 30.0) 
+- state: not run
+- restored, byte-identical from a copy taken before the edit (the tuned scene is uncommitted)

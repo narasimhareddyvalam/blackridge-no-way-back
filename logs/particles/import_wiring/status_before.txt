@@ -1,0 +1,20 @@
+ M CHANGE-BRIEF.md
+ M game/features/environments/industrial_loop/industrial_loop.gd
+ M game/features/vehicles/freight_van/freight_van.gd
+ M game/features/vehicles/freight_van/van_presentation.gd
+?? game/features/environments/industrial_loop/lamp_rain.gd
+?? game/features/vehicles/freight_van/van_particles.gd
+?? game/previews/
+?? game/tests/test_exhaust_vapour_state.gd
+?? game/tests/test_lamp_rain_state.gd
+?? game/tests/test_roof_spill_state.gd
+?? game/tests/test_wiper_flick_state.gd
+?? logs/particles/import_wiring/
+?? logs/particles/leak_probe/
+?? logs/particles/mutation_a1_godot3_name/
+?? logs/particles/mutation_a1_value_drift/
+?? logs/particles/mutation_a2_godot3_name/
+?? logs/particles/mutation_a2_value_drift/
+?? logs/particles/state/
+?? logs/particles/wired/
+?? logs/particles/wiring/

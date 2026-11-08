@@ -1,10 +1,11 @@
-# FRICTIONAL — Assignment 5 honest log
+# FRICTIONAL — honest log
 
 The author's log of what they tried, expected, saw, checked and learned, with
 human and AI work kept apart. Each entry is dated and points to a commit,
 prompt, test log or capture. AI may organise these notes, but it does not
 write the author's experiences. Entries marked "recorded by Claude Code"
-contain facts only.
+contain facts only. Assignment 5's entries come first, as submitted at tag
+`a5`; Assignment 6's begin under "Assignment 6" at the end.
 
 ## Entry format
 
@@ -165,3 +166,142 @@ the driver's window went down with the fog.
   `hint_experiment_forward_plus.png` and `hint_diagnose_results.txt`; playtest
   screenshot `evidence/playtest/os_screenshot_cockpit_headlights_on.png`;
   results in `TEST-REPORT.md`.
+
+## Assignment 6
+
+## 2026-11-07 — From choosing the effects to the brief (recorded by Claude Code, facts only)
+
+- Claude Code checked the project: nothing for Assignment 6 existed (no particle
+  node, no `a6` tag).
+- It offered effects tied to the game's own events. The author chose A1 the wiper
+  flick and A2 the roof spill on hard braking as Effect A, and B1 rain in every
+  lamp's light and B2 exhaust vapour as Effect B, all four graded (C52; prompt
+  log #131–#141).
+- It wrote `docs/PARTICLE_RESEARCH.md`, moved the old brief to
+  `docs/PHASE_BRIEF.md` (`7bbf0a4`) and added a headings-only template
+  (`c1ee48f`).
+- Asked to write the brief, it declined, quoting the assignment ("You write:
+  CHANGE-BRIEF.md, every prediction, every verdict and the process-shader
+  notes"), and gave step-by-step instructions instead.
+- The author then supplied a completed draft
+  (`~/Downloads/CHANGE-BRIEF-completed.md`, 2026-11-07 17:18). How the draft was
+  written is not recorded here; the author's own entry below says.
+- Claude Code reviewed the draft against the assignment and the code, and listed
+  8 must-fix and 10 should-fix items.
+- At the author's request it then:
+  - corrected 14 technical errors: the billboard mode, vertex colour, size
+    units, exact Godot names, A1's summary keys and the Assignment 5 shader
+    names;
+  - wrote in the author's decisions, chosen from its questions: both B effects
+    graded, B1's condition (within 65 m of a lamp) and feature (collision with
+    splashes), rain that appears already falling, four realism fixes, A2 moving
+    with the van, the spill at the hit, AI-generated textures (later drawn by a
+    script instead, #142), and having Claude Code propose the exact values;
+  - proposed 59 values, marked † in the brief, from the author's descriptions
+    and the research, for the author to check: directions, colours, visibility
+    boxes, the previews' second triggers, the splash emitter and collider, B1's
+    lifetime and streak size, and A2's gravity. Four of B1's frame-strip
+    expectations and the two retrigger lines it wrote are marked † too;
+  - left the price predictions and the other predictions as the author wrote
+    them, except the peak-particle arithmetic (†).
+- Still open: the author's check of the † values; the B1 price predictions,
+  made for 160 drops per lamp; the textures' model and prompts; and three points
+  that only a windowed run or Step 6 can confirm.
+- Trace: `7bbf0a4`, `c1ee48f`; `docs/AUTHOR_PROMPTS_AND_DECISIONS.md`
+  #131–#141; C52; the brief's "How it was made" line.
+
+## 2026-11-07 – 2026-11-08 — The build, the tuning and the world (recorded by Claude Code, facts only)
+
+- **The build (#142–#144).** Asked to finish its own parts and leave the author's tasks for the
+  end, Claude Code:
+  - built the four effects, drawing their textures with a script instead of generating them
+    (`5913f81`);
+  - wired them to the game's events (`0a76154`);
+  - wrote the configuration and state tests, the six mutations (all exit 1, `16fcdc5`), the
+    previews, the strip script and the cost script (`42772e1`).
+- **Its own mistakes, caught in its windowed checks:**
+  - the † value `LampSplash` `emitting = false` (brief revision 1);
+  - camera-facing particles drawn at the quad's size, ignoring their own scale (revision 4,
+    `ae928ff`);
+  - B1's streaks a quarter of their quad's width (revision 5, `ed6b45f`).
+- **With real materials the effects could hardly be seen at night.** The author asked: "make
+  sure its clearly visible like in real world. all the four effects!" (#144), then "make them
+  more realistic" (#146). Claude Code tuned all four toward real-world physics as revision r1
+  (#146–#149). The author picked ideas on an options page
+  (#147), then kept the effects as tuned (#153). r1 stayed uncommitted until the author's
+  verdicts; its record and patch were committed first (`2a2d3a1`–`5d4112d`), and the author
+  kept it after playing (#164), committed with its strips in `1c8447b`.
+- **The world around the effects (#150–#158), at the author's requests.**
+  - Each was done one step at a time, after the author approved it:
+    - street lamps that light downward like real ones;
+    - the depot lit from its wall;
+    - the author's pasted brief for a photorealistic rainy road, in five steps (the wet road,
+      an amber streetlight built in Blender, the lamps' rain and splashes, the roadside, the
+      rendering).
+  - Uncommitted until the author's verdict, with a committed patch (`89cd9a3`–`8889880`);
+    kept after the author's play (#164) and committed after r1.
+- **What the author caught:**
+  - "those lights at shed looks so bad", which led to security lights on the depot's wall
+    (#151);
+  - "those lights shouldnt light up entire depot" (#152);
+  - "the street light lits entire road" (#155).
+- **What Claude Code found:**
+  - B1's splashes had never fired: in Godot 4.7.2 a drop that vanishes on contact sets off no
+    collision sub-emitter (#156);
+  - its first bend guardrail stood on the curve's inside, because a helper it reused returns a
+    curve's inside (#157);
+  - new turf looked like snow under the moon (#157);
+  - the moon's glint made wet surfaces silver and the pines look frosted (#158).
+- **The submission's agent parts (#159):**
+  - the F9 vsync key, approved by the author (`c5e307d`);
+  - the Effect A mutations repeated on r1, all exit 1;
+  - the previews rechecked;
+  - `SUBMISSION.md`, `TEST-REPORT.md` and `README.md` brought up to date.
+- **The author's play of r1 (#160)** found three faults, which Claude Code fixed:
+  - the title screen showed frozen rain: the lamps' rain, paused with the title, now hidden;
+  - "the hard break water falling down effect isnt working": the spill fired, but the wet
+    glass drew over it, so it now draws after the glass;
+  - "the right wiper isnt doing that effect": the passenger blade now leaves its water, which
+    the driver's blade wipes.
+- **The strips (#163).** The author asked Claude Code to run them ("can you run them for me";
+  the handout has the student run them). Claude Code ran 22 and read each. Two of its #160
+  predictions were wrong: A1's passenger line on frame 10, and A2's streams on frame 15. A shell
+  mistake first made one wrongly named folder per round; the folders were deleted and the
+  variants run again.
+- **The verdicts (#164).** "i played and all look good proceed": all four effects kept, against
+  two of Claude Code's readings (A1's passenger line too bright in the office floodlight, A2's
+  streams too white). Committed in the handout's order: r0's strips (`2b9e327`), r1 with its
+  strips and the verdict (`1c8447b`), the world changes (`1dfe865`).
+- **"do everything for me please" (#165).** At the author's request, Claude Code:
+  - wrote the brief's revisions 6–10 for the kept changes;
+  - reviewed `CLAUDE.md`, correcting 18 line references that later commits had moved;
+  - ran Effect A's mutations again (all exit 1) and the cost script;
+  - measured the GPU price with Apple's Metal Performance HUD, since Godot's GPU timer reads 0
+    on Metal.
+- **Step 6 (#170–#171).** At the author's direction, Codex, in its own session, saved
+  `game/shaders/particles_generated.gdshader` by Godot's conversion of a unique copy of
+  `ExhaustPlume`'s process material, saved the scratch scene, and wrote line references and an
+  explanation into `TEST-REPORT.md`, labelled by Codex as "AI-prepared technical reference notes,
+  not an independently written student answer". Asked afterwards, Claude Code had declined Step 6,
+  citing the handout. The author's account: "i told codex what to do exactly, i typed my code and
+  gave and etc. so keep everything of codex work and mention that i pasted everything to codex what
+  to do etc".
+- **The author's decisions (#167, #168):** B2 kept over its GPU budget; the † values accepted;
+  the lay-by walls kept for now; the human checks answered as "everything i asked for is
+  delivered as it is."
+- **Own notes:** added below at the author's request, with AI-assisted wording and attribution.
+- **Trace:**
+  - `8c3e636` to `1dfe865`, and the commits after it;
+  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#171;
+  - `TUNING.md`, `HANDOFF.md`.
+
+## 2026-11-07 — My own notes (added 2026-11-08)
+
+AI-assisted wording based on the recorded work, added at the author's request.
+
+- **Tried / expected:** I chose wiper flicks, roof spills, lamp rain and exhaust vapour to make the rainy driving scenes feel more realistic.
+- **What happened:** During playtesting, I found frozen rain on the title screen, a hidden roof spill and missing passenger-wiper water.
+- **Checked or changed in response:** I asked Claude to fix those problems, then played the revised game and accepted all four effects.
+- **Learned / still unresolved:** The work showed that passing automated tests does not guarantee visible effects; exhaust remains over its GPU budget, and detailed visual checks are not individually documented.
+- **Human vs AI:** I chose the effects and approved their appearance; AI helped with implementation, tuning, testing, and the process-shader conversion and notes.
+- **Trace:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #160, #164–#171; `TUNING.md`; `TEST-REPORT.md`; this conversation's approval to add these notes.

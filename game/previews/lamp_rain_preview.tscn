@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://previews/lamp_rain_preview.gd" id="1_preview"]
+
+[node name="LampRainPreview" type="Node"]
+script = ExtResource("1_preview")

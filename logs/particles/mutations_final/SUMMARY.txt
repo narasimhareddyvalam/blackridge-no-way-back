@@ -1,0 +1,26 @@
+a1_godot3_name
+- edit: game/effects/wiper_flick.tscn line 50: `initial_velocity_min = 0.2` -> `initial_velocity = 0.2`
+- test_wiper_flick_config.gd: WIPER FLICK CONFIG RESULT: 450/451 passed; 1 failed, exit 1
+- first failure: FAIL: BigDrops process.initial_velocity_min = 0.2 (found 0.0)
+- state: WIPER FLICK STATE RESULT: 27/27 passed; 0 failed, exit 0
+- restored from git, clean
+a1_value_drift
+- edit: game/effects/wiper_flick.tscn line 49: `spread = 30.0` -> `spread = 37.0`
+- test_wiper_flick_config.gd: WIPER FLICK CONFIG RESULT: 450/451 passed; 1 failed, exit 1
+- first failure: FAIL: BigDrops process.spread = 30.0 (found 37.0)
+- state: not run
+- restored from git, clean
+a2_godot3_name
+- edit: game/effects/roof_spill.tscn line 41: `initial_velocity_min = 0.5` -> `initial_velocity = 0.5`
+- test_roof_spill_config.gd: ROOF SPILL CONFIG RESULT: 220/221 passed; 1 failed, exit 1
+- first failure: FAIL: RoofStreams process.initial_velocity_min = 0.5 (found 0.0)
+- state: ROOF SPILL STATE RESULT: 13/13 passed; 0 failed, exit 0
+- restored from git, clean
+a2_value_drift
+- edit: game/effects/roof_spill.tscn line 107: `spread = 24.0` -> `spread = 30.0`
+- test_roof_spill_config.gd: ROOF SPILL CONFIG RESULT: 220/221 passed; 1 failed, exit 1
+- first failure: FAIL: RoofBeads process.spread = 24.0 (found 30.0)
+- state: not run
+- restored from git, clean
+cost_effects.gd exit 0
+DONE

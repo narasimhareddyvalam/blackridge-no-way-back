@@ -7,6 +7,24 @@ first-person cockpit driving over an approximately twelve-week university projec
 
 ## Current status
 
+**Final-project plan (2026-10-30).** [ROADMAP.md](ROADMAP.md) is the plan to finish the
+game by 2026-12-20 for Assignment 10. It covers:
+- all three missions;
+- a near-photoreal rainy night;
+- the Forward+ renderer;
+- a macOS export.
+
+A realistic game comes first and the course assignments take priority. Selling it later
+is optional. Built so far on the `develop` branch:
+- Forward+;
+- low-beam headlights that light the road;
+- a darker night;
+- a single-lane road through about 6,500 pines with ferns and undergrowth;
+- windshield rain that the wipers clear;
+- a new gauge cluster, round vents and a new steering wheel. The author's decisions are C11–C15 in
+[DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md). Nothing in that plan is built yet, and the
+rest of this section describes the game as it is today.
+
 The first vehicle prototype is implemented in `game/app/first_drive.tscn` and set
 as the main scene. It includes an industrial road loop, cockpit controls and
 instruments, live-view camera wiring, windows, wipers, lights, synthesized audio,
@@ -36,6 +54,76 @@ Explain each implementation batch and obtain approval before changing code.
 The chronological [development record](fractional.md) tracks requests, approvals,
 problems, solutions, and actual checks. Git history starts at the 2026-10-28
 baseline commit `e81ec92`.
+
+## Assignment 6 — Particle effects
+
+Four particle effects, all `GPUParticles3D`, designed in [CHANGE-BRIEF.md](CHANGE-BRIEF.md).
+Their scenes and textures are in `game/effects/`.
+
+- **A1, wiper flick:** water thrown off the driver's blade at each top turn of its stroke.
+  `van_particles.gd` fires it from `wiper_swept`.
+- **A2, roof spill:** water pours off the front of the roof onto the glass on a hard brake from
+  8 m/s, with a 20 s refill.
+- **B1, lamp rain:** rain in every lamp's light while the camera is within 65 m, with splashes
+  where the drops land. Driven by `game/features/environments/industrial_loop/lamp_rain.gd`.
+- **B2, exhaust vapour:** follows the engine and the throttle through `amount_ratio`.
+
+**Starting point:** the game at `c1ee48f` (2026-11-07): Assignment 5 (tag `a5`) and the final
+project's Phase 1, with no particle effect in it.
+
+**Engine and renderer:** Godot 4.7.2 stable, Forward+ (Godot's desktop default), with MetalFX
+temporal upscaling at 75% on macOS.
+
+**Run:** open `game/project.godot` in Godot 4.7.2 and press F5, or run
+`/Applications/Godot.app/Contents/MacOS/Godot --path game`. The main scene is
+`res://app/first_drive.tscn`. Each effect's preview scene in `game/previews/` also runs on its
+own (F6 in the editor). The previews are fixtures that put each effect's event on the brief's
+frames, and the export leaves them out.
+
+**Controls:** the opening menu lists them: W / S accelerate and brake, A / D steer, W A S D walk
+on foot, Shift run, Q forward or reverse, Space handbrake, Z / C indicators, X hazard lights,
+L headlights, V wipers (the wiper flick follows them), I cabin light, J / K windows, H horn, the
+mouse to look around, F center view, E get in or out, T answer a call, R recover, Esc pause.
+**F9 turns vsync off and on** for the FPS check; it is a debug key, not in the menu.
+
+**What this assignment added:** the four effects, their controllers, the configuration and state
+tests, the mutations, the previews, the strip script and the cost script; the brief, the tuning
+log and the test report. Revision r1 of all four effects (`TUNING.md`), with its strips before
+and after, and the changes to the lamps, the wet road and the roadside around them (prompt log
+#150–#158), kept after the author's play (#164).
+
+**Known limitations:**
+- Godot's GPU timer reads 0 on Metal, so the GPU price was read from Apple's Metal Performance
+  HUD instead (`TEST-REPORT.md`, "GPU price"). B2's exhaust costs 1.1 ms of GPU time behind the
+  van, over its 0.30 ms budget; the four effects together, 1.47 ms, are at their 1.45 ms budget.
+- The frame itself takes about 26 ms of GPU time from the driver's seat at 1280×800 on the
+  MacBook Air's Retina display (about 39 frames a second), above a 60 FPS frame before any
+  effect. The world changes (#150–#158) and the display's pixels are the likely causes, unmeasured.
+- The Iveco model has no tailpipe, so B2's exhaust position is assumed (brief revision 2).
+- B1's real-size splash droplets are faint from a few metres.
+- B1's slowest drops fade 2–4 m above the ground.
+- A headless run draws no particles and runs no GPU particle process.
+
+**Film:** "Blackridge, Rain and Vapour" (4K, 7 min 41 s), made by Claude Code at the author's
+word. The source is in `youtube/claude-liam-blackridge-particles-gamedev/`: script, beat sheet,
+the captures' records, evidence ledger, fact check, QC and build log. File:
+`Blackridge-Rain-and-Vapour-4K.mp4`, SHA-256 `8080d78ae388f2d6955b40411490b9ec2e64c58eb3e3e8cb44e4728a80539e92`. Watch
+it on OneDrive, the course's media storage: https://northeastern-my.sharepoint.com/:v:/r/personal/valam_n_northeastern_edu/Documents/Blackridge_No_Way_Back/Assignment_6/Blackridge-Rain-and-Vapour-4K.mp4?d=w1e15a35c5a7a48f09bb3e724950cdf68&csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=pdTot6
+
+The film is not in GitHub.
+
+To check the effects:
+
+```sh
+LOG_DIR=logs/particles/<step> scripts/run-test.sh test_wiper_flick_config.gd 60  # one per effect
+LOG_DIR=logs/particles/<step> scripts/run-test.sh test_wiper_flick_state.gd 60   # one per effect
+LOG_DIR=logs/particles/<step> scripts/run-test.sh cost_effects.gd 60 300         # headless price
+scripts/capture-strips.sh <round>   # frame strips: opens a window per effect
+```
+
+- Tuning: [TUNING.md](TUNING.md).
+- Results: the Assignment 6 section of [TEST-REPORT.md](TEST-REPORT.md).
+- Sources: [SOURCES.md](SOURCES.md).
 
 ## Assignment 5 — Shaders, materials and the Godot shading language
 
@@ -202,11 +290,33 @@ marker when its directory contains real tracked files.
    write exports to `builds/`. Complete interactive validation before treating an
    export as ready.
 
-The initial renderer is **Compatibility**, a provisional choice to keep the
-starting configuration simple. It is not a measured performance result or a
-final art requirement. Compare renderer options on the M1 with representative
-content before committing to renderer-specific effects. Godot documents the
+The project started on **Compatibility**, a provisional choice to keep the starting
+configuration simple. On 2026-10-30 it moved to **Forward+** (decision C12 in
+[DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)). Side-by-side captures showed that
+working headlights with a sharp low-beam cutoff and wet-road reflections need it, and
+Assignment 10 asks for the renderer to be settled early. The export target is macOS
+(C13). Assignment 5's results were measured under Compatibility, and tag `a5` keeps that
+state. Godot documents the
 [renderer tradeoffs](https://docs.godotengine.org/en/stable/tutorials/rendering/renderers.html).
+
+**macOS export (2026-11-01, Run 21).**
+- **The preset:** `game/export_presets.cfg` holds one preset, "macOS":
+  - universal, so the app runs on Intel and natively on Apple Silicon;
+  - version 0.1.0, ad-hoc signed, not notarized, with no credentials;
+  - it leaves out the tests, `experiments/` and the visual benchmark scene.
+- **The template:** Godot's official 4.7.2 macOS template, checked against the published
+  SHA-512, is installed in `~/Library/Application Support/Godot/export_templates/4.7.2.stable/`.
+- **The command,** from the repository root:
+
+  ```sh
+  /Applications/Godot.app/Contents/MacOS/Godot --headless --path game \
+    --export-release "macOS" ../builds/macos/Blackridge.zip
+  ```
+
+  It writes `builds/macos/Blackridge.zip`, which Git ignores. The ZIP holds
+  `Blackridge- No Way Back.app`; macOS turns the title's colon into a dash in the file name.
+- **Gatekeeper:** an ad-hoc signed app copied to another Mac is blocked by Gatekeeper until
+  the game is signed with a Developer ID and notarized.
 
 From the repository root, the installed macOS application can open the editor:
 

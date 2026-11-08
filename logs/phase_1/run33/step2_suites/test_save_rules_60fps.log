@@ -1,0 +1,370 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Godot follows HOME: user:// is this run's scratch home (/Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/.scratch-home/Library/Application Support/Godot/app_userdata/Blackridge- No Way Back)
+PASS: With no crack on the glass, the crack it would save still has a finite point and seed
+PASS: A game built by a test, given no paths, has saving off for progress and settings
+PASS: Given no paths, it plays on and writes nothing: after a checkpoint and a volume change, user:// is unchanged and no save is claimed
+PASS: A missing save starts a new drive, with no warning, and creates no file
+EXPECTED: ConfigFile parse errors for the damaged files below
+ERROR: ConfigFile parse error at /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg:1: Expected value, got ''=''.
+   at: _parse (core/io/config_file.cpp:293)
+   GDScript backtrace (most recent call first):
+       [0] _version_in (res://shared/save/save_file.gd:66)
+       [1] read (res://shared/save/save_file.gd:27)
+       [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+       [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+       [4] _trial (res://tests/test_save_rules.gd:430)
+       [5] _set_aside (res://tests/test_save_rules.gd:447)
+       [6] _check_corrupt (res://tests/test_save_rules.gd:107)
+       [7] _run (res://tests/test_save_rules.gd:59)
+       [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:107)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: Text that is not a save file: nothing in it is used, it is kept as progress.cfg.corrupt with the same bytes, and the game warns
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:118)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:118)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:118)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:118)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: No version, a version that is not a whole number, or one below 1 makes the file damaged: nothing in it is used, and it is kept aside (failed: )
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _set_aside (res://tests/test_save_rules.gd:447)
+         [6] _check_corrupt (res://tests/test_save_rules.gd:126)
+         [7] _run (res://tests/test_save_rules.gd:59)
+         [8] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: One bad value among good ones (a body part at NaN, 10 body parts, a squashed body part, the van outside the playable area, a crack of 1.5, an unknown mission, checkpoint 7, after-the-hit data at checkpoint 1, half of the after-the-hit data): nothing from the file is used, and each is kept aside (failed: )
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/locked/progress.cfg, nor move it aside; it is left as it is, and not saved this session.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:83)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _trial (res://tests/test_save_rules.gd:430)
+         [5] _check_locked (res://tests/test_save_rules.gd:138)
+         [6] _run (res://tests/test_save_rules.gd:60)
+         [7] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/locked/progress.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] _write_progress (res://features/missions/night_freight/first_drive.gd:350)
+         [2] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:331)
+         [3] _process (res://features/missions/night_freight/first_drive.gd:126)
+         [4] _reach (res://tests/test_save_rules.gd:459)
+         [5] _check_locked (res://tests/test_save_rules.gd:143)
+         [6] _run (res://tests/test_save_rules.gd:60)
+         [7] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: A damaged file that cannot be moved aside stays where it is, and saving stays off for it even once its folder can be written again
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/newer.cfg is from a newer version (2); it is left as it is, and not saved this session.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] read (res://shared/save/save_file.gd:31)
+         [1] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [2] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [3] _trial (res://tests/test_save_rules.gd:430)
+         [4] _check_newer (res://tests/test_save_rules.gd:153)
+         [5] _run (res://tests/test_save_rules.gd:61)
+         [6] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/newer.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] _write_progress (res://features/missions/night_freight/first_drive.gd:350)
+         [2] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:331)
+         [3] _process (res://features/missions/night_freight/first_drive.gd:126)
+         [4] _reach (res://tests/test_save_rules.gd:459)
+         [5] _check_newer (res://tests/test_save_rules.gd:156)
+         [6] _run (res://tests/test_save_rules.gd:61)
+         [7] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: A save from a newer version is not loaded, moved or written: after a checkpoint it is byte-for-byte the same, and the game warns
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/later.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] _write_progress (res://features/missions/night_freight/first_drive.gd:350)
+         [2] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:331)
+         [3] _process (res://features/missions/night_freight/first_drive.gd:126)
+         [4] _reach (res://tests/test_save_rules.gd:459)
+         [5] _check_newer (res://tests/test_save_rules.gd:168)
+         [6] _run (res://tests/test_save_rules.gd:61)
+         [7] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: A newer save that appears after loading is still never written over
+WARNING: Could not save /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/read_only/progress.cfg: Can't open file
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:61)
+         [1] _write_progress (res://features/missions/night_freight/first_drive.gd:350)
+         [2] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:331)
+         [3] _process (res://features/missions/night_freight/first_drive.gd:126)
+         [4] _reach (res://tests/test_save_rules.gd:459)
+         [5] _check_unwritable (res://tests/test_save_rules.gd:183)
+         [6] _run (res://tests/test_save_rules.gd:62)
+         [7] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: In a folder that cannot be written, a checkpoint warns, the last good save stays as it was with no .tmp left, and the game plays on with recovery working
+PASS: Missing settings give the default volumes, with no warning
+PASS: A volume change is saved when the menu is left, not before: version 1, Music 0.37, no .tmp left
+PASS: Loaded again, the settings bring Music back at 37%
+PASS: Quitting saves the volumes too
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/settings.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/settings.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] load_settings (res://features/ui/driving_hud/driving_hud.gd:233)
+         [3] _load_settings (res://tests/test_save_rules.gd:467)
+         [4] _check_settings (res://tests/test_save_rules.gd:221)
+         [5] _run (res://tests/test_save_rules.gd:63)
+         [6] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: Could not read /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/settings.cfg; it was kept as /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/settings.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] load_settings (res://features/ui/driving_hud/driving_hud.gd:233)
+         [3] _load_settings (res://tests/test_save_rules.gd:467)
+         [4] _check_settings (res://tests/test_save_rules.gd:225)
+         [5] _run (res://tests/test_save_rules.gd:63)
+         [6] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: Damaged settings (a volume in words, or above 1) give the default volumes for all four, are kept as settings.cfg.corrupt, and the menu warns
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/newer_settings.cfg is from a newer version (2); it is left as it is, and not saved this session.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] read (res://shared/save/save_file.gd:31)
+         [1] load_settings (res://features/ui/driving_hud/driving_hud.gd:233)
+         [2] _load_settings (res://tests/test_save_rules.gd:467)
+         [3] _check_settings (res://tests/test_save_rules.gd:232)
+         [4] _run (res://tests/test_save_rules.gd:63)
+         [5] _check_saving_off (res://tests/test_save_rules.gd:89)
+WARNING: /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/newer_settings.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] save_settings (res://features/ui/driving_hud/driving_hud.gd:256)
+         [2] set_menu (res://features/ui/driving_hud/driving_hud.gd:315)
+         [3] _check_settings (res://tests/test_save_rules.gd:236)
+         [4] _run (res://tests/test_save_rules.gd:63)
+         [5] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: Settings from a newer version give the default volumes and are never written, even after a change and leaving the menu
+WARNING: Could not save /var/folders/lk/350whsv52zz8v6lxn231wxdh0000gn/T/blackridge-saves-52611-149158/read_only_settings/settings.cfg: Can't open file
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:61)
+         [1] save_settings (res://features/ui/driving_hud/driving_hud.gd:256)
+         [2] set_menu (res://features/ui/driving_hud/driving_hud.gd:315)
+         [3] _check_settings (res://tests/test_save_rules.gd:250)
+         [4] _run (res://tests/test_save_rules.gd:63)
+         [5] _check_saving_off (res://tests/test_save_rules.gd:89)
+PASS: Settings that cannot be written: a notice warns, the old file stays as it was, and the new volume holds for the session
+PASS: Continuing from a save made after the hit restores the checkpoint, the van's place, where he lies and the crack
+PASS: The game saves it again as version 1 with the mission's name, leaving no .tmp
+PASS: Quit and load again: the same mission, checkpoint, van place, body and crack
+EXPECTED: a ConfigFile parse error for the damaged user://progress.cfg
+WARNING: Could not read user://progress.cfg; it was kept as user://progress.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [3] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [4] _ready (res://app/first_drive.gd:97)
+WARNING: Could not read user://settings.cfg; it was kept as user://settings.cfg.corrupt.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _set_aside (res://shared/save/save_file.gd:80)
+         [1] read (res://shared/save/save_file.gd:38)
+         [2] load_settings (res://features/ui/driving_hud/driving_hud.gd:233)
+         [3] _ready (res://app/first_drive.gd:99)
+PASS: Launched as the game, it uses user://progress.cfg and user://settings.cfg, here inside the scratch home
+PASS: With both files damaged, the menu warns about each, both are kept as .corrupt, a new drive starts at the default volumes, and the prototype's old save is neither read nor deleted
+PASS: Its next checkpoint and leaving the menu write both files there, with no .tmp left
+WARNING: user://progress.cfg is from a newer version (2); it is left as it is, and not saved this session.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] read (res://shared/save/save_file.gd:31)
+         [1] _load_checkpoint (res://features/missions/night_freight/first_drive.gd:361)
+         [2] configure (res://features/missions/night_freight/first_drive.gd:93)
+         [3] _ready (res://app/first_drive.gd:97)
+WARNING: user://settings.cfg is from a newer version (2); it is left as it is, and not saved this session.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] read (res://shared/save/save_file.gd:31)
+         [1] load_settings (res://features/ui/driving_hud/driving_hud.gd:233)
+         [2] _ready (res://app/first_drive.gd:99)
+WARNING: user://progress.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] _write_progress (res://features/missions/night_freight/first_drive.gd:350)
+         [2] _save_checkpoint (res://features/missions/night_freight/first_drive.gd:331)
+         [3] _check_launch (res://tests/test_save_rules.gd:325)
+         [4] _launch (res://tests/test_save_rules.gd:542)
+WARNING: user://settings.cfg was not saved: the file there must not be replaced.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] write (res://shared/save/save_file.gd:47)
+         [1] save_settings (res://features/ui/driving_hud/driving_hud.gd:256)
+         [2] set_menu (res://features/ui/driving_hud/driving_hud.gd:315)
+         [3] _set_paused (res://app/first_drive.gd:292)
+         [4] _check_launch (res://tests/test_save_rules.gd:327)
+         [5] _launch (res://tests/test_save_rules.gd:542)
+PASS: With both files from a newer version, the menu warns, a new drive starts at the default volumes, and neither file is changed by a checkpoint or by leaving the menu
+SAVE RULES RESULT: 26/26 passed; 0 failed
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

@@ -3,7 +3,9 @@
 Author-provided ChatGPT-generated concept images for discussing visual quality.
 These are outside the Godot project and are not runtime assets or proof of
 achievable rendering performance. The author has sorted six images into
-`approved/` and seven into `rejected/`, inspected on 2026-10-18. Approval establishes
+`approved/` and seven into `rejected/`, inspected on 2026-10-18. In-game
+look-development stills are sorted separately in
+[`../captures/`](../captures/README.md). Approval establishes
 visual references; it does not authorize every pictured feature or select a
 licensed vehicle model, song, real-world brand, city layout, or renderer.
 

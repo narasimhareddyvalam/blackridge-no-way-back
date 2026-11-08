@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Headless CPU price: wall time between frames, 240 measured after 60 to warm up, at a fixed 60 fps; the game's cases in 3 alternating rounds
+case                            mean ms     rounds' means       sd      p95      max
+empty scene, first (control)      0.002    0.002-0.002       0.000    0.003    0.006   
+game, every effect off            0.477    0.459-0.510       0.189    0.782    0.959   GPU emitters emitting: 0
+A1, two bursts alive              0.465    0.459-0.470       0.182    0.717    0.760   bursts alive at the end: 2
+A2, one burst alive               0.460    0.460-0.461       0.178    0.700    0.746   bursts alive at the end: 1
+B1, eight lamp volumes            0.457    0.454-0.459       0.180    0.704    0.744   lamp volumes shown and raining: 8
+B2, full throttle                 0.463    0.458-0.469       0.183    0.715    0.779   exhaust amount_ratio 0.80, emitting true, amount 300
+empty scene, last (control)       0.003    0.003-0.003       0.000    0.003    0.004   
+A1, two bursts alive against every effect off: -0.012 ms; the rounds vary by up to 0.051 ms (reads the same as every effect off)
+A2, one burst alive against every effect off: -0.016 ms; the rounds vary by up to 0.051 ms (reads the same as every effect off)
+B1, eight lamp volumes against every effect off: -0.019 ms; the rounds vary by up to 0.051 ms (reads the same as every effect off)
+B2, full throttle against every effect off: -0.014 ms; the rounds vary by up to 0.051 ms (reads the same as every effect off)
+The controls read 0.002 and 0.003 ms; the game with every effect off reads 0.477 ms.
+COST RESULT: 7 cases measured
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

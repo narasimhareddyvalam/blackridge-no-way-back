@@ -1,48 +1,332 @@
 shader_type spatial;
 render_mode unshaded, cull_disabled, depth_draw_never, shadows_disabled;
 
-uniform sampler2D scene_color : hint_screen_texture, filter_linear;
+uniform sampler2D scene_color : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D wipe_mask : hint_default_white, filter_linear;
 uniform bool wipers_on = true;
 uniform float sweep_angle = -0.9;
 uniform float wetness : hint_range(0.0, 1.0) = 0.2;
+uniform float rain : hint_range(0.0, 1.0) = 1.0;
+uniform float speed = 0.0;
+uniform vec4 drop_radii = vec4(0.0016, 0.0022, 0.003, 0.0038);
+uniform vec4 drop_travel = vec4(0.0);
+uniform vec4 drop_speed = vec4(0.0);
+uniform float runner_radius = 0.0055;
+uniform float runner_speed = 0.0;
+uniform float runner_down = 0.0;
+uniform float runner_up = 0.0;
+uniform float film_travel = 0.0;
+uniform vec4 sky_glow : source_color = vec4(0.204, 0.278, 0.333, 1.0);
+uniform vec2 glass_size = vec2(2.12, 1.08);
+uniform float blade_speed = 0.0;
+uniform float stroke_progress = 0.0;
+uniform float dump = 0.0;
+uniform float wiper_cycles = 0.0;
+uniform float wiper_park = -1.55;
+uniform float wiper_sweep = 1.72;
+uniform vec4 wiper_pivots = vec4(-0.8, -0.51, 0.14, -0.51);
+uniform vec4 wiper_spans = vec4(0.15, 0.85, 0.185, 0.735);
+uniform vec4 glare_points = vec4(9.0);
+uniform vec2 glare_power = vec2(0.0);
+uniform vec3 glare_colour : source_color = vec3(1.0, 0.95, 0.86);
+uniform vec2 crack_point = vec2(9.0);
+uniform float crack_amount = 0.0;
+uniform float crack_seed = 0.0;
 
-float hash(vec2 p) {
-	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+const float RUN_LANE = 0.06;
+const float RUN_EPOCH = 0.5;
+const float BEAD_STEP = 0.011;
+const float BLADE_HALF = 0.0105;
+const float RIDGE_WIDTH = 0.014;
+const float STREAK_BAND = 0.006;
+const float ARM_HALF = 0.007;
+const float SHUTTER = 0.02;
+const vec3 BLADE_TINT = vec3(0.012);
+const float GLARE_LEVEL = 3.0;
+const float GLARE_EYE = 0.0004;
+const float GLARE_CORE = 0.011;
+const float GLARE_VEIL = 0.075;
+const float GLARE_WIDE = 0.4;
+const float GLARE_GLINT = 4.0;
+const float GLINT_REACH = 0.18;
+const float ARC_WIDTH = 0.0035;
+const float ARC_REACH = 0.16;
+const float CRACK_REACH = 0.34;
+const float CRACK_WIDTH = 0.0008;
+const float CRACK_RAYS = 14.0;
+const vec4 CRACK_RINGS = vec4(0.12, 0.24, 0.4, 0.58);
+const vec3 CRACK_TINT = vec3(0.62, 0.65, 0.68);
+
+#include "rain_drops.gdshaderinc"
+
+float stroke_index(vec2 rel) {
+	float swept = (-atan(rel.x, rel.y) - wiper_park) / wiper_sweep;
+	if (swept < 0.0 || swept > 1.0) {
+		return -1.0;
+	}
+	float turn = acos(clamp(1.0 - 2.0 * swept, -1.0, 1.0)) / TAU;
+	float cycle = floor(wiper_cycles);
+	float phase = wiper_cycles - cycle;
+	if (phase >= 1.0 - turn) {
+		return cycle * 2.0 + 1.0;
+	}
+	return phase >= turn ? cycle * 2.0 : cycle * 2.0 - 1.0;
 }
 
-float swept(vec2 p, vec2 origin) {
-	vec2 delta = p - origin;
-	float angle = atan(delta.x, delta.y);
-	float area = step(length(delta), 0.81) * step(abs(angle), 1.0);
-	float recent = 0.04 + clamp(abs(angle + sweep_angle), 0.0, 2.0) * 0.10;
-	return mix(1.0, recent, area);
+float wipe_seed(vec2 metres, float cell, vec2 offset) {
+	vec2 centre = (floor((metres + offset) / cell) + 0.5) * cell - offset;
+	float latest = -1.0;
+	for (int index = 0; index < 2; index++) {
+		vec2 pivot = index == 0 ? wiper_pivots.xy : wiper_pivots.zw;
+		vec2 span = index == 0 ? wiper_spans.xy : wiper_spans.zw;
+		vec2 rel = centre - pivot;
+		float reach = length(rel);
+		if (reach >= span.x && reach <= span.y) {
+			latest = max(latest, stroke_index(rel));
+		}
+	}
+	return latest < 0.0 ? 0.0 : fract(latest * 0.618034 + 0.37) * 97.0;
+}
+
+vec4 blade_water(vec2 metres, float age) {
+	vec4 best = vec4(0.0);
+	float moving = smoothstep(0.2, 0.8, abs(blade_speed));
+	float lead = blade_speed > 0.0 ? -1.0 : 1.0;
+	float blade = -sweep_angle;
+	float top = -(wiper_park + wiper_sweep);
+	float fresh = 1.0 - smoothstep(0.0, 0.4, age);
+	for (int index = 0; index < 2; index++) {
+		vec2 pivot = index == 0 ? wiper_pivots.xy : wiper_pivots.zw;
+		vec2 span = index == 0 ? wiper_spans.xy : wiper_spans.zw;
+		vec2 rel = metres - pivot;
+		float reach = length(rel);
+		if (reach < span.x || reach > span.y) {
+			continue;
+		}
+		float side = float(index);
+		float angle = atan(rel.x, rel.y);
+		vec2 across = vec2(cos(angle), -sin(angle));
+		float lumps = mix(0.45, 1.35, noise(vec2(reach * 38.0,
+			side * 9.0 + floor(wiper_cycles * 2.0))));
+		float width = RIDGE_WIDTH * mix(0.35, 1.0, stroke_progress) * lumps * moving;
+		float ahead = (angle - blade) * reach * lead - BLADE_HALF;
+		if (width > 0.0005 && ahead > 0.0 && ahead < width) {
+			float u = ahead / width * 2.0 - 1.0;
+			best = strongest(best, vec4(across * u * lead,
+				(1.0 - smoothstep(0.7, 1.0, abs(u))) * 0.95, 0.014));
+		}
+		float pile = RIDGE_WIDTH * lumps;
+		float beyond = (top - angle) * reach - BLADE_HALF;
+		if (dump > 0.02 && beyond > 0.0 && beyond < pile) {
+			float u = beyond / pile * 2.0 - 1.0;
+			float beads = step(1.0 - dump, noise(vec2(reach * 70.0, side * 4.0 + 1.7)));
+			best = strongest(best, vec4(-across * u,
+				(1.0 - smoothstep(0.6, 1.0, abs(u))) * beads * 0.9, 0.012));
+		}
+		float band = floor(reach / STREAK_BAND);
+		if (fresh > 0.0 && hash(vec2(band, side * 31.0 + 4.0)) > 0.84) {
+			float u = (fract(reach / STREAK_BAND) - 0.5) / 0.16;
+			float dashed = step(0.42, noise(vec2(angle * reach * 55.0, band)));
+			float line = (1.0 - smoothstep(0.6, 1.0, abs(u))) * dashed * fresh;
+			best = strongest(best, vec4(vec2(0.0), line * 0.4, 0.0));
+		}
+	}
+	return best;
+}
+
+float blade_blur(vec2 metres) {
+	float blade = -sweep_angle;
+	float trail = blade + blade_speed * SHUTTER;
+	float from = min(blade, trail);
+	float to = max(blade, trail);
+	if (to - from < 0.002) {
+		return 0.0;
+	}
+	float darkest = 0.0;
+	for (int index = 0; index < 2; index++) {
+		vec2 pivot = index == 0 ? wiper_pivots.xy : wiper_pivots.zw;
+		vec2 span = index == 0 ? wiper_spans.xy : wiper_spans.zw;
+		vec2 rel = metres - pivot;
+		float reach = length(rel);
+		float angle = atan(rel.x, rel.y);
+		if (reach > span.y || angle < from || angle > to) {
+			continue;
+		}
+		float width = reach >= span.x ? BLADE_HALF * 2.0 : ARM_HALF * 2.0;
+		float behind = abs(angle - blade) / (to - from);
+		darkest = max(darkest, min(width / ((to - from) * reach), 1.0) * (1.0 - behind) * 0.9);
+	}
+	return darkest;
+}
+
+vec4 runner(vec2 metres, float odometer, float direction, float phase, float shown,
+		inout float track) {
+	float column = floor(metres.x / RUN_LANE);
+	float salt = hash(vec2(column, phase * 13.7 + direction * 3.1));
+	float pace = mix(0.6, 1.5, hash(vec2(salt, 8.4)));
+	float shifted = odometer * pace / RUN_EPOCH + salt;
+	float epoch = floor(shifted);
+	float progress = fract(shifted);
+	float id = hash(vec2(column + epoch * 31.0, phase + direction * 7.0));
+	if (id > 0.55 || shown <= 0.0) {
+		return vec4(0.0);
+	}
+	float start = (hash(vec2(id, 5.1)) - 0.5) * glass_size.y;
+	float length_run = mix(0.08, 0.45, hash(vec2(id, 6.3)));
+	float moved = min(slip(progress * RUN_EPOCH, id * 40.0), length_run);
+	float fade = (1.0 - smoothstep(0.85, 1.0, progress)) * shown;
+	float lane = (column + 0.5 + (hash(vec2(id, 7.7)) - 0.5) * 0.4) * RUN_LANE;
+	float path = lane + (noise(vec2(metres.y * 9.0, id * 50.0)) - 0.5) * 0.02;
+	float radius = runner_radius * mix(0.85, 1.35, hash(vec2(id, 9.9)));
+	float sliding = step(moved, length_run - 0.002);
+	float stretch = 1.0 + min(abs(runner_speed) * pace * 6.0, 1.5) * sliding;
+	float head = start + direction * moved;
+	vec2 rel = vec2(metres.x - path, metres.y - head);
+	vec2 shape = rel / vec2(radius, radius * 1.15 * stretch);
+	float body = (1.0 - smoothstep(0.8, 1.0, length(shape))) * fade;
+	float along = (metres.y - start) * direction;
+	float travelled = step(0.0, along) * step(along, moved - radius * 0.6);
+	track = max(track, travelled * (1.0 - smoothstep(radius * 0.8, radius * 1.2, abs(rel.x)))
+		* fade);
+	float segment = floor(along / BEAD_STEP);
+	vec2 bead_at = vec2(path + (hash(vec2(segment, id)) - 0.5) * 0.004,
+		start + direction * (segment + 0.5) * BEAD_STEP);
+	float bead_size = mix(0.0006, 0.0016, hash(vec2(segment, id * 3.0)));
+	vec2 bead_shape = (metres - bead_at) / bead_size;
+	float bead = step(0.45, hash(vec2(id * 17.0, segment))) * travelled * fade
+		* (1.0 - smoothstep(0.75, 1.0, length(bead_shape)));
+	if (body >= bead) {
+		return vec4(shape, body, 0.022);
+	}
+	return vec4(bead_shape, bead * 0.9, 0.006);
+}
+
+float arc_streak(vec2 metres, vec2 point, vec2 pivot, vec2 span) {
+	vec2 lamp = point - pivot;
+	float radius = length(lamp);
+	if (radius < span.x || radius > span.y) {
+		return 0.0;
+	}
+	vec2 from_pivot = metres - pivot;
+	float across = (length(from_pivot) - radius) / ARC_WIDTH;
+	float along = abs(atan(from_pivot.y, from_pivot.x) - atan(lamp.y, lamp.x)) * radius;
+	return exp(-across * across) * exp(-along / ARC_REACH);
+}
+
+float glare_veil(vec2 metres, vec2 point, float power, float film) {
+	if (power <= 0.0) {
+		return 0.0;
+	}
+	float r = length(metres - point);
+	float scatter = mix(0.35, 1.0, film);
+	float halo = 0.9 * exp(-r * r / (GLARE_CORE * GLARE_CORE)) + GLARE_EYE / (r * r + GLARE_EYE)
+		+ scatter * (0.35 * exp(-r / GLARE_VEIL) + 0.08 * exp(-r / GLARE_WIDE));
+	float arcs = arc_streak(metres, point, wiper_pivots.xy, wiper_spans.xy)
+		+ arc_streak(metres, point, wiper_pivots.zw, wiper_spans.zw);
+	return power * (halo + 0.3 * scatter * arcs);
+}
+
+float crack_ray(float index) {
+	return (index + hash(vec2(mod(index, CRACK_RAYS), crack_seed)) * 0.8) / CRACK_RAYS * TAU;
+}
+
+vec2 crack_lines(vec2 metres) {
+	if (crack_amount <= 0.0) {
+		return vec2(0.0);
+	}
+	vec2 rel = metres - crack_point;
+	float r = length(rel);
+	float reach = CRACK_REACH * crack_amount;
+	if (r > reach) {
+		return vec2(0.0);
+	}
+	float width = max(CRACK_WIDTH, fwidth(metres.x) * 0.55);
+	float theta = mod(atan(rel.y, rel.x), TAU);
+	float lines = 0.0;
+	for (int i = 0; i < int(CRACK_RAYS); i++) {
+		float index = float(i);
+		float spread = hash(vec2(crack_seed, index));
+		float ray_length = reach * (hash(vec2(crack_seed, index + 0.5)) > 0.35
+			? 0.6 + 0.4 * spread : 0.2 + 0.25 * spread);
+		float kink = (noise(vec2(r * 9.0, index * 3.7 + crack_seed)) - 0.5) * 0.12;
+		float off = abs(mod(theta - crack_ray(index) - kink + PI, TAU) - PI) * r;
+		float glint = 0.4 + 0.6 * noise(vec2(r * 60.0, index * 5.1 + crack_seed));
+		lines = max(lines, (1.0 - smoothstep(width, width * 2.2, off))
+			* (1.0 - smoothstep(ray_length * 0.5, ray_length, r)) * glint);
+	}
+	float sector = floor(theta / TAU * CRACK_RAYS);
+	sector -= step(theta, crack_ray(sector) - 0.00001);
+	float low = crack_ray(sector);
+	float span = crack_ray(sector + 1.0) - low;
+	float across = r * cos(theta - low - span * 0.5);
+	float along = r * sin(theta - low - span * 0.5);
+	for (int k = 0; k < 4; k++) {
+		float ring = float(k);
+		float radius = reach * CRACK_RINGS[k]
+			* (1.0 + 0.25 * (hash(vec2(sector + 7.1 * ring, crack_seed)) - 0.5));
+		float present = step(hash(vec2(sector * 1.7 + ring, crack_seed + 3.3)), 0.85 - 0.15 * ring);
+		float chord = abs(across - radius * cos(span * 0.5));
+		float glint = 0.4 + 0.6 * noise(vec2(along * 80.0, sector * 3.0 + ring));
+		lines = max(lines, (1.0 - smoothstep(width, width * 2.2, chord)) * present
+			* (0.9 - 0.12 * ring) * glint);
+	}
+	float frost = (1.0 - smoothstep(0.004, 0.02, r)) * (0.6 + 0.4 * noise(metres * 700.0));
+	return vec2(lines, frost);
 }
 
 void fragment() {
-	vec2 grid = UV * vec2(43.0, 25.0);
-	vec2 cell = floor(grid);
-	float seed = hash(cell);
-	vec2 local = fract(grid) - vec2(0.5);
-	local.x += (seed - 0.5) * 0.48;
-	local.y += sin(TIME * 0.22 + seed * 8.0) * 0.16;
-	vec2 shape = local * vec2(1.0, 0.68);
-	float radius = 0.06 + seed * 0.105;
-	float distance_to_drop = length(shape);
-	float body = 1.0 - smoothstep(radius * 0.55, radius, distance_to_drop);
-	body *= step(0.40, seed);
-	float edge = smoothstep(radius * 0.34, radius * 0.65, distance_to_drop)
-		* (1.0 - smoothstep(radius * 0.75, radius, distance_to_drop));
-	float highlight = pow(max(0.0, dot(normalize(vec3(shape, 0.08)),
-		normalize(vec3(-0.4, -0.6, 0.5)))), 12.0) * body;
-	vec2 glass = vec2((UV.x - 0.5) * 2.12, (0.5 - UV.y) * 1.08);
-	float clear = 1.0;
-	if (wipers_on) {
-		clear = min(swept(glass, vec2(-0.52, -0.51)),
-			swept(glass, vec2(0.48, -0.51)));
-	}
-	float coverage = body * mix(0.35, 0.95, wetness) * clear;
-	vec2 distortion = shape * coverage * 0.018;
-	vec3 background = texture(scene_color, SCREEN_UV + distortion).rgb;
-	ALBEDO = background * (1.0 - edge * 0.09) + vec3(highlight * 0.24);
-	ALPHA = clamp(coverage * 0.85 + highlight * 0.12, 0.0, 0.92);
+	vec2 metres = vec2((UV.x - 0.5) * glass_size.x, (0.5 - UV.y) * glass_size.y);
+	float age = texture(wipe_mask, UV).r;
+	float wet = smoothstep(0.4, 0.7, age);
+	float falling = smoothstep(0.003, 0.03, -runner_speed) * wet;
+	float climbing = smoothstep(0.003, 0.03, runner_speed) * wet;
+	float track = 0.0;
+	vec4 runners = strongest(
+		strongest(runner(metres, runner_down, -1.0, 0.0, falling, track),
+			runner(metres, runner_down, -1.0, 1.0, falling, track)),
+		strongest(runner(metres, runner_up, 1.0, 0.0, climbing, track),
+			runner(metres, runner_up, 1.0, 1.0, climbing, track)));
+	float kept = 1.0 - track;
+	vec4 drop = drop_layer(metres, 0.006, age * kept, vec2(0.14, 0.32), 0.004,
+		1.7 + wipe_seed(metres, 0.006, vec2(0.0)), vec2(1.0, 1.12));
+	vec4 fine = drop_layer(metres + vec2(0.21, 0.07), 0.008, age * kept, vec2(0.13, 0.3),
+		0.005, 41.7 + wipe_seed(metres, 0.008, vec2(0.21, 0.07)), vec2(1.0, 1.12));
+	vec4 settled = drop_layer(metres + vec2(0.13, 0.29), 0.014, age * kept, vec2(0.12, 0.23),
+		0.008, 71.3 + wipe_seed(metres, 0.014, vec2(0.13, 0.29)), vec2(1.0, 1.12));
+	vec4 medium = physical_layer(metres, 0.018, age * kept, drop_radii, drop_travel,
+		drop_speed, 0.01, 11.3);
+	vec4 large = physical_layer(metres + vec2(0.37, 0.11), 0.024, age * 0.8 * kept, drop_radii,
+		drop_travel, drop_speed, 0.016, 23.9);
+	vec4 drop_mix = strongest(strongest(drop, fine), strongest(settled, strongest(medium, large)));
+	drop_mix = strongest(drop_mix, runners);
+	vec4 water = blade_water(metres, age);
+	drop_mix = strongest(drop_mix, water);
+	float film = clamp(mix(0.08, 1.0, age) * wetness, 0.0, 1.0);
+	float smear = 1.0 - smoothstep(0.0, 0.05, age);
+	float shift = -film_travel * 14.0;
+	vec2 ripple = vec2(noise(metres * 14.0 + vec2(0.0, shift)),
+		noise(metres * 14.0 + vec2(5.2, shift + 1.3))) - 0.5;
+	vec4 glass = wet_glass(drop_mix, film, smear, ripple * film * 0.012, SCREEN_UV,
+		vec3(-0.35, 0.55, 0.75));
+	float crest = water.z * pow(1.0 - min(length(water.xy), 1.0), 2.0);
+	vec3 around = textureLod(scene_color, SCREEN_UV, 3.5).rgb;
+	vec3 colour = glass.rgb + sky_glow.rgb * sky_view(drop_mix)
+		+ (around * 0.9 + sky_glow.rgb * 0.35) * crest;
+	float near = glare_power.x * exp(-length(metres - glare_points.xy) / GLINT_REACH)
+		+ glare_power.y * exp(-length(metres - glare_points.zw) / GLINT_REACH);
+	colour += glare_colour * near * GLARE_GLINT * drop_mix.z
+		* (0.3 + 0.7 * smoothstep(0.5, 1.0, length(drop_mix.xy)));
+	vec2 crack = crack_lines(metres);
+	vec3 shatter = CRACK_TINT * (0.22 + 1.4 * dot(around, vec3(0.333))) + glare_colour * near * 3.0;
+	colour = mix(colour, shatter, max(crack.x, crack.y));
+	float alpha = max(max(glass.a, crest * 0.8), max(crack.x * 0.65, crack.y * 0.85));
+	float blur = blade_blur(metres);
+	float covered = 1.0 - (1.0 - alpha) * (1.0 - blur);
+	float veil = clamp(glare_veil(metres, glare_points.xy, glare_power.x, film)
+		+ glare_veil(metres, glare_points.zw, glare_power.y, film), 0.0, 0.9);
+	float lit = 1.0 - (1.0 - covered) * (1.0 - veil);
+	vec3 shown = colour * alpha * (1.0 - blur) + BLADE_TINT * blur
+		+ glare_colour * GLARE_LEVEL * veil * (1.0 - covered);
+	ALBEDO = shown / max(lit, 0.001);
+	ALPHA = lit;
 }

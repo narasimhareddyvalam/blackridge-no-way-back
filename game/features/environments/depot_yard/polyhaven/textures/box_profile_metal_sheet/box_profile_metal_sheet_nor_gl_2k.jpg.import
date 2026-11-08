@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ginrxnptbhrq"
 path.s3tc="res://.godot/imported/box_profile_metal_sheet_nor_gl_2k.jpg-b39fe722ac974d74cb2b6e1f38246011.s3tc.ctex"
+path.etc2="res://.godot/imported/box_profile_metal_sheet_nor_gl_2k.jpg-b39fe722ac974d74cb2b6e1f38246011.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/box_profile_metal_sheet_nor_gl_2k.jpg-b39fe722ac974d74cb2b6e1f38246011.s3tc.ctex"]
+dest_files=["res://.godot/imported/box_profile_metal_sheet_nor_gl_2k.jpg-b39fe722ac974d74cb2b6e1f38246011.s3tc.ctex", "res://.godot/imported/box_profile_metal_sheet_nor_gl_2k.jpg-b39fe722ac974d74cb2b6e1f38246011.etc2.ctex"]
 
 [params]
 

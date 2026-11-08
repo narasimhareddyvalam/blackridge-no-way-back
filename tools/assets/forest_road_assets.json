@@ -1,0 +1,18 @@
+{
+	"destination": "game/features/environments/industrial_loop/polyhaven",
+	"textures": {
+		"tarred_gravel": "2k",
+		"leaf_scattered_gravel": "2k",
+		"forest_leaves_04": "2k",
+		"pine_bark": "2k",
+		"rock_wall_02": "2k",
+		"rustic_stone_wall": "1k"
+	},
+	"models": {
+		"fern_02": "1k",
+		"dry_branches_medium_01": "1k",
+		"tree_stump_01": "1k",
+		"rock_moss_set_02": "1k",
+		"dead_tree_trunk": "1k"
+	}
+}

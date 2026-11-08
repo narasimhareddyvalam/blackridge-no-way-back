@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved start_lumber_yard.png at (560.0, -0.2, 130.0), road grade 0.0%, body pitch -0.0 degrees
+start, parked                FPS  74.2 | median  11.10 ms, slowest 5%  17.98 ms | 1287 draws, 1.82M triangles
+saved wipers_mid_sweep.png (wiper angle -0.76 rad)
+saved wipers_parked.png (setting 0, angle -1.55 rad)
+saved climb_leg.png at (390.1, 1.7, 67.0), road grade 8.3%, body pitch 4.7 degrees
+steepest climb, parked       FPS  76.8 | median  11.54 ms, slowest 5%  16.73 ms | 1639 draws, 1.63M triangles
+saved hairpin_approach_signs.png at (426.5, 21.2, -1.5), road grade 8.3%, body pitch 4.8 degrees
+saved hairpin_apex.png at (349.8, 35.6, -73.1), road grade 3.4%, body pitch 1.8 degrees
+saved viewpoint_town_lights.png at (458.5, 43.5, -114.2)
+viewpoint, looking at town   FPS 118.8 | median   7.96 ms, slowest 5%  10.46 ms | 1039 draws, 1.32M triangles
+saved pass_ahead.png at (164.3, 64.3, -206.8), road grade 0.0%, body pitch 0.1 degrees
+pass, parked                 FPS  85.5 | median  10.09 ms, slowest 5%  15.65 ms | 1037 draws, 1.45M triangles
+saved descent_grade_sign.png at (100.9, 62.5, -198.8), road grade -6.4%, body pitch -3.6 degrees
+saved descent_mirror_hairpin.png at (8.1, 27.5, -70.4), road grade -8.9%, body pitch -5.2 degrees
+saved descent_leg.png at (71.9, 60.2, -191.0), road grade -9.7%, body pitch -5.5 degrees
+steepest descent, parked     FPS  76.2 | median  10.98 ms, slowest 5%  18.29 ms | 1338 draws, 1.86M triangles
+saved landslide_closed.png at (262.4, -0.2, 169.9), road grade 0.0%, body pitch 0.0 degrees
+saved town_lamps.png at (54.6, 0.0, 44.4), road grade -1.8%, body pitch -1.2 degrees
+climbing at full throttle    FPS  68.2 | median  12.69 ms, slowest 5%  19.91 ms | 1486 draws, 1.71M triangles
+saved map_screen.png
+saved overview_debug_light.png (debug: ambient 6.0, fog off)
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

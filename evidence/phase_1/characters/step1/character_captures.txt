@@ -1,0 +1,13 @@
+ethan: top of head 1.78 m above the feet
+pedestrian: top of head 1.75 m above the feet
+saved ethan_by_van_night.png
+saved ethan_in_headlights_night.png
+saved pedestrian_low_beam.png, pedestrian brightness 156.0 against road 149.4 (0-255)
+saved pedestrian_high_beam.png, pedestrian brightness 187.9 against road 153.1 (0-255)
+saved pedestrian_lights_off.png, pedestrian brightness 12.1 against road 15.2 (0-255)
+saved ethan_by_van_debug_light.png
+saved ethan_close_debug_light.png
+saved pedestrian_close_debug_light.png
+EnterVan: the clip turns him 97 degrees and moves his hips 1.85 m; seated hips are 0.83 m above his feet. The cab floor is 1.17 m above the van's base and the driver's eye 2.03 m.
+saved enter_van_2.5s_debug_light.png
+saved enter_van_5.5s_debug_light.png

@@ -1,0 +1,6 @@
+a2_godot3_name
+- edit: game/effects/roof_spill.tscn line 41: `initial_velocity_min = 0.5` -> `initial_velocity = 0.5`
+- test_roof_spill_config.gd: ROOF SPILL CONFIG RESULT: 216/217 passed; 1 failed, exit 1
+- first failure: FAIL: RoofStreams process.initial_velocity_min = 0.5 (found 0.0) 
+- state: ROOF SPILL STATE RESULT: 13/13 passed; 0 failed, exit 0
+- restored, byte-identical from a copy taken before the edit (the tuned scene is uncommitted)

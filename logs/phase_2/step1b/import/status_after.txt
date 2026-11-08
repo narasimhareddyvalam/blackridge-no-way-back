@@ -1,0 +1,11 @@
+ M docs/AUTHOR_PROMPTS_AND_DECISIONS.md
+ M game/app/first_drive.gd
+ M game/features/missions/night_freight/first_drive.gd
+ M game/features/ui/driving_hud/driving_hud.gd
+ M game/shared/save/save_file.gd
+ M game/tests/test_collision.gd
+ M game/tests/test_save_rules.gd
+?? game/features/missions/the_wrong_cargo/
+?? game/tests/test_mission_two.gd
+?? game/tests/test_mission_two.gd.uid
+?? logs/phase_2/

@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+t 11.8 encounter starts at sample 728 (35 km/h), oncoming van at sample 815
+t 20.7 vans pass at sample 770 (meeting point 777), oncoming 38 km/h
+ERROR: String formatting error: a number is required.
+   at: validated_evaluate (core/variant/variant_op.h:770)
+   GDScript backtrace (most recent call first):
+       [0] _run (/private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/59cc27ca-ea9d-4bb1-919c-75b671e4d5dd/scratchpad/probe_encounter.gd:63)
+t %.1f (van 1.72 across, walking to (63.28326, 32.6952, -79.18034); lane %.2f) he steps out, bumper %.1f m from the crossing, van %.0f km/h, locked %s
+   lock +0.00 across 1.72 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.12
+   lock +0.02 across 1.70 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.12
+   lock +0.12 across 1.59 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.12
+   lock +0.22 across 1.48 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.11
+   lock +0.32 across 1.37 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.10
+   lock +0.42 across 1.26 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.10
+   lock +0.52 across 1.15 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.09
+   lock +0.62 across 1.04 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.08
+   lock +0.72 across 0.93 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.08
+   lock +0.82 across 0.82 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.07
+   lock +0.92 across 0.72 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.06
+   lock +1.02 across 0.61 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.06
+   lock +1.12 across 0.50 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.05
+   lock +1.22 across 0.40 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.04
+   lock +1.32 across 0.30 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.04
+   lock +1.42 across 0.19 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.03
+   lock +1.52 across 0.09 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.03
+   lock +1.62 across -0.01 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.02
+   lock +1.72 across -0.11 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.01
+   lock +1.82 across -0.21 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.00
+   lock +1.92 across -0.31 heading-to-road 6.48 deg, locked true, steering -0.06, real velocity across -1.00
+t 23.6 HIT at 32 km/h, 2.00 s after the lock, skid heard true
+   1.5 s later: crack 0.98, he is 4.3 m ahead of the van
+t 29.2 fleeing
+checkpoint load: 0 keys ["stage", "recovery", "body", "crack"]
+  stage 3 recovery [X: (-0.196444, 0.0, -0.980515), Y: (0.0, 1.0, 0.0), Z: (0.980515, 0.0, -0.196444), O: (56.65734, 32.28761, -77.45038)] body bones 11 crack { "amount": 0.97775588617609, "point": (0.445007, -0.42), "seed": 96.5918491363525 }

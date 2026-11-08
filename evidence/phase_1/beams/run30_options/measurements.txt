@@ -1,0 +1,18 @@
+mature bark materials found: 0
+port check: runtime low pattern vs the file, max difference 0/255
+spot   -1 today   low  road near  88.9 far  41.7 | 100-150 m  37.8
+spot   -1 today   high road near 109.4 far  69.7 | 100-150 m  78.1
+spot   -1 A_50m   low  road near  85.9 far  33.1 | 100-150 m  31.7
+spot   -1 A_50m   high road near 116.8 far  74.4 | 100-150 m  79.7
+spot   -1 C_40m_fade70 low  road near  81.8 far  28.8 | 100-150 m  29.4
+spot   -1 C_40m_fade70 high road near 121.0 far  77.1 | 100-150 m  80.3
+spot   -1 D_35m_fade55 low  road near  77.8 far  28.6 | 100-150 m  30.2
+spot   -1 D_35m_fade55 high road near 119.6 far  76.8 | 100-150 m  80.4
+spot  560 today   low  road near  69.1 far  70.8 | 100-150 m 127.0
+spot  560 today   high road near  88.7 far  88.5 | 100-150 m 149.2
+spot  560 A_50m   low  road near  72.2 far  72.5 | 100-150 m 135.9
+spot  560 A_50m   high road near  95.8 far  94.2 | 100-150 m 162.5
+spot  560 C_40m_fade70 low  road near  71.2 far  64.9 | 100-150 m 135.2
+spot  560 C_40m_fade70 high road near  99.1 far  95.1 | 100-150 m 169.5
+spot  560 D_35m_fade55 low  road near  68.1 far  53.5 | 100-150 m 135.8
+spot  560 D_35m_fade55 high road near  98.8 far  91.4 | 100-150 m 172.2

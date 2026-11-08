@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+saved driver_window_opacity_0.60.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.45.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.35.png (runtime only; heavy_fog.tres unchanged)
+saved driver_window_opacity_0.25.png (runtime only; heavy_fog.tres unchanged)
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

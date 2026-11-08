@@ -19,7 +19,7 @@ func _run() -> void:
 	var dimming: Node = presentation.get("night_dimming")
 	var material: ShaderMaterial = dimming.get("material")
 	var cluster := _cluster_viewport(presentation, material)
-	var folder := ProjectSettings.globalize_path("res://").path_join("../evidence/captures")
+	var folder := _output_folder("evidence/captures")
 	DirAccess.make_dir_recursive_absolute(folder)
 	for frame in range(30):
 		await process_frame
@@ -61,3 +61,11 @@ func _cluster_viewport(presentation: Node, material: Material) -> SubViewport:
 				if control is CanvasItem and control.material == material:
 					return viewport
 	return null
+
+
+func _output_folder(default_folder: String) -> String:
+	var args := OS.get_cmdline_user_args()
+	var folder: String = args[0] if args.size() > 0 else default_folder
+	if folder.is_absolute_path():
+		return folder
+	return ProjectSettings.globalize_path("res://").path_join("..").path_join(folder)

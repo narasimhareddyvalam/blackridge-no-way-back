@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfeesf3wsv7ld"
 path.s3tc="res://.godot/imported/painted_metal_shutter_diff_2k.jpg-b90a34fe7dfdb5b0b65c389e7dd4936a.s3tc.ctex"
+path.etc2="res://.godot/imported/painted_metal_shutter_diff_2k.jpg-b90a34fe7dfdb5b0b65c389e7dd4936a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/painted_metal_shutter/painted_metal_shutter_diff_2k.jpg"
-dest_files=["res://.godot/imported/painted_metal_shutter_diff_2k.jpg-b90a34fe7dfdb5b0b65c389e7dd4936a.s3tc.ctex"]
+dest_files=["res://.godot/imported/painted_metal_shutter_diff_2k.jpg-b90a34fe7dfdb5b0b65c389e7dd4936a.s3tc.ctex", "res://.godot/imported/painted_metal_shutter_diff_2k.jpg-b90a34fe7dfdb5b0b65c389e7dd4936a.etc2.ctex"]
 
 [params]
 

@@ -1,0 +1,112 @@
+{
+  "recorded": "2026-11-08",
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf, Forward+ (Metal), Apple M4",
+  "method": "Movie Maker, --fixed-fps 30, --resolution 1280x800, isolated copy of game/ at git 72ac99c (game/ = c1c9d8b)",
+  "takes": {
+    "in_play": {
+      "file": "capture/takes/in_play/in_play.mp4",
+      "sha256": "7afa4552dc6964b0bf0d6ff2b354ede74b2841b9adf174e1c5b6f1556ca12c3e",
+      "bytes": 24797191,
+      "frames": 480,
+      "seconds": 16.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "scripted input on the real main scene",
+      "stills": [
+        {
+          "file": "capture/takes/in_play/stills/in_play_f150.png",
+          "frame": 150,
+          "sha256": "363de606c6bcebd23268621512d22efd5d8e62f999586a4d7eac53053c8cffeb"
+        },
+        {
+          "file": "capture/takes/in_play/stills/in_play_f280.png",
+          "frame": 280,
+          "sha256": "e10401f0985bd9943b892515be359c744f27d2c935d336286d9a0f8dc087ede1"
+        },
+        {
+          "file": "capture/takes/in_play/stills/in_play_f420.png",
+          "frame": 420,
+          "sha256": "baf4fe45e942bb348ae6319fcc32ec106f7f2bcefe702e9e4e643de95378e42f"
+        }
+      ],
+      "excerpts": [
+        {
+          "file": "capture/takes/in_play/in_play_wipers.mp4",
+          "frames": "30-254 of the in-play take (fast wipers, up to the pause at 255)",
+          "sha256": "7ce10c8e3f55d98b0efa2b376257d8ce5478963b59f83f89ab7a2c716c222fba",
+          "seconds": 7.5
+        }
+      ]
+    },
+    "a1_repeats": {
+      "file": "capture/takes/a1_repeats/a1_repeats.mp4",
+      "sha256": "e9d2d1d2334c74c3a5f08e5086dc6d885561bc268fc57b6ea22ff53d1b6fbaef",
+      "bytes": 2005361,
+      "frames": 60,
+      "seconds": 2.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "a1_speed": {
+      "file": "capture/takes/a1_speed/a1_speed.mp4",
+      "sha256": "3f5dade5683af8ed9f611fbebde7098795c922b681b16249ddc9f014af48d22d",
+      "bytes": 4262826,
+      "frames": 60,
+      "seconds": 2.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "a2_office": {
+      "file": "capture/takes/a2_office/a2_office.mp4",
+      "sha256": "07ca0fcd1669ed1dd84a3f5ea89aa769768d432c94894fb17606dffd7254ddde",
+      "bytes": 4056932,
+      "frames": 60,
+      "seconds": 2.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "a2_valley": {
+      "file": "capture/takes/a2_valley/a2_valley.mp4",
+      "sha256": "6c9725d63ec9bdba326103538fd29990ff2b61db71658124b4fcaaa2f3fafcfa",
+      "bytes": 3435257,
+      "frames": 60,
+      "seconds": 2.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "b1_post": {
+      "file": "capture/takes/b1_post/b1_post.mp4",
+      "sha256": "98474824b0cd5db85b6152e4d85bd67b4a474c27460f3d3310cc33a46bf16543",
+      "bytes": 3990038,
+      "frames": 120,
+      "seconds": 4.0,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "b2_rear": {
+      "file": "capture/takes/b2_rear/b2_rear.mp4",
+      "sha256": "b42677cdb89fee62a44f6541773ccc406a587cd32ce93c9bde583134755feac3",
+      "bytes": 5037674,
+      "frames": 190,
+      "seconds": 6.333,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    },
+    "b2_reverse": {
+      "file": "capture/takes/b2_reverse/b2_reverse.mp4",
+      "sha256": "66ea5804ddbb768a7405af7797b9c0d647008bcd9dc75785a28d598814252ea9",
+      "bytes": 5515960,
+      "frames": 190,
+      "seconds": 6.333,
+      "size": "1280x800",
+      "fps": 30,
+      "kind": "fixture capture (preview scene)"
+    }
+  }
+}

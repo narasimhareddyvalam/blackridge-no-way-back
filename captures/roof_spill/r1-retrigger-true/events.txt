@@ -1,0 +1,6 @@
+frame 0: A2 at office, arriving at 43 km/h, retrigger on
+frame 9: brake pressed at 42.2 km/h
+frame 10: hard brake: the roof spills (roof refills for 20 s)
+frame 20: brake let off at 30.4 km/h
+frame 24: brake pressed at 30.1 km/h
+frame 25: hard brake ignored: the first spill is still alive (true)

@@ -5,8 +5,16 @@ signal indicator_clicked(high: bool)
 signal wiper_swept
 signal collided(strength: float)
 signal window_operated
+signal engine_started
 
 const TURN_FLOOR_CLEARANCE: float = 0.1
+const SLOPE_GRAVITY: float = 9.8
+const WIPER_PARK: float = -1.55
+const WIPER_SWEEP: float = 1.72
+const WIPER_CYCLES: Array[float] = [0.0, 0.75, 1.1]
+const IGNITION_SECONDS: float = 1.4
+const LOCKED_GRIP: float = 1.5
+const CLOCK_START: float = 23.0 * 3600.0 + 42.0 * 60.0
 
 @export var maximum_speed: float = 19.0
 @export var reverse_speed: float = 5.0
@@ -16,13 +24,27 @@ const TURN_FLOOR_CLEARANCE: float = 0.1
 @export var maximum_steering: float = 0.52
 
 var occupied: bool = true
+var engine_on: bool = true
+var held: bool = false
+var clock: float = CLOCK_START
+var scripted: bool = false
+var locked: bool = false
+var foot_on_brake: bool = false
+var lock_curvature: float = 0.0
+var scripted_throttle: float = 0.0
+var throttle: float = 0.0
+var scripted_brake: float = 0.0
+var scripted_steer: float = 0.0
+var driver_door: float = 0.0
 var speed: float = 0.0
 var actual_speed: float = 0.0
 var steering: float = 0.0
 var gear: int = 1
 var headlights_on: bool = true
+var high_beams: bool = false
 var wiper_setting: int = 1
-var wiper_angle: float = -0.9
+var cabin_light: bool = false
+var wiper_angle: float = WIPER_PARK
 var left_window: float = 0.0
 var right_window: float = 0.0
 var left_window_target: float = 0.0
@@ -36,6 +58,7 @@ var input_enabled: bool = false
 
 var _blink_time: float = 0.0
 var _wiper_time: float = 0.0
+var _ignition: float = -1.0
 var _wiper_half: int = 0
 var _turn_started: bool = false
 var _collision_cooldown: float = 0.0
@@ -61,25 +84,36 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	clock += delta
 	_collision_cooldown = maxf(0.0, _collision_cooldown - delta)
-	var active := occupied and input_enabled
-	var throttle := Input.get_action_strength("accelerate") if active else 0.0
+	var active := occupied and input_enabled and not held and not scripted
+	throttle = Input.get_action_strength("accelerate") if active and engine_on else 0.0
 	var brake := Input.get_action_strength("brake") if active else 0.0
-	var handbrake := Input.is_action_pressed("handbrake") if active else true
-	braking = brake > 0.0 or handbrake
-	horn_on = active and Input.is_action_pressed("horn")
+	var handbrake := Input.is_action_pressed("handbrake") if active else not scripted
 	var requested_steer := Input.get_axis("steer_right", "steer_left") if active else 0.0
-	steering = move_toward(steering, requested_steer, delta * 2.0)
+	if scripted:
+		throttle = scripted_throttle
+		brake = scripted_brake
+		requested_steer = scripted_steer
+	if foot_on_brake and active and (throttle > 0.0 or brake > 0.0 or handbrake
+			or requested_steer != 0.0):
+		foot_on_brake = false
+	braking = brake > 0.0 or handbrake or foot_on_brake
+	horn_on = active and Input.is_action_pressed("horn")
+	if not locked:
+		steering = move_toward(steering, requested_steer, delta * 2.0)
 	var speed_limit := maximum_speed if gear > 0 else reverse_speed
+	var pull := slope_pull() * delta
 	if braking:
-		speed = move_toward(speed, 0.0, brake_deceleration * delta)
+		speed = move_toward(speed + pull, 0.0,
+			(LOCKED_GRIP if locked else brake_deceleration) * delta)
 	else:
 		var drive_force := throttle * acceleration * gear
 		var drag := 0.28 + absf(speed) * 0.035 + speed * speed * 0.001
 		speed = move_toward(speed, 0.0, drag * delta)
-		speed = clampf(speed + drive_force * delta, -reverse_speed, speed_limit)
-	var steering_limit := maximum_steering / (1.0 + absf(speed) * 0.045)
-	var yaw := speed / wheelbase * tan(steering * steering_limit) * delta
+		speed = clampf(speed + drive_force * delta + pull, -reverse_speed, speed_limit)
+	var yaw := speed * lock_curvature * delta if locked \
+		else speed / wheelbase * tan(steering * _steering_limit()) * delta
 	if not _rotation_blocked(yaw):
 		rotate_y(yaw)
 	velocity.x = -global_basis.z.x * speed
@@ -100,6 +134,36 @@ func _physics_process(delta: float) -> void:
 	_visual.update_vehicle(delta)
 
 
+func clock_text() -> String:
+	return "%02d:%02d" % [int(clock / 3600.0) % 24, int(clock / 60.0) % 60]
+
+
+func reset_clock() -> void:
+	clock = CLOCK_START
+
+
+func door_handle() -> Vector3:
+	return _visual.door_handle()
+
+
+func door_opening_toward(point: Vector3) -> float:
+	return _visual.door_opening_toward(point)
+
+
+func steering_for(curvature: float) -> float:
+	return clampf(atan(curvature * wheelbase) / _steering_limit(), -1.0, 1.0)
+
+
+func _steering_limit() -> float:
+	return maximum_steering / (1.0 + absf(speed) * 0.045)
+
+
+func slope_pull() -> float:
+	if not is_on_floor():
+		return 0.0
+	return SLOPE_GRAVITY * get_floor_normal().dot(-global_basis.z)
+
+
 func _rotation_blocked(yaw: float) -> bool:
 	if is_zero_approx(yaw):
 		return false
@@ -115,10 +179,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		gear *= -1
 		switch_operated.emit()
 	elif event.is_action_pressed("headlights"):
-		headlights_on = not headlights_on
+		_cycle_headlights()
 		switch_operated.emit()
 	elif event.is_action_pressed("wipers"):
 		wiper_setting = (wiper_setting + 1) % 3
+		switch_operated.emit()
+	elif event.is_action_pressed("cabin_light"):
+		cabin_light = not cabin_light
 		switch_operated.emit()
 	elif event.is_action_pressed("indicator_left"):
 		_set_indicator(-1)
@@ -135,6 +202,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		window_operated.emit()
 
 
+func _cycle_headlights() -> void:
+	if not headlights_on:
+		headlights_on = true
+	elif not high_beams:
+		high_beams = true
+	else:
+		headlights_on = false
+		high_beams = false
+
+
 func _set_indicator(direction: int) -> void:
 	indicator = 0 if indicator == direction else direction
 	hazards_on = false
@@ -149,7 +226,41 @@ func _restart_blink() -> void:
 		indicator_clicked.emit(true)
 
 
+func switch_off() -> void:
+	engine_on = false
+	_ignition = -1.0
+	headlights_on = false
+	high_beams = false
+	wiper_setting = 0
+	cabin_light = false
+
+
+func start_engine() -> void:
+	if engine_on:
+		return
+	engine_on = true
+	_ignition = 0.0
+	engine_started.emit()
+
+
+func ignition_sweep() -> float:
+	if _ignition < 0.0:
+		return 0.0
+	return sin(PI * clampf(_ignition / IGNITION_SECONDS, 0.0, 1.0))
+
+
+func _update_ignition(delta: float) -> void:
+	if _ignition < 0.0:
+		return
+	_ignition += delta
+	if _ignition >= IGNITION_SECONDS:
+		_ignition = -1.0
+		headlights_on = true
+		wiper_setting = 1
+
+
 func _update_accessories(delta: float) -> void:
+	_update_ignition(delta)
 	left_window = move_toward(left_window, left_window_target, delta / 2.0)
 	right_window = move_toward(right_window, right_window_target, delta / 2.0)
 	if indicator != 0 or hazards_on:
@@ -167,14 +278,18 @@ func _update_accessories(delta: float) -> void:
 			indicator = 0
 			_turn_started = false
 	if wiper_setting > 0:
-		_wiper_time += delta * (0.65 if wiper_setting == 1 else 1.1)
+		_wiper_time += delta * WIPER_CYCLES[wiper_setting]
 		var half_cycle := int(_wiper_time * 2.0)
 		if half_cycle != _wiper_half:
 			_wiper_half = half_cycle
 			wiper_swept.emit()
-		wiper_angle = -cos(_wiper_time * TAU) * 0.9
+		wiper_angle = WIPER_PARK + WIPER_SWEEP * (1.0 - cos(_wiper_time * TAU)) * 0.5
 	else:
-		wiper_angle = move_toward(wiper_angle, -0.9, delta * 2.4)
+		wiper_angle = move_toward(wiper_angle, WIPER_PARK, delta * 2.4)
+
+
+func wiper_cycles() -> float:
+	return _wiper_time
 
 
 func recover(at: Transform3D) -> void:
@@ -183,6 +298,9 @@ func recover(at: Transform3D) -> void:
 	speed = 0.0
 	actual_speed = 0.0
 	steering = 0.0
+	locked = false
+	lock_curvature = 0.0
+	foot_on_brake = false
 	gear = 1
 	indicator = 0
 	hazards_on = false

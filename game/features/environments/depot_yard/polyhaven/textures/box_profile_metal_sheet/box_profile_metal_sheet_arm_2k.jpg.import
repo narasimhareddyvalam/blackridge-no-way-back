@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://m3r25uktsvi2"
 path.s3tc="res://.godot/imported/box_profile_metal_sheet_arm_2k.jpg-092a8c20efd1f1f784665e9e4b6a55b1.s3tc.ctex"
+path.etc2="res://.godot/imported/box_profile_metal_sheet_arm_2k.jpg-092a8c20efd1f1f784665e9e4b6a55b1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/textures/box_profile_metal_sheet/box_profile_metal_sheet_arm_2k.jpg"
-dest_files=["res://.godot/imported/box_profile_metal_sheet_arm_2k.jpg-092a8c20efd1f1f784665e9e4b6a55b1.s3tc.ctex"]
+dest_files=["res://.godot/imported/box_profile_metal_sheet_arm_2k.jpg-092a8c20efd1f1f784665e9e4b6a55b1.s3tc.ctex", "res://.godot/imported/box_profile_metal_sheet_arm_2k.jpg-092a8c20efd1f1f784665e9e4b6a55b1.etc2.ctex"]
 
 [params]
 

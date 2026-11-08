@@ -1,0 +1,11 @@
+debug camera at (-105.9129, 2.2, 92.59805), oncoming van at (-103.7801, 0.0, 102.9277)
+saved oncoming_van_night.png: oncoming 224 m away, glare (0.0, 0.0) at (-0.529816, -0.068027, -0.535019, -0.068171), lamps on screen (600.0, 436.0) (450.0, 424.0), windshield brightness 16.7, 55 FPS
+saved oncoming_van_debug_light.png: oncoming 224 m away, glare (0.0, 0.0) at (-0.529785, -0.067377, -0.535007, -0.067513), lamps on screen (600.0, 436.0) (450.0, 424.0), windshield brightness 79.8, 55 FPS
+saved before_it_comes.png: oncoming 144 m away, glare (0.0, 0.0) at (-0.03727, -0.15344, -0.050018, -0.153456), lamps on screen (883.0, 323.0) (876.0, 323.0), windshield brightness 53.1, 56 FPS
+saved oncoming_120m.png: oncoming 120 m away, glare (0.09995, 0.0) at (0.036674, -0.154914, 0.01696, -0.154865), lamps on screen (919.0, 323.0) (909.0, 323.0), windshield brightness 58.5, 60 FPS
+saved high_beams_flash_back.png: oncoming 79 m away, glare (0.000038, 0.271381) at (-0.055168, -0.158468, -0.082779, -0.158321), lamps on screen (873.0, 325.0) (859.0, 325.0), windshield brightness 73.1, 60 FPS
+saved oncoming_60m.png: oncoming 60 m away, glare (0.003366, 0.280985) at (-0.131447, -0.16186, -0.166, -0.161606), lamps on screen (834.0, 327.0) (817.0, 327.0), windshield brightness 67.0, 50 FPS
+saved oncoming_35m.png: oncoming 35 m away, glare (0.423646, 0.386248) at (-0.398445, -0.171787, -0.449074, -0.171099), lamps on screen (700.0, 331.0) (674.0, 331.0), windshield brightness 79.1, 60 FPS
+saved oncoming_20m.png: oncoming 20 m away, glare (0.761291, 0.698956) at (-0.579773, -0.193122, -0.683929, -0.192381), lamps on screen (610.0, 342.0) (558.0, 341.0), windshield brightness 87.8, 46 FPS
+saved oncoming_10m.png: oncoming 10 m away, glare (0.889297, 0.734776) at (-0.731316, -0.26282, -1.003395, -0.262441), lamps on screen (536.0, 374.0) (402.0, 374.0), windshield brightness 81.9, 56 FPS
+saved after_it_passed.png: oncoming 17 m away, glare (0.0, 0.0) at (9.0, 9.0, 9.0, 9.0), lamps on screen (734.0, 308.0) (785.0, 308.0), windshield brightness 54.0, 60 FPS

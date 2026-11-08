@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: One lap is about 3 km (3206 m)
+PASS: The road climbs a real hill (79.0 m)
+PASS: Five hairpins up and five down (10)
+PASS: No stretch is steeper than 10% (9.1%)
+PASS: Hairpins are flatter than the legs (6.2%)
+PASS: Hairpins are widened to at least 6 m of asphalt (6.50 m)
+PASS: The road closes into one loop
+PASS: The whole road lies at least 30 m inside the playable area
+PASS: The map screen draws the real road inside its panel (536 points)
+PASS: The hillside never pokes through the road (worst -0.023 m)
+PASS: The van drives on the road's own surface (worst 0.012 m)
+PASS: A barrier stands at every drop beside the road (175 spots, 0 missing)
+PASS: Checkpoint 0 sits on the road, facing along it
+PASS: Checkpoint 1 sits on the road, facing along it
+PASS: Checkpoint 2 sits on the road, facing along it
+PASS: Checkpoint 3 sits on the road, facing along it
+PASS: The depot yard stays flat
+PASS: The van starts level on the valley road
+PASS: With no brake the van rolls back down a 8.8% grade
+PASS: The brake holds the van on the hill
+PASS: The van's body pitches with the road (5.0 degrees on a 5.0 degree grade)
+PASS: From a stop the van climbs the steepest leg (5.9 m/s, 0.8 m higher)
+GHAT ROAD RESULT: 22/22 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

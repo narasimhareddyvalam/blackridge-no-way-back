@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The van is the Iveco: it draws iveco/iveco_exterior.glb and iveco/iveco_cab.glb (C31)
+PASS: No part of the old van or the Honda cockpit is drawn (the files stay in the repo; drawn: )
+PASS: The van draws all of the converted Iveco (88428 triangles)
+PASS: The outside (body, doors, wheels and lamps; 14 meshes) is on the body layer, which the mirrors draw
+PASS: The cab, steering wheel and glass (5 meshes) are on the cabin layer, which the mirrors never draw
+PASS: From the seat the driver sees the world, the van's own body and the cab; the mirrors see the world and the body
+PASS: The body casts the van's shadow; the cab inside it casts none
+PASS: The gauges sit on the Iveco's cluster, face the driver and show through the wheel
+PASS: The map sits on the Iveco's centre screen, facing the cab
+PASS: The reverse camera shares the map's place and starts hidden
+PASS: With the engine off the gauges and the centre screen go dark, instead of showing the model's lit dials and picture
+PASS: Only the two door mirrors have live views: the Iveco has no inside mirror (C32)
+PASS: The left door mirror shows its live view, mirrored, on both its glasses, facing back and swinging with the door
+PASS: The right door mirror shows its live view, mirrored, on both its glasses, facing back
+PASS: The screens are the cluster, the map, the reverse camera and the four mirror glasses (7)
+PASS: The driver sees open sky through the moon roof cut into the Iveco's roof (5 of 5 sight lines clear)
+PASS: From above, the roof and the headliner are open over the front seats (5 of 5)
+PASS: The moon roof has tinted glass the size of the opening, with rain lying on top of it
+PASS: A dark frame lines the opening inside, and a rubber seal surrounds it on the roof
+PASS: Looking up shows the whole moon roof (view reaches 89 degrees up)
+PASS: The wheel pivots on its hub, on the Iveco's column, which leans 44.7 degrees toward the driver
+PASS: The Iveco's own steering wheel turns with the steering
+PASS: Steering left turns the top of the wheel to the left (1.47 rad)
+PASS: Steering right turns the top of the wheel to the right
+PASS: The hub stays put and the wheel centres again
+COCKPIT RESULT: 25/25 passed; 0 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

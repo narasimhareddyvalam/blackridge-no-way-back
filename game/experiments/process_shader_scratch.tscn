@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/particles_generated.gdshader" id="1_givnb"]
+
+[sub_resource type="Curve" id="Curve_givnb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.02, 0.22), 0.0, 0.0, 0, 0, Vector2(0.3, 0.14), 0.0, 0.0, 0, 0, Vector2(0.7, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_0mba3"]
+curve = SubResource("Curve_givnb")
+
+[sub_resource type="Curve" id="Curve_rnwst"]
+_limits = [0.0, 7.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3, 3), 0.0, 0.0, 0, 0, Vector2(1, 6), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_yggth"]
+curve = SubResource("Curve_rnwst")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mba3"]
+shader = ExtResource("1_givnb")
+shader_parameter/direction = Vector3(0, -0.26, 0.97)
+shader_parameter/spread = 10.0
+shader_parameter/flatness = 0.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 4.0
+shader_parameter/initial_linear_velocity_max = 7.0
+shader_parameter/directional_velocity_min = 1.0
+shader_parameter/directional_velocity_max = 1.0
+shader_parameter/angular_velocity_min = 0.0
+shader_parameter/angular_velocity_max = 0.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 12.0
+shader_parameter/damping_max = 18.0
+shader_parameter/initial_angle_min = 0.0
+shader_parameter/initial_angle_max = 0.0
+shader_parameter/scale_min = 0.6
+shader_parameter/scale_max = 1.0
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_min = 0.0
+shader_parameter/anim_speed_max = 0.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.0
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/velocity_pivot = Vector3(0, 0, 0)
+shader_parameter/emission_sphere_radius = 0.025
+shader_parameter/color_value = Color(0.92, 0.93, 0.94, 1)
+shader_parameter/gravity = Vector3(0, 0.8, 0)
+shader_parameter/alpha_curve = SubResource("CurveTexture_0mba3")
+shader_parameter/scale_curve = SubResource("CurveTexture_yggth")
+shader_parameter/turbulence_noise_strength = 0.35
+shader_parameter/turbulence_noise_scale = -1.4701779
+shader_parameter/turbulence_influence_min = 0.1
+shader_parameter/turbulence_influence_max = 0.1
+shader_parameter/turbulence_initial_displacement_min = 0.0
+shader_parameter/turbulence_initial_displacement_max = 0.0
+shader_parameter/turbulence_noise_speed_random = 0.2
+shader_parameter/turbulence_noise_speed = Vector3(0.3, 0.25, 0.3)
+
+[node name="ProcessShaderScratch" type="Node3D" unique_id=1391079661]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=815265390]
+process_material = SubResource("ShaderMaterial_0mba3")

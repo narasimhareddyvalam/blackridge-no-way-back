@@ -1,0 +1,4 @@
+road samples: near 95 (10-46 m), far 130 (50-100 m)
+low_beams   road near  97.3, far  48.1 | white-out 0.00% | 60.0 FPS | lights true, high false
+high_beams  road near 120.7, far  82.3 | white-out 0.00% | 59.9 FPS | lights true, high true
+lights_off  road near  18.2, far  28.6 | white-out 0.00% | 60.0 FPS | lights false, high false

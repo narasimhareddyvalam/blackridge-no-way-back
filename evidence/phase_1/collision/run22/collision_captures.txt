@@ -1,0 +1,19 @@
+saved crossing_overview_night.png: van 0.0 m/s, pedestrian 11.1 m ahead and 133.1 m right, windshield brightness 18.8, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved crossing_overview_debug_light.png: van 0.0 m/s, pedestrian 11.0 m ahead and 133.1 m right, windshield brightness 81.3, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved the_crossing_ahead.png: van 0.4 m/s, pedestrian 44.1 m ahead and -1.9 m right, windshield brightness 50.4, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved waiting_at_the_stop.png: van 0.1 m/s, pedestrian 20.4 m ahead and -0.9 m right, windshield brightness 53.9, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved he_steps_out.png: van 15.8 m/s, pedestrian 12.7 m ahead and 0.5 m right, windshield brightness 53.1, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved too_late_to_stop.png: van 16.9 m/s, pedestrian 3.9 m ahead and 1.0 m right, windshield brightness 52.4, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved impact.png: van 16.7 m/s, pedestrian 2.5 m ahead and 1.0 m right, windshield brightness 46.3, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_150_ms.png: van 15.3 m/s, pedestrian 2.8 m ahead and 1.0 m right, windshield brightness 18.5, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_350_ms.png: van 13.5 m/s, pedestrian 3.2 m ahead and 1.0 m right, windshield brightness 20.7, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_600_ms.png: van 11.3 m/s, pedestrian 3.4 m ahead and 0.9 m right, windshield brightness 15.9, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved thrown_1000_ms.png: van 7.7 m/s, pedestrian 3.8 m ahead and 0.9 m right, windshield brightness 12.0, eye 0.00 m forward, objective RETURN TO THE DEPOT
+saved leaning_over_the_wheel.png: van 0.0 m/s, pedestrian 5.1 m ahead and 0.7 m right, windshield brightness 75.4, eye 0.55 m forward, objective RETURN TO THE DEPOT
+saved drive_objective.png: van 0.0 m/s, pedestrian 5.1 m ahead and 0.7 m right, windshield brightness 71.6, eye 0.55 m forward, objective DRIVE.
+saved sitting_back.png: van 0.0 m/s, pedestrian 5.1 m ahead and 0.7 m right, windshield brightness 50.2, eye 0.00 m forward, objective DRIVE.
+saved on_the_road_night.png: van 0.0 m/s, pedestrian 5.1 m ahead and 0.7 m right, windshield brightness 61.8, eye 0.00 m forward, objective DRIVE.
+saved on_the_road_debug_light.png: van 0.0 m/s, pedestrian 5.1 m ahead and 0.7 m right, windshield brightness 109.2, eye 0.00 m forward, objective DRIVE.
+saved driving_on_with_the_crack.png: van 4.7 m/s, pedestrian 1.1 m ahead and 0.7 m right, windshield brightness 51.2, eye 0.00 m forward, objective DRIVE.
+saved getting_out_at_the_depot.png: van 0.0 m/s, pedestrian -28.8 m ahead and -53.9 m right, windshield brightness 23.0, eye 0.00 m forward, objective DRIVE COMPLETE
+saved shutting_the_door.png: van 0.0 m/s, pedestrian -28.8 m ahead and -53.9 m right, windshield brightness 23.1, eye 0.00 m forward, objective DRIVE COMPLETE

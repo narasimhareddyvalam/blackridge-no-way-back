@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1lblxgbpuurw"
 path.s3tc="res://.godot/imported/security_light_diff_1k.jpg-8fad8f92463e8649441c12613dfde379.s3tc.ctex"
+path.etc2="res://.godot/imported/security_light_diff_1k.jpg-8fad8f92463e8649441c12613dfde379.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/environments/depot_yard/polyhaven/models/security_light/textures/security_light_diff_1k.jpg"
-dest_files=["res://.godot/imported/security_light_diff_1k.jpg-8fad8f92463e8649441c12613dfde379.s3tc.ctex"]
+dest_files=["res://.godot/imported/security_light_diff_1k.jpg-8fad8f92463e8649441c12613dfde379.s3tc.ctex", "res://.godot/imported/security_light_diff_1k.jpg-8fad8f92463e8649441c12613dfde379.etc2.ctex"]
 
 [params]
 

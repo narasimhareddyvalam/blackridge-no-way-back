@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: A 4.4 mm drop stays pinned on the parked windshield
+PASS: A 2 mm drop stays stuck even at 68 km/h (it sits in the slow air next to the glass)
+PASS: An 11 mm runner slides down the parked windshield (-0.151 m/s)
+PASS: At 49 km/h gravity and air drag balance: the runner holds
+PASS: At 68 km/h the runner climbs the windshield (0.135 m/s)
+PASS: At 29 km/h it still slides down, but slower than when parked
+PASS: The water film drains down when parked (-0.0078 m/s) and is dragged up at 68 km/h (0.0116 m/s)
+PASS: On a parked side window drops run down
+PASS: At 68 km/h side-window drops stream mostly backward (-0.367, -0.127 m/s)
+PASS: Integrated runner travel goes down when parked and turns up at speed
+PASS: The smallest moving bin (4.4 mm) never moved: it stayed pinned the whole time
+RAIN PHYSICS RESULT: 11/11 passed; 0 failed

@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Nothing fires as the scene loads (0 flicks in 0.15 s), and a pool of two bursts waits
+PASS: Three thin colliders move with the van, one per third of the windshield (["GlassLeft", "GlassMiddle", "GlassRight"])
+PASS: Each collider's face follows the curved glass: within 31 mm of it everywhere, and its middle within 10 mm (["1.5", "6.0", "1.5"] mm)
+PASS: Each burst is turned to the windshield's frame, in which it is set
+PASS: The driver's blade carries a collider as long as the blade, which touches only the water left on the glass (layer 2)
+PASS: The glass's own colliders leave that water alone, so only a blade clears it
+PASS: With the wipers switched off by two presses of the wipers key, nothing fires in 3 s
+PASS: On fast wipers every top turn fires one flick (7 top turns, 7 flicks in 6 s)
+PASS: The turns at park fire nothing (6 park turns)
+PASS: Each flick starts at the driver's blade tip (worst 0.0 mm away)
+PASS: Overlap: the next top turn, 0.91 s later, starts a second burst while the first is still alive; at most two are alive and none is missed (2 alive at most)
+PASS: No burst is cut short: each one's spray lives its full 1.2 s (shortest 1.32 s)
+PASS: At the top turn the blade tip is 51 mm in front of the glass's left collider, so the flick starts outside it
+PASS: At the top turn the bow wave leaves as a sheet laid along the blade (1.0000)
+PASS: Parked, no top turn throws water back along the side window or a spill's water
+PASS: Each top turn also leaves the passenger blade's water on the glass (7 of 7)
+PASS: It starts just ahead of the passenger blade's middle, on the side it was moving to (15 mm), and on the outside of the glass (10 mm)
+PASS: Its line of water lies along the passenger blade (0.9999)
+PASS: Standing on the brake (0.00 m/s), no air pushes the flick's drops (0.00 m/s²)
+PASS: At 12.0 m/s the air pushes the big drops back up the glass at 22.1 m/s² (g × (v / 8 m/s)² is 22.1 m/s²)
+PASS: and the fine spray at 80.0 m/s², its most
+PASS: and the heavy drops, which need more wind, at 9.8 m/s² (g × (v / 12 m/s)² is 9.8)
+PASS: and the run-off back along the side window at 56.7 m/s² (g × (v / 5 m/s)² is 56.7)
+PASS: Driving at 57 km/h, every top turn also throws water back along the side window (1 of 1)
+PASS: Reversing at 4.3 m/s, the cab shields the glass and nothing is pushed (0.00 m/s²)
+PASS: The hard stop spilled the roof's water, and the next top turn threw it off the glass, once (1 spill, 1 throw)
+PASS: Freeing the van in the middle of a flick frees its bursts with it, as they move in its frame, without errors (0 of 2 left)
+WIPER FLICK STATE RESULT: 27/27 passed; 0 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

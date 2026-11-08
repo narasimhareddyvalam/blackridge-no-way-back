@@ -1,0 +1,15 @@
+GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75
+HUD lines 166, frames 7717
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+A1  the driver's seat  too few complete cycles (0)
+A2  the driver's seat       9     233     259     25.288     25.577    -0.371     0.497  264 particles; -
+B1  the valley lamp        24     847     862     20.872     20.208     0.665     0.058  48050 particles; volumes raining 0, in view 3
+B2  behind the van         24    1277    1322     23.403     22.296     1.108     0.094  300 particles; exhaust amount_ratio 0.00
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+A2      -0.371    -0.868 to   0.126     0.20  within                         39.9, 40.7
+B1       0.665     0.607 to   0.722     0.70  not settled at this precision  50.1, 50.0
+B2       1.108     1.015 to   1.202     0.30  over                           44.0, 45.3

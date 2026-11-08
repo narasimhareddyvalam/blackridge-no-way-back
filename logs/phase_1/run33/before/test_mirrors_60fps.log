@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: The left mirror shows its reflection on the Iveco's own glass: 0 main and 0 wide-angle triangles, at most inf mm in front of it
+FAIL: The right mirror shows its reflection on the Iveco's own glass: 0 main and 0 wide-angle triangles, at most inf mm in front of it
+FAIL: From outside the mirrors are the van's own dark glass, not screens: the 0 reflections draw only for the driver's eye
+FAIL: Lamps behind stay bright and the dark stays dark: each mirror renders in HDR at 320 pixels, tone-mapped once, reflecting 0% like chrome glass
+FAIL: The driver's mirror is set as a driver sets it: from 0.0 degrees inside the van's side, so the side shows along its inner edge, to 0.0 outside, with the horizon in its upper part
+FAIL: The wide-angle glass below shows a wider, smaller view of the van's side and the ground: 0.0 degrees across, against 0.0 for the main glass
+FAIL: The driver's mirror swings with the door, glass and view together
+FAIL: The driver's mirror updates 30 times a second and the passenger's 15
+FAIL: The mirror cameras skip the moon and its shadow pass, with a soft fill in its place; the driver's own view keeps the moonlight and its shadows
+FAIL: The tail lamps cast a faint red glow on the road behind (0.0), brighter when braking (0.0), and none with the engine off
+FAIL: The lumber yard's and the forecourt's gravel lies at real size, 1.8 m to a tile, projected in metres (2 surfaces)
+MIRRORS RESULT: 0/11 passed; 11 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

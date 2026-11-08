@@ -1,0 +1,12 @@
+saved start_left_mirror_glance
+saved start_left_mirror_zoom
+start: 69.8 FPS with the mirrors updating (vsync off)
+saved start_ahead
+saved start_outside_mirror
+saved start_outside_gravel
+saved door_open_mirror
+saved tail_glow_braking
+behind: a van stands 28.0 m behind, its headlights on
+saved behind_left_mirror_glance
+saved behind_left_mirror_zoom
+behind: 74.8 FPS with the mirrors updating (vsync off)

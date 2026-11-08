@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Shader parses: get_shader_uniform_list() is not empty
+PASS: Uniform night_amount is listed with type float
+PASS: Uniform night_color is listed with type Color
+PASS: Uniform night_brightness is listed with type float
+PASS: Line 1 of the shader is shader_type canvas_item
+PASS: Source declares hint and default: uniform float night_amount : hint_range(0.0, 1.0) = 0.0;
+PASS: Source declares hint and default: uniform vec4 night_color : source_color = vec4(1.0, 0.55, 0.20, 1.0);
+PASS: Source declares hint and default: uniform float night_brightness : hint_range(0.1, 1.0) = 0.55;
+PASS: Source contains the colour line from CHANGE-BRIEF 2.4
+PASS: Shader declares no sampler uniforms
+PASS: Shader does not use TIME
+PASS: Dimming driver never assigns headlights_on
+PASS: Cluster material uses res://shaders/night_cluster.gdshader
+PASS: The instruments Control draws with that material
+PASS: night_amount is 1.0 before the first frame because headlights start on
+PASS: Real L press turned the headlights off
+PASS: Off-fade 1 -> 0 took 51 frames = 0.3542 s (spec 0.35 +/- 0.0069)
+PASS: Real L press turned the headlights on
+PASS: On-fade 0 -> 1 took 36 frames = 0.2500 s (spec 0.25 +/- 0.0069)
+PASS: Retrigger mid-fade turned around at 0.683 without reaching 0
+PASS: Reverse from current value: rise took 0.0833 s, expected 0.0794 s
+PASS: On-fade at time_scale 0.5 in real time took 72 frames = 0.5000 s (spec 0.50 +/- 0.0069)
+PASS: Real Escape press paused the tree
+PASS: night_amount holds at 0.861 while paused
+PASS: L while paused changes neither headlights_on nor night_amount
+PASS: After resume the fade finishes at 0
+PASS: R recovery leaves headlights_on and night_amount unchanged
+PASS: Each van builds its own ShaderMaterial instance
+PASS: The other van keeps night_amount 1.0 while the first van fades out
+PASS: No frame changes night_amount faster than the fade-in rate
+NIGHT DIMMING RESULT: 30/30 passed; 0 failed

@@ -1,0 +1,10 @@
+{
+  "destination": "game/features/environments/industrial_loop/polyhaven",
+  "textures": {
+    "weathered_plank_siding": "2k",
+    "corrugated_iron": "1k",
+    "rough_pine_door": "1k",
+    "stair_planks": "1k",
+    "brushed_concrete_03": "1k"
+  }
+}
