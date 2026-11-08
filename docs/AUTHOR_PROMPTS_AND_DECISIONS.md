@@ -2612,6 +2612,22 @@ tag `a5`. Pictures the author approved or rejected are filed in
        interactive session (`05eefd3` says so); `sessions/session-1.jsonl` is Assignment 5's.
        The author decides whether to note that or run the handout's command.
 
+162. **The film next?**
+     - **The author's message:** "they are not linked with the video right?? can we move onto
+       making the video??"
+     - **Claude Code's answer:** they are linked. The assignment's film shows each effect's
+       first strip and every revision with its prediction, strips and verdict, two lines of
+       Step 6's generated shader, both prices against the budget, and the strip readings the
+       author overruled. The rest (the game, the three parts of a particle system with real scene
+       lines, the headless price, the tests and mutations, play footage) could start now. The
+       course's film skill is at `~/Desktop/brutalist.art` (godot-gamedev, walker), as for
+       Assignment 5's film.
+     - **Claude Code asked** which order; **the author answered:** "Strips first, then film
+       (Recommended)".
+     - **The capture list, completed:** the brief's retrigger strips (A1 at frame 37, A2's ignored
+       brake at 25) and second places (A2 on the valley road, B1 at the door lamp, B2 in the
+       reverse camera) join `TUNING.md`'s list, for both rounds.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
