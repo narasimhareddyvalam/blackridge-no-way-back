@@ -3,8 +3,7 @@
 **Last run:** the film, made by Claude Code at the author's word (#172–#174), 2026-11-08:
 "Blackridge, Rain and Vapour", 4K, 7 min 41 s, its records committed as `725464b`; its section
 is below. **Next, the author's:** watch the film; upload it to the course's media storage and
-send the link; check `SUBMISSION.md`'s summary; the author's own notes in `FRICTIONAL.md` are
-written but not committed; then the OK to push, the `a6` tag, a fresh-clone check and Canvas. Before the film, Step 6, made by
+send the link; check `SUBMISSION.md`'s summary; then the OK to push, the `a6` tag, a fresh-clone check and Canvas. Before the film, Step 6, made by
 Codex in its own session at the author's direction, then kept and committed with the author's
 account (#170–#171); Codex's own section is below. Before it, "do everything for me please"
 (#165): the brief's revisions 6–10, the `CLAUDE.md` review, Effect A's mutations and the cost
@@ -104,9 +103,11 @@ No slow motion. No title card before the end shows the game's title (C04).
 - **Changed:** the film's folder (`725464b`); `README.md` and `SUBMISSION.md` (the film's name, hash
   and the revision shown, `c1c9d8b`; one sentence on the film added to the author's summary, for
   the author to check; the URL waits for the upload); this file. Not pushed.
-- **The prompt log is local** since the author's `1f55566`: the film, `SUBMISSION.md`,
-  `TEST-REPORT.md`, `FRICTIONAL.md` and the brief cite its entries (#131–#174), which a reader of
-  the repository cannot open.
+- **The prompt log is local** since the author's `1f55566`, kept out of Git for now (#175): the
+  film, `SUBMISSION.md`, `TEST-REPORT.md`, `FRICTIONAL.md` and the brief cite its entries
+  (#131–#175), which a reader of the repository cannot open.
+- **The author's own notes** in `FRICTIONAL.md`, written by the author, committed unchanged at
+  the author's request (`7e2da58`, #175).
 - **Next, the author's:** watch the film; upload it and send the link (it goes into
   `SUBMISSION.md` and `README.md`); check `SUBMISSION.md`'s summary; then the OK to push, the `a6`
   tag, a fresh-clone check and Canvas.
