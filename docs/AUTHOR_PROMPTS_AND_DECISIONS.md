@@ -2449,14 +2449,88 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Checked:** every suite passes (`logs/particles/brief_step3/SUMMARY.txt`); renders of the
        rain from standing and close by, and of the splash markers.
 
+157. **The brief, step 4: the roadside.**
+     - **The author's message:** "alright proceed with step 4"
+     - **What Claude Code found:**
+       - the valley road past the lamps runs through forest: ferns and stumps grew up to the
+         gravel verge, the ground under the lamps was leaf litter, and the only guardrails stood
+         on the hill road, where the ground drops 1.2 m or more;
+       - a US guardrail (the Midwest Guardrail System) is 12-gauge W-beam with its top 31 in
+         (787 mm) up, on posts 6 ft 3 in (1,905 mm) apart, with 12 in (305 mm) spacer blocks
+         ([NDDOT](https://www.dot.nd.gov/sites/www/files/documents/travel-safety/NDDOT%20Tech%20Brief%202_MGS.pdf),
+         [FHWA B-212](https://highways.dot.gov/safety/rwd/reduce-crash-severity/hardware-eligibility-letters/safety-eligibility-letter-b-212),
+         [MwRSF](https://mwrsf.unl.edu/attachments/MwRSFNewsletter-Issue1.pdf)); reflectors go on
+         every guardrail, white on a two-way road, at most 100 ft (30 m) apart
+         ([MUTCD 3F](https://mutcd.fhwa.dot.gov/HTM/2009/part3/part3f.htm),
+         [TxDOT](https://www.txdot.gov/manuals/trf/sfb/markers_and_delineation/dilineators-i1003914.html));
+         each end has a terminal carrying a Type 3 object marker, black and yellow stripes that
+         slope down toward the side traffic passes
+         ([MUTCD 3C](https://mutcd.fhwa.dot.gov/HTM/2003/part3/part3c.htm),
+         [TxDOT](https://www.txdot.gov/manuals/trf/sfb/markers_and_delineation/object_markers-i1003737.html));
+       - a guardrail goes where there is a hazard: the clear zone beside a road widens on the
+         outside of a curve, by up to half, and trees inside it are shielded
+         ([FHWA](https://webarchive.library.unt.edu/web/20161031205541/http:/safety.fhwa.dot.gov/roadway_dept/clear_zones),
+         [Kentucky Highway Knowledge Portal](https://kp.uky.edu/?p=11644)); the straight past the
+         lamps is flat with nothing to shield, but the bends east of the depot (radius about
+         42 m) and west of it (about 48 m) have trees from 2.5 m beyond their gravel verge;
+       - highway crews mow a strip 10–15 ft (3–4.5 m) out from the shoulder, no shorter than
+         5–7 in ([TxDOT](https://www.txdot.gov/manuals/mnt/veg/mowing_standards.html),
+         [Connecticut DOT](https://portal.ct.gov/dot/knowledge-base/articles/what-is-ctdots-mowing-policy)),
+         so a verge is grass up to the tree line;
+       - mist droplets scatter light strongly forward, so a lamp's light in the air shows most
+         when looking toward it ([miepython](https://miepython.readthedocs.io/en/latest/05_fog.html),
+         [Jendersie and d'Eon](https://research.nvidia.com/labs/rtr/approximate-mie));
+       - Poly Haven's grass models are 0.2–1.6 million polygons each, too heavy to scatter;
+       - `_outer_side()` in `ghat_dressing.gd`, which places the lay-bys' walls, returns the side
+         a curve turns toward, its inside. Left as it is, as a question for the author.
+     - **What Claude Code changed** (uncommitted, in `tools/tuning/world/lamps_and_rings.patch`):
+       - **every guardrail:** the W-beam at its real 311 × 83 mm with its top at 787 mm; posts
+         every 1.905 m with 305 mm timber spacer blocks; a white reflector on every 16th post
+         (30.5 m); a terminal head at each end with its striped marker; wet galvanized steel,
+         rougher in patches. The reflectors and markers return light toward where it came from,
+         as retroreflective sheeting does (`retroreflector.gdshader`, new): bright in headlights
+         from far off, plain under a street lamp above;
+       - **two new runs** on the outside of the bends east and west of the depot
+         (`CURVE_RAILS`), 65 m and 160 m long, with collision like the hill road's rails;
+       - **grass:** a mowed strip 2.5 m wide beyond the gravel verge along the valley road,
+         thinning into the forest litter by 4 m: Poly Haven's `leafy_grass` (Charlotte Baglioni,
+         CC0, new) blended into the ground and kept matt when wet, with about 45,000 tufts of wet
+         blades, 16–30 cm tall in the strip and 30–60 cm at its edge, swaying with the rain's
+         wind (`roadside_grass.gd`, `verge_grass.gdshader`, new). Ferns, branches, stumps and
+         rocks no longer grow inside the strip; the rest of the forest floor is unchanged
+         (`forest_floor.gd`);
+       - **lamps in the distance:** four more street lamps on the outside of the west bend,
+         38 m apart, behind its guardrail, since lighting is a recognised treatment for sharp
+         curves. From the depot they recede round the bend, and from 65–90 m away only their
+         heads glow. Each has the same rain as the others (13 rain volumes, 9 before);
+       - **mist:** the street lamps, the depot's wall lights and the office's floodlight and
+         door lamp light the air beneath them (`lamp_mist.gdshader`, new). A shader adds up each
+         lamp's light along the view through the air, at the density of the scene's haze
+         (0.0045 per metre), since volumetric fog stays off (C53). It draws a soft cone,
+         brightest at the lamp head and looking toward the lamp, and fades with the lamp's own
+         light from 65 m;
+       - `test_lamp_rain_state.gd` counts 13 rain volumes.
+     - **Checked:** every suite passes (`logs/particles/brief_step4/SUMMARY.txt`), and the
+       headless price of the game reads 0.469 ms (0.461 ms at step 3). Renders of the bends,
+       the lamps, the grass and the curve. The mist adds about 1/255 of brightness across a view
+       of one lamp, and up to 87/255 at its head. The reflector shader matched Godot's own matt
+       surface within 2% with its return off.
+     - **Not measured:** the grass's and the mist's GPU price. Godot's GPU timer reads 0 on
+       Metal. With them on, the depot view held this Mac's 6.9 ms display frame, on battery,
+       even at double 3D resolution, but the runs with them off were noisy.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
   (`FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`); a verdict
   per effect in `TUNING.md`, including whether A2 keeps its clear sheet (#149). Until then r1
   stays uncommitted in the working tree.
-- The lamps and the road's puddles and rings (#150): kept or reverted, after a look in the game;
+- The world changes (#150–#157): the lamps, the road's puddles and rings, the depot's wall
+  lights, the streetlight, the rain under the lamps, and the roadside's guardrails, grass, lamps
+  and mist: kept or reverted after a look in the game, with their GPU price on power;
   uncommitted until then (`tools/tuning/world/lamps_and_rings.patch`).
+- Whether each lay-by's stone wall should stand on the inside of its curve, where
+  `_outer_side()` puts it (#157).
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
   the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
   agent prompt.

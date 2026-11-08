@@ -1,12 +1,13 @@
 # HANDOFF.md
 
-**Last run:** the depot lit from its wall (#151), after the street lamps and the road's puddles
-(#150), 2026-11-08, on branch `develop`, after Assignment 6's r1 (#145–#149). All stay
-uncommitted in the working tree; their records, a patch copy of each, and this handoff are
-committed, not pushed. Their sections are below, newest first. **Next:** the author's brief for
-a photorealistic rainy road, one part at a time, each approved before it starts (C53); step 1,
-the wet road's reflections, is done (#153), step 2, the streetlight, is done (#154), and step 3,
-the rain and its splashes, is done (#156); step 4, the roadside, waits for approval.
+**Last run:** the brief's step 4, the roadside (#157), 2026-11-08, on branch `develop`, after the
+depot lit from its wall (#151), the street lamps and the road's puddles (#150), and Assignment
+6's r1 (#145–#149). All stay uncommitted in the working tree; their records, a patch copy of
+each, and this handoff are committed, not pushed. Their sections are below, newest first.
+**Next:** the author's brief for a photorealistic rainy road, one part at a time, each approved
+before it starts (C53). Steps 1–4 are done: the wet road's reflections (#153), the streetlight
+(#154), the rain and its splashes (#156), and the roadside (#157). What comes next waits for
+the author.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -55,6 +56,68 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The brief, step 4: the roadside (#157)
+
+**The instruction (#157):** "alright proceed with step 4" (guardrails, grass, lamps in the
+distance and thin mist, the mist without volumetric fog).
+
+**Found:**
+- The straight past the lamps is flat, so a real road would have no guardrail there. The bends
+  east and west of the depot (radius 42 m and 48 m) have trees within the widened clear zone on
+  their outside, so each gets a guardrail there.
+- Poly Haven's grass models are too heavy (0.2–1.6 million polygons each).
+- `_outer_side()` in `ghat_dressing.gd` returns a curve's inside. Only the lay-by walls use it;
+  it is left as it is, as a question for the author.
+
+**In the working tree, uncommitted,** in `tools/tuning/world/lamps_and_rings.patch`:
+- `ghat_dressing.gd`:
+  - a real W-beam profile (311 × 83 mm, its top at 787 mm);
+  - posts every 1.905 m by arc length, with timber spacer blocks;
+  - a white reflector on every 16th post;
+  - a terminal head and striped marker at each end of every rail run;
+  - wet galvanized steel, its roughness patched by noise;
+  - `build()` takes `outside_rails`, pairs of points along which the outside of the curve gets a
+    rail, its side found once from the whole bend's turn.
+- `retroreflector.gdshader`, new: matt sheeting plus a return toward each light,
+  `return_peak / (1 + (angle / return_spread)²)` in the observation angle.
+- `industrial_loop.gd`:
+  - `CURVE_RAILS` (two bends);
+  - `_bend_lamps()`, four lamps on the west bend's outside, 38 m apart and 1.3 m beyond the
+    verge;
+  - `_mist()` under every street lamp, depot wall light, the floodlight and the door lamp;
+  - the ground's turf textures, and `OFFICE_PLOT` (the office's clearing, unchanged);
+  - the grass built after the forest, from the built plots, the forecourt and the office.
+- `roadside_grass.gd`, new:
+  - about 45,000 tufts in the valley road's verge (2.5 m mowed, thinning to 4 m), in 16 m
+    tiles, drawn up to 45 m with a lighter tuft beyond 18 m, and without shadows;
+  - a 1 m map of distance beyond the verge, which `paint()` hands to the ground shader.
+- `verge_grass.gdshader`, new: wet blades that sway with the +x wind and twitch in the rain.
+- `hill_ground.gdshader`: `leafy_grass` turf blended in by the verge map, with a ragged edge,
+  kept matt (roughness 0.85).
+- `forest_floor.gd`: no prop inside the mowed strip of a valley section. The random sequence
+  is kept, so the rest of the forest floor is unchanged.
+- `lamp_mist.gdshader`, new: equi-angular sampling (10 samples) of a spot light's in-scattering
+  along the view through a box around its cone:
+  - Godot's own cone and range falloff;
+  - two Henyey–Greenstein lobes;
+  - scattering 0.004 and extinction 0.0045 per metre;
+  - clipped by the scene's depth;
+  - faded with the lamp's distance fade.
+- `polyhaven/textures/leafy_grass/` (CC0) and `tools/assets/verge_assets.json`, new;
+  `SOURCES.md` and `POLYHAVEN.md` record it.
+- `test_lamp_rain_state.gd`: 13 rain volumes (9).
+
+**Tests:** `LOG_DIR=logs/particles/brief_step4`, every suite and `test_night_dimming.gd` at 30,
+60 and 144 exit 0 with the same counts as step 3 (regression 64/64, lamp rain 360/360 and
+12/12); art 0 failures; `cost_effects.gd 60 300` exit 0 (the game reads 0.469 ms headless).
+
+**Unverified:**
+- The GPU price of the grass, the mist and the four lamps. Godot's GPU timer reads 0 on Metal,
+  and frame times on battery were noisy.
+- The look in motion, and in the van's headlights.
+- Whether the author wants the mist stronger or fainter (`scattering`).
+- Whether the lay-by walls should move.
 
 ## The brief, step 3: the rain and its splashes (#156)
 
