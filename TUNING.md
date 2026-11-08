@@ -274,7 +274,8 @@ these changes, first reverse their patch
   2026-11-08): "i played and all look good proceed".
 - **Claude against the author:** Claude's comparison called the passenger line in the office
   floodlight the clearest fault: too bright, a zigzag more like a crack than water. The author's
-  verdict after play keeps it as it is, and the verdict decides.
+  verdict after play keeps it as it is, and the verdict decides. Asked why, the author answered
+  (#168): "everything i asked for is delivered as it is."
 - **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `retrigger-true`,
   `speed_kmh-50` and `place-depot` variants
 - **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
@@ -388,7 +389,8 @@ these changes, first reverse their patch
 - **My verdict (running game, 1280×800):** kept, with its clear sheet (#149). The author's
   words after playing (#164, 2026-11-08): "i played and all look good proceed".
 - **Claude against the author:** Claude's comparison found the streams white, reading more as
-  icicles than as clear water. The author's verdict after play keeps them.
+  icicles than as clear water. The author's verdict after play keeps them. Asked why, the author
+  answered (#168): "everything i asked for is delivered as it is."
 - **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`, and the `retrigger-true` and
   `place-valley` variants
 - **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and

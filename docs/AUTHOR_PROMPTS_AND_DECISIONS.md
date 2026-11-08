@@ -2716,6 +2716,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
        - the brief's † values are accepted (`CHANGE-BRIEF.md` revision 11);
        - the lay-by walls stay on the inside of their curves for now.
 
+168. **The human checks**
+     - **The author's message,** answering the list's item 3 (the human checks a–i), which the
+       author pasted back: "everything i asked for is delivered as it is."
+     - **Recorded:** in `TEST-REPORT.md`'s human-check rows and beside the two disagreements in
+       `TUNING.md`, word for word. It answers the list as a whole, not each case, and the report
+       says so.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): Step 6's process shader, its line
