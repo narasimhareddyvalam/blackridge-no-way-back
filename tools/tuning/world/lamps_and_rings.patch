@@ -1,8 +1,20 @@
+diff --git a/SOURCES.md b/SOURCES.md
+index fe94d37..ebffccb 100644
+--- a/SOURCES.md
++++ b/SOURCES.md
+@@ -97,6 +97,7 @@ Assignments 2–4 used a different game; see `FRICTIONAL.md`.
+ | `tree_stump_01` model (1k) | https://polyhaven.com/a/tree_stump_01 | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | stumps |
+ | `rock_moss_set_02` model (1k) | https://polyhaven.com/a/rock_moss_set_02 | Kless Gyzen | CC0 1.0 | 2026-10-30 | OpenGL | mossy rocks; the landslide |
+ | `dead_tree_trunk` model (1k) | https://polyhaven.com/a/dead_tree_trunk | Rob Tuytel | CC0 1.0 | 2026-10-30 | OpenGL | fallen trunks |
++| `security_light` model (1k), in `game/features/environments/depot_yard/polyhaven/models/` (recorded in its `POLYHAVEN.md`) | https://polyhaven.com/a/security_light | Maximilian Schuster | CC0 1.0 | 2026-11-08 | OpenGL (glTF) | the freight depot's wall lights, one above each roller door, its glass drawn as a lit lens (#151) |
+ | `cabin.glb`, `steering.glb` (rebuilt) | Written by code: `tools/art/build_first_drive_art.py` (Codex; cabin and wheel parts changed by Claude Code on 2026-10-30) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-30 | OpenGL | van interior |
+ | `body.glb` and `door.glb` (the driver's door split out) | Written by code: `tools/art/build_first_drive_art.py` (Codex; the driver's door, its lowered handle and its share of the trim moved into `door.glb` by Claude Code on 2026-10-31, Run 19) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-31 | OpenGL | van body; the driver's door that swings open when Ethan gets in |
+ | `cockpit/` in `game/features/vehicles/freight_van/art/`: `cockpit_front`, `cockpit_back`, `cockpit_roof` and `cockpit_wheel` (glTF), 27 textures, two shadow stand-ins | "FREE // Honda E (Detailed Interior) 2021", https://sketchfab.com/3d-models/free-honda-e-detailed-interior-2021-814cf3f8cfd64594b1c4f96e873c3cef | Alex Murias (Sketchfab: Xlay3D), model and textures. Changed by Claude Code in Blender on 2026-10-31: fitted to the van's cab (dash widened to the windshield, doors and seats moved, roof stretched, cab closed behind the seats), Honda badges and screen pictures removed, slimmed with no visible change, textures resized to 1k and 2k, split into four files; its own sunroof frame reopened as a moon roof on 2026-10-31 (Run 16) | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) | 2026-10-31 | OpenGL (glTF) | van cockpit (C22); `cabin.glb` and `steering.glb` stay in the repository, unused |
 diff --git a/game/features/environments/industrial_loop/industrial_loop.gd b/game/features/environments/industrial_loop/industrial_loop.gd
-index 0303d0b..161bf00 100644
+index 0303d0b..43116f3 100644
 --- a/game/features/environments/industrial_loop/industrial_loop.gd
 +++ b/game/features/environments/industrial_loop/industrial_loop.gd
-@@ -56,6 +56,14 @@ const OFFICE_PAINT := {
+@@ -56,6 +56,22 @@ const OFFICE_PAINT := {
  }
  const LAMP_COLOR := Color("ffd7a0")
  const FLOODLIGHT_COLOR := Color("e4ebf2")
@@ -14,10 +26,18 @@ index 0303d0b..161bf00 100644
 +const POST_SHADOWS_TO := 45.0
 +const HALO_SIZE := 2.4
 +const HALO_STRENGTH := 0.8
++const SECURITY_LIGHT := "res://features/environments/depot_yard/polyhaven/models/security_light/" \
++	+ "security_light.gltf"
++const DEPOT_FRONT := 112.5
++const WALL_LIGHT_HEIGHT := 5.45
++const WALL_LIGHT_ENERGY := 140.0
++const WALL_LIGHT_REACH := 20.0
++const WALL_LIGHT_SPREAD := 60.0
++const WALL_RAIN_OUT := 4.0
  const VIEW_CLEARINGS: Array[Rect2] = [Rect2(420, -140, 75, 55), Rect2(395, -112, 70, 50),
  	Rect2(368, -82, 70, 50), Rect2(340, -52, 72, 50), Rect2(312, -22, 74, 50)]
  const SKYLINE_Z := 207.0
-@@ -86,6 +94,8 @@ var lamp_rain := LampRain.new()
+@@ -86,6 +102,8 @@ var lamp_rain := LampRain.new()
  var _metal := Build.material(Color("343d43"), 0.48)
  var _concrete := Build.material(Color("4b5254"))
  var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
@@ -26,7 +46,16 @@ index 0303d0b..161bf00 100644
  var _line := Build.material(Color("bdab72"), 0.65)
  var _random := RandomNumberGenerator.new()
  
-@@ -651,23 +661,59 @@ func _lamp_post(at: Vector3, heading: float) -> void:
+@@ -461,7 +479,7 @@ func _depot() -> void:
+ 		Build.box(self, Vector3(x, 2.4, 112.45), Vector3(9, 4.8, 0.15), _metal)
+ 		for y in range(1, 10):
+ 			Build.box(self, Vector3(x, y * 0.48, 112.30), Vector3(8.8, 0.025, 0.04), _concrete)
+-		_lamp_post(Vector3(x, 0, 109), PI)
++		_wall_light(Vector3(x, WALL_LIGHT_HEIGHT, DEPOT_FRONT))
+ 	for x in [-34, -22]:
+ 		Build.box(self, Vector3(x, 0.04, 93), Vector3(0.12, 0.02, 12), _line)
+ 	Build.box(self, Vector3(-28, 0.04, 99), Vector3(12, 0.02, 0.15), _line)
+@@ -651,23 +669,89 @@ func _lamp_post(at: Vector3, heading: float) -> void:
  	post.rotation.y = heading
  	Build.cylinder(post, Vector3(0, 3.7, 0), 0.09, 7.4, _metal)
  	Build.box(post, Vector3(-1, 7.25, 0), Vector3(2.1, 0.09, 0.10), _metal)
@@ -63,6 +92,36 @@ index 0303d0b..161bf00 100644
 -		light.shadow_enabled = true
 -		light.light_energy = 4.0
 -		light.omni_range = 16.0
++
++
++func _wall_light(at: Vector3) -> void:
++	var fixture := (load(SECURITY_LIGHT) as PackedScene).instantiate() as Node3D
++	fixture.position = at
++	fixture.rotation.y = PI
++	add_child(fixture)
++	for mesh: Node in fixture.find_children("*", "MeshInstance3D", true, false):
++		(mesh as MeshInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
++		if mesh.name == "security_light_glass":
++			(mesh as MeshInstance3D).material_override = _lens
++	var light := SpotLight3D.new()
++	light.position = at + Vector3(0, -0.32, -0.22)
++	light.rotation_degrees.x = -55.0
++	light.light_color = POST_LIGHT_COLOR
++	light.light_energy = WALL_LIGHT_ENERGY
++	light.spot_range = WALL_LIGHT_REACH
++	light.spot_angle = WALL_LIGHT_SPREAD
++	light.spot_attenuation = 2.0
++	light.shadow_enabled = true
++	light.distance_fade_enabled = true
++	light.distance_fade_begin = 65.0
++	light.distance_fade_length = 25.0
++	light.distance_fade_shadow = POST_SHADOWS_TO
++	add_child(light)
++	var halo := _halo()
++	halo.position = at + Vector3(0, -0.3, -0.35)
++	add_child(halo)
++	lamp_rain.add_volume(LampRain.POST, Transform3D(Basis.IDENTITY,
++		Vector3(at.x, at.y - 0.45, at.z - WALL_RAIN_OUT)))
 +
 +
 +func _halo() -> MeshInstance3D:
@@ -201,3 +260,32 @@ index 7a34a30..13ba4f0 100644
 +	NORMAL_MAP = mix(base_normal, vec3(0.5, 0.5, 1.0), paint * 0.7);
  	NORMAL_MAP_DEPTH = 0.65;
  }
+diff --git a/game/features/ui/menus/front_menu.gd b/game/features/ui/menus/front_menu.gd
+index 4974512..f1857d6 100644
+--- a/game/features/ui/menus/front_menu.gd
++++ b/game/features/ui/menus/front_menu.gd
+@@ -510,8 +510,8 @@ func _credits_text() -> String:
+ 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
+ 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
+ 		+ "characters, with Mixamo animations.")
+-	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants and rocks "
+-		+ "from Poly Haven, released CC0 by its artists.")
++	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
++		+ "props from Poly Haven, released CC0 by its artists.")
+ 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "
+ 		+ "Murias (Sketchfab: Xlay3D), licensed CC BY 4.0, used while the cab was being built.")
+ 	_section(lines, "SOUND", "Every sound was made in code for this game.")
+diff --git a/game/tests/test_lamp_rain_state.gd b/game/tests/test_lamp_rain_state.gd
+index c6a5d7e..4386bac 100644
+--- a/game/tests/test_lamp_rain_state.gd
++++ b/game/tests/test_lamp_rain_state.gd
+@@ -58,7 +58,8 @@ func _run() -> void:
+ func _check_start() -> void:
+ 	var near := _within_range()
+ 	_check(_rain.volumes.size() == 9,
+-		"Every lamp has a rain volume: 7 posts, the floodlight and the door lamp (%d)"
++		"Every lamp has a rain volume: 4 posts, the depot's 3 wall lights, the floodlight and " +
++		"the door lamp (%d)"
+ 		% _rain.volumes.size())
+ 	_check(near.size() == 3 and _states_match(near),
+ 		"At the start, the 3 lamps within 65 m of the camera rain and the other 6 are off and " +

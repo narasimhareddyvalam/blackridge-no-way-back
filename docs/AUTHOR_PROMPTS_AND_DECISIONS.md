@@ -2277,6 +2277,50 @@ tag `a5`. Pictures the author approved or rejected are filed in
          shadows before) and the rings;
        - B1's rain volume, 6 × 6 m under the head, is now smaller than the lamp's pool of light.
 
+151. **The depot's lights on its wall, and a brief for a photorealistic rainy road.**
+     - **The author's message:** "[Image #6]. those lights at shed looks so bad i mean, real
+       physics and in real life thats not how they are added near sheds, look for already
+       available assets maybe."
+     - **With it:** a pasted brief, "create an extremely photorealistic nighttime streetlight
+       scene in my existing Godot 4 driving game", in ten sections: inspect the project first; a
+       weathered streetlight with a curved arm and warm amber light; wet asphalt and puddles as
+       the highest priority; animated rain, splashes and ripples; guardrails, grass, dark trees,
+       faint distant lamps and thin mist; rendering (volumetric fog, shadows, tone mapping);
+       Blender for missing models and licensed outside assets; performance; implementation in a
+       reusable scene with screenshots; deliverables. And a reference image: a dark empty road
+       in heavy rain under an amber streetlight, a guardrail, and puddles full of rings that
+       break up the light's reflection.
+     - **Claude Code asked three questions; the author answered:**
+       - how to handle the brief: "Shed lights, then brief step by step (Recommended)";
+       - volumetric fog and tone mapping, which `CLAUDE.md` keeps fixed: "Keep them fixed";
+       - the street lamps' colour, amber like the image or the present 4,000 K white: "i want
+         them to be stuck onto the wall directly, i dont want any streetlight style lamps at
+         depot". The colour stays as it is until the brief's streetlight step.
+     - **What Claude Code found:** warehouses and sheds are lit by full-cutoff fittings on their
+       walls (wall packs and security lights), mounted about 3–6 m up (10–20 ft) and spaced
+       4.5–9 m (15–30 ft), with no light above the horizontal; loading areas take 6,000–12,000
+       lumens a fitting (vendor guides only:
+       [Hi-Hyperlite](https://hi-hyperlite.com/blogs/comprehensive-guides/full-cutoff-wall-packs-dark-sky-compliance-installation-guide),
+       [LED Lighting Supply](https://www.ledlightingsupply.com/blog/buyers-guide-to-outdoor-wall-pack-lights)).
+       The project already holds a CC0 model of one, Poly Haven's Security Light (Maximilian
+       Schuster), which the old depot-yard scene mounts above its dock doors.
+     - **What Claude Code changed** (uncommitted, in the same copy as #150,
+       `tools/tuning/world/lamps_and_rings.patch`):
+       - the depot's three street lamps are gone; a Security Light is fixed to the wall above
+         each roller door, 5.45 m up, its glass drawn as a lit lens, with a spot light aimed
+         down and out over the apron at 35° from straight down (60° each side, energy 140,
+         reach 20 m, falling off with the square of distance, shadows) and the same glow as the
+         street lamps;
+       - each light keeps a rain volume (B1), 4 m out from the wall, clear of the roof's
+         overhang; the count stays nine;
+       - the credits name Poly Haven's props as well, and `SOURCES.md` lists the model;
+       - `test_lamp_rain_state.gd` names the lamps as they are now; its expectations are
+         unchanged.
+     - **Checked:** every suite passes (`logs/particles/depot_151/SUMMARY.txt`); renders of the
+       depot from the yard, from the van and close by.
+     - **Next, on the author's approval:** the brief's parts one at a time, starting with its
+       highest priority, the wet road's reflections.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

@@ -1,9 +1,10 @@
 # HANDOFF.md
 
-**Last run:** the street lamps and the road's puddles made realistic at the author's request
-(#150), 2026-11-08, on branch `develop`, after Assignment 6's r1 (#145–#149). Both stay
+**Last run:** the depot lit from its wall (#151), after the street lamps and the road's puddles
+(#150), 2026-11-08, on branch `develop`, after Assignment 6's r1 (#145–#149). All stay
 uncommitted in the working tree; their records, a patch copy of each, and this handoff are
-committed, not pushed. Their sections are below, #150 first.
+committed, not pushed. Their sections are below, newest first. **Next:** the author's brief for
+a photorealistic rainy road, one part at a time, each approved before it starts (C53).
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -52,6 +53,37 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The depot lit from its wall (#151)
+
+**The instruction (#151):** "those lights at shed looks so bad i mean, real physics and in real
+life thats not how they are added near sheds, look for already available assets maybe", then "i
+want them to be stuck onto the wall directly, i dont want any streetlight style lamps at depot".
+With it, a pasted brief for a photorealistic rainy road, to be taken one part at a time ("Shed
+lights, then brief step by step"), with volumetric fog off and the exposure fixed ("Keep them
+fixed"). The street lamps' colour is open until the brief's streetlight step (C53).
+
+**In the working tree, uncommitted until the author has looked,** in the same patch as #150
+(`tools/tuning/world/lamps_and_rings.patch`, which now holds both, applying to HEAD):
+- `industrial_loop.gd`: `_wall_light()` in place of the depot's three `_lamp_post()` calls:
+  Poly Haven's Security Light (already in `depot_yard/polyhaven/models/`) on the wall above
+  each roller door, 5.45 m up, its glass drawn with the street lamps' lens, casting no shadow
+  itself; a spot light at its glass, aimed 35° from straight down and out over the apron, 60°
+  each side, energy 140, reach 20 m, `spot_attenuation` 2, shadows to 45 m; the street lamps'
+  glow; a B1 rain volume (the post scene) 4 m out from the wall and 0.45 m below the light,
+  clear of the roof's 1 m overhang.
+- `front_menu.gd`: the credits read "Textures, trees, plants, rocks and props from Poly Haven".
+- `SOURCES.md`: a row for the Security Light.
+- `test_lamp_rain_state.gd`: its message names the lamps as they are (4 posts, the depot's 3
+  wall lights, the floodlight, the door lamp); the expected count, 9, is unchanged.
+
+**Tests:** `LOG_DIR=logs/particles/depot_151` with the same commands as #150: every suite exits 0
+with the same counts, art 0 failures, and the cost script reads every effect the same as every
+effect off (`logs/particles/depot_151/SUMMARY.txt`).
+
+**Unverified:** the wall lights in the running game and their GPU price (three shadowed spot
+lights, as the three posts had); the bus stop's Poly Haven trash can, which ships, has no row in
+`SOURCES.md` (found, not changed).
 
 ## The street lamps and the road's puddles (#150)
 

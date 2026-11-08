@@ -106,7 +106,9 @@ also changed, uncommitted, with their own patch (`tools/tuning/world/lamps_and_r
 lamps that light downward like real ones, with shadows and a glow around the lens, and raindrop
 rings in puddles with edges (the prompt log, #150). An r1 capture from the working tree includes
 them, so B1's r0 and r1 strips differ in the lamp as well as in the rain, and A1's depot strip
-and A2's show the new puddles. To capture r1 without them, first reverse their patch
+and A2's show the new puddles. Then the depot's three street lamps became security lights on
+its wall (#151), each with its rain volume, so A1's depot strip shows them too. To capture r1
+without these changes, first reverse their patch
 (`git apply -R tools/tuning/world/lamps_and_rings.patch`), then apply it again.
 
 ## Effect A1 (wiper flick), revision r1
