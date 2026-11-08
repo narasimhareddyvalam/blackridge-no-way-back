@@ -1,12 +1,13 @@
 # HANDOFF.md
 
-**Last run:** the strips, run by Claude Code at the author's request (#163), 2026-11-08: 22
-fixture strips, all read; r0 committed as the first strip (`2b9e327`), r1's strips and Claude's
-comparisons uncommitted beside the r1 change until the author's verdicts. **Next:** the author's
-verdict per effect in the running game; the rest of Assignment 6 is in the prompt log's #158
-answer and its "Waiting for the author" list.
+**Last run:** the author's verdicts after play (#164), 2026-11-08: all four effects' r1 kept and
+committed with its strips (`1c8447b`), then the world changes (#150–#158) in the commit after it.
+**Next:** the author's parts (brief revisions, Step 6's shader, the GPU price, the human checks
+in the author's words), then the film; the full list is the prompt log's "Waiting for the
+author". Before it, the strips, run by Claude Code at the author's request (#163): 22 fixture
+strips, all read, r0 committed as the first strip (`2b9e327`).
 
-Before it, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
+Before those, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
 wipers. Before those, the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`,
 `TEST-REPORT.md`, `README.md` and the honest log. Before those, the author's brief for a
 photorealistic rainy road, done one approved step at a time (C53): the wet road's reflections
@@ -64,6 +65,38 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The verdicts: all kept (#164)
+
+**The instruction (#164):** "i played and all look good proceed. is the video only thing thats
+left?"
+
+**Done:**
+- The author's verdict recorded: r1 of all four effects kept, A2 with its clear sheet. Claude
+  Code took "all" to cover the world changes (#150–#158) and #160's title fix as well; the
+  author can say otherwise. `TUNING.md` quotes the words under each effect, beside the two
+  readings of Claude's the verdict overrules (A1's passenger line, A2's white streams).
+- HEAD plus the r1 patch alone checked in a temporary worktree (imported, then every suite), so
+  the r1 commit stands on its own.
+- Committed `1c8447b`: the r1 change (24 files), its 11 strips, the comparisons and verdicts in
+  `TUNING.md`, the prompt log's #164 and the r1-only logs.
+- Committed after it: the world changes (35 files: scripts, shaders, the streetlight model and
+  its build script, the Poly Haven textures, `SOURCES.md`, the asset lists), `TEST-REPORT.md`'s
+  "Since tuning" at the latest counts, `TUNING.md`'s commit fields, and this handoff.
+
+**Commands and real results:**
+- r1 alone, `logs/particles/r1_only_164`: import exit 0; 30 runs exit 0, at the counts below
+  except B1's state 12/12, since its 13th check, the title's, comes with the world changes; art
+  0 failures.
+- r1 and the world together, `logs/particles/strips_163`: 30 runs exit 0 (configurations 451,
+  221, 364, 44; states 27, 13, 13, 10); art 0 failures. Both patch copies matched the working
+  tree before the commits (the world's byte for byte, r1's file by file).
+
+**What the next run may rely on:** `develop` holds r1 and the world changes, not pushed; the
+patches in `tools/tuning/` are copies of what is now committed.
+
+**Unverified:** the human checks in the author's words, the GPU price, Step 6's shader, and the
+brief revisions for the kept changes: all the author's.
 
 ## The strips, run by Claude Code (#163)
 

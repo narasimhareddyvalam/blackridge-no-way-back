@@ -110,7 +110,8 @@ glass colliders, the air's push, the run-off at speed, the spill's water and fre
 A2 state test adds the water's surge as the van slows.
 
 **Outside the effects (#150):** at the author's request the street lamps and the road's puddles
-also changed, uncommitted, with their own patch (`tools/tuning/world/lamps_and_rings.patch`):
+also changed, with their own patch (`tools/tuning/world/lamps_and_rings.patch`), kept with the
+effects after the author's play (#164) and committed after r1:
 lamps that light downward like real ones, with shadows and a glow around the lens, and raindrop
 rings in puddles with edges (the prompt log, #150). An r1 capture from the working tree includes
 them, so B1's r0 and r1 strips differ in the lamp as well as in the rain, and A1's depot strip
@@ -276,7 +277,8 @@ these changes, first reverse their patch
   verdict after play keeps it as it is, and the verdict decides.
 - **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `retrigger-true`,
   `speed_kmh-50` and `place-depot` variants
-- **Commits:** _when kept._
+- **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
+  its strips `2b9e327`.
 
 ## Effect A2 (roof spill), revision r1
 
@@ -389,7 +391,8 @@ these changes, first reverse their patch
   icicles than as clear water. The author's verdict after play keeps them.
 - **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`, and the `retrigger-true` and
   `place-valley` variants
-- **Commits:** _when kept._
+- **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
+  its strips `2b9e327`.
 
 ## Effect B1 (lamp rain), revision r1
 
@@ -504,7 +507,8 @@ these changes, first reverse their patch
   2026-11-08): "i played and all look good proceed". §4's check that no drop falls under the
   office's door hood is not named in it.
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`, and the `place-door` variant
-- **Commits:** _when kept._
+- **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
+  its strips `2b9e327`.
 
 ## Effect B2 (exhaust vapour), revision r1
 
@@ -569,4 +573,5 @@ these changes, first reverse their patch
   plume to the author's eyes; the verdict keeps it.
 - **Strips:** `captures/exhaust_vapour/r0/`, `captures/exhaust_vapour/r1/`, and the
   `view-reverse_camera` variant
-- **Commits:** _when kept._
+- **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
+  its strips `2b9e327`.

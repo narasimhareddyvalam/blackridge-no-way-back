@@ -10,13 +10,16 @@ const ASPHALT_COLOR = preload("art/asphalt_albedo.png")
 const ASPHALT_NORMAL = preload("art/asphalt_normal.png")
 const RoadsideForest = preload("roadside_forest.gd")
 const ForestFloor = preload("forest_floor.gd")
+const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
 const LampRain = preload("lamp_rain.gd")
 const SiteOffice = preload("art/office/site_office.glb")
+const Streetlight = preload("art/streetlight/streetlight.glb")
 const GROUND = preload("hill_ground.gdshader")
+const MIST = preload("lamp_mist.gdshader")
 const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/textures/"
 const FOREST_CLEARANCE := 2.5
 const TERRAIN_AREA := Rect2(-160, -320, 820, 650)
@@ -42,6 +45,7 @@ const FORECOURT := Rect2(544.0, 120.8, 36.0, 5.4)
 const MOON_LAYER := 4
 const VAN_PARKING := Vector3(568.0, -0.02, 123.5)
 const SITE_OFFICE := Vector3(552.0, -0.12, 117.5)
+const OFFICE_PLOT := Rect2(SITE_OFFICE.x - 5.0, SITE_OFFICE.z - 3.5, 10.0, 7.5)
 const SHEET_STAND := 0.7
 const OFFICE_TEXTURES := {
 	"siding": ["weathered_plank_siding", 1.57, "2k"],
@@ -56,6 +60,27 @@ const OFFICE_PAINT := {
 }
 const LAMP_COLOR := Color("ffd7a0")
 const FLOODLIGHT_COLOR := Color("e4ebf2")
+const STREET_LIGHT_COLOR := Color("ffa040")
+const WALL_LIGHT_COLOR := Color("ffd1a0")
+const POLE_STEEL := Color("5c6163")
+const LUMINAIRE_PAINT := Color("8a8f92")
+const POST_ENERGY := 90.0
+const POST_REACH := 15.0
+const POST_SPREAD := 55.0
+const POST_SHADOWS_TO := 45.0
+const HALO_SIZE := 2.4
+const HALO_STRENGTH := 0.8
+const MIST_BELOW := 0.6
+const SECURITY_LIGHT := "res://features/environments/depot_yard/polyhaven/models/security_light/" \
+	+ "security_light.gltf"
+const DEPOT_FRONT := 112.5
+const WALL_LIGHT_HEIGHT := 5.45
+const WALL_LIGHT_ENERGY := 60.0
+const WALL_LIGHT_REACH := 9.0
+const WALL_LIGHT_SPREAD := 40.0
+const WALL_LIGHT_TILT := 10.0
+const WALL_HALO_SIZE := 1.2
+const WALL_RAIN_OUT := 4.0
 const VIEW_CLEARINGS: Array[Rect2] = [Rect2(420, -140, 75, 55), Rect2(395, -112, 70, 50),
 	Rect2(368, -82, 70, 50), Rect2(340, -52, 72, 50), Rect2(312, -22, 74, 50)]
 const SKYLINE_Z := 207.0
@@ -64,6 +89,11 @@ const GLOW_SIZE := 16.0
 const GLOW_FROM := 150.0
 const LANDSLIDE_AT := Vector2(330, 166)
 const CROSSING_AT := Vector2(64.0, -79.0)
+const CURVE_RAILS: Array[Vector2] = [Vector2(55.0, 44.0), Vector2(6.0, 68.0),
+	Vector2(-50.0, 72.0), Vector2(-64.0, 168.0)]
+const WEST_BEND_LAMPS: Array[Vector2] = [Vector2(-45.0, 71.5), Vector2(-64.0, 168.0)]
+const BEND_LAMP_SPACING := 38.0
+const BEND_LAMP_SETBACK := 1.3
 const SIGN_SETBACK := 3.0
 const GUIDE_GREEN := Color("0a4128")
 const TOWN_LAMPS: Array[Vector3] = [Vector3(-45, 0, 64.5), Vector3(-15, 0, 63.8),
@@ -82,10 +112,18 @@ var run_sheet_spot := Vector3.ZERO
 var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
+var grass: Node3D
+var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
 var _metal := Build.material(Color("343d43"), 0.48)
 var _concrete := Build.material(Color("4b5254"))
 var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
+var _lens := Build.luminous(Color(6.0, 5.06, 3.76))
+var _street_lens := Build.luminous(Color(6.0, 3.76, 1.5))
+var _streetlight_paints := {}
+var _halo_falloff: GradientTexture2D
+var _halo_materials := {}
+var _halo_meshes := {}
 var _line := Build.material(Color("bdab72"), 0.65)
 var _random := RandomNumberGenerator.new()
 
@@ -136,6 +174,7 @@ func _environment() -> void:
 	moon.rotation_degrees = Vector3(-35.0, -28.0, 0.0)
 	moon.light_color = Color("9bb8d4")
 	moon.light_energy = 0.2
+	moon.light_specular = 0.0
 	moon.shadow_enabled = true
 	moon.directional_shadow_max_distance = 40.0
 	moon.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
@@ -155,7 +194,8 @@ func _ground_and_roads() -> void:
 	terrain = HillTerrain.new()
 	terrain.name = "HillTerrain"
 	add_child(terrain)
-	terrain.build(road, TERRAIN_AREA, _flat_plots(), _hill_material(), 42021)
+	_ground = _hill_material()
+	terrain.build(road, TERRAIN_AREA, _flat_plots(), _ground, 42021)
 	var asphalt := ShaderMaterial.new()
 	asphalt.shader = ASPHALT
 	asphalt.set_shader_parameter("aggregate_color", _texture("tarred_gravel", "diff"))
@@ -178,7 +218,7 @@ func _ground_and_roads() -> void:
 	dressing = GhatDressing.new()
 	dressing.name = "GhatDressing"
 	add_child(dressing)
-	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index)
+	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS)
 	var yard := ShaderMaterial.new()
 	yard.shader = ASPHALT
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
@@ -327,6 +367,9 @@ func _hill_material() -> ShaderMaterial:
 		material.set_shader_parameter(pair[0] + "_color", _texture(pair[1], "diff"))
 		material.set_shader_parameter(pair[0] + "_normal", _texture(pair[1], "nor_gl"))
 		material.set_shader_parameter(pair[0] + "_arm", _texture(pair[1], "arm"))
+	material.set_shader_parameter("turf_color", _texture("leafy_grass", "diff", "1k"))
+	material.set_shader_parameter("turf_normal", _texture("leafy_grass", "nor_gl", "1k"))
+	material.set_shader_parameter("turf_arm", _texture("leafy_grass", "arm", "1k"))
 	return material
 
 
@@ -461,7 +504,7 @@ func _depot() -> void:
 		Build.box(self, Vector3(x, 2.4, 112.45), Vector3(9, 4.8, 0.15), _metal)
 		for y in range(1, 10):
 			Build.box(self, Vector3(x, y * 0.48, 112.30), Vector3(8.8, 0.025, 0.04), _concrete)
-		_lamp_post(Vector3(x, 0, 109), PI)
+		_wall_light(Vector3(x, WALL_LIGHT_HEIGHT, DEPOT_FRONT))
 	for x in [-34, -22]:
 		Build.box(self, Vector3(x, 0.04, 93), Vector3(0.12, 0.02, 12), _line)
 	Build.box(self, Vector3(-28, 0.04, 99), Vector3(12, 0.02, 0.15), _line)
@@ -471,6 +514,28 @@ func _depot() -> void:
 	_direction_sign(Vector2(40, 68), "FREIGHT DEPOT", "NEXT LEFT")
 	for at in TOWN_LAMPS:
 		_lamp_post(at, PI / 2)
+	_bend_lamps(WEST_BEND_LAMPS[0], WEST_BEND_LAMPS[1])
+
+
+func _bend_lamps(from: Vector2, to: Vector2) -> void:
+	var first := _nearest_road(from)
+	var last := _nearest_road(to)
+	var outside := 1.0 if angle_difference(road.heading_at(first), road.heading_at(last)) > 0.0 \
+		else -1.0
+	var travelled := 0.0
+	for index in range(first, last):
+		var here := road_points[index]
+		var ahead := road_points[index + 1]
+		travelled += Vector2(here.x, here.z).distance_to(Vector2(ahead.x, ahead.z))
+		if travelled < BEND_LAMP_SPACING:
+			continue
+		travelled = 0.0
+		var right := Vector3(ahead.x - here.x, 0.0, ahead.z - here.z).normalized().cross(Vector3.UP)
+		var reach: float = road.half_widths[index] + GhatRoad.VERGE + BEND_LAMP_SETBACK
+		var at := here + right * outside * reach
+		at.y = terrain.height_at(at.x, at.z)
+		var toward := -right * outside
+		_lamp_post(at, atan2(toward.z, -toward.x))
 
 
 func _direction_sign(near: Vector2, title: String, detail: String) -> void:
@@ -549,7 +614,7 @@ func _lumber_yard() -> void:
 
 func _site_office() -> void:
 	var at := SITE_OFFICE
-	clearings.append(Rect2(at.x - 5.0, at.z - 3.5, 10.0, 7.5))
+	clearings.append(OFFICE_PLOT)
 	var office := SiteOffice.instantiate() as Node3D
 	office.name = "SiteOffice"
 	office.position = at
@@ -603,6 +668,7 @@ func _office_lights(office: Node3D) -> void:
 	lamp.spot_angle = 55.0
 	lamp.shadow_enabled = true
 	office.add_child(lamp)
+	_mist(lamp, lamp.position.y + MIST_BELOW)
 	var flood := SpotLight3D.new()
 	flood.name = "FloodLight"
 	flood.transform = (office.get_node("Floodlight") as Node3D).transform
@@ -614,6 +680,7 @@ func _office_lights(office: Node3D) -> void:
 	flood.spot_angle = 30.0
 	flood.shadow_enabled = true
 	office.add_child(flood)
+	_mist(flood, (office.transform * flood.position).distance_to(VAN_PARKING) + 3.0)
 	var glow := OmniLight3D.new()
 	glow.name = "WindowGlow"
 	glow.position = (office.get_node("WindowLight") as Node3D).position
@@ -645,29 +712,151 @@ func _street_furniture() -> void:
 
 
 func _lamp_post(at: Vector3, heading: float) -> void:
-	var post := Node3D.new()
-	add_child(post)
+	var post := Streetlight.instantiate() as Node3D
 	post.position = at
 	post.rotation.y = heading
-	Build.cylinder(post, Vector3(0, 3.7, 0), 0.09, 7.4, _metal)
-	Build.box(post, Vector3(-1, 7.25, 0), Vector3(2.1, 0.09, 0.10), _metal)
-	Build.box(post, Vector3(-1.9, 7.1, 0), Vector3(0.8, 0.12, 0.45), _lamp)
-	var light := OmniLight3D.new()
-	light.position = Vector3(-1.9, 6.7, 0)
-	light.light_color = Color("ffd1a0")
-	light.light_energy = 3.0
-	light.omni_range = 18.0
-	light.omni_attenuation = 1.6
+	add_child(post)
+	var body := post.get_node("Streetlight") as MeshInstance3D
+	for surface in range(body.mesh.get_surface_count()):
+		var part := body.mesh.surface_get_material(surface).resource_name
+		body.set_surface_override_material(surface, _streetlight_material(part))
+	var lens := (post.get_node("Lens") as Node3D).position
+	var light := SpotLight3D.new()
+	light.position = lens
+	light.rotation.x = -PI / 2.0
+	light.light_color = STREET_LIGHT_COLOR
+	light.light_energy = POST_ENERGY
+	light.spot_range = POST_REACH
+	light.spot_angle = POST_SPREAD
+	light.spot_angle_attenuation = 1.5
+	light.spot_attenuation = 2.0
+	light.shadow_enabled = true
 	light.distance_fade_enabled = true
 	light.distance_fade_begin = 65.0
 	light.distance_fade_length = 25.0
+	light.distance_fade_shadow = POST_SHADOWS_TO
 	post.add_child(light)
-	lamp_rain.add_volume(LampRain.POST, Transform3D(Basis.IDENTITY,
+	_mist(light, lens.y + MIST_BELOW)
+	var halo := _halo(HALO_SIZE, STREET_LIGHT_COLOR)
+	halo.position = lens + Vector3(0, -0.2, 0)
+	post.add_child(halo)
+	lamp_rain.add_volume(LampRain.STREET, Transform3D(Basis.IDENTITY,
 		post.transform * LampRain.POST_HEAD))
-	if at.z > 100.0:
-		light.shadow_enabled = true
-		light.light_energy = 4.0
-		light.omni_range = 16.0
+
+
+func _streetlight_material(part: String) -> Material:
+	match part:
+		"lens":
+			return _street_lens
+		"footing":
+			return _concrete
+		"steel":
+			return _metal
+	if not _streetlight_paints.has(part):
+		var paint := StandardMaterial3D.new()
+		paint.albedo_color = POLE_STEEL if part == "pole" else LUMINAIRE_PAINT
+		paint.metallic = 0.6 if part == "pole" else 0.3
+		paint.roughness_texture = _texture("green_metal_rust", "arm", "1k")
+		paint.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_GREEN
+		paint.normal_enabled = true
+		paint.normal_texture = _texture("green_metal_rust", "nor_gl", "1k")
+		paint.normal_scale = 0.7 if part == "pole" else 0.3
+		paint.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+		_streetlight_paints[part] = paint
+	return _streetlight_paints[part]
+
+
+func _wall_light(at: Vector3) -> void:
+	var fixture := (load(SECURITY_LIGHT) as PackedScene).instantiate() as Node3D
+	fixture.position = at
+	fixture.rotation.y = PI
+	add_child(fixture)
+	for mesh: Node in fixture.find_children("*", "MeshInstance3D", true, false):
+		(mesh as MeshInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if mesh.name == "security_light_glass":
+			(mesh as MeshInstance3D).material_override = _lens
+	var light := SpotLight3D.new()
+	light.position = at + Vector3(0, -0.32, -0.22)
+	light.rotation_degrees.x = WALL_LIGHT_TILT - 90.0
+	light.light_color = WALL_LIGHT_COLOR
+	light.light_energy = WALL_LIGHT_ENERGY
+	light.spot_range = WALL_LIGHT_REACH
+	light.spot_angle = WALL_LIGHT_SPREAD
+	light.spot_angle_attenuation = 1.5
+	light.spot_attenuation = 2.0
+	light.shadow_enabled = true
+	light.distance_fade_enabled = true
+	light.distance_fade_begin = 65.0
+	light.distance_fade_length = 25.0
+	light.distance_fade_shadow = POST_SHADOWS_TO
+	add_child(light)
+	_mist(light, light.position.y + MIST_BELOW)
+	var halo := _halo(WALL_HALO_SIZE, WALL_LIGHT_COLOR)
+	halo.position = at + Vector3(0, -0.3, -0.35)
+	add_child(halo)
+	lamp_rain.add_volume(LampRain.POST, Transform3D(Basis.IDENTITY,
+		Vector3(at.x, at.y - 0.45, at.z - WALL_RAIN_OUT)))
+
+
+func _mist(light: SpotLight3D, depth: float) -> void:
+	var colour := light.light_color.srgb_to_linear() * light.light_energy
+	var radius := depth * tan(deg_to_rad(light.spot_angle))
+	var air := ShaderMaterial.new()
+	air.shader = MIST
+	air.set_shader_parameter("light_colour", Vector3(colour.r, colour.g, colour.b))
+	air.set_shader_parameter("half_size", Vector3(radius, radius, depth * 0.5))
+	air.set_shader_parameter("spot_cutoff", cos(deg_to_rad(light.spot_angle)))
+	air.set_shader_parameter("spot_falloff", light.spot_angle_attenuation)
+	air.set_shader_parameter("light_range", light.spot_range)
+	air.set_shader_parameter("light_decay", light.spot_attenuation)
+	air.set_shader_parameter("fade_begin", light.distance_fade_begin
+		if light.distance_fade_enabled else 1.0e6)
+	air.set_shader_parameter("fade_length", light.distance_fade_length)
+	var box := BoxMesh.new()
+	box.size = Vector3(radius * 2.0, radius * 2.0, depth)
+	var volume := MeshInstance3D.new()
+	volume.name = "Mist"
+	volume.mesh = box
+	volume.material_override = air
+	volume.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	volume.position = Vector3(0.0, 0.0, -depth * 0.5)
+	light.add_child(volume)
+
+
+func _halo(size: float, color: Color) -> MeshInstance3D:
+	if _halo_falloff == null:
+		var gradient := Gradient.new()
+		gradient.offsets = PackedFloat32Array([0.0, 0.06, 0.2, 0.5, 1.0])
+		gradient.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0.45),
+			Color(1, 1, 1, 0.12), Color(1, 1, 1, 0.03), Color(1, 1, 1, 0)])
+		_halo_falloff = GradientTexture2D.new()
+		_halo_falloff.gradient = gradient
+		_halo_falloff.fill = GradientTexture2D.FILL_RADIAL
+		_halo_falloff.fill_from = Vector2(0.5, 0.5)
+		_halo_falloff.fill_to = Vector2(0.5, 0.0)
+	if not _halo_materials.has(color):
+		var glow := StandardMaterial3D.new()
+		glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		glow.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		glow.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		glow.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		glow.albedo_texture = _halo_falloff
+		glow.albedo_color = Color(color.r * HALO_STRENGTH, color.g * HALO_STRENGTH,
+			color.b * HALO_STRENGTH)
+		glow.proximity_fade_enabled = true
+		glow.proximity_fade_distance = 0.5
+		_halo_materials[color] = glow
+	var key := "%.2f %s" % [size, color]
+	if not _halo_meshes.has(key):
+		var quad := QuadMesh.new()
+		quad.size = Vector2.ONE * size
+		quad.material = _halo_materials[color]
+		_halo_meshes[key] = quad
+	var halo := MeshInstance3D.new()
+	halo.name = "Halo"
+	halo.mesh = _halo_meshes[key]
+	halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return halo
 
 
 func _reflections() -> void:
@@ -712,7 +901,18 @@ func _forest() -> void:
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
-	forest_floor.build(road_points, clearings, 42020, terrain)
+	var mowed := PackedFloat32Array()
+	for index in range(road_points.size()):
+		mowed.append(RoadsideGrass.MOWED if road.sections[index] == GhatRoad.Section.VALLEY
+			else 0.0)
+	forest_floor.build(road_points, clearings, 42020, terrain, mowed)
+	grass = RoadsideGrass.new()
+	grass.name = "RoadsideGrass"
+	add_child(grass)
+	var built := _flat_plots()
+	built.append_array([FORECOURT, OFFICE_PLOT])
+	grass.build(road, built, 42022, terrain)
+	grass.paint(_ground)
 
 
 func _surface(asset: String, tile_size: float, triplanar: bool,

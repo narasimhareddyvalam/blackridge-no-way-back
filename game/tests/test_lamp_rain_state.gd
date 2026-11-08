@@ -44,8 +44,12 @@ func _run() -> void:
 	_rain = _app.get_node("IndustrialLoop").get("lamp_rain")
 	_road = _app.get_node("IndustrialLoop").get("road")
 	await process_frame
+	var on_title: bool = not _rain.visible and _rain.active_count() == 0
 	_app.call("_resume")
 	await _seconds(0.5)
+	_check(on_title and _rain.visible,
+		"On the title screen the lamps' rain is hidden and none of it runs, so the paused title " +
+		"shows no frozen streaks; leaving the title shows it again")
 	_check_start()
 	await _check_driving_away()
 	await _check_arrival()
@@ -57,11 +61,12 @@ func _run() -> void:
 
 func _check_start() -> void:
 	var near := _within_range()
-	_check(_rain.volumes.size() == 9,
-		"Every lamp has a rain volume: 7 posts, the floodlight and the door lamp (%d)"
+	_check(_rain.volumes.size() == 13,
+		"Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the " +
+		"floodlight and the door lamp (%d)"
 		% _rain.volumes.size())
 	_check(near.size() == 3 and _states_match(near),
-		"At the start, the 3 lamps within 65 m of the camera rain and the other 6 are off and " +
+		"At the start, the 3 lamps within 65 m of the camera rain and the other 10 are off and " +
 		"hidden (%s)" % _names(near))
 	_check(_rain.activations == near.size(),
 		"Each one started already falling: started once by its emitter's restart, which runs its " +

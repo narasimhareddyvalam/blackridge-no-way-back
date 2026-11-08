@@ -14,6 +14,17 @@ uniform float rock_to : hint_range(0.0, 1.0) = 0.66;
 uniform float ground_shade : hint_range(0.0, 1.0) = 0.58;
 uniform float rock_shade : hint_range(0.0, 1.0) = 0.72;
 uniform float wetness : hint_range(0.0, 1.0) = 0.7;
+uniform sampler2D turf_color : source_color, filter_linear_mipmap, repeat_enable;
+uniform sampler2D turf_normal : hint_normal, filter_linear_mipmap, repeat_enable;
+uniform sampler2D turf_arm : filter_linear_mipmap, repeat_enable;
+uniform float turf_tile = 2.0;
+uniform float turf_shade : hint_range(0.0, 1.0) = 0.4;
+uniform float turf_roughness : hint_range(0.0, 1.0) = 0.85;
+uniform sampler2D verge_map : hint_default_white, filter_linear, repeat_disable;
+uniform vec4 verge_area = vec4(0.0, 0.0, 1.0, 1.0);
+uniform float verge_range = 8.0;
+uniform float verge_mowed = 2.5;
+uniform float verge_edge = 4.0;
 
 varying vec3 world_position;
 varying vec3 world_normal;
@@ -35,6 +46,18 @@ void fragment() {
 	vec3 arm = texture(ground_arm, top_uv).rgb;
 	vec3 flat_normal = unpack(texture(ground_normal, top_uv).rgb);
 	vec3 surface = normalize(vec3(flat_normal.x, flat_normal.z, -flat_normal.y) * 0.6 + n);
+	float verge = texture(verge_map, (world_position.xz - verge_area.xy) / verge_area.zw).r
+		* verge_range;
+	float ragged = (texture(ground_arm, world_position.xz * 0.09).r - 0.5) * 2.0;
+	float turf = 1.0 - smoothstep(verge_mowed + ragged * 0.6, verge_edge + ragged, verge);
+	if (turf > 0.001) {
+		vec2 turf_uv = world_position.xz / turf_tile;
+		vec3 turf_flat = unpack(texture(turf_normal, turf_uv).rgb);
+		albedo = mix(albedo, texture(turf_color, turf_uv).rgb * turf_shade, turf);
+		arm = mix(arm, texture(turf_arm, turf_uv).rgb, turf);
+		surface = normalize(mix(surface,
+			normalize(vec3(turf_flat.x, turf_flat.z, -turf_flat.y) * 0.6 + n), turf));
+	}
 	if (rock > 0.001) {
 		vec3 weights = pow(abs(n), vec3(4.0));
 		weights /= dot(weights, vec3(1.0));
@@ -59,6 +82,6 @@ void fragment() {
 	}
 	ALBEDO = albedo * (1.0 - 0.3 * wetness);
 	AO = arm.r;
-	ROUGHNESS = clamp(arm.g * (1.0 - 0.45 * wetness), 0.08, 1.0);
+	ROUGHNESS = mix(clamp(arm.g * (1.0 - 0.45 * wetness), 0.08, 1.0), turf_roughness, turf);
 	NORMAL = normalize((VIEW_MATRIX * vec4(surface, 0.0)).xyz);
 }

@@ -228,8 +228,9 @@ the driver's window went down with the fog.
   sure its clearly visible like in real world. all the four effects!" (#144), then "make them
   more realistic" (#146). Claude Code tuned all four toward real-world physics as revision r1
   (#146–#149). The author picked ideas on an options page
-  (#147), then kept the effects as tuned (#153). r1 stays uncommitted until the author's
-  verdicts; its record and patch are committed (`2a2d3a1`–`5d4112d`).
+  (#147), then kept the effects as tuned (#153). r1 stayed uncommitted until the author's
+  verdicts; its record and patch were committed first (`2a2d3a1`–`5d4112d`), and the author
+  kept it after playing (#164), committed with its strips in `1c8447b`.
 - **The world around the effects (#150–#158), at the author's requests.**
   - Each was done one step at a time, after the author approved it:
     - street lamps that light downward like real ones;
@@ -237,7 +238,8 @@ the driver's window went down with the fog.
     - the author's pasted brief for a photorealistic rainy road, in five steps (the wet road,
       an amber streetlight built in Blender, the lamps' rain and splashes, the roadside, the
       rendering).
-  - Uncommitted until the author's verdict, with a committed patch (`89cd9a3`–`8889880`).
+  - Uncommitted until the author's verdict, with a committed patch (`89cd9a3`–`8889880`);
+    kept after the author's play (#164) and committed after r1.
 - **What the author caught:**
   - "those lights at shed looks so bad", which led to security lights on the depot's wall
     (#151);

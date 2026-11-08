@@ -18,8 +18,23 @@ const DROP := 1.2
 const DEEP_DROP := 3.0
 const DROP_PROBE := 6.5
 const RAIL_INSET := 0.35
-const RAIL_CENTRE := 0.62
-const POST := Vector3(0.15, 0.95, 0.1)
+const RAIL_CENTRE := 0.632
+const RAIL_HALF_HEIGHT := 0.156
+const RAIL_DEPTH := 0.083
+const RAIL_STEPS := 16
+const POST := Vector3(0.148, 1.65, 0.102)
+const POST_TOP := 0.76
+const POST_SPACING := 1.905
+const BLOCKOUT := Vector3(0.305, 0.362, 0.152)
+const REFLECTOR_EVERY := 16
+const REFLECTOR := Vector3(0.075, 0.1, 0.01)
+const TERMINAL := Vector3(0.38, 0.64, 0.5)
+const MARKER := Vector2(0.36, 0.6)
+const STRIPE := 0.076
+const TIMBER := Color("4a4038")
+const SHEETING_WHITE := Color("e6e6e0")
+const SHEETING_YELLOW := Color("e8b400")
+const RETROREFLECTOR = preload("retroreflector.gdshader")
 const WALL := Vector2(0.48, 0.62)
 const CAP := Vector2(0.62, 0.1)
 const SHOULDER_POST := 0.9
@@ -49,18 +64,23 @@ var _flashers: Array[MeshInstance3D] = []
 
 
 func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: Vector2,
-		crossing: int = -1) -> void:
+		crossing: int = -1, outside_rails: Array[Vector2] = []) -> void:
 	_road = road
 	_terrain = terrain
 	_points = road.points
 	_concrete = concrete
-	_steel.albedo_color = Color("70777b")
-	_steel.metallic = 0.7
-	_steel.roughness = 0.58
+	_steel.albedo_color = Color("8a8f92")
+	_steel.metallic = 0.65
+	_steel.roughness = 0.45
+	_steel.roughness_texture = _patina()
+	_steel.uv1_triplanar = true
+	_steel.uv1_world_triplanar = true
+	_steel.uv1_scale = Vector3.ONE * 1.5
 	_steel.cull_mode = BaseMaterial3D.CULL_DISABLED
 	var landslide := _nearest(landslide_at)
-	var drops := _drops(landslide)
+	var drops := _drops(landslide, outside_rails)
 	_barriers(drops)
+	_rail_hardware(drops)
 	_delineators(drops)
 	_hairpin_signs()
 	_curve_signs()
@@ -71,11 +91,17 @@ func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: 
 	_build_signs()
 
 
-func _drops(landslide: int) -> Array[PackedByteArray]:
+func _drops(landslide: int, outside_rails: Array[Vector2]) -> Array[PackedByteArray]:
 	var left := PackedByteArray()
 	var right := PackedByteArray()
 	left.resize(_points.size())
 	right.resize(_points.size())
+	for pair in range(0, outside_rails.size() - 1, 2):
+		var first := _nearest(outside_rails[pair])
+		var last := _nearest(outside_rails[pair + 1])
+		var turn := angle_difference(_road.heading_at(first), _road.heading_at(last))
+		for index in range(first, last + 1):
+			(right if turn > 0.0 else left)[index] = 1
 	for index in range(_points.size()):
 		if absi(index - landslide) < LANDSLIDE_LENGTH * 3:
 			continue
@@ -147,8 +173,6 @@ func _barriers(drops: Array[PackedByteArray]) -> void:
 			else:
 				rails.append(Transform3D(basis.scaled_local(Vector3(1.0, 1.0, along.length())),
 					middle + Vector3.UP * RAIL_CENTRE))
-				_posts.append(Transform3D(basis.scaled_local(POST), start + outward * 0.12
-					+ Vector3.UP * (POST.y * 0.5 - 0.1)))
 				guardrail_segments += 1
 			shapes.append([Transform3D(basis, middle + Vector3.UP * 0.42),
 				Vector3(0.3, 0.85, along.length())])
@@ -429,22 +453,113 @@ func _build_signs() -> void:
 
 
 func _rail_mesh() -> ArrayMesh:
-	var profile := [Vector2(0.0, -0.155), Vector2(-0.045, -0.12), Vector2(-0.045, -0.075),
-		Vector2(0.0, -0.035), Vector2(0.0, 0.035), Vector2(-0.045, 0.075),
-		Vector2(-0.045, 0.12), Vector2(0.0, 0.155)]
+	var profile := PackedVector2Array()
+	var normals := PackedVector2Array()
+	for step in range(RAIL_STEPS + 1):
+		var y := lerpf(-RAIL_HALF_HEIGHT, RAIL_HALF_HEIGHT, float(step) / RAIL_STEPS)
+		var phase := PI * absf(y) / RAIL_HALF_HEIGHT
+		profile.append(Vector2(-RAIL_DEPTH * sin(phase) * sin(phase), y))
+		var slope := -RAIL_DEPTH * sin(2.0 * phase) * PI / RAIL_HALF_HEIGHT * signf(y)
+		normals.append(Vector2(-1.0, slope).normalized())
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for index in range(profile.size() - 1):
-		var a: Vector2 = profile[index]
-		var b: Vector2 = profile[index + 1]
-		var normal := Vector3(-(b.y - a.y), b.x - a.x, 0.0).normalized()
-		for corner: Vector3 in [Vector3(a.x, a.y, -0.5), Vector3(b.x, b.y, -0.5),
-				Vector3(a.x, a.y, 0.5), Vector3(a.x, a.y, 0.5), Vector3(b.x, b.y, -0.5),
-				Vector3(b.x, b.y, 0.5)]:
-			tool.set_normal(normal)
-			tool.set_uv(Vector2(corner.z, corner.y))
-			tool.add_vertex(corner)
+	for index in range(RAIL_STEPS):
+		for corner: Vector2i in [Vector2i(0, -1), Vector2i(1, -1), Vector2i(0, 1), Vector2i(0, 1),
+				Vector2i(1, -1), Vector2i(1, 1)]:
+			var point := profile[index + corner.x]
+			var normal := normals[index + corner.x]
+			tool.set_normal(Vector3(normal.x, normal.y, 0.0))
+			tool.set_uv(Vector2(corner.y * 0.5, point.y))
+			tool.add_vertex(Vector3(point.x, point.y, corner.y * 0.5))
 	return tool.commit()
+
+
+func _rail_hardware(drops: Array[PackedByteArray]) -> void:
+	var blocks: Array[Transform3D] = []
+	var reflectors: Array[Transform3D] = []
+	var heads: Array[Transform3D] = []
+	var markers := {-1.0: [] as Array[Transform3D], 1.0: [] as Array[Transform3D]}
+	var count := _points.size()
+	for side_index in range(2):
+		var side := -1.0 if side_index == 0 else 1.0
+		var flags: PackedByteArray = drops[side_index]
+		var railed := func(index: int) -> bool:
+			return flags[index] != 0 and flags[(index + 1) % count] != 0 and not _stone_here(index)
+		for run: Vector2i in _runs(railed):
+			var line := PackedVector3Array()
+			for index in range(run.x, run.y + 2):
+				line.append(_edge(index % count, side, RAIL_INSET))
+			var travelled := 0.0
+			var next_post := POST_SPACING * 0.5
+			var placed := 0
+			for segment in range(line.size() - 1):
+				var length := line[segment].distance_to(line[segment + 1])
+				var outward := (_frame((run.x + segment) % count)["right"] as Vector3) * side
+				var upright := Basis(outward, Vector3.UP, outward.cross(Vector3.UP))
+				while next_post <= travelled + length:
+					var at := line[segment].lerp(line[segment + 1], (next_post - travelled) / length)
+					_posts.append(Transform3D(upright.scaled_local(POST), at + outward
+						* (BLOCKOUT.x + POST.x * 0.5) + Vector3.UP * (POST_TOP - POST.y * 0.5)))
+					blocks.append(Transform3D(upright.scaled_local(BLOCKOUT), at + outward
+						* BLOCKOUT.x * 0.5 + Vector3.UP * (RAIL_CENTRE + RAIL_HALF_HEIGHT
+						- BLOCKOUT.y * 0.5 - 0.01)))
+					if placed % REFLECTOR_EVERY == REFLECTOR_EVERY / 2:
+						reflectors.append(Transform3D(upright.scaled_local(REFLECTOR), at
+							+ outward * 0.12 + Vector3.UP * (RAIL_CENTRE + RAIL_HALF_HEIGHT
+							+ 0.02 + REFLECTOR.y * 0.5)))
+					placed += 1
+					next_post += POST_SPACING
+				travelled += length
+			for end: Array in [[line[0], line[0] - line[1], run.x],
+					[line[line.size() - 1], line[line.size() - 1] - line[line.size() - 2],
+					run.y]]:
+				var away := Vector3((end[1] as Vector3).x, 0.0, (end[1] as Vector3).z).normalized()
+				var outward := (_frame(end[2] % count)["right"] as Vector3) * side
+				var head := (end[0] as Vector3) + away * (TERMINAL.z * 0.5 - 0.12) \
+					- outward * RAIL_DEPTH * 0.5 + Vector3.UP * RAIL_CENTRE
+				heads.append(Transform3D(Basis(outward, Vector3.UP, outward.cross(Vector3.UP))
+					.scaled_local(TERMINAL), head))
+				var across := Vector3.UP.cross(away)
+				var slope := -signf(across.dot(-outward))
+				markers[slope].append(Transform3D(Basis(across, Vector3.UP, away),
+					head + away * (TERMINAL.z * 0.5 + 0.004)))
+	var timber := StandardMaterial3D.new()
+	timber.albedo_color = TIMBER
+	timber.roughness = 0.6
+	_multimesh(_box(), blocks, timber, "RailBlockouts")
+	_multimesh(_box(), reflectors, _retro(SHEETING_WHITE), "RailReflectors")
+	_multimesh(_box(), heads, _steel, "RailTerminals")
+	for slope: float in markers:
+		var face := QuadMesh.new()
+		face.size = MARKER
+		_multimesh(face, markers[slope], _retro(SHEETING_YELLOW, slope),
+			"TerminalMarkers" + ("Left" if slope < 0.0 else "Right"))
+
+
+func _retro(colour: Color, stripe_slope: float = 0.0) -> ShaderMaterial:
+	var sheet := ShaderMaterial.new()
+	sheet.shader = RETROREFLECTOR
+	sheet.set_shader_parameter("sheeting", colour)
+	if stripe_slope != 0.0:
+		sheet.set_shader_parameter("stripe_width", STRIPE)
+		sheet.set_shader_parameter("stripe_slope", stripe_slope)
+	return sheet
+
+
+func _patina() -> NoiseTexture2D:
+	var noise := FastNoiseLite.new()
+	noise.frequency = 0.03
+	noise.fractal_octaves = 4
+	var ramp := Gradient.new()
+	ramp.set_color(0, Color(0.45, 0.45, 0.45))
+	ramp.set_color(1, Color.WHITE)
+	var patina := NoiseTexture2D.new()
+	patina.width = 256
+	patina.height = 256
+	patina.seamless = true
+	patina.noise = noise
+	patina.color_ramp = ramp
+	return patina
 
 
 func _box() -> BoxMesh:

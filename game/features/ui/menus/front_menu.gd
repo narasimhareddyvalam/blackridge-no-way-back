@@ -510,8 +510,8 @@ func _credits_text() -> String:
 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
 		+ "characters, with Mixamo animations.")
-	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants and rocks "
-		+ "from Poly Haven, released CC0 by its artists.")
+	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
+		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "
 		+ "Murias (Sketchfab: Xlay3D), licensed CC BY 4.0, used while the cab was being built.")
 	_section(lines, "SOUND", "Every sound was made in code for this game.")

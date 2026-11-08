@@ -27,11 +27,14 @@ var prop_count: int = 0
 var _segments: Array[PackedVector2Array] = []
 var _cumulative := PackedFloat32Array()
 var _terrain: Node3D
+var _mowed := PackedFloat32Array()
+var _picked: int = 0
 
 
 func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value: int,
-		terrain: Node3D) -> void:
+		terrain: Node3D, mowed := PackedFloat32Array()) -> void:
 	_terrain = terrain
+	_mowed = mowed
 	for index in range(road_points.size()):
 		var a := road_points[index]
 		var b := road_points[(index + 1) % road_points.size()]
@@ -49,6 +52,7 @@ func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value:
 		var tile_size: float = prop["tile"]
 		var tiles := {}
 		var placed := 0
+		var mown := 0
 		var wanted := int(prop["count"] * PROP_SCALE)
 		for attempt in range(wanted * 3):
 			if placed >= wanted:
@@ -61,15 +65,18 @@ func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value:
 			var part := rng.randi_range(0, parts.size() - 1)
 			var size := rng.randf_range(prop["scale"].x, prop["scale"].y)
 			var key := Vector3i(floori(point.x / tile_size), floori(point.y / tile_size), part)
-			if not tiles.has(key):
-				tiles[key] = []
 			var turn := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * size)
 			var centre := _tile_centre(key, tile_size)
 			var ground: float = _terrain.height_at(point.x, point.y)
+			placed += 1
+			if _mown(point):
+				mown += 1
+				continue
+			if not tiles.has(key):
+				tiles[key] = []
 			tiles[key].append(Transform3D(turn, Vector3(point.x - centre.x, ground,
 				point.y - centre.y)) * parts[part][1])
-			placed += 1
-		prop_count += placed
+		prop_count += placed - mown
 		for key: Vector3i in tiles:
 			_add(parts[key.z][0], tiles[key], _tile_centre(key, tile_size), prop["visible"],
 				prop["shadows"])
@@ -77,7 +84,8 @@ func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value:
 
 func _candidate(rng: RandomNumberGenerator, near: float, far: float) -> Vector2:
 	var distance := rng.randf() * _cumulative[_cumulative.size() - 1]
-	var segment := _segments[mini(_cumulative.bsearch(distance), _segments.size() - 1)]
+	_picked = mini(_cumulative.bsearch(distance), _segments.size() - 1)
+	var segment := _segments[_picked]
 	var along := segment[0].lerp(segment[1], rng.randf())
 	var direction := (segment[1] - segment[0]).normalized()
 	var side := Vector2(-direction.y, direction.x) * (1.0 if rng.randf() < 0.5 else -1.0)
@@ -89,6 +97,10 @@ func _blocked(point: Vector2, near: float, clearings: Array[Rect2]) -> bool:
 		if rect.has_point(point):
 			return true
 	return _terrain.road_clearance(point.x, point.y) < near - VERGE_REACH
+
+
+func _mown(point: Vector2) -> bool:
+	return not _mowed.is_empty() and _terrain.road_clearance(point.x, point.y) < _mowed[_picked]
 
 
 func _meshes(model: String) -> Array:

@@ -22,3 +22,5 @@ Attribution is not required; authors are recorded for credits.
 | textures | [rough_pine_door](https://polyhaven.com/a/rough_pine_door) | Rough Pine Door | 1k | Dimitrios Savva | 1640882 |
 | textures | [stair_planks](https://polyhaven.com/a/stair_planks) | Stair Planks | 1k | Rob Tuytel | 1907913 |
 | textures | [brushed_concrete_03](https://polyhaven.com/a/brushed_concrete_03) | Brushed Concrete 03 | 1k | Amal Kumar | 2727836 |
+| textures | [green_metal_rust](https://polyhaven.com/a/green_metal_rust) | Green Metal Rust | 1k | Rob Tuytel | 442141 |
+| textures | [leafy_grass](https://polyhaven.com/a/leafy_grass) | Leafy Grass | 1k | Charlotte Baglioni | 3671524 |

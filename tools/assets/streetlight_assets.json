@@ -1,0 +1,6 @@
+{
+  "destination": "game/features/environments/industrial_loop/polyhaven",
+  "textures": {
+    "green_metal_rust": "1k"
+  }
+}

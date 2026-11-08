@@ -88,9 +88,9 @@ mouse to look around, F center view, E get in or out, T answer a call, R recover
 
 **What this assignment added:** the four effects, their controllers, the configuration and state
 tests, the mutations, the previews, the strip script and the cost script; the brief, the tuning
-log and the test report. Revision r1 of all four effects (`TUNING.md`) and the changes to the
-lamps, the wet road and the roadside around them (prompt log #150–#158) are in the working tree
-until the author's verdicts.
+log and the test report. Revision r1 of all four effects (`TUNING.md`), with its strips before
+and after, and the changes to the lamps, the wet road and the roadside around them (prompt log
+#150–#158), kept after the author's play (#164).
 
 **Known limitations:**
 - Godot's GPU timer reads 0 on Metal, so the GPU price rests on the author's check.

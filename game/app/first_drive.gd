@@ -138,6 +138,7 @@ func _ready() -> void:
 func _show_title() -> void:
 	_on_title = true
 	get_tree().paused = true
+	world.lamp_rain.visible = false
 	van.input_enabled = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	driver.set_active(false)
@@ -158,6 +159,7 @@ func _leave_title() -> void:
 	if not _on_title:
 		return
 	_on_title = false
+	world.lamp_rain.visible = true
 	_audio.title_ambience(false)
 	van.get_camera().make_current()
 

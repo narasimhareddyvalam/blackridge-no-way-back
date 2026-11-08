@@ -7,7 +7,7 @@ is at tag `a5`), and then the final project's saving checks.
 
 | Field | Value |
 | --- | --- |
-| Source revision | `42772e1`, the build before tuning, for the sections from "Baseline" on; the working tree of 2026-11-08 for "Since tuning"; the final SHA is recorded at submission |
+| Source revision | `42772e1`, the build before tuning, for the sections from "Baseline" on; r1 (`1c8447b`) and the world changes committed after it, for "Since tuning"; the final SHA is recorded at submission |
 | Godot | 4.7.2.stable.official.ed1daf0bf |
 | Renderer | Forward+, Godot's desktop default (`game/project.godot` sets only the mobile method, `:135`); MetalFX upscaling at 75% on macOS |
 | Machine and GPU | MacBook Air, Apple M4 and its GPU, macOS 27.2 |
@@ -16,19 +16,20 @@ Machine results come from `scripts/run-test.sh` logs in `logs/particles/`. A HUM
 needs the author's own observation in the running game. A headless run draws nothing and runs
 no GPU particle process.
 
-## Since tuning: the working tree on 2026-11-08
+## Since tuning: r1 and the world changes, kept (2026-11-08)
 
-The sections from "Baseline" on are for `42772e1`, the committed build before tuning. Revision
-r1 (`TUNING.md`) and the changes to the world (prompt log #150–#158) are in the working tree,
-uncommitted until the author's verdicts; their patches are `tools/tuning/r1/r1.patch` and
-`tools/tuning/world/lamps_and_rings.patch`. The F9 debug key is committed (`c5e307d`). These
-results are for that working tree; the final ones are recorded again at the submitted commit.
+The sections from "Baseline" on are for `42772e1`, the committed build before tuning. The author
+kept revision r1 (`TUNING.md`) and the changes to the world (prompt log #150–#158) after playing
+(#164). r1 is committed with its strips and the verdicts in `1c8447b`, and the world changes in
+the commit after it; their patches are `tools/tuning/r1/r1.patch` and
+`tools/tuning/world/lamps_and_rings.patch`. The F9 debug key is committed (`c5e307d`). The final
+results are recorded again at the submitted commit.
 
 | Check | Result | Logs |
 | --- | --- | --- |
-| Every earlier suite | The baseline's counts, exit 0; art 0 failures | `logs/particles/submission_prep/SUMMARY.txt` |
-| Configuration | A1 339/339, A2 217/217, B1 360/360 (four scenes, the street lamps' own added), B2 44/44, exit 0 | the same |
-| State | A1 22/22, A2 13/13, B1 12/12 (13 volumes), B2 10/10 (`amount` stays 300), exit 0 | the same |
+| Every earlier suite | The baseline's counts, exit 0; art 0 failures; the same with r1 alone, in a temporary worktree | `logs/particles/strips_163/SUMMARY.txt`; r1 alone: `logs/particles/r1_only_164/SUMMARY.txt` |
+| Configuration | A1 451/451, A2 221/221, B1 364/364 (four scenes, the street lamps' own added), B2 44/44, exit 0 | the same |
+| State | A1 27/27, A2 13/13, B1 13/13 (13 volumes; 12/12 with r1 alone, since the title check comes with the world changes), B2 10/10 (`amount` stays 300), exit 0 | the same |
 | Effect A mutations on r1 | A1 Godot 3 rename on `BigDrops`: 338/339, exit 1, the minimum reading 0.0, while the state test passes 22/22. A1 `spread` 30 → 37: 338/339, exit 1. A2 Godot 3 rename on `RoofStreams`: 216/217, exit 1, state 13/13. A2 `RoofBeads` `spread` 24 → 30: 216/217, exit 1. Each scene was restored from a copy and compared byte for byte | `logs/particles/r1_mutations/` |
 | Previews, headless at 30 fps | Every event on the same frame as before r1, except B1's hide: frame 109, 1.30 s after the stop, for 111 and 1.35 s, from r1's shorter lives. The brief's frame 110 is empty either way | `logs/particles/previews_headless_r1/` |
 | Headless CPU price | The game with every effect off 0.479 ms; A1 +0.000, A2 −0.003, B1 −0.006, B2 −0.003 ms against it, while the rounds vary by up to 0.011 ms; the controls 0.002 and 0.010 ms | `logs/particles/submission_prep/cost_effects_60fps.log` |
@@ -125,8 +126,10 @@ or stop.
     - A2: a spill on 10 and an ignored second hard brake on 25;
     - B1: on at 10, off at 70, hidden at 111;
     - B2: ignition at 10, throttle from 40 to 80, engine off at 100.
-- **The strips:** the author captures them with `scripts/capture-strips.sh`. The rounds, the
-  readings and the verdicts are in `TUNING.md`. _Pending the author's r0._
+- **The strips:** captured with `scripts/capture-strips.sh` by Claude Code at the author's
+  request (#163; the handout has the student run them): 22 fixture strips, r0 in `2b9e327` and
+  r1 in `1c8447b`, each round with the brief's variants. The readings, the comparisons and the
+  verdicts are in `TUNING.md`.
 - **Claude Code's own windowed checks** (renders in its scratch folder, not strips):
   - **Every effect draws where it should.** Drawn solid red for one run, each appears at the
     blade tip, the roof lip, the lamp and the tailpipe.
@@ -188,11 +191,11 @@ benchmark. An `--export-pack` listing has 715 entries and none from `previews/`,
 
 | Check | Evidence to collect | Status |
 | --- | --- | --- |
-| In play | A1 triggered by normal play many times, with rapid repeats on fast wipers. A2 on hard brakes and at the hit. B1 starting and stopping at lamps, paused and hidden. B2 at ignition, on the throttle and at switch-off. The size verdict at 1280×800, and the boundaries holding | author to do |
+| In play | A1 triggered by normal play many times, with rapid repeats on fast wipers. A2 on hard brakes and at the hit. B1 starting and stopping at lamps, paused and hidden. B2 at ignition, on the throttle and at switch-off. The size verdict at 1280×800, and the boundaries holding | The author's play, 2026-11-08 (#164): "i played and all look good proceed". It names none of these cases; the author to add what was checked |
 | Against the background | Each effect on its darkest and brightest real stretch: A1 on the valley road and at the depot; A2 on the valley road and under the office floodlight; B1 between lamps and under the depot posts and floodlight; B2 on the valley road and in the floodlight and reversing lamps | author to do |
 | Edge of screen | A large GPU effect near the screen's edge does not pop out: B2's 60 m visibility box, B1's volumes | author to do |
 | Scene load | B1 on the first frames after load, already falling; B2 not before its ignition | author to do |
-| Claude against you | Each of Claude Code's strip readings beside the author's verdict, with at least one disagreement named, or none | author to do, in `TUNING.md` |
+| Claude against you | Each of Claude Code's strip readings beside the author's verdict, with at least one disagreement named, or none | In `TUNING.md`: the author's verdict after play (#164) keeps the two things Claude's readings faulted, A1's passenger line in the floodlight and A2's white streams; the author to confirm in their own words |
 | GPU price | The Visual Profiler's GPU time with each effect off and at its heaviest, on the M4. Godot's GPU timer read 0 on Metal in Run 17 and still does. FPS with vsync off (F9 toggles it, `c5e307d`), whether it rises above the display's refresh, and the comparison with the brief's budgets | author to do |
 
 ## The process shader (Step 6, the author)
