@@ -2167,11 +2167,74 @@ tag `a5`. Pictures the author approved or rejected are filed in
        pixels by 1–3 levels of 255 (invisible); after, the sheet's frames lift them by a median of
        18–23 and up to 47.
 
+149. **The same for the other three effects: research, then match real life.**
+     - **The author's message:** "do the same thing do research of how the other three effects
+       look in real life and redo them to match real life and realisitic."
+     - **What Claude Code found:**
+       - rain: a camera sees a falling drop as a streak, the path it moves during the exposure,
+         and each drop acts as a wide-angle lens that sends a lamp's light toward the eye, so
+         rain shows as bright streaks near lights (Garg and Nayar,
+         [Photorealistic rendering of rain streaks](https://www.cs.columbia.edu/CAVE/publications/pdfs/Garg_TOG06.pdf),
+         2006; [Vision and rain](https://cave.cs.columbia.edu/Statics/publications/pdfs/Garg_IJCV07.pdf),
+         2007);
+       - a raindrop falls at a speed that grows with its size, about 2 m/s at 0.5 mm, 4 m/s at
+         1 mm, 6.6 m/s at 2 mm and 8 m/s at 3 mm (Gunn and Kinzer's measurements, 1949, as fitted
+         by Atlas, Srivastava and Sekhon, 1973), so the brief's 6.5–8.5 m/s held only drops of
+         2–3.7 mm;
+       - real rain at 10 mm/h holds about 250 drops over 1 mm in every cubic metre (Marshall and
+         Palmer's distribution, 1948), far more than a game can draw;
+       - a drop hitting a wet surface throws up a crown that sheds small droplets before it
+         reaches its full height
+         ([MIT](https://meche.mit.edu/node/1996)); no measured crown height for wet ground was
+         found;
+       - exhaust: a warm engine's exhaust is mostly invisible; in cold, wet air its water vapour
+         condenses into a thin white plume that dissipates soon after the pipe, and a diesel,
+         whose exhaust is mostly air, shows less of it at idle
+         ([Exhaust gas](https://en.wikipedia.org/wiki/Exhaust_gas);
+         [a garage's guide](https://www.craigandlandrethauto.com/2026/04/26/white-smoke-from-exhaust-what-drivers-should-know/);
+         [an owners' forum](https://bobistheoilguy.com/forums/threads/why-does-car-smoke-hang-in-the-air-when-cold.189369/));
+         none gave how long it stays visible, and the search for a visibility rule like
+         aircraft contrails' (the Schmidt–Appleman criterion) found only aircraft;
+       - the roof spill: owners describe water collected on the body coming off all at once as
+         they slow
+         ([4Runner owners](https://www.4runner6g.com/forum/threads/driving-in-rain-water-getting-splashed-on-windshield-from-hood-scoop.4300/);
+         [another thread, with a Silverado owner](https://www.4runner6g.com/forum/threads/rain-driving-issues-water-spray-all-over-windshield-from-channeling-down-to-grille.9180/));
+         no technical source was found; water pouring off a rounded edge stays attached to it
+         and follows the surface below (the
+         [Coandă effect](https://www.encyclopedia.com/reference/encyclopedias-almanacs-transcripts-and-maps/coanda-effect));
+         a clear film shows by how it bends the scene behind it (Garg and Nayar, above).
+     - **What Claude Code changed in r1** (`TUNING.md`; still uncommitted):
+       - B1: drops of 1–2.5 mm falling at 3.5–8.5 m/s, each drawn as the streak a camera sees,
+         stretched by its speed; 2,000 drops under a post lamp, 3,200 under the floodlight and
+         300 at the door lamp (160 each before), about 9 per cubic metre under a post lamp, a
+         limit set by the frame's budget; splashes of 3 droplets under a millimetre;
+       - B2: a jet that leaves the pipe at 4–7 m/s and stops within about a metre, puffs that
+         grow from 6–10 cm to 36–60 cm, densest at the pipe, gone in 1.6 s (2.5 before); how fast
+         the jet slows is Claude Code's estimate, not a measured value;
+       - A2: a clear sheet of water (`WaterWash`, new) that runs down the glass ahead of the
+         streams and bends the lights behind it, with no light of its own, drawn first so the
+         streams show on top; the spill turned to the glass's frame, as A1's flick is, with its
+         water leaving at the same angles as before (10.4° off the glass, the rivulets 5° into
+         it); the particle shader gains a `ripple` setting for the sheet.
+     - **Flagged for the author:**
+       - A2's sheet is close to "Clear sheet", the #147 idea the author did not choose; here the
+         streams stay on top of it instead of being replaced. Deleting the `WaterWash` node takes
+         it out.
+       - B1 now has up to 3,100 particles per post lamp (5,000 for the floodlight); its GPU price
+         is unmeasured, and only the author's windowed run can measure it.
+       - B1's slowest drops fade out 2–4 m above the ground instead of landing; letting them land
+         needs a longer life and about 45% more drops, not made, for the price.
+     - **Checked:** every suite passes (`logs/particles/realistic_r1d/SUMMARY.txt`): the
+       configuration tests 339/339, 217/217, 255/255 and 44/44, the state tests 22/22, 13/13,
+       12/12 and 10/10, 30 runs and the art check; the headless price reads the same as every
+       effect off for all four.
+
 ## Waiting for the author
 
-- Assignment 6's tuning (#146): the four effects in the game; the r0 and r1 strips
+- Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
   (`FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`); a verdict
-  per effect in `TUNING.md`. Until then r1 stays uncommitted in the working tree.
+  per effect in `TUNING.md`, including whether A2 keeps its clear sheet (#149). Until then r1
+  stays uncommitted in the working tree.
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
   the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
   agent prompt.

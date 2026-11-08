@@ -48,9 +48,10 @@ private page: https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ.
 After the options page, the author asked (#146): "make them more realistic. i want the bigger
 droplets effect even under no lights in normal when driving. make everything realistic as fuck
 as if its a real world game". Then, for the wiper flick and the roof spill, the author asked for
-ideas to choose from (#147) and chose seven of the eight offered. No strip had been captured yet,
-so A1's and A2's r1 were extended with them rather than starting an r2. So r1 departs from the
-loop above in three ways:
+ideas to choose from (#147) and chose seven of the eight offered. Then the author asked for each
+effect to be researched and matched to real life: the wiper flick (#148), then the other three
+(#149). No strip had been captured yet, so r1 was extended each time rather than starting an r2.
+So r1 departs from the loop above in three ways:
 
 - It was applied before the author captured r0, on the author's requests rather than on an
   approved prediction. The predictions below were written before the author's r1 capture.
@@ -93,7 +94,7 @@ The author's r1 strips should show the same effects as those renders; a differen
 effect would mean the build or the machine differs.
 
 **Tests with r1:** every suite passes: 30 runs and the art check
-(`logs/particles/realistic_r1c/SUMMARY.txt`). The configuration tests read the new values,
+(`logs/particles/realistic_r1d/SUMMARY.txt`). The configuration tests read the new values,
 including each shader parameter (which must be one of the shader's uniforms) and each per-axis
 curve, and check that no A emitter uses a sub-emitter, turbulence or a driven `amount_ratio`, the
 features the B effects are graded on (the author's decision, #147). The A1 state test adds the
@@ -191,11 +192,11 @@ A2 state test adds the water's surge as the van slows.
 
 ## Effect A2 (roof spill), revision r1
 
-- **What I saw (running game, 1280×800):** _the author._ (#144, #146 and #147, as for A1.)
+- **What I saw (running game, 1280×800):** _the author._ (#144, #146, #147 and #149, as for A1.)
 - **Claude's reading of r0:** _from `captures/roof_spill/r0/`._ Claude Code's render showed no
   spill on any frame: the roof lip is above the driver's view, and the streams on the glass
   were too dark to see.
-- **Change (applied at the author's direction, #146 and #147):**
+- **Change (applied at the author's direction, #146, #147 and #149):**
   - the quads' material: `StandardMaterial3D` → the shared `ShaderMaterial`, drawn as clear water
     that bends the view: the streams at `scatter` 1.5, `diffuse` 0.15, `sky` 0.8, `refraction`
     0.04, `lens_blur` 0.8; the beads at `scatter` 3, `sky` 1.2, `refraction` 0.015, `glint` 1;
@@ -203,27 +204,60 @@ A2 state test adds the water's surge as the van slows.
   - a curtain, then down the glass: real gravity, the scene's still air (0, −9.8, 0) in place of
     the brief's gravity laid along the glass, plus the surge of the water as the van slows, set by
     the van's code each tick from the van's own deceleration (about 8–9 m/s² while braking, none
-    at rest); the water leaves the lip 10° off the glass (`direction` (0, −0.56, −0.83)), so it
-    falls as a thin curtain just in front of the glass and lands on it lower down; the colliders
-    fitted to the glass hold it there, and it runs down at the speed of a draining film
-    (`collision_mode` rigid, friction 0.3: about 1 m/s while braking, 0.5 m/s after);
+    at rest); the water leaves the lip 10° off the glass, so it falls as a thin curtain just in
+    front of the glass and lands on it lower down; the colliders fitted to the glass hold it there,
+    and it runs down at the speed of a draining film (`collision_mode` rigid, friction 0.3: about
+    1 m/s while braking, 0.5 m/s after);
+  - simulated with the van in the glass's frame, as A1's flick is (#149): the spill is turned to
+    the windshield at the roof lip, so its boxes lie along the glass, 4–5 cm along it and 2–4 cm
+    deep; its directions are written in that frame and leave as before, measured in the van:
+    the curtain 10.4° off the glass (`direction` (0, −0.985, −0.18)), the rivulets 5° into it
+    ((0, −0.996, 0.09));
   - the streams: 96 (32), 0.6–1.5 cm wide, drawn as comets along their flow (`tail` 0.6),
     31 times their width at 3 m/s; the beads: 120 (48), 2.5–6 mm, the same streaks as A1's;
   - rivulets with wet tails (`Rivulets`, new): 8 rivulets, 3–5 mm wide, appear as the sheet
     breaks up (from 0.3 of their 1.6 s life) and run down the glass, each with a tail as long as
     its last 0.3 s of travel (`tail` 0.8);
+  - a clear sheet of water (`WaterWash`, new, #149): 40 pieces of a water film, 12–22 cm, leave
+    across the 0.9 m lip 4 cm below it and run down the glass at 0.3–0.8 m/s, first wider than
+    long and then longer than wide (a per-axis `scale_curve`: across 1.4 → 0.8, along
+    0.8 → 1.6), for 0.6 s (alpha `0:0, 0.15:0.6, 0.5:0.4, 1:0`); drawn with no light of its own
+    (`scatter`, `diffuse`, `sky` and `glint` 0, `catch_light` 0.4): only the scene behind it,
+    shifted (`refraction` 0.03), blurred (`lens_blur` 1.2) and rippled by a wave that moves over
+    the film (`ripple` 0.012, a new uniform of the particle shader); drawn before the streams,
+    beads and rivulets (`sorting_offset` −0.25 m), so they show on top of it; the colliders hold
+    it on the glass (rigid, friction 0.3);
   - the wipers clear the spill: A1's `SpillWater`, above.
-- **Rules that change with it, for the brief revisions if kept:** the spill lives until its
-  rivulets finish (1.6 s), so the brief's "disappears within 1.30 s" becomes 1.6 s; §8's peak:
-  96 + 120 + 8 = 224 particles.
-- **Claude's prediction for r1** (office approach; the hard brake comes on frame 10):
-  - frames 10–15: nothing yet: the water starts above the driver's view, behind the roof's edge,
-    and moves at a draining film's speed;
-  - frame 17: the first drops at the top right of the glass;
-  - frame 20: thin pale streams coming down the top of the glass, right of the middle;
-  - frame 30: streams and rivulet tails lower down, near the office, with the office and the road
-    seen between them;
-  - frame 50: a rivulet or none.
+- **Why, from the research (#149):**
+  - owners describe water collected on a vehicle's body coming off all at once as they slow
+    (Toyota 4Runner owners; a Silverado owner whose truck "slung it onto the windshield all at
+    once when slowing"); no technical source was found, so this supports the effect, not a number;
+  - water pouring off a rounded edge stays attached to it and follows the surface below (the
+    Coandă, or teapot, effect), which supports the curtain leaving close to the glass;
+  - a water drop or film acts as a wide-angle lens, showing the scene behind it bent, not light of
+    its own (Garg and Nayar); at night a clear film shows by how it bends and smears the lights
+    behind it, so the new sheet draws only that.
+  - Claude Code's own renders, with and without the sheet and every seed fixed, measured what it
+    adds: at 0.47 s it changes 2.9% of the frame by more than 6 levels of 255, and up to 141,
+    most in the office's lit windows and the bushes before them, bent and smeared, and faintly
+    over the trees.
+- **The author's #147 choice:** the sheet is close to "Clear sheet", the one #147 idea for the
+  spill that the author did not choose, which drew the spill as a film in place of its streams.
+  Here the streams, beads and rivulets stay, on top of it. Deleting the `WaterWash` node and its
+  name in `SPILL_EMITTERS` takes it out.
+- **Rules that change with it, for the brief revisions if kept:** the spill's frame is the
+  glass's, so §3's directions and boxes change frame; the spill lives until its rivulets finish
+  (1.6 s), so the brief's "disappears within 1.30 s" becomes 1.6 s; §8's peak:
+  40 + 96 + 120 + 8 = 264 particles.
+- **Claude's prediction for r1** (office approach; the hard brake comes on frame 10; the wipers
+  run, so the drops flung near the office are A1's):
+  - frames 10–15: no spill yet: the water starts above the driver's view, behind the roof's
+    edge;
+  - frame 17: the first stream heads at the top of the glass, right of the middle;
+  - frame 20: pale streams with round heads coming down across the top of the glass;
+  - frame 30: streams, beads and rivulet tails lower down by the office, and the office's lit
+    windows and the bushes before them bent and smeared by the clear sheet;
+  - frame 50: none.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`
@@ -231,28 +265,62 @@ A2 state test adds the water's surge as the van slows.
 
 ## Effect B1 (lamp rain), revision r1
 
-- **What I saw (running game, 1280×800):** _the author._ (#144 and #146.)
+- **What I saw (running game, 1280×800):** _the author._ (#144, #146 and #149.)
 - **Claude's reading of r0:** _from `captures/lamp_rain/r0/`._ Claude Code's render showed no
   rain under the lamp on any frame.
   - The valley lamp is an omni light of energy 3 with a steep falloff, bright only within a
     couple of metres of its head.
   - A camera-facing streak lit from above takes almost no matt light.
-- **Change (applied at the author's direction, #146):** the quads' material, `LampRain` and
-  `LampSplash`, in all three scenes: `StandardMaterial3D` → the shared `ShaderMaterial`:
-  `forward_scatter` 0.8, `scatter` 100 (the strongest of the three on the options page),
-  `diffuse` 0.5; no `sky`, `glint` or `refraction`; `min_pixels` 2 (`LampRain`) and 1.5
-  (`LampSplash`). With no lamp, the streaks still draw nothing.
+- **Change (applied at the author's direction, #146 and #149), in all three scenes:**
+  - the quads' material, `LampRain` and `LampSplash`: `StandardMaterial3D` → the shared
+    `ShaderMaterial`: `forward_scatter` 0.5, `scatter` 60, `diffuse` 0.3 (#146's were 0.8, 100
+    and 0.5); no `sky`, `glint` or `refraction`; at least 1 px wide (`min_pixels` 1; #146's were
+    2 and 1.5). With no lamp, the streaks still draw nothing;
+  - real drop sizes and speeds (#149): drops 1–2.5 mm across (`scale` 0.1–0.25 of a 0.01 m
+    square, in place of 0.7–1.35 of a 0.01 × 0.25 m streak), falling at 3.5–8.5 m/s (6.5–8.5);
+  - each drop drawn as the streak a camera sees (#149): turned along its motion as before and
+    stretched by its speed (`scale_over_velocity` 0–9 m/s, the length growing to 201 times the
+    width at 9 m/s), so a 1.5 mm drop draws the path it falls in 1/30 s, a bigger one longer;
+  - denser rain (#149): 2,000 drops under each post lamp, 3,200 under the floodlight and 300 at
+    the door lamp (160 each), brighter while lit (alpha `0:0.1, 0.15:0.8, 0.75:0.8, 1:0`; 0.45);
+  - smaller splashes (#149): 3 droplets a landing (4), 0.3–1 mm (1–3 mm), thrown 1–9 cm up at
+    0.5–1.3 m/s (0.6–1.6) in a 70° cone (60°), for 0.2 s (0.25); 1,100 under a post lamp, 1,800
+    under the floodlight, 170 at the door (160 each).
+- **Why, from the research (#149):**
+  - a camera sees a falling drop as a streak, the path it moves during the exposure, and each
+    drop acts as a wide-angle lens that sends a lamp's light toward the eye, so rain shows as
+    bright streaks near lights (Garg and Nayar, "Photorealistic rendering of rain streaks", 2006,
+    and "Vision and rain", 2007);
+  - a raindrop falls at a speed that grows with its size: about 2 m/s at 0.5 mm, 4 m/s at 1 mm,
+    6.6 m/s at 2 mm and 8 m/s at 3 mm (Gunn and Kinzer's measurements, 1949, as fitted by Atlas
+    and others, 1973: v ≈ 9.65 − 10.3 e^(−0.6 D), D in mm); the brief's 6.5–8.5 m/s held only
+    drops of 2–3.7 mm, and 3.5–8.5 m/s takes in drops from 0.9 mm;
+  - real rain is far denser than any game draws: at 10 mm/h, about 250 drops over 1 mm in every
+    cubic metre (Marshall and Palmer's distribution, 1948); the 2,000 drops in a post lamp's
+    6 × 6 × 6.4 m are about 9 per cubic metre, a limit set by the frame's budget;
+  - a drop hitting a wet surface throws up a crown that sheds small droplets before it reaches
+    its full height (MIT's splash studies), so each landing throws a few droplets of under a
+    millimetre a few centimetres up.
+- **A known gap:** a drop slower than about 5.5 m/s does not reach the ground within its 1.1 s
+  life, so the slowest fade out 2–4 m above the ground, where the lamp's light is already faint.
+  Letting all of them land needs a 1.6 s life and preprocess and about 45% more drops, a single
+  change for a later revision if the author wants it; not made, for the price.
+- **Rules that change with it, for the brief revisions if kept:** §4's speeds 6.5–8.5 m/s become
+  3.5–8.5; its streaks 17–34 cm long become drops of 1–2.5 mm stretched by their speed; its 160
+  drops and 160 splash droplets per lamp become 2,000 and 1,100 (post), 3,200 and 1,800
+  (floodlight), 300 and 170 (door); 4 droplets a landing become 3, and their 0.25 s life 0.2 s.
+  §8's B1 peak becomes 3,100 particles per post lamp (5,000 floodlight, 470 door), up to 24,800
+  at eight post volumes, and its GPU price is unmeasured: §7's failure 10, the author's windowed
+  price check.
 - **Claude's prediction for r1** (the valley post lamp at (−15, 63.8)):
   - frames 10 and 12: no rain yet: `restart()` with preprocess takes effect three frames late
     (a fixture finding, `TEST-REPORT.md`);
-  - frames 20–70: thin pale streaks falling around the lamp head and down beside the post,
-    brightest within a couple of metres of the head, with a few splash specks on the lit ground
-    under it;
-  - frame 85: only a few lower streaks; frame 110: empty.
-  - Away from the head the rain stays faint: the lamp's own light is small, and the brief
-    forbids changing lamps to show particles (§6). If the author wants more, the next single
-    change would raise `scatter` (its range goes to 200), or lower `forward_scatter` so that
-    drops beside the lamp catch more of its light.
+  - frame 20: rain from just under the lamp head down beside the post, with splash specks on the
+    lit ground;
+  - frames 30, 50 and 70: steady rain filling the lamp's light, many short pale streaks, most
+    around the head, and splash specks on the lit ground;
+  - frame 85: streaks left only in the middle and lower part, as the rain stops from the top;
+  - frame 110: empty (hidden on frame 109).
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`
@@ -260,27 +328,42 @@ A2 state test adds the water's surge as the van slows.
 
 ## Effect B2 (exhaust vapour), revision r1
 
-- **What I saw (running game, 1280×800):** _the author._ (#144 and #146.)
+- **What I saw (running game, 1280×800):** _the author._ (#144, #146 and #149.)
 - **Claude's reading of r0:** _from `captures/exhaust_vapour/r0/`._ Claude Code's render
   showed no vapour behind the van on any frame:
   - the van shades the plume from the floodlight;
   - the tail lamps light it from behind, which a matt material hardly passes.
-- **Change (applied at the author's direction, #146):**
+- **Change (applied at the author's direction, #146 and #149):**
   - the quad's material, `ExhaustPlume`: `StandardMaterial3D` → the shared `ShaderMaterial`:
-    `forward_scatter` 0.7, `scatter` 0.6, `diffuse` 0.3; no `sky`, `glint`, `refraction` or
-    minimum width;
+    `forward_scatter` 0.75, `scatter` 0.8, `diffuse` 0.25 (#146's were 0.7, 0.6 and 0.3); no
+    `sky`, `glint`, `refraction` or minimum width;
   - a denser plume: `amount` 96 → 300, still fixed; `amount_ratio` still runs 0.15–0.80 of it;
-  - bigger puffs: `scale` 1.2–2.2 → 2.4–3.6 (24–36 cm, growing 2.5× over their life).
-- **Rule that changes with it, for the brief revision if kept:** §5's "Keep `amount = 96` fixed
-  at all times" becomes 300; `test_exhaust_vapour_state.gd` checks it.
+  - a jet that stops (#149): puffs leave from within 2.5 cm of the pipe's centre
+    (`emission_sphere_radius` 0.06 → 0.025) at 4–7 m/s (1–2.2) within 10° (18°), and the still
+    air stops them within about a metre (`damping` 0.8–1.4 → 12–18 m/s²); warm, they rise a
+    little (`gravity` 0.5 → 0.8 m/s² up), and curl more (`turbulence_noise_strength`
+    0.15 → 0.35, scale 1.2 → 1.6, speed (0.2, 0.1, 0.2) → (0.3, 0.25, 0.3));
+  - a thin plume that thins out (#149): puffs born 6–10 cm (`scale` 0.6–1.0; #146's 2.4–3.6),
+    three times that by 0.3 of their life and six times by its end (36–60 cm; `scale_curve`
+    `0:1, 0.3:3, 1:6`), densest at the pipe (alpha `0:0, 0.02:0.22, 0.3:0.14, 0.7:0.05, 1:0`),
+    gone in 1.6 s (`lifetime` 2.5 → 1.6); a whiter grey, (0.92, 0.93, 0.94).
+- **Why, from the research (#149):** a warm engine's exhaust is mostly invisible; in cold, wet
+  air its water vapour condenses into a thin white plume that dissipates soon after the pipe, and
+  a diesel, whose exhaust is mostly air, shows less of it at idle (consumer guides and owners'
+  forums; none gave how long it stays visible). How fast the jet slows is Claude Code's estimate
+  of a jet mixing into still air, not a measured value.
+- **Rules that change with it, for the brief revisions if kept:** §5's "Keep `amount = 96` fixed
+  at all times" becomes 300 (`test_exhaust_vapour_state.gd` checks it); its lifetime 2.5 s
+  becomes 1.6 s, so "existing vapour drifts and fades within 2.5 s" becomes 1.6 s; its
+  `visibility_aabb` stays 49 m long, more than the 30 m the van covers in 1.6 s at 19 m/s.
 - **Claude's prediction for r1** (site office, rear view; ignition on frame 9):
   - frames 10, 20 and 30: no vapour yet (the 0.4 s wait, then the ramp);
-  - frame 40: a faint red haze at the tailpipe, lit by the tail lamps;
-  - frame 55: a soft red-lit cloud behind the van as it pulls away at full throttle;
-  - frame 80: the cloud glowing bright red in the brake lamps;
-  - frame 100: the van 3.4 m on, engine off; the vapour left behind in the world, pale grey in
-    the floodlight;
-  - frame 130: a faint grey remnant; frame 180: none.
+  - frame 40: a faint red smudge just behind the bumper, lit by the tail lamps (idle);
+  - frame 55: a small red-lit plume behind the van as it pulls away at full throttle;
+  - frame 80: a narrow plume glowing bright red in the brake lamps;
+  - frame 100: the van 3.4 m on, engine off; a faint pale grey wisp left behind in the
+    floodlight;
+  - frame 130: at most a trace; frame 180: none.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/exhaust_vapour/r0/`, `captures/exhaust_vapour/r1/`
