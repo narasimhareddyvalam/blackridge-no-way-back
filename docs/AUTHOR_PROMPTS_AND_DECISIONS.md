@@ -2104,6 +2104,38 @@ tag `a5`. Pictures the author approved or rejected are filed in
        bigger drops with the sky, A2's sheet, B1's strongest scattering, B2's dense and soft
        plume), the air's push, and the collider.
 
+147. **Ideas first, for a more realistic wiper flick and roof spill.**
+     - **The author's message:** "make wiper flick and roof spill more realistic. like give me
+       ideas to choose from first to make them more realistic"
+     - **What Claude Code did:** offered four ideas for each effect, from how the real thing
+       behaves (`docs/PARTICLE_RESEARCH.md` §3–§4), and asked the author to choose before
+       building anything. It also raised that r1's glass collider on A1 overlaps the feature the
+       brief gives B1, collision with splashes, which the A effects must not use.
+     - **The author's choices:**
+       - the wiper flick, all four: "Threads, then beads (Recommended)", "Real drop sizes",
+         "Drops land and slide", "Side-window run-off";
+       - the roof spill: "Curtain, then down the glass", "Rivulets with wet trails", "Wipers
+         clear the spill" (not "Clear sheet");
+       - the collider: "B1's feature: splashes (Recommended)": B1 keeps its collider and
+         splashes, and the brief names the splash sub-emitter as the feature the A effects don't
+         use; the A effects may use colliders, but never sub-emitters, turbulence or
+         `amount_ratio`.
+     - **What Claude Code then built,** as A1's and A2's r1, still uncommitted (`TUNING.md`):
+       - the drops drawn like the windshield's own drops: the sky in each drop's lower half, the
+         same catch light, and a lens that shifts the view by a few pixels; and as a comet, a
+         round head with a tail along its motion;
+       - A1: threads that snap into beads of 2.5–5.5 mm, more water, from the blade's outer
+         half; beads that land on the glass creep down it, or up it in the wind; the run-off
+         thrown back along the side window above 5 m/s; 200 more drops on the first top turn
+         after a roof spill;
+       - A2: real gravity plus the water's surge as the van slows, in place of gravity laid
+         along the glass; the water leaves the lip just off the glass and lands lower down;
+         eight rivulets with tails as long as their last 0.3 s of travel;
+       - the windshield is curved (3.4 cm proud at its middle, 7–12 cm back at its sides), so
+         three thin colliders follow it, each a plane fitted to a third of the glass model;
+       - a check in both A configuration tests that no A emitter uses a sub-emitter,
+         turbulence or a driven `amount_ratio`.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146): the four effects in the game; the r0 and r1 strips

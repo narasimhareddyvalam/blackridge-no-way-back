@@ -1,6 +1,6 @@
 # HANDOFF.md
 
-**Last run:** Assignment 6, r1 applied at the author's direction (#145–#146), 2026-11-07, on
+**Last run:** Assignment 6, r1 applied at the author's direction (#145–#147), 2026-11-07, on
 branch `develop`. The effects' change is in the working tree, uncommitted until the author's
 verdicts, as the handout asks; its record, a copy of it as a patch, the capture option and this
 handoff are committed, not pushed. Its section is below.
@@ -53,112 +53,130 @@ intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
 
-## Assignment 6, r1 applied at the author's direction: the realistic look (#145–#146)
+## Assignment 6, r1 applied at the author's direction: the realistic look (#145–#147)
 
-**The instruction (#146):** "make them more realistic. i want the bigger droplets effect even
-under no lights in normal when driving. make everything realistic as fuck as if its a real world
-game". It came after the options page the author asked for in #145:
-https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ.
+**The instructions:**
+- #146: "make them more realistic. i want the bigger droplets effect even under no lights in
+  normal when driving. make everything realistic as fuck as if its a real world game", after the
+  options page the author asked for in #145: https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ;
+- #147: "make wiper flick and roof spill more realistic. like give me ideas to choose from
+  first", then the author's choices: every A1 idea, three of the four A2 ideas, and B1's
+  splashes as its feature that the A effects don't use.
 
 **In the working tree, uncommitted until the author's verdicts** (the handout: "Do not commit"
 until the verdict). `tools/tuning/r1/r1.patch` is a committed copy: `git apply
 tools/tuning/r1/r1.patch` on `4f73f98` restores it (checked with `git apply --cached --check`).
 - `game/effects/scatter_particle.gdshader` and its `.uid`, new: the particle shader for all four
-  effects (its parts are listed in `TUNING.md`). It is an effect resource, not in `game/shaders/`.
-- The six effect scenes: every draw material is a `ShaderMaterial` running that shader; A1's
-  and A2's counts and sizes, and B2's, are raised (`TUNING.md`).
+  effects (`TUNING.md` lists its parts). It is an effect resource, not in `game/shaders/`. The
+  water is drawn like the windshield's own drops (`rain_drops.gdshaderinc`), and a drop turned
+  along its motion draws as a comet.
+- The six effect scenes: every draw material is a `ShaderMaterial` running that shader. A1 has
+  four emitters (`SpillWater` and `PillarRunoff` are new) and A2 three (`Rivulets` is new); their
+  values are in `TUNING.md`.
 - `van_particles.gd`:
-  - A1 runs in the van's frame (`local_coords` on), and each burst is placed by position only,
-    so it keeps the body's frame;
-  - each physics tick, the air's push up the glass is set (`_blow_flicks`), with none when parked
-    or reversing;
-  - a glass collider as large as the windshield;
-  - `setup()` takes the glass's transform and size, and `van_presentation.gd`'s one call passes
-    them.
-- `particle_readback.gd` reads a `ShaderMaterial`. It fails any parameter that is not one of the
-  shader's uniforms, because Godot stores an unknown name without an error.
-- The four configuration tests take the new values.
-- `test_wiper_flick_state.gd` adds the glass collider, the air's push (none on the brake, the
-  formula at 12 m/s, none reversing), and the bursts freed with the van.
-- `test_exhaust_vapour_state.gd` expects an amount of 300.
+  - each van gets its own copy of the flick's and spill's process materials, since their gravity
+    changes at runtime;
+  - the flick is turned to the windshield's frame and placed at the blade tip; each tick its
+    gravity is the still air's plus the air's push up the glass, or back along the side for the
+    run-off (`_blow_flicks`), none parked or reversing;
+  - the run-off is thrown only above 5 m/s; a spill's water is thrown by the first top turn
+    within 3 s of it;
+  - each tick the spill's gravity is the still air's plus its water's surge as the van's speed
+    changes (`_pour_spill`);
+  - three thin colliders follow the curved windshield, each a plane fitted to a third of the
+    glass model (`_fit_glass`);
+  - `setup()` takes the windshield's `MeshInstance3D`, and `van_presentation.gd`'s one call
+    passes it.
+- The previews fix the new emitters' seeds; `cost_effects.gd` restarts them.
+- `particle_readback.gd` reads a `ShaderMaterial` and per-axis curves, and checks that an emitter
+  uses no sub-emitter, turbulence or driven `amount_ratio`.
+- The four configuration tests take the new values; the A1 state test adds the colliders, the
+  air's push, the run-off at speed, the spill's water and freeing the van; the A2 state test adds
+  the water's surge; `test_exhaust_vapour_state.gd` expects an amount of 300.
 
 **Committed:**
 - this handoff;
 - `TUNING.md`: r1 for each effect, with the predictions;
-- the prompt log (#145–#146);
+- the prompt log (#145–#147);
 - `scripts/capture-strips.sh`: `FROM=<commit>` renders that commit's game from a temporary
   checkout;
 - `tools/tuning/r1/r1.patch`, in place of the first proposal, which stays at `bf962da`;
-- `logs/particles/realistic/`.
+- `logs/particles/realistic/` (r1 as of #146) and `logs/particles/realistic_r1b/` (as of #147).
 
 **Tests, with the exact commands** (from the repository root):
 
 ```sh
 HOME=$PWD/.scratch-home /Applications/Godot.app/Contents/MacOS/Godot --headless --editor \
   --path game --import
-LOG_DIR=logs/particles/realistic scripts/run-test.sh <test>.gd 60   # every suite
-LOG_DIR=logs/particles/realistic scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
-LOG_DIR=logs/particles/realistic scripts/run-test.sh cost_effects.gd 60 300
+LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh <test>.gd 60   # every suite
+LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
+LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh cost_effects.gd 60 300
 python3 tools/tests/check_first_drive_art.py
 ```
 
-- **The import:** exit 0 with no errors; it wrote `scatter_particle.gdshader.uid`.
-- **Every suite** (`logs/particles/realistic/SUMMARY.txt`), all exit 0:
+- **The import:** exit 0 with no errors.
+- **Every suite** (`logs/particles/realistic_r1b/SUMMARY.txt`), all exit 0, no script or shader
+  errors:
   - the earlier suites with their baseline counts: 64/64, 0 failures, 92/92, 21/21, 12/12, 25/25,
     33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7, 30/30
     ×3, and art 0 failures;
-  - configuration 84/84, 79/79, 237/237 and 44/44;
-  - state 13/13, 11/11, 12/12 and 10/10.
-- **The cost script:** controls 0.002 and 0.002 ms against the game's 0.449 ms. Every effect is
-  within −0.010 to +0.013 ms of it while the rounds vary by up to 0.051 ms: still no GPU particle
+  - configuration 220/220, 163/163, 237/237 and 44/44;
+  - state 20/20, 13/13, 12/12 and 10/10.
+- **The cost script:** controls 0.002 and 0.003 ms against the game's 0.449 ms. Every effect is
+  within −0.003 to +0.018 ms of it while the rounds vary by up to 0.058 ms: still no GPU particle
   process headless.
-- **The only ERROR lines:** the same engine messages as before tuning. "Resources still in use
-  at exit" now also appears in the regression and integration logs. A verbose run names them:
-  `wiper.wav` and `collision.wav`, sounds still playing at exit, not the effects.
+- **The only ERROR lines:** the same engine messages as before tuning. A verbose run names the
+  resources still in use at exit as `wiper.wav` and `collision.wav`, sounds still playing, not
+  the effects.
 
 **What the next run may rely on:**
 
-- r1 renders in the game as on the options page. Claude Code rendered all four previews from the
-  working tree into its scratch folder, with A1 also at 50 km/h and in the depot. B1's frame 30
-  matches the page's ×100 option exactly (the previews use fixed seeds).
+- r1 renders in the game as the page shows: Claude Code rendered every preview from the working
+  tree into its scratch folder, with A1 also at 50 km/h and in the depot (the previews use fixed
+  seeds).
 - `FROM=4f73f98 scripts/capture-strips.sh 0 …` renders r0. It was tested for A1 at 50 km/h, into
   the scratch folder, and its temporary checkout was removed.
-- Two findings from this run's test:
-  - A burst placed with `global_transform` takes the van's basis, while its parent, the body,
-    moves on its own; placed by position only, it stays in the body's frame, where the glass's
-    direction is defined.
-  - A value set in `_physics_process` is read in a test after `process_frame`, before
-    `_process` moves the body again.
+- Findings from this run:
+  - The windshield model is curved, 3.4 cm proud of its plane at the middle and 7–12 cm behind it
+    at the sides; the wipers sweep the plane.
+  - GPU trails redraw every draw pass once per trail section, so a bead cannot head a trail, and
+    a trail misbehaves once its particle rests; rigid collision works for local-coordinate
+    particles against colliders that move with them.
+  - Turned along their motion, particles face the driver's camera correctly even with the
+    mirrors' cameras drawing them too.
+  - At night only a particle's emission shows; a lens that shows only the dark scene behind it
+    disappears, so the water copies the windshield drops' sky-filled lower half.
+  - A test that times a deceleration counts ticks with the van's clock, not a fixed duration.
 
 **Waiting on the author (`TUNING.md`):**
 
 1. If the Godot editor is open and says files changed on disk, choose Reload, not Ignore: Ignore
    and a later save would write r0's scenes back over r1.
 2. Look at the four effects in the game at 1280×800:
-   - the wiper flick, parked and driving on the dark valley road;
-   - a hard brake at the office;
+   - the wiper flick, parked and driving on the dark valley road, and in the depot;
+   - a hard brake at the office, with the wipers running;
    - a lamp on the valley road;
    - the exhaust at the office.
 3. Capture `FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`, and
    the A1 variants named in `TUNING.md`.
 4. Give a verdict per effect.
    - **For each effect kept,** Claude Code commits its part of r1 and writes the brief's
-     revisions:
-     - each effect's draw material, counts and sizes;
-     - A1's van frame, the air and the collider, and its freed-van rule;
-     - B2's amount of 300;
-     - §8's peaks, now A1 400, A2 216 and B2 300: 3,476 in all.
+     revisions (listed under each effect in `TUNING.md`), including revision 6: B1's feature
+     that the A effects don't use is its splash sub-emitter (#147).
    - **For each effect reverted,** Claude Code restores its part from `4f73f98`.
 
 **Unverified:**
 
 - How r1 looks in the author's strips and in the running game, which decide.
 - r1's GPU price:
-  - more particles (A1 400 at its peak, A2 216, B2 300);
-  - a shader that reads the screen and depth for A1 and A2;
+  - more particles (A1 728 at its peak, A2 224, B2 300);
+  - a shader that reads the screen for A1's and A2's water;
+  - three more particle colliders;
   - the windowed frame-time check is the author's (§8).
-- Whether A1's flick, now about 0.1–0.15 s long, reads as real. That is shorter than §2's
-  phases, because drops stop on the glass collider or pass behind the pillar.
+- Whether the parked flick on the unlit road reads as real: with real drop sizes it shows about
+  as much as the glass's own drops.
+- The side-window run-off is beyond the pillar, out of the driver's view in these strips; it is
+  seen through the side window and from outside.
 - The tailpipe's position (revision 2).
 
 ## Assignment 6, the build: effects, wiring, previews, fixes, price and documents (#142–#144)
