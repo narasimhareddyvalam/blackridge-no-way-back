@@ -27,6 +27,7 @@ results are recorded again at the submitted commit.
 
 | Check | Result | Logs |
 | --- | --- | --- |
+| Fresh clone of the submission | The handout's check, at the author's word (#179): `git clone --branch a6` of `1237471` into an empty folder; `--import` once, exit 0, no SCRIPT or SHADER ERROR; then every suite through `scripts/run-test.sh` in its stated mode: every count identical to the rows above and the baseline's, all exit 0, no SCRIPT or SHADER ERROR in any log; `cost_effects.gd` exit 0, its 7 cases measured; art 0 failures. `a6` is the commit after `1237471`, which adds only this record (`TEST-REPORT.md`, these logs, `HANDOFF.md`) | `logs/particles/fresh_clone_a6/SUMMARY.txt` |
 | Every earlier suite | The baseline's counts, exit 0; art 0 failures; the same with r1 alone, in a temporary worktree | `logs/particles/strips_163/SUMMARY.txt`; r1 alone: `logs/particles/r1_only_164/SUMMARY.txt` |
 | Configuration | A1 451/451, A2 221/221, B1 364/364 (four scenes, the street lamps' own added), B2 44/44, exit 0 | the same |
 | State | A1 27/27, A2 13/13, B1 13/13 (13 volumes; 12/12 with r1 alone, since the title check comes with the world changes), B2 10/10 (`amount` stays 300), exit 0 | the same |

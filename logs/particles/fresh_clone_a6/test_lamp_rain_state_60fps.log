@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: On the title screen the lamps' rain is hidden and none of it runs, so the paused title shows no frozen streaks; leaving the title shows it again
+PASS: Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the floodlight and the door lamp (13)
+PASS: At the start, the 3 lamps within 65 m of the camera rain and the other 10 are off and hidden (LampRainStreet10, LampRainFloodlight11, LampRainDoor12)
+PASS: Each one started already falling: started once by its emitter's restart, which runs its preprocess (3 starts)
+PASS: Driving away with the real throttle, each lamp's rain stops emitting within one tick of the camera passing 65 m (all three by 9.2 s)
+PASS: and hides once its last drops and their splashes are gone: the last lamp left is still shown 0.1 s before 1.30 s (the rain's life, then the splash's) and hidden 0.1 s after
+PASS: Arriving among the depot and valley lamps, each one within 65 m starts, already falling (LampRainPost2, LampRainStreet4, LampRainStreet5)
+PASS: No more than 8 volumes rain at once (3)
+PASS: Esc pauses the game: the rain freezes where it is and nothing restarts
+PASS: Esc again resumes it without a restart
+PASS: Hidden, the rain stops emitting
+PASS: Shown again, each volume clears its old drops and restarts, already falling (3 starts)
+PASS: On the hill road, far from every lamp, no lamp rain runs
+LAMP RAIN STATE RESULT: 13/13 passed; 0 failed
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

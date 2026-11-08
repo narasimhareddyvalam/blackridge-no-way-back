@@ -1,10 +1,11 @@
 # HANDOFF.md
 
-**Last run:** the film, made by Claude Code at the author's word (#172–#174), 2026-11-08:
-"Blackridge, Rain and Vapour", 4K, 7 min 41 s, its records committed as `725464b`; its section
-is below; its OneDrive link is in `README.md` and `SUBMISSION.md` (#177). **Next, the
-author's:** check that a reviewer can open the link; check `SUBMISSION.md`'s summary; then the
-OK to push, the `a6` tag, a fresh-clone check and Canvas. Before the film, Step 6, made by
+**Last run:** the submission (#177–#179), 2026-11-08: the film's link, the prompt log back in Git,
+the fresh-clone check of the tagged commit (every count as recorded), then `a6` and the push of
+`develop`; its section is below. **Next, the author's:** Canvas, with the files in
+`~/Desktop/assignment_6/`. Before it, the film, made by Claude Code at the author's word
+(#172–#174): "Blackridge, Rain and Vapour", 4K, 7 min 41 s, its records committed as `725464b`.
+Before the film, Step 6, made by
 Codex in its own session at the author's direction, then kept and committed with the author's
 account (#170–#171); Codex's own section is below. Before it, "do everything for me please"
 (#165): the brief's revisions 6–10, the `CLAUDE.md` review, Effect A's mutations and the cost
@@ -71,6 +72,34 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## 2026-11-08 — The submission: the fresh-clone check, `a6` and the push (#177–#179)
+
+- **Asked:** "i confirmed the link opens and push" (#179), after the film's link (#177) and the
+  prompt log back in Git (#178).
+- **Before the push:** GitHub's `develop` (`c1ee48f`) is contained in the local one, so the push
+  only adds commits; no file is deleted since it; `main` (`a2dd684`) and the `a5` tag are not
+  touched; `game/` is unchanged since the film's revision `c1c9d8b`.
+- **The fresh-clone check** (`logs/particles/fresh_clone_a6/SUMMARY.txt`): `git clone --branch a6`
+  of `1237471` into an empty folder in Claude Code's scratch space, then:
+
+  ```sh
+  HOME=$PWD/.scratch-home /Applications/Godot.app/Contents/MacOS/Godot --headless --editor --path game --import
+  LOG_DIR=logs/particles/fresh_clone_a6 scripts/run-test.sh <each suite> 60   # night dimming also 30, 144
+  LOG_DIR=logs/particles/fresh_clone_a6 scripts/run-test.sh cost_effects.gd 60 300
+  python3 tools/tests/check_first_drive_art.py
+  ```
+
+  The import: exit 0, 823 imported files, no SCRIPT or SHADER ERROR. Every suite: the same counts
+  as the last full run (`logs/particles/strips_163/`), exit 0, no SCRIPT or SHADER ERROR; the cost
+  script exit 0; art 0 failures. The windowed GPU price (`gpu_price.gd`) needs a window and the
+  Metal HUD, so it is not part of this headless check.
+- **`a6`** is the commit after `1237471`, adding only this record; it is pushed with `develop`
+  at the author's word (#179). The source ZIP is made from `a6`, and the submitted SHA goes into
+  the Desktop copy of `SUBMISSION.md` and the Canvas note (`~/Desktop/assignment_6/`), not into
+  this commit.
+- **Next, the author's:** submit on Canvas: the ZIP and `SUBMISSION.md` from the Desktop folder,
+  and the note in `CANVAS-NOTE.txt` there.
 
 ## 2026-11-08 — The film, made by Claude Code at the author's word (#172–#174)
 
