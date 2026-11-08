@@ -1,15 +1,17 @@
 # HANDOFF.md
 
-**Last run:** Step 6, made by Codex in its own session at the author's direction, then kept and
-committed with the author's account (#170–#171), 2026-11-08; Codex's own section is below. Before
-it, "do everything for me please" (#165): the brief's revisions 6–10, the `CLAUDE.md` review,
-Effect A's mutations and the cost script again, and the GPU price from Apple's Metal Performance
-HUD. **Next:** the author's own notes in `FRICTIONAL.md`, then the film, the tag, a fresh-clone
-check and Canvas; the full list is the prompt log's "Waiting for the author". Before those, the
-author's verdicts after play (#164): all four effects kept, committed with their strips
-(`1c8447b`), then the world changes (`1dfe865`). Before those, the strips, run by Claude Code at
-the author's request (#163): 22 fixture strips, all read, r0 committed as the first strip
-(`2b9e327`).
+**Last run:** the film, made by Claude Code at the author's word (#172–#174), 2026-11-08:
+"Blackridge, Rain and Vapour", 4K, 7 min 41 s, its records committed as `725464b`; its section
+is below. **Next, the author's:** watch the film; upload it to the course's media storage and
+send the link; check `SUBMISSION.md`'s summary; the author's own notes in `FRICTIONAL.md` are
+written but not committed; then the OK to push, the `a6` tag, a fresh-clone check and Canvas. Before the film, Step 6, made by
+Codex in its own session at the author's direction, then kept and committed with the author's
+account (#170–#171); Codex's own section is below. Before it, "do everything for me please"
+(#165): the brief's revisions 6–10, the `CLAUDE.md` review, Effect A's mutations and the cost
+script again, and the GPU price from Apple's Metal Performance HUD. Before those, the author's
+verdicts after play (#164): all four effects kept, committed with their strips (`1c8447b`), then
+the world changes (`1dfe865`). Before those, the strips, run by Claude Code at the author's
+request (#163): 22 fixture strips, all read, r0 committed as the first strip (`2b9e327`).
 
 Before those, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
 wipers. Before those, the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`,
@@ -69,6 +71,47 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## 2026-11-08 — The film, made by Claude Code at the author's word (#172–#174)
+
+- **Asked:** "yes start the film now" (#172); what it must be (#173): everything done for the
+  assignment, apt, the toolkit's best practices, not too long, and "make sure the script says i
+  did everything", which the film does not do: it states contributions as the records state
+  them, with the author first (#173); "ok continue. let me know when its done" (#174).
+- **Made:** "Blackridge, Rain and Vapour", with the Brutalist toolkit's godot-gamedev skill and its
+  walker modifier, in `youtube/claude-liam-blackridge-particles-gamedev/`. Assignment 5's film
+  folder is untouched.
+- **Footage:** Movie Maker takes from an isolated copy of `game/` at `c1c9d8b`: one scripted-input
+  take on the real main scene and seven fixture takes (`capture/CAPTURE.md`,
+  `capture/manifest.json`). `game/` was not changed, so no game test was rerun; the results in
+  the sections below still stand.
+- **Narration:** Kokoro `am_onyx`, 28 beats, 1,541 words; aligned 28/28, no fallback.
+- **Checks** (the toolkit at `~/Desktop/brutalist.art`; `<reel>` is the film's folder):
+  - `python3 <reel>/build/ledger.py`: files 98 · exclusions 680 · excerpts 7 · pairs 7;
+  - `./art godot-gamedev --check <reel> --game <repo>/game`: `"status": "PASS"`;
+  - `./art final <reel> --height 2160 --fps 30 --out <reel>/exports/landscape`: GATE T PASS (28
+    beats, 0 FAILs, `TYPECHECK.md`); the toolkit's Gate V 56 frames, 0 BLOCKER, 0 MAJOR
+    (`_qc/REPORT.md`); the master written, 460.8 s;
+  - frame-level QC (`_qc/VISUAL-QC.md`): the first pass found layout faults (clipped code, the
+    pause leaking into B08, wrapped tables); a second pass compared every narrated sentence and
+    label with the records and corrected eight claims (B09, B13, B15, B17, B18, B20, B21, B23);
+    the master was sampled at 15%, 50% and 85% of every beat and read;
+  - the master's audio: −24.6 LUFS integrated, true peak −3.2 dBFS, no silence over 2.5 s.
+- **The master:** `<reel>/exports/landscape/Blackridge-Rain-and-Vapour-4K.mp4`, a hard link to the
+  compiler's `claude-liam-blackridge-particles-gamedev.mp4` (as Assignment 5's upload was named),
+  3840×2160, 30 fps, H.264 and AAC stereo, 460.8 s (7 min 41 s), 66.9 MB, SHA-256
+  `8080d78ae388f2d6955b40411490b9ec2e64c58eb3e3e8cb44e4728a80539e92`. Media stays out of Git (`.gitignore`).
+- **Changed:** the film's folder (`725464b`); `README.md` and `SUBMISSION.md` (the film's name, hash
+  and the revision shown, `c1c9d8b`; one sentence on the film added to the author's summary, for
+  the author to check; the URL waits for the upload); this file. Not pushed.
+- **The prompt log is local** since the author's `1f55566`: the film, `SUBMISSION.md`,
+  `TEST-REPORT.md`, `FRICTIONAL.md` and the brief cite its entries (#131–#174), which a reader of
+  the repository cannot open.
+- **Next, the author's:** watch the film; upload it and send the link (it goes into
+  `SUBMISSION.md` and `README.md`); check `SUBMISSION.md`'s summary; then the OK to push, the `a6`
+  tag, a fresh-clone check and Canvas.
+- **Unverified:** the author has not watched the film; how it looks on another screen or after the
+  media storage re-encodes it.
 
 ## 2026-11-08 — Process shader scratch conversion (Codex)
 

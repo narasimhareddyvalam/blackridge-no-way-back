@@ -104,8 +104,12 @@ and after, and the changes to the lamps, the wet road and the roadside around th
 - B1's slowest drops fade 2–4 m above the ground.
 - A headless run draws no particles and runs no GPU particle process.
 
-**Film:** the link, filename and SHA-256 are added at submission. The film is stored in the
-course's media storage, not in GitHub.
+**Film:** "Blackridge, Rain and Vapour" (4K, 7 min 41 s), made by Claude Code at the author's
+word. The source is in `youtube/claude-liam-blackridge-particles-gamedev/`: script, beat sheet,
+the captures' records, evidence ledger, fact check, QC and build log. File:
+`Blackridge-Rain-and-Vapour-4K.mp4`, SHA-256 `8080d78ae388f2d6955b40411490b9ec2e64c58eb3e3e8cb44e4728a80539e92`. The
+link is added once the author has uploaded it to the course's media storage; the film is not in
+GitHub.
 
 To check the effects:
 
