@@ -363,3 +363,14 @@ _Add future adjustments below this line with a date, reason, changed setting, an
   checked only the settings the brief named, so a windowed check caught it.
 - **Evidence:** the four configuration tests now read `billboard_keep_scale` (70/70, 68/68,
   234/234, 42/42); with it off, B2's fails 41/42, exit 1 (`logs/particles/keep_scale/`).
+
+### 2026-11-07, revision 5 (build): B1's streaks as wide as their quads (Claude Code)
+
+- **Found:** `rain_streak.png` drew its line across only the middle quarter of its 16 pixels
+  (width at half alpha 4 px). So the brief's 7–14 mm quads drew streaks about 2–4 mm wide, well
+  under a pixel at a lamp's distance, against §4's "streaks ... 7–14 mm wide" and "1–2 px wide".
+- **Changed:** the texture script draws the streak across the quad's width with soft edges
+  (width at half alpha 12 px of 16). The other four textures rebuild byte-identical. A2's
+  `roof_stream.png` keeps its thin bar: the brief gives its streams a length, not a width.
+- **Evidence:** `logs/particles/streak_width/` (the profile before and after, the import, and
+  the configuration test, 234/234).
