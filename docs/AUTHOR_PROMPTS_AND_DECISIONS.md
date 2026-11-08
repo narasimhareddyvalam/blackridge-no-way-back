@@ -2321,6 +2321,18 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Next, on the author's approval:** the brief's parts one at a time, starting with its
        highest priority, the wet road's reflections.
 
+152. **The depot's wall lights: a small pool each, not the whole depot.**
+     - **The author's message:** "and make sure the lighting is realistic from those lights.
+       those lights shouldnt light up entire depot, it should lightup only things below those
+       lights in small radius"
+     - **What Claude Code changed** (uncommitted, in `tools/tuning/world/lamps_and_rings.patch`):
+       each wall light's beam now points nearly straight down (10° out from the wall, in place of
+       35°), 40° each side with a soft edge (60° before), and reaches 9 m (20 m), at energy 60
+       (140); its glow is 1.2 m across (2.4). Each leaves a pool about 4 m across in front of its
+       door and a fan of light down the door's top; the rest of the depot stays dark.
+     - **Checked:** every suite passes (`logs/particles/depot_152/SUMMARY.txt`); renders along the
+       depot, from the van, from the side and facing a door.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

@@ -54,7 +54,14 @@ intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
 
-## The depot lit from its wall (#151)
+## The depot lit from its wall (#151), each light a small pool (#152)
+
+**#152:** "those lights shouldnt light up entire depot, it should lightup only things below those
+lights in small radius". Each wall light's beam now points nearly straight down (10° out from
+the wall), 40° each side with a soft edge (`spot_angle_attenuation` 1.5), reaching 9 m at energy
+60, with a 1.2 m glow (`_halo(size)` now takes the size): a pool about 4 m across in front of each
+door, the rest of the depot dark. Every suite passes (`logs/particles/depot_152/SUMMARY.txt`).
+The values below are #151's first ones.
 
 **The instruction (#151):** "those lights at shed looks so bad i mean, real physics and in real
 life thats not how they are added near sheds, look for already available assets maybe", then "i
