@@ -5,7 +5,8 @@
 uncommitted in the working tree; their records, a patch copy of each, and this handoff are
 committed, not pushed. Their sections are below, newest first. **Next:** the author's brief for
 a photorealistic rainy road, one part at a time, each approved before it starts (C53); step 1,
-the wet road's reflections, is done (#153); step 2, the streetlight, waits for approval.
+the wet road's reflections, is done (#153), and step 2, the streetlight, is done (#154); step 3,
+the rain and its splashes, waits for approval.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -54,6 +55,38 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The brief, step 2: the streetlight (#154)
+
+**The instruction (#154):** "alright proceed", then "Amber like your reference (Recommended)" for
+the street lamps' light (C54).
+
+**In the working tree, uncommitted,** in `tools/tuning/world/lamps_and_rings.patch` (which now
+carries new files as well):
+- `tools/art/build_streetlight.py`, new: run with
+  `/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1
+  --python tools/art/build_streetlight.py`; it writes
+  `game/features/environments/industrial_loop/art/streetlight/streetlight.glb` (1,626
+  triangles; slots "pole", "housing", "lens", "footing", "steel"; an empty "Lens").
+- `tools/assets/streetlight_assets.json`, new: Poly Haven's `green_metal_rust` (1k), fetched
+  with `python3 -I tools/assets/fetch_polyhaven.py tools/assets/streetlight_assets.json`, its
+  imports set by `configure_imports.py` (the six other import files it touched were put back).
+- `industrial_loop.gd`: `_lamp_post()` places the model and replaces its materials
+  (`_streetlight_material()`); the light, amber `STREET_LIGHT_COLOR`, energy 90, sits at the
+  "Lens" empty; `_halo(size, color)` now takes a colour; the depot keeps `WALL_LIGHT_COLOR`.
+- `SOURCES.md`: rows for the texture and the model.
+
+**An r1 change with it,** in `tools/tuning/r1/r1.patch`: B1's post scene scatters 5 (60), as the
+brighter lamps had blown its amber to white; `test_lamp_rain_config.gd` reads each scene's own
+strength. It assumes the world patch's lamps.
+
+**Tests:** `LOG_DIR=logs/particles/brief_step2`, the same commands as #150: every suite exits 0
+with the same counts, art 0 failures, and the cost script reads every effect the same as every
+effect off.
+
+**Unverified:** the model in the running game up close; the GPU price is unchanged in kind
+(four shadowed spot lights, as before). Found, not changed: `rock_wall_02` and
+`rustic_stone_wall` import without mipmaps or VRAM compression.
 
 ## The brief, step 1: the wet road's reflections (#153)
 

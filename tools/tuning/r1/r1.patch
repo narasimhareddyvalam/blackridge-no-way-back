@@ -401,7 +401,7 @@ index 11580a0..fb5e218 100644
  preprocess = 0.0
  explosiveness = 0.0
 diff --git a/game/effects/lamp_rain_post.tscn b/game/effects/lamp_rain_post.tscn
-index c880f28..e7b614a 100644
+index c880f28..e253ffd 100644
 --- a/game/effects/lamp_rain_post.tscn
 +++ b/game/effects/lamp_rain_post.tscn
 @@ -1,10 +1,11 @@
@@ -479,7 +479,7 @@ index c880f28..e7b614a 100644
 +shader_parameter/face_camera = false
 +shader_parameter/min_pixels = 1.0
 +shader_parameter/forward_scatter = 0.5
-+shader_parameter/scatter = 60.0
++shader_parameter/scatter = 5.0
 +shader_parameter/diffuse = 0.3
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
@@ -526,7 +526,7 @@ index c880f28..e7b614a 100644
 +shader_parameter/face_camera = true
 +shader_parameter/min_pixels = 1.0
 +shader_parameter/forward_scatter = 0.5
-+shader_parameter/scatter = 60.0
++shader_parameter/scatter = 5.0
 +shader_parameter/diffuse = 0.3
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
@@ -1891,17 +1891,20 @@ index bae6e39..231d22f 100644
  var _checks: int = 0
  var _failures: int = 0
 diff --git a/game/tests/test_lamp_rain_config.gd b/game/tests/test_lamp_rain_config.gd
-index b87ee23..56c800f 100644
+index b87ee23..f47c7bd 100644
 --- a/game/tests/test_lamp_rain_config.gd
 +++ b/game/tests/test_lamp_rain_config.gd
-@@ -1,26 +1,30 @@
+@@ -1,26 +1,34 @@
  extends SceneTree
  ## B1, rain in every lamp's light: reads back every setting CHANGE-BRIEF.md §4 (and its
 -## revision 1) names from the three scenes, including the feature neither A effect uses:
+-## collision with a height field, and splashes through a sub-emitter.
 +## revision 1) names from the three scenes, as TUNING.md's r1 revises them at the author's request
 +## (#146, #149): real rain's mix of drop sizes and speeds, each drop drawn as the streak it leaves
-+## in a 1/30 s frame, at a density near real rain's. Also the feature neither A effect uses:
- ## collision with a height field, and splashes through a sub-emitter.
++## in a 1/30 s frame, denser than before. The post scene, under the street lamps and the depot's
++## wall lights, scatters less light since those lamps became realistic (#150, #154). Also the
++## feature neither A effect uses: collision with a height field, and splashes through a
++## sub-emitter.
  
  const Readback = preload("res://tests/particle_readback.gd")
  const SLANT := Vector3(0.08, -0.997, 0.0)
@@ -1909,16 +1912,18 @@ index b87ee23..56c800f 100644
  	"res://effects/lamp_rain_post.tscn": {"root": "LampRainPost",
 -		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT,
 +		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT, "drops": 2000, "splashes": 1100,
++		"scatter": 5.0,
  		"aabb": AABB(Vector3(-4.0, -8.5, -4.0), Vector3(8.0, 10.0, 8.0)),
  		"collider": Vector3(8.0, 10.0, 8.0), "collider_at": Vector3(0.0, -3.5, 0.0)},
  	"res://effects/lamp_rain_floodlight.tscn": {"root": "LampRainFloodlight",
  		"box": Vector3(3.5, 0.1, 6.5), "direction": Vector3(0.023, -0.997, 0.077),
-+		"drops": 3200, "splashes": 1800,
++		"drops": 3200, "splashes": 1800, "scatter": 60.0,
  		"aabb": AABB(Vector3(-4.5, -5.0, -7.5), Vector3(9.0, 6.0, 15.0)),
  		"collider": Vector3(9.0, 6.0, 15.0), "collider_at": Vector3(0.0, -2.0, 0.0)},
  	"res://effects/lamp_rain_door.tscn": {"root": "LampRainDoor",
 -		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT,
 +		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT, "drops": 300, "splashes": 170,
++		"scatter": 60.0,
  		"aabb": AABB(Vector3(-1.5, -3.5, -1.5), Vector3(3.0, 4.0, 3.0)),
  		"collider": Vector3(3.0, 4.0, 3.0), "collider_at": Vector3(0.0, -1.5, 0.0)},
  }
@@ -1929,7 +1934,7 @@ index b87ee23..56c800f 100644
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -73,49 +77,47 @@ func _check_variant(path: String, variant: Dictionary) -> void:
+@@ -73,49 +81,49 @@ func _check_variant(path: String, variant: Dictionary) -> void:
  
  func _rain(variant: Dictionary) -> Dictionary:
  	return {
@@ -1965,7 +1970,8 @@ index b87ee23..56c800f 100644
 +		"scale_over_velocity_curve": {"x": FLAT, "y": [Vector2(0.0, 1.0), Vector2(1.0, 201.0)],
 +			"z": FLAT},
 +		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": 1.0,
-+			"forward_scatter": 0.5, "scatter": 60.0, "diffuse": 0.3, "glint": 0.0, "sky": 0.0}},
++			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
++			"sky": 0.0}},
 +		"mesh": {"size": Vector2(0.01, 0.01)},
  		"texture": "res://effects/textures/rain_streak.png",
  	}
@@ -1995,7 +2001,8 @@ index b87ee23..56c800f 100644
 -			"backlight": BACKLIGHT, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES,
 -			"billboard_keep_scale": true},
 +		"draw": {"shader": SCATTER, "params": {"face_camera": true, "min_pixels": 1.0,
-+			"forward_scatter": 0.5, "scatter": 60.0, "diffuse": 0.3, "glint": 0.0, "sky": 0.0}},
++			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
++			"sky": 0.0}},
  		"mesh": {"size": Vector2(0.01, 0.01)},
  		"texture": "res://effects/textures/water_bead.png",
  	}

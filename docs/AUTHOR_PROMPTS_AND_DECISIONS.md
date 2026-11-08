@@ -2374,6 +2374,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Next, on the author's approval:** step 2, the streetlight itself, with the colour
        question.
 
+154. **The brief, step 2: the streetlight.**
+     - **The author's message:** "alright proceed"
+     - **Claude Code asked which light the street lamps should give; the author answered:**
+       "Amber like your reference (Recommended)".
+     - **What Claude Code found:** Poly Haven's two street lamps (`street_lamp_01`,
+       `street_lamp_02`, Josh Dean) are ornate Victorian lanterns, wrong for a modern roadside;
+       the Blender MCP add-on was not running, so Blender 5.2.2 ran from the command line, as
+       for the site office. A high-pressure sodium lamp's light sits near x 0.52, y 0.42 in CIE
+       1931, about 2,000 K, a deep orange-yellow.
+     - **What Claude Code changed** (uncommitted, in `tools/tuning/world/lamps_and_rings.patch`):
+       - `tools/art/build_streetlight.py`, new, builds `streetlight.glb` (1,626 triangles): a
+         tapered round steel pole on a concrete footing with a bolted base plate, four anchor
+         bolts and a hand-hole cover, bending over in a 1.3 m davit arm to a cobra head with a
+         drop refractor and a photocell; real-size UVs and named material slots, as the site
+         office's script does;
+       - the four street lamps (the three valley lamps and the lumber yard's) use it: the pole
+         and head painted grey over the relief and roughness of Poly Haven's `green_metal_rust`
+         (Rob Tuytel, CC0, new), the footing in the yard's concrete;
+       - their light is amber, `ffa040`, and its energy 90 (60 before), so the road is about as
+         bright as before though amber light carries less brightness per unit; the lens and the
+         glow are amber too; the depot's wall lights keep their white;
+       - B1's post scene, the rain under the street lamps and the depot's wall lights, scatters
+         5 in place of 60: since #150 those lamps light the drops 20 to 100 times more strongly,
+         and at 60 their amber blew out to white; at 5 the rain reads golden. The floodlight's and
+         the door lamp's rain keep 60, as their lamps did not change.
+     - **Checked:** every suite passes (`logs/particles/brief_step2/SUMMARY.txt`); the lamp
+       configuration test reads each scene's own strength (255/255); renders of the model in
+       Blender, and of the lamp in the game from five views.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

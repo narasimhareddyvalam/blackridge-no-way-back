@@ -332,7 +332,13 @@ without these changes, first reverse their patch
   - frame 85: streaks left only in the middle and lower part, as the rain stops from the top;
   - frame 110: empty (hidden on frame 109).
   - With #150's lamp in the working tree: on every frame, the road and the verge under the lamp
-    lit in a broad warm pool, puddles on the road, and a soft glow around the lens.
+    lit in a broad warm pool, puddles on the road, and a soft glow around the lens; with #154's
+    amber streetlight, all of it amber and the rain golden.
+- **A change with #154 (r1, in `tools/tuning/r1/r1.patch`):** the post scene's `scatter`, for the
+  rain under the street lamps and the depot's wall lights, 60 → 5. Since #150 those lamps light
+  the drops 20 to 100 times more strongly than the lamps r1 was tuned under, and at 60 the amber
+  blew out to white; at 5 it reads golden, as in the author's reference. The floodlight's and the
+  door lamp's rain keep 60. This value assumes the world patch's lamps.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`
