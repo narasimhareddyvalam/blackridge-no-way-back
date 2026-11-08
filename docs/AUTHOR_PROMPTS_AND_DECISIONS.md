@@ -2746,12 +2746,21 @@ tag `a5`. Pictures the author approved or rejected are filed in
        answers themselves, with Codex's attempt disclosed; or keep Codex's work, disclosed, and
        lose those points.
 
+171. **Codex's Step 6, kept**
+     - **The author's answer,** choosing among redoing Step 6, keeping Codex's file with the
+       author's own answers, or keeping all of Codex's work: "i told codex what to do exactly, i
+       typed my code and gave and etc. so keep everything of codex work and mention that i pasted
+       everything to codex what to do etc"
+     - **Recorded:** Codex's files and notes are committed unchanged, beside the author's account
+       (`TEST-REPORT.md`, `FRICTIONAL.md`, `SUBMISSION.md`). Claude Code had said which two of the
+       handout's checks this fails; the author chose it knowing that.
+
 ## Waiting for the author
 
-- Assignment 6, the author's parts (the list, #166): Step 6's process shader, its line
-  references and answer; the human checks in the author's own words (`TEST-REPORT.md`); the
-  author's own notes in `FRICTIONAL.md`; then, after the film, watching it, uploading it to the
-  course's media storage, the summary in `SUBMISSION.md`, the OK to push, and Canvas.
+- Assignment 6, the author's parts (the list, #166): the author's own notes in
+  `FRICTIONAL.md`; then, after the film, watching it, uploading it to the course's media storage,
+  the summary in `SUBMISSION.md`, the OK to push, and Canvas. Step 6 is Codex's, at the author's
+  direction, kept (#171).
 - The world changes (#150–#158), kept with the effects (#164): their GPU price on power.
 - The lay-by walls stand on the inside of their curves, where `_outer_side()` puts them (#157);
   kept there for now (#167).

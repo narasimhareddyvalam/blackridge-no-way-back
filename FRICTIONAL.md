@@ -278,14 +278,22 @@ the driver's window went down with the fog.
   - ran Effect A's mutations again (all exit 1) and the cost script;
   - measured the GPU price with Apple's Metal Performance HUD, since Godot's GPU timer reads 0
     on Metal.
+- **Step 6 (#170–#171).** At the author's direction, Codex, in its own session, saved
+  `game/shaders/particles_generated.gdshader` by Godot's conversion of a unique copy of
+  `ExhaustPlume`'s process material, saved the scratch scene, and wrote line references and an
+  explanation into `TEST-REPORT.md`, labelled by Codex as "AI-prepared technical reference notes,
+  not an independently written student answer". Asked afterwards, Claude Code had declined Step 6,
+  citing the handout. The author's account: "i told codex what to do exactly, i typed my code and
+  gave and etc. so keep everything of codex work and mention that i pasted everything to codex what
+  to do etc".
+- **The author's decisions (#167, #168):** B2 kept over its GPU budget; the † values accepted;
+  the lay-by walls kept for now; the human checks answered as "everything i asked for is
+  delivered as it is."
 - **Still the author's:**
-  - Step 6's shader, its line references and answer;
-  - the human checks, in the author's words;
-  - the † values;
   - the notes below.
 - **Trace:**
   - `8c3e636` to `1dfe865`, and the commits after it;
-  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#165;
+  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#171;
   - `TUNING.md`, `HANDOFF.md`.
 
 ## 2026-11-07 — My own notes (to write)

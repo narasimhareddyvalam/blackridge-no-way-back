@@ -242,10 +242,51 @@ benchmark. An `--export-pack` listing has 715 entries and none from `previews/`,
 | Claude against you | Each of Claude Code's strip readings beside the author's verdict, with at least one disagreement named, or none | In `TUNING.md`: the author's verdict after play (#164) keeps the two things Claude's readings faulted, A1's passenger line in the floodlight and A2's white streams. Asked why, the author answered (#168): "everything i asked for is delivered as it is." |
 | GPU price | The Visual Profiler's GPU time with each effect off and at its heaviest, on the M4, an FPS comparison with vsync off if made, and the comparison with the brief's budgets | Measured by Claude Code at the author's request (#165), with Apple's Metal Performance HUD, since Godot's GPU timer reads 0 on Metal: "GPU price" above. B2 is over its budget. The author's own Visual Profiler reading is not recorded |
 
-## The process shader (Step 6, the author)
+## The process shader (Step 6)
 
-_The author saves Godot's generated code for one process material as
-`game/shaders/particles_generated.gdshader` and gives its line references and answers here._
+### 2026-11-08 — Generated shader and reference notes (prepared by Codex)
+
+At the author's request, Codex used Godot 4.7.2's built-in editor conversion on a unique
+copy of `ExhaustPlume`'s process material. The result is
+`game/shaders/particles_generated.gdshader`, referenced by
+`game/experiments/process_shader_scratch.tscn`. The live exhaust scene is unchanged.
+The alpha and scale CurveTextures are explicitly bound in the scratch material so they
+survive saving and reloading. These are AI-prepared technical reference notes, not an
+independently written student answer.
+
+| Item | Generated shader line(s) | Meaning |
+| --- | --- | --- |
+| a. Shader type | 3 | `shader_type particles;` |
+| b. Entry points | 317, 370 | `void start()` and `void process()` |
+| c. Initial velocity | 232, 359 | Random speed between the minimum and maximum, then multiplied by the emission direction |
+| d. Gravity | 403, 416 | `force = gravity;`, then `USERDATA1.xyz += force * DELTA;`; line 444 assigns the resulting velocity to `VELOCITY` |
+| e. Alpha over life | 255 | Samples `alpha_curve` and multiplies particle alpha; line 452 outputs the processed colour |
+| f. Scale over life | 254 | Samples `scale_curve`; lines 462–464 and 467–469 apply the resulting scale to the transform |
+| g. Brief setting | 232 | B2 revision 10's initial velocity range: 4–7 m/s, supplied by `initial_linear_velocity_min/max` in the scratch material |
+
+The process shader implements emission shape, direction and spread, initial velocity,
+gravity, damping, turbulence, base colour, alpha over life and scale over life; their
+authored values and curve textures are supplied by the ShaderMaterial. The draw step
+uses the quad mesh and its material for the puff texture, camera-facing orientation,
+transparency and blending, lighting and scattering. Amount, lifetime, preprocess and
+visibility bounds remain particle-node settings, while ignition and throttle behaviour
+remain controller responsibilities.
+
+Validation: the saved scene was reloaded and checked for its particle shader, both curve
+textures, velocity range, gravity and spread. The headless import result is recorded in
+the latest `HANDOFF.md` entry; this does not establish visual acceptance.
+
+**The author's account (#171), recorded by Claude Code:** asked how to handle Step 6, the author
+answered: "i told codex what to do exactly, i typed my code and gave and etc. so keep everything of
+codex work and mention that i pasted everything to codex what to do etc". The handout asks the
+student to save this file and write these references and answers, and asks that no agent session
+change `godot/shaders/`. Here the file was made, and the notes above were written, in Codex's
+session, at the author's direction.
+
+**Claude Code's check of the line references** (the handout lets the agent check them): each line
+cited above says what the table claims (3, 317, 370, 232, 359, 403, 416, 444, 255, 452, 254,
+462–464, 467–469). Loaded headless, the scratch scene's material is a `ShaderMaterial` on this
+file in particles mode, with 49 uniforms, initial velocity 4–7 m/s, and no shader or script error.
 
 # Assignment 5 — shaders, materials and the Godot Shading Language
 

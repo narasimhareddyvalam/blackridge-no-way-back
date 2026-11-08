@@ -1,12 +1,14 @@
 # HANDOFF.md
 
-**Last run:** "do everything for me please" (#165), 2026-11-08: the brief's revisions 6–10, the
-`CLAUDE.md` review, Effect A's mutations and the cost script again, and the GPU price from Apple's
-Metal Performance HUD. **Next:** the author's Step 6 and human checks, then the film, then the
-tag, a fresh-clone check and Canvas; the full list is the prompt log's "Waiting for the author".
-Before it, the author's verdicts after play (#164): all four effects kept, committed with their
-strips (`1c8447b`), then the world changes (`1dfe865`). Before those, the strips, run by Claude
-Code at the author's request (#163): 22 fixture strips, all read, r0 committed as the first strip
+**Last run:** Step 6, made by Codex in its own session at the author's direction, then kept and
+committed with the author's account (#170–#171), 2026-11-08; Codex's own section is below. Before
+it, "do everything for me please" (#165): the brief's revisions 6–10, the `CLAUDE.md` review,
+Effect A's mutations and the cost script again, and the GPU price from Apple's Metal Performance
+HUD. **Next:** the author's own notes in `FRICTIONAL.md`, then the film, the tag, a fresh-clone
+check and Canvas; the full list is the prompt log's "Waiting for the author". Before those, the
+author's verdicts after play (#164): all four effects kept, committed with their strips
+(`1c8447b`), then the world changes (`1dfe865`). Before those, the strips, run by Claude Code at
+the author's request (#163): 22 fixture strips, all read, r0 committed as the first strip
 (`2b9e327`).
 
 Before those, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
@@ -67,6 +69,35 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## 2026-11-08 — Process shader scratch conversion (Codex)
+
+The author explicitly requested Step 6's shader conversion and line references in this
+session. Codex generated `game/shaders/particles_generated.gdshader` with Godot
+4.7.2.stable.official.ed1daf0bf's built-in editor conversion, retained its `.uid`, and
+saved `game/experiments/process_shader_scratch.tscn`. Its material is a unique copy of
+`ExhaustPlume`'s process material; both curve textures were explicitly bound so they
+survive reload. No live effect, project setting, branch or commit was changed.
+
+`TEST-REPORT.md` now contains the verified line references and an explanation labelled
+as prepared by Codex. This does not count as the author's independently written answer.
+The graphical editor instance launched for this task exited.
+
+Checks:
+- `/Applications/Godot.app/Contents/MacOS/Godot --headless --editor --path game --import
+  --log-file /private/tmp/blackridge_process_shader_import.log`: exit 0, no errors on the
+  final run outside the sandbox. The sandboxed attempt reported certificate access and
+  editor-settings write errors.
+- Temporary verification script `/private/tmp/blackridge_verify_particles.gd`: exit 0;
+  reloaded the scratch scene and verified particle shader mode, both CurveTextures,
+  their point counts, velocity minimum/maximum, gravity and spread. Its sandboxed run
+  also printed the certificate access error.
+- `git diff --exit-code -- game/effects/exhaust_vapour.tscn game/project.godot`: exit 0.
+
+Earlier conversion probes failed without saving project files. The successful automated
+editor conversion printed editor-window/debugger errors and shutdown resource warnings;
+the subsequent independent import completed without errors. Scratch rendering and the
+author's human checks were not performed. Temporary scripts and logs are outside Git.
 
 ## Everything left that an agent may do (#165)
 
