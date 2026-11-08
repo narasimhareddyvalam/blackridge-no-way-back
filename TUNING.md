@@ -571,6 +571,8 @@ these changes, first reverse their patch
 - **My verdict (running game, 1280×800):** kept. The author's words after playing (#164,
   2026-11-08): "i played and all look good proceed". Claude had left frame 80's bright red
   plume to the author's eyes; the verdict keeps it.
+- **Over its GPU budget:** 1.11 ms of GPU time against 0.30 (`TEST-REPORT.md`, "GPU price");
+  the author keeps it as tuned and reports it (#167: "a-keep it").
 - **Strips:** `captures/exhaust_vapour/r0/`, `captures/exhaust_vapour/r1/`, and the
   `view-reverse_camera` variant
 - **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and

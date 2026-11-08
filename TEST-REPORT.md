@@ -74,7 +74,7 @@ the frame's command buffers).
 - **B1** is priced with 3 of its 8 volumes on screen; the five off screen cost nothing, so a view
   with more lamps in it would cost more.
 - **B2 is over its budget:** its 300 puffs, up to 60 cm across, are drawn with the scatter
-  shader close behind the van.
+  shader close behind the van. The author keeps it as tuned and reports it (#167).
 - **The frame itself** takes about 26 ms of GPU time from the driver's seat, and 20–23 ms at the
   lamp and behind the van, before any effect: above the 16.7 ms of a 60 FPS frame. The brief's
   13.25 ms baseline was measured before the world changes (#150–#158). How much of the difference

@@ -485,3 +485,12 @@ Claude Code wrote these revisions from that list.
 - **Evidence:** `TUNING.md` (B2); strips `captures/exhaust_vapour/r0/` (no vapour in the rear
   view) and `r1/` with the reverse camera; configuration 44/44 and state 10/10 (`amount` stays
   300); commit `1c8447b`.
+
+### 2026-11-08, revision 11 (the author's check): the † values accepted
+
+- **Decided:** the author accepted the values marked †, Claude Code's proposals (#167:
+  "b-accepted"). The ones tuning changed since are recorded in revisions 6–10, which the author
+  kept after playing (#164).
+- **Also decided (#167):** B2 stays as tuned although it is over its GPU budget, 1.11 ms of GPU
+  time against §8's 0.30 ms, and is reported so (`TEST-REPORT.md`, "GPU price"). §8's
+  predictions stay as written.

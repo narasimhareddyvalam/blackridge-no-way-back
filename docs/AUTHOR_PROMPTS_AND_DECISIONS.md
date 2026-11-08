@@ -2706,20 +2706,25 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the † values, the lay-by walls). After the film: watching it, uploading it to the course's
        media storage, the OK to push, and the Canvas submission.
 
+167. **Three decisions**
+     - **The author's message,** answering the list's item 5 (B2 over its GPU budget, the †
+       values, the lay-by walls), which the author pasted back: "a-keep it. b-accepted. c-keep
+       them for now."
+     - **Recorded:**
+       - B2 stays as tuned, over its GPU budget, and is reported so (`TUNING.md`,
+         `TEST-REPORT.md`);
+       - the brief's † values are accepted (`CHANGE-BRIEF.md` revision 11);
+       - the lay-by walls stay on the inside of their curves for now.
+
 ## Waiting for the author
 
-- Assignment 6, the author's parts (#164): the brief revisions for the kept r1 changes
-  (`TUNING.md` lists what each changes); Step 6's process shader and its line references; the
-  GPU price with each effect off and on, F9 for the FPS check; the human checks in the author's
-  own words (`TEST-REPORT.md`); the author's `FRICTIONAL.md` notes and the `CLAUDE.md` review;
-  the summary in `SUBMISSION.md`; whether Step 1 gets a `claude -p` session file; then the film,
-  the tag `a6`, a fresh-clone check and Canvas.
+- Assignment 6, the author's parts (the list, #166): Step 6's process shader, its line
+  references and answer; the human checks in the author's own words (`TEST-REPORT.md`); the
+  author's own notes in `FRICTIONAL.md`; then, after the film, watching it, uploading it to the
+  course's media storage, the summary in `SUBMISSION.md`, the OK to push, and Canvas.
 - The world changes (#150–#158), kept with the effects (#164): their GPU price on power.
-- Whether each lay-by's stone wall should stand on the inside of its curve, where
-  `_outer_side()` puts it (#157).
-- The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
-  the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
-  agent prompt.
+- The lay-by walls stand on the inside of their curves, where `_outer_side()` puts them (#157);
+  kept there for now (#167).
 - Where the chapter's Example 09 is, and when Assignment 6 is due (#131).
 - Whether Mission 2 waits until `a6` is tagged (Claude Code's recommendation, #131).
 - A frame-rate check on power with a charged battery (Runs 17–18 were measured while the Mac
