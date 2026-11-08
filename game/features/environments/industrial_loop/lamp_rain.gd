@@ -2,15 +2,14 @@ extends Node3D
 ## Rain in every lamp's light (CHANGE-BRIEF.md §4): a rain volume under each lamp that runs while
 ## the active camera is within RANGE of it, the MOST_ACTIVE nearest at most. A volume starts
 ## already falling (its emitter restarts, so its preprocess fills it), stops emitting when the
-## camera leaves, and hides once its last drops have landed. It reads the camera and never
-## writes game state; the rain's look lives in game/effects/lamp_rain_*.tscn.
+## camera leaves, and hides once its last drops and their splashes are gone. It reads the camera
+## and never writes game state; the rain's look lives in game/effects/lamp_rain_*.tscn.
 
 const POST = preload("res://effects/lamp_rain_post.tscn")
 const FLOODLIGHT = preload("res://effects/lamp_rain_floodlight.tscn")
 const DOOR = preload("res://effects/lamp_rain_door.tscn")
 const RANGE := 65.0
 const MOST_ACTIVE := 8
-const DRAIN := 1.1
 const POST_HEAD := Vector3(-1.9, 6.4, 0.0)
 const FLOOD_HEIGHT := 4.0
 const DOOR_HEIGHT := 3.0
@@ -47,6 +46,12 @@ func rain(index: int) -> GPUParticles3D:
 	return volumes[index].get_node("LampRain") as GPUParticles3D
 
 
+## How long a stopped volume takes to empty: its last drop's life, then that drop's splash.
+func settle_time(index: int) -> float:
+	var splash := volumes[index].get_node("LampSplash") as GPUParticles3D
+	return rain(index).lifetime + splash.lifetime
+
+
 func _ready() -> void:
 	_update.call_deferred(0.0)
 
@@ -71,7 +76,7 @@ func _update(delta: float) -> void:
 		elif not wanted.has(index) and _active[index]:
 			rain(index).emitting = false
 			_active[index] = false
-			_drain[index] = DRAIN
+			_drain[index] = settle_time(index)
 		elif not _active[index] and volume.visible:
 			_drain[index] -= delta
 			if _drain[index] <= 0.0:

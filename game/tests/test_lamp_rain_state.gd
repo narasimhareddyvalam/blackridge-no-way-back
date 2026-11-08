@@ -73,13 +73,17 @@ func _check_driving_away() -> void:
 	var keeper := LaneKeeper.new(_road, _nearest_sample(_van.global_position))
 	Input.action_press("accelerate")
 	var left_at := -1.0
+	var last: Array[int] = []
 	var waited := 0.0
 	while waited < 40.0 and left_at < 0.0:
 		keeper.steer(_van, LANE)
 		await physics_frame
 		waited += 1.0 / 60.0
-		if _within_range().is_empty():
+		var near := _within_range()
+		if near.is_empty():
 			left_at = waited
+		else:
+			last = near
 	Input.action_release("accelerate")
 	keeper.release()
 	await physics_frame
@@ -88,9 +92,15 @@ func _check_driving_away() -> void:
 	_check(left_at > 0.0 and stopped,
 		"Driving away with the real throttle, each lamp's rain stops emitting within one tick " +
 		"of the camera passing 65 m (all three by %.1f s)" % left_at)
-	await _seconds(1.3)
+	var settle := _emptied_after(last[0])
+	await _seconds(settle - 0.1)
+	var waiting := last.all(func(index: int) -> bool: return _rain.volumes[index].visible)
+	await _seconds(0.2)
 	var hidden := start.all(func(index: int) -> bool: return not _rain.volumes[index].visible)
-	_check(hidden, "and hides once its last drops have landed (1.1 s later)")
+	_check(not last.is_empty() and waiting and hidden,
+		"and hides once its last drops and their splashes are gone: the last lamp left is still " +
+		"shown 0.1 s before %.2f s (the rain's life, then the splash's) and hidden 0.1 s after"
+		% settle)
 
 
 func _check_arrival() -> void:
@@ -139,10 +149,17 @@ func _check_hidden() -> void:
 
 func _check_far_from_lamps() -> void:
 	_place(HILL_SAMPLE)
-	await _seconds(1.5)
+	await _seconds(_emptied_after(0) + 0.2)
 	_check(_rain.active_count() == 0 and _rain.volumes.all(func(volume: Node3D) -> bool:
 		return not volume.visible),
 		"On the hill road, far from every lamp, no lamp rain runs")
+
+
+## Read from the effect scene, not the controller: a drop's life, then its splash's.
+func _emptied_after(index: int) -> float:
+	var volume: Node3D = _rain.volumes[index]
+	return (volume.get_node("LampRain") as GPUParticles3D).lifetime \
+		+ (volume.get_node("LampSplash") as GPUParticles3D).lifetime
 
 
 func _within_range() -> Array[int]:
