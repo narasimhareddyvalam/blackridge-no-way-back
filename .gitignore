@@ -49,6 +49,3 @@ __pycache__/
 
 # The scratch home that scripts/run-test.sh gives Godot, so tests never touch the real save.
 /.scratch-home/
-
-# Keep the author prompt and decision log local for now.
-/docs/AUTHOR_PROMPTS_AND_DECISIONS.md

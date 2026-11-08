@@ -104,9 +104,9 @@ No slow motion. No title card before the end shows the game's title (C04).
 - **Changed:** the film's folder (`725464b`); `README.md` and `SUBMISSION.md` (the film's name, hash
   and the revision shown, `c1c9d8b`; one sentence on the film added to the author's summary, for
   the author to check; the URL waits for the upload); this file. Not pushed.
-- **The prompt log is local** since the author's `1f55566`, kept out of Git for now (#175): the
-  film, `SUBMISSION.md`, `TEST-REPORT.md`, `FRICTIONAL.md` and the brief cite its entries
-  (#131–#175), which a reader of the repository cannot open.
+- **The prompt log** was out of Git from the author's `1f55566` (#175) and is back at the
+  author's word (#178), so the entries the film, `SUBMISSION.md`, `TEST-REPORT.md`,
+  `FRICTIONAL.md` and the brief cite can be opened in the repository again.
 - **The author's own notes** in `FRICTIONAL.md`, written by the author, committed unchanged at
   the author's request (`7e2da58`, #175).
 - **The link (#177):** the author uploaded the film to OneDrive, the course's media storage; its
