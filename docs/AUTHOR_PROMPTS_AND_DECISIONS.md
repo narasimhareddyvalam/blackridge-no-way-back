@@ -2333,6 +2333,47 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Checked:** every suite passes (`logs/particles/depot_152/SUMMARY.txt`); renders along the
        depot, from the van, from the side and facing a door.
 
+153. **The author's picks from the options page.**
+     - **The author's message:** "also from the artifact i liked these for the four effects -",
+       with the page's picks pasted: "My picks for the Assignment 6 effects: A1 wiper flick:
+       Bigger drops, stronger sky / A2 roof spill: Lit like water / B1 lamp rain: Lit, strength
+       100 / B2 exhaust vapour: Lit, denser, softer"
+     - **What Claude Code found:** each pick is the option the page recommended, and r1 was built
+       on them (#146), but the author's later requests changed three: A1's drops became real
+       size, 2.5–4.5 mm, at the author's choice of "Real drop sizes" (#147), not the pick's
+       8–15 mm; B1's drops became real size and twelve times as many, at strength 60 (#149); and
+       B2 became a short jet gone in 1.6 s (#149), not the pick's slow 2.5 s cloud. A2 is still
+       lit like water, with the curtain, rivulets and clear sheet added since.
+     - **Claude Code asked; the author answered:** which the game should use: "Keep the game as
+       it is (Recommended)", so the picks stand as where r1 started and nothing changes; and
+       whether to start the brief's first step, the wet road's reflections: "Yes, start step 1".
+     - **Step 1, what Claude Code found:**
+       - a wet surface darkens as its pores fill and turns glossy where a water layer lies on it,
+         its roughness falling toward water's
+         ([Jensen, Legakis and Dorsey, 1999](https://groups.csail.mit.edu/graphics/pubs/wet_materials_egwr99.pdf);
+         [a 2026 driving-video weather paper](https://arxiv.org/pdf/2603.26546));
+       - light glittering on rough water is a crowd of small facets each tilted to send the light
+         to the eye, thousands of dancing highlights, and the pattern stretches toward the viewer
+         as the light sinks toward the surface
+         ([Cox and Munk, 1954](https://data-ww3.ifremer.fr/BIB/Cox_Munk_JOSA1954.pdf);
+         [NOAA](https://psl.noaa.gov/outreach/education/science/glitter);
+         [Shaw, 1999](https://www.montana.edu/jshaw/documents/Glitter_patterns_OPN1999.pdf)).
+     - **Step 1, what Claude Code changed** (`wet_asphalt.gdshader`, uncommitted, in
+       `tools/tuning/world/lamps_and_rings.patch`):
+       - an uneven film of water over the road, from slow noise and wetter round the puddles;
+         under it the asphalt is a quarter darker and glossy (roughness 0.16 in place of about
+         0.46), its gaps filled flat, while the tops of its stones stay bumpy and glossy (0.22),
+         so they glint;
+       - the rain rings form in the film too, at under half their strength, and where they are
+         finer than the pixels each patch of water tilts a little and changes smoothly about five
+         times a second, so a lamp's reflection breaks into shifting bands without flicker.
+     - **Step 1, checked:** every suite passes (`logs/particles/brief_step1/SUMMARY.txt`);
+       renders from the driver's eye, standing, the office approach in the headlights, the depot
+       and the puddle rings. The lamp's reflection is now a long streak toward the driver, where
+       it was a soft patch.
+     - **Next, on the author's approval:** step 2, the streetlight itself, with the colour
+       question.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

@@ -4,7 +4,8 @@
 (#150), 2026-11-08, on branch `develop`, after Assignment 6's r1 (#145–#149). All stay
 uncommitted in the working tree; their records, a patch copy of each, and this handoff are
 committed, not pushed. Their sections are below, newest first. **Next:** the author's brief for
-a photorealistic rainy road, one part at a time, each approved before it starts (C53).
+a photorealistic rainy road, one part at a time, each approved before it starts (C53); step 1,
+the wet road's reflections, is done (#153); step 2, the streetlight, waits for approval.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -53,6 +54,27 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The brief, step 1: the wet road's reflections (#153)
+
+**The instruction (#153):** "Yes, start step 1", after the author kept the effects as they are
+("Keep the game as it is (Recommended)") over their old picks from the options page.
+
+**In the working tree, uncommitted,** in `tools/tuning/world/lamps_and_rings.patch` with #150
+to #152 (`wet_asphalt.gdshader`):
+- an uneven water film (`film`, slow noise, wetter round the puddles): the asphalt under it a
+  quarter darker, roughness `FILM_ROUGHNESS` 0.16, its normal map flattened, and the stone tops
+  (the brightest quarter of the aggregate, `stone_top`) kept bumpy at `WET_STONE_ROUGHNESS` 0.22;
+- the rain rings in the film too (`FILM_RINGS` 0.45 of their strength), and where they are finer
+  than the pixels, a smooth random tilt per patch of about two pixels (`dance_at()`, slope 0.05,
+  changing five times a second, blended between two sizes so no seam shows).
+
+**Tests:** `LOG_DIR=logs/particles/brief_step1`, the same commands as #150: every suite exits 0
+with the same counts, art 0 failures, and the cost script reads every effect the same as every
+effect off.
+
+**Unverified:** the shimmer in motion in the running game and under MetalFX's temporal upscaling;
+the GPU price of the rings, now on the film as well as the puddles.
 
 ## The depot lit from its wall (#151), each light a small pool (#152)
 

@@ -163,10 +163,10 @@ index 0303d0b..ddcf893 100644
  
  func _reflections() -> void:
 diff --git a/game/features/environments/industrial_loop/wet_asphalt.gdshader b/game/features/environments/industrial_loop/wet_asphalt.gdshader
-index 7a34a30..13ba4f0 100644
+index 7a34a30..19579e6 100644
 --- a/game/features/environments/industrial_loop/wet_asphalt.gdshader
 +++ b/game/features/environments/industrial_loop/wet_asphalt.gdshader
-@@ -14,12 +14,21 @@ uniform vec2 crossing_centre = vec2(0.0);
+@@ -14,12 +14,26 @@ uniform vec2 crossing_centre = vec2(0.0);
  uniform vec2 crossing_along = vec2(1.0, 0.0);
  uniform vec2 crossing_size = vec2(0.0);
  uniform float crossing_wear : hint_range(0.0, 1.0) = 0.45;
@@ -184,11 +184,16 @@ index 7a34a30..13ba4f0 100644
 +const float RING_WAVE = 0.012;
 +const float RING_SLOPE = 0.5;
 +const float PUDDLE_LEVEL = 0.62;
++const float FILM_ROUGHNESS = 0.16;
++const float WET_STONE_ROUGHNESS = 0.22;
++const float FILM_RINGS = 0.45;
++const float DANCE_SLOPE = 0.05;
++const float DANCE_RATE = 5.0;
 +const int RING_LAYERS = 4;
  
  float hash(vec2 p) {
  	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-@@ -54,31 +63,69 @@ float crossing_paint(vec2 p) {
+@@ -54,31 +68,91 @@ float crossing_paint(vec2 p) {
  	return bar * clamp(1.0 - wear, 0.0, 1.0);
  }
  
@@ -215,6 +220,15 @@ index 7a34a30..13ba4f0 100644
 +	return slope * rel / r;
 +}
 +
++vec2 dance_at(vec2 p, float size, float time) {
++	vec2 cell = floor(p / size);
++	float clock = time * DANCE_RATE + hash(cell) * 7.0;
++	float tick = floor(clock);
++	vec2 before = vec2(hash(cell + tick * 0.37), hash(cell + tick * 0.91 + 5.0));
++	vec2 after = vec2(hash(cell + (tick + 1.0) * 0.37), hash(cell + (tick + 1.0) * 0.91 + 5.0));
++	return mix(before, after, smoothstep(0.0, 1.0, fract(clock))) - 0.5;
++}
++
  void vertex() {
  	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
  }
@@ -228,6 +242,9 @@ index 7a34a30..13ba4f0 100644
 +	float stones = dot(aggregate, vec3(0.333)) - 0.5;
 +	float water = smoothstep(-0.008, 0.008, broad - PUDDLE_LEVEL - stones * 0.06);
 +	float puddle = water * wetness;
++	float film = smoothstep(0.35, 0.7, noise(p * 0.25 + 7.3) * 0.65 + noise(p * 0.9 + 1.9) * 0.35);
++	film = max(film, smoothstep(-0.06, 0.0, broad - PUDDLE_LEVEL)) * wetness;
++	float stone_top = smoothstep(-0.26, -0.23, stones);
  	vec2 crack_uv = p * 0.31;
  	crack_uv.x += noise(p * 0.83) * 0.6;
  	float crack = 1.0 - smoothstep(0.009, 0.035, abs(sin(crack_uv.x * 3.14159)));
@@ -235,7 +252,9 @@ index 7a34a30..13ba4f0 100644
 -	vec2 uv = p * texture_scale;
 -	vec3 aggregate = texture(aggregate_color, uv).rgb;
  	float paint = crossing_paint(p);
- 	vec3 asphalt = aggregate * dry_color * mix(1.0, 0.45, puddle) * (1.0 - crack * 0.65);
+-	vec3 asphalt = aggregate * dry_color * mix(1.0, 0.45, puddle) * (1.0 - crack * 0.65);
++	vec3 asphalt = aggregate * dry_color * mix(1.0, 0.75, film) * mix(1.0, 0.45, puddle)
++		* (1.0 - crack * 0.65);
  	ALBEDO = mix(asphalt, PAINT_COLOR * mix(1.0, 0.82, puddle), paint);
 +	float footprint = max(length(dFdx(p)), length(dFdy(p)));
 +	float wave = max(RING_WAVE, footprint * 2.5);
@@ -244,7 +263,9 @@ index 7a34a30..13ba4f0 100644
  	dry_roughness *= mix(1.0, 0.45, damp_gloss * wetness);
 -	ROUGHNESS = mix(mix(dry_roughness, 0.075, puddle), mix(0.35, 0.14, wetness), paint);
 +	float pool_roughness = mix(0.075, 0.075 + 0.1 * rain_rings, unresolved);
-+	ROUGHNESS = mix(mix(dry_roughness, pool_roughness, water), mix(0.35, 0.14, wetness), paint);
++	float film_roughness = mix(FILM_ROUGHNESS, WET_STONE_ROUGHNESS, stone_top);
++	float surface_roughness = mix(dry_roughness, film_roughness, film);
++	ROUGHNESS = mix(mix(surface_roughness, pool_roughness, water), mix(0.35, 0.14, wetness), paint);
  	SPECULAR = 0.5;
  	vec3 small_normal = texture(aggregate_normal, uv).rgb;
 -	float ripple = sin(length(fract(p * 2.0) - 0.5) * 72.0 - TIME * 15.0);
@@ -252,16 +273,23 @@ index 7a34a30..13ba4f0 100644
 -	NORMAL_MAP = mix(mix(small_normal, vec3(0.5, 0.5, 1.0), puddle * 0.8), vec3(0.5, 0.5, 1.0),
 -		paint * 0.7);
 +	vec2 rings = vec2(0.0);
-+	if (water > 0.01 && rain_rings > 0.0) {
++	float ringing = max(water, film * FILM_RINGS * (1.0 - stone_top));
++	if (ringing > 0.01 && rain_rings > 0.0) {
 +		for (int layer = 0; layer < RING_LAYERS; layer++) {
 +			rings += ring_slope(p, float(layer), wave, TIME);
 +		}
-+		rings *= water * rain_rings;
++		rings *= ringing * rain_rings;
++		float lod = log2(max(footprint * 2.0, 0.01) / 0.01);
++		float level = floor(lod);
++		vec2 dance = mix(dance_at(p, 0.01 * exp2(level), TIME),
++			dance_at(p, 0.01 * exp2(level + 1.0), TIME), lod - level);
++		rings += dance * 2.0 * DANCE_SLOPE * unresolved * ringing * rain_rings;
 +	}
 +	vec3 tilt = vec3(-rings.x, 0.0, -rings.y);
 +	vec2 ring_xy = vec2(dot(tilt, (INV_VIEW_MATRIX * vec4(TANGENT, 0.0)).xyz),
 +		dot(tilt, (INV_VIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz));
-+	vec3 base_normal = mix(small_normal, vec3(0.5, 0.5, 1.0), water);
++	vec3 base_normal = mix(small_normal, vec3(0.5, 0.5, 1.0),
++		max(water, film * (1.0 - stone_top)));
 +	base_normal.xy += ring_xy * 0.5 / 0.65;
 +	NORMAL_MAP = mix(base_normal, vec3(0.5, 0.5, 1.0), paint * 0.7);
  	NORMAL_MAP_DEPTH = 0.65;
