@@ -1,0 +1,4 @@
+frame 0: B1 at the door lamp ((551.6, 2.88, 120.118)), condition from frame 10 to frame 70
+frame 10: condition starts: shown, and restarted so its preprocess fills it
+frame 70: condition ends: no new drops; hidden on frame 111, 1.35 s on
+frame 111: emptied and hidden

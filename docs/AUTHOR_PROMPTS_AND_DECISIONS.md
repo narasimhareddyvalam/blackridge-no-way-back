@@ -2628,12 +2628,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
        brake at 25) and second places (A2 on the valley road, B1 at the door lamp, B2 in the
        reverse camera) join `TUNING.md`'s list, for both rounds.
 
+163. **The strips, run by Claude Code?**
+     - **The author's message:** "can you run them for me"
+     - **Claude Code asked** who should start the captures, since the assignment's headless facts
+       say "Frame strips come from a windowed Movie Maker run, which I start"; **the author
+       answered:** "Claude Code runs them". So Claude Code started all four capture commands,
+       and the record says so.
+     - **What was done:** 22 strips, r0 and r1, each with the brief's variants; the readings of
+       r0 and the comparisons of r1 in `TUNING.md`. The handout's own words, "You run the
+       capture, not the agent", are quoted there beside the author's choice. Claude Code's
+       first run of the variants handed them to the script as one argument (a shell mistake),
+       which made one wrongly named folder; it was deleted and the variants run again.
+     - **Committed in the handout's order:** the r0 strips now, as the first strip; the r1
+       strips stay in the working tree beside the r1 change, for one commit with the author's
+       verdicts.
+
 ## Waiting for the author
 
-- Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
-  (`FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`); a verdict
-  per effect in `TUNING.md`, including whether A2 keeps its clear sheet (#149). Until then r1
-  stays uncommitted in the working tree.
+- Assignment 6's tuning (#146–#149): the four effects in the game. The r0 and r1 strips are
+  captured and read (#163); still to come is the author's verdict per effect in `TUNING.md`,
+  including whether A2 keeps its clear sheet (#149). Until then r1 and its strips stay
+  uncommitted in the working tree.
 - The world changes (#150–#157): the lamps, the road's puddles and rings, the depot's wall
   lights, the streetlight, the rain under the lamps, and the roadside's guardrails, grass, lamps
   and mist: kept or reverted after a look in the game, with their GPU price on power;

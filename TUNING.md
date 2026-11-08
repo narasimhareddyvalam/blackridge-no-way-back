@@ -86,6 +86,14 @@ All four effects now draw with one particle shader, `game/effects/scatter_partic
   `FROM=4f73f98 scripts/capture-strips.sh 0 wiper_flick:speed_kmh=50 wiper_flick:place=depot`
   and `scripts/capture-strips.sh 1 wiper_flick:speed_kmh=50 wiper_flick:place=depot`
 
+**Who captured them:** the handout says "You run the capture, not the agent". The author asked
+Claude Code to run them (#163: "can you run them for me"; asked who starts them, "Claude Code
+runs them"). So on 2026-11-08 Claude Code ran the commands above for both rounds, with retrigger
+on for A1 and A2, A2 on the valley road, B1 at the door lamp and B2 in the reverse camera:
+22 strips, the frames the brief reads, each with its `events.txt` and the run's `godot.log`.
+Each Movie Maker run opened its own window on this Mac. The readings below are Claude Code's
+claims from these strips; the author's verdict in the running game is still to come.
+
 Claude Code rendered the r1 previews in its scratch folder before writing the predictions
 below. Each preview fixes the seeds of its effect's own particles, and two renders of one build
 matched in the effects (A1's frames within 8 of 255 levels everywhere; B1's and B2's effects
@@ -123,9 +131,13 @@ these changes, first reverse their patch
   "i want the bigger droplets effect even under no lights in normal when driving" (#146),
   "make wiper flick and roof spill more realistic" (#147), and "make wiper flicker more visible
   and realistic and real physics as if in real life" (#148).
-- **Claude's reading of r0:** _to be written from `captures/wiper_flick/r0/` once the author has
-  captured it._ Claude Code's own render of the same preview showed no flick at the blade tip
-  on any frame: the beads are 3–7 mm, 1–2 px at about 1.2 m, and lit only by the night.
+- **Claude's reading of r0** (fixture captures: `captures/wiper_flick/r0/` and its retrigger,
+  50 km/h and depot variants): no flick on any frame of the four strips, although each events
+  log has the flick fire at the top turn on frame 10, and again on frame 37 with retrigger on.
+  What shows at the blade is the glass's own water, the same in r1: the wet line along the blade
+  and the windshield's drops. So the r0 flick fires but cannot be seen, as Claude Code's own
+  render had shown: the beads are 3–7 mm, 1–2 px at about 1.2 m, and lit only by the night. In
+  the depot's amber street lamps they show no better.
 - **Change (applied at the author's direction, #146, #147 and #148):**
   - the quads' material: `StandardMaterial3D` → the shared `ShaderMaterial`, drawn like the
     windshield's own water: the night sky's glow on each drop's lower half and at least 35% of it
@@ -235,9 +247,13 @@ these changes, first reverse their patch
 ## Effect A2 (roof spill), revision r1
 
 - **What I saw (running game, 1280×800):** _the author._ (#144, #146, #147 and #149, as for A1.)
-- **Claude's reading of r0:** _from `captures/roof_spill/r0/`._ Claude Code's render showed no
-  spill on any frame: the roof lip is above the driver's view, and the streams on the glass
-  were too dark to see.
+- **Claude's reading of r0** (`captures/roof_spill/r0/` and its retrigger and valley variants):
+  no spill on any frame, at the office or on the valley road, although each events log has the
+  roof spill on frame 10, and with retrigger on the second hard brake on frame 25 ignored, as
+  the brief asks. Claude Code's render had blamed the roof lip, above the driver's view, and
+  streams too dark to see. #160 found the main cause, and it holds for r0 too, since the
+  windshield's shader is unchanged since before r0: where the glass is wet, the windshield draws
+  a copy of the solid scene over any see-through water beyond it.
 - **Change (applied at the author's direction, #146, #147 and #149):**
   - the quads' material: `StandardMaterial3D` → the shared `ShaderMaterial`, drawn as clear water
     that bends the view: the streams at `scatter` 1.5, `diffuse` 0.15, `sky` 0.8, `refraction`
@@ -321,8 +337,11 @@ these changes, first reverse their patch
 ## Effect B1 (lamp rain), revision r1
 
 - **What I saw (running game, 1280×800):** _the author._ (#144, #146 and #149.)
-- **Claude's reading of r0:** _from `captures/lamp_rain/r0/`._ Claude Code's render showed no
-  rain under the lamp on any frame.
+- **Claude's reading of r0** (`captures/lamp_rain/r0/` and its door-lamp variant): no rain on
+  any frame, under the valley post lamp or at the office door, although the events log has the
+  rain shown and restarted on frame 10, stopped on frame 70 and hidden on frame 111. The post
+  lamp's head shows as a small cool-white panel, and the road under it stays dark. Claude Code's
+  render had shown the same, for these reasons:
   - The valley lamp is an omni light of energy 3 with a steep falloff, bright only within a
     couple of metres of its head.
   - A camera-facing streak lit from above takes almost no matt light.
@@ -413,10 +432,15 @@ these changes, first reverse their patch
 ## Effect B2 (exhaust vapour), revision r1
 
 - **What I saw (running game, 1280×800):** _the author._ (#144, #146 and #149.)
-- **Claude's reading of r0:** _from `captures/exhaust_vapour/r0/`._ Claude Code's render
-  showed no vapour behind the van on any frame:
-  - the van shades the plume from the floodlight;
-  - the tail lamps light it from behind, which a matt material hardly passes.
+- **Claude's reading of r0** (`captures/exhaust_vapour/r0/` and its reverse-camera variant):
+  - Rear view: no vapour on any frame, although the events log has the engine on from frame 10,
+    `amount_ratio` 0.19 at idle on frame 40 and 0.76 on frame 80. The tail lamps light the wet
+    ground red behind the van, and nothing above it.
+  - Reverse camera: frame 80 shows about a dozen small round red dots behind the van, the puffs
+    in the brake lamps' light; no other frame shows any.
+  - Claude Code's render had shown the rear view only, and gave two reasons: the van shades the
+    plume from the floodlight, and the tail lamps light it from behind, which a matt material
+    hardly passes.
 - **Change (applied at the author's direction, #146 and #149):**
   - the quad's material, `ExhaustPlume`: `StandardMaterial3D` → the shared `ShaderMaterial`:
     `forward_scatter` 0.75, `scatter` 0.8, `diffuse` 0.25 (#146's were 0.7, 0.6 and 0.3); no
