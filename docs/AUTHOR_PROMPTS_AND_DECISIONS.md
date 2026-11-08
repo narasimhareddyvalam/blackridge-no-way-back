@@ -2566,6 +2566,34 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Checked:** every suite passes (`logs/particles/submission_prep/SUMMARY.txt`).
      - **Found:** this Mac is an Apple M4; `AGENTS.md` and the README's first paragraph say M1.
 
+160. **The title screen's rain, the roof spill, and both wipers.**
+     - **The author's message:** "[Image #9] - fix this home screen, make it subtle less or no
+       rain and professional. its glitching right now with too much rain and also, the hard
+       break water falling down effect isnt working. And also the wiper particle effect works
+       only with left wiper and the right wiper isnt doing that effect. right wiper should do
+       same effect and left wiper should wipe off that particles i guess. check how it works in
+       real life and do it." (The image: the title screen, with long white rain streaks across
+       the van at the office.)
+     - **What Claude Code found:**
+       - **The title:** the long white streaks were the office lamps' rain, started under the
+         title camera and frozen mid-fall by the title's pause; hiding that rain alone cleared them.
+       - **The roof spill:** it fires in play, one frame after a hard brake from 12 m/s, and drawn
+         solid red it covers the glass from the driver's seat. With its real materials the
+         windshield hid it: where the glass is wet, the windshield draws a copy of the solid
+         scene over any see-through water beyond it.
+       - **The wipers:** a tandem pair. At the top turn the passenger blade stands near the glass's
+         middle and leaves the water it pushed just ahead of it, inside the driver's blade's
+         sweep. The driver's blade wipes it about 0.3 s later on its way down.
+     - **What Claude Code changed** (uncommitted, with r1):
+       - the title hides the lamps' rain, and leaving it shows the rain again, already falling;
+       - the roof spill draws after the glass (render priority 1, one setting);
+       - the passenger blade leaves its water at each top turn: a line along the blade and drops
+         that stop on the glass. A collider on the driver's blade wipes them off, and the
+         glass's and the lamps' colliders leave them alone (layer 2);
+       - the tests: A1 configuration 451/451 and state 27/27, A2 221/221, B1 364/364 and 13/13;
+       - `TUNING.md` holds each change with the author's words and Claude Code's per-frame
+         prediction, for the author's strips and verdicts.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

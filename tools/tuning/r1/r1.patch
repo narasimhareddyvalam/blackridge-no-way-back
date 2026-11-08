@@ -95,7 +95,7 @@ index 070e16d..662c54b 100644
  preprocess = 0.0
  explosiveness = 0.0
 diff --git a/game/effects/lamp_rain_door.tscn b/game/effects/lamp_rain_door.tscn
-index c22f581..90d1989 100644
+index c22f581..3bd058c 100644
 --- a/game/effects/lamp_rain_door.tscn
 +++ b/game/effects/lamp_rain_door.tscn
 @@ -1,10 +1,11 @@
@@ -257,8 +257,16 @@ index c22f581..90d1989 100644
  one_shot = false
  preprocess = 0.0
  explosiveness = 0.0
+@@ -114,6 +140,7 @@ process_material = SubResource("Process_splash")
+ draw_pass_1 = SubResource("Quad_splash")
+ 
+ [node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
++cull_mask = 4294967293
+ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+ size = Vector3(3, 4, 3)
+ resolution = 0
 diff --git a/game/effects/lamp_rain_floodlight.tscn b/game/effects/lamp_rain_floodlight.tscn
-index 11580a0..df74ee5 100644
+index 11580a0..3eb4453 100644
 --- a/game/effects/lamp_rain_floodlight.tscn
 +++ b/game/effects/lamp_rain_floodlight.tscn
 @@ -1,10 +1,11 @@
@@ -420,8 +428,16 @@ index 11580a0..df74ee5 100644
  one_shot = false
  preprocess = 0.0
  explosiveness = 0.0
+@@ -114,6 +140,7 @@ process_material = SubResource("Process_splash")
+ draw_pass_1 = SubResource("Quad_splash")
+ 
+ [node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
++cull_mask = 4294967293
+ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+ size = Vector3(9, 6, 15)
+ resolution = 0
 diff --git a/game/effects/lamp_rain_post.tscn b/game/effects/lamp_rain_post.tscn
-index c880f28..559fe89 100644
+index c880f28..3925352 100644
 --- a/game/effects/lamp_rain_post.tscn
 +++ b/game/effects/lamp_rain_post.tscn
 @@ -1,10 +1,11 @@
@@ -583,8 +599,16 @@ index c880f28..559fe89 100644
  one_shot = false
  preprocess = 0.0
  explosiveness = 0.0
+@@ -114,6 +140,7 @@ process_material = SubResource("Process_splash")
+ draw_pass_1 = SubResource("Quad_splash")
+ 
+ [node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
++cull_mask = 4294967293
+ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5, 0)
+ size = Vector3(8, 10, 8)
+ resolution = 0
 diff --git a/game/effects/roof_spill.tscn b/game/effects/roof_spill.tscn
-index 51bd5bf..f00c631 100644
+index 51bd5bf..ff40829 100644
 --- a/game/effects/roof_spill.tscn
 +++ b/game/effects/roof_spill.tscn
 @@ -1,7 +1,9 @@
@@ -652,7 +676,7 @@ index 51bd5bf..f00c631 100644
 -albedo_texture = ExtResource("1_stream")
 -billboard_mode = 0
 +[sub_resource type="ShaderMaterial" id="Draw_stream"]
-+render_priority = 0
++render_priority = 1
 +shader = ExtResource("9_scatter")
 +shader_parameter/albedo_texture = ExtResource("1_stream")
 +shader_parameter/forward_scatter = 0.85
@@ -720,7 +744,7 @@ index 51bd5bf..f00c631 100644
 -billboard_mode = 3
 -billboard_keep_scale = true
 +[sub_resource type="ShaderMaterial" id="Draw_bead"]
-+render_priority = 0
++render_priority = 1
 +shader = ExtResource("9_scatter")
 +shader_parameter/albedo_texture = ExtResource("2_bead")
 +shader_parameter/forward_scatter = 0.85
@@ -777,7 +801,7 @@ index 51bd5bf..f00c631 100644
 +collision_bounce = 0.0
 +
 +[sub_resource type="ShaderMaterial" id="Draw_rivulet"]
-+render_priority = 0
++render_priority = 1
 +shader = ExtResource("9_scatter")
 +shader_parameter/albedo_texture = ExtResource("2_bead")
 +shader_parameter/forward_scatter = 0.85
@@ -838,7 +862,7 @@ index 51bd5bf..f00c631 100644
 +collision_bounce = 0.0
 +
 +[sub_resource type="ShaderMaterial" id="Draw_wash"]
-+render_priority = 0
++render_priority = 1
 +shader = ExtResource("9_scatter")
 +shader_parameter/albedo_texture = ExtResource("3_film")
 +shader_parameter/face_camera = false
@@ -919,12 +943,12 @@ index 51bd5bf..f00c631 100644
 +process_material = SubResource("Process_rivulets")
 +draw_pass_1 = SubResource("Quad_rivulet")
 diff --git a/game/effects/wiper_flick.tscn b/game/effects/wiper_flick.tscn
-index 46afef8..2a5e809 100644
+index 46afef8..aa87b5d 100644
 --- a/game/effects/wiper_flick.tscn
 +++ b/game/effects/wiper_flick.tscn
 @@ -1,47 +1,87 @@
 -[gd_scene load_steps=14 format=3]
-+[gd_scene load_steps=40 format=3]
++[gd_scene load_steps=53 format=3]
  
  [ext_resource type="Texture2D" path="res://effects/textures/water_bead.png" id="1_bead"]
  [ext_resource type="Texture2D" path="res://effects/textures/fine_spray.png" id="2_spray"]
@@ -1035,7 +1059,7 @@ index 46afef8..2a5e809 100644
  
  [sub_resource type="QuadMesh" id="Quad_bead"]
  material = SubResource("Draw_bead")
-@@ -63,57 +103,295 @@ point_count = 3
+@@ -63,57 +103,438 @@ point_count = 3
  curve = SubResource("Curve_spray_scale")
  
  [sub_resource type="ParticleProcessMaterial" id="Process_spray"]
@@ -1265,6 +1289,118 @@ index 46afef8..2a5e809 100644
 +collision_friction = 0.25
 +collision_bounce = 0.0
 +
++[sub_resource type="Curve" id="Curve_passenger_alpha"]
++_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.05, 0.85), 0.0, 0.0, 0, 0, Vector2(0.8, 0.85), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
++point_count = 4
++
++[sub_resource type="CurveTexture" id="CurveTexture_passenger_alpha"]
++curve = SubResource("Curve_passenger_alpha")
++
++[sub_resource type="ParticleProcessMaterial" id="Process_passenger"]
++emission_shape = 3
++emission_box_extents = Vector3(0.004, 0.001, 0.24)
++inherit_velocity_ratio = 0.0
++direction = Vector3(1, 0, 0)
++spread = 20.0
++flatness = 1.0
++initial_velocity_min = 0.6
++initial_velocity_max = 2.2
++gravity = Vector3(0, 0, 0)
++damping_min = 4.0
++damping_max = 8.0
++scale_min = 0.3
++scale_max = 0.6
++scale_over_velocity_min = 0.0
++scale_over_velocity_max = 6.0
++scale_over_velocity_curve = SubResource("Curve_shutter")
++color = Color(0.78, 0.86, 0.91, 1)
++alpha_curve = SubResource("CurveTexture_passenger_alpha")
++collision_mode = 2
++
++[sub_resource type="ShaderMaterial" id="Draw_passenger"]
++render_priority = 1
++shader = ExtResource("9_scatter")
++shader_parameter/albedo_texture = ExtResource("1_bead")
++shader_parameter/face_camera = false
++shader_parameter/tail = 0.35
++shader_parameter/thread_life = 0.1
++shader_parameter/min_pixels = 2.0
++shader_parameter/forward_scatter = 0.85
++shader_parameter/scatter = 10.0
++shader_parameter/diffuse = 0.3
++shader_parameter/glint = 1.0
++shader_parameter/sky = 2.0
++shader_parameter/catch_light = 1.0
++shader_parameter/refraction = 0.012
++shader_parameter/lens_blur = 0.6
++shader_parameter/rim_dark = 0.4
++shader_parameter/ground_reach = 0.5
++
++[sub_resource type="QuadMesh" id="Quad_passenger"]
++material = SubResource("Draw_passenger")
++size = Vector2(0.01, 0.01)
++
++[sub_resource type="Curve" id="Curve_line_alpha"]
++_data = [Vector2(0, 0.95), 0.0, 0.0, 0, 0, Vector2(0.8, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
++point_count = 3
++
++[sub_resource type="CurveTexture" id="CurveTexture_line_alpha"]
++curve = SubResource("Curve_line_alpha")
++
++[sub_resource type="Curve" id="Curve_line_across"]
++_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.6), 0.0, 0.0, 0, 0]
++point_count = 2
++
++[sub_resource type="Curve" id="Curve_line_along"]
++max_value = 8.0
++_data = [Vector2(0, 6), 0.0, 0.0, 0, 0, Vector2(1, 4), 0.0, 0.0, 0, 0]
++point_count = 2
++
++[sub_resource type="CurveXYZTexture" id="Curve_line"]
++curve_x = SubResource("Curve_line_across")
++curve_y = SubResource("Curve_line_along")
++curve_z = SubResource("Curve_flat")
++
++[sub_resource type="ParticleProcessMaterial" id="Process_line"]
++emission_shape = 3
++emission_box_extents = Vector3(0.004, 0.24, 0.001)
++inherit_velocity_ratio = 0.0
++direction = Vector3(1, 0, 0)
++spread = 0.0
++initial_velocity_min = 0.2
++initial_velocity_max = 0.6
++gravity = Vector3(0, 0, 0)
++damping_min = 4.0
++damping_max = 8.0
++scale_min = 1.0
++scale_max = 1.3
++scale_curve = SubResource("Curve_line")
++color = Color(0.78, 0.86, 0.91, 1)
++alpha_curve = SubResource("CurveTexture_line_alpha")
++collision_mode = 2
++
++[sub_resource type="ShaderMaterial" id="Draw_line"]
++render_priority = 1
++shader = ExtResource("9_scatter")
++shader_parameter/albedo_texture = ExtResource("3_streak")
++shader_parameter/face_camera = false
++shader_parameter/tail = 0.0
++shader_parameter/min_pixels = 2.0
++shader_parameter/forward_scatter = 0.85
++shader_parameter/scatter = 10.0
++shader_parameter/diffuse = 0.3
++shader_parameter/glint = 1.0
++shader_parameter/sky = 2.0
++shader_parameter/catch_light = 1.0
++shader_parameter/refraction = 0.02
++shader_parameter/lens_blur = 0.6
++shader_parameter/rim_dark = 0.4
++shader_parameter/ground_reach = 0.5
++
++[sub_resource type="QuadMesh" id="Quad_line"]
++material = SubResource("Draw_line")
++size = Vector2(0.01, 0.01)
++
  [node name="WiperFlick" type="Node3D"]
  
 +[node name="WaterSheet" type="GPUParticles3D" parent="."]
@@ -1354,6 +1490,37 @@ index 46afef8..2a5e809 100644
 +transform_align = 3
 +process_material = SubResource("Process_runoff")
 +draw_pass_1 = SubResource("Quad_runoff")
++
++[node name="PassengerWater" type="GPUParticles3D" parent="."]
++layers = 2
++emitting = false
++amount = 100
++lifetime = 1.2
++one_shot = true
++preprocess = 0.0
++explosiveness = 1.0
++fixed_fps = 60
++visibility_aabb = AABB(-0.6, -0.3, -0.6, 1.2, 0.6, 1.2)
++local_coords = true
++transform_align = 3
++collision_base_size = 0.004
++process_material = SubResource("Process_passenger")
++draw_pass_1 = SubResource("Quad_passenger")
++
++[node name="PassengerLine" type="GPUParticles3D" parent="."]
++layers = 2
++emitting = false
++amount = 24
++lifetime = 1.2
++one_shot = true
++preprocess = 0.0
++explosiveness = 1.0
++fixed_fps = 60
++visibility_aabb = AABB(-0.6, -0.6, -0.3, 1.2, 1.2, 0.6)
++local_coords = true
++collision_base_size = 0.006
++process_material = SubResource("Process_line")
++draw_pass_1 = SubResource("Quad_line")
 diff --git a/game/features/environments/industrial_loop/lamp_rain.gd b/game/features/environments/industrial_loop/lamp_rain.gd
 index 2fafa3c..82e3f47 100644
 --- a/game/features/environments/industrial_loop/lamp_rain.gd
@@ -1367,10 +1534,10 @@ index 2fafa3c..82e3f47 100644
  const DOOR = preload("res://effects/lamp_rain_door.tscn")
  const RANGE := 65.0
 diff --git a/game/features/vehicles/freight_van/van_particles.gd b/game/features/vehicles/freight_van/van_particles.gd
-index 4efb3d1..76f655a 100644
+index 4efb3d1..a8b1404 100644
 --- a/game/features/vehicles/freight_van/van_particles.gd
 +++ b/game/features/vehicles/freight_van/van_particles.gd
-@@ -2,12 +2,41 @@ extends Node3D
+@@ -2,17 +2,51 @@ extends Node3D
  ## The van's particle effects (CHANGE-BRIEF.md §2, §3, §5): the wiper flick, the roof spill and
  ## the exhaust vapour. This node places, starts and stops them from what the van does and never
  ## writes the van's state. Each effect's look lives in its scene in game/effects/.
@@ -1413,7 +1580,17 @@ index 4efb3d1..76f655a 100644
  const SPILL_SPEED := 8.0
  const SPILL_DECELERATION := 6.0
  const SPILL_TICKS := 2
-@@ -25,51 +54,71 @@ var vehicle: CharacterBody3D
+ const ROOF_REFILL := 20.0
+ const ROOF_LIP := Vector3(0.0, 2.206, -1.038)
++const PASSENGER_LAYER := 2
++const PASSENGER_LEAD := 0.015
++const PASSENGER_LIFT := 0.01
++const WIPE_WIDTH := 0.1
++const WIPE_DEPTH := 0.14
+ ## No tailpipe is modelled; this place is an assumption (CHANGE-BRIEF.md revision 2).
+ const TAILPIPE := Vector3(-0.6, 0.46, 2.85)
+ const IDLE_RATIO := 0.15
+@@ -25,57 +59,114 @@ var vehicle: CharacterBody3D
  var flicks: Array[Node3D] = []
  var flicks_fired: int = 0
  var flicks_missed: int = 0
@@ -1426,6 +1603,8 @@ index 4efb3d1..76f655a 100644
  var roof_refill: float = 0.0
  var exhaust: GPUParticles3D
 +var glass_colliders: Array[GPUParticlesCollisionBox3D] = []
++var wipe_collider: GPUParticlesCollisionBox3D
++var passenger_flicks: int = 0
  
 +var _body: Node3D
  var _wiper: Node3D
@@ -1447,6 +1626,8 @@ index 4efb3d1..76f655a 100644
 +var _flick_process: Dictionary = {}
 +var _spill_process: Dictionary = {}
 +var _up_glass := Vector3.UP
++var _passenger: Node3D
++var _passenger_arm: float = 0.0
  
  
 -func setup(van: CharacterBody3D, wiper: Node3D, tip_reach: float, body: Node3D) -> void:
@@ -1489,7 +1670,46 @@ index 4efb3d1..76f655a 100644
  
  
  func tip() -> Vector3:
-@@ -84,6 +133,10 @@ func spill_alive() -> bool:
+ 	return _wiper.global_transform * Vector3(0.0, _tip_reach, 0.0)
+ 
+ 
++## The passenger blade leaves the water it pushed on the glass just ahead of it at its top turn,
++## inside the driver's blade's sweep; the driver's blade carries a collider that wipes it off.
++func wipe_with(passenger: Node3D, passenger_arm: float, driver_blade: Node3D,
++		driver_length: float) -> void:
++	_passenger = passenger
++	_passenger_arm = passenger_arm
++	wipe_collider = GPUParticlesCollisionBox3D.new()
++	wipe_collider.name = "BladeWipe"
++	wipe_collider.size = Vector3(WIPE_WIDTH, driver_length, WIPE_DEPTH)
++	wipe_collider.cull_mask = PASSENGER_LAYER
++	driver_blade.add_child(wipe_collider)
++
++
++## Where the passenger blade's water starts: on the glass's outer face, just ahead of the blade's
++## middle. The drops' frame leads the blade's travel along +x with +y leaving the glass; the line
++## of water lies in the glass with its +y along the blade.
++func passenger_water_at(line: bool = false) -> Transform3D:
++	var frame := _passenger.global_transform
++	var glass := glass_colliders[1]
++	var outward := -glass.global_basis.z.normalized()
++	var face := glass.global_position - glass.global_basis.z * glass.size.z * 0.5
++	var lead := -frame.basis.x.normalized()
++	var at := frame * Vector3(0.0, _passenger_arm, 0.0) + lead * PASSENGER_LEAD
++	at += outward * (outward.dot(face - at) + PASSENGER_LIFT)
++	var ahead := (lead - outward * outward.dot(lead)).normalized()
++	if not line:
++		return Transform3D(Basis(ahead, outward, ahead.cross(outward)), at)
++	var along := outward.cross(ahead).normalized()
++	if along.dot(frame.basis.y) < 0.0:
++		along = -along
++	return Transform3D(Basis(ahead, along, ahead.cross(along)), at)
++
++
+ func flicks_alive() -> int:
+ 	return _flick_alive.count(true)
+ 
+@@ -84,6 +175,10 @@ func spill_alive() -> bool:
  	return _spill_alive
  
  
@@ -1500,7 +1720,7 @@ index 4efb3d1..76f655a 100644
  func roof_water_ready() -> bool:
  	return roof_refill <= 0.0 and not _spill_alive
  
-@@ -91,14 +144,102 @@ func roof_water_ready() -> bool:
+@@ -91,14 +186,103 @@ func roof_water_ready() -> bool:
  func _physics_process(delta: float) -> void:
  	if vehicle == null:
  		return
@@ -1522,12 +1742,8 @@ index 4efb3d1..76f655a 100644
 +		copies[emitter_name] = own
 +		for root: Node in roots:
 +			(root.get_node(emitter_name) as GPUParticles3D).process_material = own
- 
- 
--func _exit_tree() -> void:
--	for flick in flicks:
--		if is_instance_valid(flick) and flick.is_inside_tree():
--			get_tree().create_timer(FLICK_LIFE, false).timeout.connect(flick.queue_free)
++
++
 +## One thin collider per third of the windshield's width: a plane fitted to that third of the
 +## glass model, in the glass's frame, with its face just outside the glass.
 +func _fit_glass(mesh: Mesh, frame: Transform3D) -> void:
@@ -1546,12 +1762,17 @@ index 4efb3d1..76f655a 100644
 +		var collider := GPUParticlesCollisionBox3D.new()
 +		collider.name = "Glass%s" % ["Left", "Middle", "Right"][panel]
 +		collider.size = Vector3(width / across.x + 0.02, bounds.size.y + 0.04, GLASS_DEPTH)
++		collider.cull_mask = 0xFFFFFFFF ^ PASSENGER_LAYER
 +		collider.transform = frame * Transform3D(panel_basis,
 +			surface + inward * (GLASS_DEPTH * 0.5 - GLASS_SKIN))
 +		_body.add_child(collider)
 +		glass_colliders.append(collider)
-+
-+
+ 
+ 
+-func _exit_tree() -> void:
+-	for flick in flicks:
+-		if is_instance_valid(flick) and flick.is_inside_tree():
+-			get_tree().create_timer(FLICK_LIFE, false).timeout.connect(flick.queue_free)
 +## The plane z = a + b·x + c·y, returned as (a, b, c), that best fits the points with x between
 +## left and right.
 +static func _fit_plane(points: PackedVector3Array, left: float, right: float) -> Vector3:
@@ -1607,7 +1828,7 @@ index 4efb3d1..76f655a 100644
  
  
  func _on_wiper_swept() -> void:
-@@ -113,14 +254,32 @@ func _on_wiper_swept() -> void:
+@@ -113,14 +297,40 @@ func _on_wiper_swept() -> void:
  	var flick := flicks[index]
  	if not flick.is_inside_tree():
  		return
@@ -1627,6 +1848,14 @@ index 4efb3d1..76f655a 100644
 +		spill_water_thrown += 1
 +	for emitter in throws:
  		emitter.restart()
++	if is_instance_valid(_passenger):
++		var water := flick.get_node("PassengerWater") as GPUParticles3D
++		var line := flick.get_node("PassengerLine") as GPUParticles3D
++		water.global_transform = passenger_water_at()
++		line.global_transform = passenger_water_at(true)
++		water.restart()
++		line.restart()
++		passenger_flicks += 1
  	_flick_alive[index] = true
  	last_flick = flick
  	flicks_fired += 1
@@ -1642,7 +1871,7 @@ index 4efb3d1..76f655a 100644
  func _flick_finished(index: int) -> void:
  	_flick_alive[index] = false
  
-@@ -151,9 +310,10 @@ func _hard_brake() -> void:
+@@ -151,9 +361,10 @@ func _hard_brake() -> void:
  	if not roof_water_ready():
  		spills_ignored += 1
  		return
@@ -1656,15 +1885,16 @@ index 4efb3d1..76f655a 100644
  	spills_fired += 1
  
 diff --git a/game/features/vehicles/freight_van/van_presentation.gd b/game/features/vehicles/freight_van/van_presentation.gd
-index 36573e1..e5cfda3 100644
+index 36573e1..0c2eeda 100644
 --- a/game/features/vehicles/freight_van/van_presentation.gd
 +++ b/game/features/vehicles/freight_van/van_presentation.gd
-@@ -257,7 +257,7 @@ func configure(van: CharacterBody3D) -> void:
+@@ -257,7 +257,8 @@ func configure(van: CharacterBody3D) -> void:
  	_mark_layer(_cabin, 4)
  	particles.name = "VanParticles"
  	add_child(particles)
 -	particles.setup(van, _wipers[0], WipeMap.ARMS[0] + WipeMap.BLADES[0] * 0.5, _body)
 +	particles.setup(van, _wipers[0], WipeMap.ARMS[0] + WipeMap.BLADES[0] * 0.5, _body, _windshield)
++	particles.wipe_with(_wipers[1], WipeMap.ARMS[1], _wipers[0].blade, WipeMap.BLADES[0])
  	_mirrors()
  
  
@@ -1946,10 +2176,10 @@ index bae6e39..231d22f 100644
  var _checks: int = 0
  var _failures: int = 0
 diff --git a/game/tests/test_lamp_rain_config.gd b/game/tests/test_lamp_rain_config.gd
-index b87ee23..8928a00 100644
+index b87ee23..b6bdd6e 100644
 --- a/game/tests/test_lamp_rain_config.gd
 +++ b/game/tests/test_lamp_rain_config.gd
-@@ -1,26 +1,44 @@
+@@ -1,26 +1,46 @@
  extends SceneTree
  ## B1, rain in every lamp's light: reads back every setting CHANGE-BRIEF.md §4 (and its
 -## revision 1) names from the three scenes, including the feature neither A effect uses:
@@ -1996,10 +2226,20 @@ index b87ee23..8928a00 100644
 -const BACKLIGHT := Color(0.8, 0.8, 0.8, 1.0)
 +const SCATTER := "res://effects/scatter_particle.gdshader"
 +const FLAT: Array[Vector2] = [Vector2(0.0, 1.0), Vector2(1.0, 1.0)]
++
++const WATER_ON_GLASS := 2
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -73,49 +91,52 @@ func _check_variant(path: String, variant: Dictionary) -> void:
+@@ -68,54 +88,60 @@ func _check_variant(path: String, variant: Dictionary) -> void:
+ 			and collider.update_mode == GPUParticlesCollisionHeightField3D.UPDATE_MODE_ALWAYS
+ 			and not collider.follow_camera_enabled,
+ 			"%s collider: 256 resolution, updated always, not following the camera" % root)
++		_check(collider.cull_mask & WATER_ON_GLASS == 0,
++			"%s collider leaves the water on the van's glass alone (its mask leaves out " % root
++			+ "layer %d), so only a wiper blade clears it" % WATER_ON_GLASS)
+ 	effect.free()
+ 
  
  func _rain(variant: Dictionary) -> Dictionary:
  	return {
@@ -2076,7 +2316,7 @@ index b87ee23..8928a00 100644
  		"texture": "res://effects/textures/water_bead.png",
  	}
 diff --git a/game/tests/test_roof_spill_config.gd b/game/tests/test_roof_spill_config.gd
-index 0be8092..442ffa6 100644
+index 0be8092..c753b7e 100644
 --- a/game/tests/test_roof_spill_config.gd
 +++ b/game/tests/test_roof_spill_config.gd
 @@ -1,49 +1,108 @@
@@ -2215,7 +2455,7 @@ index 0be8092..442ffa6 100644
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -67,11 +126,14 @@ func _run() -> void:
+@@ -67,11 +126,19 @@ func _run() -> void:
  		_finish()
  		return
  	var effect := packed.instantiate()
@@ -2232,6 +2472,11 @@ index 0be8092..442ffa6 100644
 +		Readback.check_emitter(emitter, EMITTERS[emitter_name], _check, emitter_name)
 +		if emitter:
 +			Readback.check_no_b_features(emitter, _check, emitter_name)
++			var quad := emitter.draw_pass_1 as QuadMesh
++			var priority: int = quad.material.render_priority if quad and quad.material else -1
++			_check(priority == 1,
++				"%s draws after the windshield's glass, which would hide water on its " % [
++				emitter_name] + "outside (render priority 1, found %d)" % priority)
  	effect.free()
  	_finish()
  
@@ -2303,10 +2548,10 @@ index 983ed13..d78f249 100644
  	var points: PackedVector3Array = _road.points
  	var basis := Basis(Vector3.UP, _road.call("heading_at", index))
 diff --git a/game/tests/test_wiper_flick_config.gd b/game/tests/test_wiper_flick_config.gd
-index 9edff90..5e727d5 100644
+index 9edff90..e18476f 100644
 --- a/game/tests/test_wiper_flick_config.gd
 +++ b/game/tests/test_wiper_flick_config.gd
-@@ -1,44 +1,155 @@
+@@ -1,44 +1,196 @@
  extends SceneTree
 -## A1, the wiper flick: reads back every setting CHANGE-BRIEF.md §2 names from the scene.
 +## A1, the wiper flick: reads back every setting of its scene, as CHANGE-BRIEF.md §2 gives them
@@ -2485,12 +2730,53 @@ index 9edff90..5e727d5 100644
 +	"mesh": {"size": Vector2(0.01, 0.01)},
 +	"texture": BEAD,
 +}
++const PASSENGER_BOX := AABB(Vector3(-0.6, -0.3, -0.6), Vector3(1.2, 0.6, 1.2))
++const PASSENGER_WATER := {
++	"node": {"amount": 100, "one_shot": true, "explosiveness": 1.0, "lifetime": 1.2,
++		"local_coords": true, "visibility_aabb": PASSENGER_BOX, "preprocess": 0.0,
++		"collision_base_size": 0.004, "transform_align": ALONG_MOTION, "layers": 2,
++		"fixed_fps": 60},
++	"process": {"emission_shape": ParticleProcessMaterial.EMISSION_SHAPE_BOX,
++		"emission_box_extents": Vector3(0.004, 0.001, 0.24), "direction": Vector3(1.0, 0.0, 0.0),
++		"spread": 20.0, "flatness": 1.0, "initial_velocity_min": 0.6, "initial_velocity_max": 2.2,
++		"gravity": Vector3.ZERO, "damping_min": 4.0, "damping_max": 8.0, "color": WATER,
++		"scale_min": 0.3, "scale_max": 0.6, "scale_over_velocity_min": 0.0,
++		"scale_over_velocity_max": 6.0, "inherit_velocity_ratio": 0.0,
++		"collision_mode": ParticleProcessMaterial.COLLISION_HIDE_ON_CONTACT},
++	"alpha_curve": [Vector2(0.0, 0.0), Vector2(0.05, 0.85), Vector2(0.8, 0.85), Vector2(1.0, 0.0)],
++	"scale_over_velocity_curve": SHUTTER,
++	"draw": BEAD_DRAW,
++	"mesh": {"size": Vector2(0.01, 0.01)},
++	"texture": BEAD,
++}
++const PASSENGER_LINE := {
++	"node": {"amount": 24, "one_shot": true, "explosiveness": 1.0, "lifetime": 1.2,
++		"local_coords": true, "visibility_aabb": AABB(Vector3(-0.6, -0.6, -0.3),
++		Vector3(1.2, 1.2, 0.6)), "preprocess": 0.0, "collision_base_size": 0.006,
++		"transform_align": GPUParticles3D.TRANSFORM_ALIGN_DISABLED, "layers": 2, "fixed_fps": 60},
++	"process": {"emission_shape": ParticleProcessMaterial.EMISSION_SHAPE_BOX,
++		"emission_box_extents": Vector3(0.004, 0.24, 0.001), "direction": Vector3(1.0, 0.0, 0.0),
++		"spread": 0.0, "initial_velocity_min": 0.2, "initial_velocity_max": 0.6,
++		"gravity": Vector3.ZERO, "damping_min": 4.0, "damping_max": 8.0, "color": WATER,
++		"scale_min": 1.0, "scale_max": 1.3, "inherit_velocity_ratio": 0.0,
++		"collision_mode": ParticleProcessMaterial.COLLISION_HIDE_ON_CONTACT},
++	"alpha_curve": [Vector2(0.0, 0.95), Vector2(0.8, 0.8), Vector2(1.0, 0.0)],
++	"scale_curve": {"x": [Vector2(0.0, 1.0), Vector2(1.0, 0.6)],
++		"y": [Vector2(0.0, 6.0), Vector2(1.0, 4.0)], "z": FLAT},
++	"draw": {"shader": SCATTER, "params": {"face_camera": false, "tail": 0.0, "min_pixels": 2.0,
++		"forward_scatter": 0.85, "scatter": 10.0, "diffuse": 0.3, "glint": 1.0, "sky": 2.0,
++		"catch_light": 1.0, "refraction": 0.02, "lens_blur": 0.6, "rim_dark": 0.4,
++		"ground_reach": 0.5}},
++	"mesh": {"size": Vector2(0.01, 0.01)},
++	"texture": "res://effects/textures/rain_streak.png",
++}
 +const EMITTERS := {"WaterSheet": WATER_SHEET, "BigDrops": BIG_DROPS, "HeavyDrops": HEAVY_DROPS,
-+	"FineSpray": FINE_SPRAY, "SpillWater": SPILL_WATER, "PillarRunoff": PILLAR_RUNOFF}
++	"FineSpray": FINE_SPRAY, "SpillWater": SPILL_WATER, "PillarRunoff": PILLAR_RUNOFF,
++	"PassengerWater": PASSENGER_WATER, "PassengerLine": PASSENGER_LINE}
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -62,10 +173,14 @@ func _run() -> void:
+@@ -62,10 +214,21 @@ func _run() -> void:
  		_finish()
  		return
  	var effect := packed.instantiate()
@@ -2506,14 +2792,21 @@ index 9edff90..5e727d5 100644
 +		Readback.check_emitter(emitter, EMITTERS[emitter_name], _check, emitter_name)
 +		if emitter:
 +			Readback.check_no_b_features(emitter, _check, emitter_name)
++	for emitter_name: String in ["PassengerWater", "PassengerLine"]:
++		var emitter := effect.get_node_or_null(emitter_name) as GPUParticles3D
++		var quad := emitter.draw_pass_1 as QuadMesh if emitter else null
++		var priority: int = quad.material.render_priority if quad and quad.material else -1
++		_check(priority == 1,
++			"%s draws after the windshield's glass, which would hide water on its outside " % [
++			emitter_name] + "(render priority 1, found %d)" % priority)
  	effect.free()
  	_finish()
  
 diff --git a/game/tests/test_wiper_flick_state.gd b/game/tests/test_wiper_flick_state.gd
-index dd8d697..f2ad1f3 100644
+index dd8d697..c6a2e55 100644
 --- a/game/tests/test_wiper_flick_state.gd
 +++ b/game/tests/test_wiper_flick_state.gd
-@@ -2,12 +2,31 @@ extends SceneTree
+@@ -2,12 +2,32 @@ extends SceneTree
  ## A1, the wiper flick, in the running game (CHANGE-BRIEF.md §2). The wipers are switched with
  ## real presses of the wipers key and the flick follows the van's own wiper_swept signal; the
  ## test never calls the effect's trigger. It checks when the flick fires (every top turn, never on
@@ -2545,10 +2838,11 @@ index dd8d697..f2ad1f3 100644
 +const RUNOFF_TERMINAL := 5.0
 +const RUNOFF_MOST := 60.0
 +const GLASS_PANELS: Array[String] = ["GlassLeft", "GlassMiddle", "GlassRight"]
++const WATER_ON_GLASS := 2
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -21,6 +40,11 @@ var _parks: int = 0
+@@ -21,6 +41,14 @@ var _parks: int = 0
  var _worst_place: float = 0.0
  var _started: Dictionary = {}
  var _shortest_life: float = INF
@@ -2556,11 +2850,14 @@ index dd8d697..f2ad1f3 100644
 +var _keeper: RefCounted
 +var _glass_frame := Basis.IDENTITY
 +var _tip_gap: float = INF
++var _passenger_ahead: float = INF
++var _passenger_lift: float = INF
++var _line_along: float = 0.0
 +var _sheet_along: float = 0.0
  
  
  func _initialize() -> void:
-@@ -51,12 +75,17 @@ func _run() -> void:
+@@ -51,12 +79,17 @@ func _run() -> void:
  	_check(_fx.flicks_fired == 0 and _fx.flicks.size() == 2,
  		"Nothing fires as the scene loads (%d flicks in 0.15 s), and a pool of two bursts waits"
  		% _fx.flicks_fired)
@@ -2578,7 +2875,15 @@ index dd8d697..f2ad1f3 100644
  	_app.queue_free()
  	await process_frame
  	await _check_freed()
-@@ -98,6 +127,110 @@ func _check_fast() -> void:
+@@ -79,6 +112,7 @@ func _check_fast() -> void:
+ 	_parks = 0
+ 	_worst_place = 0.0
+ 	var before: int = _fx.flicks_fired
++	var passenger_before: int = _fx.passenger_flicks
+ 	var most_alive := 0
+ 	for frame in range(360):
+ 		await physics_frame
+@@ -98,6 +132,129 @@ func _check_fast() -> void:
  	_check(_shortest_life >= FLICK_LIFE - 0.05 and _shortest_life < INF,
  		"No burst is cut short: each one's spray lives its full %.1f s (shortest %.2f s)" % [
  		FLICK_LIFE, _shortest_life])
@@ -2590,6 +2895,16 @@ index dd8d697..f2ad1f3 100644
 +		% _sheet_along)
 +	_check(_fx.runoffs_thrown == 0 and _fx.spill_water_thrown == 0,
 +		"Parked, no top turn throws water back along the side window or a spill's water")
++	_check(_fx.passenger_flicks - passenger_before == fired,
++		"Each top turn also leaves the passenger blade's water on the glass (%d of %d)" % [
++		_fx.passenger_flicks - passenger_before, fired])
++	_check(_passenger_ahead > 0.005 and _passenger_ahead < 0.03
++		and _passenger_lift > 0.005 and _passenger_lift < 0.02,
++		"It starts just ahead of the passenger blade's middle, on the side it was moving to " +
++		"(%.0f mm), and on the outside of the glass (%.0f mm)" % [_passenger_ahead * 1000.0,
++		_passenger_lift * 1000.0])
++	_check(_line_along > 0.99,
++		"Its line of water lies along the passenger blade (%.4f)" % _line_along)
 +
 +
 +func _check_glass() -> void:
@@ -2619,6 +2934,15 @@ index dd8d697..f2ad1f3 100644
 +		func(gap: float) -> String: return "%.1f" % (gap * 1000.0))])
 +	_check(_fx.flicks.all(func(flick: Node3D) -> bool: return flick.basis.is_equal_approx(
 +		_glass_frame)), "Each burst is turned to the windshield's frame, in which it is set")
++	var wipe := _fx.wipe_collider as GPUParticlesCollisionBox3D
++	var blade := (_fx.get("_wiper") as Node3D).get("blade") as Node3D
++	_check(wipe != null and wipe.get_parent() == blade and is_equal_approx(wipe.size.y, 0.65)
++		and wipe.cull_mask == WATER_ON_GLASS,
++		"The driver's blade carries a collider as long as the blade, which touches only the " +
++		"water left on the glass (layer %d)" % WATER_ON_GLASS)
++	_check(_fx.glass_colliders.all(func(collider: GPUParticlesCollisionBox3D) -> bool:
++		return collider.cull_mask & WATER_ON_GLASS == 0),
++		"The glass's own colliders leave that water alone, so only a blade clears it")
 +
 +
 +func _check_air() -> void:
@@ -2689,7 +3013,7 @@ index dd8d697..f2ad1f3 100644
  
  
  func _check_freed() -> void:
-@@ -110,13 +243,9 @@ func _check_freed() -> void:
+@@ -110,13 +267,9 @@ func _check_freed() -> void:
  	van.queue_free()
  	await _seconds(0.3)
  	var kept := flicks.filter(func(flick: Variant) -> bool: return is_instance_valid(flick))
@@ -2706,7 +3030,7 @@ index dd8d697..f2ad1f3 100644
  
  
  func _on_swept() -> void:
-@@ -127,6 +256,13 @@ func _on_swept() -> void:
+@@ -127,6 +280,24 @@ func _on_swept() -> void:
  		return
  	_tops += 1
  	var flick: Node3D = _fx.last_flick
@@ -2717,10 +3041,21 @@ index dd8d697..f2ad1f3 100644
 +		var sheet := flick.get_node("WaterSheet") as Node3D
 +		var blade := (_fx.get("_wiper") as Node3D).global_basis.y.normalized()
 +		_sheet_along = sheet.global_basis.y.normalized().dot(blade)
++		var passenger := _fx.get("_passenger") as Node3D
++		var middle := passenger.global_transform * Vector3(0.0, float(_fx.get("_passenger_arm")),
++			0.0)
++		var water := flick.get_node("PassengerWater") as Node3D
++		_passenger_ahead = (water.global_position - middle).dot(
++			-passenger.global_basis.x.normalized())
++		var glass := _fx.glass_colliders[1] as GPUParticlesCollisionBox3D
++		var on_glass: Vector3 = glass.global_transform.affine_inverse() * water.global_position
++		_passenger_lift = -glass.size.z * 0.5 - on_glass.z
++		var line := flick.get_node("PassengerLine") as Node3D
++		_line_along = line.global_basis.y.normalized().dot(passenger.global_basis.y.normalized())
  	if flick:
  		_worst_place = maxf(_worst_place, flick.global_position.distance_to(_fx.tip()))
  		_started[flick] = _van.clock
-@@ -137,6 +273,57 @@ func _on_spray_finished(flick: Node3D) -> void:
+@@ -137,6 +308,57 @@ func _on_spray_finished(flick: Node3D) -> void:
  		_shortest_life = minf(_shortest_life, _van.clock - float(_started[flick]))
  
  
@@ -2974,10 +3309,10 @@ index 0000000..b90f8c1
 +uid://csuo7kfyawq3y
 diff --git a/game/effects/lamp_rain_street.tscn b/game/effects/lamp_rain_street.tscn
 new file mode 100644
-index 0000000..77b92dd
+index 0000000..6e84548
 --- /dev/null
 +++ b/game/effects/lamp_rain_street.tscn
-@@ -0,0 +1,147 @@
+@@ -0,0 +1,148 @@
 +[gd_scene load_steps=19 format=3]
 +
 +[ext_resource type="Texture2D" path="res://effects/textures/rain_streak.png" id="1_streak"]
@@ -3120,6 +3455,7 @@ index 0000000..77b92dd
 +draw_pass_1 = SubResource("Quad_splash")
 +
 +[node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
++cull_mask = 4294967293
 +transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5, 0)
 +size = Vector3(12, 10, 12)
 +resolution = 0

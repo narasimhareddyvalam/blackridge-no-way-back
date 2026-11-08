@@ -1,7 +1,9 @@
 # HANDOFF.md
 
-**Last run:** the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`, `TEST-REPORT.md`,
-`README.md` and the honest log, 2026-11-08. Before it, the brief's step 5, the rendering (#158), after
+**Last run:** fixes from the author's play of r1 (#160): the title's rain, the roof spill, and
+both wipers, 2026-11-08. Before it, the submission's agent parts (#159): the F9 vsync key,
+`SUBMISSION.md`, `TEST-REPORT.md`, `README.md` and the honest log, and the brief's step 5, the
+rendering (#158), after
 the roadside (#157), the depot lit from its wall (#151), the street lamps and the road's puddles
 (#150), and Assignment 6's r1 (#145–#149). All stay uncommitted in the working tree; their
 records, a patch copy of each, and this handoff are committed, not pushed. Their sections are
@@ -59,6 +61,51 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Fixes from the author's play of r1 (#160)
+
+**The instruction (#160):** "fix this home screen, make it subtle less or no rain and
+professional. its glitching right now with too much rain and also, the hard break water falling
+down effect isnt working. And also the wiper particle effect works only with left wiper and the
+right wiper isnt doing that effect. right wiper should do same effect and left wiper should wipe
+off that particles i guess. check how it works in real life and do it."
+
+**Found:**
+- The title's streaks were the office lamps' rain, frozen by the title's pause.
+- The roof spill fires in play but was hidden: wherever the glass is wet, the windshield
+  (`windshield.gdshader`) draws a copy of the solid scene over see-through water beyond it.
+- The wipers are a tandem pair. The passenger blade leaves its water inside the driver's
+  blade's sweep at the top turn.
+
+**In the working tree, uncommitted:**
+- In the r1 patch:
+  - `wiper_flick.tscn`: `PassengerWater` and `PassengerLine` (layer 2, render priority 1,
+    `COLLISION_HIDE_ON_CONTACT`, 60 fps).
+  - `van_particles.gd`:
+    - `wipe_with()` puts a `BladeWipe` collider on the driver's blade, masked to layer 2;
+    - `passenger_water_at()` places the water on the glass's outside, ahead of the passenger
+      blade;
+    - the glass colliders' masks leave out layer 2.
+  - `van_presentation.gd` calls `wipe_with()`.
+  - `roof_spill.tscn`: render priority 1 on its four materials.
+  - `lamp_rain_*.tscn`: each collider's mask leaves out layer 2.
+  - The A1, A2 and B1 configuration tests and the A1 state test.
+- In the world patch: `first_drive.gd` hides `world.lamp_rain` on the title and shows it on
+  leaving, with its check in `test_lamp_rain_state.gd` (that test's other changes are already
+  in the world patch, so the code and its test travel together).
+- `TUNING.md`: a "#160" entry under A1, A2 and B1 with the author's words, the finding, the
+  change and the prediction per strip frame.
+
+**Tests:** `LOG_DIR=logs/particles/fixes_160`, every suite exits 0: A1 configuration 451/451 and
+state 27/27, A2 221/221 and 13/13, B1 364/364 and 13/13, the rest at their counts; art 0 failures.
+
+**Unverified:**
+- The look in play, and the strips (the author's).
+- The wipe itself, which only a windowed run shows (Claude Code's magenta check).
+- Whether the driver's own flick is also hidden where the glass is wet: its emitters keep
+  render priority 0, untouched.
+- The brief revisions these need (A1's passenger water; B1 hidden, not frozen, on the title):
+  the author's to write.
 
 ## The submission's agent parts (#159)
 

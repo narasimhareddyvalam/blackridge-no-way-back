@@ -199,6 +199,33 @@ these changes, first reverse their patch
   - **Against the author's #146:** on the unlit road the drops themselves stay small and faint,
     as real ones are; what shows clearly is the sheet of water leaving the blade, and, driving,
     the streaks the wind makes of it.
+- **Changes with #160 (r1), from the author's play of r1:**
+  - **What the author saw:** "the wiper particle effect works only with left wiper and the right
+    wiper isnt doing that effect. right wiper should do same effect and left wiper should wipe off
+    that particles i guess."
+  - **Claude's reading:** the flick was the driver's blade's alone, as the brief's A1 says. The
+    wipers are a tandem pair that sweep together. At its top turn the passenger blade stands
+    near the glass's middle, and the water it pushed is left on the glass just ahead of it, inside
+    the driver's blade's sweep. The driver's blade wipes it about 0.3 s later on fast wipers, on
+    its way down.
+  - **Change:** two emitters, `PassengerWater` (100 drops, 3–6 mm, 0.6–2.2 m/s along the glass,
+    stopping within a few centimetres) and `PassengerLine` (the line of water along the blade,
+    drawn as the driver's sheet is). Both are placed on the glass's outside just ahead of the
+    passenger blade at each top turn, on layer 2. A collider on the driver's blade touches only
+    layer 2 and hides each drop it reaches, so the driver's blade wipes them. The glass's and the
+    lamps' colliders now leave layer 2 alone, and both emitters draw after the glass (render
+    priority 1). This adds to the brief's design of A1, so the author's brief revision decides it.
+  - **Claude's prediction** (fast wipers, top turn at frame 10):
+    - frame 10: a glinting line of water along the passenger blade, right of the glass's middle,
+      beside the driver's flick at the pillar;
+    - frame 12: the line, and short streaks of drops just ahead of it, as that blade swings back
+      to the right;
+    - frame 15: the drops stopped on the glass, and the driver's blade coming down to them;
+    - frame 20: gone where the driver's blade has passed, with a few left outside its sweep;
+    - frames 30 and 50: none, or a few faint drops outside the sweep.
+  - **Tests:** configuration 451/451, state 27/27 (7 of 7 top turns, 15 mm ahead of the blade's
+    middle, 10 mm outside the glass). A headless run cannot show the wipe itself; Claude Code's
+    windowed check (drops drawn magenta) showed them vanish as the driver's blade passed.
 - **Claude's comparison of r1 with its prediction:** _after the author's r1 capture._
 - **My verdict (running game, 1280×800):** _the author: kept | reverted, because…_
 - **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `speed_kmh-50`
@@ -273,6 +300,19 @@ these changes, first reverse their patch
   - frame 30: streams, beads and rivulet tails lower down by the office, and the office's lit
     windows and the bushes before them bent and smeared by the clear sheet;
   - frame 50: none.
+- **Changes with #160 (r1), from the author's play of r1:**
+  - **What the author saw:** "the hard break water falling down effect isnt working."
+  - **Claude's reading:** the spill fires in play (from 12 m/s, one frame after the brake), and
+    drawn solid red it covers the glass from the driver's seat. With its real materials it was
+    hidden. The windshield draws a copy of the solid scene wherever it is wet, over any
+    see-through water beyond it, and a spill pours exactly where the glass is wettest.
+  - **Change:** one setting: the four spill materials' render priority, 0 → 1, so the spill
+    draws after the glass.
+  - **Claude's prediction:** r1's frames as predicted above, now also where the glass is wet:
+    frame 15 short streams across the top of the glass; frame 20 streams and beads running down
+    the right half; frame 30 beads and rivulet tails lower down; frame 50 none. On the unlit road
+    it stays subtle, translucent streaks, as the brief's §3 asks.
+  - **Tests:** configuration 221/221.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`
@@ -350,6 +390,21 @@ these changes, first reverse their patch
   splashes had never appeared; stopped drops fade (`still_fade`); `fixed_fps` 60; splashes start
   3 cm up; the street and post splashes 0.5–1.5 mm, `scatter` 30, `diffuse` 1. For §8, B1's peak
   becomes 7,750 particles per street lamp.
+- **Changes with #160 (r1), from the author's play of r1:**
+  - **What the author saw:** on the title screen, "make it subtle less or no rain and
+    professional. its glitching right now with too much rain."
+  - **Claude's reading:** the long white streaks were the office lamps' rain, started under the
+    title camera and frozen mid-fall by the title's pause, a few metres from the camera. The van's
+    own rain in its lamps keeps falling there, faintly.
+  - **Change:** the title screen hides the lamps' rain, and leaving the title shows it again, so
+    it starts already falling as play begins (`first_drive.gd`). The brief's §4 had the title
+    freeze it, so this is the author's brief revision to make. The pause menu still freezes it.
+    The lamps' colliders leave the water on the van's glass alone (A1's change).
+  - **Claude's prediction:** a calm title with only faint streaks at the van's lamps; on New
+    Game or Continue, the office lamps' rain already falling on the first frames. The strips
+    are unaffected: the previews never show the title.
+  - **Tests:** configuration 364/364, state 13/13 (a new check: hidden on the title, shown
+    after).
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`
