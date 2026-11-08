@@ -68,7 +68,43 @@ Their scenes and textures are in `game/effects/`.
   where the drops land. Driven by `game/features/environments/industrial_loop/lamp_rain.gd`.
 - **B2, exhaust vapour:** follows the engine and the throttle through `amount_ratio`.
 
-To check them:
+**Starting point:** the game at `c1ee48f` (2026-11-07): Assignment 5 (tag `a5`) and the final
+project's Phase 1, with no particle effect in it.
+
+**Engine and renderer:** Godot 4.7.2 stable, Forward+ (Godot's desktop default), with MetalFX
+temporal upscaling at 75% on macOS.
+
+**Run:** open `game/project.godot` in Godot 4.7.2 and press F5, or run
+`/Applications/Godot.app/Contents/MacOS/Godot --path game`. The main scene is
+`res://app/first_drive.tscn`. Each effect's preview scene in `game/previews/` also runs on its
+own (F6 in the editor). The previews are fixtures that put each effect's event on the brief's
+frames, and the export leaves them out.
+
+**Controls:** the opening menu lists them: W / S accelerate and brake, A / D steer, W A S D walk
+on foot, Shift run, Q forward or reverse, Space handbrake, Z / C indicators, X hazard lights,
+L headlights, V wipers (the wiper flick follows them), I cabin light, J / K windows, H horn, the
+mouse to look around, F center view, E get in or out, T answer a call, R recover, Esc pause.
+**F9 turns vsync off and on** for the FPS check; it is a debug key, not in the menu.
+
+**What this assignment added:** the four effects, their controllers, the configuration and state
+tests, the mutations, the previews, the strip script and the cost script; the brief, the tuning
+log and the test report. Revision r1 of all four effects (`TUNING.md`) and the changes to the
+lamps, the wet road and the roadside around them (prompt log #150–#158) are in the working tree
+until the author's verdicts.
+
+**Known limitations:**
+- Godot's GPU timer reads 0 on Metal, so the GPU price rests on the author's check.
+- In windowed runs on this Mac the frame time stayed at the display's refresh with vsync off,
+  so an FPS comparison is probably capped.
+- The Iveco model has no tailpipe, so B2's exhaust position is assumed (brief revision 2).
+- B1's real-size splash droplets are faint from a few metres.
+- B1's slowest drops fade 2–4 m above the ground.
+- A headless run draws no particles and runs no GPU particle process.
+
+**Film:** the link, filename and SHA-256 are added at submission. The film is stored in the
+course's media storage, not in GitHub.
+
+To check the effects:
 
 ```sh
 LOG_DIR=logs/particles/<step> scripts/run-test.sh test_wiper_flick_config.gd 60  # one per effect
@@ -77,8 +113,6 @@ LOG_DIR=logs/particles/<step> scripts/run-test.sh cost_effects.gd 60 300        
 scripts/capture-strips.sh <round>   # frame strips: opens a window per effect
 ```
 
-Each effect has a preview scene in `game/previews/` that puts its event on the brief's frames.
-The export leaves the previews out.
 - Tuning: [TUNING.md](TUNING.md).
 - Results: the Assignment 6 section of [TEST-REPORT.md](TEST-REPORT.md).
 - Sources: [SOURCES.md](SOURCES.md).

@@ -210,6 +210,64 @@ the driver's window went down with the fog.
 - Trace: `7bbf0a4`, `c1ee48f`; `docs/AUTHOR_PROMPTS_AND_DECISIONS.md`
   #131–#141; C52; the brief's "How it was made" line.
 
+## 2026-11-07 – 2026-11-08 — The build, the tuning and the world (recorded by Claude Code, facts only)
+
+- **The build (#142–#144).** Asked to finish its own parts and leave the author's tasks for the
+  end, Claude Code:
+  - built the four effects, drawing their textures with a script instead of generating them
+    (`5913f81`);
+  - wired them to the game's events (`0a76154`);
+  - wrote the configuration and state tests, the six mutations (all exit 1, `16fcdc5`), the
+    previews, the strip script and the cost script (`42772e1`).
+- **Its own mistakes, caught in its windowed checks:**
+  - the † value `LampSplash` `emitting = false` (brief revision 1);
+  - camera-facing particles drawn at the quad's size, ignoring their own scale (revision 4,
+    `ae928ff`);
+  - B1's streaks a quarter of their quad's width (revision 5, `ed6b45f`).
+- **With real materials the effects could hardly be seen at night.** The author asked: "make
+  sure its clearly visible like in real world. all the four effects!" (#144), then "make them
+  more realistic" (#146). Claude Code tuned all four toward real-world physics as revision r1
+  (#146–#149). The author picked ideas on an options page
+  (#147), then kept the effects as tuned (#153). r1 stays uncommitted until the author's
+  verdicts; its record and patch are committed (`2a2d3a1`–`5d4112d`).
+- **The world around the effects (#150–#158), at the author's requests.**
+  - Each was done one step at a time, after the author approved it:
+    - street lamps that light downward like real ones;
+    - the depot lit from its wall;
+    - the author's pasted brief for a photorealistic rainy road, in five steps (the wet road,
+      an amber streetlight built in Blender, the lamps' rain and splashes, the roadside, the
+      rendering).
+  - Uncommitted until the author's verdict, with a committed patch (`89cd9a3`–`8889880`).
+- **What the author caught:**
+  - "those lights at shed looks so bad", which led to security lights on the depot's wall
+    (#151);
+  - "those lights shouldnt light up entire depot" (#152);
+  - "the street light lits entire road" (#155).
+- **What Claude Code found:**
+  - B1's splashes had never fired: in Godot 4.7.2 a drop that vanishes on contact sets off no
+    collision sub-emitter (#156);
+  - its first bend guardrail stood on the curve's inside, because a helper it reused returns a
+    curve's inside (#157);
+  - new turf looked like snow under the moon (#157);
+  - the moon's glint made wet surfaces silver and the pines look frosted (#158).
+- **The submission's agent parts (#159):**
+  - the F9 vsync key, approved by the author (`c5e307d`);
+  - the Effect A mutations repeated on r1, all exit 1;
+  - the previews rechecked;
+  - `SUBMISSION.md`, `TEST-REPORT.md` and `README.md` brought up to date.
+- **Still the author's:**
+  - the strips and verdicts;
+  - the play and background checks;
+  - the GPU price;
+  - Step 6's shader notes;
+  - the † values;
+  - the film;
+  - the notes below.
+- **Trace:**
+  - `8c3e636` to `c5e307d`;
+  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#159;
+  - `TUNING.md`, `HANDOFF.md`.
+
 ## 2026-11-07 — My own notes (to write)
 
 - **Tried / expected:**

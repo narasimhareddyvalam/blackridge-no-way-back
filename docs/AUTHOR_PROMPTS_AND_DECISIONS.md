@@ -2549,6 +2549,23 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the brief: the author's look, strips and verdicts first, then Step 6's shader, the GPU
        price, the film, the fresh-clone check, the tag and the submission fields.
 
+159. **The submission documents and the other remaining items.**
+     - **The author's message:** "yes fill in other remaining things" (answering Claude Code's
+       offer to fill in `SUBMISSION.md` for Assignment 6 and bring `TEST-REPORT.md` up to date).
+     - **Claude Code asked:** whether to add the debug key the assignment asks for, which turns
+       vsync off for the FPS check; **the author answered:** "Yes, F9 (Recommended)".
+     - **What Claude Code did:**
+       - F9 toggles vsync (`c5e307d`), checked in a window;
+       - `SUBMISSION.md` in the assignment's 17 fields, the ones known only at submission left
+         blank;
+       - `TEST-REPORT.md`'s "Since tuning" with the working tree's results;
+       - the README's Assignment 6 section with every item the assignment lists;
+       - its facts-only entry in `FRICTIONAL.md`;
+       - repeated the Effect A mutations on r1 (each exits 1) and the previews' frame check;
+       - corrected `HANDOFF.md`: the brief's dated revisions are the author's to add.
+     - **Checked:** every suite passes (`logs/particles/submission_prep/SUMMARY.txt`).
+     - **Found:** this Mac is an Apple M4; `AGENTS.md` and the README's first paragraph say M1.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

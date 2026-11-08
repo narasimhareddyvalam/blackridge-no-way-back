@@ -1,0 +1,6 @@
+a1_value_drift
+- edit: game/effects/wiper_flick.tscn line 49: `spread = 30.0` -> `spread = 37.0`
+- test_wiper_flick_config.gd: WIPER FLICK CONFIG RESULT: 338/339 passed; 1 failed, exit 1
+- first failure: FAIL: BigDrops process.spread = 30.0 (found 37.0) 
+- state: not run
+- restored, byte-identical from a copy taken before the edit (the tuned scene is uncommitted)

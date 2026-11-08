@@ -1,6 +1,7 @@
 # HANDOFF.md
 
-**Last run:** the brief's step 5, the rendering (#158), 2026-11-08, on branch `develop`, after
+**Last run:** the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`, `TEST-REPORT.md`,
+`README.md` and the honest log, 2026-11-08. Before it, the brief's step 5, the rendering (#158), after
 the roadside (#157), the depot lit from its wall (#151), the street lamps and the road's puddles
 (#150), and Assignment 6's r1 (#145–#149). All stay uncommitted in the working tree; their
 records, a patch copy of each, and this handoff are committed, not pushed. Their sections are
@@ -58,6 +59,44 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The submission's agent parts (#159)
+
+**The instruction (#159):** "yes fill in other remaining things", answering the offer to fill in
+`SUBMISSION.md` and bring `TEST-REPORT.md` up to date; then "Yes, F9 (Recommended)" for the
+vsync debug key.
+
+**Committed:** `c5e307d`. It adds a `vsync_debug` action on F9 in `game/project.godot`, and
+`first_drive.gd` toggles vsync with a short notice. Checked in a window: vsync on, off, on.
+**The Godot editor was open on this project during this run:** if it asks, choose Reload, not
+Ignore, or the action may be lost when the editor next saves project settings.
+
+**Records (this commit):**
+- `SUBMISSION.md`: the assignment's 17 fields. The tag's SHA, the film's revision, URL and
+  SHA-256 stay blank until submission, and the summary ends with a bracketed part for the author
+  to complete.
+- `TEST-REPORT.md`: "Since tuning", the working tree's results, beside the build before tuning;
+  the GPU price row names F9 and the capped frame time.
+- `README.md`: the Assignment 6 section has every item the assignment lists (starting point,
+  engine and renderer, run, controls with F9, what was added, limitations, film to come).
+- `FRICTIONAL.md`: Claude Code's facts-only entry for #142–#159. The author's notes stay blank.
+- Earlier in this file: the brief's dated revisions after a verdict are the author's to add, as
+  the assignment says.
+
+**Tests** (logs committed):
+- `LOG_DIR=logs/particles/submission_prep`, every suite and `test_night_dimming.gd` at 30, 60
+  and 144 exit 0 with step 5's counts; art 0 failures; `cost_effects.gd 60 300` exit 0 (0.479 ms).
+- Effect A mutations on r1 (`logs/particles/r1_mutations/`): four config failures, each exit 1;
+  each scene restored from a copy, byte for byte.
+- Previews headless at 30 fps (`logs/particles/previews_headless_r1/`): every event on its r0
+  frame except B1's hide, frame 109 (111).
+
+**Found:** this Mac is an Apple M4 (`sysctl`: Mac16,12, macOS 27.2), as `TEST-REPORT.md` says;
+`AGENTS.md` and `README.md`'s first paragraph still say M1. `CLAUDE.md`'s "Unconfirmed" still
+lists whether preprocess re-runs on `restart()`, which `TEST-REPORT.md` confirms.
+
+**Unverified:** the README and the submission describe r1 and the world as pending; both need
+another pass after the verdicts.
 
 ## The brief, step 5: the rendering (#158)
 
@@ -471,9 +510,11 @@ python3 tools/tests/check_first_drive_art.py
 3. Capture `FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`, and
    the A1 variants named in `TUNING.md`.
 4. Give a verdict per effect.
-   - **For each effect kept,** Claude Code commits its part of r1 and writes the brief's
-     revisions (listed under each effect in `TUNING.md`), including revision 6: B1's feature
-     that the A effects don't use is its splash sub-emitter (#147).
+   - **For each effect kept,** Claude Code commits its part of r1. The author adds the brief's
+     dated revisions, as the assignment says ("If you keep it, add a dated revision to the
+     brief's settings"; `TUNING.md` agrees), and Claude Code may draft their wording from the
+     list under each effect in `TUNING.md`. That list includes revision 6: B1's feature that the
+     A effects don't use is its splash sub-emitter (#147).
    - **For each effect reverted,** Claude Code restores its part from `4f73f98`.
 
 **Unverified:**
