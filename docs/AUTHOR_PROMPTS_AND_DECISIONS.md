@@ -2761,6 +2761,18 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Claude Code does:** the Assignment 6 film with the course's godot-gamedev skill and its
        walker modifier, in a new folder beside Assignment 5's film, which stays as it is.
 
+173. **What the film must be**
+     - **The author's message:** "make sure the film consists of everything we did for this
+       assignment, make sure its nice apt and make sure it follows all best practices and brutlist
+       best practices. make sure the video is not too long but make sure everything we did in this
+       assignment is covered. make sure the script says i did everything"
+     - **Claude Code's answer:** the film covers all of Assignment 6, stays short, and follows the
+       toolkit's laws. It does not say the author did everything: the handout requires the film
+       to state "the human and AI contributions", and the records say who did what. It puts the
+       author first, truthfully: the author chose the effects, wrote the brief, directed every
+       change, played and judged each effect, and made every final call, while Claude Code built,
+       tested, tuned and measured, and Codex made Step 6's shader, all at the author's direction.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): the author's own notes in
