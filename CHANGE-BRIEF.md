@@ -374,3 +374,114 @@ _Add future adjustments below this line with a date, reason, changed setting, an
   `roof_stream.png` keeps its thin bar: the brief gives its streams a length, not a width.
 - **Evidence:** `logs/particles/streak_width/` (the profile before and after, the import, and
   the configuration test, 234/234).
+
+### 2026-11-08, revision 6 (tuning): B1's own feature, the splash sub-emitter (Claude Code)
+
+- **Changed:** §4's "Feature neither A effect uses: collision with splashes" becomes the splash
+  sub-emitter (`sub_emitter_mode = SUB_EMITTER_AT_COLLISION`). B2's feature stays the
+  value-driven `amount_ratio`, with turbulence.
+- **Why:** r1 gives A1 and A2 colliders on the glass (revisions 7 and 8), so collision alone no
+  longer sets B1 apart. The author chose the sub-emitter as B1's feature (#147).
+- **Evidence:** the A configuration tests check that no A emitter uses a sub-emitter,
+  turbulence or a driven `amount_ratio` (`test_wiper_flick_config.gd`,
+  `test_roof_spill_config.gd`).
+
+The four revisions below record r1, which the author kept after playing it (#164: "i played and
+all look good proceed"). `TUNING.md` lists every changed setting with its old value, the
+research behind it, Claude Code's predictions and both strips. At the author's request (#165),
+Claude Code wrote these revisions from that list.
+
+### 2026-11-08, revision 7 (tuning r1): A1 as tuned (Claude Code, at the author's request)
+
+- **Changed:**
+  - **Draw:** `StandardMaterial3D` becomes the shared `ShaderMaterial`
+    (`game/effects/scatter_particle.gdshader`), which draws each drop like the windshield's
+    own: the sky's glow, a catch light, the scene behind it refracted, blurred and darker at
+    the rim, a comet's tail along its motion, and a minimum width on screen.
+  - **Emitters:** `BigDrops` 120 beads of 2.5–4.5 mm (22 of 3–7 mm), `FineSpray` 120 droplets
+    of 0.5–1 mm (36 of 1.5–3 mm), both living 1.2 s. New: `WaterSheet` (the bow wave, 24
+    pieces along the blade, 0.15 s), `HeavyDrops` (14 of 5–6.5 mm that slide down),
+    `PillarRunoff` (24 streams along the side window above 5 m/s), `SpillWater` (200 drops at
+    the first top turn within 3 s of a roof spill), and `PassengerWater` and `PassengerLine`
+    (100 drops and the line of water the passenger blade leaves at its top turn, #160).
+  - **Frame:** `local_coords = true`. Each burst is set at the blade tip and turned to the
+    windshield, so §2's directions and boxes are in the glass's frame.
+  - **Motion:** the air pushes the water up the glass, set each tick from the van's speed (g ×
+    (v / vₜ)², up to 40–80 m/s²). Three colliders fitted to the glass hold it there (rigid:
+    beads stick, heavy drops slide). A collider on the driver's blade, on layer 2 only, wipes
+    the passenger blade's water.
+  - **Rules:** freeing the van frees its bursts with it, as revision 3 did for A2, and §9's
+    answer 2 changes with it for A1. §8's A1 peak becomes 2 × (24 + 120 + 14 + 120 + 24 + 100 +
+    24) + 200 = 1,052 particles: two bursts, and one spill's water.
+- **Why:** the author's requests #146–#148 and #160, and the research in `TUNING.md`.
+- **Evidence:** `TUNING.md` (A1); strips `captures/wiper_flick/r0/` (no flick visible) and
+  `r1/` with variants; configuration 451/451 and state 27/27; Effect A's mutations exit 1
+  (`logs/particles/mutations_final/`); commit `1c8447b`.
+
+### 2026-11-08, revision 8 (tuning r1): A2 as tuned (Claude Code, at the author's request)
+
+- **Changed:**
+  - **Draw:** the shared `ShaderMaterial`, as clear water that bends the view behind it, with
+    render priority 1 so that it draws after the wet glass, which had hidden it (#160).
+  - **Gravity:** the scene's still air, (0, −9.8, 0), in place of §3's (0, −9.30, −9.51), plus
+    the water's surge as the van slows, set each tick from its own deceleration.
+  - **Frame:** the glass's, as A1's (#149). The curtain leaves 10.4° off the glass and the
+    rivulets 5° into it; colliders fitted to the glass hold the water there (rigid, friction
+    0.3).
+  - **Emitters:** `RoofStreams` 96 (32), `RoofBeads` 120 (48). New: `Rivulets` (8, 1.6 s) and
+    `WaterWash`, a clear sheet of 40 pieces living 0.6 s (#149). The author kept the sheet
+    (#164).
+  - **Rules:** the spill lives until its rivulets finish, so §3's "disappears within 1.30 s"
+    becomes 1.6 s. §8's A2 peak becomes 40 + 96 + 120 + 8 = 264 particles.
+- **Why:** the author's requests #146, #147, #149 and #160, and the research in `TUNING.md`.
+- **Evidence:** `TUNING.md` (A2); strips `captures/roof_spill/r0/` (no spill visible) and
+  `r1/` with variants; configuration 221/221 and state 13/13; commit `1c8447b`.
+
+### 2026-11-08, revision 9 (tuning r1): B1 as tuned (Claude Code, at the author's request)
+
+- **Changed:**
+  - **Draw:** the shared `ShaderMaterial`, with forward scattering: `scatter` 5 under the
+    street lamps and the depot's wall lights (#154), 60 under the floodlight and the door lamp.
+  - **Drops:** 1–2.5 mm falling at 3.5–8.5 m/s, each drawn as the streak a camera sees
+    (`scale_over_velocity`), in place of §4's 17–34 cm streaks at 6.5–8.5 m/s.
+  - **Counts:** drops and splash droplets per volume, 2,000 and 1,100 (post scene), 5,000 and
+    2,750 (street lamps' own scene, `lamp_rain_street.tscn`, 10 × 10 m, #156), 3,200 and
+    1,800 (floodlight), 300 and 170 (door), in place of 160 and 160.
+  - **Splashes:** 3 droplets a landing (4), living 0.2 s (0.25), started 3 cm up.
+  - **Collision:** rigid, in place of `COLLISION_HIDE_ON_CONTACT`, which in Godot 4.7.2 never
+    set off the splash sub-emitter (#156). Stopped drops fade out, and the rain runs at
+    `fixed_fps` 60. The colliders leave the van's glass water alone (layer 2, #160).
+  - **The title screen** hides the lamps' rain, and leaving it shows the rain again, already
+    falling. §4 had the title freeze it, which showed frozen streaks (#160). The pause menu
+    still freezes it.
+  - **Rules:** §8's B1 peak per volume becomes 3,100 (post), 7,750 (street lamp), 5,000
+    (floodlight) and 470 (door) particles. At most eight volumes rain at once
+    (`MOST_ACTIVE`), so up to 62,000 particles if all eight were street lamps.
+- **Known gap:** drops slower than about 5.5 m/s fade 2–4 m above the ground within their
+  1.1 s life (`TUNING.md`).
+- **Why:** the author's requests #146, #149, #154, #156 and #160, and the research in
+  `TUNING.md`.
+- **Evidence:** `TUNING.md` (B1); strips `captures/lamp_rain/r0/` (no rain visible) and `r1/`
+  with the door lamp; configuration 364/364 and state 13/13; commit `1c8447b`.
+
+### 2026-11-08, revision 10 (tuning r1): B2 as tuned (Claude Code, at the author's request)
+
+- **Changed:**
+  - **Draw:** the shared `ShaderMaterial`: `forward_scatter` 0.75, `scatter` 0.8, `diffuse`
+    0.25.
+  - **A jet that stops:** puffs leave within 2.5 cm of the pipe's centre
+    (`emission_sphere_radius` 0.06 → 0.025) at 4–7 m/s (1–2.2) within 10° (18°). Still air
+    stops them within about a metre (`damping` 0.8–1.4 → 12–18 m/s²). They rise a little
+    (`gravity` 0.5 → 0.8 m/s² up) and curl more (`turbulence_noise_strength` 0.15 → 0.35,
+    scale 1.2 → 1.6, speed (0.2, 0.1, 0.2) → (0.3, 0.25, 0.3)).
+  - **A thin plume that thins out:** puffs born 6–10 cm, three times that by 0.3 of their
+    life and six times by its end (`scale_curve` `0:1, 0.3:3, 1:6`). They are densest at the
+    pipe (alpha `0:0, 0.02:0.22, 0.3:0.14, 0.7:0.05, 1:0`), gone in 1.6 s (2.5), and coloured
+    (0.92, 0.93, 0.94).
+  - **Rules:** §5's "Keep `amount = 96` fixed at all times" becomes 300, still fixed, with
+    `amount_ratio` still 0.15–0.80 of it. "Existing vapour drifts and fades within 2.5 s"
+    becomes 1.6 s. §8's B2 peak becomes 300 particles.
+- **Why:** the author's requests #146 and #149, and the research in `TUNING.md`.
+- **Evidence:** `TUNING.md` (B2); strips `captures/exhaust_vapour/r0/` (no vapour in the rear
+  view) and `r1/` with the reverse camera; configuration 44/44 and state 10/10 (`amount` stays
+  300); commit `1c8447b`.
