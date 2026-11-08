@@ -483,11 +483,20 @@ func _recover() -> void:
 	hud.notify("Van recovered to the last safe checkpoint")
 
 
+func _toggle_vsync() -> void:
+	var off := DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_DISABLED
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if off
+		else DisplayServer.VSYNC_DISABLED)
+	hud.notify("Vsync on" if off else "Vsync off (F9, for the FPS check)")
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or _ending or _ended:
 		return
 	if event.is_action_pressed("recover"):
 		_recover()
+	elif event.is_action_pressed("vsync_debug"):
+		_toggle_vsync()
 	elif event.is_action_pressed("answer_call"):
 		if van.occupied and route.phone_call.can_answer():
 			route.phone_call.answer()
