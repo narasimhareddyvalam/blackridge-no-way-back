@@ -2594,6 +2594,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
        - `TUNING.md` holds each change with the author's words and Claude Code's per-frame
          prediction, for the author's strips and verdicts.
 
+161. **What is left.**
+     - **The author's message:** "i think for now its fine. what else is left in the assignment"
+     - **Claude Code's answer:** the list of what remains, in the handout's order:
+       - the author's play and strips: `FROM=4f73f98 scripts/capture-strips.sh 0`, then
+         `scripts/capture-strips.sh 1` and the A1 variants;
+       - Claude Code's readings of the strips;
+       - the author's verdicts and the brief's dated revisions;
+       - the commits in the order the work happened;
+       - the human checks and the GPU price;
+       - Step 6's shader;
+       - the † values, the honest log's own notes and the review of `CLAUDE.md`;
+       - the film, with the course's Brutalist godot-gamedev skill;
+       - the tag, the fresh-clone check, the ZIP and Canvas.
+     - **Found:** the assignment's Step 1 asks for a `claude -p` session file
+       (`session-1.jsonl`). Assignment 6 has none, since its Step 1 ran in the author's
+       interactive session (`05eefd3` says so); `sessions/session-1.jsonl` is Assignment 5's.
+       The author decides whether to note that or run the handout's command.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
