@@ -40,6 +40,9 @@ The same checks showed that every effect fires on its frame and draws where it s
 solid red for one check, each appeared at the blade tip, the roof lip, the lamp and the
 tailpipe. With their real materials they could hardly be seen at night (below).
 
+The options were shown to the author side by side, from Claude Code's own test renders, on a
+private page: https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ.
+
 The r1 patch and its shader wait in `tools/tuning/r1/` until the author approves; applying it
 changes the effect scenes, `particle_readback.gd` and the four configuration tests.
 
@@ -70,8 +73,9 @@ changes the effect scenes, `particle_readback.gd` and the four configuration tes
     blade tip, upper left of the glass by the pillar, moving left and down, most of them 1–2 px.
     It is still hard to see against the unlit forest, because the drops are small. Frame 20
     shows a few specks, and frames 30 and 50 none.
-  - Depot (`place=depot`): frames 10–15 show a clear spray of small water beads, catching the
-    depot lamps, with bright rims.
+  - Depot (`place=depot`): frames 10–15 show only faint specks at the blade tip. Corrected on
+    2026-11-07, before any change was applied: Claude Code's first prediction said a clear
+    spray, but its own render showed one only with larger drops.
   - A1 will need larger drops to be clearly visible on the unlit road: the next revision.
 - **Claude's comparison of r1 with its prediction:** _after the author's r1 capture._
 - **My verdict (running game, 1280×800):** _the author: kept | reverted, because…_
