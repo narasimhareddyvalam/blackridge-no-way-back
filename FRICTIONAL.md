@@ -289,19 +289,19 @@ the driver's window went down with the fog.
 - **The author's decisions (#167, #168):** B2 kept over its GPU budget; the † values accepted;
   the lay-by walls kept for now; the human checks answered as "everything i asked for is
   delivered as it is."
-- **Still the author's:**
-  - the notes below.
+- **Own notes:** added below at the author's request, with AI-assisted wording and attribution.
 - **Trace:**
   - `8c3e636` to `1dfe865`, and the commits after it;
   - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#171;
   - `TUNING.md`, `HANDOFF.md`.
 
-## 2026-11-07 — My own notes (to write)
+## 2026-11-07 — My own notes (added 2026-11-08)
 
-- **Tried / expected:**
-- **What happened:**
-- **Checked or changed in response:**
-- **Learned / still unresolved:**
-- **Human vs AI:** how the draft was written; what I accepted, modified or
-  rejected of Claude Code's fixes and † proposals
-- **Trace:**
+AI-assisted wording based on the recorded work, added at the author's request.
+
+- **Tried / expected:** I chose wiper flicks, roof spills, lamp rain and exhaust vapour to make the rainy driving scenes feel more realistic.
+- **What happened:** During playtesting, I found frozen rain on the title screen, a hidden roof spill and missing passenger-wiper water.
+- **Checked or changed in response:** I asked Claude to fix those problems, then played the revised game and accepted all four effects.
+- **Learned / still unresolved:** The work showed that passing automated tests does not guarantee visible effects; exhaust remains over its GPU budget, and detailed visual checks are not individually documented.
+- **Human vs AI:** I chose the effects and approved their appearance; AI helped with implementation, tuning, testing, and the process-shader conversion and notes.
+- **Trace:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #160, #164–#171; `TUNING.md`; `TEST-REPORT.md`; this conversation's approval to add these notes.
