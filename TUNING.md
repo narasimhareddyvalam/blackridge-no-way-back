@@ -101,6 +101,14 @@ features the B effects are graded on (the author's decision, #147). The A1 state
 glass colliders, the air's push, the run-off at speed, the spill's water and freeing the van; the
 A2 state test adds the water's surge as the van slows.
 
+**Outside the effects (#150):** at the author's request the street lamps and the road's puddles
+also changed, uncommitted, with their own patch (`tools/tuning/world/lamps_and_rings.patch`):
+lamps that light downward like real ones, with shadows and a glow around the lens, and raindrop
+rings in puddles with edges (the prompt log, #150). An r1 capture from the working tree includes
+them, so B1's r0 and r1 strips differ in the lamp as well as in the rain, and A1's depot strip
+and A2's show the new puddles. To capture r1 without them, first reverse their patch
+(`git apply -R tools/tuning/world/lamps_and_rings.patch`), then apply it again.
+
 ## Effect A1 (wiper flick), revision r1
 
 - **What I saw (running game, 1280×800):** _the author, in visual terms._ The author's messages
@@ -321,6 +329,8 @@ A2 state test adds the water's surge as the van slows.
     around the head, and splash specks on the lit ground;
   - frame 85: streaks left only in the middle and lower part, as the rain stops from the top;
   - frame 110: empty (hidden on frame 109).
+  - With #150's lamp in the working tree: on every frame, the road and the verge under the lamp
+    lit in a broad warm pool, puddles on the road, and a soft glow around the lens.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`

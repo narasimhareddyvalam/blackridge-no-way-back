@@ -1,9 +1,9 @@
 # HANDOFF.md
 
-**Last run:** Assignment 6, r1 applied at the author's direction (#145–#149), 2026-11-07 to 08,
-on branch `develop`. The effects' change is in the working tree, uncommitted until the author's
-verdicts, as the handout asks; its record, a copy of it as a patch, the capture option and this
-handoff are committed, not pushed. Its section is below.
+**Last run:** the street lamps and the road's puddles made realistic at the author's request
+(#150), 2026-11-08, on branch `develop`, after Assignment 6's r1 (#145–#149). Both stay
+uncommitted in the working tree; their records, a patch copy of each, and this handoff are
+committed, not pushed. Their sections are below, #150 first.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -52,6 +52,71 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The street lamps and the road's puddles (#150)
+
+**The instruction (#150):** "can we add ripple effect when rain is falling under light on the
+floor?? do research how it looks in real life and do it and can we make the lamp light more
+realistic as in real life?" The research, with links to its sources, is in the prompt log (#150).
+It lifts `CHANGE-BRIEF.md` §6's "do not change lamp behaviour" for the lamps themselves.
+
+**In the working tree, uncommitted until the author has looked,** like r1.
+`tools/tuning/world/lamps_and_rings.patch` is a committed copy: `git apply` restores it on HEAD
+(checked with `git apply --cached --check`). r1's patch leaves these two files out and is
+unchanged.
+- `game/features/environments/industrial_loop/industrial_loop.gd`, `_lamp_post()` and the new
+  `_halo()`, for all seven posts:
+  - a `SpotLight3D` at the lens under the head, pointing down: 72° from straight down, energy
+    60, reach 30 m, `spot_attenuation` 2 (falling off with the square of distance), the same
+    colour and the same distance fade from 65 m, which B1's condition reads; shadows on every
+    post, to 45 m (before: an omni light 0.4 m under the head, energy 3, attenuation 1.6, which
+    also lit upward; shadows only on the depot's three);
+  - the head: a dark metal housing and a bright lens beneath it (`_lens`, an HDR colour), in
+    place of a head that glowed all over;
+  - a halo: a 2.4 m additive billboard around the lens, fading where it meets geometry.
+- `game/features/environments/industrial_loop/wet_asphalt.gdshader` (the valley road, the
+  crossing and the depot yard):
+  - puddles with defined edges and the stones at their rims, from the same noise, fewer of them
+    (`PUDDLE_LEVEL` 0.62); their water flat (no road texture under it) and smooth;
+  - raindrop rings in the water (`ring_slope()`, four layers, `rain_rings` to turn them off), in
+    place of a fixed grid of waves that moved together; where the rings are finer than the
+    pixels they widen and fade, and the water's roughness rises from 0.075 to 0.175.
+
+**Tests, with the exact commands** (from the repository root):
+
+```sh
+LOG_DIR=logs/particles/lamps_150 scripts/run-test.sh <test>.gd 60   # every suite
+LOG_DIR=logs/particles/lamps_150 scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
+LOG_DIR=logs/particles/lamps_150 scripts/run-test.sh cost_effects.gd 60 300
+python3 tools/tests/check_first_drive_art.py
+```
+
+- **Every suite** (`logs/particles/lamps_150/SUMMARY.txt`), all exit 0, no script or shader
+  errors, with the same counts as `realistic_r1d`, and art 0 failures.
+- **The cost script:** controls 0.002 and 0.003 ms against the game's 0.475 ms; every effect reads
+  the same as every effect off.
+- **Claude Code's renders** (scratch, not committed): the valley lamp before and after from four
+  views; the puddles mapped with a copy of the shader that paints them red; rings seen in the
+  lamp's reflection in a puddle from 2–4 m; every preview, with no script or shader errors.
+
+**What the next run may rely on:**
+- No test reads the post lamps' light or the road's puddles; `test_crossing.gd` reads only the
+  crossing's paint.
+- Findings:
+  - `Build.luminous` makes an unshaded material, and Godot ignores an unshaded material's
+    emission: only its albedo colour shows, so an HDR colour is what makes it bright;
+  - rings show only in flat, smooth water: the old soft-edged puddles, half water and half
+    textured road, hid them;
+  - a puddle mirrors the lamp about a fifth of the way from the eye to the lamp (the eye 1.7 m
+    up, the lamp 7 m).
+
+**Unverified:**
+- How it looks in the running game and in motion; MetalFX's temporal upscaling may soften rings.
+- The GPU price: seven shadowed spot lights (three omni lights with cube shadows before) and the
+  rings, four layers on each puddle pixel.
+- Whether the author wants the road's new puddles: the road's look changes everywhere it uses
+  this shader.
+- B1's rain volume, 6 × 6 m under the head, is now smaller than the lamp's pool of light.
 
 ## Assignment 6, r1 applied at the author's direction: the realistic look (#145–#149)
 

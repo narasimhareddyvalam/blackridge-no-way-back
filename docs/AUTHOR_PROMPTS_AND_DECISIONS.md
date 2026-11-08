@@ -2229,12 +2229,62 @@ tag `a5`. Pictures the author approved or rejected are filed in
        12/12 and 10/10, 30 runs and the art check; the headless price reads the same as every
        effect off for all four.
 
+150. **Ripples where the rain lands under a lamp, and more realistic lamp light.**
+     - **The author's message:** "can we add ripple effect when rain is falling under light on
+       the floor?? do research how it looks in real life and do it and can we make the lamp light
+       more realistic as in real life?"
+     - **What this lifts:** `CHANGE-BRIEF.md` §6 says not to change lamp behaviour just to make
+       particles visible; here the author asks for the lamps themselves to be made realistic.
+     - **What Claude Code found:**
+       - raindrop rings are capillary waves, which travel no slower than 23 cm/s, slowest at a
+         1.7 cm wavelength ([Britannica](https://www.britannica.com/science/capillary-wave)); in a
+         shallow puddle the shortest waves run fastest and bunch at the outer edge
+         ([The Conversation](https://theconversation.com/what-happens-when-a-raindrop-hits-a-puddle-115984)),
+         and rings pass through each other unchanged; no measured ring size or life was found;
+       - rain makes rings only where water has collected, and more rain makes more of them
+         (Sébastien Lagarde, [fxguide](https://www.fxguide.com/?p=43362));
+       - water fills a road's texture and turns it into a mirror, and ripples lengthen each light's
+         reflection toward the viewer
+         ([a vehicle-lighting patent](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/8456327);
+         [an unreviewed preprint on light pillars](https://arxiv.org/pdf/2606.18547));
+       - street lighting: a Type III head with no light above the horizontal
+         ([Colorado DOT](https://www.codot.gov/safety/traffic-safety/assets/documents/cdot-lighting-design-guideline));
+         US local roads average about 4 lux, with the average no more than six times the
+         darkest point ([Texas DOT](https://www.txdot.gov/manuals/trf/hwi/lighting_design_and_layout/illumination_levels-i1004163.html),
+         citing IES RP-8-14); poles stand about 3.5–4 times their height apart (a maker's chart);
+       - the glow around a lamp in rain or mist is its light scattered by droplets, slight in mild
+         fog and growing as it thickens (weak sources only: a vendor's blog and a patent).
+     - **What Claude Code changed** (uncommitted, like r1; `tools/tuning/world/` holds a copy):
+       - the seven post lamps (`industrial_loop.gd`): the light leaves the lens under the head,
+         downward only, out to 72° from straight down, and falls off with the square of distance
+         (a `SpotLight3D` in place of an omni light 0.4 m under the head that also lit upward);
+         energy 60, reach 30 m, the same 4000 K colour, and the same fade from 65 m that B1's
+         condition reads; every post casts shadows out to 45 m (only the depot's three did); the
+         head is a dark housing with a bright lens beneath it (the whole head glowed before),
+         and a soft glow 2.4 m across hangs around the lens;
+       - the road (`wet_asphalt.gdshader`, the valley road, the crossing and the depot yard):
+         puddles with defined edges and the stones showing at their rims, fewer of them; their
+         water is flat and smooth; and raindrop rings in the water, in place of a fixed grid of
+         waves that all moved together: random drops, each ring spreading at 0.3 m/s for 0.36 s
+         to about 10 cm, its crests 1.2 cm apart; where the rings are too fine to see they widen
+         and fade, and the water's reflection roughens instead;
+       - unchanged: the lumber yard's and the office's gravel, where water drains and no rings
+         form; the office's floodlight and gooseneck lamp; the fog, the exposure, and volumetric
+         fog, still off.
+     - **Flagged for the author:**
+       - the road's look changes everywhere it uses this shader;
+       - the GPU price is unmeasured: seven shadowed spot lights (three omni lights with cube
+         shadows before) and the rings;
+       - B1's rain volume, 6 × 6 m under the head, is now smaller than the lamp's pool of light.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
   (`FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`); a verdict
   per effect in `TUNING.md`, including whether A2 keeps its clear sheet (#149). Until then r1
   stays uncommitted in the working tree.
+- The lamps and the road's puddles and rings (#150): kept or reverted, after a look in the game;
+  uncommitted until then (`tools/tuning/world/lamps_and_rings.patch`).
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
   the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
   agent prompt.

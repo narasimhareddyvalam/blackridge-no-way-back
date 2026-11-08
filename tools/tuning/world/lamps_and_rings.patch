@@ -1,0 +1,203 @@
+diff --git a/game/features/environments/industrial_loop/industrial_loop.gd b/game/features/environments/industrial_loop/industrial_loop.gd
+index 0303d0b..161bf00 100644
+--- a/game/features/environments/industrial_loop/industrial_loop.gd
++++ b/game/features/environments/industrial_loop/industrial_loop.gd
+@@ -56,6 +56,14 @@ const OFFICE_PAINT := {
+ }
+ const LAMP_COLOR := Color("ffd7a0")
+ const FLOODLIGHT_COLOR := Color("e4ebf2")
++const POST_LIGHT_COLOR := Color("ffd1a0")
++const POST_LENS := Vector3(-1.9, 7.05, 0.0)
++const POST_ENERGY := 60.0
++const POST_REACH := 30.0
++const POST_SPREAD := 72.0
++const POST_SHADOWS_TO := 45.0
++const HALO_SIZE := 2.4
++const HALO_STRENGTH := 0.8
+ const VIEW_CLEARINGS: Array[Rect2] = [Rect2(420, -140, 75, 55), Rect2(395, -112, 70, 50),
+ 	Rect2(368, -82, 70, 50), Rect2(340, -52, 72, 50), Rect2(312, -22, 74, 50)]
+ const SKYLINE_Z := 207.0
+@@ -86,6 +94,8 @@ var lamp_rain := LampRain.new()
+ var _metal := Build.material(Color("343d43"), 0.48)
+ var _concrete := Build.material(Color("4b5254"))
+ var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
++var _lens := Build.luminous(Color(6.0, 5.06, 3.76))
++var _halo_mesh: QuadMesh
+ var _line := Build.material(Color("bdab72"), 0.65)
+ var _random := RandomNumberGenerator.new()
+ 
+@@ -651,23 +661,59 @@ func _lamp_post(at: Vector3, heading: float) -> void:
+ 	post.rotation.y = heading
+ 	Build.cylinder(post, Vector3(0, 3.7, 0), 0.09, 7.4, _metal)
+ 	Build.box(post, Vector3(-1, 7.25, 0), Vector3(2.1, 0.09, 0.10), _metal)
+-	Build.box(post, Vector3(-1.9, 7.1, 0), Vector3(0.8, 0.12, 0.45), _lamp)
+-	var light := OmniLight3D.new()
+-	light.position = Vector3(-1.9, 6.7, 0)
+-	light.light_color = Color("ffd1a0")
+-	light.light_energy = 3.0
+-	light.omni_range = 18.0
+-	light.omni_attenuation = 1.6
++	Build.box(post, Vector3(-1.9, 7.13, 0), Vector3(0.8, 0.12, 0.45), _metal)
++	Build.box(post, POST_LENS + Vector3(0, 0.012, 0), Vector3(0.62, 0.012, 0.3), _lens)
++	var light := SpotLight3D.new()
++	light.position = POST_LENS
++	light.rotation.x = -PI / 2.0
++	light.light_color = POST_LIGHT_COLOR
++	light.light_energy = POST_ENERGY
++	light.spot_range = POST_REACH
++	light.spot_angle = POST_SPREAD
++	light.spot_angle_attenuation = 0.5
++	light.spot_attenuation = 2.0
++	light.shadow_enabled = true
+ 	light.distance_fade_enabled = true
+ 	light.distance_fade_begin = 65.0
+ 	light.distance_fade_length = 25.0
++	light.distance_fade_shadow = POST_SHADOWS_TO
+ 	post.add_child(light)
++	var halo := _halo()
++	halo.position = POST_LENS + Vector3(0, -0.25, 0)
++	post.add_child(halo)
+ 	lamp_rain.add_volume(LampRain.POST, Transform3D(Basis.IDENTITY,
+ 		post.transform * LampRain.POST_HEAD))
+-	if at.z > 100.0:
+-		light.shadow_enabled = true
+-		light.light_energy = 4.0
+-		light.omni_range = 16.0
++
++
++func _halo() -> MeshInstance3D:
++	if _halo_mesh == null:
++		var gradient := Gradient.new()
++		gradient.offsets = PackedFloat32Array([0.0, 0.06, 0.2, 0.5, 1.0])
++		gradient.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0.45),
++			Color(1, 1, 1, 0.12), Color(1, 1, 1, 0.03), Color(1, 1, 1, 0)])
++		var falloff := GradientTexture2D.new()
++		falloff.gradient = gradient
++		falloff.fill = GradientTexture2D.FILL_RADIAL
++		falloff.fill_from = Vector2(0.5, 0.5)
++		falloff.fill_to = Vector2(0.5, 0.0)
++		var glow := StandardMaterial3D.new()
++		glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
++		glow.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
++		glow.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
++		glow.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
++		glow.albedo_texture = falloff
++		glow.albedo_color = Color(POST_LIGHT_COLOR.r * HALO_STRENGTH,
++			POST_LIGHT_COLOR.g * HALO_STRENGTH, POST_LIGHT_COLOR.b * HALO_STRENGTH)
++		glow.proximity_fade_enabled = true
++		glow.proximity_fade_distance = 0.5
++		_halo_mesh = QuadMesh.new()
++		_halo_mesh.size = Vector2.ONE * HALO_SIZE
++		_halo_mesh.material = glow
++	var halo := MeshInstance3D.new()
++	halo.name = "Halo"
++	halo.mesh = _halo_mesh
++	halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
++	return halo
+ 
+ 
+ func _reflections() -> void:
+diff --git a/game/features/environments/industrial_loop/wet_asphalt.gdshader b/game/features/environments/industrial_loop/wet_asphalt.gdshader
+index 7a34a30..13ba4f0 100644
+--- a/game/features/environments/industrial_loop/wet_asphalt.gdshader
++++ b/game/features/environments/industrial_loop/wet_asphalt.gdshader
+@@ -14,12 +14,21 @@ uniform vec2 crossing_centre = vec2(0.0);
+ uniform vec2 crossing_along = vec2(1.0, 0.0);
+ uniform vec2 crossing_size = vec2(0.0);
+ uniform float crossing_wear : hint_range(0.0, 1.0) = 0.45;
++uniform float rain_rings : hint_range(0.0, 1.0) = 1.0;
+ varying vec3 world_position;
+ 
+ const float BAR_PITCH = 1.2;
+ const float BAR_HALF = 0.3;
+ const float WHEEL_TRACK = 0.85;
+ const vec3 PAINT_COLOR = vec3(0.7, 0.7, 0.67);
++const float RING_CELL = 0.25;
++const float RING_EVERY = 0.5;
++const float RING_LIFE = 0.36;
++const float RING_SPEED = 0.3;
++const float RING_WAVE = 0.012;
++const float RING_SLOPE = 0.5;
++const float PUDDLE_LEVEL = 0.62;
++const int RING_LAYERS = 4;
+ 
+ float hash(vec2 p) {
+ 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+@@ -54,31 +63,69 @@ float crossing_paint(vec2 p) {
+ 	return bar * clamp(1.0 - wear, 0.0, 1.0);
+ }
+ 
++vec2 ring_slope(vec2 p, float layer, float wave, float time) {
++	vec2 grid = p / RING_CELL + vec2(0.37, 0.71) * layer;
++	vec2 cell = floor(grid);
++	float clock = time / RING_EVERY + hash(cell + 13.1 * layer);
++	float drop = floor(clock);
++	float age = fract(clock) * RING_EVERY;
++	if (age > RING_LIFE) {
++		return vec2(0.0);
++	}
++	vec2 jitter = vec2(hash(cell + drop * 0.73 + 3.1), hash(cell + drop * 1.37 + 7.7)) - 0.5;
++	vec2 from_centre = grid - cell - 0.5;
++	vec2 rel = (from_centre - jitter * 0.2) * RING_CELL;
++	float r = max(length(rel), 0.0001);
++	float behind = RING_SPEED * age - r;
++	float packet = exp(-pow(behind / (1.6 * wave) - 1.0, 2.0))
++		* smoothstep(-0.3 * wave, 0.3 * wave, behind);
++	float fade = 1.0 - age / RING_LIFE;
++	float inside = 1.0 - smoothstep(0.42, 0.5, max(abs(from_centre.x), abs(from_centre.y)));
++	float slope = RING_SLOPE * (RING_WAVE / wave) * fade * fade * packet * inside
++		* cos(6.2831853 * behind / wave);
++	return slope * rel / r;
++}
++
+ void vertex() {
+ 	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+ }
+ 
+ void fragment() {
+ 	vec2 p = world_position.xz;
++	vec2 uv = p * texture_scale;
++	vec3 aggregate = texture(aggregate_color, uv).rgb;
+ 	float broad = noise(p * 0.18) * 0.6 + noise(p * 0.71) * 0.4;
+-	float puddle = smoothstep(0.44, 0.70, broad) * wetness;
++	float stones = dot(aggregate, vec3(0.333)) - 0.5;
++	float water = smoothstep(-0.008, 0.008, broad - PUDDLE_LEVEL - stones * 0.06);
++	float puddle = water * wetness;
+ 	vec2 crack_uv = p * 0.31;
+ 	crack_uv.x += noise(p * 0.83) * 0.6;
+ 	float crack = 1.0 - smoothstep(0.009, 0.035, abs(sin(crack_uv.x * 3.14159)));
+ 	crack *= smoothstep(0.36, 0.65, noise(p * 0.33)) * crack_amount;
+-	vec2 uv = p * texture_scale;
+-	vec3 aggregate = texture(aggregate_color, uv).rgb;
+ 	float paint = crossing_paint(p);
+ 	vec3 asphalt = aggregate * dry_color * mix(1.0, 0.45, puddle) * (1.0 - crack * 0.65);
+ 	ALBEDO = mix(asphalt, PAINT_COLOR * mix(1.0, 0.82, puddle), paint);
++	float footprint = max(length(dFdx(p)), length(dFdy(p)));
++	float wave = max(RING_WAVE, footprint * 2.5);
++	float unresolved = smoothstep(RING_WAVE, RING_WAVE * 4.0, footprint);
+ 	float dry_roughness = mix(0.83, texture(aggregate_arm, uv).g, arm_roughness);
+ 	dry_roughness *= mix(1.0, 0.45, damp_gloss * wetness);
+-	ROUGHNESS = mix(mix(dry_roughness, 0.075, puddle), mix(0.35, 0.14, wetness), paint);
++	float pool_roughness = mix(0.075, 0.075 + 0.1 * rain_rings, unresolved);
++	ROUGHNESS = mix(mix(dry_roughness, pool_roughness, water), mix(0.35, 0.14, wetness), paint);
+ 	SPECULAR = 0.5;
+ 	vec3 small_normal = texture(aggregate_normal, uv).rgb;
+-	float ripple = sin(length(fract(p * 2.0) - 0.5) * 72.0 - TIME * 15.0);
+-	small_normal.xy += vec2(ripple, -ripple) * 0.012 * puddle;
+-	NORMAL_MAP = mix(mix(small_normal, vec3(0.5, 0.5, 1.0), puddle * 0.8), vec3(0.5, 0.5, 1.0),
+-		paint * 0.7);
++	vec2 rings = vec2(0.0);
++	if (water > 0.01 && rain_rings > 0.0) {
++		for (int layer = 0; layer < RING_LAYERS; layer++) {
++			rings += ring_slope(p, float(layer), wave, TIME);
++		}
++		rings *= water * rain_rings;
++	}
++	vec3 tilt = vec3(-rings.x, 0.0, -rings.y);
++	vec2 ring_xy = vec2(dot(tilt, (INV_VIEW_MATRIX * vec4(TANGENT, 0.0)).xyz),
++		dot(tilt, (INV_VIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz));
++	vec3 base_normal = mix(small_normal, vec3(0.5, 0.5, 1.0), water);
++	base_normal.xy += ring_xy * 0.5 / 0.65;
++	NORMAL_MAP = mix(base_normal, vec3(0.5, 0.5, 1.0), paint * 0.7);
+ 	NORMAL_MAP_DEPTH = 0.65;
+ }
