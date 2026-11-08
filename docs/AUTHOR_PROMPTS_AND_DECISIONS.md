@@ -2723,6 +2723,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
        `TUNING.md`, word for word. It answers the list as a whole, not each case, and the report
        says so.
 
+169. **What is left for the author**
+     - **The author's message:** "whatelse is left from my side"
+     - **Claude Code's answer:** before the film, Step 6 (the shader saved in the editor, its line
+       references and answer) and the author's own notes in `FRICTIONAL.md`; optionally a word
+       per human check. After the film: watching it, uploading it, the summary in
+       `SUBMISSION.md`, the OK to push, a check of reviewer access, and Canvas.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): Step 6's process shader, its line
