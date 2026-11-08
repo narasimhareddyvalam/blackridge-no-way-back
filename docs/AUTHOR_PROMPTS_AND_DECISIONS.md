@@ -2836,6 +2836,22 @@ tag `a5`. Pictures the author approved or rejected are filed in
        tag first, then the push of `develop` and `a6`, a check that GitHub's `a6` is the same
        commit, and the source ZIP and Canvas note in `~/Desktop/assignment_6/`.
 
+180. **`main` brought up to `a6` by a pull request**
+     - **Claude Code's question:** move `main` to `a6` (GitHub shows `main` first, still Assignment
+       5), by a fast-forward, as for Assignment 5, or by a pull request?
+     - **The author's message:** "do a pr just to be safe. make sure nothing gets lost"
+     - **Checked first:** `main` is contained in `develop`, so the pull request only adds: 77
+       commits, 3,939 files added or changed, none deleted or moved; the local `main`'s one
+       commit GitHub lacked (`7d1ad14`) is already in `develop`. Pull request #1 opened
+       (mergeable, 77 commits, no file removed). Claude Code's merge was refused by its permission
+       check. The author's next messages: a screenshot, "i am not able to merge?" (the page showed
+       no merge button, though the account is the admin and the request was mergeable); then the
+       author ran `gh pr merge 1 --repo narasimhareddyvalam/blackridge-no-way-back --merge`.
+     - **Merged** 2026-11-08 23:31 UTC as `f968a49`, parents `a2dd684` (Assignment 5's `main`) and
+       `0216d23` (`a6`): `main`'s files identical to `a6`'s, none deleted; on GitHub only `main`
+       moved, while `develop`, `a5` and `a6` are unchanged; the local `main` brought up to it.
+       Recorded after `a6`.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): the film is made (#174); watching it,

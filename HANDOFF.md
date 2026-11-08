@@ -1,5 +1,9 @@
 # HANDOFF.md
 
+**After `a6` (#180):** `main` brought up to `a6` by pull request #1, merged by the author as
+`f968a49` (a merge commit; `main`'s files identical to `a6`'s, none deleted; `develop`, `a5` and
+`a6` unchanged). This note and prompt-log #180 are local commits after the submission.
+
 **Last run:** the submission (#177–#179), 2026-11-08: the film's link, the prompt log back in Git,
 the fresh-clone check of the tagged commit (every count as recorded), then `a6` and the push of
 `develop`; its section is below. **Next, the author's:** Canvas, with the files in
