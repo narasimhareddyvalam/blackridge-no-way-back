@@ -2403,6 +2403,25 @@ tag `a5`. Pictures the author approved or rejected are filed in
        configuration test reads each scene's own strength (255/255); renders of the model in
        Blender, and of the lamp in the game from five views.
 
+155. **The street lamp: a pool under it, not the whole road.**
+     - **The author's message:** "the street light lits entire road. make sure it light only
+       road under it radius. check how it is is real life and do it please."
+     - **What Claude Code found:** on a lighting plan each isofootcandle contour out from a pole
+       marks about half the illuminance of the one inside it, scaled in mounting heights
+       ([US Navy construction manual](https://constructionmanuals.tpub.com/14027/css/Isofootcandle-Diagrams-153.htm));
+       poles stand about 3–3.5 mounting heights apart
+       ([Electrical Technology](https://electricaltechnology.org/?p=7488)), so dark gaps lie
+       between them; and a lone luminaire on a rural road serves mainly to mark it
+       ([National Academies](https://nap.nationalacademies.org/read/26476/chapter/5)).
+     - **What Claude Code changed** (uncommitted, in the world patch): the street lamps' beam
+       spreads 55° from straight down (72°), dims toward its edge (`spot_angle_attenuation` 1.5,
+       0.5 before), and reaches 15 m (30 m): full brightness under the lamp, about a third 5 m
+       out, nearly nothing by 8 m. Its reflection on the wet road now shows only within about
+       12 m of the lamp, since the light reaches no farther; a distant driver sees the lit pool
+       and dark road before it.
+     - **Checked:** every suite passes (`logs/particles/lamp_pool_155/SUMMARY.txt`); renders
+       before and after from above, 12 m, 23 m and standing.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

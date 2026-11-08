@@ -13,7 +13,7 @@ index fe94d37..a448847 100644
  | `body.glb` and `door.glb` (the driver's door split out) | Written by code: `tools/art/build_first_drive_art.py` (Codex; the driver's door, its lowered handle and its share of the trim moved into `door.glb` by Claude Code on 2026-10-31, Run 19) | Codex, Claude Code (script) | Original, no licence needed | 2026-10-31 | OpenGL | van body; the driver's door that swings open when Ethan gets in |
  | `cockpit/` in `game/features/vehicles/freight_van/art/`: `cockpit_front`, `cockpit_back`, `cockpit_roof` and `cockpit_wheel` (glTF), 27 textures, two shadow stand-ins | "FREE // Honda E (Detailed Interior) 2021", https://sketchfab.com/3d-models/free-honda-e-detailed-interior-2021-814cf3f8cfd64594b1c4f96e873c3cef | Alex Murias (Sketchfab: Xlay3D), model and textures. Changed by Claude Code in Blender on 2026-10-31: fitted to the van's cab (dash widened to the windshield, doors and seats moved, roof stretched, cab closed behind the seats), Honda badges and screen pictures removed, slimmed with no visible change, textures resized to 1k and 2k, split into four files; its own sunroof frame reopened as a moon roof on 2026-10-31 (Run 16) | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) | 2026-10-31 | OpenGL (glTF) | van cockpit (C22); `cabin.glb` and `steering.glb` stay in the repository, unused |
 diff --git a/game/features/environments/industrial_loop/industrial_loop.gd b/game/features/environments/industrial_loop/industrial_loop.gd
-index 0303d0b..23c9a93 100644
+index 0303d0b..2247e78 100644
 --- a/game/features/environments/industrial_loop/industrial_loop.gd
 +++ b/game/features/environments/industrial_loop/industrial_loop.gd
 @@ -16,6 +16,7 @@ const GhatDressing = preload("ghat_dressing.gd")
@@ -33,8 +33,8 @@ index 0303d0b..23c9a93 100644
 +const POLE_STEEL := Color("5c6163")
 +const LUMINAIRE_PAINT := Color("8a8f92")
 +const POST_ENERGY := 90.0
-+const POST_REACH := 30.0
-+const POST_SPREAD := 72.0
++const POST_REACH := 15.0
++const POST_SPREAD := 55.0
 +const POST_SHADOWS_TO := 45.0
 +const HALO_SIZE := 2.4
 +const HALO_STRENGTH := 0.8
@@ -104,7 +104,7 @@ index 0303d0b..23c9a93 100644
 +	light.light_energy = POST_ENERGY
 +	light.spot_range = POST_REACH
 +	light.spot_angle = POST_SPREAD
-+	light.spot_angle_attenuation = 0.5
++	light.spot_angle_attenuation = 1.5
 +	light.spot_attenuation = 2.0
 +	light.shadow_enabled = true
  	light.distance_fade_enabled = true

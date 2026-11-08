@@ -56,6 +56,17 @@ intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
 
+## The street lamps: a pool under each (#155)
+
+**The instruction (#155):** "the street light lits entire road. make sure it light only road under
+it radius. check how it is is real life and do it please."
+
+**In the working tree, uncommitted,** in the world patch: `POST_SPREAD` 72 → 55, `POST_REACH`
+30 → 15 m, and the street lamps' `spot_angle_attenuation` 0.5 → 1.5, so each lights a pool about
+8 m in radius. **Tests:** `LOG_DIR=logs/particles/lamp_pool_155`, every suite exits 0, art 0
+failures. **Unverified:** the pool in motion; the lamp's reflection now shows only within about
+12 m of it.
+
 ## The brief, step 2: the streetlight (#154)
 
 **The instruction (#154):** "alright proceed", then "Amber like your reference (Recommended)" for
