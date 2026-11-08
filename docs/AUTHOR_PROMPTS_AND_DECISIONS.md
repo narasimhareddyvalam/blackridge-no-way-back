@@ -2730,6 +2730,22 @@ tag `a5`. Pictures the author approved or rejected are filed in
        per human check. After the film: watching it, uploading it, the summary in
        `SUBMISSION.md`, the OK to push, a check of reviewer access, and Canvas.
 
+170. **Step 6, asked of Claude Code after Codex had done it**
+     - **The author's message:** "can you do step 6 for me"
+     - **Found, uncommitted in the working tree:** at the author's request, in its own session,
+       Codex had already made `game/shaders/particles_generated.gdshader` (15:21, with its
+       `.uid`) by Godot's editor conversion of a unique copy of `ExhaustPlume`'s process
+       material, saved `game/experiments/process_shader_scratch.tscn`, and written line
+       references and an explanation into `TEST-REPORT.md`, labelled "AI-prepared technical
+       reference notes, not an independently written student answer", with a `HANDOFF.md` entry.
+     - **Claude Code's answer:** it does not change Codex's work, and it cannot do Step 6 itself.
+       The handout requires that "no agent session changed godot/shaders/", and says of the
+       answers: "The agent may check that your line references point where you say. It does not
+       write the answers." `CLAUDE.md` gives `game/shaders/` to the author alone; Codex reads
+       `AGENTS.md`, which does not say so. The author chooses: redo the save and write the
+       answers themselves, with Codex's attempt disclosed; or keep Codex's work, disclosed, and
+       lose those points.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): Step 6's process shader, its line
