@@ -2422,6 +2422,33 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Checked:** every suite passes (`logs/particles/lamp_pool_155/SUMMARY.txt`); renders
        before and after from above, 12 m, 23 m and standing.
 
+156. **The brief, step 3: the rain and its splashes under the lamps.**
+     - **The author's message:** "alright proceed with step 3"
+     - **What Claude Code found:**
+       - each street lamp's rain fell in a 6 × 6 m column, narrower than its pool of light
+         (#155);
+       - **B1's splashes had never appeared anywhere in the game.** In Godot 4.7.2 a particle that
+         collides with `COLLISION_HIDE_ON_CONTACT` sets off no `SUB_EMITTER_AT_COLLISION`
+         emission; with `COLLISION_RIGID` it does. A small test scene showed it, and large
+         markers on the splash droplets then showed them landing across the road, the verge, the
+         lamp head and branches. The configuration tests had read only the settings;
+       - the splash droplets, real size (under 1.5 mm), lit from above and seen from a few metres,
+         stay faint, as real ones do: a 1 mm droplet covers under 2% of a pixel 5 m away.
+     - **What Claude Code changed** (uncommitted, in the r1 patch, with one line in the world
+       patch):
+       - `lamp_rain_street.tscn`, new, for the street lamps: 10 × 10 m, 5,000 drops and 2,750
+         splash droplets, a 12 × 12 m collider; the depot's wall lights keep the post scene;
+       - all four rain scenes: the drops collide as rigid bodies (no bounce, full friction), set
+         off their splashes, and fade once they stop (`still_fade`, a new setting of the particle
+         shader that fades a streak that has lost its speed); the rain steps 60 times a second
+         (30), and each splash starts 3 cm up, both so splashes are not born under the road;
+       - the street and post splashes: droplets 0.5–1.5 mm (0.3–1), strength 30 (5), matt 1.0
+         (0.3);
+       - the lamp-rain preview's valley lamp uses the street scene; the configuration test reads
+         all of it (360/360).
+     - **Checked:** every suite passes (`logs/particles/brief_step3/SUMMARY.txt`); renders of the
+       rain from standing and close by, and of the splash markers.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips

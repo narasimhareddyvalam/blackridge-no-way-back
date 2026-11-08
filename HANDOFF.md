@@ -5,8 +5,8 @@
 uncommitted in the working tree; their records, a patch copy of each, and this handoff are
 committed, not pushed. Their sections are below, newest first. **Next:** the author's brief for
 a photorealistic rainy road, one part at a time, each approved before it starts (C53); step 1,
-the wet road's reflections, is done (#153), and step 2, the streetlight, is done (#154); step 3,
-the rain and its splashes, waits for approval.
+the wet road's reflections, is done (#153), step 2, the streetlight, is done (#154), and step 3,
+the rain and its splashes, is done (#156); step 4, the roadside, waits for approval.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -55,6 +55,33 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The brief, step 3: the rain and its splashes (#156)
+
+**The instruction (#156):** "alright proceed with step 3".
+
+**Found:** B1's splashes never fired. In Godot 4.7.2 `COLLISION_HIDE_ON_CONTACT` sets off no
+`SUB_EMITTER_AT_COLLISION`; `COLLISION_RIGID` does (a scratch scene, then large markers in the
+game). The configuration test read only the settings.
+
+**In the working tree, uncommitted** (the r1 patch, and in the world patch only
+`_lamp_post()`'s `LampRain.STREET`):
+- `game/effects/lamp_rain_street.tscn`, new: the street lamps' rain, 10 × 10 m, 5,000 drops,
+  2,750 splash droplets, a 12 × 12 m collider; `lamp_rain.gd` gains `STREET`; the preview's valley
+  lamp uses it.
+- All four rain scenes: rigid collisions (friction 1, bounce 0), `fixed_fps` 60, splashes 3 cm up,
+  and `still_fade` 1 on the drops; the street and post splashes 0.5–1.5 mm, `scatter` 30,
+  `diffuse` 1.
+- `scatter_particle.gdshader`: `still_fade` fades a particle whose streak has lost its speed
+  stretch (`shape_ratio`, its length over its width before any widening).
+- `test_lamp_rain_config.gd`: four scenes, 360 checks.
+
+**Tests:** `LOG_DIR=logs/particles/brief_step3`, every suite exits 0 (lamp rain 360/360 and
+12/12), art 0 failures.
+
+**Unverified:** the splash droplets are real size and faint from a few metres; whether the author
+wants them more visible. The particle count per street lamp is 7,750 (3,100 before); the GPU
+price is unmeasured.
 
 ## The street lamps: a pool under each (#155)
 

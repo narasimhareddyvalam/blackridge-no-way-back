@@ -95,7 +95,7 @@ index 070e16d..662c54b 100644
  preprocess = 0.0
  explosiveness = 0.0
 diff --git a/game/effects/lamp_rain_door.tscn b/game/effects/lamp_rain_door.tscn
-index c22f581..5d4c838 100644
+index c22f581..90d1989 100644
 --- a/game/effects/lamp_rain_door.tscn
 +++ b/game/effects/lamp_rain_door.tscn
 @@ -1,10 +1,11 @@
@@ -112,7 +112,7 @@ index c22f581..5d4c838 100644
  point_count = 4
  
  [sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
-@@ -17,38 +18,57 @@ point_count = 3
+@@ -17,38 +18,60 @@ point_count = 3
  [sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
  curve = SubResource("Curve_rain_scale")
  
@@ -151,7 +151,10 @@ index c22f581..5d4c838 100644
 +scale_over_velocity_curve = SubResource("Curve_rain_blur")
  color = Color(0.88, 0.89, 0.9, 1)
  alpha_curve = SubResource("CurveTexture_rain_alpha")
- collision_mode = 2
+-collision_mode = 2
++collision_mode = 1
++collision_friction = 1.0
++collision_bounce = 0.0
  sub_emitter_mode = 3
 -sub_emitter_amount_at_collision = 4
 -
@@ -177,6 +180,7 @@ index c22f581..5d4c838 100644
 +shader_parameter/diffuse = 0.3
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
++shader_parameter/still_fade = 1.0
  
  [sub_resource type="QuadMesh" id="Quad_streak"]
  material = SubResource("Draw_streak")
@@ -185,8 +189,11 @@ index c22f581..5d4c838 100644
  
  [sub_resource type="Curve" id="Curve_splash_alpha"]
  _data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-@@ -60,25 +80,26 @@ curve = SubResource("Curve_splash_alpha")
+@@ -58,27 +81,29 @@ point_count = 2
+ curve = SubResource("Curve_splash_alpha")
+ 
  [sub_resource type="ParticleProcessMaterial" id="Process_splash"]
++emission_shape_offset = Vector3(0, 0.03, 0)
  emission_shape = 0
  direction = Vector3(0, 1, 0)
 -spread = 60.0
@@ -227,7 +234,7 @@ index c22f581..5d4c838 100644
  
  [sub_resource type="QuadMesh" id="Quad_splash"]
  material = SubResource("Draw_splash")
-@@ -88,7 +109,7 @@ size = Vector2(0.01, 0.01)
+@@ -88,9 +113,10 @@ size = Vector2(0.01, 0.01)
  
  [node name="LampRain" type="GPUParticles3D" parent="."]
  emitting = false
@@ -235,8 +242,11 @@ index c22f581..5d4c838 100644
 +amount = 300
  sub_emitter = NodePath("../LampSplash")
  lifetime = 1.1
++fixed_fps = 60
  one_shot = false
-@@ -103,8 +124,8 @@ draw_pass_1 = SubResource("Quad_streak")
+ preprocess = 1.1
+ explosiveness = 0.0
+@@ -103,8 +129,8 @@ draw_pass_1 = SubResource("Quad_streak")
  
  [node name="LampSplash" type="GPUParticles3D" parent="."]
  emitting = true
@@ -248,7 +258,7 @@ index c22f581..5d4c838 100644
  preprocess = 0.0
  explosiveness = 0.0
 diff --git a/game/effects/lamp_rain_floodlight.tscn b/game/effects/lamp_rain_floodlight.tscn
-index 11580a0..fb5e218 100644
+index 11580a0..df74ee5 100644
 --- a/game/effects/lamp_rain_floodlight.tscn
 +++ b/game/effects/lamp_rain_floodlight.tscn
 @@ -1,10 +1,11 @@
@@ -265,7 +275,7 @@ index 11580a0..fb5e218 100644
  point_count = 4
  
  [sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
-@@ -17,38 +18,57 @@ point_count = 3
+@@ -17,38 +18,60 @@ point_count = 3
  [sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
  curve = SubResource("Curve_rain_scale")
  
@@ -304,7 +314,10 @@ index 11580a0..fb5e218 100644
 +scale_over_velocity_curve = SubResource("Curve_rain_blur")
  color = Color(0.88, 0.89, 0.9, 1)
  alpha_curve = SubResource("CurveTexture_rain_alpha")
- collision_mode = 2
+-collision_mode = 2
++collision_mode = 1
++collision_friction = 1.0
++collision_bounce = 0.0
  sub_emitter_mode = 3
 -sub_emitter_amount_at_collision = 4
 -
@@ -330,6 +343,7 @@ index 11580a0..fb5e218 100644
 +shader_parameter/diffuse = 0.3
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
++shader_parameter/still_fade = 1.0
  
  [sub_resource type="QuadMesh" id="Quad_streak"]
  material = SubResource("Draw_streak")
@@ -338,8 +352,11 @@ index 11580a0..fb5e218 100644
  
  [sub_resource type="Curve" id="Curve_splash_alpha"]
  _data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-@@ -60,25 +80,26 @@ curve = SubResource("Curve_splash_alpha")
+@@ -58,27 +81,29 @@ point_count = 2
+ curve = SubResource("Curve_splash_alpha")
+ 
  [sub_resource type="ParticleProcessMaterial" id="Process_splash"]
++emission_shape_offset = Vector3(0, 0.03, 0)
  emission_shape = 0
  direction = Vector3(0, 1, 0)
 -spread = 60.0
@@ -380,7 +397,7 @@ index 11580a0..fb5e218 100644
  
  [sub_resource type="QuadMesh" id="Quad_splash"]
  material = SubResource("Draw_splash")
-@@ -88,7 +109,7 @@ size = Vector2(0.01, 0.01)
+@@ -88,9 +113,10 @@ size = Vector2(0.01, 0.01)
  
  [node name="LampRain" type="GPUParticles3D" parent="."]
  emitting = false
@@ -388,8 +405,11 @@ index 11580a0..fb5e218 100644
 +amount = 3200
  sub_emitter = NodePath("../LampSplash")
  lifetime = 1.1
++fixed_fps = 60
  one_shot = false
-@@ -103,8 +124,8 @@ draw_pass_1 = SubResource("Quad_streak")
+ preprocess = 1.1
+ explosiveness = 0.0
+@@ -103,8 +129,8 @@ draw_pass_1 = SubResource("Quad_streak")
  
  [node name="LampSplash" type="GPUParticles3D" parent="."]
  emitting = true
@@ -401,7 +421,7 @@ index 11580a0..fb5e218 100644
  preprocess = 0.0
  explosiveness = 0.0
 diff --git a/game/effects/lamp_rain_post.tscn b/game/effects/lamp_rain_post.tscn
-index c880f28..e253ffd 100644
+index c880f28..559fe89 100644
 --- a/game/effects/lamp_rain_post.tscn
 +++ b/game/effects/lamp_rain_post.tscn
 @@ -1,10 +1,11 @@
@@ -418,7 +438,7 @@ index c880f28..e253ffd 100644
  point_count = 4
  
  [sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
-@@ -17,38 +18,57 @@ point_count = 3
+@@ -17,38 +18,60 @@ point_count = 3
  [sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
  curve = SubResource("Curve_rain_scale")
  
@@ -457,7 +477,10 @@ index c880f28..e253ffd 100644
 +scale_over_velocity_curve = SubResource("Curve_rain_blur")
  color = Color(0.88, 0.89, 0.9, 1)
  alpha_curve = SubResource("CurveTexture_rain_alpha")
- collision_mode = 2
+-collision_mode = 2
++collision_mode = 1
++collision_friction = 1.0
++collision_bounce = 0.0
  sub_emitter_mode = 3
 -sub_emitter_amount_at_collision = 4
 -
@@ -483,6 +506,7 @@ index c880f28..e253ffd 100644
 +shader_parameter/diffuse = 0.3
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
++shader_parameter/still_fade = 1.0
  
  [sub_resource type="QuadMesh" id="Quad_streak"]
  material = SubResource("Draw_streak")
@@ -491,8 +515,11 @@ index c880f28..e253ffd 100644
  
  [sub_resource type="Curve" id="Curve_splash_alpha"]
  _data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-@@ -60,25 +80,26 @@ curve = SubResource("Curve_splash_alpha")
+@@ -58,27 +81,29 @@ point_count = 2
+ curve = SubResource("Curve_splash_alpha")
+ 
  [sub_resource type="ParticleProcessMaterial" id="Process_splash"]
++emission_shape_offset = Vector3(0, 0.03, 0)
  emission_shape = 0
  direction = Vector3(0, 1, 0)
 -spread = 60.0
@@ -504,8 +531,8 @@ index c880f28..e253ffd 100644
  gravity = Vector3(0, -9.8, 0)
 -scale_min = 0.1
 -scale_max = 0.3
-+scale_min = 0.03
-+scale_max = 0.1
++scale_min = 0.05
++scale_max = 0.15
  color = Color(0.88, 0.89, 0.9, 1)
  alpha_curve = SubResource("CurveTexture_splash_alpha")
  
@@ -526,14 +553,14 @@ index c880f28..e253ffd 100644
 +shader_parameter/face_camera = true
 +shader_parameter/min_pixels = 1.0
 +shader_parameter/forward_scatter = 0.5
-+shader_parameter/scatter = 5.0
-+shader_parameter/diffuse = 0.3
++shader_parameter/scatter = 30.0
++shader_parameter/diffuse = 1.0
 +shader_parameter/glint = 0.0
 +shader_parameter/sky = 0.0
  
  [sub_resource type="QuadMesh" id="Quad_splash"]
  material = SubResource("Draw_splash")
-@@ -88,7 +109,7 @@ size = Vector2(0.01, 0.01)
+@@ -88,9 +113,10 @@ size = Vector2(0.01, 0.01)
  
  [node name="LampRain" type="GPUParticles3D" parent="."]
  emitting = false
@@ -541,8 +568,11 @@ index c880f28..e253ffd 100644
 +amount = 2000
  sub_emitter = NodePath("../LampSplash")
  lifetime = 1.1
++fixed_fps = 60
  one_shot = false
-@@ -103,8 +124,8 @@ draw_pass_1 = SubResource("Quad_streak")
+ preprocess = 1.1
+ explosiveness = 0.0
+@@ -103,8 +129,8 @@ draw_pass_1 = SubResource("Quad_streak")
  
  [node name="LampSplash" type="GPUParticles3D" parent="."]
  emitting = true
@@ -1324,6 +1354,18 @@ index 46afef8..2a5e809 100644
 +transform_align = 3
 +process_material = SubResource("Process_runoff")
 +draw_pass_1 = SubResource("Quad_runoff")
+diff --git a/game/features/environments/industrial_loop/lamp_rain.gd b/game/features/environments/industrial_loop/lamp_rain.gd
+index 2fafa3c..82e3f47 100644
+--- a/game/features/environments/industrial_loop/lamp_rain.gd
++++ b/game/features/environments/industrial_loop/lamp_rain.gd
+@@ -6,6 +6,7 @@ extends Node3D
+ ## and never writes game state; the rain's look lives in game/effects/lamp_rain_*.tscn.
+ 
+ const POST = preload("res://effects/lamp_rain_post.tscn")
++const STREET = preload("res://effects/lamp_rain_street.tscn")
+ const FLOODLIGHT = preload("res://effects/lamp_rain_floodlight.tscn")
+ const DOOR = preload("res://effects/lamp_rain_door.tscn")
+ const RANGE := 65.0
 diff --git a/game/features/vehicles/freight_van/van_particles.gd b/game/features/vehicles/freight_van/van_particles.gd
 index 4efb3d1..76f655a 100644
 --- a/game/features/vehicles/freight_van/van_particles.gd
@@ -1626,6 +1668,19 @@ index 36573e1..e5cfda3 100644
  	_mirrors()
  
  
+diff --git a/game/previews/lamp_rain_preview.gd b/game/previews/lamp_rain_preview.gd
+index d96d056..0245c8f 100644
+--- a/game/previews/lamp_rain_preview.gd
++++ b/game/previews/lamp_rain_preview.gd
+@@ -20,7 +20,7 @@ const VIEWS := {
+ 	"floodlight": [Vector3(-5.4, -2.33, 7.0), Vector3(1.6, -2.8, 1.0), 50.0],
+ }
+ const SCENES := {
+-	"post": "lamp_rain_post.tscn",
++	"post": "lamp_rain_street.tscn",
+ 	"door": "lamp_rain_door.tscn",
+ 	"floodlight": "lamp_rain_floodlight.tscn",
+ }
 diff --git a/game/previews/roof_spill_preview.gd b/game/previews/roof_spill_preview.gd
 index 5d07c09..3aa087e 100644
 --- a/game/previews/roof_spill_preview.gd
@@ -1891,39 +1946,49 @@ index bae6e39..231d22f 100644
  var _checks: int = 0
  var _failures: int = 0
 diff --git a/game/tests/test_lamp_rain_config.gd b/game/tests/test_lamp_rain_config.gd
-index b87ee23..f47c7bd 100644
+index b87ee23..8928a00 100644
 --- a/game/tests/test_lamp_rain_config.gd
 +++ b/game/tests/test_lamp_rain_config.gd
-@@ -1,26 +1,34 @@
+@@ -1,26 +1,44 @@
  extends SceneTree
  ## B1, rain in every lamp's light: reads back every setting CHANGE-BRIEF.md §4 (and its
 -## revision 1) names from the three scenes, including the feature neither A effect uses:
 -## collision with a height field, and splashes through a sub-emitter.
 +## revision 1) names from the three scenes, as TUNING.md's r1 revises them at the author's request
 +## (#146, #149): real rain's mix of drop sizes and speeds, each drop drawn as the streak it leaves
-+## in a 1/30 s frame, denser than before. The post scene, under the street lamps and the depot's
-+## wall lights, scatters less light since those lamps became realistic (#150, #154). Also the
-+## feature neither A effect uses: collision with a height field, and splashes through a
-+## sub-emitter.
++## in a 1/30 s frame, denser than before. The street scene (#156) fills the street lamps' wider
++## pool, and with the post scene under the depot's wall lights scatters less light since those
++## lamps became realistic (#150, #154). Also the feature neither A effect uses: collision with a
++## height field, and splashes through a sub-emitter; the drops collide as rigid bodies, since
++## Godot 4.7.2 fires a collision sub-emitter only then, and fade once they stop (#156).
  
  const Readback = preload("res://tests/particle_readback.gd")
  const SLANT := Vector3(0.08, -0.997, 0.0)
++const BRIGHT_SPLASH := {"splash_scale": Vector2(0.05, 0.15), "splash_scatter": 30.0,
++	"splash_diffuse": 1.0}
++const PLAIN_SPLASH := {"splash_scale": Vector2(0.03, 0.1), "splash_scatter": 60.0,
++	"splash_diffuse": 0.3}
  const VARIANTS := {
++	"res://effects/lamp_rain_street.tscn": {"root": "LampRainStreet",
++		"box": Vector3(5.0, 0.2, 5.0), "direction": SLANT, "drops": 5000, "splashes": 2750,
++		"scatter": 5.0, "splash": BRIGHT_SPLASH,
++		"aabb": AABB(Vector3(-6.0, -8.5, -6.0), Vector3(12.0, 10.0, 12.0)),
++		"collider": Vector3(12.0, 10.0, 12.0), "collider_at": Vector3(0.0, -3.5, 0.0)},
  	"res://effects/lamp_rain_post.tscn": {"root": "LampRainPost",
 -		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT,
 +		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT, "drops": 2000, "splashes": 1100,
-+		"scatter": 5.0,
++		"scatter": 5.0, "splash": BRIGHT_SPLASH,
  		"aabb": AABB(Vector3(-4.0, -8.5, -4.0), Vector3(8.0, 10.0, 8.0)),
  		"collider": Vector3(8.0, 10.0, 8.0), "collider_at": Vector3(0.0, -3.5, 0.0)},
  	"res://effects/lamp_rain_floodlight.tscn": {"root": "LampRainFloodlight",
  		"box": Vector3(3.5, 0.1, 6.5), "direction": Vector3(0.023, -0.997, 0.077),
-+		"drops": 3200, "splashes": 1800, "scatter": 60.0,
++		"drops": 3200, "splashes": 1800, "scatter": 60.0, "splash": PLAIN_SPLASH,
  		"aabb": AABB(Vector3(-4.5, -5.0, -7.5), Vector3(9.0, 6.0, 15.0)),
  		"collider": Vector3(9.0, 6.0, 15.0), "collider_at": Vector3(0.0, -2.0, 0.0)},
  	"res://effects/lamp_rain_door.tscn": {"root": "LampRainDoor",
 -		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT,
 +		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT, "drops": 300, "splashes": 170,
-+		"scatter": 60.0,
++		"scatter": 60.0, "splash": PLAIN_SPLASH,
  		"aabb": AABB(Vector3(-1.5, -3.5, -1.5), Vector3(3.0, 4.0, 3.0)),
  		"collider": Vector3(3.0, 4.0, 3.0), "collider_at": Vector3(0.0, -1.5, 0.0)},
  }
@@ -1934,13 +1999,13 @@ index b87ee23..f47c7bd 100644
  
  var _checks: int = 0
  var _failures: int = 0
-@@ -73,49 +81,49 @@ func _check_variant(path: String, variant: Dictionary) -> void:
+@@ -73,49 +91,52 @@ func _check_variant(path: String, variant: Dictionary) -> void:
  
  func _rain(variant: Dictionary) -> Dictionary:
  	return {
 -		"node": {"amount": 160, "one_shot": false, "explosiveness": 0.0, "lifetime": 1.1,
 +		"node": {"amount": variant["drops"], "one_shot": false, "explosiveness": 0.0,
-+			"lifetime": 1.1,
++			"lifetime": 1.1, "fixed_fps": 60,
  			"local_coords": false, "visibility_aabb": variant["aabb"], "preprocess": 1.1,
  			"emitting": false, "collision_base_size": 0.01,
  			"sub_emitter": NodePath("../LampSplash"),
@@ -1951,9 +2016,11 @@ index b87ee23..f47c7bd 100644
  			"initial_velocity_max": 8.5, "direction": variant["direction"], "spread": 4.0,
  			"gravity": Vector3(0.0, -0.5, 0.0), "damping_min": 0.0, "damping_max": 0.15,
 -			"color": WATER, "scale_min": 0.7, "scale_max": 1.35,
+-			"collision_mode": ParticleProcessMaterial.COLLISION_HIDE_ON_CONTACT,
 +			"color": WATER, "scale_min": 0.1, "scale_max": 0.25,
 +			"scale_over_velocity_min": 0.0, "scale_over_velocity_max": 9.0,
- 			"collision_mode": ParticleProcessMaterial.COLLISION_HIDE_ON_CONTACT,
++			"collision_mode": ParticleProcessMaterial.COLLISION_RIGID, "collision_friction": 1.0,
++			"collision_bounce": 0.0,
  			"sub_emitter_mode": ParticleProcessMaterial.SUB_EMITTER_AT_COLLISION,
 -			"sub_emitter_amount_at_collision": 4},
 -		"alpha_curve": [Vector2(0.0, 0.1), Vector2(0.15, 0.45), Vector2(0.75, 0.45),
@@ -1971,7 +2038,7 @@ index b87ee23..f47c7bd 100644
 +			"z": FLAT},
 +		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": 1.0,
 +			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
-+			"sky": 0.0}},
++			"sky": 0.0, "still_fade": 1.0}},
 +		"mesh": {"size": Vector2(0.01, 0.01)},
  		"texture": "res://effects/textures/rain_streak.png",
  	}
@@ -1989,10 +2056,12 @@ index b87ee23..f47c7bd 100644
 -			"direction": Vector3(0.0, 1.0, 0.0), "spread": 60.0,
 -			"gravity": Vector3(0.0, -9.8, 0.0), "color": WATER, "scale_min": 0.1,
 -			"scale_max": 0.3},
++			"emission_shape_offset": Vector3(0.0, 0.03, 0.0),
 +			"initial_velocity_min": 0.5, "initial_velocity_max": 1.3,
 +			"direction": Vector3(0.0, 1.0, 0.0), "spread": 70.0,
-+			"gravity": Vector3(0.0, -9.8, 0.0), "color": WATER, "scale_min": 0.03,
-+			"scale_max": 0.1},
++			"gravity": Vector3(0.0, -9.8, 0.0), "color": WATER,
++			"scale_min": variant["splash"]["splash_scale"].x,
++			"scale_max": variant["splash"]["splash_scale"].y},
  		"alpha_curve": [Vector2(0.0, 0.6), Vector2(1.0, 0.0)],
 -		"draw": {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA,
 -			"blend_mode": BaseMaterial3D.BLEND_MODE_MIX,
@@ -2001,8 +2070,8 @@ index b87ee23..f47c7bd 100644
 -			"backlight": BACKLIGHT, "billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES,
 -			"billboard_keep_scale": true},
 +		"draw": {"shader": SCATTER, "params": {"face_camera": true, "min_pixels": 1.0,
-+			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
-+			"sky": 0.0}},
++			"forward_scatter": 0.5, "scatter": variant["splash"]["splash_scatter"],
++			"diffuse": variant["splash"]["splash_diffuse"], "glint": 0.0, "sky": 0.0}},
  		"mesh": {"size": Vector2(0.01, 0.01)},
  		"texture": "res://effects/textures/water_bead.png",
  	}
@@ -2711,10 +2780,10 @@ index dd8d697..f2ad1f3 100644
  		await physics_frame
 diff --git a/game/effects/scatter_particle.gdshader b/game/effects/scatter_particle.gdshader
 new file mode 100644
-index 0000000..7a658ea
+index 0000000..f2a9a08
 --- /dev/null
 +++ b/game/effects/scatter_particle.gdshader
-@@ -0,0 +1,177 @@
+@@ -0,0 +1,181 @@
 +shader_type spatial;
 +render_mode blend_mix, depth_draw_never, cull_disabled;
 +
@@ -2739,9 +2808,11 @@ index 0000000..7a658ea
 +uniform float ripple : hint_range(0.0, 0.1) = 0.0;
 +uniform float lens_blur : hint_range(0.0, 5.0) = 1.0;
 +uniform float rim_dark : hint_range(0.0, 1.0) = 0.4;
++uniform float still_fade : hint_range(0.0, 1.0) = 0.0;
 +
 +varying float coverage;
 +varying float aspect;
++varying float shape_ratio;
 +varying float life;
 +varying vec2 across;
 +varying vec2 along;
@@ -2775,6 +2846,7 @@ index 0000000..7a658ea
 +	bool comet = tail > 0.0 && !face_camera;
 +	float width = 2.0 * abs(VERTEX.x) * length(MODELVIEW_MATRIX[0].xyz);
 +	float span = 2.0 * abs(VERTEX.y) * length(MODELVIEW_MATRIX[1].xyz);
++	shape_ratio = span / max(width, 0.000001);
 +	float grow = 1.0;
 +	if (min_pixels > 0.0) {
 +		float depth = max(-(MODELVIEW_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).z, 0.001);
@@ -2874,6 +2946,7 @@ index 0000000..7a658ea
 +			ALPHA = clamp(COLOR.a * lens_shape * coverage, 0.0, 1.0);
 +		}
 +	}
++	ALPHA *= 1.0 - still_fade * (1.0 - smoothstep(2.0, 8.0, shape_ratio));
 +	float caught = pow(max(dot(surface, normalize(catch_from)), 0.0), 40.0) * catch_light;
 +	EMISSION += (through * 1.5 + vec3(dot(through, vec3(0.2126, 0.7152, 0.0722)) * 0.6)) * caught;
 +}
@@ -2899,3 +2972,156 @@ index 0000000..b90f8c1
 +++ b/game/effects/scatter_particle.gdshader.uid
 @@ -0,0 +1 @@
 +uid://csuo7kfyawq3y
+diff --git a/game/effects/lamp_rain_street.tscn b/game/effects/lamp_rain_street.tscn
+new file mode 100644
+index 0000000..77b92dd
+--- /dev/null
++++ b/game/effects/lamp_rain_street.tscn
+@@ -0,0 +1,147 @@
++[gd_scene load_steps=19 format=3]
++
++[ext_resource type="Texture2D" path="res://effects/textures/rain_streak.png" id="1_streak"]
++[ext_resource type="Texture2D" path="res://effects/textures/water_bead.png" id="2_bead"]
++[ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
++
++[sub_resource type="Curve" id="Curve_rain_alpha"]
++_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.15, 0.8), 0.0, 0.0, 0, 0, Vector2(0.75, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
++point_count = 4
++
++[sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
++curve = SubResource("Curve_rain_alpha")
++
++[sub_resource type="Curve" id="Curve_rain_scale"]
++_data = [Vector2(0, 0.9), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.9), 0.0, 0.0, 0, 0]
++point_count = 3
++
++[sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
++curve = SubResource("Curve_rain_scale")
++
++[sub_resource type="Curve" id="Curve_rain_flat"]
++_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
++point_count = 2
++
++[sub_resource type="Curve" id="Curve_rain_blur_along"]
++max_value = 210.0
++_data = [Vector2(0, 1), 0.0, 200.0, 0, 1, Vector2(1, 201), 200.0, 0.0, 1, 0]
++point_count = 2
++
++[sub_resource type="CurveXYZTexture" id="Curve_rain_blur"]
++curve_x = SubResource("Curve_rain_flat")
++curve_y = SubResource("Curve_rain_blur_along")
++curve_z = SubResource("Curve_rain_flat")
++
++[sub_resource type="ParticleProcessMaterial" id="Process_rain"]
++emission_shape = 3
++emission_box_extents = Vector3(5, 0.2, 5)
++direction = Vector3(0.08, -0.997, 0)
++spread = 4.0
++initial_velocity_min = 3.5
++initial_velocity_max = 8.5
++gravity = Vector3(0, -0.5, 0)
++damping_min = 0.0
++damping_max = 0.15
++scale_min = 0.1
++scale_max = 0.25
++scale_curve = SubResource("CurveTexture_rain_scale")
++scale_over_velocity_min = 0.0
++scale_over_velocity_max = 9.0
++scale_over_velocity_curve = SubResource("Curve_rain_blur")
++color = Color(0.88, 0.89, 0.9, 1)
++alpha_curve = SubResource("CurveTexture_rain_alpha")
++collision_mode = 1
++collision_friction = 1.0
++collision_bounce = 0.0
++sub_emitter_mode = 3
++sub_emitter_amount_at_collision = 3
++
++[sub_resource type="ShaderMaterial" id="Draw_streak"]
++render_priority = 0
++shader = ExtResource("9_scatter")
++shader_parameter/albedo_texture = ExtResource("1_streak")
++shader_parameter/face_camera = false
++shader_parameter/min_pixels = 1.0
++shader_parameter/forward_scatter = 0.5
++shader_parameter/scatter = 5.0
++shader_parameter/diffuse = 0.3
++shader_parameter/glint = 0.0
++shader_parameter/sky = 0.0
++shader_parameter/still_fade = 1.0
++
++[sub_resource type="QuadMesh" id="Quad_streak"]
++material = SubResource("Draw_streak")
++size = Vector2(0.01, 0.01)
++
++[sub_resource type="Curve" id="Curve_splash_alpha"]
++_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
++point_count = 2
++
++[sub_resource type="CurveTexture" id="CurveTexture_splash_alpha"]
++curve = SubResource("Curve_splash_alpha")
++
++[sub_resource type="ParticleProcessMaterial" id="Process_splash"]
++emission_shape_offset = Vector3(0, 0.03, 0)
++emission_shape = 0
++direction = Vector3(0, 1, 0)
++spread = 70.0
++initial_velocity_min = 0.5
++initial_velocity_max = 1.3
++gravity = Vector3(0, -9.8, 0)
++scale_min = 0.05
++scale_max = 0.15
++color = Color(0.88, 0.89, 0.9, 1)
++alpha_curve = SubResource("CurveTexture_splash_alpha")
++
++[sub_resource type="ShaderMaterial" id="Draw_splash"]
++render_priority = 0
++shader = ExtResource("9_scatter")
++shader_parameter/albedo_texture = ExtResource("2_bead")
++shader_parameter/face_camera = true
++shader_parameter/min_pixels = 1.0
++shader_parameter/forward_scatter = 0.5
++shader_parameter/scatter = 30.0
++shader_parameter/diffuse = 1.0
++shader_parameter/glint = 0.0
++shader_parameter/sky = 0.0
++
++[sub_resource type="QuadMesh" id="Quad_splash"]
++material = SubResource("Draw_splash")
++size = Vector2(0.01, 0.01)
++
++[node name="LampRainStreet" type="Node3D"]
++
++[node name="LampRain" type="GPUParticles3D" parent="."]
++emitting = false
++amount = 5000
++sub_emitter = NodePath("../LampSplash")
++lifetime = 1.1
++fixed_fps = 60
++one_shot = false
++preprocess = 1.1
++explosiveness = 0.0
++collision_base_size = 0.01
++visibility_aabb = AABB(-6, -8.5, -6, 12, 10, 12)
++local_coords = false
++transform_align = 3
++process_material = SubResource("Process_rain")
++draw_pass_1 = SubResource("Quad_streak")
++
++[node name="LampSplash" type="GPUParticles3D" parent="."]
++emitting = true
++amount = 2750
++lifetime = 0.2
++one_shot = false
++preprocess = 0.0
++explosiveness = 0.0
++visibility_aabb = AABB(-6, -8.5, -6, 12, 10, 12)
++local_coords = false
++process_material = SubResource("Process_splash")
++draw_pass_1 = SubResource("Quad_splash")
++
++[node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
++transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5, 0)
++size = Vector3(12, 10, 12)
++resolution = 0
++update_mode = 1
++follow_camera_enabled = false

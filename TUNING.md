@@ -339,6 +339,12 @@ without these changes, first reverse their patch
   the drops 20 to 100 times more strongly than the lamps r1 was tuned under, and at 60 the amber
   blew out to white; at 5 it reads golden, as in the author's reference. The floodlight's and the
   door lamp's rain keep 60. This value assumes the world patch's lamps.
+- **Changes with #156 (r1):** the street lamps' own scene, `lamp_rain_street.tscn` (10 × 10 m,
+  5,000 drops, 2,750 splash droplets); in all four scenes rigid collisions in place of
+  `COLLISION_HIDE_ON_CONTACT`, which in Godot 4.7.2 never set off the splash sub-emitter, so B1's
+  splashes had never appeared; stopped drops fade (`still_fade`); `fixed_fps` 60; splashes start
+  3 cm up; the street and post splashes 0.5–1.5 mm, `scatter` 30, `diffuse` 1. For §8, B1's peak
+  becomes 7,750 particles per street lamp.
 - **Claude's comparison of r1 with its prediction:** _after r1._
 - **My verdict (running game, 1280×800):** _the author._
 - **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`
