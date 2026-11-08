@@ -93,7 +93,7 @@ The author's r1 strips should show the same effects as those renders; a differen
 effect would mean the build or the machine differs.
 
 **Tests with r1:** every suite passes: 30 runs and the art check
-(`logs/particles/realistic_r1b/SUMMARY.txt`). The configuration tests read the new values,
+(`logs/particles/realistic_r1c/SUMMARY.txt`). The configuration tests read the new values,
 including each shader parameter (which must be one of the shader's uniforms) and each per-axis
 curve, and check that no A emitter uses a sub-emitter, turbulence or a driven `amount_ratio`, the
 features the B effects are graded on (the author's decision, #147). The A1 state test adds the
@@ -104,68 +104,85 @@ A2 state test adds the water's surge as the van slows.
 
 - **What I saw (running game, 1280×800):** _the author, in visual terms._ The author's messages
   of 2026-11-07: "make sure its clearly visible like in real world. all the four effects!" (#144),
-  "i want the bigger droplets effect even under no lights in normal when driving" (#146), and
-  "make wiper flick and roof spill more realistic" (#147).
+  "i want the bigger droplets effect even under no lights in normal when driving" (#146),
+  "make wiper flick and roof spill more realistic" (#147), and "make wiper flicker more visible
+  and realistic and real physics as if in real life" (#148).
 - **Claude's reading of r0:** _to be written from `captures/wiper_flick/r0/` once the author has
   captured it._ Claude Code's own render of the same preview showed no flick at the blade tip
   on any frame: the beads are 3–7 mm, 1–2 px at about 1.2 m, and lit only by the night.
-- **Change (applied at the author's direction, #146 and #147):**
+- **Change (applied at the author's direction, #146, #147 and #148):**
   - the quads' material: `StandardMaterial3D` → the shared `ShaderMaterial`, drawn like the
-    windshield's drops: `sky` 2, `catch_light` 1, `refraction` 0.012, `lens_blur` 0.6,
-    `rim_dark` 0.4; `forward_scatter` 0.85, `scatter` 10, `diffuse` 0.3; `glint` 1 on the beads;
-    the mist (`FineSpray`) at `sky` 1.2, `catch_light` 0.5, `refraction` 0.006;
+    windshield's own water: the night sky's glow on each drop's lower half and at least 35% of it
+    over all its water (`sky` 2), a catch light (`catch_light` 1), the scene behind shifted by a
+    few pixels (`refraction` 0.012, the sheet 0.02), `lens_blur` 0.6, `rim_dark` 0.4; each drop's
+    upper part shows an average of the headlit scene below it, as a drop's wide-angle lens does
+    (`ground_reach` 0.5); `forward_scatter` 0.85, `scatter` 10, `diffuse` 0.3; `glint` 1 on the
+    sheet and beads; the mist at `sky` 1.2, `catch_light` 0.5, `refraction` 0.006;
+  - the bow wave leaves first (`WaterSheet`, new): 24 overlapping pieces of a water ridge, 10–13
+    mm wide and 7–9 cm long, laid along the blade by the van's code at each top turn, run ahead
+    toward the pillar at 1–3 m/s and tear into shorter, thinner pieces within 0.15 s;
   - threads that snap into beads: each bead is drawn as a comet turned along its motion
-    (`transform_align` Z-billboard, Y to velocity; `tail` 0.35); it is born twice as long and 0.8
-    as wide, and is round by 8% of its life (a per-axis `scale_curve`), its tail as bright as its
-    head while it is a thread (`thread_life` 0.1); a fast drop draws as the streak a 1/60 s
-    glimpse of it would show, 26 times its width at 6 m/s (`scale_over_velocity`);
-  - real drop sizes: beads 2.5–5.5 mm (`scale` 0.3–0.7 → 0.25–0.55), mist 0.5–1 mm
+    (`transform_align` Z-billboard, Y to velocity; `tail` 0.35), born twice as long and 0.8 as
+    wide and round by 8% of its life (a per-axis `scale_curve`), its tail as bright as its head
+    while it is a thread (`thread_life` 0.1), and faint for its first 0.07 s, while the sheet
+    tears; a fast drop draws as the streak a 1/60 s glimpse of it would show, 26 times its width
+    at 6 m/s (`scale_over_velocity`);
+  - real drop sizes: beads 2.5–4.5 mm (`scale` 0.3–0.7 → 0.25–0.45), mist 0.5–1 mm
     (0.15–0.3 → 0.05–0.1), drawn at least 2 px and 1 px wide;
-  - more water: 120 beads and 120 mist droplets a burst (22 and 36);
+  - drops by size, as on a real windshield: most beads stick where they land and creep about
+    4 cm/s parked (`collision_mode` rigid, friction 0.85); 14 heavy drops of 5–6.5 mm
+    (`HeavyDrops`, new) slide down the glass (friction 0.25); in the wind, all of them climb;
+  - more water: 120 beads, 14 heavy drops and 120 mist droplets a burst (22 and 36 before);
   - where it leaves: the outer half of the blade's leading edge, a box 9 × 26 cm beside it, at
     0.2–2.6 m/s toward the pillar and a little off the glass;
   - simulated with the van (`local_coords` on): each burst is set at the blade tip, turned to the
     windshield's frame, and its directions and boxes are in that frame;
   - the air over the glass, set by the van's code each tick: a push up the glass of g × (v / vₜ)²,
-    with v the van's forward speed and vₜ 8 m/s for the beads and 3 m/s for the mist, up to 40
-    and 80 m/s²; none parked or reversing;
-  - drops land and slide: three thin colliders follow the curved windshield, one per third of its
-    width, each a plane fitted to the glass model, 3 mm outside it; a bead that lands stays and
-    creeps (`collision_mode` rigid, friction 0.6): about 15 cm/s down the glass parked, about
-    0.5 m/s up it at 50 km/h; a mist droplet that touches the glass joins its water;
+    with v the van's forward speed and vₜ 6 m/s for the sheet, 8 for the beads, 12 for the heavy
+    drops and 3 for the mist, up to 40 and 80 m/s²; none parked or reversing;
+  - three thin colliders follow the curved windshield, one per third of its width, each a plane
+    fitted to the glass model, 3 mm outside it; a mist droplet that touches the glass joins its
+    water;
   - side-window run-off (`PillarRunoff`, new): above 5 m/s, each top turn also throws 24 streams
     back along the side window from the pillar, pushed back by the air (g × (v / 5 m/s)², up to
-    60 m/s²);
+    60 m/s²); seen by turning the driver's head left;
   - the wipers clear a spill (`SpillWater`, new): the first top turn within 3 s of a roof spill
     throws 200 more drops, 3–6 mm.
+- **Why, from the research (#148):** at each reversal the blade's quick deceleration throws the
+  water it pushed off the side of the windshield (wiper patents US 5642026 and US 5654616); that
+  water leaves as a sheet, which tears into strands about its own thickness, each pinching into
+  drops about 1.9 times its width (Rayleigh–Plateau), so a 2–3 mm bow wave gives drops of
+  2–5 mm; on the glass, large drops slide down, medium ones stay put, and small ones are pushed
+  up by the wind (Hooshanginejad and Lee, Physical Review Fluids, 2022); the airflow and the
+  wipers drive water over the A-pillar onto the side window (Jaguar Land Rover, SAE
+  2012-01-0588).
 - **Rules that change with it, for the brief revisions if kept:**
   - the flick's frame is the windshield's;
   - freeing the van frees its bursts with it, as A2's revision 3 did for the spill;
   - §9's answer 2 changes for A1;
-  - §8's peak: 2 × (120 + 120 + 24) + 200 = 728 particles;
+  - §8's peak: 2 × (24 + 120 + 14 + 120 + 24) + 200 = 804 particles;
   - B1's feature that the A effects don't use is its splash sub-emitter (the author's decision,
     #147; revision 6).
 - **Claude's prediction for r1** (from its own render of these previews):
   - Valley road, parked (`scripts/capture-strips.sh 1`):
     - frame 10: nothing new at the blade; the burst fires at the end of frame 10 and shows from
-      frame 11, as in r0;
-    - frame 12: a fine spray of pale threads leaving the blade's upper half toward the pillar,
-      1–2 px wide and faint against the dark forest;
-    - frame 15: the threads have snapped into small beads; most have passed behind the pillar,
-      and a few lie on the glass below the blade's path;
-    - frames 20 and 30: a few specks creeping down the glass, like the glass's own drops;
+      frame 11, as in r0, when a continuous pale ridge of water lies along the blade (not a
+      frame the strip keeps);
+    - frame 12: the ridge torn into pale dashes running from the blade toward the pillar;
+    - frame 15: fine pale threads and small beads, most passing behind the pillar;
+    - frames 20 and 30: a few specks on the glass between the blade and the pillar, where the
+      wipers don't reach, and a heavy drop or two sliding down;
     - frame 50: none.
   - At 50 km/h (`wiper_flick:speed_kmh=50`):
     - frames 12 and 15: a fan of pale streaks blown up and back across the top left of the
       glass;
-    - frame 20: a few specks running up the glass; the run-off is beyond the pillar, out of this
-      view;
+    - frame 20: a few specks running up the glass;
     - frames 30 and 50: none.
-  - Depot (`wiper_flick:place=depot`): frames 12 and 15: fine streaks by the pillar in the lamp
-    light; frame 20: a few specks; frames 30 and 50: none.
-  - **Against the author's #146:** real drops are small. Parked on the unlit road, the flick shows
-    about as much as the glass's own drops do, faint in a still frame; driving, the wind turns it
-    into a fan of streaks that shows clearly. The author chose real sizes in #147, knowing this.
+  - Depot (`wiper_flick:place=depot`): frame 12: pale streaks by the pillar in the lamp light;
+    frame 15: drops; frames 20 and 30: a few specks; frame 50: none.
+  - **Against the author's #146:** on the unlit road the drops themselves stay small and faint,
+    as real ones are; what shows clearly is the sheet of water leaving the blade, and, driving,
+    the streaks the wind makes of it.
 - **Claude's comparison of r1 with its prediction:** _after the author's r1 capture._
 - **My verdict (running game, 1280×800):** _the author: kept | reverted, because…_
 - **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `speed_kmh-50`

@@ -2136,6 +2136,37 @@ tag `a5`. Pictures the author approved or rejected are filed in
        - a check in both A configuration tests that no A emitter uses a sub-emitter,
          turbulence or a driven `amount_ratio`.
 
+148. **A more visible wiper flick, with real physics, researched first.**
+     - **The author's message:** "make wiper flicker more visible and realistic and real physics
+       as if in real life. go do research how it looks in real life first"
+     - **What Claude Code found:**
+       - wiper patents say the blade's quick deceleration at each reversal throws water off the
+         side of the windshield (US 5642026, US 5654616), and that at about 60–120 km/h the air
+         pulls wiped water back into view (pull-back, or "wiper drawback");
+       - Jaguar Land Rover's SAE paper 2012-01-0588 models water driven over the A-pillar onto
+         the side window by the airflow and the wipers;
+       - drops on a windshield, by size (Hooshanginejad and Lee, Physical Review Fluids 7, 033601,
+         2022, as reported by Science News): large ones slide down, small ones are pushed up by
+         the wind, medium ones stay put, and the smallest stick;
+       - water flung as a sheet tears into strands about its own thickness, and each strand
+         pinches into drops about 1.9 times its width (Rayleigh–Plateau), so a 2–3 mm bow wave
+         gives drops of 2–5 mm;
+       - US rules require a fast setting of at least 45 cycles a minute; the game's is 66.
+       - Not found: a measured wind speed at which drops of each size start to climb (the
+         Emergent Scientist paper on side windows refused the fetch), so the air push stays an
+         estimate.
+     - **What Claude Code changed in A1's r1** (`TUNING.md`):
+       - the bow wave leaves first, as a sheet of water laid along the blade at each top turn,
+         running toward the pillar and tearing up within 0.15 s (`WaterSheet`, new);
+       - the beads appear as the sheet tears (fainter for the first 0.07 s), and most stick
+         where they land; 14 heavy drops of 5–6.5 mm slide down the glass (`HeavyDrops`, new);
+       - each drop's upper part shows an average of the headlit scene below it, as a drop's
+         wide-angle lens does, and all the water reflects at least 35% of the night sky's glow,
+         as the windshield's own water does.
+     - **Measured in Claude Code's renders** of the parked preview: before, the flick lifted its
+       pixels by 1–3 levels of 255 (invisible); after, the sheet's frames lift them by a median of
+       18–23 and up to 47.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146): the four effects in the game; the r0 and r1 strips

@@ -1,6 +1,6 @@
 # HANDOFF.md
 
-**Last run:** Assignment 6, r1 applied at the author's direction (#145–#147), 2026-11-07, on
+**Last run:** Assignment 6, r1 applied at the author's direction (#145–#148), 2026-11-07, on
 branch `develop`. The effects' change is in the working tree, uncommitted until the author's
 verdicts, as the handout asks; its record, a copy of it as a patch, the capture option and this
 handoff are committed, not pushed. Its section is below.
@@ -53,7 +53,7 @@ intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
 
-## Assignment 6, r1 applied at the author's direction: the realistic look (#145–#147)
+## Assignment 6, r1 applied at the author's direction: the realistic look (#145–#148)
 
 **The instructions:**
 - #146: "make them more realistic. i want the bigger droplets effect even under no lights in
@@ -61,7 +61,10 @@ No slow motion. No title card before the end shows the game's title (C04).
   options page the author asked for in #145: https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ;
 - #147: "make wiper flick and roof spill more realistic. like give me ideas to choose from
   first", then the author's choices: every A1 idea, three of the four A2 ideas, and B1's
-  splashes as its feature that the A effects don't use.
+  splashes as its feature that the A effects don't use;
+- #148: "make wiper flicker more visible and realistic and real physics as if in real life. go
+  do research how it looks in real life first". The research and its sources are in the
+  prompt log (#148) and `TUNING.md`.
 
 **In the working tree, uncommitted until the author's verdicts** (the handout: "Do not commit"
 until the verdict). `tools/tuning/r1/r1.patch` is a committed copy: `git apply
@@ -71,12 +74,15 @@ tools/tuning/r1/r1.patch` on `4f73f98` restores it (checked with `git apply --ca
   water is drawn like the windshield's own drops (`rain_drops.gdshaderinc`), and a drop turned
   along its motion draws as a comet.
 - The six effect scenes: every draw material is a `ShaderMaterial` running that shader. A1 has
-  four emitters (`SpillWater` and `PillarRunoff` are new) and A2 three (`Rivulets` is new); their
-  values are in `TUNING.md`.
+  six emitters (`WaterSheet`, `HeavyDrops`, `SpillWater` and `PillarRunoff` are new) and A2 three
+  (`Rivulets` is new); their values are in `TUNING.md`.
+- The shader's water also shows, in each drop's upper part, an average of the headlit scene
+  below it (`ground_reach`), and reflects at least 35% of the night sky's glow over all of it.
 - `van_particles.gd`:
   - each van gets its own copy of the flick's and spill's process materials, since their gravity
     changes at runtime;
-  - the flick is turned to the windshield's frame and placed at the blade tip; each tick its
+  - the flick is turned to the windshield's frame and placed at the blade tip, its bow-wave
+    sheet laid along the blade (`_lay_along_blade`); each tick its
     gravity is the still air's plus the air's push up the glass, or back along the side for the
     run-off (`_blow_flicks`), none parked or reversing;
   - the run-off is thrown only above 5 m/s; a spill's water is thrown by the first top turn
@@ -101,29 +107,30 @@ tools/tuning/r1/r1.patch` on `4f73f98` restores it (checked with `git apply --ca
 - `scripts/capture-strips.sh`: `FROM=<commit>` renders that commit's game from a temporary
   checkout;
 - `tools/tuning/r1/r1.patch`, in place of the first proposal, which stays at `bf962da`;
-- `logs/particles/realistic/` (r1 as of #146) and `logs/particles/realistic_r1b/` (as of #147).
+- `logs/particles/realistic/` (r1 as of #146), `logs/particles/realistic_r1b/` (as of #147) and
+  `logs/particles/realistic_r1c/` (as of #148).
 
 **Tests, with the exact commands** (from the repository root):
 
 ```sh
 HOME=$PWD/.scratch-home /Applications/Godot.app/Contents/MacOS/Godot --headless --editor \
   --path game --import
-LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh <test>.gd 60   # every suite
-LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
-LOG_DIR=logs/particles/realistic_r1b scripts/run-test.sh cost_effects.gd 60 300
+LOG_DIR=logs/particles/realistic_r1c scripts/run-test.sh <test>.gd 60   # every suite
+LOG_DIR=logs/particles/realistic_r1c scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
+LOG_DIR=logs/particles/realistic_r1c scripts/run-test.sh cost_effects.gd 60 300
 python3 tools/tests/check_first_drive_art.py
 ```
 
 - **The import:** exit 0 with no errors.
-- **Every suite** (`logs/particles/realistic_r1b/SUMMARY.txt`), all exit 0, no script or shader
+- **Every suite** (`logs/particles/realistic_r1c/SUMMARY.txt`), all exit 0, no script or shader
   errors:
   - the earlier suites with their baseline counts: 64/64, 0 failures, 92/92, 21/21, 12/12, 25/25,
     33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7, 30/30
     ×3, and art 0 failures;
-  - configuration 220/220, 163/163, 237/237 and 44/44;
-  - state 20/20, 13/13, 12/12 and 10/10.
-- **The cost script:** controls 0.002 and 0.003 ms against the game's 0.449 ms. Every effect is
-  within −0.003 to +0.018 ms of it while the rounds vary by up to 0.058 ms: still no GPU particle
+  - configuration 339/339, 163/163, 237/237 and 44/44;
+  - state 22/22, 13/13, 12/12 and 10/10.
+- **The cost script:** controls 0.002 and 0.003 ms against the game's 0.479 ms. Every effect is
+  within −0.004 to +0.001 ms of it while the rounds vary by up to 0.010 ms: still no GPU particle
   process headless.
 - **The only ERROR lines:** the same engine messages as before tuning. A verbose run names the
   resources still in use at exit as `wiper.wav` and `collision.wav`, sounds still playing, not
@@ -147,6 +154,10 @@ python3 tools/tests/check_first_drive_art.py
   - At night only a particle's emission shows; a lens that shows only the dark scene behind it
     disappears, so the water copies the windshield drops' sky-filled lower half.
   - A test that times a deceleration counts ticks with the van's clock, not a fixed duration.
+  - Measured in renders of the parked flick: drops showing only the dark scene lifted their
+    pixels by 1–3 levels of 255; with the bow-wave sheet, the average view below and the sky's
+    reflection, the sheet's frames lift them by a median of 18–23 and up to 47.
+  - The previews repeat in their effects, but the game's own background rain is not seeded.
 
 **Waiting on the author (`TUNING.md`):**
 
@@ -169,12 +180,15 @@ python3 tools/tests/check_first_drive_art.py
 
 - How r1 looks in the author's strips and in the running game, which decide.
 - r1's GPU price:
-  - more particles (A1 728 at its peak, A2 224, B2 300);
-  - a shader that reads the screen for A1's and A2's water;
+  - more particles (A1 804 at its peak, A2 224, B2 300);
+  - a shader that reads the screen for A1's and A2's water, up to four times a pixel for the
+    flick's drops;
   - three more particle colliders;
   - the windowed frame-time check is the author's (§8).
-- Whether the parked flick on the unlit road reads as real: with real drop sizes it shows about
-  as much as the glass's own drops.
+- Whether the parked flick on the unlit road reads as real: the sheet shows; the drops after
+  it stay small and faint, as real ones are there.
+- The wind speed at which drops of each size start to climb: no measured value was found, so
+  the air's push stays an estimate.
 - The side-window run-off is beyond the pillar, out of the driver's view in these strips; it is
   seen through the side window and from outside.
 - The tailpipe's position (revision 2).
