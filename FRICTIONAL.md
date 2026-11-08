@@ -257,17 +257,35 @@ the driver's window went down with the fog.
   - the Effect A mutations repeated on r1, all exit 1;
   - the previews rechecked;
   - `SUBMISSION.md`, `TEST-REPORT.md` and `README.md` brought up to date.
+- **The author's play of r1 (#160)** found three faults, which Claude Code fixed:
+  - the title screen showed frozen rain: the lamps' rain, paused with the title, now hidden;
+  - "the hard break water falling down effect isnt working": the spill fired, but the wet
+    glass drew over it, so it now draws after the glass;
+  - "the right wiper isnt doing that effect": the passenger blade now leaves its water, which
+    the driver's blade wipes.
+- **The strips (#163).** The author asked Claude Code to run them ("can you run them for me";
+  the handout has the student run them). Claude Code ran 22 and read each. Two of its #160
+  predictions were wrong: A1's passenger line on frame 10, and A2's streams on frame 15. A shell
+  mistake first made one wrongly named folder per round; the folders were deleted and the
+  variants run again.
+- **The verdicts (#164).** "i played and all look good proceed": all four effects kept, against
+  two of Claude Code's readings (A1's passenger line too bright in the office floodlight, A2's
+  streams too white). Committed in the handout's order: r0's strips (`2b9e327`), r1 with its
+  strips and the verdict (`1c8447b`), the world changes (`1dfe865`).
+- **"do everything for me please" (#165).** At the author's request, Claude Code:
+  - wrote the brief's revisions 6–10 for the kept changes;
+  - reviewed `CLAUDE.md`, correcting 18 line references that later commits had moved;
+  - ran Effect A's mutations again (all exit 1) and the cost script;
+  - measured the GPU price with Apple's Metal Performance HUD, since Godot's GPU timer reads 0
+    on Metal.
 - **Still the author's:**
-  - the strips and verdicts;
-  - the play and background checks;
-  - the GPU price;
-  - Step 6's shader notes;
+  - Step 6's shader, its line references and answer;
+  - the human checks, in the author's words;
   - the † values;
-  - the film;
   - the notes below.
 - **Trace:**
-  - `8c3e636` to `c5e307d`;
-  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#159;
+  - `8c3e636` to `1dfe865`, and the commits after it;
+  - `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #142–#165;
   - `TUNING.md`, `HANDOFF.md`.
 
 ## 2026-11-07 — My own notes (to write)

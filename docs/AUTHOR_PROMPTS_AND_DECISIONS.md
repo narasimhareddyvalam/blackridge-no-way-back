@@ -2663,6 +2663,40 @@ tag `a5`. Pictures the author approved or rejected are filed in
        summary in `SUBMISSION.md`, the Step 1 session file, then the tag, a fresh-clone check
        and Canvas.
 
+165. **"do everything for me please"**
+     - **The author's message:** "do everything for me please", answering Claude Code's offer to
+       give step-by-step instructions for Step 6 and the GPU price while it drafted the brief
+       revisions.
+     - **What Claude Code does, each part labelled as its own:**
+       - the brief's dated revisions for the kept changes;
+       - the `CLAUDE.md` review, with the confirmed headless facts;
+       - the GPU price, measured by Claude Code (the handout makes it the author's check);
+       - Effect A's mutations and the cost script again on the kept state;
+       - the film, the submission documents, the tag and a fresh-clone check;
+       - pushing only after the author's OK.
+     - **What stays the author's, and why:**
+       - Step 6's save of `game/shaders/particles_generated.gdshader`, its line references and
+         its answer. The handout says "The agent may check that your line references point where
+         you say. It does not write the answers"; its checklist requires that "no agent session
+         changed godot/shaders/"; and `CLAUDE.md` gives that folder to the author alone.
+       - The human checks and the author's own notes in `FRICTIONAL.md`, in the author's words:
+         the handout forbids inventing a playtester's words, and `FRICTIONAL.md` says AI "does
+         not write the author's experiences".
+       - Uploading to Canvas and the course's media storage, which Claude Code cannot reach.
+     - **The Step 1 session file:** none is made now. Step 1 ran in the author's interactive
+       session (`05eefd3` says why), and a session made now would not record what happened.
+     - **Done:**
+       - the brief's revisions 6–10;
+       - the `CLAUDE.md` review: 18 line references corrected, the three headless facts added
+         with their evidence, 119 lines;
+       - Effect A's four mutations, all exit 1, and the cost script (`mutations_final`);
+       - the GPU price, from Apple's Metal Performance HUD, since Godot's GPU timer reads 0 on
+         Metal. Each effect was shown and hidden in alternating blocks; a first design in rounds
+         failed, because the GPU's own time drifted more than the budgets. A1 −0.39 ms (below
+         what the method resolves), A2 0.08, B1 0.67 (3 of 8 volumes on screen), B2 1.11 (over
+         its 0.30 budget), all four 1.47 against 1.45. The frame itself takes about 26 ms of GPU
+         time from the driver's seat.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (#164): the brief revisions for the kept r1 changes

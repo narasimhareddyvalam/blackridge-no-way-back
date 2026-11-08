@@ -1,11 +1,13 @@
 # HANDOFF.md
 
-**Last run:** the author's verdicts after play (#164), 2026-11-08: all four effects' r1 kept and
-committed with its strips (`1c8447b`), then the world changes (#150–#158) in the commit after it.
-**Next:** the author's parts (brief revisions, Step 6's shader, the GPU price, the human checks
-in the author's words), then the film; the full list is the prompt log's "Waiting for the
-author". Before it, the strips, run by Claude Code at the author's request (#163): 22 fixture
-strips, all read, r0 committed as the first strip (`2b9e327`).
+**Last run:** "do everything for me please" (#165), 2026-11-08: the brief's revisions 6–10, the
+`CLAUDE.md` review, Effect A's mutations and the cost script again, and the GPU price from Apple's
+Metal Performance HUD. **Next:** the author's Step 6 and human checks, then the film, then the
+tag, a fresh-clone check and Canvas; the full list is the prompt log's "Waiting for the author".
+Before it, the author's verdicts after play (#164): all four effects kept, committed with their
+strips (`1c8447b`), then the world changes (`1dfe865`). Before those, the strips, run by Claude
+Code at the author's request (#163): 22 fixture strips, all read, r0 committed as the first strip
+(`2b9e327`).
 
 Before those, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
 wipers. Before those, the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`,
@@ -65,6 +67,50 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Everything left that an agent may do (#165)
+
+**The instruction (#165):** "do everything for me please".
+
+**Kept for the author, and why** (prompt log #165):
+- Step 6's save of `game/shaders/particles_generated.gdshader`, its line references and its
+  answer: the handout says the agent "does not write the answers", and no agent may change
+  `game/shaders/`.
+- The human checks and the author's own notes, in the author's words.
+- Canvas and the course's media storage.
+
+**Done:**
+- `CHANGE-BRIEF.md` revisions 6–10, written by Claude Code at the author's request: B1's own
+  feature is the splash sub-emitter (A1 and A2 now collide with the glass), then r1 of each
+  effect, with §8's new peaks (A1 1,052, A2 264, B1 up to 7,750 per street-lamp volume, B2 300).
+- `CLAUDE.md` reviewed, 119 lines: 18 line references moved by later commits corrected (the van's
+  by the wiring commit's new `throttle` member, the world's by #150–#158, `first_drive.gd` and
+  `project.godot` by F9); the three headless facts added with their evidence; the Godot facts
+  the build found moved out of "Unconfirmed".
+- Effect A's four mutations on the committed scenes, each restored from git and checked clean;
+  the cost script again.
+- The GPU price: `game/tests/gpu_price.gd` (windowed) and `tools/tests/gpu_price.py`.
+  `TEST-REPORT.md` has the method, the conditions, the table and the first design's failure.
+- `TEST-REPORT.md`, `README.md`, `SUBMISSION.md` and `FRICTIONAL.md` (facts only) brought up to
+  date.
+
+**Commands and real results:**
+- `logs/particles/mutations_final/`: A1 Godot 3 rename 450/451 exit 1, state 27/27; A1 spread
+  450/451 exit 1; A2 rename 220/221 exit 1, state 13/13; A2 spread 220/221 exit 1. Cost script
+  exit 0: controls 0.002 and 0.003 ms, the game 0.459 ms, every effect within 0.039 ms of it.
+- GPU price: `MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 HOME=$PWD/.scratch-home godot --path game
+  --resolution 1280x800 --script res://tests/gpu_price.gd [-- --only=A1,A2 --cycles=40]`, then
+  `python3 tools/tests/gpu_price.py <logs>`: A1 −0.39, A2 0.08, B1 0.67, B2 1.11 ms (over its
+  0.30 budget), all 1.47 against 1.45 (`logs/particles/gpu_price/RESULT.txt`).
+- Headless import with the scratch home: exit 0, no errors; only `gpu_price.gd.uid` appeared.
+
+**What the next run may rely on:** the HUD logs only while the game's window is in front, and the
+GPU's own time drifts by several milliseconds a minute, so only alternating blocks give a price.
+The game takes about 26 ms of GPU time a frame from the driver's seat at 1280×800 on this
+Retina display.
+
+**Unverified:** why A1 reads below zero (Claude Code's guess: the GPU's clock rises with load);
+how much of the 26 ms frame the world changes cause.
 
 ## The verdicts: all kept (#164)
 

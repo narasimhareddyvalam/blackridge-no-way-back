@@ -93,9 +93,12 @@ and after, and the changes to the lamps, the wet road and the roadside around th
 #150–#158), kept after the author's play (#164).
 
 **Known limitations:**
-- Godot's GPU timer reads 0 on Metal, so the GPU price rests on the author's check.
-- In windowed runs on this Mac the frame time stayed at the display's refresh with vsync off,
-  so an FPS comparison is probably capped.
+- Godot's GPU timer reads 0 on Metal, so the GPU price was read from Apple's Metal Performance
+  HUD instead (`TEST-REPORT.md`, "GPU price"). B2's exhaust costs 1.1 ms of GPU time behind the
+  van, over its 0.30 ms budget; the four effects together, 1.47 ms, are at their 1.45 ms budget.
+- The frame itself takes about 26 ms of GPU time from the driver's seat at 1280×800 on the
+  MacBook Air's Retina display (about 39 frames a second), above a 60 FPS frame before any
+  effect. The world changes (#150–#158) and the display's pixels are the likely causes, unmeasured.
 - The Iveco model has no tailpipe, so B2's exhaust position is assumed (brief revision 2).
 - B1's real-size splash droplets are faint from a few metres.
 - B1's slowest drops fade 2–4 m above the ground.

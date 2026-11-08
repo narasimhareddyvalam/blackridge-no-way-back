@@ -30,15 +30,59 @@ results are recorded again at the submitted commit.
 | Every earlier suite | The baseline's counts, exit 0; art 0 failures; the same with r1 alone, in a temporary worktree | `logs/particles/strips_163/SUMMARY.txt`; r1 alone: `logs/particles/r1_only_164/SUMMARY.txt` |
 | Configuration | A1 451/451, A2 221/221, B1 364/364 (four scenes, the street lamps' own added), B2 44/44, exit 0 | the same |
 | State | A1 27/27, A2 13/13, B1 13/13 (13 volumes; 12/12 with r1 alone, since the title check comes with the world changes), B2 10/10 (`amount` stays 300), exit 0 | the same |
-| Effect A mutations on r1 | A1 Godot 3 rename on `BigDrops`: 338/339, exit 1, the minimum reading 0.0, while the state test passes 22/22. A1 `spread` 30 → 37: 338/339, exit 1. A2 Godot 3 rename on `RoofStreams`: 216/217, exit 1, state 13/13. A2 `RoofBeads` `spread` 24 → 30: 216/217, exit 1. Each scene was restored from a copy and compared byte for byte | `logs/particles/r1_mutations/` |
+| Effect A mutations, on the kept state | A1 Godot 3 rename on `BigDrops` (`initial_velocity_min` → `initial_velocity`): 450/451, exit 1, the minimum reading 0.0, while the state test passes 27/27. A1 `spread` 30 → 37: 450/451, exit 1. A2 Godot 3 rename on `RoofStreams`: 220/221, exit 1, state 13/13. A2 `RoofBeads` `spread` 24 → 30: 220/221, exit 1. Each scene was restored from git and checked clean | `logs/particles/mutations_final/` |
 | Previews, headless at 30 fps | Every event on the same frame as before r1, except B1's hide: frame 109, 1.30 s after the stop, for 111 and 1.35 s, from r1's shorter lives. The brief's frame 110 is empty either way | `logs/particles/previews_headless_r1/` |
-| Headless CPU price | The game with every effect off 0.479 ms; A1 +0.000, A2 −0.003, B1 −0.006, B2 −0.003 ms against it, while the rounds vary by up to 0.011 ms; the controls 0.002 and 0.010 ms | `logs/particles/submission_prep/cost_effects_60fps.log` |
+| Headless CPU price | The game with every effect off 0.459 ms; A1 −0.001, A2 −0.002, B1 −0.005, B2 +0.013 ms against it, while the rounds vary by up to 0.039 ms; the controls 0.002 and 0.003 ms. A1's case leaves out its passenger water, added later (#160); headless runs no GPU particles either way | `logs/particles/mutations_final/cost/cost_effects_60fps.log` |
 | F9, the vsync debug key | In a window, vsync read on, then off after one F9, then on after two | Claude Code's scratch run |
 
-For the GPU price below: Godot's GPU timer still reads 0 on Metal here. In Claude Code's windowed
-timing on this Mac, with vsync turned off in code, the frame time stayed at the display's refresh,
-6.9 ms on its 144 Hz display, whether the grass and mist were on or off. So an FPS comparison is
-probably capped, as the assignment warns some compositors do, and the report should say so.
+## GPU price (windowed, measured by Claude Code at the author's request, #165)
+
+The assignment's method is the Visual Profiler's GPU time, but Godot's GPU timer reads 0 on
+Metal: the measuring script read `viewport_get_measured_render_time_gpu` too, and it was 0.000 in
+every case. So each frame's GPU time came from Apple's Metal Performance HUD, which logs it
+(`MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1`; Apple defines it from the GPU start and end times of
+the frame's command buffers).
+
+- **Conditions:** MacBook Air, Apple M4, macOS 27.2, on battery (100%), Low Power Mode off; the
+  built-in Retina display at 60 Hz; the game's 1280×800 window, which is 2560×1600 pixels at
+  2×, with MetalFX at 75%; vsync on.
+- **Method** (`game/tests/gpu_price.gd`, `tools/tests/gpu_price.py`): each effect at its
+  heaviest, in a view where it is on screen, since Godot runs no particles whose visibility box
+  is off screen. Each effect keeps running while it is shown and hidden in alternating blocks of
+  1 s (B2 2 s, since showing it restarts its 0.6 s ramp), the first 0.3 s (B2 0.8 s) of each left
+  out. Its price is the mean, over the cycles, of a shown block's GPU time minus the next hidden
+  block's, so a drift in the GPU's time over a minute cancels. The 95% interval comes from the
+  cycles' spread.
+- **A first design failed:** each case held 10 s in three rounds. With every effect off, the
+  GPU's time drifted between rounds by more than every budget (20.5 to 25.8 ms a frame), and the
+  HUD logs only while the game's window is in front, so some cases got no frames
+  (`logs/particles/gpu_price/v1_rounds/NOTE.txt`).
+
+| Effect | Heaviest state, view | Cycles | GPU price (ms) | 95% interval | Budget | Against it | Frames/s shown, hidden |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A1 | two bursts with their passenger water and one spill's water, 1,052 particles; the driver's seat | 40 | −0.39 | −0.46 to −0.32 | 0.25 | within | 39.1, 39.4 |
+| A2 | one burst, 264 particles; the driver's seat | 49 | 0.08 | −0.03 to 0.20 | 0.20 | within | 38.8, 39.6 |
+| B1 | the 8 volumes nearest the B1 strip's view of the valley lamp, 48,050 particles, 3 of them in view | 24 | 0.67 | 0.61 to 0.72 | 0.70 | at its budget | 50.1, 50.0 |
+| B2 | full throttle, 300 particles; behind the van | 24 | 1.11 | 1.02 to 1.20 | 0.30 | over, 3.7 times | 44.0, 45.3 |
+| All four | | | 1.47 | 1.30 to 1.64 | 1.45 | at the combined budget | |
+
+- **A1 reads below zero.** Its cost is under what this method resolves. A GPU's time for the same
+  work also falls when its clock rises with load; that is Claude Code's explanation, not
+  measured.
+- **A2** pools two runs. The run with 40 cycles alone gives 0.19 (0.12 to 0.25), at its budget
+  (`RESULT_a.txt`).
+- **B1** is priced with 3 of its 8 volumes on screen; the five off screen cost nothing, so a view
+  with more lamps in it would cost more.
+- **B2 is over its budget:** its 300 puffs, up to 60 cm across, are drawn with the scatter
+  shader close behind the van.
+- **The frame itself** takes about 26 ms of GPU time from the driver's seat, and 20–23 ms at the
+  lamp and behind the van, before any effect: above the 16.7 ms of a 60 FPS frame. The brief's
+  13.25 ms baseline was measured before the world changes (#150–#158). How much of the difference
+  they cause, and how much the Retina display's pixels, is unmeasured.
+- **Frames a second,** from the HUD's present intervals with vsync on: the game runs below the
+  display's 60 Hz, so vsync does not cap it. No vsync-off comparison was made; GPU time is the
+  primary number.
+- **Logs:** `logs/particles/gpu_price/` (`RESULT.txt` pools `run_all.log` and `run_a.log`).
 
 ## Baseline (earlier suites, pinned frame rate)
 
@@ -170,7 +214,7 @@ warm up; the game's cases ran in three alternating rounds.
   0.02–0.06 ms, are below it too.
 - **Godot's process and physics monitors are not used:** under a script main loop they read
   1028 ms and 0.350 ms in every case.
-- **The GPU price is the author's HUMAN CHECK below.**
+- **The GPU price is under "GPU price", measured windowed with Apple's Metal HUD.**
 
 ## Exit messages explained
 
@@ -196,7 +240,7 @@ benchmark. An `--export-pack` listing has 715 entries and none from `previews/`,
 | Edge of screen | A large GPU effect near the screen's edge does not pop out: B2's 60 m visibility box, B1's volumes | author to do |
 | Scene load | B1 on the first frames after load, already falling; B2 not before its ignition | author to do |
 | Claude against you | Each of Claude Code's strip readings beside the author's verdict, with at least one disagreement named, or none | In `TUNING.md`: the author's verdict after play (#164) keeps the two things Claude's readings faulted, A1's passenger line in the floodlight and A2's white streams; the author to confirm in their own words |
-| GPU price | The Visual Profiler's GPU time with each effect off and at its heaviest, on the M4. Godot's GPU timer read 0 on Metal in Run 17 and still does. FPS with vsync off (F9 toggles it, `c5e307d`), whether it rises above the display's refresh, and the comparison with the brief's budgets | author to do |
+| GPU price | The Visual Profiler's GPU time with each effect off and at its heaviest, on the M4, an FPS comparison with vsync off if made, and the comparison with the brief's budgets | Measured by Claude Code at the author's request (#165), with Apple's Metal Performance HUD, since Godot's GPU timer reads 0 on Metal: "GPU price" above. B2 is over its budget. The author's own Visual Profiler reading is not recorded |
 
 ## The process shader (Step 6, the author)
 
