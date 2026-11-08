@@ -1,17 +1,20 @@
 # HANDOFF.md
 
-**Last run:** fixes from the author's play of r1 (#160): the title's rain, the roof spill, and
-both wipers, 2026-11-08. Before it, the submission's agent parts (#159): the F9 vsync key,
-`SUBMISSION.md`, `TEST-REPORT.md`, `README.md` and the honest log, and the brief's step 5, the
-rendering (#158), after
-the roadside (#157), the depot lit from its wall (#151), the street lamps and the road's puddles
-(#150), and Assignment 6's r1 (#145–#149). All stay uncommitted in the working tree; their
-records, a patch copy of each, and this handoff are committed, not pushed. Their sections are
-below, newest first. **Next:** the author's brief for a photorealistic rainy road is done, one
-approved step at a time (C53): the wet road's reflections (#153), the streetlight (#154), the
-rain and its splashes (#156), the roadside (#157) and the rendering (#158). What is left of
-Assignment 6 is listed in the prompt log's #158 answer and the "Waiting for the author" list;
-it starts with the author's look in the game and the strips.
+**Last run:** the strips, run by Claude Code at the author's request (#163), 2026-11-08: 22
+fixture strips, all read; r0 committed as the first strip (`2b9e327`), r1's strips and Claude's
+comparisons uncommitted beside the r1 change until the author's verdicts. **Next:** the author's
+verdict per effect in the running game; the rest of Assignment 6 is in the prompt log's #158
+answer and its "Waiting for the author" list.
+
+Before it, fixes from the author's play of r1 (#160): the title's rain, the roof spill, and both
+wipers. Before those, the submission's agent parts (#159): the F9 vsync key, `SUBMISSION.md`,
+`TEST-REPORT.md`, `README.md` and the honest log. Before those, the author's brief for a
+photorealistic rainy road, done one approved step at a time (C53): the wet road's reflections
+(#153), the streetlight (#154), the rain and its splashes (#156), the roadside (#157) and the
+rendering (#158), after the depot lit from its wall (#151), the street lamps and the road's
+puddles (#150), and Assignment 6's r1 (#145–#149). All those game changes stay uncommitted in
+the working tree; their records, a patch copy of each, and this handoff are committed, not
+pushed. Their sections are below, newest first.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -61,6 +64,58 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The strips, run by Claude Code (#163)
+
+**The instruction (#163):** "can you run them for me". Asked who starts them, since the
+handout says "You run the capture, not the agent", the author answered "Claude Code runs them".
+
+**Done:**
+- 22 fixture strips with Movie Maker, 1280×800 at 30 fps, each run in its own window: r0 from
+  `4f73f98` in a temporary worktree, r1 from the working tree (the r1 and world patches, #160
+  included). Each round has the defaults and the brief's variants: A1 with retrigger on, at
+  50 km/h and in the depot; A2 with retrigger on and on the valley road; B1 at the door lamp;
+  B2 in the reverse camera.
+- Every strip read. `TUNING.md` has Claude's reading of r0 for each effect and its comparison
+  of r1 with its prediction, and says who captured the strips.
+- Committed in `2b9e327`: the 11 r0 strips (kept frames, `events.txt`, `godot.log`), the r0
+  readings and the prompt log's #163.
+- In the working tree, uncommitted: the 11 r1 strips (72 MB) and the r1 comparisons in
+  `TUNING.md`. They go into one commit with the r1 change and the author's verdicts, in the
+  handout's order: first strip, tuning change, its strip, verdict.
+
+**Commands and real results:**
+- `FROM=4f73f98 scripts/capture-strips.sh 0` and `scripts/capture-strips.sh 1`: exit 0 each.
+- The variants, both rounds, exit 0 each: `FROM=4f73f98 scripts/capture-strips.sh 0
+  wiper_flick:retrigger=true wiper_flick:speed_kmh=50 wiper_flick:place=depot
+  roof_spill:retrigger=true roof_spill:place=valley lamp_rain:place=door
+  exhaust_vapour:view=reverse_camera`, then the same with `1` and no `FROM`. The first attempt
+  passed them as one argument from zsh and made one wrongly named folder per round; both were
+  deleted, and the variants run again from a bash array.
+- Every suite, `LOG_DIR=logs/particles/strips_163`: 30 runs exit 0, at the counts of #160
+  (configurations 451, 221, 364, 44; states 27, 13, 13, 10); the art check 0 failures. Each log
+  ends with the engine's exit messages only (DummyShader RIDs, resources still in use).
+
+**What the strips show (Claude's claims, `TUNING.md`):**
+- r0: no effect visible in any strip, although every events log has it fire.
+- r1: all four visible. B2 matches every predicted frame; B1 every frame but two details.
+- Wrong predictions: #160's A1 passenger line on frame 10 (it shows from 11) and A2's streams on
+  frame 15 (they come between 15 and 20).
+- The clearest fault: with the office floodlight behind it, A1's passenger line turns into a
+  bright white zigzag (A2's office strips, frames 25–50). A2's streams are white, more icicles
+  than clear water.
+- Not readable from the strips: B1's splashes, and whether any drop falls under the door's hood.
+
+**What the next run may rely on:** the r0 strips match `4f73f98`; the r1 strips match the
+working tree as it stands. A re-render repeats the effects (fixed seeds); the game's own rain
+differs a little.
+
+**Unverified:**
+- Everything the strips can't show: the author's verdicts in the running game.
+- `game/shaders/standard_generated.gdshader` was written at 13:51:29, during the captures, with
+  its content unchanged (git shows no difference). The capture script works only in a temporary
+  worktree. The Godot editor, open earlier, has since closed, and most likely saved it on
+  quitting. Nothing in `game/shaders/` changed.
 
 ## Fixes from the author's play of r1 (#160)
 
