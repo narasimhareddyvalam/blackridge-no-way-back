@@ -7,9 +7,12 @@
 # Usage, from the repository root:
 #   scripts/capture-strips.sh <round> [effect[:name=value[,name=value]] ...]
 # With no effect named, all four are captured. A variant's settings go after a colon and name
-# its folder, for example:
+# its folder. FROM=<commit> renders that commit's game instead of the working tree, from a
+# temporary checkout that is imported first and removed afterwards; the strips still land in
+# this repository's captures/. For example:
 #   scripts/capture-strips.sh 0
 #   scripts/capture-strips.sh 0 wiper_flick:retrigger=true lamp_rain:place=door
+#   FROM=4f73f98 scripts/capture-strips.sh 0
 set -u
 
 if [ "$#" -lt 1 ] || ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -27,6 +30,25 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 godot="${GODOT:-$(command -v godot || echo /Applications/Godot.app/Contents/MacOS/Godot)}"
 captures="${CAPTURES:-$root/captures}"
 status=0
+game="$root/game"
+mkdir -p "$root/.scratch-home"
+
+if [ -n "${FROM:-}" ]; then
+	checkout="$(mktemp -d "${TMPDIR:-/tmp}/blackridge-strips.XXXXXX")"
+	trap 'git -C "$root" worktree remove --force "$checkout"' EXIT
+	if ! git -C "$root" worktree add --quiet --detach "$checkout" "$FROM" > /dev/null; then
+		echo "cannot check out $FROM" >&2
+		exit 2
+	fi
+	import_log="$root/.scratch-home/import-$FROM.log"
+	echo "== importing $FROM's assets into a temporary checkout (no window; a few minutes)"
+	if ! HOME="$root/.scratch-home" "$godot" --headless --editor --path "$checkout/game" \
+			--import > "$import_log" 2>&1; then
+		echo "   the import failed; see $import_log" >&2
+		exit 1
+	fi
+	game="$checkout/game"
+fi
 
 for spec in "${specs[@]}"; do
 	effect="${spec%%:*}"
@@ -54,12 +76,13 @@ for spec in "${specs[@]}"; do
 		continue
 	fi
 	mkdir -p "$out"
-	echo "== $effect$suffix: rendering $quit_after frames into $out (a window opens)"
+	echo "== $effect$suffix${FROM:+ at $FROM}: rendering $quit_after frames into $out" \
+		"(a window opens)"
 	extra=()
 	if [ "${#settings[@]}" -gt 0 ]; then
 		extra=(-- "${settings[@]}")
 	fi
-	HOME="$root/.scratch-home" "$godot" --path "$root/game" --resolution 1280x800 \
+	HOME="$root/.scratch-home" "$godot" --path "$game" --resolution 1280x800 \
 		"res://previews/${effect}_preview.tscn" --write-movie "$out/frame.png" \
 		--fixed-fps 30 --quit-after "$quit_after" ${extra[@]+"${extra[@]}"} > "$out/godot.log" 2>&1
 	code=$?

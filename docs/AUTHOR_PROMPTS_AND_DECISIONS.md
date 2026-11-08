@@ -2070,8 +2070,45 @@ tag `a5`. Pictures the author approved or rejected are filed in
        written prediction, the author captures r1, Claude Code compares, and the author judges in
        the game.
 
+145. **A comparison to choose from.**
+     - **The author's message:** "give me comparsion photo to choose from"
+     - **What Claude Code did:** rendered each effect's preview with its present look and with
+       two or three lit options, in short windowed runs of its own (kept in its scratch folder,
+       not strips), and put them side by side on a private page:
+       https://claude.ai/artifact/3e4vVuGdFm9fBS5TndPFRZ.
+
+146. **Realistic, with big drops seen without lights while driving.**
+     - **The author's message:** "make them more realistic. i want the bigger droplets effect
+       even under no lights in normal when driving. make everything realistic as fuck as if its
+       a real world game"
+     - **What Claude Code did, at the author's direction:** applied a realistic look to all four
+       effects as their r1 (`TUNING.md`):
+       - one particle shader for all four, `game/effects/scatter_particle.gdshader` (not in
+         `game/shaders/`): light from behind scatters forward through drops and vapour, as in
+         real rain; a water drop bends the scene behind it like a small lens and shows the night
+         sky at its rim, so it reads on an unlit road; no drop is drawn under 1–2 px wide, and
+         it is made fainter by the same factor;
+       - A1: bigger and more drops (8–15 mm; 80 beads and 120 mist droplets a burst), simulated
+         in the van's frame, so they leave the blade at the van's speed; the air pushes them up
+         the glass as the van drives, and a collider on the glass stops any that fall back on
+         it;
+       - A2: three times as many streams, three times as wide, and more beads;
+       - B1: the strongest of the page's three scattering strengths (`scatter` 100), as the
+         valley lamps are dim;
+       - B2: a denser, softer plume, 300 puffs twice the size.
+     - **Where this departs from the handout's loop:** each effect's r1 changes several
+       settings, not one; the author's request stands in for the approval of a written
+       prediction; and the change stays uncommitted until the author's verdicts. The
+       predictions are written in `TUNING.md` before the author's r1 capture.
+     - **Choices that were Claude Code's:** the options taken from the comparison page (A1's
+       bigger drops with the sky, A2's sheet, B1's strongest scattering, B2's dense and soft
+       plume), the air's push, and the collider.
+
 ## Waiting for the author
 
+- Assignment 6's tuning (#146): the four effects in the game; the r0 and r1 strips
+  (`FROM=4f73f98 scripts/capture-strips.sh 0`, then `scripts/capture-strips.sh 1`); a verdict
+  per effect in `TUNING.md`. Until then r1 stays uncommitted in the working tree.
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,
   the textures' method, and the author's own `FRICTIONAL.md` notes; then the commit, before any
   agent prompt.
