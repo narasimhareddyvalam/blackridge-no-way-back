@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: On foot at the office, with the engine off, there is no exhaust
+PASS: Signing the run sheet and boarding with E starts the engine; the plume waits 0.4 s
+PASS: then ramps up over 0.6 s to idle (0.07 on the way, 0.15 at idle)
+PASS: The real accelerate key drives amount_ratio from 0.15 at idle to 0.80 at full throttle and back (0.80, 0.15)
+PASS: amount stays 300 throughout, so the plume never reallocates or restarts
+PASS: Esc pauses it: the plume freezes, and the throttle cannot change it
+PASS: Esc again resumes it from where it was, not from a new ignition
+PASS: Hidden, the plume stops emitting
+PASS: Shown again with the engine running, it ramps back up (0.04, then 0.15)
+PASS: New drive switches the engine off and the plume stops at once
+EXHAUST VAPOUR STATE RESULT: 10/10 passed; 0 failed
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

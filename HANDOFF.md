@@ -1,13 +1,14 @@
 # HANDOFF.md
 
-**Last run:** the brief's step 4, the roadside (#157), 2026-11-08, on branch `develop`, after the
-depot lit from its wall (#151), the street lamps and the road's puddles (#150), and Assignment
-6's r1 (#145–#149). All stay uncommitted in the working tree; their records, a patch copy of
-each, and this handoff are committed, not pushed. Their sections are below, newest first.
-**Next:** the author's brief for a photorealistic rainy road, one part at a time, each approved
-before it starts (C53). Steps 1–4 are done: the wet road's reflections (#153), the streetlight
-(#154), the rain and its splashes (#156), and the roadside (#157). What comes next waits for
-the author.
+**Last run:** the brief's step 5, the rendering (#158), 2026-11-08, on branch `develop`, after
+the roadside (#157), the depot lit from its wall (#151), the street lamps and the road's puddles
+(#150), and Assignment 6's r1 (#145–#149). All stay uncommitted in the working tree; their
+records, a patch copy of each, and this handoff are committed, not pushed. Their sections are
+below, newest first. **Next:** the author's brief for a photorealistic rainy road is done, one
+approved step at a time (C53): the wet road's reflections (#153), the streetlight (#154), the
+rain and its splashes (#156), the roadside (#157) and the rendering (#158). What is left of
+Assignment 6 is listed in the prompt log's #158 answer and the "Waiting for the author" list;
+it starts with the author's look in the game and the strips.
 
 Before it, the build after the brief (#142–#144), committed in 18 commits from `7f1f7bb` (the
 test runner) to `4f73f98`, not pushed. Before that:
@@ -26,7 +27,8 @@ lamps (C47) and Run 33. Committed before them, in order:
 - `301c250`: the save rules, on their own (#107);
 - `573862b`: Runs 20–26, after the author had told Max about the van on 2026-11-03 (#109).
 
-`develop` is pushed up to `5d5ca7e`; `main` is untouched.
+`develop` is pushed up to `c1ee48f`; every commit after it is local, not pushed; `main` is
+untouched.
 
 **Assignment 6 (particles) began on 2026-11-07 (#131–#138, C52):** four effects, the author's
 brief first, then the test runner, the baseline and the assignment's Step 1. See the section
@@ -56,6 +58,25 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## The brief, step 5: the rendering (#158)
+
+**The instruction (#158):** "proceed with step 5. what else is left in the assignment do?"
+
+**Found:** every rendering setting is Godot's default except MetalFX temporal upscaling at 75% on
+macOS. The moon's mirror glint made wet surfaces shine silver-blue and the needles look frosted;
+under full cloud the moon gives only diffuse light. Four candidates changed almost nothing
+visible, so none was made: shadows to 65 m, soft contact shadows, a reflection probe at the west
+bend, and anisotropic filtering on the road (renders and pixel counts in the prompt log).
+
+**In the working tree, uncommitted,** in `tools/tuning/world/lamps_and_rings.patch`:
+`industrial_loop.gd`'s moon has `light_specular = 0.0`.
+
+**Tests:** `LOG_DIR=logs/particles/brief_step5`, every suite and `test_night_dimming.gd` at 30, 60
+and 144 exit 0 with step 4's counts; art 0 failures; `cost_effects.gd 60 300` exit 0 (0.467 ms).
+
+**Unverified:** the darker night in play, on foot and in the van; the author's view of losing the
+frosted look of the trees.
 
 ## The brief, step 4: the roadside (#157)
 

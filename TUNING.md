@@ -110,7 +110,9 @@ and A2's show the new puddles. Then the depot's three street lamps became securi
 its wall (#151), each with its rain volume, so A1's depot strip shows them too. The brief's
 roadside step (#157) adds grass along the valley road, guardrails on the bends east and west of
 the depot, four lamps on the west bend, and lit mist under every lamp. So strips on the valley
-road and at the depot show these too, including B1's at the valley lamp. To capture r1 without
+road and at the depot show these too, including B1's at the valley lamp. The brief's rendering
+step (#158) turns off the moon's glint on wet surfaces and needles, so every strip is darker
+outside the lamps. To capture r1 without
 these changes, first reverse their patch
 (`git apply -R tools/tuning/world/lamps_and_rings.patch`), then apply it again.
 

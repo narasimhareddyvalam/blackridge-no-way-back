@@ -351,7 +351,7 @@ index 624b83a..6cc83ab 100644
  	NORMAL = normalize((VIEW_MATRIX * vec4(surface, 0.0)).xyz);
  }
 diff --git a/game/features/environments/industrial_loop/industrial_loop.gd b/game/features/environments/industrial_loop/industrial_loop.gd
-index 0303d0b..7312056 100644
+index 0303d0b..3338bfd 100644
 --- a/game/features/environments/industrial_loop/industrial_loop.gd
 +++ b/game/features/environments/industrial_loop/industrial_loop.gd
 @@ -10,13 +10,16 @@ const ASPHALT_COLOR = preload("art/asphalt_albedo.png")
@@ -438,7 +438,15 @@ index 0303d0b..7312056 100644
  var _line := Build.material(Color("bdab72"), 0.65)
  var _random := RandomNumberGenerator.new()
  
-@@ -155,7 +193,8 @@ func _ground_and_roads() -> void:
+@@ -136,6 +174,7 @@ func _environment() -> void:
+ 	moon.rotation_degrees = Vector3(-35.0, -28.0, 0.0)
+ 	moon.light_color = Color("9bb8d4")
+ 	moon.light_energy = 0.2
++	moon.light_specular = 0.0
+ 	moon.shadow_enabled = true
+ 	moon.directional_shadow_max_distance = 40.0
+ 	moon.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+@@ -155,7 +194,8 @@ func _ground_and_roads() -> void:
  	terrain = HillTerrain.new()
  	terrain.name = "HillTerrain"
  	add_child(terrain)
@@ -448,7 +456,7 @@ index 0303d0b..7312056 100644
  	var asphalt := ShaderMaterial.new()
  	asphalt.shader = ASPHALT
  	asphalt.set_shader_parameter("aggregate_color", _texture("tarred_gravel", "diff"))
-@@ -178,7 +217,7 @@ func _ground_and_roads() -> void:
+@@ -178,7 +218,7 @@ func _ground_and_roads() -> void:
  	dressing = GhatDressing.new()
  	dressing.name = "GhatDressing"
  	add_child(dressing)
@@ -457,7 +465,7 @@ index 0303d0b..7312056 100644
  	var yard := ShaderMaterial.new()
  	yard.shader = ASPHALT
  	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
-@@ -327,6 +366,9 @@ func _hill_material() -> ShaderMaterial:
+@@ -327,6 +367,9 @@ func _hill_material() -> ShaderMaterial:
  		material.set_shader_parameter(pair[0] + "_color", _texture(pair[1], "diff"))
  		material.set_shader_parameter(pair[0] + "_normal", _texture(pair[1], "nor_gl"))
  		material.set_shader_parameter(pair[0] + "_arm", _texture(pair[1], "arm"))
@@ -467,7 +475,7 @@ index 0303d0b..7312056 100644
  	return material
  
  
-@@ -461,7 +503,7 @@ func _depot() -> void:
+@@ -461,7 +504,7 @@ func _depot() -> void:
  		Build.box(self, Vector3(x, 2.4, 112.45), Vector3(9, 4.8, 0.15), _metal)
  		for y in range(1, 10):
  			Build.box(self, Vector3(x, y * 0.48, 112.30), Vector3(8.8, 0.025, 0.04), _concrete)
@@ -476,7 +484,7 @@ index 0303d0b..7312056 100644
  	for x in [-34, -22]:
  		Build.box(self, Vector3(x, 0.04, 93), Vector3(0.12, 0.02, 12), _line)
  	Build.box(self, Vector3(-28, 0.04, 99), Vector3(12, 0.02, 0.15), _line)
-@@ -471,6 +513,28 @@ func _depot() -> void:
+@@ -471,6 +514,28 @@ func _depot() -> void:
  	_direction_sign(Vector2(40, 68), "FREIGHT DEPOT", "NEXT LEFT")
  	for at in TOWN_LAMPS:
  		_lamp_post(at, PI / 2)
@@ -505,7 +513,7 @@ index 0303d0b..7312056 100644
  
  
  func _direction_sign(near: Vector2, title: String, detail: String) -> void:
-@@ -549,7 +613,7 @@ func _lumber_yard() -> void:
+@@ -549,7 +614,7 @@ func _lumber_yard() -> void:
  
  func _site_office() -> void:
  	var at := SITE_OFFICE
@@ -514,7 +522,7 @@ index 0303d0b..7312056 100644
  	var office := SiteOffice.instantiate() as Node3D
  	office.name = "SiteOffice"
  	office.position = at
-@@ -603,6 +667,7 @@ func _office_lights(office: Node3D) -> void:
+@@ -603,6 +668,7 @@ func _office_lights(office: Node3D) -> void:
  	lamp.spot_angle = 55.0
  	lamp.shadow_enabled = true
  	office.add_child(lamp)
@@ -522,7 +530,7 @@ index 0303d0b..7312056 100644
  	var flood := SpotLight3D.new()
  	flood.name = "FloodLight"
  	flood.transform = (office.get_node("Floodlight") as Node3D).transform
-@@ -614,6 +679,7 @@ func _office_lights(office: Node3D) -> void:
+@@ -614,6 +680,7 @@ func _office_lights(office: Node3D) -> void:
  	flood.spot_angle = 30.0
  	flood.shadow_enabled = true
  	office.add_child(flood)
@@ -530,7 +538,7 @@ index 0303d0b..7312056 100644
  	var glow := OmniLight3D.new()
  	glow.name = "WindowGlow"
  	glow.position = (office.get_node("WindowLight") as Node3D).position
-@@ -645,29 +711,151 @@ func _street_furniture() -> void:
+@@ -645,29 +712,151 @@ func _street_furniture() -> void:
  
  
  func _lamp_post(at: Vector3, heading: float) -> void:
@@ -698,7 +706,7 @@ index 0303d0b..7312056 100644
  
  
  func _reflections() -> void:
-@@ -712,7 +900,18 @@ func _forest() -> void:
+@@ -712,7 +901,18 @@ func _forest() -> void:
  	forest_floor = ForestFloor.new()
  	forest_floor.name = "ForestFloor"
  	add_child(forest_floor)

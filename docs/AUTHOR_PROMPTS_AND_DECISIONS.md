@@ -2519,6 +2519,36 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Metal. With them on, the depot view held this Mac's 6.9 ms display frame, on battery,
        even at double 3D resolution, but the runs with them off were noisy.
 
+158. **The brief, step 5: rendering quality.**
+     - **The author's message:** "proceed with step 5. what else is left in the assignment do?"
+       (After interrupting a render: "sorry continue, i interrupted bymistakenly".)
+     - **What Claude Code found:**
+       - every rendering setting is Godot's default except MetalFX temporal upscaling at 75% on
+         macOS: a 4,096 shadow atlas with "soft low" filtering, 256 px reflection probes, 4×
+         texture filtering, screen-space reflections on;
+       - **the moon:** the game's one directional light shone a mirror-bright glint on wet
+         surfaces. That glint made the wet road and the depot yard shine silver-blue, and the
+         pine needles look frosted, like snow. Under full cloud no direct sun or moonlight
+         reaches the ground; the sky glows evenly
+         ([daylighting glossary](https://www.schorsch.com/en/kbase/glossary/skies.html));
+       - candidates rendered with and without, and left out because they changed almost nothing
+         visible:
+         - the lamps' shadows carried to 65 m (45 m): 7 pixels of a lamp 59 m away;
+         - soft shadows that sharpen near contact (`light_size` 0.3 m): the same at this scale,
+           at a real cost;
+         - a reflection probe at the west bend: 0.16% of the picture;
+         - anisotropic filtering of the road's textures: 0.03% at night.
+     - **What Claude Code changed** (uncommitted, in the world patch): the moon lights without a
+       glint (`light_specular` 0), as diffuse light from the cloud. The van's mirrors already lit
+       their pictures this way (ambient fill in the moon's place).
+     - **Checked:** every suite passes with step 4's results (`logs/particles/brief_step5/SUMMARY.txt`;
+       the game reads 0.467 ms headless); in-game renders match the test renders (0 pixels apart
+       at the west bend).
+     - **Claude Code answered the second question** with the list of what is left of Assignment
+       6, from the handoff, `TUNING.md`, `TEST-REPORT.md`, `SUBMISSION.md`, `FRICTIONAL.md` and
+       the brief: the author's look, strips and verdicts first, then Step 6's shader, the GPU
+       price, the film, the fresh-clone check, the tag and the submission fields.
+
 ## Waiting for the author
 
 - Assignment 6's tuning (#146–#149): the four effects in the game; the r0 and r1 strips
