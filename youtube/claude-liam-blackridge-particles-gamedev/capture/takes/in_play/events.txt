@@ -1,0 +1,43 @@
+TAKE frame -1: start, in the van | paused false, wipers 1, gear 1, speed 0.00, flicks 0, exhaust 1.00
+TAKE frame 0: state | paused false, wipers 1, gear 1, speed 0.00, flicks 0, exhaust 1.00
+TAKE frame 15: state | paused false, wipers 1, gear 1, speed 0.00, flicks 0, exhaust 0.03
+TAKE frame 30: state | paused false, wipers 1, gear 1, speed 0.00, flicks 1, exhaust 0.15
+TAKE frame 45: wipers pressed and released | paused false, wipers 1, gear 1, speed 0.00, flicks 1, exhaust 0.15
+TAKE frame 45: state | paused false, wipers 1, gear 1, speed 0.00, flicks 1, exhaust 0.15
+TAKE frame 46: state | paused false, wipers 2, gear 1, speed 0.00, flicks 1, exhaust 0.15
+TAKE frame 60: state | paused false, wipers 2, gear 1, speed 0.00, flicks 2, exhaust 0.15
+TAKE frame 75: state | paused false, wipers 2, gear 1, speed 0.00, flicks 2, exhaust 0.15
+TAKE frame 90: state | paused false, wipers 2, gear 1, speed 0.00, flicks 3, exhaust 0.15
+TAKE frame 105: state | paused false, wipers 2, gear 1, speed 0.00, flicks 3, exhaust 0.15
+TAKE frame 120: state | paused false, wipers 2, gear 1, speed 0.00, flicks 4, exhaust 0.15
+TAKE frame 135: state | paused false, wipers 2, gear 1, speed 0.00, flicks 4, exhaust 0.15
+TAKE frame 150: state | paused false, wipers 2, gear 1, speed 0.00, flicks 5, exhaust 0.15
+TAKE frame 165: state | paused false, wipers 2, gear 1, speed 0.00, flicks 6, exhaust 0.15
+TAKE frame 180: state | paused false, wipers 2, gear 1, speed 0.00, flicks 6, exhaust 0.15
+TAKE frame 195: state | paused false, wipers 2, gear 1, speed 0.00, flicks 7, exhaust 0.15
+TAKE frame 210: state | paused false, wipers 2, gear 1, speed 0.00, flicks 7, exhaust 0.15
+TAKE frame 225: state | paused false, wipers 2, gear 1, speed 0.00, flicks 8, exhaust 0.15
+TAKE frame 240: state | paused false, wipers 2, gear 1, speed 0.00, flicks 8, exhaust 0.15
+TAKE frame 255: pause pressed and released | paused false, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 255: state | paused false, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 256: state | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 270: state | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 285: state | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 300: state | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 315: pause pressed and released | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 315: state | paused true, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 316: state | paused false, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 330: state | paused false, wipers 2, gear 1, speed 0.00, flicks 9, exhaust 0.15
+TAKE frame 345: change_gear pressed and released | paused false, wipers 2, gear 1, speed 0.00, flicks 10, exhaust 0.15
+TAKE frame 345: state | paused false, wipers 2, gear 1, speed 0.00, flicks 10, exhaust 0.15
+TAKE frame 346: state | paused false, wipers 2, gear -1, speed 0.00, flicks 10, exhaust 0.15
+TAKE frame 360: handbrake and accelerate held | paused false, wipers 2, gear -1, speed 0.00, flicks 10, exhaust 0.15
+TAKE frame 360: state | paused false, wipers 2, gear -1, speed 0.00, flicks 10, exhaust 0.15
+TAKE frame 375: state | paused false, wipers 2, gear -1, speed 0.00, flicks 11, exhaust 0.69
+TAKE frame 390: state | paused false, wipers 2, gear -1, speed 0.00, flicks 12, exhaust 0.80
+TAKE frame 405: state | paused false, wipers 2, gear -1, speed 0.00, flicks 12, exhaust 0.80
+TAKE frame 420: state | paused false, wipers 2, gear -1, speed 0.00, flicks 13, exhaust 0.80
+TAKE frame 435: state | paused false, wipers 2, gear -1, speed 0.00, flicks 13, exhaust 0.80
+TAKE frame 450: both let go | paused false, wipers 2, gear -1, speed 0.00, flicks 14, exhaust 0.80
+TAKE frame 450: state | paused false, wipers 2, gear -1, speed 0.00, flicks 14, exhaust 0.80
+TAKE frame 465: state | paused false, wipers 2, gear -1, speed 0.00, flicks 14, exhaust 0.26

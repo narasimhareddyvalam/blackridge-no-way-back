@@ -1,0 +1,2220 @@
+{
+  "metadata": {
+    "title": "Blackridge, Rain and Vapour",
+    "slug": "claude-liam-blackridge-particles-gamedev",
+    "kind": "godot-gamedev",
+    "modifier": "walker",
+    "game": "Blackridge: No Way Back",
+    "game_project": "game/",
+    "game_revision": "c1c9d8b",
+    "brand": "claude-liam",
+    "audience": "Godot developers and students following the @NikBearBrown Claude workflows",
+    "register": "Teardown",
+    "engine": "kokoro",
+    "voice": "am_onyx",
+    "voice_kokoro": "am_onyx",
+    "palette": "claude",
+    "style_preset": "claude",
+    "aspect_ratio": "16:9",
+    "fit": "contain",
+    "fps": 30,
+    "captions": false,
+    "channel": "@NikBearBrown",
+    "channel_title": "@NikBearBrown",
+    "folderLabel": "@NikBearBrown",
+    "greeting": "Namaste, Liam",
+    "greeting_note": "hello lexicon: Namaste (Hindi), as in the author's Assignment 5 film.",
+    "persona": "Liam (in for Bear)",
+    "presenter": "Liam (in for Bear)",
+    "in_for_bear": true,
+    "teaching_contract": "code-then-result-v1",
+    "note": "Contributions are stated as the records state them (prompt log #173).",
+    "build": {
+      "at": "2026-11-08T17:03:00",
+      "cut": "master",
+      "filled": 28,
+      "of": 28,
+      "slates": [],
+      "skin_warnings": []
+    }
+  },
+  "beats": [
+    {
+      "beat_id": "B00",
+      "act": "ASK",
+      "role_note": "COLD OPEN LAW + walker bookend 1: Claude composer, prompt begins 'Please use Walker to convert my game design document about …', describing this game. Eyebrow discloses it is reconstructed.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Namaste. This is Liam, in for Bear. This is Blackridge: No Way Back, a Godot game where you drive a freight van through a rainy town at night. The prompt on screen is a reconstruction; the real work began from the author's brief. Let's take apart the four particle effects this build added, and how each was tested and priced.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "command": "Please use Walker to convert my game design document about Blackridge: No Way Back, a narrative crime game where you drive freight through a rainy industrial town at night, into four GPU particle effects: the wiper's flick, the roof's spill on a hard brake, rain in every lamp's light, and the exhaust's vapour.",
+            "topic": "RECONSTRUCTED PROMPT · BLACKRIDGE",
+            "segment": "Blackridge, Rain and Vapour",
+            "greeting": "Namaste, Liam",
+            "runningText": "reading the brief…",
+            "output": [
+              "Brief committed before any effect.",
+              "Four effects. Twenty-two frame strips.",
+              "Every price measured; one over budget."
+            ],
+            "folderLabel": "@NikBearBrown"
+          }
+        },
+        "show": [
+          {
+            "at": "Namaste",
+            "event": "Composer types the reconstructed Walker prompt"
+          },
+          {
+            "at": "reconstruction",
+            "event": "Running line, then three result lines land"
+          }
+        ]
+      },
+      "audio_file": "mp3/beat-B00.mp3",
+      "actual_duration_s": 17.02,
+      "render_duration_s": 17.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B00.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B01",
+      "act": "BLUF",
+      "role_note": "EXECUTIVE-SUMMARY LAW, walker bookend 2. Single-word trigger 'noise' -> 'rules': the misconception that particles are random decoration, which the body dismantles.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Particle effects are rules. In Blackridge, four of them answer the wipers, the brakes, the lamps and the engine. Each one was predicted, tested, tuned against frame strips, and priced on the G P U.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "BrutalistHesitantWriter",
+          "props": {
+            "text": "Particle effects are noise.\nIn Blackridge, four of them answer\nthe wipers, the brakes,\nthe lamps and the engine.",
+            "triggerWords": "noise",
+            "replacementWords": "rules",
+            "fontSize": 80,
+            "mistakeRate": 2,
+            "hesitateWithin": 2,
+            "hesitateBetween": 8,
+            "charMs": 30,
+            "seed": "claude-liam-blackridge-particles-gamedev",
+            "contextTitle": "Blackridge, Rain and Vapour"
+          }
+        },
+        "show": [
+          {
+            "at": 0.8,
+            "event": "Writer types 'Particle effects are noise.'"
+          },
+          {
+            "at": "rules",
+            "event": "Deletes 'noise', types 'rules'"
+          }
+        ]
+      },
+      "lead_silence_s": 0.8,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "Hesitant-writer bookend (EXECUTIVE-SUMMARY LAW): the overview is typed token by token, so steady-state frames are mostly cream."
+      },
+      "audio_file": "mp3/beat-B01.mp3",
+      "actual_duration_s": 11.787,
+      "audio_notes": "lead 0.8 s baked with ffmpeg; 10.99 s -> 11.79 s",
+      "render_duration_s": 11.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B01.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B02",
+      "act": "SETUP",
+      "role_note": "Identifies the game, both effects, their jobs and the events and conditions that drive them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The author chose four effects and wrote their brief. Effect A: two one-shot events, the wiper's flick at each top turn and the roof's spill on a hard brake. Effect B: two continuous ones, rain in each lamp's light and exhaust that follows the throttle. All are G P U particles in Godot four point seven point two.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Four effects, two jobs each",
+            "label": "scripted input · real main scene · held frame",
+            "source": "capture/takes/in_play/stills/in_play_f150.png · in-play take frame 150 · game c1c9d8b",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/stills/in_play_f150.png",
+                "aspect": 1.6,
+                "caption": "In play: fast wipers, rain in the office lamps' light",
+                "row": 0,
+                "at": 0.0
+              }
+            ],
+            "cards": [
+              {
+                "label": "A1 · one-shot",
+                "text": "Wiper flick: wiper_swept, at the top turn",
+                "at": 4.37,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "A2 · one-shot",
+                "text": "Roof spill: a new hard brake",
+                "at": 6.13,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "B1 · ambience",
+                "text": "Lamp rain: camera within 65 m of a lamp",
+                "at": 9.57,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "B2 · feedback",
+                "text": "Exhaust: engine_on, throttle → amount_ratio",
+                "at": 10.83,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Engine",
+                "text": "Godot 4.7.2 · Forward+ · GPUParticles3D",
+                "at": 14.43,
+                "tone": "neutral",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 16.94
+          }
+        },
+        "show": [
+          {
+            "at": "four effects",
+            "event": "Held in-play frame"
+          },
+          {
+            "at": "wiper's flick",
+            "event": "Effect cards light in narration order"
+          }
+        ]
+      },
+      "audio_file": "mp3/beat-B02.mp3",
+      "actual_duration_s": 16.94,
+      "render_duration_s": 16.966666666666665,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B02.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B03",
+      "act": "SPEC",
+      "role_note": "Specification shown verbatim from CHANGE-BRIEF.md (outside game/, so not a gamedev excerpt).",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Before any effect existed, the brief fixed each one's intent: timing phases, contrast, scale, change over life, variation and layered emitters. It predicted ten ways they could fail, every price, and a budget of one point four five milliseconds of G P U time for all four. It was committed before the build, and Claude's project file imports it.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The brief came first",
+            "label": "document · CHANGE-BRIEF.md, verbatim",
+            "source": "CHANGE-BRIEF.md §2, §7, §8 · committed 8c3e636 before the first build commit",
+            "layout": "document",
+            "media": [],
+            "cards": [
+              {
+                "label": "Intent",
+                "text": "Timing, contrast, scale, change over life, variation, layers",
+                "at": 2.97,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "§7",
+                "text": "Ten predicted failures, each with its check",
+                "at": 8.47,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "§8",
+                "text": "Budget: 1.45 ms of GPU time, all four",
+                "at": 11.27,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Order",
+                "text": "8c3e636 brief → build · CLAUDE.md:68 imports it",
+                "at": 15.27,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Revisions",
+                "text": "1–11 record every kept change",
+                "at": 17.63,
+                "tone": "neutral",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "- **Timing phases:** 0.00–0.07 s: sharp bead release at the blade tip; 0.07–0.25 s: larger beads arc outward and down, with finer spray spreading; 0.25–0.65 s: big drops fall out of view; 0.65–1.20 s: only a few faint mist specks remain before fading.\n| 1 | Old Godot 3 property names or incorrect 3D material settings cause errors or invisible particles | Headless configuration/property readback test in Godot 4.7.2, followed by a windowed preview |\n| **Total predicted maximum** | **2,852**† | **0.13 ms** | **0.80 ms** | **Combined GPU ≤ 1.45 ms** | Windowed GPU/render impact |",
+            "documentLabel": "CHANGE-BRIEF.md",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 18.9
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B03.mp3",
+      "actual_duration_s": 18.9,
+      "render_duration_s": 18.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B03.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B04",
+      "act": "CODE",
+      "role_note": "The three parts of a particle system, a line from the scene file for each.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Every particle system has three parts, and this scene file holds all three. Emission: how many, and for how long, three hundred puffs living one point six seconds. Process: how they move and change, here its own material. Draw: what each puff looks like, a quad and its shader. The settings live in the scene, not in code.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "B2's scene: the three parts",
+            "project": "Blackridge: No Way Back",
+            "path": "game/effects/exhaust_vapour.tscn",
+            "source": "effects/exhaust_vapour.tscn:59–70 · Claude Code, directed by the author · verbatim",
+            "code": "[node name=\"ExhaustPlume\" type=\"GPUParticles3D\" parent=\".\"]\nlayers = 1\nemitting = false\namount = 300\nlifetime = 1.6\none_shot = false\npreprocess = 0.0\nexplosiveness = 0.0\nvisibility_aabb = AABB(-3, -1, -11, 6, 5, 60)\nlocal_coords = false\nprocess_material = SubResource(\"Process_plume\")\ndraw_pass_1 = SubResource(\"Quad_puff\")",
+            "startLine": 59,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Emission",
+                "value": "amount, lifetime, preprocess"
+              },
+              {
+                "label": "Process",
+                "value": "Process_plume, lines 22–40"
+              },
+              {
+                "label": "Draw",
+                "value": "Quad_puff and its shader"
+              }
+            ],
+            "cues": [
+              {
+                "at": 5.97,
+                "line": 62,
+                "label": "Emission"
+              },
+              {
+                "at": 8.43,
+                "line": 69,
+                "label": "Process"
+              },
+              {
+                "at": 11.17,
+                "line": 70,
+                "label": "Draw"
+              }
+            ],
+            "output": [
+              "test_exhaust_vapour_config.gd: 44/44, every setting read back (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 16.68
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B04.mp3",
+      "actual_duration_s": 16.68,
+      "render_duration_s": 16.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B04.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B05",
+      "act": "RESULT",
+      "role_note": "Result of B04: the scene's three parts, as the engine draws them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Here's that scene behind the van, in a fixture. After the ignition, puffs leave the pipe fast and stop within a metre. On the throttle the plume thickens and glows red in the brake lamps. Switched off, it rises and thins away.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The three parts, running",
+            "label": "fixture capture · B2 preview · the clip in real time, then held strip frames",
+            "source": "capture/takes/b2_rear/b2_rear.mp4 · captures/exhaust_vapour/r1 frames 55, 80, 100, 130 · ignition f10, throttle f40–80, off f100",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-rain/takes/b2_rear.mp4",
+                "aspect": 1.6,
+                "caption": "the clip, 30 fps, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/55.png",
+                "aspect": 1.6,
+                "caption": "frame 55, held: throttle",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.1,
+                  "y": 0.15,
+                  "w": 0.65,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/80.png",
+                "aspect": 1.6,
+                "caption": "frame 80, held: brake lamps",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.1,
+                  "y": 0.15,
+                  "w": 0.65,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/100.png",
+                "aspect": 1.6,
+                "caption": "frame 100, held: engine off",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.1,
+                  "y": 0.15,
+                  "w": 0.65,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/130.png",
+                "aspect": 1.6,
+                "caption": "frame 130, held",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.1,
+                  "y": 0.15,
+                  "w": 0.65,
+                  "h": 0.7
+                }
+              }
+            ],
+            "cards": [],
+            "rows": [
+              {
+                "label": "clip",
+                "at": 0.0
+              },
+              {
+                "label": "throttle",
+                "at": 6.23
+              },
+              {
+                "label": "off",
+                "at": 9.43
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 12.22
+          }
+        },
+        "evidence_media": "capture/takes/b2_rear/b2_rear.mp4"
+      },
+      "audio_file": "mp3/beat-B05.mp3",
+      "actual_duration_s": 12.22,
+      "render_duration_s": 12.233333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B05.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B06",
+      "act": "PRICE",
+      "role_note": "Why a GPU effect's headless price is near zero, with the recorded control.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Why can't a headless run price this? Headless, Godot uses a dummy renderer: nothing is drawn and no particle is simulated. The cost script's empty-scene control reads two thousandths of a millisecond, the game half a millisecond, and every effect the same as none. That's only the C P U's share.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Headless: the CPU's share only",
+            "label": "recorded output · cost_effects.gd, headless, 60 fps",
+            "source": "logs/particles/mutations_final/cost/cost_effects_60fps.log",
+            "layout": "document",
+            "media": [],
+            "cards": [
+              {
+                "label": "Dummy renderer",
+                "text": "No particle drawn or simulated",
+                "at": 3.07,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Control",
+                "text": "0.002 ms",
+                "at": 8.07,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Every effect",
+                "text": "Same as none, within noise",
+                "at": 11.77,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "The controls read 0.002 and 0.003 ms; the game with every effect off reads 0.459 ms.\nA1, two bursts alive against every effect off: -0.001 ms; the rounds vary by up to 0.025 ms (reads the same as every effect off)\nA2, one burst alive against every effect off: -0.002 ms; the rounds vary by up to 0.025 ms (reads the same as every effect off)\nB1, eight lamp volumes against every effect off: -0.005 ms; the rounds vary by up to 0.025 ms (reads the same as every effect off)\nB2, full throttle against every effect off: +0.013 ms; the rounds vary by up to 0.039 ms (reads the same as every effect off)",
+            "documentLabel": "cost_effects_60fps.log",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.98
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B06.mp3",
+      "actual_duration_s": 15.98,
+      "render_duration_s": 16.0,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B06.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B07",
+      "act": "CODE",
+      "role_note": "Effect A1's trigger code.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "A one's event is the van's wiper swept signal, sent every half stroke. The handler acts only at the top turn, with the wipers on. It takes a free burst from a pool of two, so a new flick can overlap the last one's spray. If both are still alive, it logs a miss rather than cut one short.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "A1: the top turn fires a flick",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/vehicles/freight_van/van_particles.gd",
+            "source": "features/vehicles/freight_van/van_particles.gd:288–300 · Claude Code, directed by the author · verbatim",
+            "code": "func _on_wiper_swept() -> void:\n\tif not is_instance_valid(_wiper) or vehicle.wiper_setting == 0 \\\n\t\t\tor vehicle.wiper_angle < _top_turn:\n\t\treturn\n\tvar index := _flick_alive.find(false)\n\tif index < 0:\n\t\tflicks_missed += 1\n\t\tpush_warning(\"Wiper flick missed: both bursts are still alive\")\n\t\treturn\n\tvar flick := flicks[index]\n\tif not flick.is_inside_tree():\n\t\treturn\n\tflick.global_position = tip()",
+            "startLine": 288,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Event",
+                "value": "wiper_swept, freight_van.gd:5"
+              },
+              {
+                "label": "Retrigger",
+                "value": "overlap, FLICK_POOL 2 (line 17)"
+              },
+              {
+                "label": "Park turn",
+                "value": "ignored, below the top turn"
+              }
+            ],
+            "cues": [
+              {
+                "at": 5.33,
+                "line": 290,
+                "label": "top turn only"
+              },
+              {
+                "at": 8.23,
+                "line": 292,
+                "label": "free burst"
+              },
+              {
+                "at": 12.87,
+                "line": 295,
+                "label": "both alive"
+              }
+            ],
+            "output": [
+              "test_wiper_flick_state.gd: 27/27, top turns only, two bursts at most (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 15.51
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B07.mp3",
+      "actual_duration_s": 15.51,
+      "render_duration_s": 15.533333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B07.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B08",
+      "act": "RESULT",
+      "role_note": "Result of B07: Effect A1 in play, including rapid repeats.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In play, on fast wipers: a flick at every top turn, about one a second, beside the passenger blade's line of water. This is scripted input on the real game. The log has the wipers fast at one and a half seconds, and nine flicks by eight and a half.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "A1 in play: rapid repeats",
+            "label": "scripted input · real main scene · 30 fps, real time",
+            "source": "capture/takes/in_play/in_play_wipers.mp4: frames 30–254 of the in-play take · events.txt: wipers fast f45, 9 flicks by f255",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-rain/takes/in_play_wipers.mp4",
+                "aspect": 1.6,
+                "caption": "fast wipers at the site office, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-rain/takes/in_play_wipers.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 1
+              }
+            ],
+            "cards": [],
+            "rows": [
+              {
+                "label": "in play",
+                "at": 0.0
+              },
+              {
+                "label": "replay",
+                "at": 7.5
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 13.95
+          }
+        },
+        "evidence_media": "capture/takes/in_play/in_play_wipers.mp4"
+      },
+      "audio_file": "mp3/beat-B08.mp3",
+      "actual_duration_s": 13.95,
+      "render_duration_s": 13.966666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B08.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B09",
+      "act": "TUNING",
+      "role_note": "Effect A: the first strip, the tuning revision (prediction, before and after strips) and the author's verdict.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The first strips showed nothing: three-millimetre drops lit only by the night were invisible, and the spill hid behind the wet glass. At the author's request the drops became water that bends the light behind it. Claude predicted each frame first; three were wrong, and two were off in brightness. The author played both effects and kept them, overruling two of Claude's readings.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Effect A: first strip, then r1",
+            "label": "fixture captures · frame strips r0 and r1 · crops",
+            "source": "captures/wiper_flick/r0|r1/frame 12 · captures/roof_spill/r0|r1/frame 20 · TUNING.md",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/wiper_flick/r0/12.png",
+                "aspect": 1.6,
+                "caption": "A1 r0, frame 12",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.156,
+                  "y": 0.1875,
+                  "w": 0.203,
+                  "h": 0.275
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/wiper_flick/r1/12.png",
+                "aspect": 1.6,
+                "caption": "A1 r1, frame 12",
+                "row": 0,
+                "at": 7.63,
+                "crop": {
+                  "x": 0.156,
+                  "y": 0.1875,
+                  "w": 0.203,
+                  "h": 0.275
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/roof_spill/r0/20.png",
+                "aspect": 1.6,
+                "caption": "A2 r0, frame 20",
+                "row": 1,
+                "at": 4.33,
+                "crop": {
+                  "x": 0.42,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.5
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/roof_spill/r1/20.png",
+                "aspect": 1.6,
+                "caption": "A2 r1, frame 20",
+                "row": 1,
+                "at": 7.63,
+                "crop": {
+                  "x": 0.42,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.5
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Predicted",
+                "text": "A1 f12: dashes by the pillar ✓",
+                "at": 10.6,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Wrong",
+                "text": "No heavy drop on f20–30 · passenger line from f11 · A2 streams after f15",
+                "at": 12.1,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Verdict",
+                "text": "Kept after play (#164); 2 readings overruled",
+                "at": 15.87,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "A1",
+                "at": 0.0
+              },
+              {
+                "label": "A2",
+                "at": 4.33
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 18.84
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B09.mp3",
+      "actual_duration_s": 18.84,
+      "render_duration_s": 18.866666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B09.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B10",
+      "act": "CODE",
+      "role_note": "Effect A2's trigger code.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "A two fires on a new hard brake. The brake comes on at eight metres a second or more, and the van slows at six metres a second squared for two physics ticks. A second brake while the spill is alive, or during the roof's twenty-second refill, is ignored.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "A2: a new hard brake spills the roof",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/vehicles/freight_van/van_particles.gd",
+            "source": "features/vehicles/freight_van/van_particles.gd:342–356 · Claude Code, directed by the author · verbatim",
+            "code": "func _watch_brakes(delta: float) -> void:\n\troof_refill = maxf(roof_refill - delta, 0.0)\n\tvar speed := absf(vehicle.actual_speed)\n\tvar slowing := (_last_speed - speed) / delta\n\tvar braking: bool = vehicle.braking\n\tif braking and not _was_braking:\n\t\t_brake_pending = _last_speed >= SPILL_SPEED\n\t\t_hard_ticks = 0\n\tif _brake_pending and braking:\n\t\t_hard_ticks = _hard_ticks + 1 if slowing >= SPILL_DECELERATION else 0\n\t\t_brake_pending = _hard_ticks > 0\n\t\tif _hard_ticks >= SPILL_TICKS:\n\t\t\t_brake_pending = false\n\t\t\t_hard_brake()\n\t_was_braking = braking",
+            "startLine": 342,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Thresholds",
+                "value": "8 m/s, 6 m/s², 2 ticks (40–42)"
+              },
+              {
+                "label": "Retrigger",
+                "value": "ignored unless roof water is ready (360–363)"
+              },
+              {
+                "label": "Refill",
+                "value": "ROOF_REFILL 20 s (43)"
+              }
+            ],
+            "cues": [
+              {
+                "at": 0.93,
+                "line": 347,
+                "label": "rising edge"
+              },
+              {
+                "at": 2.97,
+                "line": 348,
+                "label": "8 m/s"
+              },
+              {
+                "at": 6.9,
+                "line": 353,
+                "label": "2 ticks"
+              }
+            ],
+            "output": [
+              "test_roof_spill_state.gd: 13/13, thresholds, rising edge, refill (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 13.85
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B10.mp3",
+      "actual_duration_s": 13.85,
+      "render_duration_s": 13.866666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B10.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B11",
+      "act": "RESULT",
+      "role_note": "Result of B10: the ignored retrigger, and the author's play finding.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In the fixture, a second hard brake at frame twenty-five changes nothing; the first spill's streams run on. In the author's first play the spill never showed at all: it fired, but the wet windshield drew over it. One setting, its render priority, fixed that.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "A2: the retrigger is ignored",
+            "label": "fixture capture · A2 preview, retrigger on · frame strip",
+            "source": "captures/roof_spill/r1-retrigger-true/ frames 20, 25, 30 · events.txt verbatim",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/roof_spill/r1-retrigger-true/20.png",
+                "aspect": 1.6,
+                "caption": "frame 20",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.42,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.36
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/roof_spill/r1-retrigger-true/25.png",
+                "aspect": 1.6,
+                "caption": "frame 25: second brake",
+                "row": 0,
+                "at": 2.07,
+                "crop": {
+                  "x": 0.42,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.36
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/roof_spill/r1-retrigger-true/30.png",
+                "aspect": 1.6,
+                "caption": "frame 30",
+                "row": 0,
+                "at": 4.53,
+                "crop": {
+                  "x": 0.42,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.36
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "events.txt",
+                "text": "frame 24: brake pressed at 30.1 km/h\nframe 25: hard brake ignored: the first spill is still alive (true)",
+                "at": 2.07,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Author's play (#160)",
+                "text": "Spill fired, but the wet glass drew over it",
+                "at": 6.87,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Fix",
+                "text": "render_priority 1 on the spill's materials",
+                "at": 11.43,
+                "tone": "pass",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "r1",
+                "at": 0.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 13.63
+          }
+        },
+        "evidence_media": "evidence/strips/roof_spill/r1-retrigger-true/frame00000025.png"
+      },
+      "audio_file": "mp3/beat-B11.mp3",
+      "actual_duration_s": 13.63,
+      "render_duration_s": 13.633333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B11.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B12",
+      "act": "CODE",
+      "role_note": "Effect B1's condition code: start and stop.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "B one's condition is distance. Each tick, the lamps within sixty-five metres of the camera, eight at most, are wanted. A newly wanted volume is shown and restarted, so its preprocess fills the whole fall path at once. One no longer wanted stops emitting, drains, then hides.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "B1: rain where the camera is",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/environments/industrial_loop/lamp_rain.gd",
+            "source": "features/environments/industrial_loop/lamp_rain.gd:70–84 · Claude Code, directed by the author · verbatim",
+            "code": "\tfor index in range(volumes.size()):\n\t\tvar volume := volumes[index]\n\t\tif wanted.has(index) and not _active[index]:\n\t\t\tvolume.visible = true\n\t\t\train(index).restart()\n\t\t\t_active[index] = true\n\t\t\tactivations += 1\n\t\telif not wanted.has(index) and _active[index]:\n\t\t\train(index).emitting = false\n\t\t\t_active[index] = false\n\t\t\t_drain[index] = settle_time(index)\n\t\telif not _active[index] and volume.visible:\n\t\t\t_drain[index] -= delta\n\t\t\tif _drain[index] <= 0.0:\n\t\t\t\tvolume.visible = false",
+            "startLine": 70,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Condition",
+                "value": "RANGE 65 m, MOST_ACTIVE 8 (12–13)"
+              },
+              {
+                "label": "Start",
+                "value": "restart(): 1.1 s preprocess"
+              },
+              {
+                "label": "Stop",
+                "value": "drain, then hide"
+              }
+            ],
+            "cues": [
+              {
+                "at": 5.47,
+                "line": 72,
+                "label": "nearest ≤ 8"
+              },
+              {
+                "at": 7.77,
+                "line": 74,
+                "label": "start"
+              },
+              {
+                "at": 12.47,
+                "line": 78,
+                "label": "stop"
+              },
+              {
+                "at": 14.13,
+                "line": 84,
+                "label": "hidden"
+              }
+            ],
+            "output": [
+              "test_lamp_rain_state.gd: 13/13, start, stop, pause, hidden (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 15.25
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B12.mp3",
+      "actual_duration_s": 15.25,
+      "render_duration_s": 15.266666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B12.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B13",
+      "act": "RESULT",
+      "role_note": "Result of B12: Effect B1 starting, stopping and pausing.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The fixture: a few frames after the start, rain fills the light from just under the lamp to the ground, steady, then drains from the top after the stop, gone by frame one hundred and ten. In play, the pause menu pauses it with the game, and resume carries on. On the title screen it's hidden.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "B1: start, stop and pause",
+            "label": "fixture capture · B1 preview · clip, then held strip frames",
+            "source": "capture/takes/b1_post/b1_post.mp4 · captures/lamp_rain/r1 frames 20–110 · start f10, stop f70, hidden f109 · capture/takes/in_play/stills/in_play_f280.png · game/tests/test_lamp_rain_state.gd:50, 130, 136",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-rain/takes/b1_post.mp4",
+                "aspect": 1.6,
+                "caption": "the valley lamp, 30 fps, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/20.png",
+                "aspect": 1.6,
+                "caption": "frame 20, held: lamp to ground",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/50.png",
+                "aspect": 1.6,
+                "caption": "frame 50, held: steady",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/70.png",
+                "aspect": 1.6,
+                "caption": "frame 70, held: stop",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/85.png",
+                "aspect": 1.6,
+                "caption": "frame 85, held: draining",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/110.png",
+                "aspect": 1.6,
+                "caption": "frame 110, held: empty",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/stills/in_play_f280.png",
+                "aspect": 1.6,
+                "caption": "in play, paused (scripted input)",
+                "row": 3,
+                "at": 0.0
+              }
+            ],
+            "cards": [
+              {
+                "label": "Pause",
+                "text": "State test: rain frozen on Esc, resumes. In play: paused f255–f315",
+                "at": 9.8,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Title",
+                "text": "State test: hidden on the title, then shown",
+                "at": 13.27,
+                "tone": "neutral",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "clip",
+                "at": 0.0
+              },
+              {
+                "label": "steady",
+                "at": 3.83
+              },
+              {
+                "label": "stop",
+                "at": 6.2
+              },
+              {
+                "label": "in play",
+                "at": 9.23
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.19
+          },
+          "rendered": {
+            "out": "media/B13.mp4",
+            "at": "2026-11-08T21:55:06.995336+00:00"
+          }
+        },
+        "evidence_media": "capture/takes/b1_post/b1_post.mp4"
+      },
+      "audio_file": "mp3/beat-B13.mp3",
+      "actual_duration_s": 15.19,
+      "render_duration_s": 15.2,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B13.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B14",
+      "act": "CODE",
+      "role_note": "Effect B1's feature that Effect A does not use: the splash sub-emitter.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "B one's own feature is the sub-emitter. Drops collide with a height field, and each landing sets off a splash of three droplets. Claude's first build used hide-on-contact collisions, which in four point seven point two never set off the splash. Rigid collisions do. Neither A effect uses a sub-emitter.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "B1's own feature: splashes",
+            "project": "Blackridge: No Way Back",
+            "path": "game/effects/lamp_rain_street.tscn",
+            "source": "effects/lamp_rain_street.tscn:43–57 · Claude Code, directed by the author · verbatim",
+            "code": "damping_min = 0.0\ndamping_max = 0.15\nscale_min = 0.1\nscale_max = 0.25\nscale_curve = SubResource(\"CurveTexture_rain_scale\")\nscale_over_velocity_min = 0.0\nscale_over_velocity_max = 9.0\nscale_over_velocity_curve = SubResource(\"Curve_rain_blur\")\ncolor = Color(0.88, 0.89, 0.9, 1)\nalpha_curve = SubResource(\"CurveTexture_rain_alpha\")\ncollision_mode = 1\ncollision_friction = 1.0\ncollision_bounce = 0.0\nsub_emitter_mode = 3\nsub_emitter_amount_at_collision = 3",
+            "startLine": 43,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Collider",
+                "value": "a height field per volume"
+              },
+              {
+                "label": "Sub-emitter",
+                "value": "LampSplash (line 117)"
+              },
+              {
+                "label": "Found (#156)",
+                "value": "hide-on-contact fired no splash"
+              }
+            ],
+            "cues": [
+              {
+                "at": 2.33,
+                "line": 53,
+                "label": "rigid collision"
+              },
+              {
+                "at": 5.43,
+                "line": 57,
+                "label": "3 per landing"
+              },
+              {
+                "at": 11.33,
+                "line": 56,
+                "label": "AT_COLLISION"
+              }
+            ],
+            "output": [
+              "test_lamp_rain_config.gd: 364/364, collision and sub-emitter read back (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 16.7
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B14.mp3",
+      "actual_duration_s": 16.7,
+      "render_duration_s": 16.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B14.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B15",
+      "act": "RESULT",
+      "role_note": "Result of B14: the splashes, honestly faint.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Here's the road under that lamp, cropped and enlarged from the strip: drops reaching the ground, and at most a few specks where they land. Real-size splashes are too faint to pick out from a few metres away, and the report records that as a limitation.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "B1: drops land; splashes faint",
+            "label": "fixture capture · frame strip · crop ×3.2",
+            "source": "evidence/strips/lamp_rain/r1/frame00000050.png · crop of the road and verge under the lamp",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/50.png",
+                "aspect": 1.6,
+                "caption": "Frame 50, under the valley lamp",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.375,
+                  "y": 0.55,
+                  "w": 0.3125,
+                  "h": 0.2
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Seen",
+                "text": "Streaks to the ground; a few specks on the road",
+                "at": 3.3,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Limitation",
+                "text": "Real-size splashes are faint at this distance",
+                "at": 8.37,
+                "tone": "fail",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 13.29
+          },
+          "rendered": {
+            "out": "media/B15.mp4",
+            "at": "2026-11-08T21:55:52.160230+00:00"
+          }
+        },
+        "evidence_media": "evidence/strips/lamp_rain/r1/frame00000050.png"
+      },
+      "audio_file": "mp3/beat-B15.mp3",
+      "actual_duration_s": 13.29,
+      "render_duration_s": 13.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B15.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B16",
+      "act": "CODE",
+      "role_note": "Effect B2's feedback code and its feature Effect A does not use.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "B two's own feature is a value-driven amount ratio. After ignition it waits, ramps up from zero, then follows the throttle: point one five at idle, plus point six five times the throttle. The amount stays three hundred; only the share that emits changes. With the engine off, it's zero at once.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "B2: the throttle drives amount_ratio",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/vehicles/freight_van/van_particles.gd",
+            "source": "features/vehicles/freight_van/van_particles.gd:372–385 · Claude Code, directed by the author · verbatim",
+            "code": "func _drive_exhaust(delta: float) -> void:\n\tif not vehicle.engine_on or not exhaust.is_visible_in_tree():\n\t\texhaust.emitting = false\n\t\texhaust.amount_ratio = 0.0\n\t\t_ramp = 0.0\n\t\t_engine_time = IGNITION_DELAY if vehicle.engine_on else 0.0\n\t\treturn\n\t_engine_time += delta\n\tif _engine_time < IGNITION_DELAY:\n\t\treturn\n\t_ramp = move_toward(_ramp, 1.0, delta / IGNITION_RAMP)\n\t_throttle = move_toward(_throttle, clampf(vehicle.throttle, 0.0, 1.0), delta / THROTTLE_FOLLOW)\n\texhaust.amount_ratio = (IDLE_RATIO + THROTTLE_RATIO * _throttle) * _ramp\n\texhaust.emitting = true",
+            "startLine": 372,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Ratio",
+                "value": "0.15 + 0.65 × throttle (52–53)"
+              },
+              {
+                "label": "Timing",
+                "value": "wait 0.4 s, ramp 0.6 s (54–55)"
+              },
+              {
+                "label": "Amount",
+                "value": "300, fixed"
+              }
+            ],
+            "cues": [
+              {
+                "at": 3.77,
+                "line": 380,
+                "label": "0.4 s"
+              },
+              {
+                "at": 4.27,
+                "line": 382,
+                "label": "ramp"
+              },
+              {
+                "at": 8.4,
+                "line": 384,
+                "label": "0.15–0.80"
+              },
+              {
+                "at": 14.4,
+                "line": 373,
+                "label": "zero"
+              }
+            ],
+            "output": [
+              "test_exhaust_vapour_state.gd: 10/10, idle 0.15, full 0.80, amount 300 (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 16.77
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B16.mp3",
+      "actual_duration_s": 16.77,
+      "render_duration_s": 16.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B16.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B17",
+      "act": "RESULT",
+      "role_note": "Result of B16: Effect B2 through the reverse camera, and the state test's readings of its ratio.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Through the reverse camera, less of it shows: nothing at idle or on the throttle, a narrow red column once the brake lamps light it, and a faint grey wisp after switch-off, gone a second later. The state test reads the ratio itself: point one five at idle, point eight at full throttle, zero when off, frozen while paused. In play, the dash shows that same camera.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "B2: start, throttle, stop",
+            "label": "fixture capture · B2 preview, reverse camera · clip, then held strip frames",
+            "source": "capture/takes/b2_reverse/b2_reverse.mp4 · captures/exhaust_vapour/r1-view-reverse_camera frames 55–130 · capture/takes/in_play/stills/in_play_f420.png: in-play dash crop",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-rain/takes/b2_reverse.mp4",
+                "aspect": 1.6,
+                "caption": "the reverse camera, 30 fps, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1-view-reverse_camera/55.png",
+                "aspect": 1.6,
+                "caption": "frame 55, held: throttle, none shows",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.15,
+                  "y": 0.25,
+                  "w": 0.7,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1-view-reverse_camera/80.png",
+                "aspect": 1.6,
+                "caption": "frame 80, held: brake lamps",
+                "row": 1,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.15,
+                  "y": 0.25,
+                  "w": 0.7,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1-view-reverse_camera/100.png",
+                "aspect": 1.6,
+                "caption": "frame 100, held: engine off, a faint wisp",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.15,
+                  "y": 0.25,
+                  "w": 0.7,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1-view-reverse_camera/130.png",
+                "aspect": 1.6,
+                "caption": "frame 130, held: gone",
+                "row": 2,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.15,
+                  "y": 0.25,
+                  "w": 0.7,
+                  "h": 0.7
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/stills/in_play_f420.png",
+                "aspect": 1.6,
+                "caption": "in play: the dash in reverse (scripted input)",
+                "row": 3,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.68,
+                  "y": 0.62,
+                  "w": 0.18,
+                  "h": 0.2
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "test_exhaust_vapour_state.gd",
+                "text": "idle 0.15 · full 0.80 · off 0",
+                "at": 9.83,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Pause",
+                "text": "frozen while paused",
+                "at": 15.1,
+                "tone": "neutral",
+                "mono": true
+              }
+            ],
+            "rows": [
+              {
+                "label": "clip",
+                "at": 0.0
+              },
+              {
+                "label": "throttle",
+                "at": 3.87
+              },
+              {
+                "label": "off",
+                "at": 6.47
+              },
+              {
+                "label": "in play",
+                "at": 16.37
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 19.09
+          }
+        },
+        "evidence_media": "capture/takes/b2_reverse/b2_reverse.mp4"
+      },
+      "audio_file": "mp3/beat-B17.mp3",
+      "actual_duration_s": 19.09,
+      "render_duration_s": 19.1,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B17.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B18",
+      "act": "TUNING",
+      "role_note": "Effect B: the first strip, the tuning revision and the author's verdict.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The first B strips showed no rain, and almost no vapour. At the author's request the tuning used real drop sizes and speeds, drew each drop as the streak a camera sees, and made the exhaust a jet that stops. Around them, the lamps, the wet road and the roadside were rebuilt too, also at the author's requests. B two matched every predicted frame, B one all but two details. The author kept both.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Effect B: first strip, then r1",
+            "label": "fixture captures · frame strips r0 and r1 · crops",
+            "source": "captures/lamp_rain/r0|r1/frame 50 · captures/exhaust_vapour/r0|r1/frame 80 · TUNING.md",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r0/50.png",
+                "aspect": 1.6,
+                "caption": "B1 r0, frame 50",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/lamp_rain/r1/50.png",
+                "aspect": 1.6,
+                "caption": "B1 r1, frame 50",
+                "row": 0,
+                "at": 4.7,
+                "crop": {
+                  "x": 0.3,
+                  "y": 0.0,
+                  "w": 0.5,
+                  "h": 0.8
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r0/80.png",
+                "aspect": 1.6,
+                "caption": "B2 r0, frame 80",
+                "row": 1,
+                "at": 8.57,
+                "crop": {
+                  "x": 0.2,
+                  "y": 0.25,
+                  "w": 0.6,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/80.png",
+                "aspect": 1.6,
+                "caption": "B2 r1, frame 80",
+                "row": 1,
+                "at": 8.57,
+                "crop": {
+                  "x": 0.2,
+                  "y": 0.25,
+                  "w": 0.6,
+                  "h": 0.6
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "B2",
+                "text": "Every predicted frame matched",
+                "at": 15.77,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "B1",
+                "text": "All but two: splashes, spread of streaks",
+                "at": 17.7,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "World (#150–#158)",
+                "text": "Lamps lighting down · wall lights · wet road · roadside · mist",
+                "at": 10.77,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Verdict",
+                "text": "Kept after play (#164)",
+                "at": 19.37,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "B1",
+                "at": 0.0
+              },
+              {
+                "label": "B2",
+                "at": 8.57
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 20.67
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B18.mp3",
+      "actual_duration_s": 20.67,
+      "render_duration_s": 20.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B18.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B19",
+      "act": "CODE",
+      "role_note": "Two annotated lines of the generated process shader beside the brief's settings.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Step six: Godot's own code for B two's process material, generated by its converter and saved by Codex at the author's direction. Line two fifty-four grows each puff along the brief's scale curve, to six times its birth size. Line two fifty-five fades it along the alpha curve, densest near the pipe and gone by the end of its life.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "The generated process shader",
+            "project": "Blackridge: No Way Back",
+            "path": "game/shaders/particles_generated.gdshader",
+            "source": "shaders/particles_generated.gdshader:248–257 · generated by Godot, saved by Codex for the author · verbatim",
+            "code": "\tparams.lifetime = (1.0 - lifetime_randomness * rand_from_seed(alt_seed));\n\tparams.color = color_value;\n}\n\nvoid process_display_param(inout DisplayParameters parameters, float lifetime) {\n\t// Compile-time add textures.\n\tparameters.scale *= texture(scale_curve, vec2(lifetime)).rgb;\n\tparameters.color.a *= texture(alpha_curve, vec2(lifetime)).r;\n\tparameters.color = rotate_hue(parameters.color, parameters.hue_rotation);\n}",
+            "startLine": 248,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Line 254",
+                "value": "scale_curve 0:1, 0.3:3, 1:6"
+              },
+              {
+                "label": "Line 255",
+                "value": "alpha_curve, densest at the pipe"
+              },
+              {
+                "label": "Checked",
+                "value": "TEST-REPORT's line references"
+              }
+            ],
+            "cues": [
+              {
+                "at": 7.97,
+                "line": 254,
+                "label": "scale over life"
+              },
+              {
+                "at": 13.4,
+                "line": 255,
+                "label": "alpha over life"
+              }
+            ],
+            "output": [
+              "Loaded headless: ShaderMaterial, particles mode, 49 uniforms (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 18.71
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B19.mp3",
+      "actual_duration_s": 18.71,
+      "render_duration_s": 18.733333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B19.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B20",
+      "act": "RESULT",
+      "role_note": "Result of B19: what the two shader lines do.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "And that's those two lines on screen: puffs born small and dense at the pipe, growing as they drift, and fading as they grow. The process shader shapes them over their life. How they look belongs to the draw step's material.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Scale and alpha over life, drawn",
+            "label": "fixture capture · frame strip r1 · crops",
+            "source": "evidence/strips/exhaust_vapour/r1/frame00000055.png, evidence/strips/exhaust_vapour/r1/frame00000080.png",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/55.png",
+                "aspect": 1.6,
+                "caption": "frame 55: a small plume, pulling away",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.3,
+                  "w": 0.5,
+                  "h": 0.55
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-rain/strips/exhaust_vapour/r1/80.png",
+                "aspect": 1.6,
+                "caption": "frame 80: dense at the pipe, fainter out",
+                "row": 0,
+                "at": 3.93,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.3,
+                  "w": 0.5,
+                  "h": 0.55
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Process",
+                "text": "Scale and alpha over life (254–255)",
+                "at": 6.77,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Draw",
+                "text": "The quad's material decides the look",
+                "at": 10.13,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "B2 r1",
+                "at": 0.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 11.93
+          }
+        },
+        "evidence_media": "evidence/strips/exhaust_vapour/r1/frame00000080.png"
+      },
+      "audio_file": "mp3/beat-B20.mp3",
+      "actual_duration_s": 11.93,
+      "render_duration_s": 11.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B20.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B21",
+      "act": "TESTS",
+      "role_note": "What the tests proved, the mutations that failed them, and what no headless run can show.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "What the tests proved. Configuration tests read every setting back from the scenes: four hundred fifty-one checks for A one alone. State tests drive the real game through events, retriggers and pause. Both mutations, a Godot three name and a drifted spread, fail as they should, and the twenty-two earlier test runs still pass. None of this shows what the screen shows.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What the tests proved",
+            "label": "recorded output · scripts/run-test.sh, headless, 60 fps",
+            "source": "logs/particles/strips_163/SUMMARY.txt · logs/particles/mutations_final/SUMMARY.txt",
+            "layout": "document",
+            "media": [],
+            "cards": [
+              {
+                "label": "Configuration",
+                "text": "451 · 221 · 364 · 44 checks, exit 0",
+                "at": 1.1,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Mutations",
+                "text": "Godot 3 name and value drift: exit 1",
+                "at": 10.43,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Earlier suites",
+                "text": "22 runs pass; art 0 failures",
+                "at": 14.63,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Can't show",
+                "text": "Anything on screen",
+                "at": 16.77,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "test_wiper_flick_config.gd         60   exit 0   WIPER FLICK CONFIG RESULT: 451/451 passed; 0 failed | bad lines 0, ERROR: lines 1\ntest_roof_spill_config.gd          60   exit 0   ROOF SPILL CONFIG RESULT: 221/221 passed; 0 failed | bad lines 0, ERROR: lines 1\ntest_lamp_rain_config.gd           60   exit 0   LAMP RAIN CONFIG RESULT: 364/364 passed; 0 failed | bad lines 0, ERROR: lines 1\ntest_exhaust_vapour_config.gd      60   exit 0   EXHAUST VAPOUR CONFIG RESULT: 44/44 passed; 0 failed | bad lines 0, ERROR: lines 0\ntest_wiper_flick_state.gd          60   exit 0   WIPER FLICK STATE RESULT: 27/27 passed; 0 failed | bad lines 0, ERROR: lines 2\ntest_lamp_rain_state.gd            60   exit 0   LAMP RAIN STATE RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 2\n- test_wiper_flick_config.gd: WIPER FLICK CONFIG RESULT: 450/451 passed; 1 failed, exit 1\n- first failure: FAIL: BigDrops process.initial_velocity_min = 0.2 (found 0.0)",
+            "documentLabel": "SUMMARY.txt, verbatim",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 19.14
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B21.mp3",
+      "actual_duration_s": 19.14,
+      "render_duration_s": 19.166666666666668,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B21.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B22",
+      "act": "PRICE",
+      "role_note": "Both prices against the budget (headless in B06, GPU here).",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Then the G P U price. Godot's own timer reads zero on Metal, so Claude used Apple's Metal H U D, showing and hiding each effect in turn. A one and A two are within budget, B one at its budget, and B two over: one point one milliseconds against point three. The author kept it. The frame itself is already twenty-six milliseconds.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "GPU price against the budget",
+            "label": "recorded output · Metal Performance HUD, windowed, Apple M4 · each effect shown, then hidden",
+            "source": "logs/particles/gpu_price/RESULT.txt · game/tests/gpu_price.gd · tools/tests/gpu_price.py · B2 kept over budget: CHANGE-BRIEF.md revision 11 (#167) · the 26 ms frame: TEST-REPORT.md, GPU price",
+            "layout": "document",
+            "media": [],
+            "cards": [],
+            "rows": [],
+            "excerpt": "fx    price ms         95% interval   budget  against it                     frames/s shown, hidden\nA1      -0.388    -0.457 to  -0.318     0.25  within                         39.1, 39.4\nA2       0.083    -0.029 to   0.195     0.20  within                         38.8, 39.6\nB1       0.665     0.607 to   0.722     0.70  not settled at this precision  50.1, 50.0\nB2       1.108     1.015 to   1.202     0.30  over                           44.0, 45.3\nall      1.468     1.296 to   1.640     1.45  not settled at this precision",
+            "documentLabel": "RESULT.txt, verbatim",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 18.15
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B22.mp3",
+      "actual_duration_s": 18.15,
+      "render_duration_s": 18.166666666666668,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B22.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B23",
+      "act": "LIMITS",
+      "role_note": "Agent mistakes caught, readings overruled, what remains uncertain, one next step, texture sources and the revision shown.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Mistakes caught: particles ignoring their own size, rain streaks a quarter as wide as they should be, splashes that never fired, a spill hidden behind the glass. The author overruled two of Claude's readings. Still uncertain: A one's below-zero price, the tailpipe's position, and that heavy frame. Next step: make B two cheaper. Textures: drawn by a script, plus Poly Haven's C C zero assets. The game shown is revision c one c nine d eight b.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Mistakes, limits and sources",
+            "label": "records · CHANGE-BRIEF.md revisions · TUNING.md · SOURCES.md",
+            "source": "brief revisions 1, 4, 5 · #156 · #160 · TEST-REPORT.md · SOURCES.md · git c1c9d8b",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "Mistakes caught",
+                "text": "keep_scale off · streaks ¼ wide · no splash · spill behind glass",
+                "at": 0.0,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Overruled",
+                "text": "Passenger line too bright; A2 streams too white",
+                "at": 8.27,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Uncertain",
+                "text": "A1 below zero · tailpipe position · 26 ms frame",
+                "at": 10.17,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Next step",
+                "text": "Make B2 cheaper, then price it again",
+                "at": 14.17,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Textures",
+                "text": "tools/make_particle_textures.py · Poly Haven CC0",
+                "at": 15.77,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Revision shown",
+                "text": "game/ at c1c9d8b",
+                "at": 20.27,
+                "tone": "neutral",
+                "mono": true
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 22.91
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B23.mp3",
+      "actual_duration_s": 22.91,
+      "render_duration_s": 22.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B23.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B24",
+      "act": "CONTRIBUTIONS",
+      "role_note": "Human and AI contributions, stated as the records state them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Who did what. The author chose the four effects, wrote the brief, directed every change, played and judged every effect, and made every final call. Claude Code built, tested, tuned, captured the strips and measured, all at the author's direction. Codex saved the Step six shader, also at the author's direction.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Who did what",
+            "label": "records · docs/AUTHOR_PROMPTS_AND_DECISIONS.md #131–#173 · FRICTIONAL.md",
+            "source": "prompt log · FRICTIONAL.md · SUBMISSION.md",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "The author",
+                "text": "Chose the effects · wrote the brief · directed every change · played and judged · every final call",
+                "at": 0.7,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Claude Code",
+                "text": "Built · tested · tuned · captured strips · measured — at the author's direction",
+                "at": 7.4,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Codex",
+                "text": "Saved Step 6's shader — at the author's direction",
+                "at": 12.47,
+                "tone": "neutral",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 16.41
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B24.mp3",
+      "actual_duration_s": 16.41,
+      "render_duration_s": 16.433333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B24.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B25",
+      "act": "VERDICT",
+      "role_note": "Walker bookend 4a: verdict separates implemented work, limitations and human judgement.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Let's recap with Claude. Implemented: four G P U effects, each on a real event or condition, tested and tuned. Verified: predictions against frame strips, and mutations that fail the tests. Still open: B two's G P U cost, and a heavy frame. Human judgement: the author played every effect and made every call.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeVerdictArtifact",
+          "props": {
+            "artifactTitle": "Verdict",
+            "artifactHeading": "Blackridge, Rain and Vapour",
+            "artifactLines": [
+              "Implemented: four GPU particle effects on real events and conditions.",
+              "Verified: predictions against frame strips; mutations fail the tests.",
+              "Open: B2 over its GPU budget, and a heavy frame.",
+              "Human judgement: the author played every effect and made every call."
+            ]
+          }
+        }
+      },
+      "lead_silence_s": 0.5,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "Locked ClaudeVerdictArtifact bookend: the component fixes the card layout and the four recap lines are the mandated content."
+      },
+      "audio_file": "mp3/beat-B25.mp3",
+      "actual_duration_s": 17.546,
+      "audio_notes": "lead 0.5 s baked with ffmpeg; 17.05 s -> 17.55 s",
+      "render_duration_s": 17.566666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B25.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B26",
+      "act": "HANDOFF",
+      "role_note": "HANDOFF LAW + walker Your Turn: Liam reads the prompt aloud, discusses it, signs off.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Your turn. Paste this into Claude. Please use Walker to help me tune one particle setting in my game. I will pick the setting myself. Before you change anything, ask for my prediction of what the next frame strip will show and what it will cost on the G P U, then capture the strip, measure the price, and show me predicted versus measured. It makes you commit before you look, and makes Claude measure instead of guess. Judge the answer on three things: it asks for your prediction first, shows the strip and the price, and flags any mismatch. Liam, in for Bear.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "command": "Please use Walker to help me tune one particle setting in my game. I will pick the setting myself. Before you change anything, ask for my prediction of what the next frame strip will show and what it will cost on the GPU, then capture the strip, measure the price, and show me predicted versus measured.",
+            "topic": "YOUR TURN · BLACKRIDGE",
+            "segment": "Blackridge, Rain and Vapour",
+            "greeting": "Your turn.",
+            "runningText": "paste this into Claude…",
+            "folderLabel": "@NikBearBrown"
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B26.mp3",
+      "actual_duration_s": 28.92,
+      "render_duration_s": 28.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B26.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    },
+    {
+      "beat_id": "B27",
+      "act": "OUTRO",
+      "role_note": "OUTRO-LOCK: exact title, hardcoded @NikBearBrown, slug-seeded mascot, spoken title + handle, 1.0 s silent tail.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Blackridge, Rain and Vapour. At Nik Bear Brown.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeTitleOutro",
+          "props": {
+            "title": "Blackridge, Rain and Vapour",
+            "slug": "claude-liam-blackridge-particles-gamedev"
+          }
+        }
+      },
+      "kind": "outro_voice",
+      "tail_silence_s": 1.0,
+      "audio_file": "mp3/beat-B27.mp3",
+      "actual_duration_s": 4.328,
+      "audio_notes": "tail 1.0 s baked with ffmpeg; 3.33 s -> 4.33 s",
+      "render_duration_s": 4.333333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B27.mp4",
+        "filled_by": "media",
+        "at": "2026-11-08T17:03:00"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+frame 0: B1 at the post lamp ((-15.0, 6.4, 65.7)), condition from frame 10 to frame 70
+frame 10: condition starts: shown, and restarted so its preprocess fills it
+frame 70: condition ends: no new drops; hidden on frame 109, 1.30 s on
+frame 109: emptied and hidden
