@@ -2755,6 +2755,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (`TEST-REPORT.md`, `FRICTIONAL.md`, `SUBMISSION.md`). Claude Code had said which two of the
        handout's checks this fails; the author chose it knowing that.
 
+172. **The film**
+     - **The author's message:** "yes start the film now", answering whether Claude Code should
+       start the film, with game windows opening during its captures.
+     - **Claude Code does:** the Assignment 6 film with the course's godot-gamedev skill and its
+       walker modifier, in a new folder beside Assignment 5's film, which stays as it is.
+
 ## Waiting for the author
 
 - Assignment 6, the author's parts (the list, #166): the author's own notes in
