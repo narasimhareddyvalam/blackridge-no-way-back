@@ -107,9 +107,10 @@ and after, and the changes to the lamps, the wet road and the roadside around th
 **Film:** "Blackridge, Rain and Vapour" (4K, 7 min 41 s), made by Claude Code at the author's
 word. The source is in `youtube/claude-liam-blackridge-particles-gamedev/`: script, beat sheet,
 the captures' records, evidence ledger, fact check, QC and build log. File:
-`Blackridge-Rain-and-Vapour-4K.mp4`, SHA-256 `8080d78ae388f2d6955b40411490b9ec2e64c58eb3e3e8cb44e4728a80539e92`. The
-link is added once the author has uploaded it to the course's media storage; the film is not in
-GitHub.
+`Blackridge-Rain-and-Vapour-4K.mp4`, SHA-256 `8080d78ae388f2d6955b40411490b9ec2e64c58eb3e3e8cb44e4728a80539e92`. Watch
+it on OneDrive, the course's media storage: https://northeastern-my.sharepoint.com/:v:/r/personal/valam_n_northeastern_edu/Documents/Blackridge_No_Way_Back/Assignment_6/Blackridge-Rain-and-Vapour-4K.mp4?d=w1e15a35c5a7a48f09bb3e724950cdf68&csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=pdTot6
+
+The film is not in GitHub.
 
 To check the effects:
 
