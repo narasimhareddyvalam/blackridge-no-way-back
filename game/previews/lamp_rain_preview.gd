@@ -20,7 +20,7 @@ const VIEWS := {
 	"floodlight": [Vector3(-5.4, -2.33, 7.0), Vector3(1.6, -2.8, 1.0), 50.0],
 }
 const SCENES := {
-	"post": "lamp_rain_post.tscn",
+	"post": "lamp_rain_street.tscn",
 	"door": "lamp_rain_door.tscn",
 	"floodlight": "lamp_rain_floodlight.tscn",
 }

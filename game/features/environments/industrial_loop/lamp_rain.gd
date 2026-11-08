@@ -6,6 +6,7 @@ extends Node3D
 ## and never writes game state; the rain's look lives in game/effects/lamp_rain_*.tscn.
 
 const POST = preload("res://effects/lamp_rain_post.tscn")
+const STREET = preload("res://effects/lamp_rain_street.tscn")
 const FLOODLIGHT = preload("res://effects/lamp_rain_floodlight.tscn")
 const DOOR = preload("res://effects/lamp_rain_door.tscn")
 const RANGE := 65.0

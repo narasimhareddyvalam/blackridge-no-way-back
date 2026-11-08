@@ -9,7 +9,7 @@ extends SceneTree
 ## nothing, so how the vapour looks is not checked here.
 
 const NEAR_DOOR := Vector3(-3.4, 0.0, 0.6)
-const AMOUNT := 96
+const AMOUNT := 300
 
 var _checks: int = 0
 var _failures: int = 0

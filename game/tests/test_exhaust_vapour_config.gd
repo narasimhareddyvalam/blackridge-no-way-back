@@ -1,28 +1,29 @@
 extends SceneTree
-## B2, the exhaust vapour: reads back every setting CHANGE-BRIEF.md §5 names from the scene,
-## including the features neither A effect uses: an amount_ratio the game drives (the node
-## must have it, with amount fixed at 96) and turbulence.
+## B2, the exhaust vapour: reads back every setting CHANGE-BRIEF.md §5 names from the scene, as
+## TUNING.md's r1 revises them at the author's request (#146, #149): a short jet of wet exhaust
+## that the still air stops within a metre or so, where its vapour spreads and thins out in under
+## two seconds. Also the features neither A effect uses: an amount_ratio the game drives (the node
+## must have it, with amount fixed at 300) and turbulence.
 
 const Readback = preload("res://tests/particle_readback.gd")
 const SCENE := "res://effects/exhaust_vapour.tscn"
 const PLUME := {
-	"node": {"amount": 96, "one_shot": false, "explosiveness": 0.0, "lifetime": 2.5,
+	"node": {"amount": 300, "one_shot": false, "explosiveness": 0.0, "lifetime": 1.6,
 		"local_coords": false, "preprocess": 0.0, "layers": 1,
 		"visibility_aabb": AABB(Vector3(-3.0, -1.0, -11.0), Vector3(6.0, 5.0, 60.0))},
 	"process": {"emission_shape": ParticleProcessMaterial.EMISSION_SHAPE_SPHERE,
-		"emission_sphere_radius": 0.06, "initial_velocity_min": 1.0, "initial_velocity_max": 2.2,
-		"direction": Vector3(0.0, -0.26, 0.97), "spread": 18.0,
-		"gravity": Vector3(0.0, 0.5, 0.0), "damping_min": 0.8, "damping_max": 1.4,
-		"color": Color(0.9, 0.91, 0.92, 1.0), "scale_min": 1.2, "scale_max": 2.2,
-		"turbulence_enabled": true, "turbulence_noise_strength": 0.15,
-		"turbulence_noise_scale": 1.2, "turbulence_noise_speed": Vector3(0.2, 0.1, 0.2)},
-	"alpha_curve": [Vector2(0.0, 0.1), Vector2(0.15, 0.28), Vector2(0.5, 0.18), Vector2(1.0, 0.0)],
-	"scale_curve": [Vector2(0.0, 0.4), Vector2(0.5, 1.4), Vector2(1.0, 2.5)],
-	"draw": {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA,
-		"blend_mode": BaseMaterial3D.BLEND_MODE_MIX,
-		"shading_mode": BaseMaterial3D.SHADING_MODE_PER_PIXEL,
-		"billboard_mode": BaseMaterial3D.BILLBOARD_PARTICLES, "billboard_keep_scale": true,
-		"vertex_color_use_as_albedo": true},
+		"emission_sphere_radius": 0.025, "initial_velocity_min": 4.0, "initial_velocity_max": 7.0,
+		"direction": Vector3(0.0, -0.26, 0.97), "spread": 10.0,
+		"gravity": Vector3(0.0, 0.8, 0.0), "damping_min": 12.0, "damping_max": 18.0,
+		"color": Color(0.92, 0.93, 0.94, 1.0), "scale_min": 0.6, "scale_max": 1.0,
+		"turbulence_enabled": true, "turbulence_noise_strength": 0.35,
+		"turbulence_noise_scale": 1.6, "turbulence_noise_speed": Vector3(0.3, 0.25, 0.3)},
+	"alpha_curve": [Vector2(0.0, 0.0), Vector2(0.02, 0.22), Vector2(0.3, 0.14),
+		Vector2(0.7, 0.05), Vector2(1.0, 0.0)],
+	"scale_curve": [Vector2(0.0, 1.0), Vector2(0.3, 3.0), Vector2(1.0, 6.0)],
+	"draw": {"shader": "res://effects/scatter_particle.gdshader", "params": {
+		"face_camera": true, "min_pixels": 0.0, "forward_scatter": 0.75, "scatter": 0.8,
+		"diffuse": 0.25, "glint": 0.0, "sky": 0.0}},
 	"mesh": {"size": Vector2(0.1, 0.1)},
 	"texture": "res://effects/textures/exhaust_puff.png",
 }
@@ -56,8 +57,8 @@ func _run() -> void:
 	if plume:
 		_check("amount_ratio" in plume and not plume.emitting,
 			"The plume has amount_ratio for the throttle, and waits for the engine (emitting off)")
-		_check(scale_curve_can_reach(plume, 2.5),
-			"Its scale curve can reach 2.5 (max_value %.1f)" % _max_scale(plume))
+		_check(scale_curve_can_reach(plume, 6.0),
+			"Its scale curve can reach 6 (max_value %.1f)" % _max_scale(plume))
 	effect.free()
 	_finish()
 

@@ -42,7 +42,10 @@ func set_up() -> void:
 	van.wiper_swept.connect(_on_swept)
 	for index in range(effects.flicks.size()):
 		var flick: Node3D = effects.flicks[index]
-		fix_seeds([flick.get_node("BigDrops"), flick.get_node("FineSpray")], 6 + index * 2)
+		var emitters := ["WaterSheet", "BigDrops", "HeavyDrops", "FineSpray", "SpillWater",
+			"PillarRunoff"].map(
+			func(emitter_name: String) -> Node: return flick.get_node(emitter_name))
+		fix_seeds(emitters, 6 + index * emitters.size())
 
 
 func on_frame(number: int) -> void:

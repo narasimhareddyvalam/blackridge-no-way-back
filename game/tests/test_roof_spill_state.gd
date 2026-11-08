@@ -3,7 +3,8 @@ extends SceneTree
 ## driven on the flat valley road with real throttle and brake input, and the lane keeper steers;
 ## the test never calls the effect's trigger. It checks when the spill fires (a new hard brake
 ## from 8 m/s or more; never on load, at rest, below 8 m/s, coasting, or while the brake stays
-## held), where (the roof lip, moving with the van), the ignore rule (a second hard brake inside
+## held), where (the roof lip, moving with the van), the surge of its water (forward at the van's
+## own deceleration while it brakes, none at rest), the ignore rule (a second hard brake inside
 ## the first spill's life, or within the 20 s refill, does nothing), and freeing the van. A
 ## headless run draws nothing, so how the spill looks is not checked here.
 
@@ -11,6 +12,7 @@ const LaneKeeper = preload("res://tests/lane_keeper.gd")
 const STRAIGHT := 960
 const LANE := 1.25
 const ROOF_LIP := Vector3(0.0, 2.206, -1.038)
+const STILL_AIR := Vector3(0.0, -9.8, 0.0)
 
 var _checks: int = 0
 var _failures: int = 0
@@ -84,7 +86,16 @@ func _check_hard_brake() -> void:
 	_check(_fx.spill.position.is_equal_approx(ROOF_LIP) and body.is_ancestor_of(_fx.spill)
 		and _van.is_ancestor_of(body),
 		"It pours from the roof lip, %s in the van's frame, and moves with the van" % ROOF_LIP)
+	await process_frame
+	var before: float = _van.actual_speed
+	var started: float = _van.clock
 	await _steer_for(0.15)
+	await process_frame
+	var slowing: float = (before - _van.actual_speed) / (_van.clock - started)
+	var braking := _surge()
+	_check(slowing > 6.0 and absf(braking - slowing) < slowing * 0.1,
+		"While the van slows at %.1f m/s², the spill's water surges forward at %.1f m/s²" % [
+		slowing, braking])
 	Input.action_release("brake")
 	await _steer_for(0.15)
 	var again := absf(_van.actual_speed)
@@ -94,6 +105,11 @@ func _check_hard_brake() -> void:
 		"A second hard brake from %.1f m/s, inside the first spill's life, is ignored" % again)
 	await _steer_for(1.5)
 	_check(_fx.spills_fired == 1, "Holding the brake to a stop spills nothing more")
+	await _steer_for(0.3)
+	await process_frame
+	var resting := _surge()
+	_check(absf(_van.actual_speed) < 0.05 and absf(resting) < 0.3,
+		"Stopped, the water no longer surges (%.2f m/s²)" % resting)
 	Input.action_release("brake")
 
 
@@ -115,6 +131,15 @@ func _check_freed() -> void:
 	await _seconds(0.5)
 	_check(not is_instance_valid(spill),
 		"Freeing the van in the middle of a spill frees the spill with it, without errors")
+
+
+## The forward push on the spill's water, in the world: its gravity, turned out of its frame, less
+## the still air's, along the van's heading. Read after the tick that set it.
+func _surge() -> float:
+	var streams := _fx.spill.get_node("RoofStreams") as GPUParticles3D
+	var process := streams.process_material as ParticleProcessMaterial
+	var push := streams.global_basis * process.gravity - STILL_AIR
+	return push.dot(-_van.global_basis.z.normalized())
 
 
 func _place(index: int) -> void:

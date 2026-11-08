@@ -76,7 +76,7 @@ func _case(label: String) -> void:
 		"A2, one burst alive":
 			(_effects.spill as Node3D).visible = true
 			_record(label, await _measure(_keep_spill))
-			_states[label] = "bursts alive at the end: %d" % _alive([_effects.spill], "RoofBeads")
+			_states[label] = "bursts alive at the end: %d" % _alive([_effects.spill], "Rivulets")
 			(_effects.spill as Node3D).visible = false
 		"B1, eight lamp volumes":
 			_volumes(true)
@@ -146,14 +146,15 @@ func _show_flicks(shown: bool) -> void:
 func _keep_two_flicks(frame: int) -> void:
 	if frame % FLICK_EVERY == 0:
 		var flick: Node3D = _effects.flicks[(frame / FLICK_EVERY) % _effects.flicks.size()]
-		for emitter: GPUParticles3D in [flick.get_node("BigDrops"), flick.get_node("FineSpray")]:
-			emitter.restart()
+		for emitter_name in ["WaterSheet", "BigDrops", "HeavyDrops", "FineSpray", "SpillWater",
+				"PillarRunoff"]:
+			(flick.get_node(emitter_name) as GPUParticles3D).restart()
 		_restarted[flick] = frame
 
 
 func _keep_spill(frame: int) -> void:
 	if frame % SPILL_EVERY == 0:
-		for name in ["RoofStreams", "RoofBeads"]:
+		for name in ["WaterWash", "RoofStreams", "RoofBeads", "Rivulets"]:
 			(_effects.spill.get_node(name) as GPUParticles3D).restart()
 		_restarted[_effects.spill] = frame
 

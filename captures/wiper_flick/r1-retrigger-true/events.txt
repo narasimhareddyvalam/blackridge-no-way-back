@@ -1,0 +1,7 @@
+frame 0: A1 at valley, 0 km/h, fast wipers, retrigger on
+frame 10: wiper top turn
+frame 10: flick 1 fired at the blade tip (1 alive)
+frame 24: wiper park turn
+frame 37: wiper top turn
+frame 37: flick 2 fired at the blade tip (2 alive)
+frame 51: wiper park turn

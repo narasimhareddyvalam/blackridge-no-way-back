@@ -56,10 +56,10 @@ So r1 departs from the loop above in three ways:
 - It was applied before the author captured r0, on the author's requests rather than on an
   approved prediction. The predictions below were written before the author's r1 capture.
 - Each effect's r1 changes several settings, not one; each section lists them.
-- It stays uncommitted until the author's verdicts, as the handout asks. The working tree holds
-  r1, and commit `4f73f98` holds r0. `tools/tuning/r1/r1.patch` is a copy of the change, which
-  `git apply` restores if the working tree is lost. The first r1 proposal, superseded, is in
-  `tools/tuning/r1/` at commit `bf962da`.
+- It stayed uncommitted until the author's verdicts, as the handout asks. The author kept all
+  four after playing (#164), and r1 is committed with its strips and the verdicts; commit
+  `4f73f98` holds r0. `tools/tuning/r1/r1.patch` is a copy of the change. The first r1
+  proposal, superseded, is in `tools/tuning/r1/` at commit `bf962da`.
 
 All four effects now draw with one particle shader, `game/effects/scatter_particle.gdshader`
 (an effect resource, not one of the hand-written shaders in `game/shaders/`):
@@ -238,10 +238,44 @@ these changes, first reverse their patch
   - **Tests:** configuration 451/451, state 27/27 (7 of 7 top turns, 15 mm ahead of the blade's
     middle, 10 mm outside the glass). A headless run cannot show the wipe itself; Claude Code's
     windowed check (drops drawn magenta) showed them vanish as the driver's blade passed.
-- **Claude's comparison of r1 with its prediction:** _after the author's r1 capture._
-- **My verdict (running game, 1280×800):** _the author: kept | reverted, because…_
-- **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `speed_kmh-50`
-  and `place-depot` variants
+- **Claude's comparison of r1 with its prediction** (`captures/wiper_flick/r1/` and its
+  variants):
+  - Valley road, parked: as predicted, frame 10 shows nothing new at the blade, frame 12 pale
+    dashes between the blade and the pillar, frame 15 fine pale threads at the top of the
+    blade's line, and frame 50 none. Not as predicted: frames 20 and 30 show no heavy drop
+    sliding down, and their specks along the blade's line can't be told from the glass's own
+    drops, which r0 shows in the same place.
+  - At 50 km/h: frame 12 a small fan of short pale streaks between the blade and the pillar,
+    angled up along it, as predicted; frame 15 fainter than predicted, a few threads near the
+    top; frame 20 a few faint specks; frames 30 and 50 none.
+  - Depot: frame 12 pale streaks by the pillar, as predicted; frame 15 thin threads spreading
+    from the top of the blade's line toward the pillar, more threads than drops; frames 20 and
+    30 a few specks; frame 50 none apart from the glass's own drops. The depot's wall lights
+    (#151) leave this corner darker than r0's street lamps did.
+  - Retrigger on, with no prediction written for it: the second flick fires on frame 37 with
+    the first still alive (the events log: "2 alive"). Its dashes and threads show faintly on
+    frames 40 and 45, as the first burst's did on 12 and 15. Nothing of the first burst is
+    visible by then, so the strip can't show two bursts at once.
+  - The passenger blade (#160's prediction):
+    - wrong on frame 10: the line shows from frame 11, as the driver's flick does, since both
+      fire at the end of frame 10;
+    - frame 12: the line where the blade stood, pale blue-white and jagged, but no streaks of
+      drops ahead of it;
+    - frame 15: the line whole, the driver's blade coming down;
+    - frame 20, as predicted: wiped where the driver's blade has passed, its upper part left
+      outside the sweep;
+    - frames 30 and 50: that upper part, fainter, then a trace: a piece of the line, not drops.
+  - The same line in strong light: in A2's strips at the office, with the floodlight behind it,
+    the line turns bright white from A2's frame 25 to 50. It is a zigzag that reads more like a
+    crack or a lightning bolt than water. Claude's view: too bright and too regular there; this
+    is the clearest fault the strips show.
+- **My verdict (running game, 1280×800):** kept. The author's words after playing (#164,
+  2026-11-08): "i played and all look good proceed".
+- **Claude against the author:** Claude's comparison called the passenger line in the office
+  floodlight the clearest fault: too bright, a zigzag more like a crack than water. The author's
+  verdict after play keeps it as it is, and the verdict decides.
+- **Strips:** `captures/wiper_flick/r0/`, `captures/wiper_flick/r1/`, and the `retrigger-true`,
+  `speed_kmh-50` and `place-depot` variants
 - **Commits:** _when kept._
 
 ## Effect A2 (roof spill), revision r1
@@ -329,9 +363,32 @@ these changes, first reverse their patch
     the right half; frame 30 beads and rivulet tails lower down; frame 50 none. On the unlit road
     it stays subtle, translucent streaks, as the brief's §3 asks.
   - **Tests:** configuration 221/221.
-- **Claude's comparison of r1 with its prediction:** _after r1._
-- **My verdict (running game, 1280×800):** _the author._
-- **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`
+- **Claude's comparison of r1 with its prediction** (`captures/roof_spill/r1/` and its
+  variants):
+  - Frame 15, not as #160 predicted: no stream yet. The earlier prediction was right: no spill
+    on frames 10–15, since the water starts above the driver's view. The specks around the
+    office from frame 10 on are B1's rain in the office floodlight, in the world, not on the
+    glass.
+  - Frame 20, as predicted: about twenty streams hang from the top of the glass across the
+    middle and right, each with a round head. They are brighter and more solid than the "pale"
+    predicted: white, they read more as icicles than as clear water, though the road and trees
+    show between them.
+  - Frame 30: the streams lower down the glass and thinner, as predicted. The clear sheet's
+    bending of the office's lit windows doesn't show, since the streams cover the office there.
+    The bright white zigzag right of the driver's blade is A1's passenger line (A1, above), not
+    the spill.
+  - Frame 50: no spill, as predicted.
+  - Valley road: frame 20 grey, translucent streams against the dark sky, and a wavy ripple in
+    the trees above the road where the clear sheet bends them; frame 30 the streams lower and
+    fainter; frame 50 none. These are the subtle, translucent streaks predicted.
+  - Retrigger on: the events log has the second hard brake on frame 25 ignored, and frame 25
+    shows nothing new; the first spill's streams run on.
+- **My verdict (running game, 1280×800):** kept, with its clear sheet (#149). The author's
+  words after playing (#164, 2026-11-08): "i played and all look good proceed".
+- **Claude against the author:** Claude's comparison found the streams white, reading more as
+  icicles than as clear water. The author's verdict after play keeps them.
+- **Strips:** `captures/roof_spill/r0/`, `captures/roof_spill/r1/`, and the `retrigger-true` and
+  `place-valley` variants
 - **Commits:** _when kept._
 
 ## Effect B1 (lamp rain), revision r1
@@ -424,9 +481,29 @@ these changes, first reverse their patch
     are unaffected: the previews never show the title.
   - **Tests:** configuration 364/364, state 13/13 (a new check: hidden on the title, shown
     after).
-- **Claude's comparison of r1 with its prediction:** _after r1._
-- **My verdict (running game, 1280×800):** _the author._
-- **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`
+- **Claude's comparison of r1 with its prediction** (`captures/lamp_rain/r1/` and the door
+  lamp):
+  - As predicted:
+    - frames 10 and 12: no rain;
+    - frame 20: short golden streaks from about a metre under the lamp head down to the ground
+      beside the post;
+    - frames 30, 50 and 70: steady rain filling the lamp's light;
+    - frame 85: a clear gap under the head, with streaks left in the middle and lower part;
+    - frame 110: empty;
+    - on every frame, the amber pool on the verge, the glow around the lens and golden rain,
+      from #150's and #154's lamp.
+  - Not as predicted: the streaks spread through the whole light rather than gathering around
+    the head. No splash specks can be picked out on the lit ground at the strip's distance, at
+    most a few dots on the road (the known faintness of real-size splashes).
+  - Door lamp, with no prediction written for it: faint thin streaks fall at the hood and beside
+    the sign from frame 20 to 85, fewer by 85, and frame 110 is empty. The game's own rain draws
+    faint streaks there too, and from this one view a streak crossing the door can't be placed
+    in front of the hood or under it. §4's check that no drop falls under the hood needs the
+    author's eyes.
+- **My verdict (running game, 1280×800):** kept. The author's words after playing (#164,
+  2026-11-08): "i played and all look good proceed". §4's check that no drop falls under the
+  office's door hood is not named in it.
+- **Strips:** `captures/lamp_rain/r0/`, `captures/lamp_rain/r1/`, and the `place-door` variant
 - **Commits:** _when kept._
 
 ## Effect B2 (exhaust vapour), revision r1
@@ -472,7 +549,24 @@ these changes, first reverse their patch
   - frame 100: the van 3.4 m on, engine off; a faint pale grey wisp left behind in the
     floodlight;
   - frame 130: at most a trace; frame 180: none.
-- **Claude's comparison of r1 with its prediction:** _after r1._
-- **My verdict (running game, 1280×800):** _the author._
-- **Strips:** `captures/exhaust_vapour/r0/`, `captures/exhaust_vapour/r1/`
+- **Claude's comparison of r1 with its prediction** (`captures/exhaust_vapour/r1/` and the
+  reverse camera):
+  - Rear view, every frame as predicted:
+    - frames 10, 20 and 30: no vapour (on frame 30 `amount_ratio` is 0.08, too thin to show);
+    - frame 40: a faint red smudge under the bumper;
+    - frame 55: a small pinkish-red plume as the van pulls away;
+    - frame 80: a narrow plume glowing bright red in the brake lamps;
+    - frame 100: a faint blue-grey wisp behind the stopped van;
+    - frames 130 and 180: none.
+  - Frame 80's plume is bright and saturated. Whether it reads as lit by the brake lamps or as
+    glowing of itself (§5's contrast) is for the author's eyes.
+  - Reverse camera, with no prediction written for it: frame 80 shows a narrow column of red-lit
+    vapour rising behind the van, frame 100 a faint grey wisp, and the other frames none. Frame
+    100 also has one sharp white rain streak just in front of the lens, from the middle of the
+    frame to its bottom. It is rain, not the exhaust.
+- **My verdict (running game, 1280×800):** kept. The author's words after playing (#164,
+  2026-11-08): "i played and all look good proceed". Claude had left frame 80's bright red
+  plume to the author's eyes; the verdict keeps it.
+- **Strips:** `captures/exhaust_vapour/r0/`, `captures/exhaust_vapour/r1/`, and the
+  `view-reverse_camera` variant
 - **Commits:** _when kept._

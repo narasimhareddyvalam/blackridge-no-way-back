@@ -257,7 +257,8 @@ func configure(van: CharacterBody3D) -> void:
 	_mark_layer(_cabin, 4)
 	particles.name = "VanParticles"
 	add_child(particles)
-	particles.setup(van, _wipers[0], WipeMap.ARMS[0] + WipeMap.BLADES[0] * 0.5, _body)
+	particles.setup(van, _wipers[0], WipeMap.ARMS[0] + WipeMap.BLADES[0] * 0.5, _body, _windshield)
+	particles.wipe_with(_wipers[1], WipeMap.ARMS[1], _wipers[0].blade, WipeMap.BLADES[0])
 	_mirrors()
 
 

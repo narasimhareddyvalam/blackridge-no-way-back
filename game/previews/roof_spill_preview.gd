@@ -31,7 +31,8 @@ func set_up() -> void:
 			push_error("Unknown place %s: use office or valley" % place)
 	van.speed = ARRIVAL_SPEED
 	var spill: Node3D = effects.spill
-	fix_seeds([spill.get_node("RoofStreams"), spill.get_node("RoofBeads")], 6)
+	fix_seeds([spill.get_node("RoofStreams"), spill.get_node("RoofBeads"),
+		spill.get_node("Rivulets"), spill.get_node("WaterWash")], 6)
 
 
 func on_frame(number: int) -> void:

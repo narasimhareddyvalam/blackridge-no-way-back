@@ -2643,16 +2643,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
        strips stay in the working tree beside the r1 change, for one commit with the author's
        verdicts.
 
+164. **The verdicts after play, and what is left**
+     - **The author's message:** "i played and all look good proceed. is the video only thing
+       thats left?"
+     - **Recorded as the author's verdict:** all four effects' r1 kept, A2 with its clear sheet.
+       Claude Code took "all" to cover the world changes too (#150–#158, with #160's title
+       fix), which every scene of the play shows; the author can say otherwise. The message
+       names no case or reason, so `TUNING.md` quotes it under each effect.
+     - **Claude against the author:** Claude Code's readings had called A1's passenger line in
+       the office floodlight too bright and A2's streams more icicles than water. The verdict
+       keeps both, and `TUNING.md` records the disagreement.
+     - **Committed in the handout's order:** the r1 change with its strips and the verdicts,
+       after HEAD plus the r1 patch alone passed every suite in a temporary worktree
+       (`logs/particles/r1_only_164`); then the world changes.
+     - **Claude Code's answer:** no, the film is not the only thing left. Before it come the
+       author's own parts: the brief revisions for the kept changes, Step 6's process shader
+       and its line references, the GPU price, and the human checks in the author's words.
+       With or after the film: the author's `FRICTIONAL.md` notes, the `CLAUDE.md` review, the
+       summary in `SUBMISSION.md`, the Step 1 session file, then the tag, a fresh-clone check
+       and Canvas.
+
 ## Waiting for the author
 
-- Assignment 6's tuning (#146–#149): the four effects in the game. The r0 and r1 strips are
-  captured and read (#163); still to come is the author's verdict per effect in `TUNING.md`,
-  including whether A2 keeps its clear sheet (#149). Until then r1 and its strips stay
-  uncommitted in the working tree.
-- The world changes (#150–#157): the lamps, the road's puddles and rings, the depot's wall
-  lights, the streetlight, the rain under the lamps, and the roadside's guardrails, grass, lamps
-  and mist: kept or reverted after a look in the game, with their GPU price on power;
-  uncommitted until then (`tools/tuning/world/lamps_and_rings.patch`).
+- Assignment 6, the author's parts (#164): the brief revisions for the kept r1 changes
+  (`TUNING.md` lists what each changes); Step 6's process shader and its line references; the
+  GPU price with each effect off and on, F9 for the FPS check; the human checks in the author's
+  own words (`TEST-REPORT.md`); the author's `FRICTIONAL.md` notes and the `CLAUDE.md` review;
+  the summary in `SUBMISSION.md`; whether Step 1 gets a `claude -p` session file; then the film,
+  the tag `a6`, a fresh-clone check and Canvas.
+- The world changes (#150–#158), kept with the effects (#164): their GPU price on power.
 - Whether each lay-by's stone wall should stand on the inside of its curve, where
   `_outer_side()` puts it (#157).
 - The Assignment 6 brief (#141): the author's check of the † values, the B1 price predictions,

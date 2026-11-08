@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=39 format=3]
 
 [ext_resource type="Texture2D" path="res://effects/textures/roof_stream.png" id="1_stream"]
 [ext_resource type="Texture2D" path="res://effects/textures/water_bead.png" id="2_bead"]
+[ext_resource type="Texture2D" path="res://effects/textures/rain_streak.png" id="3_film"]
+[ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
 
 [sub_resource type="Curve" id="Curve_streams_alpha"]
 _data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.12, 0.6), 0.0, 0.0, 0, 0, Vector2(0.5, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -17,29 +19,58 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_streams_scale"]
 curve = SubResource("Curve_streams_scale")
 
+[sub_resource type="Curve" id="Curve_flat"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_flow_along"]
+max_value = 32.0
+_data = [Vector2(0, 1), 0.0, 30.0, 0, 1, Vector2(1, 31), 30.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_flow"]
+curve_x = SubResource("Curve_flat")
+curve_y = SubResource("Curve_flow_along")
+curve_z = SubResource("Curve_flat")
+
 [sub_resource type="ParticleProcessMaterial" id="Process_streams"]
 emission_shape = 3
-emission_box_extents = Vector3(0.48, 0.015, 0.025)
-direction = Vector3(0, -0.7, -0.71)
-spread = 12.0
+emission_box_extents = Vector3(0.48, 0.02, 0.015)
+direction = Vector3(0, -0.985, -0.18)
+spread = 10.0
 initial_velocity_min = 0.5
 initial_velocity_max = 1.4
-gravity = Vector3(0, -9.3, -9.51)
+gravity = Vector3(0, -9.8, 0)
 damping_min = 0.1
 damping_max = 0.4
-scale_min = 1.2
-scale_max = 2.8
+scale_min = 0.6
+scale_max = 1.5
 scale_curve = SubResource("CurveTexture_streams_scale")
+scale_over_velocity_min = 0.0
+scale_over_velocity_max = 3.0
+scale_over_velocity_curve = SubResource("Curve_flow")
 color = Color(0.82, 0.86, 0.88, 1)
 alpha_curve = SubResource("CurveTexture_streams_alpha")
+collision_mode = 1
+collision_friction = 0.3
+collision_bounce = 0.0
 
-[sub_resource type="StandardMaterial3D" id="Draw_stream"]
-transparency = 1
-blend_mode = 0
-shading_mode = 1
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_stream")
-billboard_mode = 0
+[sub_resource type="ShaderMaterial" id="Draw_stream"]
+render_priority = 1
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("1_stream")
+shader_parameter/forward_scatter = 0.85
+shader_parameter/diffuse = 0.15
+shader_parameter/lens_blur = 0.8
+shader_parameter/rim_dark = 0.4
+shader_parameter/face_camera = false
+shader_parameter/tail = 0.6
+shader_parameter/min_pixels = 1.2
+shader_parameter/scatter = 1.5
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.8
+shader_parameter/catch_light = 1.0
+shader_parameter/refraction = 0.04
 
 [sub_resource type="QuadMesh" id="Quad_stream"]
 material = SubResource("Draw_stream")
@@ -59,40 +90,197 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_beads_scale"]
 curve = SubResource("Curve_beads_scale")
 
+[sub_resource type="Curve" id="Curve_shutter_along"]
+max_value = 32.0
+_data = [Vector2(0, 1), 0.0, 25.0, 0, 1, Vector2(1, 26), 25.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_shutter"]
+curve_x = SubResource("Curve_flat")
+curve_y = SubResource("Curve_shutter_along")
+curve_z = SubResource("Curve_flat")
+
 [sub_resource type="ParticleProcessMaterial" id="Process_beads"]
 emission_shape = 3
-emission_box_extents = Vector3(0.48, 0.02, 0.03)
-direction = Vector3(0, -0.7, -0.71)
+emission_box_extents = Vector3(0.48, 0.025, 0.02)
+direction = Vector3(0, -0.985, -0.18)
 spread = 24.0
 initial_velocity_min = 0.4
 initial_velocity_max = 1.6
-gravity = Vector3(0, -9.3, -9.51)
+gravity = Vector3(0, -9.8, 0)
 damping_min = 0.1
 damping_max = 0.6
-scale_min = 0.3
-scale_max = 0.9
+scale_min = 0.25
+scale_max = 0.6
 scale_curve = SubResource("CurveTexture_beads_scale")
+scale_over_velocity_min = 0.0
+scale_over_velocity_max = 6.0
+scale_over_velocity_curve = SubResource("Curve_shutter")
 color = Color(0.78, 0.86, 0.91, 1)
 alpha_curve = SubResource("CurveTexture_beads_alpha")
+collision_mode = 1
+collision_friction = 0.3
+collision_bounce = 0.0
 
-[sub_resource type="StandardMaterial3D" id="Draw_bead"]
-transparency = 1
-blend_mode = 0
-shading_mode = 1
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_bead")
-billboard_mode = 3
-billboard_keep_scale = true
+[sub_resource type="ShaderMaterial" id="Draw_bead"]
+render_priority = 1
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("2_bead")
+shader_parameter/forward_scatter = 0.85
+shader_parameter/diffuse = 0.3
+shader_parameter/lens_blur = 0.6
+shader_parameter/rim_dark = 0.4
+shader_parameter/face_camera = false
+shader_parameter/tail = 0.35
+shader_parameter/min_pixels = 2.0
+shader_parameter/scatter = 3.0
+shader_parameter/glint = 1.0
+shader_parameter/sky = 1.2
+shader_parameter/catch_light = 1.0
+shader_parameter/refraction = 0.015
 
 [sub_resource type="QuadMesh" id="Quad_bead"]
 material = SubResource("Draw_bead")
 size = Vector2(0.01, 0.01)
 
+[sub_resource type="Curve" id="Curve_rivulets_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 0), 0.0, 0.0, 0, 0, Vector2(0.3, 0.7), 0.0, 0.0, 0, 0, Vector2(0.85, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_rivulets_alpha"]
+curve = SubResource("Curve_rivulets_alpha")
+
+[sub_resource type="Curve" id="Curve_track_along"]
+max_value = 160.0
+_data = [Vector2(0, 1), 0.0, 150.0, 0, 1, Vector2(1, 151), 150.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_track"]
+curve_x = SubResource("Curve_flat")
+curve_y = SubResource("Curve_track_along")
+curve_z = SubResource("Curve_flat")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_rivulets"]
+emission_shape = 3
+emission_box_extents = Vector3(0.45, 0.02, 0.01)
+direction = Vector3(0, -0.996, 0.09)
+spread = 15.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.5
+gravity = Vector3(0, -9.8, 0)
+scale_min = 0.3
+scale_max = 0.5
+scale_over_velocity_min = 0.0
+scale_over_velocity_max = 2.0
+scale_over_velocity_curve = SubResource("Curve_track")
+color = Color(0.8, 0.86, 0.9, 1)
+alpha_curve = SubResource("CurveTexture_rivulets_alpha")
+collision_mode = 1
+collision_friction = 0.35
+collision_bounce = 0.0
+
+[sub_resource type="ShaderMaterial" id="Draw_rivulet"]
+render_priority = 1
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("2_bead")
+shader_parameter/forward_scatter = 0.85
+shader_parameter/diffuse = 0.15
+shader_parameter/lens_blur = 0.6
+shader_parameter/rim_dark = 0.4
+shader_parameter/face_camera = false
+shader_parameter/tail = 0.8
+shader_parameter/min_pixels = 1.5
+shader_parameter/scatter = 1.5
+shader_parameter/glint = 0.5
+shader_parameter/sky = 0.8
+shader_parameter/catch_light = 1.0
+shader_parameter/refraction = 0.03
+
+[sub_resource type="QuadMesh" id="Quad_rivulet"]
+material = SubResource("Draw_rivulet")
+size = Vector2(0.01, 0.01)
+
+[sub_resource type="Curve" id="Curve_wash_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15, 0.6), 0.0, 0.0, 0, 0, Vector2(0.5, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_wash_alpha"]
+curve = SubResource("Curve_wash_alpha")
+
+[sub_resource type="Curve" id="Curve_wash_across"]
+max_value = 2.0
+_data = [Vector2(0, 1.4), 0.0, 0.0, 0, 0, Vector2(1, 0.8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_wash_along"]
+max_value = 2.0
+_data = [Vector2(0, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_wash"]
+curve_x = SubResource("Curve_wash_across")
+curve_y = SubResource("Curve_wash_along")
+curve_z = SubResource("Curve_flat")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_wash"]
+emission_shape_offset = Vector3(0, -0.04, -0.004)
+emission_shape = 3
+emission_box_extents = Vector3(0.45, 0.03, 0.002)
+direction = Vector3(0, -1, 0.05)
+spread = 8.0
+initial_velocity_min = 0.3
+initial_velocity_max = 0.8
+gravity = Vector3(0, -9.8, 0)
+scale_min = 1.2
+scale_max = 2.2
+scale_curve = SubResource("Curve_wash")
+color = Color(0.82, 0.86, 0.9, 1)
+alpha_curve = SubResource("CurveTexture_wash_alpha")
+collision_mode = 1
+collision_friction = 0.3
+collision_bounce = 0.0
+
+[sub_resource type="ShaderMaterial" id="Draw_wash"]
+render_priority = 1
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("3_film")
+shader_parameter/face_camera = false
+shader_parameter/tail = 0.0
+shader_parameter/min_pixels = 0.0
+shader_parameter/forward_scatter = 0.85
+shader_parameter/scatter = 0.0
+shader_parameter/diffuse = 0.0
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.0
+shader_parameter/catch_light = 0.4
+shader_parameter/refraction = 0.03
+shader_parameter/lens_blur = 1.2
+shader_parameter/rim_dark = 0.1
+shader_parameter/ripple = 0.012
+
+[sub_resource type="QuadMesh" id="Quad_wash"]
+material = SubResource("Draw_wash")
+size = Vector2(0.1, 0.1)
+
 [node name="RoofSpill" type="Node3D"]
+
+[node name="WaterWash" type="GPUParticles3D" parent="."]
+sorting_offset = -0.25
+emitting = false
+amount = 40
+lifetime = 0.6
+one_shot = true
+preprocess = 0.0
+explosiveness = 0.7
+visibility_aabb = AABB(-2, -3, -3, 4, 4, 4)
+local_coords = true
+collision_base_size = 0.02
+process_material = SubResource("Process_wash")
+draw_pass_1 = SubResource("Quad_wash")
 
 [node name="RoofStreams" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 32
+amount = 96
 lifetime = 0.85
 one_shot = true
 preprocess = 0.0
@@ -100,17 +288,34 @@ explosiveness = 0.8
 visibility_aabb = AABB(-2, -3, -3, 4, 4, 4)
 local_coords = true
 transform_align = 3
+collision_base_size = 0.01
 process_material = SubResource("Process_streams")
 draw_pass_1 = SubResource("Quad_stream")
 
 [node name="RoofBeads" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 48
+amount = 120
 lifetime = 1.3
 one_shot = true
 preprocess = 0.0
 explosiveness = 0.65
 visibility_aabb = AABB(-2, -3, -3, 4, 4, 4)
 local_coords = true
+transform_align = 3
+collision_base_size = 0.005
 process_material = SubResource("Process_beads")
 draw_pass_1 = SubResource("Quad_bead")
+
+[node name="Rivulets" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 8
+lifetime = 1.6
+one_shot = true
+preprocess = 0.0
+explosiveness = 0.5
+visibility_aabb = AABB(-2, -3, -3, 4, 4, 4)
+local_coords = true
+transform_align = 3
+collision_base_size = 0.004
+process_material = SubResource("Process_rivulets")
+draw_pass_1 = SubResource("Quad_rivulet")
