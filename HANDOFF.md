@@ -1,9 +1,8 @@
 # HANDOFF.md
 
-**Last run:** Assignment 6, step 1: the old brief moved, and a template for the Assignment 6
-brief (#138–#139), 2026-11-07, on branch `develop`. It is committed in two commits, the rename
-(`7bbf0a4`) and then the groundwork, and not pushed. Before it, each committed on `develop` and
-pushed:
+**Last run:** Assignment 6, the build after the brief (#142–#144), 2026-11-07, on branch
+`develop`, committed in 18 commits from `7f1f7bb` (the test runner) to this handoff, not pushed. Its section is below. Before it:
+- `7bbf0a4`: the old brief moved, and the brief template (#138);
 - `5d5ca7e`: Phase 2, step 1b, missions in a row and the progress file's version 2 (#129–#130);
 - `b4650fd`: the version 2 save rules, before any code (#127–#128);
 - `2ebd682`: the Phase 2 brief, Mission 2, before any code (#126);
@@ -48,6 +47,90 @@ screen with the game logo (C42), the film look in cutscenes, the filmed ending a
 intro.
 
 No slow motion. No title card before the end shows the game's title (C04).
+
+## Assignment 6, the build: effects, wiring, previews, fixes, price and documents (#142–#144)
+
+**The instruction (#142):** finish every agent part following best practice, and leave the
+author's own tasks for the end. Then #144: make all four effects clearly visible, as in the real
+world.
+
+**Files changed (committed):**
+
+- **The effects:** `game/effects/` holds four scenes, three B1 variants and five textures, with
+  `tools/make_particle_textures.py`.
+- **The controllers:**
+  - `game/features/vehicles/freight_van/van_particles.gd`, new, for A1, A2 and B2;
+  - `game/features/environments/industrial_loop/lamp_rain.gd`, new, for B1; its hide time comes
+    from the scene's lifetimes (1.35 s);
+  - the hooks: `van_presentation.gd`, `industrial_loop.gd`, and `throttle` as a member in
+    `freight_van.gd`.
+- **The previews:** `game/previews/` (the shared `preview_fixture.gd` and one per effect), left
+  out of the export (`game/export_presets.cfg`).
+- **The tools:** `scripts/capture-strips.sh`, new; `scripts/run-test.sh` (`7f1f7bb`).
+- **The tests:**
+  - `game/tests/`: four configuration tests, four state tests, `particle_readback.gd` and
+    `cost_effects.gd`;
+  - `logs/particles/` holds every run, each mutation with its `MUTATION.md`, and the leak
+    probe.
+- **Documents:**
+  - `CHANGE-BRIEF.md`, revisions 1–5;
+  - `CLAUDE.md` (`05eefd3`);
+  - `TEST-REPORT.md`, `SOURCES.md` and `README.md`, each with an Assignment 6 section first;
+  - `TUNING.md`, new;
+  - `FRICTIONAL.md`, the prompt log (#143–#144) and this file.
+
+**Tests, with the exact commands** (from the repository root; logs under `logs/particles/`):
+
+```sh
+LOG_DIR=logs/particles/<step> scripts/run-test.sh <test>.gd 60
+LOG_DIR=logs/particles/<step> scripts/run-test.sh test_night_dimming.gd 30  # and 60, 144
+LOG_DIR=logs/particles/cost scripts/run-test.sh cost_effects.gd 60 300
+python3 tools/tests/check_first_drive_art.py
+```
+
+- **Every suite before tuning** (`logs/particles/suites_before_tuning/SUMMARY.txt`), all exit 0:
+  - the earlier suites with their baseline counts: 64/64, 0 failures, 92/92, 21/21, 12/12, 25/25,
+    33/33, 12/12, 49/49, 21/21, 44/44, 12/12, 13/13, 12/12, 15/15, 29/29, 13/13, 20/20, 7/7, 30/30
+    ×3, and art 0 failures;
+  - configuration 70/70, 68/68, 234/234 and 42/42;
+  - state 9/9, 11/11, 12/12 and 10/10.
+- **The cost script:** controls 0.002 and 0.003 ms against the game's 0.484 ms. Every effect is
+  within −0.031 to +0.024 ms of it while the rounds vary by up to 0.165 ms: no GPU particle
+  process runs headless.
+- **The mutations:** all six exit 1, as in `TEST-REPORT.md`.
+- **The only ERROR lines:** the engine's DummyShader leak, "resources still in use", and the save
+  test's damaged file, explained in `TEST-REPORT.md`.
+
+**What the next run may rely on:**
+
+- Every effect fires on the right game state and on the preview's frames, headless and in a
+  window. Drawn solid red for one check, each draws where it should.
+- The build matches the brief: revisions 4 (`billboard_keep_scale`) and 5 (the streak's width).
+- Godot 4.7.2 runs `restart()` with `preprocess` about three frames late, and it does re-run the
+  preprocess.
+- A capture window takes the keyboard; the previews ignore real input.
+
+**Waiting on the author (the tuning loop, `TUNING.md`):**
+
+1. Capture the before strips: `scripts/capture-strips.sh 0`.
+2. Approve revision r1, the scattering draw material for each effect, or change it. Its patch
+   and shader wait in `tools/tuning/r1/`, outside `game/`, so nothing imports or exports them,
+   and they change nothing until applied with
+   `python3 -I tools/tuning/r1/apply_r1.py tools/tuning/r1/scatter_particle.gdshader`:
+   - it adds `game/effects/scatter_particle.gdshader`;
+   - it swaps each effect's draw material;
+   - it teaches `particle_readback.gd` to check a shader material;
+   - it updates the four configuration tests.
+3. After r1: capture `scripts/capture-strips.sh 1`; Claude Code compares; the author judges in
+   the game.
+4. r2 is proposed after r1's strips, for the sizes and counts the brief's own scale asks for: A1's
+   drops at 2–5 px and B2's plume to 0.5–0.8 m.
+
+**Unverified:**
+
+- How the effects look in the record: no strip has been captured by the author yet.
+- The GPU price: Godot's GPU timer read 0 on Metal in Run 17.
+- The tailpipe's position (revision 2).
 
 ## Assignment 6, step 1: the old brief moved, and the brief template (approved: #138)
 

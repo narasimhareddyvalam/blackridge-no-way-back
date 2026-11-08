@@ -40,6 +40,9 @@ The same checks showed that every effect fires on its frame and draws where it s
 solid red for one check, each appeared at the blade tip, the roof lip, the lamp and the
 tailpipe. With their real materials they could hardly be seen at night (below).
 
+The r1 patch and its shader wait in `tools/tuning/r1/` until the author approves; applying it
+changes the effect scenes, `particle_readback.gd` and the four configuration tests.
+
 ## Effect A1 (wiper flick), revision r1
 
 - **What I saw (running game, 1280×800):** _the author, in visual terms._ The author's message
