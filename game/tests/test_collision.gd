@@ -367,8 +367,8 @@ func _check_lean(sample: Dictionary) -> void:
 
 func _first_in_view(space: PhysicsDirectSpaceState3D, eye: Vector3, van: Transform3D,
 		hips: Vector3) -> float:
-	for step in range(5, 100):
-		var past := step * 0.1
+	for step in range(50, 1000):
+		var past := step * 0.01
 		if _clear_sight(space, eye, van * Vector3(hips.x, hips.y, -BUMPER - past)):
 			return past
 	return INF

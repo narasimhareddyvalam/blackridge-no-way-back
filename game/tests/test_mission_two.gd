@@ -3,6 +3,9 @@ extends SceneTree
 const CARGO := "res://features/missions/the_wrong_cargo/the_wrong_cargo.gd"
 const AT_THE_YARD := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=2\n"
 const LOADED := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=1\n"
+const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
+const VAN_FRONT := Vector3(0.0, 1.0, -2.52)
+const VAN_REAR := Vector3(0.0, 1.0, 3.01)
 
 var _checks: int = 0
 var _failures: int = 0
@@ -13,6 +16,9 @@ var _hud: CanvasLayer
 var _route: Node
 var _van: CharacterBody3D
 var _menu: Control
+var _gate_shed: Node3D
+var _gate_frames: int = 0
+var _gate_hits: int = 0
 
 
 func _initialize() -> void:
@@ -27,7 +33,7 @@ func _check(condition: bool, description: String) -> void:
 
 
 func _run() -> void:
-	create_timer(110.0, true, false, true).timeout.connect(_timeout)
+	create_timer(170.0, true, false, true).timeout.connect(_timeout)
 	_scratch = OS.get_temp_dir().path_join("blackridge-mission-two-%d-%d.cfg" % [
 		OS.get_process_id(), Time.get_ticks_usec()])
 	if not ResourceLoader.exists(CARGO):
@@ -39,6 +45,7 @@ func _run() -> void:
 	await _check_title()
 	await _check_continue()
 	await _check_new_game()
+	await _check_gate()
 	_remove()
 	_finish()
 
@@ -117,6 +124,90 @@ func _check_new_game() -> void:
 	await _free_app()
 
 
+func _check_gate() -> void:
+	_remove()
+	_store(START_SAVE)
+	await _build()
+	await _key(KEY_ENTER)
+	await _seconds(1.0)
+	var shed: Node3D = _app.get_node("IndustrialLoop").get("transfer_shed")
+	if shed == null:
+		_check(false, "The world has a transfer shed with a gate (IndustrialLoop.transfer_shed)")
+		await _free_app()
+		return
+	var gate_z: float = shed.get("GATE_Z")
+	var lane_x: float = shed.get("LANE_X")
+	_check(not bool(shed.call("barrier_open")) and _objective() == "DRIVE TO THE TRANSFER SHED",
+		"At Mission 2's start the gate's barrier is down, and the objective is the transfer shed "
+		+ "(%s)" % _objective())
+	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x, 0.1, gate_z + 18.0)))
+	await _seconds(0.5)
+	_watch_gate(shed)
+	await _hold(KEY_W, 5.0)
+	await _hold(KEY_S, 1.5)
+	var front := _van.to_global(VAN_FRONT).z
+	_check(front > gate_z - 0.05 and not bool(shed.call("barrier_open")),
+		"Driving at the closed barrier, the van stops against its arm: its front %.2f m short of "
+		% (front - gate_z) + "the arm's line, and the barrier stays down")
+	_check(_objective() == "STOP AT THE GATE" and _detail().contains("E"),
+		"At the gate the objective asks for a stop and names E (%s: %s)" % [_objective(),
+		_detail()])
+	await _key(KEY_E)
+	await _seconds(1.0)
+	_check(bool(_van.get("occupied")) and not bool(shed.call("barrier_open")),
+		"E at the gate hands the guard the run sheet instead of leaving the van; the barrier "
+		+ "waits for the guard's check")
+	await _seconds(8.0)
+	_check(bool(shed.call("barrier_open")),
+		"After the check the barrier is up within 8 s")
+	await _hold(KEY_W, 4.0)
+	var rear := _van.to_global(VAN_REAR).z
+	_check(rear < gate_z - 1.0, "The van drives through the gate: its rear %.2f m past the arm"
+		% (gate_z - rear))
+	await _seconds(6.0)
+	_check(not bool(shed.call("barrier_open")),
+		"Once the van is clear, the barrier comes back down behind it")
+	_check(_gate_hits == 0 and _gate_frames > 0,
+		"Over %d physics frames the arm was never across the van while it was lower than fully up "
+		% _gate_frames + "(%d frames it was)" % _gate_hits)
+	_gate_shed = null
+	await _free_app()
+
+
+func _watch_gate(shed: Node3D) -> void:
+	_gate_shed = shed
+	_gate_frames = 0
+	_gate_hits = 0
+	while _gate_shed == shed and is_instance_valid(shed):
+		await physics_frame
+		if not is_instance_valid(_van):
+			return
+		_gate_frames += 1
+		var gate_z: float = shed.get("GATE_Z")
+		var front := _van.to_global(VAN_FRONT).z
+		var rear := _van.to_global(VAN_REAR).z
+		if front < gate_z - 0.05 and rear > gate_z + 0.05 and float(shed.call("barrier_angle")) < 80.0:
+			_gate_hits += 1
+
+
+func _hold(code: Key, seconds: float) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = true
+	Input.parse_input_event(event)
+	await _seconds(seconds)
+	var release := event.duplicate() as InputEventKey
+	release.pressed = false
+	Input.parse_input_event(release)
+	await process_frame
+
+
+func _detail() -> String:
+	var label: Variant = _hud.get("_detail")
+	return (label as Label).text if label is Label else ""
+
+
 func _screen() -> String:
 	return String(_menu.call("screen"))
 
@@ -188,7 +279,7 @@ func _remove() -> void:
 
 
 func _timeout() -> void:
-	_check(false, "The Mission 2 checks finish within 110 s")
+	_check(false, "The Mission 2 checks finish within 170 s")
 	_finish()
 
 

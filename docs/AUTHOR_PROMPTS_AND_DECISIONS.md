@@ -2885,6 +2885,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
        numbered ISO 17712 bolt seal through a hasp; T4 one Euro pallet. The step 2a brief
        committed with them.
 
+185. **The GDD on the Desktop**
+     - **The author's message:** "also my gdd is on desktop. if you have any doubts check it out."
+     - **Read:** `~/Desktop/Blackridge_No_Way_Back_GDD.pdf` (the class GDD, Oct 19). For step 2b it
+       agrees: E is the interact key for gates ("job boards, crates and gates are planned"), with
+       a prompt within reach; Act I's "guarded gates" and "strict instructions not to inspect
+       cargo"; M2's challenge "notice what is wrong without being told". Still waiting for the OK
+       to start 2b.
+
+186. **Step 2b**
+     - **The author's message:** "OKAY PROCEED"
+     - **Done:** the spur, the fence, the guard booth, the barrier and the gate lamp, tests first;
+       the road's guardrail opened at the spur. One suite failed: `test_collision.gd`.
+
+187. **The ragdoll**
+     - **Claude Code's question:** the struck man's tumble is chaotic and two checks sat at their
+       edges; his elbow limit was soft (161° against 145°). Fix the ragdoll first (recommended),
+       leave the test failing, or loosen the test?
+     - **The author's message:** "okay fix it"
+     - **Done:** firm hinge limits (softness and bias 0.9); the lean check measured at 1 cm. Every
+       suite passes; step 2b committed.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

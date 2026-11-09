@@ -110,6 +110,7 @@ func _ready() -> void:
 	cargo.name = "TheWrongCargo"
 	add_child(cargo)
 	cargo.objective_changed.connect(_route_objective)
+	cargo.shed = world.transfer_shed
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()
@@ -187,8 +188,10 @@ func _back_to_title() -> void:
 
 func _pick_mission() -> void:
 	_mission = route
+	cargo.active = false
 	if route.handed_on != null:
 		_mission = cargo
+		cargo.active = true
 		cargo.configure(van, route.handed_on)
 	hud.set_mission(_mission.NAME)
 
@@ -503,6 +506,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied and route.phone_call.can_answer():
 			route.phone_call.answer()
 	elif event.is_action_pressed("interact") and not _boarding:
+		if van.occupied and _mission == cargo and cargo.wants_interact():
+			var note: String = cargo.interact()
+			if not note.is_empty():
+				hud.notify(note)
+			return
 		if van.occupied and (route.fleeing or van.held):
 			return
 		if van.occupied:

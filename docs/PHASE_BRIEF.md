@@ -4333,3 +4333,62 @@ Daily's rear spring rate.
 
 - The inspection (step 3): the seal number and weight against the manifest.
 - Any story words (S1–S4); the guard's lines stay neutral placeholders, labelled so.
+
+## Revision 2026-11-08 (Phase 2, step 2b: the spur, the gate and the guard booth)
+
+- **Author:** "OKAY PROCEED" (#186), after the GDD check (#185); then "okay fix it" (#187) for the
+  struck man's ragdoll, which this step exposed.
+- **Built** (`game/features/environments/industrial_loop/transfer_shed.gd`, new; wired in
+  `industrial_loop.gd`):
+  - **the spur:** 6 m wide, on the depot yard's wet asphalt, from the valley road's north edge to the
+    shed's dock fronts; its mouth flares with 6 m corner radii so a van can turn in; a stop line and
+    STOP 2.5 m before the arm;
+  - **the road's guardrail opens at the spur's mouth,** each side ending in its terminal
+    (`ghat_dressing.gd`, a new `openings` argument);
+  - **the security fence:** 2.4 m chain-link (posts every 3 m, top rail, the mesh drawn by
+    `chain_link.gdshader`, new, 50 mm openings, 3 mm wire, its far haze filtered rather than
+    shimmering), three barbed strands on 45° arms 0.45 m long, angled out; it runs from the shed's
+    front corners to the gate line; colliders for the van and Ethan;
+  - **the guard booth** on the driver's side (the van is left-hand drive): 2.5 × 2.0 m on a plinth,
+    glazed all round at 1.05–2.25 m, lit inside (an omni light, no shadows), a sign "STOP - REPORT TO
+    GATEHOUSE";
+  - **the boom barrier:** a cabinet, a 6.4 m arm (longer than the 6 m lane, as the research says;
+    the brief's 5 m† was too short) with red and white retroreflective bands 0.4 m long, drawn by
+    the guardrails' `retroreflector.gdshader`; a rest post at its tip; it rises in 4 s. Its safety
+    loop keeps it up while any part of the van is under the arm, and it closes only once the van is
+    1 m clear;
+  - **a lighting column at the gate,** the street lamps' own, so B1's rain runs in its light (the
+    lamp rain's 14th volume, added after the others so their order is kept);
+  - **the gate is 15.4 m from the dock fronts,** the apron a van needs to turn and reverse (about
+    twice its length, from the research).
+- **Mission 2** (`the_wrong_cargo.gd`, `first_drive.gd`): the objectives "DRIVE TO THE TRANSFER
+  SHED", "STOP AT THE GATE" ("press E"), "WAIT AT THE GATE" and "DRIVE THROUGH THE GATE"; E at the
+  stop hands the run sheet to the guard instead of leaving the van; the guard is a stand-in, a 3 s
+  check, labelled so in the code (D6). No story words: S1–S3 stay open.
+- **Tests first** (`logs/phase_2/step2b/`):
+  - `before/`: the new gate checks fail on the old code, 7/8;
+  - `after/`: `test_mission_two.gd` 15/15, by real key presses: the barrier down at the start; the
+    van stopped against the arm 0.03 m short of its line; E hands over the run sheet; the barrier up
+    within 8 s; through the gate; down again behind it; the arm across the van in 0 of 1,539
+    physics frames while lower than fully up.
+- **Mutations, each exit 1:** the safety loop removed (the arm across the van in 85 frames); E not
+  routed to the gate (Ethan leaves the van); the ragdoll's old soft limits (an elbow at 161°).
+- **Found, and fixed at the author's word (#187):** `test_collision.gd` failed 42/44 with the shed
+  in the world.
+  - **Not contact:** the hit is at the bus stop. Any one part of the shed, even with every collider
+    removed, changed the struck man's tumble; an empty shed node did not. His ragdoll is chaotic, and
+    two checks sat at their edges.
+  - **A real flaw under it:** his hinge limits were soft (softness 0.3, bias 0.6), so an elbow set to
+    145° folded to 161° under the impact, past what a human elbow can. Now 0.9 and 0.9: the elbows
+    peak at 143°, the knees at 138°, inside their limits (`pedestrian.gd`).
+  - **A measuring step:** the lean check measured the seated and leaning reach in 0.1 m steps and
+    asked for a gain over 1.0 m; an exact 1.0 m in those steps failed. At 1 cm steps the gain is
+    1.01–1.06 m in every case tried. The step is now 1 cm; the expectation is unchanged.
+- **Test changes, with their reasons:** `test_lamp_rain_state.gd` counts 14 volumes, the gate lamp
+  added; `test_collision.gd` measures reach at 1 cm.
+- **Every suite passes** (`logs/phase_2/step2b/suites/SUMMARY.txt`): all 31 runs exit 0, no SCRIPT
+  or SHADER ERROR; the counts as the baseline's (`baseline/`), with Mission 2 at 15/15. Art 0
+  failures.
+- **Import** with the scratch home: exit 0, no errors or warnings (`import/`).
+- **Not done:** the gate's frame strip, with predictions first and the author's verdict (it opens a
+  game window); the GPU price, with the shed in 2c.

@@ -63,8 +63,11 @@ var _concrete: Material
 var _flashers: Array[MeshInstance3D] = []
 
 
+## Each opening is (x, z, half width): a side road's mouth, where the rail on that side of the
+## road stops, each run ending with its terminal.
 func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: Vector2,
-		crossing: int = -1, outside_rails: Array[Vector2] = []) -> void:
+		crossing: int = -1, outside_rails: Array[Vector2] = [],
+		openings: Array[Vector3] = []) -> void:
 	_road = road
 	_terrain = terrain
 	_points = road.points
@@ -79,6 +82,7 @@ func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: 
 	_steel.cull_mode = BaseMaterial3D.CULL_DISABLED
 	var landslide := _nearest(landslide_at)
 	var drops := _drops(landslide, outside_rails)
+	_open(drops, openings)
 	_barriers(drops)
 	_rail_hardware(drops)
 	_delineators(drops)
@@ -119,6 +123,21 @@ func _drops(landslide: int, outside_rails: Array[Vector2]) -> Array[PackedByteAr
 			if dropped or (_road.is_layby(index) and side == _outer_side(index)):
 				(left if side_index == 0 else right)[index] = 1
 	return [_continuous(left, landslide), _continuous(right, landslide)]
+
+
+func _open(drops: Array[PackedByteArray], openings: Array[Vector3]) -> void:
+	for opening in openings:
+		var at := Vector2(opening.x, opening.y)
+		var index := _nearest(at)
+		var left := _edge(index, -1.0, RAIL_INSET)
+		var right := _edge(index, 1.0, RAIL_INSET)
+		var side_index := 0 if Vector2(left.x, left.z).distance_to(at) \
+			< Vector2(right.x, right.z).distance_to(at) else 1
+		var side := -1.0 if side_index == 0 else 1.0
+		for other in range(_points.size()):
+			var edge := _edge(other, side, RAIL_INSET)
+			if Vector2(edge.x, edge.z).distance_to(at) < opening.z:
+				drops[side_index][other] = 0
 
 
 func _continuous(flags: PackedByteArray, landslide: int) -> PackedByteArray:

@@ -61,9 +61,9 @@ func _run() -> void:
 
 func _check_start() -> void:
 	var near := _within_range()
-	_check(_rain.volumes.size() == 13,
+	_check(_rain.volumes.size() == 14,
 		"Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the " +
-		"floodlight and the door lamp (%d)"
+		"floodlight, the door lamp and the transfer shed's gate lamp (%d)"
 		% _rain.volumes.size())
 	_check(near.size() == 3 and _states_match(near),
 		"At the start, the 3 lamps within 65 m of the camera rain and the other 10 are off and " +

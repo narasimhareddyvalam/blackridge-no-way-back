@@ -1,5 +1,12 @@
 # HANDOFF.md
 
+**Last run:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
+the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
+Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.
+**Next:** the gate's frame strip (a game window opens; predictions first, then the author's
+verdict), then 2c, the shed, the dock lift and the floodlights, each approved first.
+
 **Assignment 6 is submitted** on Canvas by the author (#181, 2026-11-08): the ZIP of `a6`
 (`0216d23`), `SUBMISSION.md` with the SHA, and the note with the tag and film links.
 **After `a6` (#180):** `main` brought up to `a6` by pull request #1, merged by the author as

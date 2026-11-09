@@ -12,6 +12,7 @@ const RoadsideForest = preload("roadside_forest.gd")
 const ForestFloor = preload("forest_floor.gd")
 const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
+const TransferShed = preload("transfer_shed.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -115,6 +116,9 @@ var forest_floor: Node3D
 var grass: Node3D
 var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
+var transfer_shed: Node3D
+var warehouse_widths: Array[float] = []
+var _yard_surface: Material
 var _metal := Build.material(Color("343d43"), 0.48)
 var _concrete := Build.material(Color("4b5254"))
 var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
@@ -138,6 +142,7 @@ func _ready() -> void:
 	add_child(DepotDetail.new())
 	_street_furniture()
 	_boundary()
+	_transfer_shed()
 	_reflections()
 	_forest()
 	lamp_rain.name = "LampRain"
@@ -218,12 +223,14 @@ func _ground_and_roads() -> void:
 	dressing = GhatDressing.new()
 	dressing.name = "GhatDressing"
 	add_child(dressing)
-	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS)
+	var openings: Array[Vector3] = [TransferShed.road_opening()]
+	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS, openings)
 	var yard := ShaderMaterial.new()
 	yard.shader = ASPHALT
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
 	yard.set_shader_parameter("aggregate_normal", ASPHALT_NORMAL)
 	yard.set_shader_parameter("dry_color", Vector3(0.48, 0.49, 0.50))
+	_yard_surface = yard
 	_depot_ground(yard)
 
 
@@ -233,6 +240,7 @@ func _flat_plots() -> Array[Rect2]:
 		plots.append(Rect2(item.x - 23, item.z - 15.5, 46, 33.4))
 	plots.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	plots.append(Rect2(SILOS[0] - 8, SILO_Z - 8, SILOS[1] - SILOS[0] + 16, 16))
+	plots.append_array(TransferShed.flat_plots())
 	return plots
 
 
@@ -387,6 +395,7 @@ func _buildings() -> void:
 	var window := Build.luminous(Color("bfad80") * 0.55)
 	for item: Vector3 in WAREHOUSES:
 		var size := Vector3(_random.randf_range(24, 38), _random.randf_range(9, 15), 23)
+		warehouse_widths.append(size.x)
 		clearings.append(Rect2(item.x - size.x / 2 - 4, item.z - 15.5, size.x + 8, 33.4))
 		Build.box(self, item + Vector3.UP * size.y / 2, size, masonry, true)
 		Build.box(self, item + Vector3.UP * (size.y + 0.18),
@@ -871,6 +880,16 @@ func _reflections() -> void:
 	probe.intensity = 0.8
 	probe.update_mode = ReflectionProbe.UPDATE_ONCE
 	add_child(probe)
+
+
+func _transfer_shed() -> void:
+	transfer_shed = TransferShed.new()
+	transfer_shed.name = "TransferShed"
+	add_child(transfer_shed)
+	transfer_shed.build(road, warehouse_widths[WAREHOUSES.size() - 1], _yard_surface, _concrete,
+		_metal, _wall_material(Color("aeb1ad")))
+	clearings.append_array(transfer_shed.clearings)
+	_lamp_post(transfer_shed.lamp_at, 0.0)
 
 
 func _boundary() -> void:

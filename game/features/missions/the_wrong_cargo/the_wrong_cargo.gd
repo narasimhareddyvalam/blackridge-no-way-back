@@ -17,6 +17,10 @@ var vehicle: CharacterBody3D
 var stage: int = 0
 var recovery_pose := START
 var fleeing: bool = false
+var active: bool = false
+var shed: Node3D
+
+var _shown := ""
 
 
 static func valid_progress(config: ConfigFile) -> bool:
@@ -37,7 +41,24 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	stage = config.get_value("cargo", "stage")
 	recovery_pose = START
 	vehicle.recover(recovery_pose)
+	if shed != null:
+		shed.reset()
+		shed.watch(vehicle)
+	_shown = ""
 	_update_objective()
+
+
+func wants_interact() -> bool:
+	return active and stage == 0 and shed != null and shed.vehicle_at_stop() \
+		and not shed.barrier_open() and not shed.checking()
+
+
+func interact() -> String:
+	if absf(float(vehicle.get("speed"))) > 0.3:
+		return "Stop at the line first."
+	shed.hand_run_sheet()
+	_update_objective()
+	return "You hand the guard the run sheet."
 
 
 func recover() -> void:
@@ -52,5 +73,29 @@ func place_next() -> String:
 	return NEXT[stage]
 
 
+func _physics_process(_delta: float) -> void:
+	if active and stage == 0:
+		_update_objective()
+
+
 func _update_objective() -> void:
-	objective_changed.emit("MISSION 2 IS BEING BUILT", "Next: %s." % NEXT[stage].to_lower())
+	var title := "MISSION 2 IS BEING BUILT"
+	var detail := "Next: %s." % NEXT[stage].to_lower()
+	if stage == 0 and shed != null:
+		if shed.vehicle_through():
+			detail = "Next: backing onto the dock."
+		elif shed.checking():
+			title = "WAIT AT THE GATE"
+			detail = "The guard is checking the run sheet."
+		elif shed.barrier_open():
+			title = "DRIVE THROUGH THE GATE"
+			detail = "The barrier is up."
+		elif shed.vehicle_near():
+			title = "STOP AT THE GATE"
+			detail = "Stop at the line, then press E to hand the guard the run sheet."
+		else:
+			title = "DRIVE TO THE TRANSFER SHED"
+			detail = "Take the spur north off the valley road, just west of the depot."
+	if title + detail != _shown:
+		_shown = title + detail
+		objective_changed.emit(title, detail)
