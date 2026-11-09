@@ -2859,6 +2859,32 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Recorded:** Assignment 6 submitted on Canvas by the author, 2026-11-08: the ZIP of `a6`
        (`0216d23`), `SUBMISSION.md` with the SHA, and the note with the tag and film links.
 
+182. **Mission 2 resumes**
+     - **The author's message:** "yes lets go ahead and do mission 2. remember all the things we
+       did in assignments we should keep using those techniques in our game to make it more
+       professional and realistic"
+     - **Claude Code's answer:** step 2 of the Phase 2 brief, the transfer shed, proposed in
+       sub-steps, starting with its brief written before any code, using the assignments'
+       methods: intent and predictions first, tests by real key presses, frame strips read
+       against predictions and judged by the author, effects built as GPU particles where they
+       are real, the GPU price measured, and a fresh-clone check at the end. Waiting for the OK.
+
+183. **Step 2a: research first**
+     - **The author's message:** "start make sure everything is realistic do your research first
+       how things work in real life and real life physics before starting."
+     - **Done:** research on docks, levellers, dock lifts, the Daily's floor and payload,
+       forklifts, pallet handling, bolt seals and barriers; the transfer shed's brief written as
+       a dated revision in `docs/PHASE_BRIEF.md` (not `CHANGE-BRIEF.md`: about 20 game and test
+       files cite it for Assignment 6). Not committed; decisions T1–T4 asked.
+
+184. **T1–T4 decided**
+     - **The author's message:** "- a. A dock lift in one bay (my recommendation). A scissor
+       platform sets itself to the van's floor, and you can see it sink as the load goes in. and
+       t2-t4 everything are okay"
+     - **Recorded:** T1 a, the dock lift; T2 the electric forklift and a hand pallet truck; T3 a
+       numbered ISO 17712 bolt seal through a hasp; T4 one Euro pallet. The step 2a brief
+       committed with them.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

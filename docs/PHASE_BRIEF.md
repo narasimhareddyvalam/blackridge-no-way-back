@@ -4208,3 +4208,128 @@ stage=1                     ; 0 its start, 1 loaded, 2 in the dark van, 3 the es
   - Mission 2's places and play (steps 2–8);
   - Mission 2's title shot, seen in a window;
   - the author's save and keyboard checks.
+
+## Revision 2026-11-08 (Phase 2, step 2a: the transfer shed's brief, written before any code)
+
+- **Status:** drafted by Claude Code at the author's word (#182–#183: "start make sure everything
+  is realistic do your research first how things work in real life and real life physics before
+  starting"). It changes nothing in the game, and is committed only with the author's OK, before
+  any of step 2's code. Values marked † are Claude Code's proposals from the research below, for
+  the author to accept or change.
+- **The methods carried over from the assignments (#182):** intent and measurable rules before
+  code, predictions written before each strip and judged by the author in the game (Assignments 5
+  and 6); tests first, by real key presses; GPU particles only where something real moves; the
+  GPU price measured with the Metal HUD, shown and hidden in blocks; a fresh-clone check at the end
+  of the step; every Claude reading of a frame a claim, not a check.
+
+### What real loading docks taught (the research)
+
+| Fact | Value | What it means here |
+| --- | --- | --- |
+| Standard dock height | about 1.2 m (44–55 in) | Today's warehouse docks stand 1.3 m high (`industrial_loop.gd`, the concrete blocks at the doors) |
+| A panel van's load floor | Iveco Daily about 0.68 m | 0.5–0.6 m below a standard dock |
+| A dock leveller's useful range | about ±0.1 m (edge-of-dock) to ±0.3 m (pit) | No leveller bridges a van at a standard dock |
+| How sites serve vans | a dock lift (a scissor platform, ground to about 1.5 m), a raised ramp for the van, or a low "van dock" | One of these is needed for the van to load at a dock at all |
+| Dock door | 2.7–3.0 m wide, about 3 m high | Fits the van (2.0 m wide, about 2.6 m tall with a medium roof) |
+| Dock bumpers | laminated rubber, 100–150 mm thick, 250 mm wide | They, not the driver, set where the van stops |
+| Dock signals | red/green lights outside for the driver, inside for the loader; a dock light on an arm lights the van's inside | Visible in the reverse camera and the mirrors |
+| Wheel chocks or a restraint | chocks are common, restraints safer | A chock at the rear wheel once the van stops |
+| Forklift, 2.5 t counterbalance | about 1.1 m wide, turning radius 2.0–2.35 m, 16–19 km/h; electric indoors (no exhaust), LPG outdoors | It brings the pallet to the dock edge; it cannot drive into a panel van |
+| Getting a pallet into a van | a hand pallet truck rolls it across the leveller or lift; a forklift only at the van's rear edge from the ground | The loader, not the forklift, puts the load inside |
+| Euro pallet | 1.2 × 0.8 m; the Daily takes it through the rear doors | The sealed load is one or two pallets |
+| Iveco Daily 35S payload | roughly 1.0–1.4 t; leaf-sprung rear axle | It sinks visibly as weight goes in. No published spring rate was found, so the sink is an estimate, labelled so |
+| Bolt seal (ISO 17712, high security) | two parts, bolt and cap, each with the same unique number; pushed shut by hand; removed only with bolt cutters | It needs a hasp on the van's rear doors; the number goes on the paperwork and is checked by "view, verify, tug, twist" |
+| Boom barrier | arm longer than the lane, typically 3–7 m; post about 1 m high; a guard booth beside it | The guard reads the run sheet, then lifts the arm |
+
+Sources: [SafeRack](https://saferack.com/posts/loading-dock-heights-by-truck-type/),
+[Blue Giant: dock height](https://www.bluegiant.com/architects/planning-and-design/dock-height/),
+[Blue Giant: leveller widths](https://www.bluegiant.com/architects/planning-and-design/leveler-width-and-length/),
+[Rite-Hite: levellers](https://www.ritehite.com/en/am/news/2022/blog/which-loading-dock-leveler-is-right-for-you),
+[Specifying a safe dock lift](https://continuingeducation.bnpmedia.com/courses/advance-lifts/specifying-a-safe-dock-lift/2),
+[Dockzilla](https://dockzilla.com/?p=6293), [MHI dock planning 101](https://mhi.org/downloads/industrygroups/lodem/dock_planning_101.pdf),
+[Bahrns: dock doors](https://www.bahrns.com/blog/?p=7843), [Projul: dock design](https://projul.com/blog/construction-loading-dock-design-installation-guide),
+[Rite-Hite: dock communication](https://www.ritehite.com/en/af/products/vehicle-restraints/communication-and-controls),
+[Hyster H2.5UT](https://www.lectura-specs.com/en/model/forklifts/lpg-forklifts-hyster/h2-5ut-11738474),
+[Mitsubishi FGC25N](https://www.lectura-specs.com/en/model/forklifts/lpg-forklifts-mitsubishi/fgc25n-11782084),
+[Iveco Daily dimensions](https://www.vanguide.co.uk/?p=1428), [Daily 2019 specs](https://www.carexpert.co.nz/iveco/daily/2019/exterior-and-dimensions),
+[Iveco: Daily suspension](https://www.iveco.com/africa-mideast-en/products/pages/power_daily_cab_gearbox_and_suspensions.aspx),
+[NZ Customs: seals](https://www.customs.govt.nz/media/crbdcszr/seals-for-sea-freight.pdf),
+[Seals.com: verifying seals](https://seals.com/maintain-a-robust-program-to-verify-and-inspect-seals/),
+[Wikipedia: security seal](https://en.wikipedia.com/wiki/Security_seal),
+[OPTraffic: barrier arm length](https://optraffic.com/blog/barrier-security-gate-arm-length-access-control/).
+Not found: a lighting level for yards and docks from EN 12464-2 (its table is paywalled); the
+Daily's rear spring rate.
+
+### Decisions for the author
+
+- **Decided (#184):** T1 a, the dock lift; T2, T3 and T4 as proposed. The author's words:
+  "a. A dock lift in one bay ... and t2-t4 everything are okay".
+
+- **T1, how the van meets the dock:**
+  - **a. A van bay with a dock lift (Claude Code's recommendation†):** the shed keeps its 1.3 m
+    docks, and one bay has a scissor lift platform in a pit, which sets itself to the van's floor.
+    It is what real sites fit for vans, and the platform moving down as the load goes in shows the
+    weight;
+  - b. a low "van dock" at about 0.7 m with an edge-of-dock leveller;
+  - c. no dock: the forklift loads at the van's rear edge from the yard, in the rain.
+- **T2, how the load goes in:** the electric forklift brings the pallet to the lift; the loader
+  rolls it into the van with a hand pallet truck† (real, and the only way into a panel van).
+- **T3, the seal:** a numbered ISO 17712 bolt seal through a hasp on the rear doors†, its number
+  read by the guard and written on the run sheet.
+- **T4, the load:** one Euro pallet†; its weight is step 3's (S4), so step 2 builds the van's sink
+  as a function of any weight.
+
+### The parts and their order (each approved on its own)
+
+- **2b, the spur, gate and booth:** a 6 m single-lane spur† north from the road to the shed; a
+  boom barrier (5 m arm†, red and white, lit), a guard booth (about 2.5 × 2 m†, lit window), a stop
+  line. The guard is a stand-in (D6), labelled so. The barrier lifts after the run sheet is
+  checked, never through the van.
+- **2c, the shed, the dock and the floodlights:** the north-west warehouse becomes the transfer
+  shed: its doors, the van bay (T1), bumpers, red/green dock lights, a dock light inside, painted
+  guide lines on a concrete apron, two LED floodlights on the wall† about 8 m up, aimed down. Each
+  floodlight is a lamp for B1, so its rain runs by Assignment 6's own rule. The puddles and rain
+  rings come from the wet asphalt the road uses.
+- **2d, backing onto the dock:** by real keys, in reverse, with the reverse camera and mirrors;
+  the bumpers stop the van physically (the van touches them, it does not pass through); at a stop
+  within 0.3 m of the bumpers, square to the door within 3°†, the dock light turns green and a chock
+  goes in. The van reverses at most 1.4 m/s† here, walking pace, as a driver does at a dock.
+- **2e, the load and the seal:** the forklift (electric, 2.5 t class, about 1.1 m wide) sets the
+  pallet on the lift; the lift and the van sink as weight goes in; the rear doors close; the seal
+  goes on with its number; the checkpoint "loaded" saves (stage 1).
+
+### Rules a test can measure (written before the code)
+
+| # | Rule | Test |
+| --- | --- | --- |
+| R1 | The barrier is down until the run sheet is checked; the van stops at the stop line; it never passes through the arm | `test_mission_two.gd`, by real keys |
+| R2 | The van stopped against the bumpers ends within 0.3 m of them and within 3° of square (Q3); no part of it passes through them | the same |
+| R3 | Reversing in the bay never exceeds 1.4 m/s | the same |
+| R4 | The lift platform meets the van's floor within 20 mm before the pallet moves | the same |
+| R5 | The van sinks by the load's weight over its rear spring estimate, and back when unloaded; the sink is labelled an estimate | the same |
+| R6 | The seal's number is the same on bolt, cap and run sheet; once on, the doors stay shut until it is cut | the same |
+| R7 | "Loaded" saves stage 1, and a reload restores the van at the dock, loaded and sealed | `test_mission_two.gd`, `test_save_rules.gd` |
+| R8 | Every existing suite passes, and Mission 1 is unchanged | every suite |
+
+### Predictions (before any code)
+
+- The van's real floor height in our model is measured in 2c; if it differs from 0.68 m, the lift
+  follows the model, and the difference is written here.
+- With the floodlights on, B1 adds up to two rain volumes at the shed; with Assignment 6's prices
+  (B1 0.67 ms for three volumes on screen), the shed costs about 0.5 ms† of GPU time over today's
+  scene, and stays within a 1.0 ms budget†. Measured in 2c with the Metal HUD.
+- The bay's frame strips (2d): frame by frame, the van's rear in the reverse camera, the green
+  light at the stop, the chock; predicted before capture, judged by the author.
+
+### What could go wrong, and the check that catches it
+
+1. The van catches on the bumpers and climbs them, or jitters: R2's test and a strip.
+2. The lift and the van floor disagree, and the pallet floats or sinks through: R4's test.
+3. The floodlights' shadows cost too much: the GPU price; shadows on the far light go first.
+4. The guard stand-in mistaken for Assignment 9's AI: labelled in code, tests and docs (D6).
+5. A save at the dock loads the van outside it: R7.
+
+### Not in this step
+
+- The inspection (step 3): the seal number and weight against the manifest.
+- Any story words (S1–S4); the guard's lines stay neutral placeholders, labelled so.
