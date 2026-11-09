@@ -4392,3 +4392,25 @@ Daily's rear spring rate.
 - **Import** with the scratch home: exit 0, no errors or warnings (`import/`).
 - **Not done:** the gate's frame strip, with predictions first and the author's verdict (it opens a
   game window); the GPU price, with the shed in 2c.
+
+## Revision 2026-11-08 (Phase 2, step 2b: the gate's first frame strip)
+
+- **Author:** "yes record it" (#188).
+- **How:** a scripted-input take on the real main scene, Mission 2's start save, the van set on
+  the spur 26 m before the gate and driven by the game's own actions (`tools/captures/
+  gate_take.gd`), on an isolated copy of `game/`, Movie Maker at 1280×800 and 30 fps, in a window,
+  run by Claude Code at the author's word. Frames 45, 120, 215, 300, 385, 444, 480 and 575 are kept
+  in `captures/transfer_shed/2b/`, with `events.txt` (every event and its frame), `godot.log` (no
+  SCRIPT or SHADER ERROR) and `strip.png`.
+- **Events:** at the spur on frame 12; braking for the line on 203; stopped 0.22 m before the stop
+  line on 215; E on 235; the barrier up on 444; in the yard on 588.
+- **Claude Code's predictions (written before the capture), and its reading (a claim, not a check):**
+  - 20 m out: the gate lamp's amber pool with rain in it, as predicted; the barrier's bands flaring
+    in the headlights, as predicted. **Not as predicted:** the booth's windows read as a flat beige
+    panel, a box rather than lit glass with a room behind it (one even glow, no depth); the fence is
+    barely there: its posts faint, the mesh a very faint haze, no barbed wire to be seen;
+  - stopped: STOP hidden under the bonnet and the arm just above it, as predicted;
+  - frame 385: the arm at 49°, about halfway, as predicted; frame 444: upright, as predicted;
+  - inside: the dock doors and the 1.3 m concrete docks in the headlights, the ground beside the
+    spur unpaved (2c), as predicted.
+- **The author's verdict:** to come, after the author's own look in the game.

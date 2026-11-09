@@ -2906,6 +2906,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** firm hinge limits (softness and bias 0.9); the lean check measured at 1 cm. Every
        suite passes; step 2b committed.
 
+188. **The gate's first strip**
+     - **The author's message:** "yes record it"
+     - **Done:** the strip recorded in a window (`captures/transfer_shed/2b/`); Claude Code's
+       reading: as predicted, except the booth's windows (a flat beige box) and the fence (barely
+       visible). The author's verdict asked.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it
