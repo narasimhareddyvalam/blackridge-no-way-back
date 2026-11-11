@@ -3103,6 +3103,20 @@ tag `a5`. Pictures the author approved or rejected are filed in
        backs into bay 3, the van bay with its dock lift. Step 2b's r1 and r2 committed on
        `develop`, not pushed. Next: step 2c's brief for layout B, before any code.
 
+211. **Step 2c's brief**
+     - **The author's message:** "okay"
+     - **Done:** step 2c's brief for layout B written in `docs/PHASE_BRIEF.md` before any code,
+       from research on depots (truck courts, aprons, door mixes, wheel guides, one-way yards,
+       pedestrian separation, yard speeds, yard lights, the Daily's turning circle): the yard, the
+       cut and its retaining wall, the fence, markings, kerbs, bollards, signs, lights, the side
+       yard's contents, glass windows; parts 2c-1 to 2c-3, then 2d and 2e; rules D1–D9;
+       predictions. Asked: the author's OK to commit it and start 2c-1.
+
+212. **The brief committed, and the yard begun**
+     - **The author's message:** "ok"
+     - **Decision:** step 2c's brief committed on `develop` alone, before any code, as step 2a's
+       was; then step 2c-1, the yard, tests first.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

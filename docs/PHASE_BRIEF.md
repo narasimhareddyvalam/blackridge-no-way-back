@@ -4734,3 +4734,134 @@ Daily's rear spring rate.
     goes down (265, 300); warm-toned, as under the booth's light;
   - the rest as in the second strip.
 - **The author's verdict:** to come.
+
+## Revision 2026-11-11 (Phase 2, step 2c: the depot around the shed, written before any code)
+
+- **Status:** drafted by Claude Code at the author's word ("okay", #211), after the author asked
+  for the shed's surroundings to be a real depot with roads, with Ethan reversing onto the dock
+  (#209), and chose layout B (#210). It changes nothing in the game, and is committed only with
+  the author's OK, before any of step 2c's code. Values marked † are Claude Code's proposals from
+  the research below, for the author to accept or change. Step 2a's plan for the shed, its rules
+  R1–R8 and decisions T1–T4 stand; this revision adds the yard around them.
+
+### What real depots taught (the research)
+
+| Fact | Value | What it means here |
+| --- | --- | --- |
+| Truck court depth | 120–150 ft (37–46 m) for semi-trailers; or twice the longest vehicle plus 5–10 ft | The front yard is 15.4 m deep: enough for vans (2 × 5.53 m + 1.5 m), not for trailers, which is why the side yard is where trailers park |
+| Apron surface | concrete in front of the docks (asphalt softens and dents under trailer stands); never gravel | A 5 m concrete strip along the dock fronts, asphalt elsewhere, no unpaved ground inside the fence |
+| Door mix | dock-high doors (48–52 in) for trailers; grade-level or lift solutions for vans | Bays 1 and 2 stay dock-high (1.3 m); bay 3 is the van bay with its dock lift (T1) |
+| Wheel guides | raised steel, safety yellow, seen from the cab; e.g. 2.085 × 0.25 × 0.365 m a guide | A pair at each bay, bay 3's set for the van's track |
+| Traffic | one-way where it fits; counter-clockwise, so drivers back on their own side; signs and markings for lanes, entrances, exits and walkways | The van comes in, swings right into the side yard, and backs into bay 3 on the driver's (left) side |
+| Pedestrians | kept apart from vehicles by physical barriers, not paint alone; marked crossings | A marked walkway from the gate to the shed's door, railed where it runs beside the lane |
+| Parking | trucks apart from staff cars | Trailers in the side yard; the staff car park behind a kerb in its south-east corner |
+| Yard speed | usually posted 5 mph; about 3 mph approaching a dock | A 5 mph sign at the gate; 2a's reverse limit of 1.4 m/s (3.1 mph) at the bay |
+| Yard lights | poles of 25–35 ft (7.5–10.5 m) for industrial yards, spaced about 3–4 times their height; full cutoff | Two 10 m poles in the side yard, aimed down; with the shed's two wall floods |
+| Iveco Daily 35S, 3520 wheelbase | turning circle 12.1 m kerb to kerb, 12.7 m wall to wall | Our van's 3.50 m wheelbase: the front yard is just deep enough to turn in, the side yard more than enough |
+| The ground east of the shed | flat near the road, rising to the north-east (about 1.2–1.8 m at z 30; the game's own terrain) | The side yard is cut level, held by a retaining wall along its north edge |
+
+Sources: [Link Logistics: loading docks](https://www.linklogistics.com/news-insights/industrial-real-estate-101/what-is-a-loading-dock-a-guide-to-types-configurations-and-key-features/),
+[Projul: dock design](https://projul.com/blog/construction-loading-dock-design-guide/),
+[Industrial Spaces: fleet access](https://industrialspaces.net/learn/logistics-operations/fleet-access-considerations-warehouse-sites),
+[Nike DC standards: parking](https://gps.standards.nike.com/distribution-centers/space-types/parking),
+[Inbound Logistics: warehouse layout](https://inboundlogistics.com/articles/fine-tuning-your-warehouse-layout),
+[Trucknews: yard traffic](https://www.trucknews.com/business-management/manage-fleet-yard-traffic-in-name-of-safety-productivity/1003174734),
+[Rite-Hite: wheel guides](https://www.ritehite.com/en/am/news/2023/blog/why-wheel-guides),
+[Loading Systems: wheel guides](https://www.loading-systems.com/products/accessories/wheel-guides),
+[USPS PO-515: yard rules](https://about.usps.com/handbooks/po515/po515_ch3_002.htm),
+[Paragon Logistics: yard safety rules](https://paragonlogistics.tawk.help/article/yard-safety-rules),
+[BigRentz: speed limits](https://www.bigrentz.com/blog/forklift-speed-limits-osha-rules-and-best-practices-for-safe-operation),
+[LED Lighting Supply: logistics yard lighting](https://www.ledlightingsupply.com/commercial-lighting/led-logistics-yard-lighting),
+[JCLGL: pole lights](https://jclgl-led.com/blogs/led-parking-lot-lights/led-pole-lights-commercial-use),
+[Iveco Daily 35S spec sheet](https://s3-ap-southeast-2.amazonaws.com/imotor-cms/files_cms/Daily35SVanSpecSheetUpdate-Aug17.pdf),
+[Carexpert: Daily dimensions](https://www.carexpert.co.nz/iveco/daily/2019/exterior-and-dimensions).
+Most are vendor or consultant pages, not standards; their figures are rules of thumb.
+
+### The layout (B, #210), in the world's metres
+
+- **The yard:** the front yard (x −89 to −53, z 37.5 to 55) and the side yard (x −53 to −27,
+  z 30 to 55), paved in the road's wet asphalt, with its puddles and rain rings; a concrete strip
+  5 m deep along the dock fronts (z 39.9 to 45); a slot drain along the strip's yard edge †.
+- **The cut:** the side yard's ground is lowered to the yard's level, and a concrete retaining
+  wall along z 30 (x −53 to −27) holds the ground behind it, as high as that ground stands
+  (about 1.2–1.8 m); the fence runs along its top †.
+- **The fence:** the gate's galvanized chain-link, closing the yard: as today on the west and
+  along the gate line west of the barrier; from the barrier's rest post east along z 55 to x −27;
+  north along x −27 to z 30; west along the retaining wall to the shed's east wall.
+- **Markings:** yellow bay lines from the dock fronts 12 m out †; bay numbers 1–3 on the ground
+  and over the doors; a hatched keep-clear box in front of bay 3 †; white direction arrows (in:
+  north from the gate, then east; out: west to the gate) †; a zebra walkway from the gate to a
+  pedestrian door at the shed's west front corner, railed on its lane side †; the trailer and car
+  bays marked.
+- **Kerbs, bollards, signs:** yellow steel bollards at the shed's corners, between the dock doors
+  and at the office door †; a kerb round the staff car park †; signs with no company name (S4
+  stays open): "5 MPH" and "HI-VIS BEYOND THIS POINT" at the gate, "DOCK 1", "DOCK 2", "VAN BAY 3
+  · DOCK LIFT", "STAFF PARKING ONLY", "NO PARKING" at the hatched box †.
+- **Lights:** the shed's two LED wall floods about 8 m up (2a) and two 10 m poles in the side
+  yard at about (−46, 50.5) and (−31, 40), full cutoff, aimed down †; each is a lamp for B1, so
+  rain falls in its light. B1 rains in at most eight volumes at once (`MOST_ACTIVE`), so at the
+  shed the gate lamp, the floods, the poles and the nearest street lamps share that cap.
+- **The side yard's contents:** three marked trailer bays along its north half (2.6 × 14 m)
+  with two parked semi-trailers †; the staff car park, four bays (2.5 × 5 m) with two or three
+  cars †; the office, a single-storey annex of about 5 × 4.5 m at the shed's east front corner,
+  with a lit window and a door †; a skip against the retaining wall; stacked pallets †.
+- **The shed:** the flat beige high windows become glass, dark with a faint light inside † (the
+  flaw the gate's first strip found).
+
+### The parts and their order (each approved on its own)
+
+- **2c-1, the yard:** paving, the concrete strip, the drain, the cut and its retaining wall, the
+  fence moved out, kerbs, bollards, markings, signs, and the two pole lights with B1's rain.
+- **2c-2, the shed's front:** bays 1 and 2 as truck docks (rubber dock shelters †, levellers,
+  bumpers, red and green lights, wheel guides); bay 3 as the van bay (T1: a scissor dock lift in a
+  pit, its platform set to the van's floor †; bumpers; red and green lights outside and inside; a
+  dock light on an arm; wheel guides); the windows as glass; the wall floods; the office.
+- **2c-3, the parked things:** the trailers, cars, skip and pallets, from free CC0 or CC-BY models
+  with any logo removed and credited in `SOURCES.md`; two or three options of each, shown to the
+  author in a picture first.
+- **2d, backing into bay 3** (2a's plan): by real keys, in reverse, with the reverse camera and
+  the mirrors; the wheel guides and bumpers solid; at a stop within 0.3 m of the bumpers and 3° of
+  square, the outside light turns green and a chock goes in.
+- **2e, the load and the seal:** as 2a planned.
+
+### Rules a test can measure (written before the code)
+
+| # | Rule | Test |
+| --- | --- | --- |
+| D1 | No unpaved ground inside the fence: the yard's surface covers every point between the fence and the shed | `test_mission_two.gd`, sampling the yard |
+| D2 | The fence closes the yard: no gap over 0.1 m along its line but the gate's lane | the same, from the fence's colliders |
+| D3 | The side yard is level within 2 cm, and no tree, rock or prop stands inside the fence | the same, from the terrain and the forest |
+| D4 | The van, driven by real keys from the gate, swings into the side yard and backs into bay 3 without touching a kerb, bollard, trailer, car, wall or the fence | the same (2d) |
+| D5 | Each new light is a lamp for B1: the lamp rain's volume count grows by the lights added | `test_lamp_rain_state.gd`, `test_lamp_rain_config.gd` |
+| D6 | Where the walkway runs beside the lane, a rail stands between them | `test_mission_two.gd` |
+| D7 | 2a's R2 and R3 at bay 3: the bumpers stop the van within 0.3 m and 3° of square, the light turns green, a chock goes in, and reversing there never passes 1.4 m/s | the same (2d) |
+| D8 | Every existing suite passes, and Mission 1 is unchanged | every suite |
+| D9 | The depot's GPU price, measured with the Metal HUD as in Assignment 6, stays within 1.5 ms † over today's scene at the shed | `game/tests/gpu_price.gd`, `tools/tests/gpu_price.py` |
+
+### Predictions (before any code)
+
+- **Approaching the gate:** past the barrier, a paved and lit yard: yellow bay lines and numbers in
+  the headlights, the two poles' pools of light with rain in them, the trailers' rear doors in the
+  side yard, the office's lit window; the shed's high windows dark glass, not beige panels.
+- **Backing into bay 3 (2d's strip):** the reverse camera shows the wheel guides and the bumpers
+  closing; the light outside turns from red to green at the stop.
+- **GPU price:** two more shadowed lights and up to four more B1 volumes on screen: about 1.0 ms †
+  over today's scene at the shed, within D9's 1.5 ms.
+
+### What could go wrong, and the check that catches it
+
+1. New solid bodies change the struck man's tumble again (twice so far): his limbs are now held
+   by the guard (C56), but the lean check sits exactly at its 1.0 m; the hit and collision suites
+   catch it, and it is reported before anything is changed.
+2. Trees, rocks or props left inside the grown yard, or the cut leaving holes in the ground: D3,
+   and a strip.
+3. The van riding over a 0.15 m kerb, since its box clears 0.15 m: kerbs get colliders tall enough
+   to stop it, D4.
+4. The lights cost too much: D9; the poles' shadows go first.
+5. A model's licence that does not allow a sold game, or a logo left on: `SOURCES.md` and the
+   author's look at each option.
+
+### Not in this step
+
+- The load and the seal (2e), the inspection (step 3), any story words (S1–S4), any company name
+  on a sign (S4), and the guards' behaviour (Assignment 9).

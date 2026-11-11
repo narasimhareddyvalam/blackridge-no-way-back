@@ -37,8 +37,11 @@ the author chose layout B for the depot around the shed (the yard 26 m east into
 with parked trailers, a staff car park apart, an office, a skip and two pole lights; Ethan
 backs into bay 3, the van bay with its dock lift), drawn over the real ground from research on
 truck courts, aprons, wheel guides, one-way yards and pedestrian separation; and this work
-committed on `develop`, not pushed. **Next:** step 2c's brief for layout B, before any code,
-each part approved on its own. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
+committed on `develop` (`684f8d3`), not pushed. **Then step 2c's brief** (#211–#212), the
+last revision in `docs/PHASE_BRIEF.md`: the depot's yard for layout B from research, parts
+2c-1 to 2c-3, 2d and 2e, rules D1–D9, committed alone before any code. **Next:** 2c-1, the
+yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the code
+committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
 **Before it:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
