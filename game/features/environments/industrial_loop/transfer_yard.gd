@@ -1,61 +1,61 @@
 extends Node3D
-## The transfer depot's yard (docs/PHASE_BRIEF.md, Phase 2 step 2c-1, layout B): the paving, the
-## concrete strip along the docks and its drain, the side yard cut level behind its retaining wall,
-## the markings, the car park's kerb, the bollards, the walkway and its rail, and the signs. The
-## shed owns the fence, the gate and the booth; the world builds the two pole lights at `LAMPS`.
+## The bigger depot's yard (docs/PHASE_BRIEF.md, Phase 2 step 2c revised, part 1): the platform
+## paved round the shed, the concrete apron along the docks and its drain, the bay lines and
+## numbers, the arrows from the gate, the railed walkway from the gate to the office, the staff car
+## bays behind their kerb, the trailer bays beside the shed's east wall, the bollards and the
+## signs. The shed owns the fence and the gate; the world builds the five yard lights at LAMPS.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
-const FRONT := Rect2(-89.0, 37.5, 36.0, 17.5)
-const SIDE := Rect2(-53.0, 30.0, 26.0, 25.0)
-const FLAT := Rect2(-53.0, 32.0, 25.0, 25.0)
-const CLEARING := Rect2(-56.0, 27.0, 32.0, 32.0)
-const APRON_END_Z := 45.0
+const PLATFORM := Rect2(-92.0, -13.0, 66.0, 68.0)
+const SHED := Rect2(-90.0, -10.0, 50.0, 30.0)
+const APRON := Rect2(-90.0, 20.0, 50.0, 15.0)
 const SURFACE := 0.02
 const PAINT := 0.006
-const WALL_THICKNESS := 0.3
-const WALL_STEP := 2.0
-const WALL_CAP := 0.15
-const EAST_WALL_OUT := 1.15
-const NATURAL_OUT := 3.0
-const BAY_LINES: Array[float] = [-82.0, -74.0, -66.0, -58.0]
-const BAYS: Array[float] = [-78.0, -70.0, -62.0]
+const BAY_LINES: Array[float] = [-82.0, -78.0, -74.0, -70.0, -66.0, -62.0, -58.0, -54.0, -50.0,
+	-45.5]
+const BAYS: Array[float] = [-80.0, -76.0, -72.0, -68.0, -64.0, -60.0, -56.0, -52.0, -47.75]
 const BAY_LENGTH := 12.0
-const KEEP_CLEAR := Rect2(-65.6, 45.6, 7.2, 6.0)
-const WALKWAY := Rect2(-88.6, 40.2, 1.8, 14.3)
-const RAIL_X := -86.6
+const KEEP_CLEAR := Rect2(-49.6, 26.0, 3.7, 6.0)
+const WALKWAY := Rect2(-91.8, 20.3, 1.4, 34.4)
+const LANDING := Rect2(-90.4, 20.3, 2.2, 1.2)
+const RAIL_X := -90.2
+const RAIL_FROM := 21.5
+const RAIL_TO := 42.0
 const RAIL_HEIGHT := 1.1
-const TRAILER_BAYS: Array[float] = [-46.0, -41.0, -36.0]
+const TRAILER_BAYS: Array[float] = [-37.4, -33.6, -29.8]
 const TRAILER_BAY := Vector2(2.6, 14.0)
-const TRAILER_FRONT_Z := 31.5
-const CAR_BAYS := Rect2(-33.0, 44.8, 5.0, 10.0)
+const TRAILER_BACK_Z := 4.0
+const CAR_BAYS := Rect2(-88.4, 42.4, 5.0, 12.5)
 const CAR_BAY_WIDTH := 2.5
-const KERB_Z := 44.4
-const BOLLARDS: Array[Vector2] = [Vector2(-88.5, 38.3), Vector2(-53.5, 38.3),
-	Vector2(-74.0, 38.6), Vector2(-66.0, 38.6)]
+const KERB_X := -89.0
+const BOLLARDS: Array[Vector2] = [Vector2(-44.95, 20.35), Vector2(-40.55, 20.35)]
 const BOLLARD_RADIUS := 0.075
 const BOLLARD_HEIGHT := 1.07
-const LAMPS: Array[Vector3] = [Vector3(-46.0, 0.0, 54.0), Vector3(-29.0, 0.0, 40.0)]
-const LAMP_HEADINGS: Array[float] = [-PI / 2.0, 0.0]
+const LAMPS: Array[Vector3] = [Vector3(-79.0, 0.0, 53.8), Vector3(-58.0, 0.0, 53.8),
+	Vector3(-36.0, 0.0, 53.8), Vector3(-89.6, 0.0, 30.0), Vector3(-27.4, 0.0, 30.0)]
+const LAMP_HEADINGS: Array[float] = [-PI / 2.0, -PI / 2.0, -PI / 2.0, PI, 0.0]
 const SAFETY := Color(0.86, 0.66, 0.08)
 
-var wall_top: float = 0.0
 var _white := Build.material(Color("d8d5cb"), 0.45)
 var _yellow := Build.material(SAFETY, 0.45)
 var _steel := Build.material(Color(0.6, 0.62, 0.62), 0.5)
 
 
-func build(dock_front_z: float, asphalt: Material, terrain: Node3D) -> void:
+func build(asphalt: Material) -> void:
 	var slab := Build.material(Color(0.46, 0.46, 0.44), 0.6)
-	_ground("DockApron", Rect2(FRONT.position.x, FRONT.position.y, FRONT.size.x,
-		APRON_END_Z - FRONT.position.y), slab)
-	_ground("YardAsphalt", Rect2(FRONT.position.x, APRON_END_Z, FRONT.size.x,
-		FRONT.end.y - APRON_END_Z), asphalt)
-	_ground("YardAsphaltSide", SIDE, asphalt)
-	Build.box(self, Vector3(FRONT.get_center().x, SURFACE + 0.003, APRON_END_Z),
-		Vector3(FRONT.size.x, 0.006, 0.12), Build.material(Color(0.05, 0.05, 0.055), 0.35)) \
+	_ground("DockApron", APRON, slab)
+	_ground("YardAsphaltSouth", Rect2(PLATFORM.position.x, APRON.end.y, PLATFORM.size.x,
+		PLATFORM.end.y - APRON.end.y), asphalt)
+	_ground("YardAsphaltEast", Rect2(SHED.end.x, PLATFORM.position.y, PLATFORM.end.x - SHED.end.x,
+		APRON.end.y - PLATFORM.position.y), asphalt)
+	_ground("YardAsphaltWest", Rect2(PLATFORM.position.x, PLATFORM.position.y,
+		SHED.position.x - PLATFORM.position.x, APRON.end.y - PLATFORM.position.y), asphalt)
+	_ground("YardAsphaltBack", Rect2(SHED.position.x, PLATFORM.position.y, SHED.size.x,
+		SHED.position.y - PLATFORM.position.y), asphalt)
+	Build.box(self, Vector3(APRON.get_center().x, SURFACE + 0.003, APRON.end.y),
+		Vector3(APRON.size.x, 0.006, 0.12), Build.material(Color(0.05, 0.05, 0.055), 0.35)) \
 		.name = "SlotDrain"
-	_retaining_wall(terrain, slab)
-	_bay_markings(dock_front_z)
+	_bay_markings()
 	_keep_clear()
 	_arrow(Vector3(-70.0, 0.0, 54.9), PI / 2.0, 2.9)
 	_arrow(Vector3(-65.0, 0.0, 53.8), 0.0)
@@ -68,7 +68,7 @@ func build(dock_front_z: float, asphalt: Material, terrain: Node3D) -> void:
 	_sign("5 MPH", Vector3(-66.9, 0.0, 56.2), 0.0, Color("f2f1ea"), Color("141414"), 0.6)
 	_sign("HI-VIS BEYOND THIS POINT", Vector3(-80.0, 0.0, 55.25), 0.0, Color("1f4f9c"),
 		Color("f2f1ea"), 1.7)
-	_sign("STAFF PARKING ONLY", Vector3(-33.8, 0.0, 44.1), -PI / 2.0, Color("f2f1ea"),
+	_sign("STAFF PARKING ONLY", Vector3(-83.2, 0.0, 41.9), PI / 2.0, Color("f2f1ea"),
 		Color("1f4f9c"), 1.3)
 
 
@@ -86,28 +86,6 @@ func _ground(name: String, rect: Rect2, surface: Material) -> void:
 	var piece := Build.instance(self, Vector3.ZERO, tool.commit(), surface)
 	piece.name = name
 	piece.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-
-
-func _retaining_wall(terrain: Node3D, slab: Material) -> void:
-	var behind := SIDE.position.y - 2.1
-	var highest := 0.0
-	for x in range(int(SIDE.position.x), int(SIDE.end.x) + 1):
-		highest = maxf(highest, float(terrain.call("height_at", float(x), behind)))
-	wall_top = highest + WALL_CAP
-	var length := SIDE.size.x + EAST_WALL_OUT + WALL_THICKNESS / 2.0
-	Build.box(self, Vector3(SIDE.position.x + length / 2.0, wall_top / 2.0,
-		SIDE.position.y - WALL_THICKNESS / 2.0), Vector3(length, wall_top, WALL_THICKNESS), slab,
-		true).name = "RetainingWall"
-	var z := SIDE.position.y
-	while z < SIDE.end.y:
-		var ground := maxf(float(terrain.call("height_at", SIDE.end.x + NATURAL_OUT, z)),
-			float(terrain.call("height_at", SIDE.end.x + NATURAL_OUT, z + WALL_STEP)))
-		if ground < 0.25:
-			break
-		var height := ground + WALL_CAP
-		Build.box(self, Vector3(SIDE.end.x + EAST_WALL_OUT, height / 2.0, z + WALL_STEP / 2.0),
-			Vector3(WALL_THICKNESS, height, WALL_STEP), slab, true).name = "RetainingWallEast"
-		z += WALL_STEP
 
 
 func _paint(name: String, from: Vector2, to: Vector2, width: float, colour: Material) -> void:
@@ -128,12 +106,11 @@ func _ground_text(words: String, at: Vector3, size: int, colour: Color) -> Label
 	return label
 
 
-func _bay_markings(dock_front_z: float) -> void:
+func _bay_markings() -> void:
 	for x in BAY_LINES:
-		_paint("BayLine", Vector2(x, dock_front_z), Vector2(x, dock_front_z + BAY_LENGTH), 0.1,
-			_yellow)
+		_paint("BayLine", Vector2(x, SHED.end.y), Vector2(x, SHED.end.y + BAY_LENGTH), 0.1, _yellow)
 	for index in range(BAYS.size()):
-		var at := Vector3(BAYS[index], 0.0, dock_front_z + BAY_LENGTH - 1.4)
+		var at := Vector3(BAYS[index], 0.0, SHED.end.y + BAY_LENGTH - 1.4)
 		_ground_text(str(index + 1), at, 300, SAFETY).name = "BayNumber"
 
 
@@ -153,8 +130,8 @@ func _keep_clear() -> void:
 			_paint("HatchedBox", Vector2(start_x, start_x - offset), Vector2(end_x, end_x - offset),
 				0.15, _yellow)
 		offset += step
-	_ground_text("NO PARKING", Vector3(box.get_center().x, 0.0, box.end.y - 0.9), 130, SAFETY) \
-		.name = "NoParking"
+	_ground_text("NO PARKING", Vector3(box.get_center().x, 0.0, box.position.y + 1.2), 110,
+		SAFETY).name = "NoParking"
 
 
 func _arrow(at: Vector3, heading: float, length: float = 3.4) -> void:
@@ -178,21 +155,24 @@ func _walkway() -> void:
 	while z < WALKWAY.end.y:
 		_paint("Walkway", Vector2(WALKWAY.position.x, z), Vector2(WALKWAY.end.x, z), 0.5, _white)
 		z += 1.0
-	var length := WALKWAY.size.y
-	var centre := WALKWAY.get_center().y
+	for row: float in [LANDING.position.y + 0.25, LANDING.position.y + 0.95]:
+		_paint("Walkway", Vector2(LANDING.position.x, row), Vector2(LANDING.end.x, row), 0.5,
+			_white)
+	var length := RAIL_TO - RAIL_FROM
+	var centre := (RAIL_FROM + RAIL_TO) / 2.0
 	Build.box(self, Vector3(RAIL_X, RAIL_HEIGHT, centre), Vector3(0.05, 0.05, length), _yellow,
 		true).name = "WalkwayRail"
 	Build.box(self, Vector3(RAIL_X, RAIL_HEIGHT / 2.0, centre), Vector3(0.04, 0.04, length),
 		_yellow).name = "WalkwayMidRail"
-	var post := WALKWAY.position.y
-	while post <= WALKWAY.end.y + 0.01:
+	var post := RAIL_FROM
+	while post <= RAIL_TO + 0.01:
 		Build.cylinder(self, Vector3(RAIL_X, RAIL_HEIGHT / 2.0, post), 0.025, RAIL_HEIGHT, _yellow)
 		post += 2.0
 
 
 func _trailer_bays() -> void:
-	var back := TRAILER_FRONT_Z
-	var front := TRAILER_FRONT_Z + TRAILER_BAY.y
+	var back := TRAILER_BACK_Z
+	var front := TRAILER_BACK_Z + TRAILER_BAY.y
 	for x in TRAILER_BAYS:
 		var half := TRAILER_BAY.x / 2.0
 		_paint("TrailerBay", Vector2(x - half, back), Vector2(x - half, front), 0.1, _white)
@@ -205,14 +185,14 @@ func _car_park(slab: Material) -> void:
 	while z <= CAR_BAYS.end.y + 0.01:
 		_paint("CarBay", Vector2(CAR_BAYS.position.x, z), Vector2(CAR_BAYS.end.x, z), 0.1, _white)
 		z += CAR_BAY_WIDTH
-	var length := SIDE.end.x - (CAR_BAYS.position.x - 0.6)
-	var middle := Vector3(SIDE.end.x - length / 2.0, 0.0, KERB_Z)
-	Build.box(self, middle + Vector3.UP * 0.085, Vector3(length, 0.15, 0.2), slab).name = "Kerb"
+	var middle := Vector3(KERB_X, 0.0, CAR_BAYS.get_center().y)
+	Build.box(self, middle + Vector3.UP * 0.085, Vector3(0.2, 0.15, CAR_BAYS.size.y), slab) \
+		.name = "Kerb"
 	var stop := StaticBody3D.new()
-	stop.name = "KerbStop"
 	add_child(stop)
+	stop.name = "KerbStop"
 	var shape := BoxShape3D.new()
-	shape.size = Vector3(length, 0.6, 0.2)
+	shape.size = Vector3(0.2, 0.6, CAR_BAYS.size.y)
 	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	collision.position = middle + Vector3.UP * 0.3

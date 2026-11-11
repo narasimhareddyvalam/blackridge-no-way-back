@@ -236,7 +236,7 @@ func _ground_and_roads() -> void:
 
 func _flat_plots() -> Array[Rect2]:
 	var plots: Array[Rect2] = [DEPOT_PLOT, FENCE_PLOT, LUMBER_YARD, SKYLINE_PLOT]
-	for item in WAREHOUSES:
+	for item in WAREHOUSES.slice(0, WAREHOUSES.size() - 1):
 		plots.append(Rect2(item.x - 23, item.z - 15.5, 46, 33.4))
 	plots.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	plots.append(Rect2(SILOS[0] - 8, SILO_Z - 8, SILOS[1] - SILOS[0] + 16, 16))
@@ -396,6 +396,8 @@ func _buildings() -> void:
 	for item: Vector3 in WAREHOUSES:
 		var size := Vector3(_random.randf_range(24, 38), _random.randf_range(9, 15), 23)
 		warehouse_widths.append(size.x)
+		if item == WAREHOUSES[WAREHOUSES.size() - 1]:
+			continue
 		clearings.append(Rect2(item.x - size.x / 2 - 4, item.z - 15.5, size.x + 8, 33.4))
 		Build.box(self, item + Vector3.UP * size.y / 2, size, masonry, true)
 		Build.box(self, item + Vector3.UP * (size.y + 0.18),

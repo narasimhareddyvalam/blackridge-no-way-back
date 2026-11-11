@@ -335,5 +335,20 @@ if (GUARD / 'guard.glb').exists():
     check(joints == 80, 'guard/guard.glb keeps Rocketbox\'s 80-bone skeleton')
     check((GUARD / 'guard.glb').stat().st_size < FILE_LIMIT, 'The guard file is under 25 MB')
 print(f'GEOMETRY: guard/guard.glb: {guard_triangles} triangles')
+
+DEPOT = WORLD / 'depot'
+door_triangles = 0
+check((DEPOT / 'dock_door.glb').exists(),
+      "The dock door exists: Maxwell autodoors' sectional door, made game-ready")
+if (DEPOT / 'dock_door.glb').exists():
+    document, binary = gltf_parts(DEPOT / 'dock_door.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            door_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    check(0 < door_triangles < 6000, 'depot/dock_door.glb bounded geometry (<6000 triangles)')
+    check(not document.get('images'),
+          'depot/dock_door.glb carries no textures (its wall is gone)')
+    check((DEPOT / 'dock_door.glb').stat().st_size < FILE_LIMIT, 'The dock door file is under 25 MB')
+print(f'GEOMETRY: depot/dock_door.glb: {door_triangles} triangles')
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)

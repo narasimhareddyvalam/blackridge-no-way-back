@@ -14,12 +14,12 @@ const ThinWire = preload("thin_wire.gdshader")
 const Retroreflector = preload("retroreflector.gdshader")
 const Guard = preload("res://features/characters/guard/guard.glb")
 const Yard = preload("transfer_yard.gd")
+const Ground = preload("depot_ground.gd")
+const Building = preload("transfer_building.gd")
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
 const STOP_LINE_OUT := 2.5
-const BUILDING_FRONT_Z := 37.5
-const DOCK_FRONT_Z := 39.9
 const CORNER_RADIUS := 6.0
 const COLUMN_STEP := 0.5
 const SURFACE_HEIGHT := 0.02
@@ -50,12 +50,11 @@ const BOLLARD_HEIGHT := 1.07
 const STOPPED_SPEED := 0.5
 const CLEAR_BEHIND := 1.0
 const SWEEP_HALF_DEPTH := 0.3
-const APRON_PLOT := Rect2(LANE_X - 23.0, BUILDING_FRONT_Z, 46.0, GATE_Z + 2.0 - BUILDING_FRONT_Z)
 const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z,
 	LANE_WIDTH + CORNER_RADIUS * 2.0 + 2.0, 20.0)
 
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
-var clearings: Array[Rect2] = [APRON_PLOT, SPUR_PLOT, Yard.CLEARING]
+var clearings: Array[Rect2] = [SPUR_PLOT, Ground.CLEARING]
 var yard_lamps: Array[Vector3] = Yard.LAMPS
 var yard_lamp_headings: Array[float] = Yard.LAMP_HEADINGS
 var vehicle: Node3D
@@ -82,7 +81,7 @@ static func road_opening() -> Vector3:
 
 
 static func flat_plots() -> Array[Rect2]:
-	return [APRON_PLOT, SPUR_PLOT, Yard.FLAT]
+	return [Ground.FLAT, SPUR_PLOT]
 
 
 static func _galvanized_steel() -> StandardMaterial3D:
@@ -97,29 +96,42 @@ static func _wire_material() -> ShaderMaterial:
 	return wire
 
 
-func build(road: RefCounted, building_width: float, surface: Material, concrete: Material,
+func build(road: RefCounted, _building_width: float, surface: Material, concrete: Material,
 		metal: Material, wall: Material, terrain: Node3D) -> void:
 	_spur(road, surface)
+	var ground := Ground.new()
+	ground.name = "Ground"
+	add_child(ground)
+	ground.build(terrain, concrete)
+	var building := Building.new()
+	building.name = "Building"
+	add_child(building)
+	building.build(metal)
 	var yard := Yard.new()
 	yard.name = "Yard"
 	add_child(yard)
-	yard.build(DOCK_FRONT_Z, surface, terrain)
+	yard.build(surface)
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"
 	add_child(_fence_body)
-	var west := LANE_X - building_width / 2.0
-	var east := LANE_X + building_width / 2.0
+	var west := Ground.PLATFORM.position.x
+	var east := Ground.PLATFORM.end.x
 	var cabinet_west := LANE_X - LANE_WIDTH / 2.0 - 0.3 - 0.16
 	var rest_x := LANE_X - LANE_WIDTH / 2.0 - 0.3 + ARM_LENGTH + 0.3
-	var far := Yard.SIDE.end.x
-	var back := Yard.SIDE.position.y
-	_fence(Vector3(west, 0.0, BUILDING_FRONT_Z), Vector3(west, 0.0, GATE_Z), Vector3.LEFT)
 	_fence(Vector3(west, 0.0, GATE_Z), Vector3(cabinet_west, 0.0, GATE_Z), Vector3.BACK)
-	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(far, 0.0, GATE_Z), Vector3.BACK)
-	_fence(Vector3(far, 0.0, GATE_Z), Vector3(far, 0.0, back), Vector3.RIGHT)
-	_fence(Vector3(far, yard.wall_top, back), Vector3(east, yard.wall_top, back),
-		Vector3.FORWARD)
+	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(east, 0.0, GATE_Z), Vector3.BACK)
+	var reach := Vector2(Ground.PLATFORM.position.y, Ground.PLATFORM.position.y)
+	for run in ground.top_runs():
+		_fence(run["from"], run["to"], run["outward"])
+		var outward: Vector3 = run["outward"]
+		var end_z: float = (run["to"] as Vector3).z
+		if outward.x < 0.0:
+			reach.x = maxf(reach.x, end_z)
+		elif outward.x > 0.0:
+			reach.y = maxf(reach.y, end_z)
+	_fence(Vector3(west, 0.0, GATE_Z), Vector3(west, 0.0, reach.x), Vector3.LEFT)
+	_fence(Vector3(east, 0.0, GATE_Z), Vector3(east, 0.0, reach.y), Vector3.RIGHT)
 	for at in Yard.LAMPS:
 		var footing := CylinderShape3D.new()
 		footing.radius = 0.25

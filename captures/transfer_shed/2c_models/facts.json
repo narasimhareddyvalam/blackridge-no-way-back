@@ -1,0 +1,86 @@
+{
+ "polyhaven_rollershutter_door": {
+  "size_m": [
+   3.08,
+   0.3,
+   2.4
+  ],
+  "triangles": 1104,
+  "textures": [
+   "rollershutter_door_diff 2048x2048",
+   "rollershutter_door_graffiti_diff 2048x2048",
+   "rollershutter_door_metal-rollershutter_door_rough 2048x2048",
+   "rollershutter_door_nor_gl 2048x2048"
+  ]
+ },
+ "polyhaven_security_light": {
+  "size_m": [
+   0.32,
+   0.42,
+   0.53
+  ],
+  "triangles": 4668,
+  "textures": [
+   "security_light_diff 2048x2048",
+   "security_light_metal-security_light_rough 2048x2048",
+   "security_light_nor_gl 2048x2048"
+  ]
+ },
+ "polyhaven_corrugated_iron_02": {
+  "real_size_m": 2.7,
+  "maps": [
+   "corrugated_iron_02_ao_2k.jpg",
+   "corrugated_iron_02_arm_2k.jpg",
+   "corrugated_iron_02_diff_2k.jpg",
+   "corrugated_iron_02_disp_2k.jpg",
+   "corrugated_iron_02_metal_2k.jpg",
+   "corrugated_iron_02_nor_gl_2k.jpg",
+   "corrugated_iron_02_rough_2k.jpg"
+  ]
+ },
+ "polyhaven_factory_wall": {
+  "real_size_m": 3.0,
+  "maps": [
+   "factory_wall_ao_2k.jpg",
+   "factory_wall_arm_2k.jpg",
+   "factory_wall_diff_2k.jpg",
+   "factory_wall_disp_2k.jpg",
+   "factory_wall_nor_gl_2k.jpg",
+   "factory_wall_rough_2k.jpg"
+  ]
+ },
+ "ambientcg_CorrugatedSteel009": {
+  "real_size_m": 2.0,
+  "maps": [
+   "CorrugatedSteel009_2K-JPG_AmbientOcclusion.jpg",
+   "CorrugatedSteel009_2K-JPG_Color.jpg",
+   "CorrugatedSteel009_2K-JPG_Displacement.jpg",
+   "CorrugatedSteel009_2K-JPG_Metalness.jpg",
+   "CorrugatedSteel009_2K-JPG_NormalDX.jpg",
+   "CorrugatedSteel009_2K-JPG_NormalGL.jpg",
+   "CorrugatedSteel009_2K-JPG_Roughness.jpg"
+  ]
+ },
+ "polyhaven_hangar_concrete_floor": {
+  "real_size_m": 2.0,
+  "maps": [
+   "hangar_concrete_floor_ao_2k.jpg",
+   "hangar_concrete_floor_arm_2k.jpg",
+   "hangar_concrete_floor_diff_2k.jpg",
+   "hangar_concrete_floor_disp_2k.jpg",
+   "hangar_concrete_floor_nor_gl_2k.jpg",
+   "hangar_concrete_floor_rough_2k.jpg"
+  ]
+ },
+ "ambientcg_Concrete047A": {
+  "real_size_m": 2.0,
+  "maps": [
+   "Concrete047A_2K-JPG_AmbientOcclusion.jpg",
+   "Concrete047A_2K-JPG_Color.jpg",
+   "Concrete047A_2K-JPG_Displacement.jpg",
+   "Concrete047A_2K-JPG_NormalDX.jpg",
+   "Concrete047A_2K-JPG_NormalGL.jpg",
+   "Concrete047A_2K-JPG_Roughness.jpg"
+  ]
+ }
+}

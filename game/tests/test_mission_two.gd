@@ -6,13 +6,15 @@ const LOADED := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstag
 const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const VAN_FRONT := Vector3(0.0, 1.0, -2.52)
 const VAN_REAR := Vector3(0.0, 1.0, 3.01)
-const SIDE_YARD := Rect2(-53.0, 30.0, 26.0, 25.0)
-const YARD_INSIDE: Array[Rect2] = [Rect2(-89.0, 37.5, 62.0, 17.5), Rect2(-53.0, 30.0, 26.0, 8.0)]
-const FENCE_ENDS: Array[Vector2] = [Vector2(-89.0, 37.5), Vector2(-53.0, 30.0),
-	Vector2(-74.46, 55.0), Vector2(-67.3, 55.0)]
 const YARD_SIGNS: Array[String] = ["5 MPH", "HI-VIS BEYOND THIS POINT", "STAFF PARKING ONLY",
 	"NO PARKING"]
 const GATE_LANE := Rect2(-74.0, 51.9, 6.0, 3.1)
+const PLATFORM := Rect2(-92.0, -13.0, 66.0, 68.0)
+const SHED := Rect2(-90.0, -10.0, 50.0, 30.0)
+const OLD_SHED := Rect2(-89.0, 14.5, 36.0, 25.4)
+const OFFICE := Rect2(-90.0, 12.0, 8.0, 8.0)
+const DOCK_SIZE := Vector2(2.74, 3.05)
+const DRIVE_IN_SIZE := Vector2(3.7, 2.9)
 const DRIVE := Rect2(-74.0, 51.9, 21.0, 3.1)
 
 var _checks: int = 0
@@ -153,6 +155,8 @@ func _check_gate() -> void:
 	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x, 0.1, gate_z + 18.0)))
 	await _seconds(0.5)
 	var booth := _check_booth(shed)
+	_check_ground(shed, _app.get_node("IndustrialLoop"))
+	_check_building(shed, _app.get_node("IndustrialLoop"))
 	_check_yard(shed, _app.get_node("IndustrialLoop"))
 	var eye := _van.get_node("VanPresentation").get("driving_camera") as Camera3D
 	_watch_gate(shed)
@@ -372,6 +376,141 @@ func _check_booth(shed: Node3D) -> Dictionary:
 		"axis": axis, "sign": sign}
 
 
+func _check_ground(shed: Node3D, world: Node3D) -> void:
+	var terrain: Node3D = world.get("terrain")
+	var forest: Node3D = world.get("forest")
+	var worst := 0.0
+	var open := 0
+	for z in range(int(PLATFORM.position.y), int(PLATFORM.end.y)):
+		for x in range(int(PLATFORM.position.x), int(PLATFORM.end.x)):
+			worst = maxf(worst, absf(float(terrain.call("height_at", x + 0.5, z + 0.5))))
+			if forest != null and not bool(forest.call("_is_blocked", x + 0.5, z + 0.5)):
+				open += 1
+	_check(worst <= 0.02 and open == 0, ("E1: the platform is level (%.2f m at worst) and no "
+		+ "tree may stand on it (%d open spots)") % [worst, open])
+	var walls: Array[AABB] = []
+	for found in shed.find_children("CutWall*", "MeshInstance3D", true, false):
+		walls.append((found as MeshInstance3D).global_transform * (found as MeshInstance3D).get_aabb())
+	var edges: Array[Array] = [[Vector2(PLATFORM.position.x, PLATFORM.position.y),
+		Vector2(PLATFORM.end.x, PLATFORM.position.y), Vector2(0.0, -1.0)],
+		[Vector2(PLATFORM.position.x, PLATFORM.position.y), Vector2(PLATFORM.position.x,
+		PLATFORM.end.y), Vector2(-1.0, 0.0)], [Vector2(PLATFORM.end.x, PLATFORM.position.y),
+		Vector2(PLATFORM.end.x, PLATFORM.end.y), Vector2(1.0, 0.0)]]
+	var sloping := 0
+	var unheld := 0
+	var samples := 0
+	for edge in edges:
+		var from: Vector2 = edge[0]
+		var to: Vector2 = edge[1]
+		var out: Vector2 = edge[2]
+		var steps := int(from.distance_to(to) / 0.5)
+		for step in range(1, steps):
+			var at := from.lerp(to, float(step) / steps)
+			samples += 1
+			var inside := at - out * 0.5
+			var behind := at + out * 3.0
+			if absf(float(terrain.call("height_at", inside.x, inside.y))) > 0.02:
+				sloping += 1
+			var ground := float(terrain.call("height_at", behind.x, behind.y))
+			if ground > 0.3 and not walls.any(func(box: AABB) -> bool:
+					return Rect2(box.position.x, box.position.z, box.size.x, box.size.z).grow(0.3) \
+						.has_point(at) and box.end.y >= ground):
+				unheld += 1
+	_check(not walls.is_empty() and samples > 0 and sloping == 0 and unheld == 0,
+		("E2: every cut is held: %d walls; of %d points along the edges, %d slope in front "
+		+ "and %d have higher ground 3 m behind than any wall there") % [walls.size(), samples,
+		sloping, unheld])
+
+
+func _check_building(shed: Node3D, world: Node3D) -> void:
+	var body := shed.get_node_or_null("Building/ShedBody") as StaticBody3D
+	var boxes: Array[AABB] = []
+	if body != null:
+		for found in body.find_children("*", "CollisionShape3D", true, false):
+			var shape := found as CollisionShape3D
+			if shape.shape is BoxShape3D:
+				var size: Vector3 = (shape.shape as BoxShape3D).size
+				boxes.append(shape.global_transform * AABB(-size / 2.0, size))
+	var union := boxes[0] if not boxes.is_empty() else AABB()
+	for box in boxes:
+		union = union.merge(box)
+	var old := 0
+	for found in world.get_children():
+		if found is MeshInstance3D:
+			var at := (found as MeshInstance3D).global_position
+			old += 1 if OLD_SHED.has_point(Vector2(at.x, at.z)) else 0
+	_check(not boxes.is_empty() and absf(union.position.x - SHED.position.x) < 0.05
+		and absf(union.end.x - SHED.end.x) < 0.05 and absf(union.position.z - SHED.position.y) < 0.05
+		and absf(union.end.z - SHED.end.y) < 0.05 and absf(union.end.y - 9.0) < 0.1 and old == 0,
+		("E3: the shed's walls span x %.2f..%.2f, z %.2f..%.2f, eaves %.2f m; %d pieces of the old "
+		+ "warehouse remain") % [union.position.x, union.end.x, union.position.z, union.end.z,
+		union.end.y, old])
+	var openings: Array[Array] = []
+	for index in range(8):
+		openings.append(["DockOpening%d" % (index + 1), Vector3(-80.0 + 4.0 * index, 1.3, 20.0),
+			DOCK_SIZE])
+	openings.append(["DockOpening9", Vector3(-47.75, 1.3, 20.0), DOCK_SIZE])
+	openings.append(["DriveInOpening", Vector3(-42.75, 0.0, 20.0), DRIVE_IN_SIZE])
+	var wrong: Array[String] = []
+	for entry in openings:
+		var marker := shed.get_node_or_null("Building/" + entry[0]) as Node3D
+		var sill: Vector3 = entry[1]
+		var size: Vector2 = entry[2]
+		if marker == null or marker.global_position.distance_to(sill) > 0.02:
+			wrong.append(entry[0])
+			continue
+		var hole := AABB(Vector3(sill.x - size.x / 2.0, sill.y, 19.0), Vector3(size.x, size.y, 2.0))
+		var edges: Array[Vector3] = [Vector3(hole.position.x - 0.05, sill.y + size.y / 2.0, 19.9),
+			Vector3(hole.end.x + 0.05, sill.y + size.y / 2.0, 19.9),
+			Vector3(sill.x, hole.end.y + 0.05, 19.9)]
+		if sill.y > 0.0:
+			edges.append(Vector3(sill.x, sill.y - 0.05, 19.9))
+		var overlaps := boxes.any(func(box: AABB) -> bool: return box.intersects(hole.grow(-0.02)))
+		var framed := edges.all(func(point: Vector3) -> bool:
+			return boxes.any(func(box: AABB) -> bool: return box.grow(0.001).has_point(point)))
+		if overlaps or not framed:
+			wrong.append(entry[0])
+	var undoored: Array[String] = []
+	for entry in openings:
+		var door_name: String = (entry[0] as String).replace("Opening", "Door")
+		var door_node := shed.get_node_or_null("Building/" + door_name) as Node3D
+		var sill: Vector3 = entry[1]
+		var size: Vector2 = entry[2]
+		var opening := AABB(Vector3(sill.x - size.x / 2.0 + 0.03, sill.y + 0.03, 19.95),
+			Vector3(size.x - 0.06, size.y - 0.06, 0.1))
+		var seen := AABB()
+		var solid := false
+		if door_node != null:
+			for found in door_node.find_children("*", "MeshInstance3D", true, false):
+				var part := found as MeshInstance3D
+				var box: AABB = part.global_transform * part.get_aabb()
+				seen = box if not seen.has_volume() else seen.merge(box)
+			for found in door_node.find_children("*", "CollisionShape3D", true, false):
+				var shape := found as CollisionShape3D
+				if shape.shape is BoxShape3D:
+					var extent: Vector3 = (shape.shape as BoxShape3D).size
+					var blocker: AABB = shape.global_transform * AABB(-extent / 2.0, extent)
+					solid = solid or blocker.grow(0.0).encloses(AABB(opening.position, Vector3(
+						opening.size.x, opening.size.y, 0.0)))
+		var face := AABB(opening.position, Vector3(opening.size.x, opening.size.y, 0.0))
+		if door_node == null or not seen.has_volume() or not seen.grow(0.001).encloses(face) \
+				or not solid:
+			undoored.append(door_name)
+	_check(undoored.is_empty(), "E4: a closed, solid door fills each opening (missing: %s)"
+		% ", ".join(undoored))
+	_check(wrong.is_empty(), ("E4: nine dock openings 2.74 x 3.05 m from 1.3 m up at x -80 + 4n "
+		+ "and -47.75, and the drive-in door's 3.7 x 2.9 m at the yard's level at x -42.75 (wrong: "
+		+ "%s)") % ", ".join(wrong))
+	var light := shed.get_node_or_null("Building/OfficeLight") as OmniLight3D
+	var door := shed.get_node_or_null("Building/OfficeDoor") as MeshInstance3D
+	var door_box: AABB = door.global_transform * door.get_aabb() if door != null else AABB()
+	_check(light != null and light.light_energy > 0.0 and OFFICE.has_point(Vector2(
+		light.global_position.x, light.global_position.z)) and door != null
+		and door_box.position.y < 0.05 and absf(door_box.get_center().z - 20.0) < 0.3
+		and door_box.position.x > OFFICE.position.x and door_box.end.x < OFFICE.end.x,
+		"E5: the office is lit inside, and its door stands at the yard's level in the front wall")
+
+
 func _check_yard(shed: Node3D, world: Node3D) -> void:
 	var pieces: Array[Rect2] = []
 	for found in shed.find_children("*", "MeshInstance3D", true, false):
@@ -387,61 +526,80 @@ func _check_yard(shed: Node3D, world: Node3D) -> void:
 		sampled += 1
 		if not pieces.any(func(piece: Rect2) -> bool: return piece.has_point(spot)):
 			bare += 1
-	_check(sampled > 0 and bare == 0, ("D1: the yard is paved everywhere inside the fence: "
+	_check(sampled > 0 and bare == 0, ("E6: the yard is paved everywhere inside the fence: "
 		+ "%d of %d points between the fence and the shed unpaved") % [bare, sampled])
-	var ends: Array[Vector2] = []
-	var inside := 0
-	var fence := shed.get_node_or_null("Fence")
-	if fence != null:
-		for child in fence.get_children():
-			var shape := child as CollisionShape3D
-			if shape == null or not shape.shape is BoxShape3D:
+	var shapes: Array[CollisionShape3D] = []
+	for holder: String in ["Fence", "Ground"]:
+		var node := shed.get_node_or_null(holder)
+		if node != null:
+			for found in node.find_children("*", "CollisionShape3D", true, false):
+				if (found as CollisionShape3D).shape is BoxShape3D:
+					shapes.append(found as CollisionShape3D)
+	var corners: Array[Vector2] = [Vector2(PLATFORM.position.x, PLATFORM.position.y),
+		Vector2(PLATFORM.end.x, PLATFORM.position.y), Vector2(PLATFORM.end.x, PLATFORM.end.y),
+		Vector2(PLATFORM.position.x, PLATFORM.end.y)]
+	var gaps := 0
+	var edge_points := 0
+	for side in range(4):
+		var from := corners[side]
+		var to := corners[(side + 1) % 4]
+		var steps := int(from.distance_to(to) / 0.5)
+		for step in range(steps + 1):
+			var at := from.lerp(to, float(step) / steps)
+			if absf(at.y - PLATFORM.end.y) < 0.01 and at.x > -74.4 and at.x < -67.4:
 				continue
-			var half := (shape.shape as BoxShape3D).size.x / 2.0
-			var along := shape.global_basis.x.normalized() * half
-			for end: Vector3 in [shape.global_position - along, shape.global_position + along]:
-				ends.append(Vector2(end.x, end.z))
-			var middle := Vector2(shape.global_position.x, shape.global_position.z)
-			var within := func(rect: Rect2) -> bool: return rect.grow(-0.5).has_point(middle)
-			if YARD_INSIDE.any(within):
-				inside += 1
-	var loose := 0
-	for end in ends:
-		var meets := ends.filter(func(other: Vector2) -> bool: return other.distance_to(end) < 0.1)
-		var held := FENCE_ENDS.any(func(post: Vector2) -> bool: return post.distance_to(end) < 0.6)
-		if meets.size() < 2 and not held:
-			loose += 1
-	_check(not ends.is_empty() and loose == 0 and inside == 0,
-		("D2: the fence closes the yard: %d loose ends (gaps over 0.1 m), %d fence runs inside the "
-		+ "yard") % [loose, inside])
-	var terrain: Node3D = world.get("terrain")
-	var forest: Node3D = world.get("forest")
-	var worst := 0.0
-	var wooded := 0
-	for spot in _yard_spots():
-		if SIDE_YARD.has_point(spot):
-			worst = maxf(worst, absf(float(terrain.call("height_at", spot.x, spot.y))))
-		if forest != null and not bool(forest.call("_is_blocked", spot.x, spot.y)):
-			wooded += 1
-	_check(worst <= 0.02 and wooded == 0, ("D3: the side yard is level (%.2f m at worst) and no "
-		+ "tree may stand inside the fence (%d open spots)") % [worst, wooded])
+			edge_points += 1
+			if not shapes.any(func(shape: CollisionShape3D) -> bool:
+					var local := shape.global_transform.affine_inverse() * Vector3(at.x, 1.0, at.y)
+					var half := (shape.shape as BoxShape3D).size / 2.0
+					return absf(local.x) <= half.x + 0.35 and absf(local.z) <= half.z + 0.35):
+				gaps += 1
+	var body := shed.get_node_or_null("Building/ShedBody")
+	var front := -INF
+	if body != null:
+		for found in body.find_children("*", "CollisionShape3D", true, false):
+			var shape := found as CollisionShape3D
+			if shape.shape is BoxShape3D:
+				front = maxf(front, shape.global_position.z + (shape.shape as BoxShape3D).size.z / 2.0)
+	_check(edge_points > 0 and gaps == 0 and PLATFORM.end.y - front >= 34.95,
+		("E6: the fence and the walls close the yard but for the gate (%d of %d points along "
+		+ "its edge open), and the court is %.1f m deep") % [gaps, edge_points,
+		PLATFORM.end.y - front])
 	var rails := shed.find_children("WalkwayRail*", "MeshInstance3D", true, false)
 	var railed := not rails.is_empty()
 	for found in rails:
 		var part := found as MeshInstance3D
 		var box: AABB = part.global_transform * part.get_aabb()
-		railed = railed and box.position.x > -87.0 and box.end.x < -86.0 \
-			and box.position.z < 42.0 and box.end.z > 53.0 \
+		railed = railed and box.position.x > -90.5 and box.end.x < -89.9 \
+			and box.position.z < 22.0 and box.end.z > 41.5 \
 			and found.find_children("*", "CollisionShape3D", true, false).size() > 0
-	_check(railed, "D6: a solid rail runs between the walkway and the lane, along the walkway")
+	_check(railed, "E6: a solid rail runs between the walkway and the court, from the office")
 	var words: Array[String] = []
 	for found in shed.find_children("*", "Label3D", true, false):
 		words.append((found as Label3D).text)
 	var missing := YARD_SIGNS.filter(func(sign: String) -> bool: return not words.has(sign))
+	for number in range(1, 10):
+		if not words.has(str(number)):
+			missing.append("bay %d" % number)
 	var lines := shed.find_children("BayLine*", "MeshInstance3D", true, false).size()
-	_check(missing.is_empty() and lines >= 4,
-		"The yard carries its bay lines (%d) and its signs (missing: %s)" % [lines,
+	_check(missing.is_empty() and lines >= 10,
+		"E7: the yard carries its bay lines (%d of 10), numbers and signs (missing: %s)" % [lines,
 		", ".join(missing)])
+	var placed := {"TrailerBay": Rect2(-38.8, 3.9, 10.4, 14.2),
+		"CarBay": Rect2(-88.5, 42.3, 5.2, 12.7)}
+	var astray: Array[String] = []
+	for prefix: String in placed:
+		var found_lines := shed.find_children(prefix + "*", "MeshInstance3D", true, false)
+		if found_lines.is_empty():
+			astray.append(prefix)
+		for found in found_lines:
+			var box: AABB = (found as MeshInstance3D).global_transform \
+				* (found as MeshInstance3D).get_aabb()
+			if not (placed[prefix] as Rect2).grow(0.1).encloses(Rect2(box.position.x,
+					box.position.z, box.size.x, box.size.z)):
+				astray.append(String(found.name))
+	_check(astray.is_empty(), "E7: the trailer bays stand beside the shed's east wall and the "
+		+ "car bays beside the walkway (astray: %s)" % ", ".join(astray))
 	_check_arrows(shed)
 	var yard := shed.get_node_or_null("Yard")
 	var signs: Array[Node] = yard.find_children("Sign*", "Node3D", false, false) \
@@ -455,6 +613,32 @@ func _check_yard(shed: Node3D, world: Node3D) -> void:
 		return DRIVE.has_point(Vector2(at.x, at.z)))
 	_check(not signs.is_empty() and in_drive.is_empty(),
 		"No sign stands in the drive from the gate to the side yard (%d do)" % in_drive.size())
+	_check_way_in(shed)
+
+
+func _check_way_in(shed: Node3D) -> void:
+	var space := shed.get_world_3d().direct_space_state
+	var way: Array[Vector3] = [Vector3(-70.0, 1.2, 53.5), Vector3(-70.0, 1.2, 46.0),
+		Vector3(-62.0, 1.2, 40.0), Vector3(-41.0, 1.2, 37.5), Vector3(-47.75, 1.2, 22.5)]
+	var box := BoxShape3D.new()
+	box.size = Vector3(2.4, 1.6, 2.4)
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = box
+	if _van != null:
+		query.exclude = [_van.get_rid()]
+	var blocked: Array[String] = []
+	for index in range(way.size() - 1):
+		var steps := int(way[index].distance_to(way[index + 1]) / 0.5)
+		for step in range(steps + 1):
+			query.transform = Transform3D(Basis.IDENTITY, way[index].lerp(way[index + 1],
+				float(step) / steps))
+			for hit in space.intersect_shape(query, 4):
+				var collider := hit["collider"] as Node
+				var named := String(collider.name) if collider != null else "?"
+				if not blocked.has(named):
+					blocked.append(named)
+	_check(blocked.is_empty(), "The van's way in, right, then back onto bay 9 is clear of "
+		+ "anything solid (blocked by: %s)" % ", ".join(blocked))
 
 
 func _check_arrows(shed: Node3D) -> void:
@@ -480,12 +664,11 @@ func _check_arrows(shed: Node3D) -> void:
 
 func _yard_spots() -> Array[Vector2]:
 	var spots: Array[Vector2] = []
-	for z in range(41, 55):
-		for x in range(-88, -53):
-			spots.append(Vector2(x + 0.5, z + 0.5))
-	for z in range(31, 55):
-		for x in range(-52, -27):
-			spots.append(Vector2(x + 0.5, z + 0.5))
+	for z in range(int(PLATFORM.position.y), int(PLATFORM.end.y)):
+		for x in range(int(PLATFORM.position.x), int(PLATFORM.end.x)):
+			var spot := Vector2(x + 0.5, z + 0.5)
+			if not SHED.has_point(spot):
+				spots.append(spot)
 	return spots
 
 

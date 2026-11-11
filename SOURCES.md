@@ -11,6 +11,8 @@ is at tag `a6`. Assignment 5's record follows with its text unchanged; its grade
 | Asset | Source | Authors (roles) | Licence | Date | Used in |
 | --- | --- | --- | --- | --- | --- |
 | `guard.glb` in `game/features/characters/guard/`, with six extracted WebP textures | Microsoft Rocketbox avatar library, https://github.com/microsoft/Microsoft-Rocketbox: the avatar `Security_Male_01` and the animation `m_sit_chair_breathe_01` (`source_assets/rocketbox/README.md`) | Microsoft (Rocketbox Studios; Microsoft Research). Converted by Claude Code with `tools/art/convert_rocketbox.py` (Blender 5.2.2) on 2026-11-11: the clip baked onto him bone by bone, his shoes at the origin, one roughness per part, the specular maps dropped, textures halved to 1024 pixels as WebP (`game/features/characters/ATTRIBUTION.md`) | MIT, copyright (c) 2020 Microsoft; the notice is in the in-game credits (C55) | 2026-11-11 | the gate guard at the transfer shed, a stand-in (D6) |
+| `dock_door.glb` in `game/features/environments/industrial_loop/art/depot/` | "Industrial Overhead Door" by Maxwell autodoors, https://sketchfab.com/3d-models/industrial-overhead-door-20ced63367824ec1a2ada0fbf118b413 (`source_assets/sketchfab/01_door_maxwell/README.md`), fetched through the Blender MCP add-on on 2026-11-11 | Maxwell autodoors (Sketchfab `maihupronoob`). Converted by Claude Code with `tools/art/convert_depot_models.py` (Blender 5.2.2): its red wall and its overhead tracks and springs removed, scaled to a 2.74 x 3.05 m panel, reduced to 5,346 triangles, no textures | CC BY 4.0; credited in game ("THE DEPOT") | 2026-11-11 | the transfer shed's nine dock doors |
+| `rollershutter_door.gltf`, reused from `game/features/environments/depot_yard/polyhaven/models/` (its `POLYHAVEN.md`) | https://polyhaven.com/a/rollershutter_door | MP | CC0 1.0 | 2026-11-11 (reused) | the transfer shed's drive-in door, scaled 1.2 |
 
 # Assignment 6 — particle effects (2026-11-07)
 
@@ -26,6 +28,7 @@ is at tag `a6`. Assignment 5's record follows with its text unchanged; its grade
 | --- | --- | --- | --- | --- | --- |
 | `water_bead.png`, `fine_spray.png`, `roof_stream.png`, `exhaust_puff.png` | Written by code: `tools/make_particle_textures.py` (Claude Code), seed 6; every run writes the same bytes | Claude Code (script) | Original, no licence needed | 2026-11-07 | A1's beads and mist, A2's streams and beads, B1's splashes, B2's puffs |
 | `rain_streak.png` | The same script; redrawn as wide as its quad in brief revision 5 | Claude Code (script) | Original, no licence needed | 2026-11-07 | B1's streaks |
+| `cladding_grey_diff_2k.jpg` in `game/features/environments/industrial_loop/art/depot/` | Made by code from https://polyhaven.com/a/box_profile_metal_sheet (its 2k colour map, in the depot yard's copy): `tools/art/make_depot_textures.py` (Claude Code) turns the red sheet a light warm grey; the shed uses the sheet's own normal and ARM maps, and `concrete_wall_006` (2k), from the same folder | Amal Kumar (the sheet); Claude Code (script) | CC0 1.0 | 2026-11-11 | the transfer shed's cladding and dock face |
 
 All five are in `game/effects/textures/`, imported with mipmaps. The script is their provenance
 record: it draws each shape from formulas and fixed-seed noise, and fetches nothing.

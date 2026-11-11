@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+1_driver_at_the_stop_line: the van at (-71.0, -0.15, 60.9), heading 0.00 rad, headlights true, wipers 1
+  saved 1_driver_at_the_stop_line.png (1280x800), near black 5%
+2_driver_inside_the_gate: the van at (-69.6, -0.15, 51.4), heading -0.44 rad, headlights true, wipers 1
+  saved 2_driver_inside_the_gate.png (1280x800), near black 8%
+3_yard_from_above: camera at (-72.0, 55.0, 88.0) looking at (-55.0, 0.0, 42.0), fov 45
+  saved 3_yard_from_above.png (1280x800), near black 0%
+4_side_yard_from_the_car_park: camera at (-30.0, 1.7, 53.5) looking at (-46.0, 1.4, 30.5), fov 60
+  saved 4_side_yard_from_the_car_park.png (1280x800), near black 21%
+5_yard_from_above_debug_light_not_the_game: camera at (-72.0, 55.0, 88.0) looking at (-55.0, 0.0, 42.0), fov 45
+  saved 5_yard_from_above_debug_light_not_the_game.png (1280x800), near black 8%
+6_plan_from_above_debug_light_not_the_game: straight down from (-57.5, 100.0, 37.0), 48 m from top to bottom, north up
+  saved 6_plan_from_above_debug_light_not_the_game.png (1280x800), near black 0%
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

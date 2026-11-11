@@ -1,6 +1,38 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+**Last run:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
+Claude account: the bigger depot's platform cut into the hill behind 65 concrete walls (11 m at
+the back), the 50 x 30 m shed (`transfer_building.gd`) in grey box-profile cladding over a 1.3 m
+concrete dock face, the office's two lit storeys, nine of Maxwell autodoors' dock doors and Poly
+Haven's roller shutter as the drive-in door, the yard re-laid (`transfer_yard.gd` rewritten), the
+fence along the platform's edges and the walls' tops, five yard lights. The design and the plan
+are the last two revisions of `docs/PHASE_BRIEF.md` (rules E1–E10) and `docs/DEPOT_PLAN.md`.
+**Tests** (`logs/phase_2/step2c_p1/`): Mission 2 39/41 → 46/46 over four tasks, each failing
+first; the lamp rain 12/13 → 13/13 (19 volumes); the menus 19/20 → 20/20; art 1 → 0 failures; ten
+mutations exit 1, each on its own check (`mutations_summary.txt`); import clean. Every suite, each
+as `LOG_DIR=logs/phase_2/step2c_p1/suites scripts/run-test.sh <test>.gd <fps> 300` for the 31
+runs, then `python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): all exit 0 with
+the baseline's counts but Mission 2's and the collision's (44/44 under C57); no SCRIPT or SHADER
+ERROR; the struck man's fall unchanged. Stills: `captures/transfer_shed/2c_p1/`
+(`depot_part1_sheet.png`, opened for the author), from `tools/captures/capture_depot.gd`.
+**Changed:** new `depot_ground.gd`, `transfer_building.gd` (and their `.uid`),
+`industrial_loop/art/depot/` (`cladding_grey_diff_2k.jpg`, `dock_door.glb`, `ATTRIBUTION.md`),
+`tools/art/make_depot_textures.py`, `tools/art/convert_depot_models.py`, `docs/DEPOT_PLAN.md`,
+`docs/DEPOT_RESEARCH.md`; `transfer_yard.gd` (rewritten), `transfer_shed.gd`, `industrial_loop.gd`,
+`front_menu.gd` (credits), `test_mission_two.gd`, `test_lamp_rain_state.gd`, `test_menus.gd`,
+`check_first_drive_art.py`, `tools/captures/capture_depot.gd`, `SOURCES.md`, `docs/PHASE_BRIEF.md`,
+the prompt log (#215–#224), twelve `source_assets/sketchfab/<model>/README.md`, this note;
+committed on `develop` at the author's word (#224). **Rely on:** `develop` is 9 commits ahead of
+`origin/develop`,
+unpushed until A6 is graded; the twelve Sketchfab models in `source_assets/sketchfab/` (out of
+Git, each README in Git); the Blender MCP add-on keeps its Sketchfab switch per scene;
+`tools/assets/fetch_polyhaven.py` puts the project's name in its User-Agent, so this run did not
+use it (flagged to the author). **Next:** part 2, with the author's OK: the docks
+at work (seals, levellers, bumpers, a light over each door, red and green lights, the inside by
+the docks lit and dry, rain in every lamp's light), each step approved. **Unverified:** the GPU
+price (D9); the drive-in shutter, dark until part 2's lights; how the walls read from the hill.
+
+**Before it:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
 the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
 concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
 not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
@@ -28,9 +60,21 @@ on `develop` at the author's word (#214). **Rely on:** `develop` is 8 commits ah
 `origin/develop`, unpushed until A6 is graded; 2c-1's baseline is `logs/phase_2/step2b_r2/suites/`. **Next:** the yard's strip (a
 game window), with the author's OK; then 2c-2. Rerun every suite after each
 depot step: the struck man's fall can move again. **Unverified:** every look: the paint, the walls and the dip
-behind them, the poles' pools and their rain, the signs; the GPU price (D9).
+behind them, the poles' pools and their rain, the signs; the GPU price (D9). **Then** (#215–#216,
+not committed): six stills of the yard from new `tools/captures/capture_depot.gd` in a game
+window, in `captures/transfer_shed/2c1/` (bay 3's "3" overlaps "NO PARKING"; the yard is dark at
+night); the author does not like the docks' shutters and shelters and wants everything more
+real and bigger, so `docs/DEPOT_RESEARCH.md` holds research on real docks and on free models
+(CC0/CC-BY). **Then** (#217–#221): the mix approved (free models, no own builds, #221); the
+shed becomes about 50 x 30 m with eight truck docks and the van bay, set back into the hill
+behind retaining walls (about 10.5 m), the yard 35 m deep, with parked trucks and cars and
+realistic lights and rain at and inside the docks (#219–#220,
+`captures/transfer_shed/2c_models/proposed_layout.png`); twelve CC BY Sketchfab models chosen
+(`chosen_models.png`) and fetched through the Blender MCP add-on (#222) into
+`source_assets/sketchfab/<model>/` (the .glb out of Git, a README each in Git), at real sizes.
+No brief or code yet.
 
-**Before it:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+**Before that:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
 account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
 its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
 to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
@@ -74,7 +118,7 @@ yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the 
 committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
-**Before that:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+**Earlier:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
 second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
 3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
 beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
@@ -90,7 +134,7 @@ unpushed until the author says. **Next:** the author's OK to build r1 and the gu
 in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
 **Unverified:** every look in the r1 revision; the † values are proposals.
 
-**Earlier:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Earlier still:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

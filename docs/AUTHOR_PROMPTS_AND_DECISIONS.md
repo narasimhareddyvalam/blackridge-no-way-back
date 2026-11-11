@@ -3136,6 +3136,116 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Decision:** step 2c-1 committed on `develop`, not pushed; the yard's frame strip is
        the next step, a game window, with its own OK.
 
+215. **Pictures of the yard**
+     - **The author's message:** "can you give me picture to look at it?"
+     - **Done:** six stills of the yard in a game window, from new
+       `tools/captures/capture_depot.gd` into `captures/transfer_shed/2c1/`, with
+       `depot_sheet.png` opened for the author: the driver's view at the stop line and inside
+       the gate, the yard from above at night, the side yard from the car park at eye height,
+       and the view from above and a plan in a debug light (not the game's look). Claude Code's
+       reading: bay 3's painted "3" overlaps the "NO PARKING" words; the yard is dark at night
+       (the shed's wall floods come with 2c-2, and the two poles light small pools); the high
+       windows are still flat panels (2c-2); the retaining walls are plain slabs. Asked: whether
+       to fix the overlap. Not committed.
+
+216. **Realistic, and bigger**
+     - **The author's message:** "i dont like the way sheters look, make them more realistic. make
+       everything look more good and realistic, make it more bigger. check how they are in real
+       life do research and see if there are models that we can use?"
+     - **Done so far:** research begun on real loading docks and depot fronts, and on free
+       models and textures whose licences allow a sold game (CC0, CC-BY or MIT). Claude Code
+       read "sheters" as the dock doors' shutters and the shelters round them, and asked whether
+       "bigger" means a longer shed with a row of proper dock doors. The overlap fix is still
+       open.
+     - **Done:** `docs/DEPOT_RESEARCH.md`: real docks (doors about 3 x 3 m at dock height,
+       sectional; black curtain shelters about 3.4 m square; doors about 4 m apart; flush docks;
+       metal cladding over a concrete plinth; a light over each door) and free models with their
+       licences (Poly Haven and ambientCG CC0; Sketchfab and Fab CC-BY; makers' CAD files,
+       TurboSquid and CGTrader not usable). Asked again what "bigger" means.
+
+217. **Existing models?**
+     - **The author's message:** "use the models that already exist?? is that what we are doing?"
+     - **Done:** answered that nothing is decided: today the shed is boxes built in code;
+       proposed a mix, free models where good ones exist and Claude Code's own builds for what
+       nobody offers free, each model checked in Blender first. Asked whether to go ahead.
+
+218. **The mix of models and builds**
+     - **The author's message:** "yes go ahead"
+     - **Done:** Blender's MCP add-on was not reachable, so the seven candidates needing no
+       login (Poly Haven and ambientCG, CC0) were downloaded to the session's scratch folder and
+       rendered in background Blender (`captures/transfer_shed/2c_models/`, with
+       `candidates_sheet.png` opened for the author): Factory Wall (box-profile cladding) and
+       Corrugated Iron for the walls, Hangar Concrete for the apron; the roller shutter (a shop
+       door, 0.6 m too short), the old-style lamp and Concrete 047A (visibly repeating) not
+       used. The Sketchfab and Fab models need the author's free login. Asked the shed's size.
+
+219. **The shed's size**
+     - **The author's answer:** "50 m, set back (Recommended)", over "50 m, same place" and
+       "Keep 36 m".
+     - **Decision:** the transfer shed becomes about 50 x 30 m with eight real-size truck docks
+       and the van bay, moved back into the hill so lorries have room in front; the hill behind
+       and west of it is cut, and 2c-1's yard is re-laid round it.
+     - **Done:** the proposed layout drawn over the real ground
+       (`captures/transfer_shed/2c_models/proposed_layout.png`) and played back: one level
+       platform cut into the hill behind retaining walls (about 10.5 m behind the shed); docks
+       1-8 at 4 m with sectional doors, curtain shelters, bumpers and lights; bay 9 the van bay;
+       a drive-in door; the office at the west end with a railed walkway from the gate; staff
+       cars; three parked trailers; floodlights on 12 m poles; the gate and booth as built.
+
+220. **The layout, with parked vehicles, and the docks' lights and rain**
+     - **The author's message:** "yes sounds good, make sure there are few trucks and cards parked
+       as well. but make sure the lights and rain is realisitc inside the dock as well"
+     - **Decision:** the layout as played back; add a few parked trucks and cars; the lights
+       and the rain at and inside the docks must be realistic.
+     - **Done:** played back Claude Code's calls: two tractor-trailers and a box truck at docks,
+       three parked trailers, four or five staff cars, all generic; LED lamps inside the shed
+       over a dry floor, a light over each dock, red/green lights, an arm lamp inside each door;
+       rain only outside, in every lamp's light, never inside or under a shelter.
+
+221. **Existing models, not built ones**
+     - **The author's message:** "just get some already existing models and use them, dont
+       waste time to create them"
+     - **Done:** Sketchfab's public catalogue searched for American trucks, trailers, cars, dock
+       parts and props (the story's town is American), each licence read on the model's own
+       record (CC BY); uploads ripped from commercial games (Midnight Club, Burnout, Left 4
+       Dead) excluded, since their uploaders cannot license them, and branded or logoed ones
+       avoided. Twelve chosen (`captures/transfer_shed/2c_models/chosen_models.png`):
+       Maxwell Autodoors' sectional door, leveller and foam seal; Brian Trepanier's 1980s semi
+       tractor; NLM's dry-van trailer; Daniel Zhabotinsky's box truck and 1980s sedan; YJ_'s
+       dumpsters; Kamran Mughal's forklift; FFeller's pallet jack; widthRider's pallet;
+       MaX3Dd's cone. Sketchfab downloads need the author's login; asked how.
+     - **The author's answer:** "Open Blender + MCP (Recommended)", over "I'll download them".
+     - **Done:** Blender was open with the MCP add-on and its Sketchfab switch on in the
+       author's scene; asked the author to tick it.
+
+222. **All the props**
+     - **The author's message:** "use all of those props. and its already on i switched it on"
+     - **Done:** the add-on keeps its switches per scene, so Claude Code ticked Sketchfab in the
+       new scene "DepotModels" it had made (the author's own scene untouched) and imported all
+       twelve; each read on its Sketchfab record (CC BY 4.0; the box truck's and the sedan's
+       author "unconditionally" allows use in a digital product; the pallet jack's asks for
+       credit only for a changed re-upload). Turned and sized to real measurements (the
+       tractor came turned 45 deg; the trailer's box is chunkier than a real one, so it is a
+       45 ft compromise; the pallet came on its edge), exported to
+       `source_assets/sketchfab/<model>/<model>.glb` (out of Git) with a README each (in Git).
+       The author's Blender window was switched back to their own scene.
+     - **Asked:** whether to write the plan and start part 1 (the dug-in platform and its walls,
+       the 50 x 30 m shed, the yard re-laid).
+
+223. **Part 1**
+     - **The author's message:** "yes proceed"
+     - **Done:** the design written before any code as the last revision of
+       `docs/PHASE_BRIEF.md` (rules E1-E10, predictions), and part 1's task plan in
+       `docs/DEPOT_PLAN.md`; Claude Code runs it itself, task by task, tests first.
+     - **Done:** part 1 built, tests first in four tasks (Mission 2 39/41 → 46/46, the lamp
+       rain 19 volumes, the menus credit Maxwell autodoors, the art check holds the door);
+       ten mutations exit 1; every suite passes, the struck man's fall unchanged; eight
+       stills in `captures/transfer_shed/2c_p1/` opened for the author. Asked: the commit.
+
+224. **Part 1 committed**
+     - **The author's answer:** "Commit it (Recommended)", over "Changes first" and "Not yet".
+     - **Decision:** part 1 committed on `develop`, not pushed; part 2 waits for its own OK.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

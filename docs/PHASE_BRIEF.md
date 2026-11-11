@@ -4931,3 +4931,125 @@ Most are vendor or consultant pages, not standards; their figures are rules of t
   runs stand as in `suites/`: nothing in `game/` but this test changed since. **Not done:** the
   strip and the GPU price (D9), both windowed runs, each with the author's OK; the commit,
   with the author's OK.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised: the bigger depot, written before any code)
+
+- **Status:** the author's decisions #216–#223. The docks' shutters and shelters looked fake;
+  everything is to look real and bigger (#216); existing models are used, not built ones
+  (#217–#222); the shed is about 50 x 30 m, set back into the hill so lorries have room
+  (#219); a few trucks and cars are parked, and the lights and rain at and inside the docks are
+  realistic (#220); "yes proceed" (#223). This replaces step 2c's layout B for the shed and the
+  yard; the gate, the booth and the barrier (2b) stay as built. Research:
+  `docs/DEPOT_RESEARCH.md`. Models: the twelve in `source_assets/sketchfab/` (CC BY 4.0, each
+  with its README). Textures: Poly Haven (CC0). Values marked † are Claude Code's calls.
+- **The layout** (the world's metres; north is −z; drawn in
+  `captures/transfer_shed/2c_models/proposed_layout.png`):
+  - **the platform:** x −92 to −26, z −13 to 55, level at 0, cut into the hill and held by
+    concrete retaining walls as high as the ground behind them: about 11 m along the back
+    (z −13), and stepping down along the west (x −92) and east (x −26) sides to nothing towards
+    the gate;
+  - **the shed:** x −90 to −40, z −10 to 20 (50 x 30 m); eaves 9 m and a 5° gable roof, ridge
+    about 10.3 m †; box-profile metal cladding in light grey † (Poly Haven's Factory Wall, made
+    grey) over a 1.3 m concrete dock face; the roof in the world's corrugated iron; gutters and
+    downpipes along the front †;
+  - **its front (z 20), west to east:** the office (x −90 to −82, two storeys, lit windows, a
+    door at the yard's level) †; truck docks 1–8 at x −80, −76 … −52, each a 2.74 x 3.05 m
+    opening (9 x 10 ft) from the dock floor 1.3 m up, closed by Maxwell's sectional door; bay
+    9, the van bay with its dock lift (T1), at x −47.75; a drive-in door at the yard's level at
+    x −42.75 (Poly Haven's roller shutter, 3.7 x 2.9 m) †;
+  - **the yard:** an asphalt court 35 m deep (z 20 to 55) from x −92 to −26, with a 15 m
+    concrete apron in front of the docks and a slot drain at its edge †; bay lines 12 m out
+    and numbers for docks 1–9; the arrows as in 2c-1 (in: north from the gate, then east; out:
+    west to the gate); a zebra walkway along the west fence from the gate to the office,
+    railed on the court's side; five staff car bays beside it (x −88.4 to −83.4, z 42.4 to
+    54.6) behind a kerb; three trailer bays on the east (x −38.7 to −28.5, z 23 to 37); the
+    signs as built in 2c-1;
+  - **the fence:** the gate's chain-link along z 55, as built; along x −92 and x −26 from the
+    walls to z 55; and along the walls' tops †;
+  - **lights:** five yard lights on the road's street-lamp poles † at (−79, 53.8), (−58, 53.8)
+    and (−36, 53.8) along the south fence, (−89.6, 30) beside the walkway's rail and (−27.4, 30)
+    on the east side, clear of the car bays and the walkway, each a lamp for B1. The shed's
+    lights come in part 2.
+- **The parts (each approved on its own, tests first):**
+  - **Part 1 (approved, #223):** the platform and its walls, the shed's shell with its doors and
+    office, the yard re-laid, the five yard lights.
+  - **Part 2:** the docks at work: the seals, levellers and bumpers, a light over each dock, the
+    red and green lights, the inside of the shed by the docks lit and dry, and rain only
+    outside, in the light of every lamp at the depot.
+  - **Part 3:** the parked things: two tractor-trailers and a box truck at docks, the parked
+    trailers, staff cars, the dumpsters, a forklift, a pallet jack, pallets and cones.
+  - Then 2d (backing onto bay 9) and 2e (the load and the seal), as planned.
+- **Rules part 1's tests measure (`test_mission_two.gd` unless named):**
+
+| # | Rule |
+| --- | --- |
+| E1 | The platform is level within 2 cm at every metre inside it, and no tree stands on it |
+| E2 | Every cut is held: 0.5 m in front of each wall the ground is level, and 3 m behind it the ground is no higher than the wall's top |
+| E3 | The shed is a solid building from x −90 to −40 and z −10 to 20 (within 5 cm), its eaves 9 m up (within 10 cm); the old warehouse box and its dock blocks are gone |
+| E4 | Eight truck openings, 2.74 m wide and 3.05 m tall from 1.3 m up, centred at x −80 + 4n (within 2 cm), bay 9's at x −47.75 and the drive-in door's at x −42.75 at the yard's level; each is filled by a closed door |
+| E5 | The office's windows are lit from inside, and its door at the yard's level opens onto the walkway |
+| E6 | The yard is paved everywhere inside the fence, the fence and the walls close it but for the gate, the court is at least 35 m deep from the dock face to the fence, and a railed walkway runs from the gate to the office |
+| E7 | Bay lines for docks 1–9, the arrows, and the signs on solid posts, none in the drive |
+| E8 | Five yard lights, each a lamp for B1 (`test_lamp_rain_state.gd`: 19 rain volumes) |
+| E9 | Every suite passes, and Mission 1 is unchanged; if the struck man's fall moves again, it is reported before anything is changed (C57) |
+| E10 | The doors' game files keep within the art check's limits, and their authors are in the credits (`check_first_drive_art.py`, `test_menus.gd`) |
+
+- **Predictions (part 1, before any code):** past the barrier, a wide yard and a long grey shed
+  35 m ahead; eight closed sectional doors in a row over the concrete dock face, the van bay
+  and the drive-in door at the east end; the office's lit windows at the west end; the cut's
+  tall walls at the back and sides, darker than the shed; five pools of light with rain in
+  them. The shed's own lights come in part 2, so its front is lit only by the yard lights and
+  the headlights. The struck man's fall will probably move again, since part 1 adds solid
+  bodies while the world is built (C57's finding).
+- **What could go wrong, and the check:** terrain left in front of a wall or above it (E1, E2);
+  the old warehouse or its plots left behind (E3, E1); heavy door files (E10, the art check);
+  the fall moving (every suite, reported); the yard too dark to read (the stills).
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 1: built)
+
+- **Built** (new `depot_ground.gd`, `transfer_building.gd`; `transfer_yard.gd` rewritten;
+  `transfer_shed.gd`, `industrial_loop.gd`; new `tools/art/make_depot_textures.py` and
+  `tools/art/convert_depot_models.py`; task plan `docs/DEPOT_PLAN.md`): the platform level from
+  x −92 to −26 and z −13 to 55, held by 65 concrete cut walls (the back one 11 m, the sides
+  stepping down); the 50 x 30 m shed in grey box-profile cladding over the concrete dock face,
+  under its corrugated-iron gable roof with gutters and downpipes; the office's two lit storeys;
+  nine of Maxwell autodoors' sectional doors and Poly Haven's roller shutter as the drive-in
+  door; the yard paved round it with the 15 m apron, the bay lines and numbers 1–9, the hatched
+  box before bay 9, the 2c-1 arrows and signs, the railed walkway, five car bays behind their
+  kerb, three trailer bays; the fence along the gate, the platform's sides and the walls' tops;
+  five yard lights. The old warehouse box is gone; the world still draws its random numbers, so
+  nothing else moved.
+- **Where it differs from the plan:**
+  - **the trailer bays** stand beside the shed's east wall (z 4 to 18), not at z 23 to 37 †: there
+    they leave the court's east end clear for the van to pull forward before backing onto bay 9;
+  - **the dock door** is an 8 x 7 ft door at its source; its panel is stretched 1.04 times across
+    and 1.31 times up to fill the 9 x 10 ft opening, so its three windows sit a little low; its
+    overhead tracks and springs, inside the shed while it is shut, were dropped (5,346 triangles);
+  - **the drive-in shutter** reads as a dark opening at night: it is fully metallic, so it shows
+    only what it reflects. Part 2's light over each door is to light it;
+  - **the materials** were reused from the depot yard's Poly Haven set rather than fetched again
+    (the box-profile sheet made grey, `concrete_wall_006` for the dock face), and the cut walls use
+    the world's concrete.
+- **Tests first** (`logs/phase_2/step2c_p1/`): `task1_before/` Mission 2 39/41 (E1 10.52 m and
+  1,892 open spots; E2 no walls) → `task1_after/` 41/41; `task2_before/` 41/44 (E3–E5) →
+  `task2_after/` 44/44; `task3_before/` 44/45 (no doors), the menus 19/20 (no credit), the art
+  check 1 failure → `task3_after/` 45/45, 20/20, 0; `task4_before/` 40/46 (the yard, the fence, the
+  rail, the bays, the way in blocked) and the lamp rain 12/13 (16 volumes) → `task4_after/` 46/46
+  and 13/13 (19).
+- **Mutations** (`mutations/`, on an APFS clone, restored byte for byte after each): the platform
+  half flattened (E1, E2), the east walls missing (E2), the old warehouse back (E3), dock 3 moved
+  0.5 m (E4), the office dark (E5), bay 9's door missing (E4), the apron unpaved (E6), the east
+  fence missing (E6), a light removed (the lamp rain), a bollard in the van's way (the way in): all
+  ten exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0, with the baseline's counts but
+  Mission 2's (46/46) and the collision's (44/44 under C57's 0.9 m); art 0 failures; no SCRIPT or
+  SHADER ERROR. The struck man's fall did not move (5.3 s, 2.0 m, the same lean): C57's finding
+  that after the first extra body the fall stays put held again.
+- **The stills** (`captures/transfer_shed/2c_p1/`, `depot_part1_sheet.png`). **Claude Code's
+  reading against the predictions (a claim, not a check):** as predicted: the long grey shed 35 m
+  past the barrier, the row of white sectional doors over the dock face, the office's lit windows
+  at the west end, the cut walls stepping down the sides with the fence on their tops, rain in
+  the yard lights; the shed's front lit only by the yard lights and headlights. Not as predicted:
+  the drive-in door dark (above); the metal roof dark from above at night, as metal is.
+- **Not done:** part 2 (the docks at work, the shed's lights and inside, the rain), part 3 (the
+  parked things), the GPU price (D9); the commit, with the author's OK.

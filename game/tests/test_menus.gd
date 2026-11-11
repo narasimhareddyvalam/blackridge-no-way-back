@@ -7,7 +7,7 @@ const OLD_WORDS: Array[String] = ["PROTOTYPE", "prototype", "freight loop", "ind
 	"Begin / continue drive", "Drive again", "First drive"]
 const KEYS: Array[String] = ["W / S", "A / D", "SPACE", "Z / C", "J / K", "MOUSE", "SHIFT", "ESC"]
 const CREDITED: Array[String] = ["NRVALAM WORKS", "Max", "CC BY 4.0", "Mixamo", "Poly Haven",
-	"Alex Murias", "Microsoft Rocketbox", "Godot Engine", "MIT"]
+	"Alex Murias", "Microsoft Rocketbox", "Maxwell autodoors", "Godot Engine", "MIT"]
 
 var _checks: int = 0
 var _failures: int = 0

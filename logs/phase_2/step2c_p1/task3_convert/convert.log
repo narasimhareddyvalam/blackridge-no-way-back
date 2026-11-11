@@ -1,0 +1,23 @@
+14:14:09 | INFO: Data are loaded, start creating Blender stuff
+14:14:09 | INFO: Blender create Mesh node Garage_doors_N240118:______3_lambert2_0
+14:14:09 | INFO: Blender create Mesh node Garage_doors_N240118:______3_lambert2_0.001
+14:14:09 | INFO: Blender create Mesh node pCube4_lambert4_0
+14:14:09 | INFO: Blender create Mesh node pCube5_lambert4_0
+14:14:09 | INFO: Blender create Mesh node pCube6_lambert4_0
+14:14:09 | INFO: Blender create Mesh node pCube7_lambert1_0
+14:14:09 | INFO: Blender create Mesh node pCube7_lambert5_0
+14:14:09 | INFO: Blender create Mesh node pCube7_lambert6_0
+14:14:09 | INFO: Blender create Mesh node pPlane1_blinn1_0
+14:14:09 | INFO: Blender create Mesh node pPlane2_blinn1_0
+14:14:09 | INFO: glTF import finished in 0.15s
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+14:14:09 | INFO: Starting glTF 2.0 export
+14:14:09 | INFO: Extracting primitive: Garage_doors_N240118:______3_lambert2_0
+14:14:09 | INFO: Primitives created: 5
+14:14:09 | INFO: Finished glTF 2.0 export in 0.017663955688476562 s
+
+CONVERTED dock_door: 5346 triangles, 3.23 x 0.30 x 3.05 m, 5 materials, 353.4 kB
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit
