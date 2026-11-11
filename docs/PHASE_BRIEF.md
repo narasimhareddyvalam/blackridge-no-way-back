@@ -4865,3 +4865,69 @@ Most are vendor or consultant pages, not standards; their figures are rules of t
 
 - The load and the seal (2e), the inspection (step 3), any story words (S1–S4), any company name
   on a sign (S4), and the guards' behaviour (Assignment 9).
+
+## Revision 2026-11-11 (Phase 2, step 2c-1: the yard, built)
+
+- **Built** (new `transfer_yard.gd`; `transfer_shed.gd`, `industrial_loop.gd`): the front and
+  side yards paved in the yard's wet asphalt; the concrete strip from the building front to
+  z 45, with its slot drain; the side yard cut level, the ground flattened to one grid point past
+  its east edge (x −26), behind its retaining walls; the fence out along z 55 to x −27, north to
+  z 30, and west along the wall's top; the bay lines 12 m out, the bay numbers on the ground, the
+  hatched "NO PARKING" box before bay 3; three arrows (in: north from the gate, then east along
+  the gate side; out: west to the gate along the docks' side, each on its right); the walkway's
+  zebra stripes with a solid yellow rail on the lane side; the trailer bays, four car bays and
+  the car park's kerb, solid to 0.6 m (risk 3); four bollards, at the shed's corners and between
+  the docks; signs on solid posts: "5 MPH" outside the gate beside the lane, "HI-VIS BEYOND THIS
+  POINT" on the fence west of the gate, "STAFF PARKING ONLY"; the two pole lights, each a lamp
+  for B1 (16 rain volumes, from 14).
+- **Where it differs from the brief:**
+  - **a second retaining wall, not foreseen:** the ground also rises east of the side yard, so
+    a wall steps down along x −26 from 1.64 m at the north corner to 0.45 m at z 46, where the
+    slope ends;
+  - **the north wall is 1.93 m** (the ground behind it 1.78 m, plus a 0.15 m cap), above the
+    1.2–1.8 m †; from x −53 to about −45 the ground behind it is the shed's flat plot, so there
+    it stands free. Behind both walls the ground climbs over one 2 m grid cell, a dip that the
+    wall's top hides from the van;
+  - **the poles are the road's street lamps** (the lamp about 6.4 m up), not 10 m poles †, at
+    the yard's edges out of the side yard's turning space: (−46, 54) by the south fence and
+    (−29, 40) by the east fence, where the brief had (−46, 50.5) and (−31, 40) †;
+  - **the marks, corrected in the build:** the first build had no out arrow, its north arrow ran
+    into bay 2's lines, the "5 MPH" sign stood in the right turn from the gate, and no sign post
+    was solid; three checks now hold them;
+  - **left for 2c-2:** the numbers and the "DOCK 1", "DOCK 2" and "VAN BAY 3 · DOCK LIFT" signs
+    over the doors, which come with the doors; the office, and the bollard at its door. The 1.3 m
+    dock blocks still have no collider; 2c-2 rebuilds them.
+- **Tests first** (`logs/phase_2/step2c1/`): `before/` Mission 2 31/36 (1,090 of 1,090 yard
+  points unpaved, a fence run inside the yard, 1.34 m of slope with 486 spots open to trees, no
+  rail, no marks), the lamp rain 12/13 (14 volumes for 16 lamps); `before_marks/` 36/39 (no out
+  arrow, no solid post, a sign in the drive); `after/` 39/39 and 13/13; import clean.
+- **Mutations** (`mutations/`, on an APFS clone, its file restored byte for byte after each): the
+  side yard unpaved, the old east fence, the flat area one grid point short (0.34 m of slope),
+  the forest let into the yard (486 spots), the rail hollow, no out arrow, the sign posts hollow,
+  the sign back in the drive, and no yard poles (the lamp rain's test): all nine exit 1, each on
+  its own check.
+- **Every suite** (`suites/SUMMARY.txt`): 30 of the 31 runs exit 0 with the baseline's counts
+  (Mission 2 now 39/39); art 0 failures; no SCRIPT or SHADER ERROR. **The collision suite fails,
+  43/44: the brief's predicted failure 1, reported before anything is changed.**
+- **The failing check** is "Leaning shows the road from 1.9 m past the bumper, where a harder hit
+  leaves him (2.9 m from the seat)". Its gain, 2.930 − 1.950 = 0.98 m, is 2 cm short of the
+  1.0 m accepted in 2b r1, a bar set at the exact value it measured then (1.000 m). What the runs
+  in `fall_sensitivity/` show (its `SUMMARY.txt`; a claim from them, not a check):
+  - the yard changes Mission 1's fall at the bus stop's crossing, far from the shed: he rests at
+    5.3 s, 2.0 m ahead of the bumper (3.7 s and 2.4 m before);
+  - no part of the yard does it alone, and nothing near him does: with the yard not built the old
+    fall returns; with one plain box built in its place, or buried 50 m under any of six places
+    on the map, the new fall returns. No further change tried (about 30: more boxes, boxes
+    added after the world is built, unused physics bodies, each group of the yard's colliders
+    taken out) moved the new fall. The engine's reason was not found;
+  - everything the player sees holds: the hood hides him from the seat (0 of 11 parts), leaning
+    shows him (9 of 11), he lies in the beams, the crack is in view; the other 43 checks pass;
+  - at the road under him, rather than at his hips 0.17 m above it, the gain is 1.07–1.08 m
+    (1.10–1.12 m in the old fall).
+- **The author's decision (#213, C57):** "Bar at 0.9 m (Recommended)": the check keeps
+  measuring at his hips and asks for at least 0.9 m, 8 cm below today's fall; Mission 1 is
+  unchanged. Built in `test_collision.gd`: 44/44 (`lean_bar/`). **Mutation:** Ethan leaning
+  30 cm instead of 42 cm, exit 1 (the gain 0.7 m, and 5 of 11 parts showing). The other 30
+  runs stand as in `suites/`: nothing in `game/` but this test changed since. **Not done:** the
+  strip and the GPU price (D9), both windowed runs, each with the author's OK; the commit,
+  with the author's OK.

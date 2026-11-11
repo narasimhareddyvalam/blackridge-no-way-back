@@ -887,9 +887,11 @@ func _transfer_shed() -> void:
 	transfer_shed.name = "TransferShed"
 	add_child(transfer_shed)
 	transfer_shed.build(road, warehouse_widths[WAREHOUSES.size() - 1], _yard_surface, _concrete,
-		_metal, _wall_material(Color("aeb1ad")))
+		_metal, _wall_material(Color("aeb1ad")), terrain)
 	clearings.append_array(transfer_shed.clearings)
 	_lamp_post(transfer_shed.lamp_at, 0.0)
+	for index in range(transfer_shed.yard_lamps.size()):
+		_lamp_post(transfer_shed.yard_lamps[index], transfer_shed.yard_lamp_headings[index])
 
 
 func _boundary() -> void:

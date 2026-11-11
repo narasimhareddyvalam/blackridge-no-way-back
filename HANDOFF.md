@@ -1,6 +1,36 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+**Last run:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
+concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
+not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
+numbers, the hatched box, three arrows, the railed walkway, trailer and car bays, the car park's
+kerb, four bollards, three signs on solid posts, and two pole lights with B1's rain (16
+volumes). Its revision is the last in `docs/PHASE_BRIEF.md`. **Tests**
+(`logs/phase_2/step2c1/`): `test_mission_two.gd` 31/36 before, 36/39 before the marks were
+corrected, 39/39 after; `test_lamp_rain_state.gd` 12/13 → 13/13; nine mutations exit 1, each on
+its own check (`mutations_summary.txt`); import clean. Every suite, each as
+`LOG_DIR=logs/phase_2/step2c1/suites scripts/run-test.sh <test>.gd <fps> 300` for the 31 runs,
+then `python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): 30 exit 0 with the
+baseline's counts (Mission 2 now 39/39), art 0 failures, no SCRIPT or SHADER ERROR, but
+**`test_collision.gd` 43/44**: the lean check's gain is 0.98 m against its 1.0 m, identical on
+reruns (`collision_rerun/`, `collision_marks/`). It is the brief's predicted failure 1: the yard
+changes Mission 1's fall (2.0 m out, not 2.4 m); `fall_sensitivity/SUMMARY.txt` shows that any
+extra body built into the world does it, and that nothing tried since moves the new fall.
+Reported to the author before anything was changed. **Then, at the author's word (#213,
+C57):** the lean check asks for at least 0.9 m, still at his hips: `test_collision.gd` 44/44
+(`lean_bar/`); Ethan leaning 30 cm instead of 42, exit 1. Nothing else in `game/` changed
+after `suites/`, so **every suite passes.** **Changed:** new `transfer_yard.gd` and its
+`.uid`, `transfer_shed.gd`, `industrial_loop.gd`, `test_mission_two.gd`,
+`test_lamp_rain_state.gd`, `test_collision.gd`, `docs/PHASE_BRIEF.md`,
+`docs/DESIGN_DECISIONS.md` (C57), the prompt log (#212–#214), this note, the logs; committed
+on `develop` at the author's word (#214). **Rely on:** `develop` is 8 commits ahead of
+`origin/develop`, unpushed until A6 is graded; 2c-1's baseline is `logs/phase_2/step2b_r2/suites/`. **Next:** the yard's strip (a
+game window), with the author's OK; then 2c-2. Rerun every suite after each
+depot step: the struck man's fall can move again. **Unverified:** every look: the paint, the walls and the dip
+behind them, the poles' pools and their rain, the signs; the GPU price (D9).
+
+**Before it:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
 account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
 its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
 to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
@@ -44,7 +74,7 @@ yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the 
 committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
-**Before it:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+**Before that:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
 second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
 3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
 beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
@@ -60,7 +90,7 @@ unpushed until the author says. **Next:** the author's OK to build r1 and the gu
 in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
 **Unverified:** every look in the r1 revision; the † values are proposals.
 
-**Before that:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Earlier:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

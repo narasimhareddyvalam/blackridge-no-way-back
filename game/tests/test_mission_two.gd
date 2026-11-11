@@ -6,6 +6,14 @@ const LOADED := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstag
 const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const VAN_FRONT := Vector3(0.0, 1.0, -2.52)
 const VAN_REAR := Vector3(0.0, 1.0, 3.01)
+const SIDE_YARD := Rect2(-53.0, 30.0, 26.0, 25.0)
+const YARD_INSIDE: Array[Rect2] = [Rect2(-89.0, 37.5, 62.0, 17.5), Rect2(-53.0, 30.0, 26.0, 8.0)]
+const FENCE_ENDS: Array[Vector2] = [Vector2(-89.0, 37.5), Vector2(-53.0, 30.0),
+	Vector2(-74.46, 55.0), Vector2(-67.3, 55.0)]
+const YARD_SIGNS: Array[String] = ["5 MPH", "HI-VIS BEYOND THIS POINT", "STAFF PARKING ONLY",
+	"NO PARKING"]
+const GATE_LANE := Rect2(-74.0, 51.9, 6.0, 3.1)
+const DRIVE := Rect2(-74.0, 51.9, 21.0, 3.1)
 
 var _checks: int = 0
 var _failures: int = 0
@@ -145,6 +153,7 @@ func _check_gate() -> void:
 	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x, 0.1, gate_z + 18.0)))
 	await _seconds(0.5)
 	var booth := _check_booth(shed)
+	_check_yard(shed, _app.get_node("IndustrialLoop"))
 	var eye := _van.get_node("VanPresentation").get("driving_camera") as Camera3D
 	_watch_gate(shed)
 	await _hold(KEY_W, 5.0)
@@ -361,6 +370,123 @@ func _check_booth(shed: Node3D) -> Dictionary:
 		+ "more than 0.15 of a wire's light (%d panels)" % panels)
 	return {"guard": guard, "start": guard.global_position if guard != null else Vector3.INF,
 		"axis": axis, "sign": sign}
+
+
+func _check_yard(shed: Node3D, world: Node3D) -> void:
+	var pieces: Array[Rect2] = []
+	for found in shed.find_children("*", "MeshInstance3D", true, false):
+		var named := String(found.name)
+		if named.begins_with("YardAsphalt") or named.begins_with("DockApron"):
+			var box: AABB = (found as MeshInstance3D).global_transform \
+				* (found as MeshInstance3D).get_aabb()
+			pieces.append(Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
+				.grow(0.01))
+	var bare := 0
+	var sampled := 0
+	for spot in _yard_spots():
+		sampled += 1
+		if not pieces.any(func(piece: Rect2) -> bool: return piece.has_point(spot)):
+			bare += 1
+	_check(sampled > 0 and bare == 0, ("D1: the yard is paved everywhere inside the fence: "
+		+ "%d of %d points between the fence and the shed unpaved") % [bare, sampled])
+	var ends: Array[Vector2] = []
+	var inside := 0
+	var fence := shed.get_node_or_null("Fence")
+	if fence != null:
+		for child in fence.get_children():
+			var shape := child as CollisionShape3D
+			if shape == null or not shape.shape is BoxShape3D:
+				continue
+			var half := (shape.shape as BoxShape3D).size.x / 2.0
+			var along := shape.global_basis.x.normalized() * half
+			for end: Vector3 in [shape.global_position - along, shape.global_position + along]:
+				ends.append(Vector2(end.x, end.z))
+			var middle := Vector2(shape.global_position.x, shape.global_position.z)
+			var within := func(rect: Rect2) -> bool: return rect.grow(-0.5).has_point(middle)
+			if YARD_INSIDE.any(within):
+				inside += 1
+	var loose := 0
+	for end in ends:
+		var meets := ends.filter(func(other: Vector2) -> bool: return other.distance_to(end) < 0.1)
+		var held := FENCE_ENDS.any(func(post: Vector2) -> bool: return post.distance_to(end) < 0.6)
+		if meets.size() < 2 and not held:
+			loose += 1
+	_check(not ends.is_empty() and loose == 0 and inside == 0,
+		("D2: the fence closes the yard: %d loose ends (gaps over 0.1 m), %d fence runs inside the "
+		+ "yard") % [loose, inside])
+	var terrain: Node3D = world.get("terrain")
+	var forest: Node3D = world.get("forest")
+	var worst := 0.0
+	var wooded := 0
+	for spot in _yard_spots():
+		if SIDE_YARD.has_point(spot):
+			worst = maxf(worst, absf(float(terrain.call("height_at", spot.x, spot.y))))
+		if forest != null and not bool(forest.call("_is_blocked", spot.x, spot.y)):
+			wooded += 1
+	_check(worst <= 0.02 and wooded == 0, ("D3: the side yard is level (%.2f m at worst) and no "
+		+ "tree may stand inside the fence (%d open spots)") % [worst, wooded])
+	var rails := shed.find_children("WalkwayRail*", "MeshInstance3D", true, false)
+	var railed := not rails.is_empty()
+	for found in rails:
+		var part := found as MeshInstance3D
+		var box: AABB = part.global_transform * part.get_aabb()
+		railed = railed and box.position.x > -87.0 and box.end.x < -86.0 \
+			and box.position.z < 42.0 and box.end.z > 53.0 \
+			and found.find_children("*", "CollisionShape3D", true, false).size() > 0
+	_check(railed, "D6: a solid rail runs between the walkway and the lane, along the walkway")
+	var words: Array[String] = []
+	for found in shed.find_children("*", "Label3D", true, false):
+		words.append((found as Label3D).text)
+	var missing := YARD_SIGNS.filter(func(sign: String) -> bool: return not words.has(sign))
+	var lines := shed.find_children("BayLine*", "MeshInstance3D", true, false).size()
+	_check(missing.is_empty() and lines >= 4,
+		"The yard carries its bay lines (%d) and its signs (missing: %s)" % [lines,
+		", ".join(missing)])
+	_check_arrows(shed)
+	var yard := shed.get_node_or_null("Yard")
+	var signs: Array[Node] = yard.find_children("Sign*", "Node3D", false, false) \
+		if yard != null else []
+	var solid := signs.filter(func(sign: Node) -> bool:
+		return sign.find_children("*", "CollisionShape3D", true, false).size() > 0)
+	_check(not signs.is_empty() and solid.size() == signs.size(),
+		"Every yard sign stands on a solid post (%d of %d)" % [solid.size(), signs.size()])
+	var in_drive := signs.filter(func(sign: Node) -> bool:
+		var at := (sign as Node3D).global_position
+		return DRIVE.has_point(Vector2(at.x, at.z)))
+	_check(not signs.is_empty() and in_drive.is_empty(),
+		"No sign stands in the drive from the gate to the side yard (%d do)" % in_drive.size())
+
+
+func _check_arrows(shed: Node3D) -> void:
+	var north := false
+	var east := Rect2()
+	var west := Rect2()
+	for found in shed.find_children("Arrow*", "MeshInstance3D", true, false):
+		var arrow := found as MeshInstance3D
+		var box: AABB = arrow.global_transform * arrow.get_aabb()
+		var area := Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
+		var points := arrow.global_basis.x.normalized()
+		if points.dot(Vector3.FORWARD) > 0.99 and GATE_LANE.encloses(area):
+			north = true
+		elif points.dot(Vector3.RIGHT) > 0.99 and DRIVE.encloses(area):
+			east = area
+		elif points.dot(Vector3.LEFT) > 0.99 and DRIVE.encloses(area):
+			west = area
+	var kept_right := east.has_area() and west.has_area() and west.end.y <= east.position.y
+	_check(north and kept_right, ("The arrows lead in north from the gate, then east, and out "
+		+ "west to the gate, each on its own right-hand side (north %s, east %s, west %s)")
+		% [north, east.has_area(), west.has_area()])
+
+
+func _yard_spots() -> Array[Vector2]:
+	var spots: Array[Vector2] = []
+	for z in range(41, 55):
+		for x in range(-88, -53):
+			spots.append(Vector2(x + 0.5, z + 0.5))
+	for z in range(31, 55):
+		for x in range(-52, -27):
+			spots.append(Vector2(x + 0.5, z + 0.5))
+	return spots
 
 
 func _in_booth(booth: Node3D, size: Vector3, path: String) -> Node3D:

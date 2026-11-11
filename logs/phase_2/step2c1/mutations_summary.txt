@@ -1,0 +1,19 @@
+mutation_side_unpaved: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: D1: the yard is paved everywhere inside the fence: 600 of 1090 points between the fence and the shed unpaved
+mutation_old_east_fence: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: D2: the fence closes the yard: 1 loose ends (gaps over 0.1 m), 1 fence runs inside the yard
+mutation_flat_one_column_short: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: D3: the side yard is level (0.34 m at worst) and no tree may stand inside the fence (0 open spots)
+mutation_trees_in_yard: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: D3: the side yard is level (0.00 m at worst) and no tree may stand inside the fence (486 open spots)
+mutation_rail_hollow: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: D6: a solid rail runs between the walkway and the lane, along the walkway
+mutation_no_out_arrow: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: The arrows lead in north from the gate, then east, and out west to the gate, each on its own right-hand side (north true, east true, west false)
+mutation_sign_post_hollow: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: Every yard sign stands on a solid post (0 of 3)
+mutation_sign_in_drive: exit 1; MISSION TWO RESULT: 38/39 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: No sign stands in the drive from the gate to the side yard (1 do)
+mutation_no_yard_lamps: exit 1; LAMP RAIN STATE RESULT: 12/13 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the floodlight, the door lamp, the transfer shed's gate lamp and its yard's 2 pol
+clone restored byte for byte after each

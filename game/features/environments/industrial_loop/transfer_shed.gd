@@ -13,6 +13,7 @@ const ChainLink = preload("chain_link.gdshader")
 const ThinWire = preload("thin_wire.gdshader")
 const Retroreflector = preload("retroreflector.gdshader")
 const Guard = preload("res://features/characters/guard/guard.glb")
+const Yard = preload("transfer_yard.gd")
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -54,7 +55,9 @@ const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z
 	LANE_WIDTH + CORNER_RADIUS * 2.0 + 2.0, 20.0)
 
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
-var clearings: Array[Rect2] = [APRON_PLOT, SPUR_PLOT]
+var clearings: Array[Rect2] = [APRON_PLOT, SPUR_PLOT, Yard.CLEARING]
+var yard_lamps: Array[Vector3] = Yard.LAMPS
+var yard_lamp_headings: Array[float] = Yard.LAMP_HEADINGS
 var vehicle: Node3D
 var driver_eye: Node3D
 
@@ -79,7 +82,7 @@ static func road_opening() -> Vector3:
 
 
 static func flat_plots() -> Array[Rect2]:
-	return [APRON_PLOT, SPUR_PLOT]
+	return [APRON_PLOT, SPUR_PLOT, Yard.FLAT]
 
 
 static func _galvanized_steel() -> StandardMaterial3D:
@@ -95,8 +98,12 @@ static func _wire_material() -> ShaderMaterial:
 
 
 func build(road: RefCounted, building_width: float, surface: Material, concrete: Material,
-		metal: Material, wall: Material) -> void:
+		metal: Material, wall: Material, terrain: Node3D) -> void:
 	_spur(road, surface)
+	var yard := Yard.new()
+	yard.name = "Yard"
+	add_child(yard)
+	yard.build(DOCK_FRONT_Z, surface, terrain)
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"
@@ -105,10 +112,22 @@ func build(road: RefCounted, building_width: float, surface: Material, concrete:
 	var east := LANE_X + building_width / 2.0
 	var cabinet_west := LANE_X - LANE_WIDTH / 2.0 - 0.3 - 0.16
 	var rest_x := LANE_X - LANE_WIDTH / 2.0 - 0.3 + ARM_LENGTH + 0.3
+	var far := Yard.SIDE.end.x
+	var back := Yard.SIDE.position.y
 	_fence(Vector3(west, 0.0, BUILDING_FRONT_Z), Vector3(west, 0.0, GATE_Z), Vector3.LEFT)
-	_fence(Vector3(east, 0.0, BUILDING_FRONT_Z), Vector3(east, 0.0, GATE_Z), Vector3.RIGHT)
 	_fence(Vector3(west, 0.0, GATE_Z), Vector3(cabinet_west, 0.0, GATE_Z), Vector3.BACK)
-	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(east, 0.0, GATE_Z), Vector3.BACK)
+	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(far, 0.0, GATE_Z), Vector3.BACK)
+	_fence(Vector3(far, 0.0, GATE_Z), Vector3(far, 0.0, back), Vector3.RIGHT)
+	_fence(Vector3(far, yard.wall_top, back), Vector3(east, yard.wall_top, back),
+		Vector3.FORWARD)
+	for at in Yard.LAMPS:
+		var footing := CylinderShape3D.new()
+		footing.radius = 0.25
+		footing.height = 3.0
+		var collision := CollisionShape3D.new()
+		collision.shape = footing
+		collision.position = at + Vector3.UP * 1.5
+		_fence_body.add_child(collision)
 	_island(concrete)
 	_booth(concrete, metal, wall)
 	_barrier(metal, rest_x)
@@ -262,7 +281,7 @@ func _spur(road: RefCounted, surface: Material) -> void:
 		for step in range(columns + 1):
 			var x := float(group[0]) + step * COLUMN_STEP
 			var edge := _road_edge_z(road, x)
-			var north := DOCK_FRONT_Z
+			var north := GATE_Z
 			if float(group[2]) != 0.0:
 				var out := absf(x - LANE_X) - half
 				var inner := CORNER_RADIUS - out

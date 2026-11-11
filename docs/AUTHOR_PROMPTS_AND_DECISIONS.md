@@ -3116,6 +3116,25 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **The author's message:** "ok"
      - **Decision:** step 2c's brief committed on `develop` alone, before any code, as step 2a's
        was; then step 2c-1, the yard, tests first.
+     - **Done:** step 2c-1 built, tests first (Mission 2 31/36 → 39/39, the lamp rain 12/13 →
+       13/13, nine mutations exit 1); every suite passes but `test_collision.gd` 43/44: the yard
+       changes the struck man's fall in Mission 1 (2.0 m out, not 2.4 m), and the lean check's
+       gain reads 0.98 m against its 1.0 m (the brief's risk 1, reported before any change;
+       `logs/phase_2/step2c1/fall_sensitivity/`). Asked.
+
+213. **The lean check's bar**
+     - **The author's answer:** "Bar at 0.9 m (Recommended)", over "Measure at the road" and
+       "Lean 45 cm, not 42".
+     - **Decision:** the lean check keeps measuring at his hips and asks for at least 0.9 m
+       gained by leaning, 8 cm below today's fall; Mission 1 is unchanged. Claude Code had set
+       the 1.0 m bar (#206) at the exact value it measured, which left no margin.
+     - **Done:** the bar in `test_collision.gd`: 44/44; Ethan leaning 30 cm instead of 42,
+       exit 1. Decision C57 recorded. Every suite passes. Asked: the commit.
+
+214. **Step 2c-1 committed**
+     - **The author's answer:** "Commit it (Recommended)", over "Strip first" and "Not yet".
+     - **Decision:** step 2c-1 committed on `develop`, not pushed; the yard's frame strip is
+       the next step, a game window, with its own OK.
 
 ## Waiting for the author
 
