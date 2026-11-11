@@ -1,7 +1,16 @@
 # SOURCES
 
-Assignment 6 comes first. Assignment 5's record follows with its text unchanged; its graded copy
-is at tag `a5`.
+Mission 2's work (the final project's Phase 2) comes first, then Assignment 6, whose graded copy
+is at tag `a6`. Assignment 5's record follows with its text unchanged; its graded copy is at tag
+`a5`.
+
+# Phase 2 — Mission 2, The Wrong Cargo (2026-11-08 onward)
+
+## Models
+
+| Asset | Source | Authors (roles) | Licence | Date | Used in |
+| --- | --- | --- | --- | --- | --- |
+| `guard.glb` in `game/features/characters/guard/`, with six extracted WebP textures | Microsoft Rocketbox avatar library, https://github.com/microsoft/Microsoft-Rocketbox: the avatar `Security_Male_01` and the animation `m_sit_chair_breathe_01` (`source_assets/rocketbox/README.md`) | Microsoft (Rocketbox Studios; Microsoft Research). Converted by Claude Code with `tools/art/convert_rocketbox.py` (Blender 5.2.2) on 2026-11-11: the clip baked onto him bone by bone, his shoes at the origin, one roughness per part, the specular maps dropped, textures halved to 1024 pixels as WebP (`game/features/characters/ATTRIBUTION.md`) | MIT, copyright (c) 2020 Microsoft; the notice is in the in-game credits (C55) | 2026-11-11 | the gate guard at the transfer shed, a stand-in (D6) |
 
 # Assignment 6 — particle effects (2026-11-07)
 

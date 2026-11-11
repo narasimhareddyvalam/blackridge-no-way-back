@@ -33,3 +33,32 @@ author's request:
   gives only his standing pose; the hit itself is physics.
 
 The source downloads are described in `source_assets/mixamo/README.md`.
+
+## The gate guard
+
+`guard/guard.glb`, with the textures Godot extracts next to it, is made from the Microsoft
+Rocketbox avatar library (decision C55):
+
+- **Source:** https://github.com/microsoft/Microsoft-Rocketbox: the avatar
+  `Assets/Avatars/Professions/Security_Male_01` and the animation
+  `Assets/Animations/all_animations_max_motextr_static/m_sit_chair_breathe_01.max.fbx`,
+  downloaded on 2026-11-11 (`source_assets/rocketbox/README.md`).
+- **Licence:** MIT, copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`). Free for
+  any use, including a game that is sold, if the copyright and licence notice go with it; the
+  in-game credits carry them.
+
+### Changes
+
+Claude Code converted the downloads with `tools/art/convert_rocketbox.py` on 2026-11-11, at the
+author's request:
+
+- **The clip:** baked onto him bone by bone, because a Rocketbox clip's rest pose is its own
+  first frame: each bone turns as the clip turns it, on his own bone lengths. It is named
+  `SitIdle-loop`, which Godot loops as `SitIdle`.
+- **Placement:** turned to face the model's front and moved so that his shoes stand at its
+  origin, under his hips.
+- **Materials:** one roughness per part (head 0.56, uniform 0.72, kit 0.5); Rocketbox's specular
+  maps are dropped and nothing is metallic.
+- **Textures:** halved from 2048 to 1024 pixels and stored as WebP.
+- **In the game:** he sits at the gate booth's counter, and a `LookAtModifier3D` turns his head
+  (`transfer_shed.gd`).

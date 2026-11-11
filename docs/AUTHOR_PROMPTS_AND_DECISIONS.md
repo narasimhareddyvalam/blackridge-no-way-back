@@ -2912,6 +2912,197 @@ tag `a5`. Pictures the author approved or rejected are filed in
        reading: as predicted, except the booth's windows (a flat beige box) and the fence (barely
        visible). The author's verdict asked.
 
+189. **A question**
+     - **The author's message:** "what is trigger word in game"
+     - **Answered:** the game has no trigger word. In the GDD, a trigger is the event that moves
+       a mission's objective on or sets off a scripted moment; Mission 2's gate given as the
+       example. The strip's verdict still asked.
+
+190. **The question, narrowed**
+     - **The author's message:** "like collision related"
+     - **Answered:** a collision trigger is a shape that detects overlap without blocking
+       (Godot's `Area3D`). The game has none; the gate and the missions check the van's position
+       in code instead.
+
+191. **Where things stand**
+     - **The author's message:** "where are we at the game dev?? what should we do next?"
+     - **Answered:** status of Mission 2 (2a and 2b done, the strip's verdict open, 2c–2e to
+       come) and Claude Code's recommended order: the strip's verdict, push the five local
+       commits, then 2c.
+
+192. **The gate strip**
+     - **The author's message:** "what about gate strip"
+     - **Answered:** what the strip shows and how to open it; as predicted except the booth and
+       the fence. The booth's windows are opaque glowing panels with nothing behind them
+       (`transfer_shed.gd`), so it reads as a box. Claude Code's own further readings: no guard
+       in sight while the HUD says he is checking the sheet (D6 allows a labelled stand-in), the
+       shed's high windows are the same flat panels, and the dock face turns white in the
+       headlights (both belong to 2c). The author's verdict still asked.
+
+193. **The gate strip's verdict**
+     - **The author's message:** "go with 3"
+     - **Decision:** option 3 of #192: r1 for the booth and the fence, with a stand-in guard at
+       the desk (D6). Claude Code first reran every suite as this run's baseline: all 31 runs exit
+       0 with step 2b's counts, art 0 failures (`logs/phase_2/step2b_r1/baseline/`).
+
+194. **Where the booth stands**
+     - **The author's answer:** "Move the booth (Recommended)", asked because from the stop line
+       the booth's window was about 4.8 m from Ethan's eye, too far to pass a sheet across.
+     - **Decision:** the booth moves back toward the road onto a kerbed island before the barrier,
+       its window beside the driver's at the stop, its wall 1.0 m from the van's side; the stop
+       line, the barrier and the gate tests stay; the fence ends at the barrier.
+     - **Done:** the r1 revision written in `docs/PHASE_BRIEF.md` before any code, with its tests
+       and predictions. Asked: the author's OK to build, and the guard's Mixamo file.
+
+195. **Other places to get the guard**
+     - **The author's message:** "give more tools like mixamo to get the character we want"
+     - **Answered:** Microsoft Rocketbox recommended (MIT, on GitHub): it has `Security_Male_01`
+       and `Security_Female_01`, and 17 men's seated-at-a-table idles on its shared skeleton; it
+       needs the author's OK, as C11 names only CC0 and CC-BY. Also listed: MakeHuman's MPFB2
+       (CC0), Sketchfab (CC-BY, rigged by Mixamo's auto-rigger), Mixamo, Reallusion's AccuRIG and
+       ActorCore; MetaHuman and AI generators possible but not worth it here; Daz 3D, low-poly
+       packs and VRoid not a fit. Offered: a render of the Rocketbox guard beside Ethan, made
+       outside the game.
+
+196. **The links**
+     - **The author's message:** "give me url"
+     - **Answered:** the links to Rocketbox's two security guards, their preview pictures, its
+       seated animations and the library.
+
+197. **The guard's render**
+     - **The author's message:** "go with the male guard, render him"
+     - **Done:** Rocketbox's `Security_Male_01`, its textures and four of its seated idles
+       downloaded from GitHub into a scratch folder outside the repository, and rendered in
+       Blender (Cycles): beside Ethan; from Ethan's seat at the stop in the game's 74° view; and
+       that view zoomed 3×. He sits with `m_sit_chair_breathe_01`, his head turned to Ethan.
+       Found: the "sit_table" idles sit on a table, not at one; and each clip's rest pose is its
+       own first frame, so a clip moves him only when each bone's turn is copied in the
+       armature's space. Nothing in the project changed. Asked: whether he is the guard.
+
+198. **The guard chosen**
+     - **The author's answer:** "Use him, build r1 (Recommended)"
+     - **Decision:** Rocketbox's `Security_Male_01` is the gate guard, a stand-in (D6), with
+       Rocketbox's MIT licence as an exception to C11 (C55); he replaces the r1 revision's Mixamo
+       source, so no Mixamo download is needed.
+     - **Not started:** the build, because the Mac's disk was full (1.2 GB free of 228 GB; one
+       command could not run). Asked: the author to free space first.
+
+199. **A more realistic Ethan, and the full disk**
+     - **The author's message:** "check and see if we can replace ethan with something more
+       realistic.  no do you think we shoul delete images in this repo or something idk? what do
+       you think?"
+     - **Answered:** Ethan can be replaced; his clearest flaw is the blazer and tie on a truck
+       driver (#111). Recommended: a photo-scanned man from Sketchfab under CC-BY (Renderpeople's
+       rigged "Nathan", or Metazeon's raw scan in a leather jacket and jeans), re-rigged on
+       Mixamo's skeleton so his clips still work; shortlisted and rendered beside today's Ethan
+       first. Also listed: another Mixamo character, Rocketbox's delivery driver, MetaHuman (not
+       now). It supersedes C28 and is its own step after the gate. On space: not the repository's
+       images, which are graded evidence that Git keeps anyway; instead files outside Git's
+       history: Assignment 5's raw film recordings (3.4 GB), the A6 ZIP (1.5 GB), `builds/`
+       (875 MB) and Claude Code's scratch (171 MB). Asked which to remove.
+
+200. **The raw film recordings deleted**
+     - **The author's message:** "alright delete all the film recordings for now first. also what
+       do you mean rebuild from the a6 tag?? i dont want to lose any code i mean"
+     - **Done:** deleted `youtube/claude-liam-blackridge-gamedev/capture/raw/` (Assignment 5's
+       film: five raw MJPEG recordings and two test clips, 3.4 GB), none of it in Git; the film's
+       compressed takes beside it are kept. Free space went from 1.2 GB to 4.6 GB.
+     - **Answered:** the `a6` tag is Git's permanent mark on the submitted commit `0216d23`, on
+       this Mac and on GitHub; the Desktop ZIP is only a copy of its files, so deleting it loses
+       no code, and Git can make the ZIP again from the tag. Code only on this Mac: the five
+       commits since `a6` and today's uncommitted records. Asked: whether to push `develop`.
+
+201. **Pushing before Assignment 6 is graded**
+     - **The author's message:** "but a6 hasnt been graded so they might think i skipped doing
+       it in submission when they are grading"
+     - **Answered:** checked on GitHub: its default branch is `main`, which is `a6`, and the tag
+       cannot move; the five later commits touch no Assignment 6 file (only Mission 2's gate,
+       its strip, logs and records). Recommended all the same: nothing pushed until the grade is
+       in, and the five commits backed up meanwhile as one Git bundle file the author keeps off
+       this Mac. Asked: whether to make it, and where.
+
+202. **Ethan from Rocketbox**
+     - **The author's message:** "no i thnk its fine lets leave it for now. lets move on, give me
+       better ethan designs? from where we got security guard character"
+     - **Decision:** no backup bundle for now; nothing pushed.
+     - **Done:** Rocketbox's own previews of its 32 working-age men in everyday or work clothes
+       (21 adults; the delivery man, eight construction workers, the woodsman, the gardener) put
+       on one numbered sheet in a scratch folder and opened. Claude Code's picks for a freight
+       driver of 28 at the end of a night shift in the rain: 22 (flannel shirt, beanie, boots),
+       20 (hoodie and jeans), 4 (dark jacket over a hoodie) and 12 (denim jacket). Told: a
+       Rocketbox man has less detail than today's Ethan, a different skeleton, and replaces C28.
+       Asked: which to render beside today's Ethan.
+
+203. **Ethan stays**
+     - **The author's message:** "lets stick with what we have" (after declining the question of
+       which Rocketbox men to render)
+     - **Decision:** Ethan stays Mixamo's Ch33 (C28 unchanged); nothing rendered or changed.
+       Asked: whether to start the gate's r1 build.
+
+204. **The r1 build**
+     - **The author's message:** "alright start."
+     - **Done:** step 2b r1 built, tests first: the island, its kerb and bollards; the booth beside
+       the driver's window, glazed, with its counter, monitor, logbook and drafting chair;
+       Rocketbox's guard seated, his head turning to Ethan at the stop; E lowering the driver's
+       window; the fence in galvanized steel, with glints along the chain-link and thin barbed
+       wire; the credits. Mission 2 15/28 → 28/28, menus 19/20 → 20/20, art 1 → 0 failures, three
+       mutations exit 1. Every other suite as the baseline except `test_hit_speeds.gd`, 11/12: at
+       60 km/h the struck man's knee or elbow passes its limit for 4 ticks (3 allowed), the same on
+       a rerun. Not changed. Asked: how to handle it.
+
+205. **The struck man's joints**
+     - **The author's answer:** "Fix his joints (Recommended)", over "Allow 4 ticks" and "Leave it
+       failing for now".
+     - **Decision:** a guard in his ragdoll keeps each knee and elbow from passing its limit on
+       any physics tick, tests first; reported instead of kept if it makes him jitter.
+     - **Done:** `LimbGuard` in `pedestrian.gd`; the hit at speed 9/12 before, 12/12 after (each
+       speed peaking at −5° and 145°); the guard removed, exit 1. Every suite again: all as the
+       baseline except `test_collision.gd` 43/44, its lean check at exactly 1.00 m against "more
+       than 1.0 m", because the changed tumble lands him 2.4 m out instead of 2.8 m. Asked.
+
+206. **The lean check**
+     - **The author's answer:** "Accept 1.0 m or more (Recommended)", over "Undo the joint fix" and
+       "Keep both as they are".
+     - **Done:** the lean check asks for at least 1.0 m, rounded to its search's centimetre;
+       `test_collision.gd` 44/44. Decision C56 recorded. Every suite now passes (`suites_limbs/`,
+       with `lean_check/` for the collision test).
+
+207. **The second strip**
+     - **The author's message:** "alright, tell me when its done"
+     - **Done:** the gate's second strip recorded in a window on an isolated copy, the take now
+       looking left at the booth after the stop (`captures/transfer_shed/2b_r1/`). Claude Code's
+       reading: the hand-over as predicted (the lit room, the guard turning to Ethan, then down to
+       the logbook as the window goes down); the guard crowded by the windscreen pillar, his face
+       dark red at this size; the fence's chain-link a bright white speckle like snow, not a faint
+       glinting mesh. The author's verdict asked.
+
+208. **The second strip's verdict**
+     - **The author's answer:** "Fix both (Recommended)", over "Fix only the fence" and "Keep it as
+       it is".
+     - **Done:** r2, tests first: the chain-link blended, its glint 0.12; the guard moved along
+       the counter to 101° left of Ethan's view, in the side window; a cool glow from his monitor
+       lights his face. Mission 2 28/31 before, 31/31 after; the guard at his old seat exit 1;
+       every suite passes. The third strip recorded (`captures/transfer_shed/2b_r2/`): no
+       speckle, a fine mesh beside the lamp; the guard clear of the pillar, his face readable. The
+       author's verdict asked.
+
+209. **The depot around the shed, and reversing onto its dock**
+     - **The author's message:** "i dont like the warehouse surroundings as well. make it more
+       realistic add roads, make it more like a depot. check how they are in real life. and let
+       the user(gamer) reverse their car into depot."
+     - **Taken as:** the gate's third strip kept as it is (no objection to it); the shed's
+       surroundings to be planned again from how real depots are laid out, with roads; and backing
+       the van onto the dock (steps 2c and 2d). Research and a plan first, for the author's OK.
+
+210. **The depot's layout, and a commit**
+     - **The author's answers:** "B: depot with side yard (Recommended)" over "A: compact yard",
+       and "Commit it now (Recommended)", after two layouts drawn over the real ground (from
+       research on truck courts, aprons, wheel guides, one-way yards and pedestrian separation).
+     - **Decision:** the depot's yard grows 26 m east into a side yard cut into the rising ground,
+       with parked trailers, a staff car park apart, an office, a skip and two pole lights; Ethan
+       backs into bay 3, the van bay with its dock lift. Step 2b's r1 and r2 committed on
+       `develop`, not pushed. Next: step 2c's brief for layout B, before any code.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

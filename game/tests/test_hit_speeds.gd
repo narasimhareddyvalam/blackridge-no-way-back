@@ -7,9 +7,9 @@ const WATCH_SECONDS := 8.0
 const ON_BONNET := 1.15
 const ROOF_EDGE := -0.5
 const BUMPER := 2.45
-const WRONG_WAY := -30.0
+const WRONG_WAY := -10.0
 const FOLDED := 155.0
-const LONGEST_OUT := 3
+const LONGEST_OUT := 0
 const KNEE := Vector3(-1.0, 0.0, 0.0)
 const LEFT_ELBOW := Vector3(0.33, 0.0, 0.94)
 const RIGHT_ELBOW := Vector3(0.18, 0.0, -0.98)
@@ -122,7 +122,7 @@ func _watch(kmh: float, pedestrian: Node3D) -> void:
 	for bend in resting:
 		rests_in_range = rests_in_range and bend > WRONG_WAY and bend < FOLDED
 	_check(longest <= LONGEST_OUT and rests_in_range,
-		"At %.0f km/h his knees and elbows never stay bent the wrong way, and he comes to " % kmh
+		"At %.0f km/h his knees and elbows never pass their limits, and he comes to " % kmh
 		+ "rest with them in range (peak %.0f and %.0f degrees, for %d tick" % [wrong_way, folded,
 		longest] + ("s)" if longest != 1 else ")"))
 

@@ -43,6 +43,11 @@ __pycache__/
 # game/features/characters/ are committed instead (decision C27).
 /source_assets/mixamo/*.fbx
 
+# Raw Rocketbox downloads (108 MB with the TGA textures). The README and licence stay tracked.
+/source_assets/rocketbox/*
+!/source_assets/rocketbox/README.md
+!/source_assets/rocketbox/LICENSE.md
+
 # Raw Sketchfab downloads (hundreds of MB). Each folder's README.md stays tracked.
 /source_assets/sketchfab/*/*
 !/source_assets/sketchfab/*/README.md

@@ -360,7 +360,7 @@ func _check_lean(sample: Dictionary) -> void:
 		forward * 100.0, leaning, parts] + "%d from the seat; the hood hides the road nearer " % (
 		seated) + "than %.1f m past the bumper (his hips lie %.1f m out)" % [leaning_reach,
 		-hips.z - BUMPER])
-	_check(leaning_reach < 3.0 and seated_reach > leaning_reach + 1.0,
+	_check(leaning_reach < 3.0 and snappedf(seated_reach - leaning_reach, 0.01) >= 1.0,
 		"Leaning shows the road from %.1f m past the bumper, where a harder hit leaves him "
 		% leaning_reach + "(%.1f m from the seat)" % seated_reach)
 

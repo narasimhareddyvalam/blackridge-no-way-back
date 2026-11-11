@@ -1,12 +1,15 @@
 extends Node
-## Step 2b's gate strip: the real main scene on Mission 2's start save, the van set on the spur
+## Step 2b's gate strips: the real main scene on Mission 2's start save, the van set on the spur
 ## 26 m before the gate, then driven only with the game's own actions (held driving actions and
 ## InputEventAction presses). Real keys and clicks are swallowed. Every event prints its frame.
+## For r1's strip, once stopped the driver looks left at the booth, as a driver handing over a
+## run sheet would, and ahead again when the barrier starts to rise.
 
 const GAME = preload("res://app/first_drive.tscn")
 const SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const APPROACH := 26.0
 const CRUISE := 3.5
+const LOOK_AT_BOOTH := Vector2(-0.12, 1.3)
 
 var app: Node3D
 var van: CharacterBody3D
@@ -14,6 +17,7 @@ var shed: Node3D
 var frame := -1
 var phase := "settle"
 var stopped_at := -1
+var looked_ahead := false
 var _path := ""
 
 
@@ -67,8 +71,15 @@ func _process(_delta: float) -> void:
 				phase = "stopped"
 				_report("stopped, front %.2f m before the arm" % (front.z - gate_z))
 		"stopped":
+			if frame == stopped_at + 8:
+				_look(LOOK_AT_BOOTH)
+				_report("looking left at the booth")
 			if frame == stopped_at + 20:
 				_send("interact")
+			if not looked_ahead and float(shed.call("barrier_angle")) > 0.0:
+				looked_ahead = true
+				_look(Vector2.ZERO)
+				_report("looking ahead again")
 			if bool(shed.call("barrier_open")):
 				phase = "through"
 				_report("barrier up")
@@ -90,6 +101,10 @@ func _cruise(go: bool) -> void:
 		Input.action_release("accelerate")
 
 
+func _look(target: Vector2) -> void:
+	van.get_node("VanPresentation").set("_look_target", target)
+
+
 func _send(action: String) -> void:
 	for pressed: bool in [true, false]:
 		var event := InputEventAction.new()
@@ -100,6 +115,7 @@ func _send(action: String) -> void:
 
 
 func _report(text: String) -> void:
-	print("TAKE frame %d: %s | phase %s, speed %.2f, front z %.2f, barrier %.0f deg, checking %s" % [
-		frame, text, phase, float(van.get("speed")), van.to_global(Vector3(0, 1, -2.52)).z,
-		float(shed.call("barrier_angle")), shed.call("checking")])
+	print(("TAKE frame %d: %s | phase %s, speed %.2f, front z %.2f, barrier %.0f deg, checking %s, "
+		+ "window %.2f") % [frame, text, phase, float(van.get("speed")),
+		van.to_global(Vector3(0, 1, -2.52)).z, float(shed.call("barrier_angle")),
+		shed.call("checking"), float(van.get("left_window"))])

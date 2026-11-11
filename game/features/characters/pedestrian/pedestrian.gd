@@ -31,6 +31,8 @@ const LIMB_DAMP := 25.0
 const STRAIGHT := 2.0
 const LIMIT_SOFTNESS := 0.9
 const LIMIT_BIAS := 0.9
+const GUARD_STRAIGHT := -5.0
+const GUARD_FOLDED := 150.0
 const SETTLE_WINDOW := 0.5
 const SETTLE_DRIFT := 0.05
 const SETTLE_SECONDS := 1.0
@@ -253,7 +255,7 @@ func _build_ragdoll() -> void:
 		var end := _skeleton.get_bone_global_rest(_skeleton.find_bone(PREFIX + spec["end"]))
 		var along := rest.basis.inverse() * (end.origin - rest.origin)
 		var centre := along * 0.5 if spec["shape"] != Shape.BOX else Vector3.ZERO
-		var bone := PhysicalBone3D.new()
+		var bone: PhysicalBone3D = LimbGuard.new() if spec.has("hinge") else PhysicalBone3D.new()
 		bone.name = spec["name"]
 		bone.bone_name = PREFIX + spec["name"]
 		bone.mass = spec["mass"]
@@ -269,6 +271,14 @@ func _build_ragdoll() -> void:
 		_joint(bone, spec, centre)
 		_simulator.add_child(bone)
 		bones[spec["name"]] = bone
+		if bone is LimbGuard:
+			var guard := bone as LimbGuard
+			guard.hinge = (spec["hinge"] as Vector3).normalized()
+			guard.pivot = -centre
+			guard.lowest = GUARD_STRAIGHT
+			guard.highest = GUARD_FOLDED
+			var above := String(_skeleton.get_bone_name(_skeleton.get_bone_parent(index)))
+			guard.upper = bones.get(above.trim_prefix(PREFIX)) as PhysicalBone3D
 
 
 func _shape(spec: Dictionary, length: float) -> Shape3D:
@@ -314,3 +324,35 @@ func _pose_bend(name: String, axis: Vector3) -> float:
 	var u := upper.y.normalized()
 	var v := _skeleton.get_bone_global_pose(index).basis.y.normalized()
 	return rad_to_deg(atan2(u.cross(v).dot((upper * axis).normalized()), u.dot(v)))
+
+
+class LimbGuard extends PhysicalBone3D:
+	## A knee's or an elbow's backstop: the physics engine calls it on every tick, before the scene
+	## reads the bodies. Past its limits it turns the limb back about the joint and takes away the
+	## turning speed that was carrying it further; inside them it does nothing.
+	var upper: PhysicalBone3D
+	var hinge := Vector3.RIGHT
+	var pivot := Vector3.ZERO
+	var lowest := -5.0
+	var highest := 150.0
+
+	func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+		if upper == null:
+			return
+		var above := PhysicsServer3D.body_get_direct_state(upper.get_rid())
+		if above == null:
+			return
+		var axis := (above.transform.basis * hinge).normalized()
+		var u := above.transform.basis.y.normalized()
+		var v := state.transform.basis.y.normalized()
+		var bend := rad_to_deg(atan2(u.cross(v).dot(axis), u.dot(v)))
+		var limit := clampf(bend, lowest, highest)
+		if is_equal_approx(limit, bend):
+			return
+		var turn := Basis(axis, deg_to_rad(limit - bend))
+		var joint := state.transform * pivot
+		state.transform = Transform3D(turn * state.transform.basis,
+			joint + turn * (state.transform.origin - joint))
+		var closing := (state.angular_velocity - above.angular_velocity).dot(axis)
+		if (bend < lowest and closing < 0.0) or (bend > highest and closing > 0.0):
+			state.angular_velocity -= axis * closing

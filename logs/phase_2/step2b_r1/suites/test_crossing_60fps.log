@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The mission is given the crossing
+PASS: A bus shelter stands on the right, 9.9 m before the crossing and 5.4 m off the road's centre
+PASS: It has glass sides, a timetable and a litter bin (3 glass panes)
+PASS: The zebra crossing is painted across the road (3.0 m by 4.5 m)
+PASS: Pedestrian-crossing signs warn both ways: AHEAD 30 m out, and an arrow at the crossing (4 of 4)
+PASS: A BUS STOP flag marks the shelter
+PASS: A footpath leads 31 m from the far side of the crossing toward the town
+PASS: No tree or plant grows in the shelter or on the path (0 inside; 0 path points uncleared)
+PASS: It is a dark stretch: the nearest lamp is 156 m away
+PASS: Stopped in the hairpin above the crossing, nothing starts until the van drives on
+PASS: He waits at the crossing's kerb as the encounter begins
+PASS: Crawling down at 20 km/h, braking as he steps out, the van still skids into him on the crossing at 18 km/h (struck 0.05 m from its centre line)
+CROSSING RESULT: 12/12 passed; 0 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

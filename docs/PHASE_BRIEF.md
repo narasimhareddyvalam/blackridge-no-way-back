@@ -4414,3 +4414,323 @@ Daily's rear spring rate.
   - inside: the dock doors and the 1.3 m concrete docks in the headlights, the ground beside the
     spur unpaved (2c), as predicted.
 - **The author's verdict:** to come, after the author's own look in the game.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the booth beside the driver, glazed and manned)
+
+- **Author:** "go with 3" (#193), the author's verdict on the first strip: option 3 of #192, r1 for
+  the booth and the fence with a stand-in guard at the desk; then "Move the booth (Recommended)"
+  (#194), asked because from the stop line the booth's window was about 4.8 m from Ethan's eye:
+  3.5 m ahead, and 2.6 m out from the van's side, too far to pass a sheet across.
+- **Written before any code.** Values marked † are Claude Code's proposals for the author to
+  check, from common practice at drive-up gatehouses and chain-link fences; no source was searched
+  for this revision.
+- **What the first strip showed, and why** (found in the code):
+  - the booth's windows are opaque panels in a glowing, unshaded material
+    (`transfer_shed.gd:297`), so the booth reads as a flat beige box, with no glass, nothing
+    behind it and nobody inside;
+  - the fence's mesh is drawn on a flat sheet. A round wire catches a lamp somewhere along its
+    length at almost any angle; a flat sheet reflects it only at the mirror angle, so the gate
+    lamp and the headlights hardly ever glint on it, and at a distance only its 11% coverage is
+    left. The barbed strands and the bottom wire are 6 mm boxes, under a pixel beyond about 10 m,
+    so they break up or vanish. The posts and rails share the depot's dark painted metal
+    (`343d43`), where real chain-link is galvanized grey.
+- **The booth moves beside the driver's window** †:
+  - its centre 1.9 m behind the stop line (z 59.4), level with the eye of a driver stopped at the
+    line (`EYE` sits 1.80 m behind the van's front), and its lane-side wall 1.0 m from the side of
+    a van in the middle of the lane (x −73.0);
+  - on a concrete island 0.15 m high, from the barrier cabinet to 1.0 m in front of the booth, its
+    kerb 0.25 m outside the booth's wall and painted safety yellow; three steel bollards, 0.15 m
+    across and 1.07 m high, safety yellow with a reflective band, at the island's nose and at the
+    booth's two lane-side corners, clear of the window. The bollards and the booth stop the van;
+    the kerb alone would not, as the van's box clears 0.15 m;
+  - the lane beside the island narrows from 6.0 m to 4.75 m: a van in the middle of the lane
+    passes 0.75 m from the kerb, its mirror about 0.5 m from the bollards;
+  - the booth stands on the island, so its floor is 0.30 m above the road, its sill 1.20 m and the
+    head of its windows 2.40 m;
+  - the fence along the gate line now runs from the west corner to the barrier cabinet, so the
+    booth stands just outside it on the road side, as many gatehouses do, with no gap where the
+    booth was;
+  - the stop line, STOP, the barrier and its safety loop, and the 3 s check stay as they are.
+- **The booth glazed** †: clear toughened glass in the same frames, see-through and reflecting
+  more at grazing angles, as glass does, in place of the glowing panels; the lane-side window
+  split by a mullion into a sliding window.
+- **The room inside** †, lined in light grey painted panels over a dark vinyl floor:
+  - a desk along the lane-side wall under the window, 0.74 m high, 0.6 m deep and 1.8 m long, with
+    a 24-inch monitor showing four dim camera views, a keyboard, a desk phone and an open logbook;
+  - an office chair facing the window;
+  - a 0.6 × 0.6 m LED panel in the ceiling. The booth's light keeps its colour and now casts
+    shadows, so it leaves the booth only through the glass; its energy is set so that the desk
+    reads as lit.
+- **The guard, a stand-in (D6):** a seated Mixamo man in dark work clothes, in the chair facing
+  the window, breathing in a looping seated idle. His head turns to Ethan's window when the van
+  stops at the line, down to the logbook while he checks the run sheet, and back to the lane once
+  the barrier is up (`LookAtModifier3D`, which 4.7.2 has, on `mixamorig:Head`; 0.6 s, within 70°
+  of his body) †. He has no perception, movement or collision and never leaves the booth; the
+  scene, the code and the tests name him a stand-in, which Assignment 9's technique replaces. The
+  sheet's passing is not animated.
+  - **Source:** Mixamo (C27), downloaded by the author with their Adobe account into
+    `source_assets/mixamo/`: one character who looks like neither Ethan (Ch33) nor the pedestrian
+    (Ch01), as C28 asks, with a seated idle, FBX Binary, With Skin, 30 fps.
+    `tools/art/convert_mixamo.py` converts it to `game/features/characters/guard/guard.glb`; the
+    art check gets a budget for it, and `SOURCES.md` credits Adobe Mixamo.
+- **The driver's window** †: E at the stop lowers the driver's window if it is up, because the
+  sheet goes through it, and raises it again once the barrier is up. The window key works as
+  before.
+- **The fence that catches the light** †:
+  - the chain-link shader lights each wire as a round wire, so the gate lamp and the headlights
+    glint along the wires as they do on real galvanized wire; the coverage stays as it is;
+  - the barbed strands and the bottom wire are drawn at least one pixel wide and fade as their
+    true width would (the "phone-wire" method), so they read as fine lines against the lamp;
+  - the posts, rails, barb arms and wires in galvanized grey (light, metallic, slightly rough) in
+    place of the depot's dark metal.
+- **Not in r1:** the shed's high windows, the same glowing panels (`industrial_loop.gd:395`), and
+  the dock face that turns white in the headlights: both are the shed's, in 2c. Rain on the
+  booth's glass. A guard who comes out, takes the sheet or hands it back. The GPU price of the
+  shadowed booth light, the glass and the guard is measured with 2c's, as 2b planned.
+- **Risk:** step 2b found that any new part of the shed changed the struck man's tumble in
+  `test_collision.gd`. r1 adds colliders (the island, the bollards); if that suite fails, it is
+  reported before anything is changed.
+- **Tests first** (`test_mission_two.gd`, by real key presses; run before the build, expected to
+  fail, and after):
+  - the booth's lane-side window is within 0.5 m of the driver's eye along the lane, and within
+    1.2 m of the van's side, when the van has stopped at the line;
+  - its windows are see-through: transparent, neither unshaded nor glowing;
+  - a desk, a chair and a lit monitor stand inside its walls, and its light casts shadows;
+  - the guard is a skinned character inside the booth, seated, facing the lane-side window within
+    20°, playing a looping idle, marked a stand-in, without collision, and in the same place from
+    the start of the gate to its end; within 1 s of the stop his head turns toward the driver's
+    window;
+  - E lowers the driver's window, and it is up again once the barrier is up;
+  - the van driven up the middle of the lane touches neither the kerb nor a bollard;
+  - the fence along the gate line meets the barrier cabinet with no gap over 0.1 m, and the booth
+    stands outside it;
+  - the barbed strands and the bottom wire use the thin-wire material, and both fence shaders
+    compile (no SHADER ERROR);
+  - **mutations,** each to exit 1: the booth in its old place; the glowing panels back; the guard
+    without his stand-in mark.
+- **Predictions for the second strip** (written before the build; the same take on the real game,
+  1280×800 at 30 fps, now looking left at the booth after E, as a driver would, so its kept frames
+  are numbered again):
+  - **on the approach, about 19 m out:** the booth left of the lane on its yellow-kerbed island, a
+    lit room behind glass: the ceiling panel, the monitor's blue-white glow and a seated figure
+    facing the lane; the bollards' bands flaring in the headlights; the fence's posts and top rail
+    as grey lines, its mesh glinting faintly where the gate lamp's light falls, and the barbed
+    strands as fine lines against the lamp's pool;
+  - **about 11 m out:** the guard readable as a man in dark clothes at his desk, a glint of the
+    gate lamp on the glass; the mesh beside the lamp catching its light in diagonal glints;
+  - **stopped:** the booth out of the windshield's view, beside the driver's window; the barrier
+    and the fence on both sides ahead;
+  - **looking left after E:** the window going down; the guard about 2.5 m away through it, lit
+    from above, his head turned to Ethan, then down to the logbook during the check;
+  - **the barrier rising, and through it:** as in the first strip;
+  - **inside the yard:** as in the first strip (the shed's windows and the dock face are 2c's).
+- **Baseline** (this run's start, before any change): every suite rerun, all 31 runs exit 0 with
+  step 2b's counts, no SCRIPT or SHADER ERROR, art 0 failures (`logs/phase_2/step2b_r1/baseline/`).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the guard from Rocketbox, before the build)
+
+- **Author:** "Use him, build r1 (Recommended)" (#198), after the render of Rocketbox's
+  `Security_Male_01` (#197); then "alright start." (#204), once the disk had room.
+- **The guard's source, in place of Mixamo:** Microsoft Rocketbox's `Security_Male_01` (MIT, C55),
+  a US-style security officer, with Rocketbox's seated idle `m_sit_chair_breathe_01` (382 frames).
+  The downloads (his FBX, nine TGA textures and the clip's FBX, 108 MB) go to
+  `source_assets/rocketbox/`, kept out of Git for their size as Mixamo's are; its tracked
+  `README.md` gives each file's address. `tools/art/convert_rocketbox.py` (new, Blender) makes
+  `game/features/characters/guard/guard.glb`:
+  - each clip's rest pose is its own first frame, so the clip is baked onto him bone by bone:
+    each bone turns as the clip turns it in the armature's space, on his own bone lengths (found
+    in the render, #197);
+  - his shoes stand at the model's origin; textures halved to 1024 pixels as WebP; Rocketbox's
+    specular maps dropped for one roughness per part (head 0.56, uniform 0.72, kit 0.5), as was
+    done for Mixamo's characters;
+  - one clip, `SitIdle-loop`.
+- **A counter and a drafting chair, in place of the desk and office chair** †: the clip seats him
+  with his hips 0.76 m above his shoes, a high seat, as gatehouses use so that a seated guard
+  sees out at the windows' height. So the counter's top sits just under the sill, 0.88 m above
+  the booth's floor, and the chair's seat about 0.64 m, on a gas column and a five-star base.
+- **His head** is turned by `LookAtModifier3D` on `Bip01 Head`. He watches his monitor; when the
+  van stops at the line he looks at Ethan's eye (the driving camera, given to the shed by the
+  app); while he checks the run sheet, at the logbook; once the barrier is up, at his monitor
+  again. Each target lies within a natural turn of his head, so the modifier's angle limit stays
+  off (the revision above said within 70°).
+- **Credits:** the in-game credits and `SOURCES.md` name Microsoft Rocketbox and carry its MIT
+  notice; `game/features/characters/ATTRIBUTION.md` describes the conversion.
+- **Tests:** as the revision above, with the guard's checks read from his skeleton: seated (his
+  hips within 0.25 m above the chair's seat), facing the window (his knees within 20° of it), and
+  his head toward Ethan's eye within 1 s of the stop (within 25°).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: built)
+
+- **Author:** "alright start." (#204).
+- **Built** (`transfer_shed.gd` and `chain_link.gdshader`; new: `thin_wire.gdshader`,
+  `tools/art/convert_rocketbox.py`, `game/features/characters/guard/`):
+  - the island (0.15 m of concrete, a safety-yellow kerb and nose) with three yellow bollards
+    banded in retroreflective sheeting, all solid; on it the booth, its centre 1.9 m behind the
+    stop line and its lane-side wall 1.0 m from the side of a van in the middle of the lane; the
+    fence along the gate line now runs to the barrier cabinet;
+  - clear glass in all four windows, the lane-side one split by a sliding window's mullion; grey
+    lining, a dark floor and a ceiling with a 0.6 m LED panel; the booth's light now casts
+    shadows (energy 1.5, range 4 m †);
+  - a counter 0.88 m high with a monitor showing four dim camera views, a keyboard, a phone and an
+    open logbook, and a drafting chair with a 0.64 m seat;
+  - the guard, `GuardStandIn` (marked `stand_in`), playing `SitIdle`; a `LookAtModifier3D` turns
+    his head to a target that moves from his monitor to Ethan's eye at the stop, to the logbook
+    during the check, and back once the barrier is up. The app hands the shed the driving camera
+    (`first_drive.gd`);
+  - E at the stop lowers the driver's window if it is up; it goes back up once the barrier is up;
+  - the fence's posts, rails and arms in galvanized steel (light grey, metallic 0.5, roughness
+    0.5 †); the chain-link lit as round wire, with a glint along each wire (zinc reflectance
+    0.5 †); the barbed strands and the bottom wire drawn as thin wire, at least a pixel wide;
+  - the credits name Microsoft Rocketbox with its MIT notice; `SOURCES.md` and
+    `game/features/characters/ATTRIBUTION.md` record the guard.
+- **Found while building:**
+  - Rocketbox's head bone points forward along its own +Y, and `LookAtModifier3D` turns about Y
+    unless told otherwise, so the head could not turn (46° off Ethan's eye). Its turning axis is
+    now the head's upward axis, chosen from its rest pose (0° off);
+  - the gate test drives the van up to the arm, 2.5 m past the stop line, so the window check
+    measures where Ethan's eye is when the van's front is at the line (0.10 m from the window);
+  - "the window goes back up" passed on the old code, because the window never went down; the
+    check now needs both.
+- **Tests first** (`logs/phase_2/step2b_r1/`): `before/`: Mission 2 15/28, the 13 new checks
+  failing; menus 19/20 (no Rocketbox credit); art 1 failure (no guard). `after/`: Mission 2 28/28,
+  menus 20/20, art 0 failures (the guard: 9,515 triangles, one clip, six 1,024-pixel textures, 80
+  bones, 1.5 MB).
+- **Mutations, each exit 1:** the booth back in its old place (26/28); the glowing panels back
+  (27/28); the guard without his stand-in mark (27/28). The script was restored byte for byte.
+- **Import** with the scratch home, before and after `configure_imports.py`: exit 0, no errors or
+  warnings (`import/`). The converter writes a byte-identical file on a second run.
+- **Every suite** (`suites/SUMMARY.txt`): 30 of 31 runs exit 0 with the baseline's counts, with
+  Mission 2 now 28/28; art 0 failures. **One fails: `test_hit_speeds.gd`, 11/12.** At 60 km/h the
+  struck man's knee or elbow passes its limit for 4 physics ticks (peak −106°) where the check
+  allows 3 (the baseline: 2 ticks, peak −42°); a rerun gives the same numbers (`hit_speeds_rerun/`).
+  As step 2b found, any new part of the shed changes his chaotic tumble; nothing at the crossing
+  changed. Reported to the author before anything is changed.
+- **Not done:** the second strip (it opens a game window; the take must look left at the booth
+  after E); the GPU price, with 2c's.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the struck man's limbs, before the change)
+
+- **Author:** "Fix his joints (Recommended)" (#205), after the hit at 60 km/h bent a knee or an
+  elbow past its limit for 4 physics ticks once the gate's new parts were in the world.
+- **Why the hinges give:** each knee and elbow is a `PhysicalBone3D` hinge with angular limits,
+  but under the van's impact the solver lets a limb through its limit for a few ticks (peak −106°
+  at 60 km/h); which tumble does it depends on everything else in the world, as step 2b found.
+- **The change** (`pedestrian.gd`) †: each lower leg and forearm gets a guard, run by the physics
+  engine on every tick before the scene reads the bodies. When the joint's bend has passed −5°
+  (the wrong way) or 150° (folded), it turns the limb back to that limit about the joint itself,
+  so the knee or elbow stays where it is, and takes away the turning speed that was carrying it
+  further. Inside the limits it does nothing, so the hinge and its limits behave as before.
+- **Test first** (`test_hit_speeds.gd`): a knee or an elbow may no longer pass −10° or 155° for a
+  single tick (it allowed 3 ticks past −30°), at 30, 45 and 60 km/h; everything else as before.
+  Expected to fail before the change. **Mutation:** the guard removed, which must exit 1.
+- **Then every suite again,** with `test_collision.gd` watched most, since it also reads his
+  limbs. If the guard makes him jitter or changes where he lies, it is reported, not kept.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the struck man's limbs, changed)
+
+- **Author:** "Fix his joints (Recommended)" (#205), then "Accept 1.0 m or more (Recommended)"
+  (#206).
+- **Changed** (`pedestrian.gd`): each lower leg and forearm is a `LimbGuard`, a `PhysicalBone3D`
+  whose `_integrate_forces` keeps its joint's bend between −5° and 150° †, turning the limb back
+  about the joint and taking away the turning speed past the limit; inside the limits it does
+  nothing.
+- **Test first** (`test_hit_speeds.gd`, no tick past −10° or 155°, where it allowed 3 ticks past
+  −30°): 9/12 before (2, 1 and 4 ticks at 30, 45 and 60 km/h, `limbs_before/`); 12/12 after, each
+  speed peaking at −5° and 145° (`limbs_after/`). **Mutation:** the guard removed, 9/12, exit 1
+  (`mutation_no_limb_guard/`); the script restored byte for byte.
+- **Every suite again** (`suites_limbs/`): 30 of 31 as the baseline, with Mission 2 28/28 and the
+  hit at speed 12/12. `test_collision.gd` 43/44: its own limb checks improved (the worst bends
+  −5° and −5°, where they were −24° and −8°), but the changed tumble lands him 2.4 m ahead of
+  the bumper instead of 2.8 m, and the lean check, which wanted more than 1.0 m of road gained by
+  leaning, measured exactly 1.00 m (2.00 m leaning, 3.00 m seated, to the centimetre). Reported;
+  the author chose to accept 1.0 m or more (#206).
+- **Test change, with its reason:** `test_collision.gd`'s lean check now asks for a gain of at
+  least 1.0 m, rounded to the centimetre its search steps in: the cab, the bonnet and the lean are
+  unchanged, and only his landing spot moved. 44/44 (`lean_check/`).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the second strip)
+
+- **Author:** "alright, tell me when its done" (#207).
+- **How:** as the first strip (an isolated copy of `game/`, Movie Maker at 1280×800 and 30 fps, in
+  a window, run by Claude Code at the author's word), with the take now looking left at the booth
+  8 frames after the stop and ahead again when the barrier starts to rise
+  (`tools/captures/gate_take.gd`). Eleven frames are kept in `captures/transfer_shed/2b_r1/` with
+  `events.txt`, `godot.log` (no SCRIPT or SHADER ERROR) and `strip.png`.
+- **Events:** stopped 0.22 m before the line on 215, as before; looking left on 223; E on 235; the
+  window fully down by the end of the check; looking ahead on 326 as the barrier starts; the
+  barrier up on 444; inside the yard on 588, with the window up again.
+- **Claude Code's reading against the predictions (a claim, not a check):**
+  - **the hand-over, as predicted:** through Ethan's window, the lit room with its counter,
+    monitor, phone and logbook, and the guard in his uniform and cap; his head turned to Ethan
+    (232), then down to the logbook while he checks (265, 300), the window going down between
+    them;
+  - **the guard is crowded:** at the view's full turn to the left he sits beside the van's
+    windscreen pillar, partly behind it, and at this size his face reads dark red (232);
+  - **the fence, not as predicted:** its chain-link reads as a dense, bright white speckle, like
+    snow, on both sides of the gate (45, 120, 215, 385, 444), not a faint mesh with glints: every
+    pixel its hashed alpha keeps carries a full wire's glint. The barbed strands are lost in it;
+  - **the booth on the approach:** its yellow kerb catches the headlights and the room shows as a
+    lit grey interior (45, 120), but the guard cannot be made out at 19 or 11 m;
+  - the barrier rising, and inside the yard: as in the first strip.
+- **The author's verdict:** to come.
+
+## Revision 2026-11-11 (Phase 2, step 2b r2: the fence's veil and the guard in the window, before the change)
+
+- **Author:** "Fix both (Recommended)" (#208), the verdict on the second strip: tone the fence's
+  glints down to a faint sheen that glints only near the lamp, keep the barbed wire as fine lines,
+  move the guard clear of the windscreen pillar and light his face properly; then a third strip.
+- **The fence** †: the chain-link is blended at its coverage instead of hashed. A hashed pixel is
+  either wire or nothing, so each one the hash kept carried a whole wire's glint, and the far
+  mesh became bright speckle; a blended pixel carries only the share of wire it holds, as a camera
+  averages a wire thinner than a pixel. Its zinc reflectance, set by `transfer_shed.gd`, drops
+  from 0.5 to 0.12, so it glints only where the lamp's or the headlights' light is strong. The
+  barbed strands and the bottom wire are unchanged.
+- **The guard** †: his seat moves from 0.45 m north of the booth's middle to 0.35 m south of it,
+  so that from Ethan's eye at the stop line his head lies about 97° left of straight ahead, in the
+  middle of the driver's side window, where it was 79°, against the windscreen pillar. The
+  logbook, the chair and the ceiling panel move with him; the monitor sits 0.75 m north of him on
+  the counter, turned to him, with the keyboard before it and the phone beyond.
+- **His face** †: the monitor gets its own glow, a small cool light (0.62, 0.72, 0.85), energy
+  0.35, reaching 1.2 m, without shadows, in front of the screen, so it lights his face from the
+  side as a screen does at night, where the overhead light alone left it under the cap's brim.
+- **The take** looks left by the full 1.3 rad the game's mouse look allows (it used 1.25).
+- **Tests first** (`test_mission_two.gd`):
+  - looking left from the driver's seat with the van's front at the stop line, the guard's head
+    lies between 85° and 120° left of straight ahead (it lay 79°);
+  - a light within 1.2 m of his head, in front of him and casting no shadow, lights his face;
+  - the chain-link is blended, not hashed, and glints at no more than 0.15 of a wire's light;
+  - every other check as before. **Mutation:** the guard back at his old seat, which must exit 1.
+- **Predictions for the third strip** (the same take, looking left by 1.3 rad):
+  - **on the approach (45, 120):** the fence a faint grey veil, brighter beside the gate lamp
+    with a few glints along the wires there, its posts and top rail as grey lines and the barbed
+    strands as fine lines against the lamp's pool; no white speckle;
+  - **looking left (232, 265, 300):** the guard in the middle of the side window, clear of the
+    pillar, his face lit from his left by the monitor's cool glow and readable as a face; then his
+    head down to the logbook as the window goes down;
+  - **the rest:** as in the second strip.
+
+## Revision 2026-11-11 (Phase 2, step 2b r2: built, and the third strip)
+
+- **Built** (`transfer_shed.gd`, `chain_link.gdshader`, `tools/captures/gate_take.gd`): the
+  chain-link blended at its coverage, its zinc reflectance 0.12 (set by the shed); the guard's
+  seat 0.35 m south of the booth's middle, the logbook, chair and ceiling panel with him, the
+  monitor 0.75 m north of him with the keyboard before it and the phone at the counter's north
+  end; the monitor's glow (`MonitorGlow`); the take looking left by 1.3 rad.
+- **Tests first** (`logs/phase_2/step2b_r2/`): `before/` 28/31, the three new checks failing (the
+  guard's head 82° left of straight ahead); `after/` 31/31 (101°). **Mutation:** the guard back at
+  his old seat, 29/31, exit 1 (82° again; the monitor, which follows him, also leaves the booth);
+  the script restored byte for byte.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0 with the baseline's counts, Mission 2
+  31/31, the hit at speed 12/12 and the collision 44/44; art 0 failures; no SCRIPT or SHADER ERROR.
+- **The third strip** (`captures/transfer_shed/2b_r2/`, the same take; the same events on the
+  same frames as the second). **Claude Code's reading against the predictions (a claim, not a
+  check):**
+  - **the fence, as predicted:** no white speckle anywhere; beside the gate lamp the chain-link is
+    a fine diamond mesh catching its warm light, with a post beside it (385, 444); far off it is a
+    veil faint enough to vanish at 19 m (45), as real chain-link does at night. The barbed strands
+    cannot be told apart at this size;
+  - **the guard, as predicted:** in the middle of the side window, clear of the pillar, his face
+    lit and readable under the cap, turned to Ethan (232), then down to the logbook as the window
+    goes down (265, 300); warm-toned, as under the booth's light;
+  - the rest as in the second strip.
+- **The author's verdict:** to come.

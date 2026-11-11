@@ -1,15 +1,18 @@
 extends Node3D
-## The transfer shed's way in (docs/PHASE_BRIEF.md, Phase 2 step 2b): the spur north from the
-## valley road, the security fence round the shed's yard, the guard booth and the boom barrier.
-## The guard is a stand-in (decision D6): a timed check of the run sheet, labelled so, until
-## Assignment 9's technique replaces it. The barrier, like a real one on its safety loop, never
-## comes down while a vehicle is under its arm.
+## The transfer shed's way in (docs/PHASE_BRIEF.md, Phase 2 step 2b and its r1): the spur north
+## from the valley road, the security fence round the shed's yard, the guard booth on a kerbed
+## island beside the driver's window at the stop line, and the boom barrier. The guard is a
+## stand-in (decision D6): Rocketbox's seated security officer (C55) and a timed check of the run
+## sheet, labelled so, until Assignment 9's technique replaces it. The barrier, like a real one on
+## its safety loop, never comes down while a vehicle is under its arm.
 
 signal run_sheet_checked
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const ChainLink = preload("chain_link.gdshader")
+const ThinWire = preload("thin_wire.gdshader")
 const Retroreflector = preload("retroreflector.gdshader")
+const Guard = preload("res://features/characters/guard/guard.glb")
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -27,7 +30,23 @@ const ARM_PIVOT_HEIGHT := 0.9
 const RAISE_SECONDS := 4.0
 const CHECK_SECONDS := 3.0
 const BOOTH := Vector3(2.5, 2.7, 2.0)
-const BOOTH_GAP := 0.6
+const BOOTH_FACE_X := LANE_X - 2.0
+const BOOTH_Z := GATE_Z + STOP_LINE_OUT + 1.9
+const BOOTH_LIGHT := Color(1.0, 0.86, 0.68)
+const PLINTH := 0.15
+const SILL := 1.05
+const HEAD := 2.25
+const COUNTER_HEIGHT := 0.88
+const SEAT_HEIGHT := 0.64
+const GUARD_SEAT := Vector3(0.3, 0.0, 0.35)
+const WIRE_GLINT := 0.12
+const SCREEN_GLOW := Color(0.62, 0.72, 0.85)
+const ISLAND_HEIGHT := 0.15
+const KERB_OUT := 0.25
+const ISLAND_NOSE := 1.0
+const BOLLARD_RADIUS := 0.075
+const BOLLARD_HEIGHT := 1.07
+const STOPPED_SPEED := 0.5
 const CLEAR_BEHIND := 1.0
 const SWEEP_HALF_DEPTH := 0.3
 const APRON_PLOT := Rect2(LANE_X - 23.0, BUILDING_FRONT_Z, 46.0, GATE_Z + 2.0 - BUILDING_FRONT_Z)
@@ -37,15 +56,22 @@ const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
 var clearings: Array[Rect2] = [APRON_PLOT, SPUR_PLOT]
 var vehicle: Node3D
+var driver_eye: Node3D
 
 var _angle: float = 0.0
 var _target: float = 0.0
 var _check_left: float = -1.0
+var _lowered_window := false
 var _arm: AnimatableBody3D
 var _vehicle_front := Vector3.ZERO
 var _vehicle_rear := Vector3.ZERO
 var _fence_body: StaticBody3D
+var _look_target: Marker3D
+var _screen: Node3D
+var _logbook: Node3D
 var _paint := Build.material(Color("d8d5cb"), 0.55)
+var _galvanized := _galvanized_steel()
+var _thin_wire := _wire_material()
 
 
 static func road_opening() -> Vector3:
@@ -54,6 +80,18 @@ static func road_opening() -> Vector3:
 
 static func flat_plots() -> Array[Rect2]:
 	return [APRON_PLOT, SPUR_PLOT]
+
+
+static func _galvanized_steel() -> StandardMaterial3D:
+	var steel := Build.material(Color(0.6, 0.62, 0.62), 0.5)
+	steel.metallic = 0.5
+	return steel
+
+
+static func _wire_material() -> ShaderMaterial:
+	var wire := ShaderMaterial.new()
+	wire.shader = ThinWire
+	return wire
 
 
 func build(road: RefCounted, building_width: float, surface: Material, concrete: Material,
@@ -65,12 +103,13 @@ func build(road: RefCounted, building_width: float, surface: Material, concrete:
 	add_child(_fence_body)
 	var west := LANE_X - building_width / 2.0
 	var east := LANE_X + building_width / 2.0
-	var booth_west := LANE_X - LANE_WIDTH / 2.0 - BOOTH_GAP - BOOTH.x
+	var cabinet_west := LANE_X - LANE_WIDTH / 2.0 - 0.3 - 0.16
 	var rest_x := LANE_X - LANE_WIDTH / 2.0 - 0.3 + ARM_LENGTH + 0.3
-	_fence(Vector3(west, 0.0, BUILDING_FRONT_Z), Vector3(west, 0.0, GATE_Z), Vector3.LEFT, metal)
-	_fence(Vector3(east, 0.0, BUILDING_FRONT_Z), Vector3(east, 0.0, GATE_Z), Vector3.RIGHT, metal)
-	_fence(Vector3(west, 0.0, GATE_Z), Vector3(booth_west, 0.0, GATE_Z), Vector3.BACK, metal)
-	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(east, 0.0, GATE_Z), Vector3.BACK, metal)
+	_fence(Vector3(west, 0.0, BUILDING_FRONT_Z), Vector3(west, 0.0, GATE_Z), Vector3.LEFT)
+	_fence(Vector3(east, 0.0, BUILDING_FRONT_Z), Vector3(east, 0.0, GATE_Z), Vector3.RIGHT)
+	_fence(Vector3(west, 0.0, GATE_Z), Vector3(cabinet_west, 0.0, GATE_Z), Vector3.BACK)
+	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(east, 0.0, GATE_Z), Vector3.BACK)
+	_island(concrete)
 	_booth(concrete, metal, wall)
 	_barrier(metal, rest_x)
 
@@ -128,6 +167,9 @@ func hand_run_sheet() -> bool:
 	if checking() or _target > 0.0:
 		return false
 	_check_left = CHECK_SECONDS
+	if is_instance_valid(vehicle) and float(vehicle.get("left_window_target")) < 0.5:
+		vehicle.set("left_window_target", 1.0)
+		_lowered_window = true
 	return true
 
 
@@ -135,6 +177,7 @@ func reset() -> void:
 	_check_left = -1.0
 	_target = 0.0
 	_angle = 0.0
+	_lowered_window = false
 	if _arm != null:
 		_arm.rotation.z = 0.0
 
@@ -160,6 +203,21 @@ func _physics_process(delta: float) -> void:
 	_angle = move_toward(_angle, _target, 90.0 / RAISE_SECONDS * delta)
 	if _arm != null:
 		_arm.rotation.z = deg_to_rad(_angle)
+	if _lowered_window and _angle >= 89.0:
+		_lowered_window = false
+		if is_instance_valid(vehicle):
+			vehicle.set("left_window_target", 0.0)
+	if _look_target != null:
+		_look_target.global_position = _gaze()
+
+
+func _gaze() -> Vector3:
+	if checking():
+		return _logbook.global_position
+	if _target == 0.0 and is_instance_valid(driver_eye) and vehicle_at_stop() \
+			and absf(float(vehicle.get("actual_speed"))) < STOPPED_SPEED:
+		return driver_eye.global_position
+	return _screen.global_position
 
 
 func _road_edge_z(road: RefCounted, x: float) -> float:
@@ -241,7 +299,7 @@ func _markings() -> void:
 	word.pixel_size = 0.004
 
 
-func _fence(from: Vector3, to: Vector3, outward: Vector3, metal: Material) -> void:
+func _fence(from: Vector3, to: Vector3, outward: Vector3) -> void:
 	var length := from.distance_to(to)
 	if length < 0.3:
 		return
@@ -249,22 +307,26 @@ func _fence(from: Vector3, to: Vector3, outward: Vector3, metal: Material) -> vo
 	var bays := maxi(ceili(length / POST_SPACING), 1)
 	var link := ShaderMaterial.new()
 	link.shader = ChainLink
+	link.set_shader_parameter("zinc_reflectance", WIRE_GLINT)
 	var lean := (outward + Vector3.UP).normalized()
 	var lean_basis := Basis(along, lean, along.cross(lean))
 	for bay in range(bays + 1):
 		var at := from + along * (length * bay / bays)
 		Build.cylinder(self, at + Vector3.UP * (FENCE_HEIGHT + 0.05) / 2.0, 0.03,
-			FENCE_HEIGHT + 0.05, metal)
+			FENCE_HEIGHT + 0.05, _galvanized)
 		var arm := Build.box(self, at + Vector3.UP * FENCE_HEIGHT + lean * BARB_ARM / 2.0,
-			Vector3(0.03, BARB_ARM, 0.03), metal)
+			Vector3(0.03, BARB_ARM, 0.03), _galvanized)
 		arm.basis = lean_basis
 	var middle := (from + to) / 2.0
 	var basis := Basis(along, Vector3.UP, along.cross(Vector3.UP))
 	var rail := Build.box(self, middle + Vector3.UP * FENCE_HEIGHT, Vector3(length, 0.042, 0.042),
-		metal)
+		_galvanized)
 	rail.basis = basis
-	var bottom := Build.box(self, middle + Vector3.UP * 0.08, Vector3(length, 0.006, 0.006), metal)
+	var bottom := Build.box(self, middle + Vector3.UP * 0.08, Vector3(length, 0.006, 0.006),
+		_thin_wire)
 	bottom.basis = basis
+	bottom.name = "BottomWire"
+	bottom.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var quad := QuadMesh.new()
 	quad.size = Vector2(length, FENCE_HEIGHT - 0.08)
 	var panel := Build.instance(self, middle + Vector3.UP * (FENCE_HEIGHT / 2.0 + 0.02), quad,
@@ -274,8 +336,10 @@ func _fence(from: Vector3, to: Vector3, outward: Vector3, metal: Material) -> vo
 	for strand in range(1, 4):
 		var lift := BARB_ARM * strand / 3.0 * 0.7071
 		var strand_at := middle + Vector3.UP * (FENCE_HEIGHT + lift) + outward * lift
-		var wire := Build.box(self, strand_at, Vector3(length, 0.006, 0.006), metal)
+		var wire := Build.box(self, strand_at, Vector3(length, 0.006, 0.006), _thin_wire)
 		wire.basis = basis
+		wire.name = "BarbStrand"
+		wire.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var shape := BoxShape3D.new()
 	shape.size = Vector3(length, FENCE_HEIGHT + 0.4, 0.12)
 	var collision := CollisionShape3D.new()
@@ -284,50 +348,220 @@ func _fence(from: Vector3, to: Vector3, outward: Vector3, metal: Material) -> vo
 	_fence_body.add_child(collision)
 
 
+func _island(concrete: Material) -> void:
+	var west := BOOTH_FACE_X - BOOTH.x - KERB_OUT
+	var east := BOOTH_FACE_X + KERB_OUT
+	var north := GATE_Z - 0.4
+	var south := BOOTH_Z + BOOTH.z / 2.0 + ISLAND_NOSE
+	var middle := Vector3((west + east) / 2.0, ISLAND_HEIGHT / 2.0, (north + south) / 2.0)
+	Build.box(self, middle, Vector3(east - west, ISLAND_HEIGHT, south - north), concrete, true) \
+		.name = "Island"
+	var safety := Build.material(Color(0.86, 0.66, 0.08), 0.55)
+	Build.box(self, Vector3(east + 0.006, ISLAND_HEIGHT / 2.0, middle.z),
+		Vector3(0.012, ISLAND_HEIGHT, south - north), safety).name = "Kerb"
+	Build.box(self, Vector3(middle.x, ISLAND_HEIGHT / 2.0, south + 0.006),
+		Vector3(east - west, ISLAND_HEIGHT, 0.012), safety).name = "KerbNose"
+	var band := ShaderMaterial.new()
+	band.shader = Retroreflector
+	band.set_shader_parameter("sheeting", Vector3(0.88, 0.88, 0.86))
+	band.set_shader_parameter("stripe_colour", Vector3(0.88, 0.88, 0.86))
+	for at_z: float in [BOOTH_Z - BOOTH.z / 2.0 - 0.12, BOOTH_Z + BOOTH.z / 2.0 + 0.12,
+			south - 0.25]:
+		var at := Vector3(east - 0.1, ISLAND_HEIGHT, at_z)
+		var bollard := Build.cylinder(self, at + Vector3.UP * BOLLARD_HEIGHT / 2.0,
+			BOLLARD_RADIUS, BOLLARD_HEIGHT, safety)
+		bollard.name = "Bollard"
+		bollard.create_trimesh_collision()
+		Build.cylinder(self, at + Vector3.UP * (BOLLARD_HEIGHT - 0.18), BOLLARD_RADIUS + 0.002,
+			0.08, band).name = "ReflectiveBand"
+
+
 func _booth(concrete: Material, metal: Material, wall: Material) -> void:
 	var booth := Node3D.new()
 	booth.name = "GuardBooth"
-	booth.position = Vector3(LANE_X - LANE_WIDTH / 2.0 - BOOTH_GAP - BOOTH.x / 2.0, 0.0, GATE_Z)
+	booth.position = Vector3(BOOTH_FACE_X - BOOTH.x / 2.0, ISLAND_HEIGHT, BOOTH_Z)
 	add_child(booth)
-	var plinth := 0.15
-	Build.box(booth, Vector3(0, plinth / 2.0, 0), Vector3(BOOTH.x + 0.3, plinth, BOOTH.z + 0.3),
+	Build.box(booth, Vector3(0, PLINTH / 2.0, 0), Vector3(BOOTH.x + 0.3, PLINTH, BOOTH.z + 0.3),
 		concrete, true)
-	var sill := 1.05
-	var head := 2.25
-	var lit := Build.luminous(Color(1.0, 0.86, 0.66) * 0.42)
+	var glass := StandardMaterial3D.new()
+	glass.albedo_color = Color(0.82, 0.88, 0.9, 0.12)
+	glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	glass.roughness = 0.04
+	glass.metallic_specular = 0.5
 	var frame := Build.material(Color("c9c7bf"), 0.5)
-	for side: Array in [[Vector3(0, 0, 1), BOOTH.x], [Vector3(0, 0, -1), BOOTH.x],
-			[Vector3(1, 0, 0), BOOTH.z], [Vector3(-1, 0, 0), BOOTH.z]]:
-		var normal: Vector3 = side[0]
-		var width: float = side[1]
+	var lining := Build.material(Color(0.55, 0.56, 0.55), 0.6)
+	var names := {Vector3(0, 0, 1): "GlassSouth", Vector3(0, 0, -1): "GlassNorth",
+		Vector3(1, 0, 0): "ServiceWindow", Vector3(-1, 0, 0): "GlassWest"}
+	for normal: Vector3 in names:
+		var width := BOOTH.x if normal.z != 0.0 else BOOTH.z
 		var across := normal.cross(Vector3.UP)
 		var face := normal * ((BOOTH.z if normal.z != 0.0 else BOOTH.x) / 2.0)
 		var basis := Basis(across, Vector3.UP, normal)
-		var lower := Build.box(booth, face + Vector3.UP * (plinth + (sill - plinth) / 2.0),
-			Vector3(width, sill - plinth, 0.1), wall, true)
+		var lower := Build.box(booth, face + Vector3.UP * (PLINTH + (SILL - PLINTH) / 2.0),
+			Vector3(width, SILL - PLINTH, 0.1), wall, true)
 		lower.basis = basis
-		var upper := Build.box(booth, face + Vector3.UP * (head + (BOOTH.y - head) / 2.0),
-			Vector3(width, BOOTH.y - head, 0.1), wall)
+		var upper := Build.box(booth, face + Vector3.UP * (HEAD + (BOOTH.y - HEAD) / 2.0),
+			Vector3(width, BOOTH.y - HEAD, 0.1), wall)
 		upper.basis = basis
-		var glass := Build.box(booth, face + Vector3.UP * (sill + head) / 2.0,
-			Vector3(width - 0.16, head - sill, 0.02), lit)
-		glass.basis = basis
+		for band: Vector2 in [Vector2(PLINTH, SILL), Vector2(HEAD, BOOTH.y)]:
+			var inside := Build.box(booth, face - normal * 0.055 + Vector3.UP * (band.x + band.y)
+				/ 2.0, Vector3(width - 0.22, band.y - band.x, 0.01), lining)
+			inside.basis = basis
+		var pane := Build.box(booth, face + Vector3.UP * (SILL + HEAD) / 2.0,
+			Vector3(width - 0.16, HEAD - SILL, 0.02), glass)
+		pane.basis = basis
+		pane.name = names[normal]
+		pane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		for end in [-1.0, 1.0]:
 			Build.box(booth, face + across * end * (width / 2.0 - 0.04)
-				+ Vector3.UP * (sill + head) / 2.0, Vector3(0.08, head - sill, 0.12), frame)
+				+ Vector3.UP * (SILL + HEAD) / 2.0, Vector3(0.08, HEAD - SILL, 0.12), frame)
+		if normal.x > 0.0:
+			var mullion := Build.box(booth, face + Vector3.UP * (SILL + HEAD) / 2.0,
+				Vector3(0.05, HEAD - SILL, 0.1), frame)
+			mullion.basis = basis
+			mullion.name = "SlidingWindowMullion"
 	Build.box(booth, Vector3(0, BOOTH.y + 0.08, 0), Vector3(BOOTH.x + 0.5, 0.16, BOOTH.z + 0.5),
 		metal)
-	var light := OmniLight3D.new()
-	light.position = Vector3(0, BOOTH.y - 0.25, 0)
-	light.light_color = Color(1.0, 0.86, 0.68)
-	light.light_energy = 0.7
-	light.omni_range = 4.5
-	light.shadow_enabled = false
-	booth.add_child(light)
+	_room(booth, lining)
 	var sign := Build.text(booth, "STOP  -  REPORT TO GATEHOUSE",
 		Vector3(BOOTH.x / 2.0 + 0.06, BOOTH.y - 0.22, 0), 28, Color("e3d5af"))
 	sign.rotation.y = PI / 2.0
 	sign.shaded = true
+
+
+func _room(booth: Node3D, lining: Material) -> void:
+	var inner := Vector2(BOOTH.x - 0.2, BOOTH.z - 0.2)
+	Build.box(booth, Vector3(0, PLINTH + 0.005, 0), Vector3(inner.x, 0.01, inner.y),
+		Build.material(Color(0.08, 0.08, 0.085), 0.55)).name = "Floor"
+	Build.box(booth, Vector3(0, BOOTH.y - 0.005, 0), Vector3(inner.x, 0.01, inner.y), lining) \
+		.name = "Ceiling"
+	var panel_at := Vector3(0.2, BOOTH.y - 0.016, GUARD_SEAT.z * 0.5)
+	Build.box(booth, panel_at, Vector3(0.6, 0.012, 0.6), Build.luminous(BOOTH_LIGHT * 0.9)) \
+		.name = "LedPanel"
+	var light := OmniLight3D.new()
+	light.name = "BoothLight"
+	light.position = panel_at - Vector3(0, 0.08, 0)
+	light.light_color = BOOTH_LIGHT
+	light.light_energy = 1.5
+	light.omni_range = 4.0
+	light.shadow_enabled = true
+	booth.add_child(light)
+	var laminate := Build.material(Color(0.58, 0.56, 0.52), 0.45)
+	var dark := Build.material(Color(0.03, 0.03, 0.035), 0.4)
+	var depth := 0.55
+	var counter_x := BOOTH.x / 2.0 - 0.1 - depth / 2.0
+	var top := PLINTH + COUNTER_HEIGHT
+	Build.box(booth, Vector3(counter_x, top - 0.015, 0), Vector3(depth, 0.03, 1.6), laminate) \
+		.name = "Counter"
+	for end in [-1.0, 1.0]:
+		Build.box(booth, Vector3(counter_x, PLINTH + (COUNTER_HEIGHT - 0.03) / 2.0, end * 0.785),
+			Vector3(depth, COUNTER_HEIGHT - 0.03, 0.03), laminate).name = "CounterSide"
+	var monitor := Node3D.new()
+	monitor.name = "Monitor"
+	monitor.position = Vector3(counter_x + 0.05, top, GUARD_SEAT.z - 0.75)
+	booth.add_child(monitor)
+	var towards := Vector3(GUARD_SEAT.x - monitor.position.x, 0.0,
+		GUARD_SEAT.z - monitor.position.z)
+	towards = towards.normalized()
+	monitor.basis = Basis(Vector3.UP.cross(towards).normalized(), Vector3.UP, towards)
+	Build.box(monitor, Vector3(0, 0.01, -0.03), Vector3(0.22, 0.02, 0.18), dark)
+	Build.box(monitor, Vector3(0, 0.12, -0.03), Vector3(0.06, 0.22, 0.04), dark)
+	Build.box(monitor, Vector3(0, 0.38, 0), Vector3(0.55, 0.33, 0.04), dark)
+	_screen = Build.box(monitor, Vector3(0, 0.38, 0.021), Vector3(0.52, 0.29, 0.002), _cctv())
+	_screen.name = "Screen"
+	var glow := OmniLight3D.new()
+	glow.name = "MonitorGlow"
+	glow.position = Vector3(0, 0.38, 0.15)
+	glow.light_color = SCREEN_GLOW
+	glow.light_energy = 0.35
+	glow.omni_range = 1.2
+	glow.shadow_enabled = false
+	monitor.add_child(glow)
+	Build.box(booth, Vector3(counter_x - 0.08, top + 0.01, GUARD_SEAT.z - 0.45),
+		Vector3(0.14, 0.02, 0.44), dark) \
+		.name = "Keyboard"
+	Build.box(booth, Vector3(counter_x + 0.05, top + 0.035, -0.72), Vector3(0.2, 0.07, 0.22),
+		dark) \
+		.name = "Phone"
+	_logbook = Build.box(booth, Vector3(counter_x + 0.06, top + 0.008, GUARD_SEAT.z),
+		Vector3(0.3, 0.016, 0.42), Build.material(Color(0.78, 0.76, 0.7), 0.8))
+	_logbook.name = "Logbook"
+	_seat_guard(booth, dark)
+
+
+func _seat_guard(booth: Node3D, dark: Material) -> void:
+	var fabric := Build.material(Color(0.06, 0.06, 0.07), 0.85)
+	var chair := Node3D.new()
+	chair.name = "Chair"
+	chair.position = Vector3(GUARD_SEAT.x - 0.06, PLINTH, GUARD_SEAT.z)
+	booth.add_child(chair)
+	Build.box(chair, Vector3(0, SEAT_HEIGHT - 0.03, 0), Vector3(0.44, 0.06, 0.44), fabric) \
+		.name = "Seat"
+	Build.box(chair, Vector3(-0.24, SEAT_HEIGHT + 0.3, 0), Vector3(0.05, 0.42, 0.4), fabric) \
+		.name = "Back"
+	Build.box(chair, Vector3(-0.2, SEAT_HEIGHT + 0.05, 0), Vector3(0.05, 0.1, 0.05), dark)
+	Build.cylinder(chair, Vector3(0, (SEAT_HEIGHT - 0.06 + 0.06) / 2.0, 0), 0.025,
+		SEAT_HEIGHT - 0.12, dark).name = "Column"
+	for spoke in range(5):
+		var turn := TAU * spoke / 5.0
+		var leg := Build.box(chair, Vector3(cos(turn), 0.0, sin(turn)) * 0.14 + Vector3.UP * 0.05,
+			Vector3(0.28, 0.025, 0.04), dark)
+		leg.rotation.y = -turn
+	var guard := Guard.instantiate() as Node3D
+	guard.name = "GuardStandIn"
+	guard.set_meta("stand_in", true)
+	guard.position = Vector3(GUARD_SEAT.x, PLINTH, GUARD_SEAT.z)
+	guard.rotation.y = PI / 2.0
+	booth.add_child(guard)
+	var player := guard.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
+	player.play("SitIdle")
+	var skeleton := guard.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
+	var head := skeleton.find_bone("Bip01 Head")
+	var rest := (skeleton.global_basis * skeleton.get_bone_global_rest(head).basis) \
+		.orthonormalized()
+	var front := guard.global_basis.z.normalized()
+	var best := 0.0
+	var axis := 0
+	var upward := 0.0
+	var turn_axis := 0
+	for index in range(3):
+		var along := rest[index].dot(front)
+		if absf(along) > best:
+			best = absf(along)
+			axis = index * 2 + (0 if along > 0.0 else 1)
+		if absf(rest[index].dot(Vector3.UP)) > upward:
+			upward = absf(rest[index].dot(Vector3.UP))
+			turn_axis = index
+	_look_target = Marker3D.new()
+	_look_target.name = "GuardLook"
+	add_child(_look_target)
+	_look_target.global_position = _screen.global_position
+	var look := LookAtModifier3D.new()
+	look.name = "GuardHead"
+	look.bone_name = "Bip01 Head"
+	look.forward_axis = axis as SkeletonModifier3D.BoneAxis
+	look.primary_rotation_axis = turn_axis as Vector3.Axis
+	look.duration = 0.6
+	look.transition_type = Tween.TRANS_SINE
+	look.ease_type = Tween.EASE_IN_OUT
+	skeleton.add_child(look)
+	look.target_node = look.get_path_to(_look_target)
+
+
+func _cctv() -> StandardMaterial3D:
+	var image := Image.create(64, 36, false, Image.FORMAT_RGB8)
+	image.fill(Color(0.02, 0.02, 0.025))
+	var tones: Array[Color] = [Color(0.22, 0.26, 0.3), Color(0.16, 0.19, 0.21),
+		Color(0.25, 0.25, 0.27), Color(0.12, 0.15, 0.18)]
+	for pane in range(4):
+		var left := 1 + (pane % 2) * 32
+		var high := 1 + floori(pane / 2.0) * 18
+		for y in range(16):
+			for x in range(30):
+				image.set_pixel(left + x, high + y, tones[pane] * (0.75 + 0.25 * y / 16.0))
+	var screen := Build.luminous(Color(1.4, 1.5, 1.6))
+	screen.albedo_texture = ImageTexture.create_from_image(image)
+	return screen
 
 
 func _barrier(metal: Material, rest_x: float) -> void:

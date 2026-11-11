@@ -1,6 +1,63 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Last run:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
+its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
+to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
+with glinting chain-link and thin barbed wire; the credits carry Rocketbox's MIT notice. Its
+revisions are the last three in `docs/PHASE_BRIEF.md`. **Tests** (`logs/phase_2/step2b_r1/`):
+`test_mission_two.gd` 15/28 before, 28/28 after; `test_menus.gd` 19/20 → 20/20; art 1 → 0
+failures; three mutations exit 1; import clean. Every suite rerun after the build, each as
+`LOG_DIR=logs/phase_2/step2b_r1/suites scripts/run-test.sh <test>.gd <fps> 300` for step 2b's 31
+runs, then the art check: 30 exit 0 with the baseline's counts, but `test_hit_speeds.gd` 11/12 (at
+60 km/h a knee or elbow of the struck man passed its limit for 4 ticks, peak −106°), identical on
+a rerun: the shed's new bodies changed his chaotic tumble. **Then, at the author's word (#205–#206,
+C56):** a `LimbGuard` on each lower leg and forearm (`pedestrian.gd`) keeps every knee and elbow
+between −5° and 150°; `test_hit_speeds.gd` made strict (no tick past −10° or 155°): 9/12 before,
+12/12 after, the guard removed exit 1; `test_collision.gd`'s lean check now asks for at least 1.0 m
+gained by leaning (it measured exactly 1.00 m once the tumble changed). **Every suite passes:** all
+31 runs in `suites_limbs/` exit 0 with the baseline's counts (Mission 2 28/28, the hit at speed
+12/12) except the collision test, which passes 44/44 after the lean change (`lean_check/`);
+nothing else changed between them. **Changed:** `pedestrian.gd`, `test_hit_speeds.gd`,
+`test_collision.gd`, `transfer_shed.gd`,
+`chain_link.gdshader`, new `thin_wire.gdshader`, `first_drive.gd`, `front_menu.gd`, the tests
+`test_mission_two.gd` and `test_menus.gd`, `tools/tests/check_first_drive_art.py`, new
+`tools/art/convert_rocketbox.py` and `game/features/characters/guard/`,
+`source_assets/rocketbox/README.md` and `LICENSE.md`, `.gitignore`, `SOURCES.md`,
+`game/features/characters/ATTRIBUTION.md`, `docs/DESIGN_DECISIONS.md` (C55, C56), the prompt log,
+this note. Nothing committed. **Rely on:** `develop` is 5 commits ahead of `origin/develop`, unpushed
+until A6 is graded (#201); the guard's downloads sit in `source_assets/rocketbox/`, out of Git, and
+its README says how to fetch them again. **Then the second strip** (#207, `captures/transfer_shed/2b_r1/`, the take looking left after
+the stop): the hand-over as predicted; the fence's chain-link a white speckle like snow. **Then
+r2** (#208): the chain-link blended with a 0.12 glint, the guard moved clear of the windscreen
+pillar (101°), his monitor's glow on his face; Mission 2 28/31 → 31/31; every suite passes
+(`logs/phase_2/step2b_r2/suites/`); the third strip (`captures/transfer_shed/2b_r2/`): no
+speckle, the guard readable. **Then** (#209–#210): the third strip kept;
+the author chose layout B for the depot around the shed (the yard 26 m east into a side yard
+with parked trailers, a staff car park apart, an office, a skip and two pole lights; Ethan
+backs into bay 3, the van bay with its dock lift), drawn over the real ground from research on
+truck courts, aprons, wheel guides, one-way yards and pedestrian separation; and this work
+committed on `develop`, not pushed. **Next:** step 2c's brief for layout B, before any code,
+each part approved on its own. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
+glints, the guard through the window; the GPU price of the shadowed booth light.
+
+**Before it:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
+3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
+beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
+last in `docs/PHASE_BRIEF.md`, written before any code, with its tests and the second strip's
+predictions. **Tests:** every suite rerun as the baseline, each as
+`LOG_DIR=logs/phase_2/step2b_r1/baseline scripts/run-test.sh <test>.gd <fps> 300` for the 31 runs
+in step 2b's list, then `python3 tools/tests/check_first_drive_art.py`: all exit 0 with step 2b's
+counts, no SCRIPT or SHADER ERROR, art 0 failures (`logs/phase_2/step2b_r1/baseline/SUMMARY.txt`;
+the engine's exit lines vary between 1 and 2 per log, as before). **Changed:** only
+`docs/PHASE_BRIEF.md`, the prompt log (#192–#194) and this note; nothing in `game/`; nothing
+committed. **Rely on:** `develop` is 5 commits ahead of `origin/develop` (`8ddceca` to `0c87333`),
+unpushed until the author says. **Next:** the author's OK to build r1 and the guard's Mixamo file
+in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
+**Unverified:** every look in the r1 revision; the † values are proposals.
+
+**Before that:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

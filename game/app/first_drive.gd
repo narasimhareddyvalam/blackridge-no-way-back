@@ -111,6 +111,7 @@ func _ready() -> void:
 	add_child(cargo)
 	cargo.objective_changed.connect(_route_objective)
 	cargo.shed = world.transfer_shed
+	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()

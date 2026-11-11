@@ -23,6 +23,19 @@ const BAR := 0.1
 const ITEM_WIDTH := 440.0
 const VOLUME_STEP := 5.0
 const STUDIO := "NRVALAM WORKS"
+const ROCKETBOX_LICENSE := ("Permission is hereby granted, free of charge, to any person "
+	+ "obtaining a copy of this software and associated documentation files (the \"Software\"), "
+	+ "to deal in the Software without restriction, including without limitation the rights to "
+	+ "use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the "
+	+ "Software, and to permit persons to whom the Software is furnished to do so, subject to the "
+	+ "following conditions:\n\nThe above copyright notice and this permission notice shall be "
+	+ "included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS "
+	+ "PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT "
+	+ "LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND "
+	+ "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY "
+	+ "CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, "
+	+ "ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN "
+	+ "THE SOFTWARE.")
 const CONTROLS := [["W / S", "Accelerate / brake"], ["A / D", "Steer"],
 	["W A S D", "Walk, on foot"], ["SHIFT", "Run"], ["Q", "Forward / reverse (stop first)"],
 	["SPACE", "Handbrake"], ["Z / C", "Left / right indicator"], ["X", "Hazard lights"],
@@ -510,6 +523,10 @@ func _credits_text() -> String:
 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
 		+ "characters, with Mixamo animations.")
+	_section(lines, "THE GATE GUARD", "The guard at the transfer shed is Security_Male_01 from "
+		+ "the Microsoft Rocketbox avatar library, with its seated idle. Copyright (c) 2020 "
+		+ "Microsoft, released under the MIT license:")
+	lines.append(_plain_text(ROCKETBOX_LICENSE))
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

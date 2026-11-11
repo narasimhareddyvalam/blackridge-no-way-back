@@ -310,5 +310,30 @@ check(np.allclose(building.min(0), [-3.0, 0.0, -1.8], atol=0.001)
 check(triangles < 30000, f'office/site_office.glb bounded geometry (<30000 triangles)')
 check((OFFICE / 'site_office.glb').stat().st_size < FILE_LIMIT, 'The office file is under 25 MB')
 print(f'GEOMETRY: office/site_office.glb: {triangles} triangles')
+
+GUARD = ROOT / 'game/features/characters/guard'
+check(sorted(path.name for path in GUARD.glob('*.glb')) == ['guard.glb'],
+      "The gate guard exists: Microsoft Rocketbox's Security_Male_01 (C55)")
+guard_triangles = 0
+if (GUARD / 'guard.glb').exists():
+    document, binary = gltf_parts(GUARD / 'guard.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            guard_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    clips = [animation['name'] for animation in document.get('animations', [])]
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(webp_size(binary[start:start + view['byteLength']])))
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(guard_triangles < 12000, 'guard/guard.glb bounded geometry (<12000 triangles)')
+    check(clips == ['SitIdle-loop'], 'guard/guard.glb carries one clip, the seated idle, looping')
+    check(len(sizes) == 6 and max(sizes) <= 1024,
+          'guard/guard.glb holds six WebP textures of at most 1024 pixels (colour and normal '
+          'for head, uniform and kit)')
+    check(joints == 80, 'guard/guard.glb keeps Rocketbox\'s 80-bone skeleton')
+    check((GUARD / 'guard.glb').stat().st_size < FILE_LIMIT, 'The guard file is under 25 MB')
+print(f'GEOMETRY: guard/guard.glb: {guard_triangles} triangles')
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)
