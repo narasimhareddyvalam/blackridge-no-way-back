@@ -5176,3 +5176,150 @@ Most are vendor or consultant pages, not standards; their figures are rules of t
   reach them.
 - **Committed** on `develop` at the author's word (#227), not pushed. **Not done:** 2d and 2e,
   next; part 3 (the parked trucks, trailers and cars), set aside for the polish pass (#227).
+
+## Revision 2026-11-11 (Phase 2, step 2d: backing onto bay 9, written before any code)
+
+- **Status:** at the author's word (#227: "yes commit it and then start on bay 9"), the first
+  step toward a playable Mission 2 (#226). It changes nothing in the game. Values marked † are
+  Claude Code's proposals; U1–U3 below are the author's to decide.
+- **What real docks do (research, 2026-11-11), and what it changes in 2a's plan:**
+
+| Fact | What it means here |
+| --- | --- |
+| A dock's lights: outside green while a vehicle may back in or leave; once it is secured, the outside light turns red (do not pull away) and the inside one green (safe to load) | 2a said the light turns green at the stop: that is the inside light. Bay 9 shows green outside while Ethan backs in, and red once the van is docked and chocked |
+| Pit-mounted dock lifts are set in a pit in the ground or in a pit on top of a raised dock; inside the building, the dock door still closes; they serve vans, pickups and step vans | Bay 9's lift sits in the pit behind its door, where the other docks have levellers, and the van backs onto the dock face's bumpers like a truck |
+| Swing ("barn") doors are opened and hooked back before backing onto a dock; once docked they cannot open, and a driver who forgets has to pull out again | Ethan opens the van's rear doors before he backs in |
+| Chocks go under the rear wheels so a vehicle cannot roll while it is loaded (OSHA 1910.178(k)(1), for powered trucks boarding it) | A chock under a rear wheel once the van is docked |
+
+  Sources: [Rite-Hite: communication at the dock](https://www.ritehite.com/en/AM/Solutions/Solutions-by-Need/Loading-Dock-Safety-and-Security/FullTime-Communication-at-the-Dock),
+  [Manufacturing.net: dock light communication](https://www.manufacturing.net/safety/article/13195786/improve-loading-dock-safety-with-light-communication),
+  [Cisco-Eagle: Advance Lifts' dock lift guide](https://www.cisco-eagle.com/uploads/Advance-Lifts/Dock-Lift-Guide.pdf),
+  [Pentalift: interior pit-mounted lifts](https://www.pentalift.com/tag/product-handling/),
+  [Bond-or-Seals: dock lifts](https://bondorseals.com/more_info/dock_lifts/dock_lifts.htm),
+  [The Trucker: trailer doors](https://www.thetrucker.com/trucking-news/trucking-life/trailer-doors-present-a-danger-many-drivers-dont-think-about),
+  [Trucking Truth forum](https://www.truckingtruth.com/truckers-forum/Topic-17403/Page-3/got-my-first-service-failure-yesterday),
+  [OSHA interpretation, 1996](https://osha.gov/laws-regs/standardinterpretations/1996-02-09).
+- **2a's R3** ("reversing in the bay never exceeds 1.4 m/s") becomes a judgement, not a limit: a
+  real van has no governor, so a stop that arrives faster than 1.4 m/s (walking pace) is a hard
+  hit that does not count as docked.
+
+### The parts and their order (approved together; built and tested one after another)
+
+- **2d-1, bay 9's lift and lights:** a scissor lift in the pit behind bay 9's door, its platform
+  1.83 x 2.44 m (6 x 8 ft) †, resting flush with the dock floor, its edges striped yellow and
+  black, a bridge lip at its outer end, its push-button box on the wall beside the door †; an
+  inside red/green light beside the door †; two steel wheel guides on the apron to centre the
+  van †. The lift moves in 2e.
+- **2d-2, the van's rear doors and its hold:** the two rear doors cut from the Iveco body as
+  their own parts, hinged at the rear corners, opening to about 270° and hooked back against the
+  sides †; the hold behind them (its floor at the model's own height, near the Daily's 0.68 m;
+  lined sides; the bulkhead) †. On foot at the van's rear, E opens or closes them.
+- **2d-3, backing onto bay 9:** by real keys, in reverse, with the mirrors and the reverse
+  camera; the bumpers stop the van physically. At the stop the docking is judged: within 0.3 m of
+  the bumpers and 3° of square, arrived at 1.4 m/s or less, the doors open. Then a chock goes
+  under a rear wheel, and bay 9's lights turn: outside red, inside green. The objective follows
+  each stage.
+
+### Decisions for the author
+
+- **Decided (#228):** U1 a, U2 a, U3 a, each as Claude Code recommended.
+
+- **U1, who chocks the wheel:** a. Ethan, on foot: E at a rear wheel, as drivers do at many
+  docks (Claude Code's recommendation †); b. the dock worker, unseen: the chock appears.
+- **U2, the rear doors:** a. opened before backing in, so the van's model is cut and its hold
+  built (Claude Code's recommendation †); b. left shut until 2e.
+- **U3, a bad docking:** a. a retry: the light stays green, the objective says why (too fast,
+  not square, too far, the doors shut) and asks Ethan to pull forward and try again; nothing is
+  broken (Claude Code's recommendation †); b. a fail: back to the last checkpoint.
+
+### Rules a test can measure (written before the code; `test_mission_two.gd` unless named)
+
+| # | Rule |
+| --- | --- |
+| G1 | Bay 9's lift stands in the pit behind its door, its platform flush with the dock floor within 1 cm and inside the opening's width; nothing solid stands in the doorway above the dock floor |
+| G2 | Bay 9's outside light is green and its inside light red until the van is docked and chocked; then the outside light is red and the inside one green; the other docks' lights stay as part 2 set them |
+| G3 | On foot at the van's rear with the van stopped, E opens both rear doors to at least 250°, and E again closes them; they open neither while the van moves nor from anywhere else |
+| G4 | Driven by real keys from the court, the van backs onto bay 9 and stops against its bumpers: it never passes through them, and its rear ends within 0.3 m of them and within 3° of square |
+| G5 | A stop that misses G4's 0.3 m or 3°, arrives faster than 1.4 m/s, or has the doors shut is not a docking: bay 9 stays green and the objective names why and asks for another try (U3 a) |
+| G6 | Docked, E on foot at a rear wheel puts a chock under it (U1 a); while it is in, the van cannot drive off; then G2's lights turn |
+| G7 | Every existing suite passes; Mission 1's fall is reported if it moves |
+
+### Predictions (before any code)
+
+- In the reverse camera: the lit apron, the two wheel guides, the bumpers growing between the
+  seal's black pads; bay 9's outside light green until the chock goes in, then red, the inside
+  light green; through the open doors the hold lit by bay 9's arm light; the lift flush in the
+  floor behind the door.
+
+### What could go wrong, and the check that catches it
+
+1. The van's box climbs or jitters against the bumpers (the box starts 0.15 m up): G4's test and
+   a strip.
+2. The doors cut from the body leave holes or seams: stills from behind, in the debug light and
+   at night.
+3. The open doors, hooked back, foul the seal's pads or the piers between doors: G4's run and a
+   still.
+4. E's meanings clash (E also enters and leaves the van): G3 and G6 by real keys, on foot.
+5. The new solid bodies (the wheel guides, the doors) flip the struck man's fall again: every
+   suite, reported.
+
+### Not in this step
+
+- The lift's travel and the load (2e), the seal (2e), the inspection (step 3), story words
+  (S1–S4).
+
+## Revision 2026-11-11 (Phase 2, step 2d: backing onto bay 9, built)
+
+- **Built** (new `dock_lift.gd`, `van_bay.gd`, `game/tests/test_bay_nine.gd`,
+  `tools/captures/capture_bay_nine.gd`; `transfer_building.gd`, `transfer_yard.gd`,
+  `transfer_shed.gd`, the van's `freight_van.gd` and `van_presentation.gd`, Mission 2's
+  `the_wrong_cargo.gd`, the app's `first_drive.gd`; `tools/art/convert_iveco.py` and
+  `tools/art/make_depot_textures.py`): bay 9's scissor lift in a pit cut into the dock floor behind
+  its door, its deck flush, striped yellow and black, its bridge lip folded under, its push-button
+  box on the wall; bay 9's inside light, red until the van is docked and chocked; two yellow wheel
+  guides on the apron; a chock on a holder on the dock face. The van's two rear doors are their own
+  parts now and swing round to lie against its sides, the right one first. Mission 2, past the
+  gate, asks Ethan to open the rear doors, then to back onto bay 9; each stop at the bumpers is
+  judged, a miss names what was wrong and asks for another try, and a docking asks for the chock,
+  which Ethan sets in front of the driver's-side rear wheel on foot. Then the bay's lights turn
+  (red outside, green inside), the van cannot drive off, and the objective points at the load
+  (2e). E on foot routes to these actions before getting in; nothing changes in Mission 1.
+- **Where it differs from the brief:**
+  - **G4's centre line:** within 0.1 m, not 0.2 m †. Between the guides the van has only about
+    0.21 m either side, so a 0.2 m rule could hardly be missed; 0.1 m keeps the van's 1.62 m
+    door opening on the lift's 1.83 m platform for 2e;
+  - **the chock** is taken by E at the wheel and appears there; Ethan has no carrying animation;
+  - **a recover (R)** while chocked returns the chock to its holder, as the van leaves the bay;
+  - **the hold's floor** in the model stands 0.46 m up, a real Daily's about 0.68 m: 2e's lift
+    follows the model, as 2a's brief said it would.
+- **Tests first** (`logs/phase_2/step2d/`): `task1_before/` bay 9 0/5 (no lift, the pit filled,
+  no inside light, no guides, no chock) → `task1_after/` 5/5, Mission 2 still 53/53;
+  `task2_before/` 6/8 (no rear doors; behind the van E got Ethan in) → `task2_after/` 8/8;
+  `task3_before/` 9/15 (no judging, no chock) → `task3_after/` 19/19. Flaws in the new test,
+  fixed on the way: a missing door read as closed (−1°); Ethan pressing E at the wheel to get in
+  took the chock out instead, so "cannot drive off" first passed with nobody driving; a crooked
+  run steered to +5° from −5°. The art check's list of the van's parts gained the two rear doors
+  only after the conversion (it should have failed first), with a new check that each turns
+  about its own rear corner; a mutant of that check exits 1.
+- **Mutations** (`mutations/`, `mutations_summary.txt`; on three APFS clones, each with its own
+  home, restored byte for byte after each): the pit filled (G1), the lift sunk 5 cm (G1), the
+  inside light green at rest (G2), the guides gone, the doors opening only 180° (G3), the doors
+  opening from anywhere (G3), the speed, the doors, the short stop, the square and the centre
+  line each ignored (G5), the chock holding nothing (G6), the lights never turning (G2), the
+  chock reached from 5 m (G6): all fourteen exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0 (the 30 before with part 2's counts,
+  and `test_bay_nine.gd` 19/19); the art check first failed on the van's parts list, then passed
+  with the rear doors in it (0 failures); no SCRIPT or SHADER ERROR. The struck man's fall did
+  not move (3.7 s, his hips 2.4 m out): the pit's slab pieces, the guides' stops and the doors left
+  his outcome as part 2 left it.
+- **The stills** (`captures/bay_nine/2d/`, `bay_nine_sheet.png`, from the new
+  `tools/captures/capture_bay_nine.gd`, which sets each state directly). **Claude Code's reading
+  against the predictions (a claim, not a check):** as predicted: the reverse camera shows the lit
+  apron, the yellow wheel guides and the bay with its parking guide lines; the rear doors lie
+  against the sides and the hold shows behind them, lit; docked, the van stands between the
+  guides with bay 9 green; the chock sits in front of the driver's-side rear wheel and the outside
+  light turns red; from inside, the lift's striped deck lies flush in the floor and the van's
+  open hold fills the doorway. Not judged here: how the chock and the lift read at a glance from
+  the driver's seat, which is the author's check in the game.
+- **Committed** on `develop` at the author's word (#229), not pushed. **Not done:** 2e, the load
+  and the seal, next.

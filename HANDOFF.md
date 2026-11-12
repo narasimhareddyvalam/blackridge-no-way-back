@@ -1,6 +1,30 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
+**Last run:** Phase 2, step 2d built (#227–#229), 2026-11-11, on the author's second Claude
+account: backing onto bay 9, the first step toward a playable Mission 2 (#226). Bay 9's dock
+lift in a pit behind its door (new `dock_lift.gd`), its inside light, two wheel guides and a
+chock on the dock face; the van's rear doors cut from the Iveco body (`tools/art/convert_iveco.py`)
+and swung by E on foot; each stop at the bumpers judged (new `van_bay.gd`), a miss named and
+retried on the spot (U3 a), a docking chocked by Ethan on foot (U1 a), then the bay's lights
+turn and the van cannot drive off. Design and results: the last two revisions of
+`docs/PHASE_BRIEF.md` (rules G1–G7; "step 2d: built"); tasks at the end of
+`docs/DEPOT_PLAN.md`. **Tests** (`logs/phase_2/step2d/`): the new `test_bay_nine.gd` 0/5 → 19/19
+over three tasks, each failing first; fourteen mutations exit 1, each on its own check
+(`mutations_summary.txt`). Every suite, each as
+`LOG_DIR=logs/phase_2/step2d/suites scripts/run-test.sh <test>.gd <fps> 450` for the 31 runs
+(the 30 before and `test_bay_nine.gd` at 60), then `python3 tools/tests/check_first_drive_art.py`
+(`suites/SUMMARY.txt`): all 31 exit 0 with the baseline's counts; the art check failed once on
+the van's parts list, then passed with the rear doors in it; no SCRIPT or SHADER ERROR; the
+struck man's fall did not move (3.7 s). Stills: `captures/bay_nine/2d/` (`bay_nine_sheet.png`), from
+the new `tools/captures/capture_bay_nine.gd`. **Changed:** see the revision; committed on `develop`
+at the author's word (#229). **Rely on:** `develop` is 11 commits ahead of `origin/develop`, unpushed until
+A6 is graded; on foot in Mission 2, E at the van's rear or at its rear wheel acts before getting
+in; `test_bay_nine.gd` takes about four minutes (run it with a 450 s timeout).
+**Unverified:** the look of the doors, the lift, the guides and the chock in a window; whether
+players read the retry messages; the hold floor's 0.46 m against a real Daily's 0.68 m. **Next:**
+2e, the load and the seal: its research and brief first, then the author's OK (#229).
+
+**Before it:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
 second Claude account: the docks at work. Seals, 18 solid bumpers, the dock edge, a light over
 each of the ten doors and red/green signals at the nine docks; levellers in docks 1–8; docks 5
 and 9 open, their panels raised into tracks, an arm light inside each; inside, ten high-bay
@@ -38,7 +62,7 @@ drive-in shutter, still dark; the east yard light's rain, off near the gate unde
 eight. **Next:** step 2d, backing onto bay 9, toward a playable Mission 2 (#227); part 3 (the
 parked trucks, trailers and cars) waits for the polish pass.
 
-**Before it:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
+**Before that:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
 Claude account: the bigger depot's platform cut into the hill behind 65 concrete walls (11 m at
 the back), the 50 x 30 m shed (`transfer_building.gd`) in grey box-profile cladding over a 1.3 m
 concrete dock face, the office's two lit storeys, nine of Maxwell autodoors' dock doors and Poly
@@ -70,7 +94,7 @@ at work (seals, levellers, bumpers, a light over each door, red and green lights
 the docks lit and dry, rain in every lamp's light), each step approved. **Unverified:** the GPU
 price (D9); the drive-in shutter, dark until part 2's lights; how the walls read from the hill.
 
-**Before that:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+**Earlier:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
 the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
 concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
 not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
@@ -112,7 +136,7 @@ realistic lights and rain at and inside the docks (#219–#220,
 `source_assets/sketchfab/<model>/` (the .glb out of Git, a README each in Git), at real sizes.
 No brief or code yet.
 
-**Earlier:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+**Earlier still:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
 account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
 its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
 to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
@@ -156,7 +180,7 @@ yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the 
 committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
-**Earlier still:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+**Before those:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
 second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
 3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
 beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
@@ -172,7 +196,7 @@ unpushed until the author says. **Next:** the author's OK to build r1 and the gu
 in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
 **Unverified:** every look in the r1 revision; the † values are proposals.
 
-**Before those:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Long before:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

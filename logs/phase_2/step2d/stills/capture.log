@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+1_reverse_camera_backing_in: the van's own reverse view, its rear 4.36 m from the bumpers
+2_open_doors_and_hold: camera at (-46.4, 1.6, 21.6) looking at (-47.75, 1.2, 25.0), fov 60
+docked: verdict docked
+3_docked_from_the_court: camera at (-44.0, 1.7, 31.0) looking at (-47.75, 1.6, 21.0), fov 50
+4_chock_under_the_wheel: camera at (-45.5, 0.9, 23.0) looking at (-46.9, 0.25, 21.7), fov 50
+5_lights_turned_red_outside: camera at (-43.5, 1.7, 29.0) looking at (-46.2, 2.0, 20.1), fov 40
+6_the_lift_and_the_hold_from_inside: camera at (-46.6, 3.0, 15.5) looking at (-47.75, 1.4, 21.0), fov 60
+7_bay_from_above_debug_light_not_the_game: camera at (-47.75, 11.0, 27.5) looking at (-47.75, 0.0, 22.0), fov 50
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)

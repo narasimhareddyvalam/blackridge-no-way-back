@@ -4,6 +4,8 @@ extends Node3D
 ## numbers, the arrows from the gate, the railed walkway from the gate to the office, the staff car
 ## bays behind their kerb, the trailer bays beside the shed's east wall, the bollards and the
 ## signs. The shed owns the fence and the gate; the world builds the five yard lights at LAMPS.
+## Step 2d adds bay 9's two wheel guides, low steel rails that centre a van backing in, and its
+## wheel chock on a holder on the dock face.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const PLATFORM := Rect2(-92.0, -13.0, 66.0, 68.0)
@@ -35,6 +37,13 @@ const LAMPS: Array[Vector3] = [Vector3(-79.0, 0.0, 53.8), Vector3(-58.0, 0.0, 53
 	Vector3(-36.0, 0.0, 53.8), Vector3(-89.6, 0.0, 30.0), Vector3(-27.4, 0.0, 30.0)]
 const LAMP_HEADINGS: Array[float] = [-PI / 2.0, -PI / 2.0, -PI / 2.0, PI, 0.0]
 const SAFETY := Color(0.86, 0.66, 0.08)
+const GUIDES := Vector2(-47.75, 1.25)
+const GUIDE := Vector3(0.15, 0.2, 3.5)
+const GUIDE_FROM := 20.5
+const GUIDE_FLARE := Vector2(0.3, 1.0)
+const GUIDE_STOP := 0.35
+const CHOCK_HOLDER := Vector3(-45.8, 0.6, 20.0)
+const CHOCK := Vector3(0.22, 0.2, 0.3)
 
 var _white := Build.material(Color("d8d5cb"), 0.45)
 var _yellow := Build.material(SAFETY, 0.45)
@@ -65,6 +74,8 @@ func build(asphalt: Material) -> void:
 	_car_park(slab)
 	for spot in BOLLARDS:
 		_bollard(Vector3(spot.x, SURFACE, spot.y))
+	_wheel_guides()
+	_chock()
 	_sign("5 MPH", Vector3(-66.9, 0.0, 56.2), 0.0, Color("f2f1ea"), Color("141414"), 0.6)
 	_sign("HI-VIS BEYOND THIS POINT", Vector3(-80.0, 0.0, 55.25), 0.0, Color("1f4f9c"),
 		Color("f2f1ea"), 1.7)
@@ -197,6 +208,68 @@ func _car_park(slab: Material) -> void:
 	collision.shape = shape
 	collision.position = middle + Vector3.UP * 0.3
 	stop.add_child(collision)
+
+
+func _wheel_guides() -> void:
+	var stops := StaticBody3D.new()
+	stops.name = "WheelGuideStops"
+	add_child(stops)
+	var end := GUIDE_FROM + GUIDE.z
+	for side: float in [-1.0, 1.0]:
+		var x := GUIDES.x + side * (GUIDES.y + GUIDE.x / 2.0)
+		var straight := Vector3(x, 0.0, GUIDE_FROM + GUIDE.z / 2.0)
+		_guide_piece(stops, straight, GUIDE.z, 0.0, "WheelGuide")
+		var reach := Vector2(side * GUIDE_FLARE.x, GUIDE_FLARE.y)
+		_guide_piece(stops, Vector3(x + reach.x / 2.0, 0.0, end + reach.y / 2.0), reach.length(),
+			atan2(reach.x, reach.y), "WheelGuideFlare")
+
+
+func _guide_piece(stops: StaticBody3D, at: Vector3, length: float, yaw: float,
+		label: String) -> void:
+	var rail := Build.box(self, at + Vector3.UP * (SURFACE + GUIDE.y / 2.0), Vector3(GUIDE.x,
+		GUIDE.y, length), _yellow)
+	rail.rotation.y = yaw
+	rail.name = label
+	var shape := BoxShape3D.new()
+	shape.size = Vector3(GUIDE.x, GUIDE_STOP, length)
+	var collision := CollisionShape3D.new()
+	collision.shape = shape
+	collision.position = at + Vector3.UP * GUIDE_STOP / 2.0
+	collision.rotation.y = yaw
+	stops.add_child(collision)
+
+
+func _chock() -> void:
+	Build.box(self, CHOCK_HOLDER + Vector3(0.0, -0.02, 0.05), Vector3(CHOCK.x + 0.06, 0.04, 0.1),
+		_steel).name = "ChockHolder"
+	var chock := Node3D.new()
+	chock.name = "WheelChock"
+	chock.position = CHOCK_HOLDER + Vector3(0.0, 0.0, CHOCK.z / 2.0 + 0.01)
+	add_child(chock)
+	var rubber := Build.material(Color(0.95, 0.72, 0.08), 0.65)
+	Build.instance(chock, Vector3.ZERO, _wedge(), rubber).name = "Wedge"
+
+
+func _wedge() -> ArrayMesh:
+	var half := CHOCK / 2.0
+	var corners: Array[Vector3] = []
+	for x: float in [-half.x, half.x]:
+		corners.append_array([Vector3(x, 0.0, -half.z), Vector3(x, 0.0, half.z),
+			Vector3(x, CHOCK.y, -half.z)])
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for face: Array in [[0, 2, 1], [3, 4, 5], [0, 1, 4, 3], [0, 3, 5, 2], [1, 2, 5, 4]]:
+		var points: Array[Vector3] = []
+		for index: int in face:
+			points.append(corners[index])
+		var normal := (points[2] - points[0]).cross(points[1] - points[0]).normalized()
+		var fan: Array[int] = [0, 1, 2]
+		if points.size() == 4:
+			fan = [0, 1, 2, 0, 2, 3]
+		for index in fan:
+			tool.set_normal(normal)
+			tool.add_vertex(points[index])
+	return tool.commit()
 
 
 func _bollard(at: Vector3) -> void:

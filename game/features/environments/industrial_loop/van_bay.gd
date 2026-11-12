@@ -1,0 +1,140 @@
+extends Node
+## Bay 9, the transfer shed's van bay (docs/PHASE_BRIEF.md, step 2d, rules G2 and G4–G6): judges
+## each stop at its bumpers by where and how the van ended up, and holds the chock. A stop counts
+## as docked within 0.3 m of the bumpers' face, 3 degrees of square and 0.1 m of the bay's centre
+## line, arrived at walking pace (1.4 m/s or less) with the rear doors open; any other stop there
+## is a miss, named for the first thing wrong, so the driver pulls forward and tries again (the
+## author's U3 a, #228). Docked, Ethan chocks the driver's-side rear wheel (U1 a); then the bay's
+## lights turn, red outside and green inside. It reads the van and moves only the chock.
+
+signal changed
+
+const CENTRE_X := -47.75
+const BUMPERS_Z := 20.13
+const DOCKED_WITHIN := 0.3
+const SQUARE_WITHIN := 3.0
+const CENTRED_WITHIN := 0.1
+const GENTLE := 1.4
+const SETTLE := 0.5
+const STILL := 0.05
+const AT_BAY := 1.0
+const ARRIVING := 0.4
+const LINED_UP := 1.5
+const REAR := Vector3(0.0, 1.0, 3.01)
+const WHEEL_FRONT := Vector3(-0.872, 0.15, 1.48)
+const REACH := 1.0
+
+var verdict := ""
+var chocked := false
+var measured := {"gap": 0.0, "angle": 0.0, "offset": 0.0, "arrived": 0.0}
+var vehicle: CharacterBody3D
+
+var _building: Node3D
+var _chock: Node3D
+var _rest := Transform3D()
+var _arrived := 0.0
+var _still := 0.0
+var _judged := false
+
+
+func setup(building: Node3D, chock: Node3D) -> void:
+	_building = building
+	_chock = chock
+	_rest = chock.transform
+
+
+func reset() -> void:
+	if chocked:
+		unchock()
+	_decide("")
+	_arrived = 0.0
+	_still = 0.0
+	_judged = false
+
+
+func can_chock(at: Vector3) -> bool:
+	return verdict == "docked" and not chocked and _near_wheel(at)
+
+
+func can_unchock(at: Vector3) -> bool:
+	return chocked and _near_wheel(at)
+
+
+func chock_wheel() -> void:
+	chocked = true
+	_chock.global_transform = vehicle.global_transform * Transform3D(Basis.IDENTITY, WHEEL_FRONT)
+	vehicle.set("chocked", true)
+	_building.call("set_bay_nine_docked", true)
+	changed.emit()
+
+
+func unchock() -> void:
+	chocked = false
+	_chock.transform = _rest
+	if is_instance_valid(vehicle):
+		vehicle.set("chocked", false)
+	_building.call("set_bay_nine_docked", false)
+	changed.emit()
+
+
+func _physics_process(delta: float) -> void:
+	if not is_instance_valid(vehicle):
+		return
+	if chocked:
+		if not bool(vehicle.get("chocked")):
+			unchock()
+		return
+	var rear := vehicle.to_global(REAR)
+	var gap := rear.z - BUMPERS_Z
+	var facing := vehicle.global_basis.z.normalized().z < -0.9
+	if not facing or absf(rear.x - CENTRE_X) > LINED_UP or gap > AT_BAY:
+		_arrived = 0.0
+		_still = 0.0
+		_judged = false
+		if verdict == "docked":
+			_decide("")
+		return
+	var speed := absf(float(vehicle.get("actual_speed")))
+	if gap < ARRIVING:
+		_arrived = maxf(_arrived, speed)
+	if speed > STILL:
+		_still = 0.0
+		_judged = false
+		if verdict == "docked":
+			_decide("")
+		return
+	_still += delta
+	if _still >= SETTLE and not _judged:
+		_judged = true
+		_judge(rear, gap)
+
+
+func _judge(rear: Vector3, gap: float) -> void:
+	var square := rad_to_deg(acos(clampf(-vehicle.global_basis.z.normalized().z, -1.0, 1.0)))
+	var offset := absf(rear.x - CENTRE_X)
+	measured = {"gap": maxf(gap, 0.0), "angle": square, "offset": offset, "arrived": _arrived}
+	var result := "docked"
+	if _arrived > GENTLE:
+		result = "fast"
+	elif gap > DOCKED_WITHIN:
+		result = "far"
+	elif square > SQUARE_WITHIN:
+		result = "crooked"
+	elif offset > CENTRED_WITHIN:
+		result = "off_centre"
+	elif not bool(vehicle.get("rear_doors_open")):
+		result = "doors"
+	_decide(result)
+
+
+func _decide(value: String) -> void:
+	if verdict != value:
+		verdict = value
+		changed.emit()
+
+
+func _near_wheel(at: Vector3) -> bool:
+	if not is_instance_valid(vehicle):
+		return false
+	var spot := vehicle.to_global(WHEEL_FRONT)
+	return Vector2(at.x - spot.x, at.z - spot.z).length() < REACH

@@ -210,3 +210,46 @@ x −82..−42 every 8 m, y 8.4; the dock rain volume centred at (−64.0, 4.6, 
 built, where it differs from the numbers above (the bay lights' rows, the dock rain's box, the
 American pallet, a fourth prop job for the carton) and every result are in `docs/PHASE_BRIEF.md`,
 revision "part 2: built".
+
+---
+
+# Step 2d, backing onto bay 9: Implementation Plan
+
+**Goal:** rules G1–G7 in `docs/PHASE_BRIEF.md` (revision "step 2d: backing onto bay 9"), with the
+author's decisions U1 a, U2 a, U3 a (#228): bay 9's lift and lights, the van's rear doors, and a
+docking judged at the bumpers, retried on the spot, then chocked by Ethan on foot.
+
+**Architecture:** the shed's building cuts a pit for the lift (new `dock_lift.gd`), adds bay 9's
+inside light and switches both lights (`set_bay_nine_docked`); the yard adds two wheel guides and
+the chock's resting place. The van owns its rear doors (`rear_doors_open`, cut from the Iveco body
+by `tools/art/convert_iveco.py` as `RearDoorLeft` and `RearDoorRight`, swung by the presentation)
+and `chocked`. The transfer shed judges the stop at bay 9 (`bay_nine_report()`) and places the
+chock; Mission 2's script turns that into objectives and Ethan's on-foot actions; the app routes
+E and the hint to those actions before boarding.
+
+**Numbers †:** the platform 1.83 x 2.44 m, its top flush with the dock floor (1.3 m), in a pit
+1.87 x 2.46 m behind the door down to 0.05 m; the inside light on the right pier at
+(−45.5, 3.0, 19.7), the lift's controls below it; the wheel guides' inner faces 1.25 m either side
+of x −47.75, from z 20.5 to 24.0, 0.2 m tall (their colliders 0.35 m), flared to z 25; the
+docking: the van's rear within 0.3 m of the bumpers' face (z 20.13), within 0.2 m of the bay's
+centre line and 3° of square, arrived at 1.4 m/s or less; the chock in front of the driver's side
+rear wheel. The model's hold floor stands 0.46 m up (a real Daily's about 0.68 m): 2e's lift
+follows the model.
+
+### Task 1: The lift, the lights, the guides and the chock's place (G1, G2 at rest)
+- Tests first (new `game/tests/test_bay_nine.gd`): G1; bay 9 green outside and red inside; two
+  solid wheel guides; the chock at rest by bay 9.
+- Then: the pit, `dock_lift.gd`, the inside light, `set_bay_nine_docked`, the guides, the chock,
+  a hazard-stripe texture from `tools/art/make_depot_textures.py`.
+### Task 2: The van's rear doors (G3)
+- Tests first: G3 by real keys on foot, in Mission 2.
+- Then: the conversion's two rear doors and their pivots; the presentation's swing; the van's
+  `rear_doors_open`; the mission's on-foot action and the app's routing.
+### Task 3: Backing onto bay 9, the retries and the chock (G2, G4–G6)
+- Tests first: G4–G6 and G2's switch, by real keys.
+- Then: `bay_nine_report()`, the objectives and retry messages, the chock and `chocked`.
+### Task 4: Every suite, mutations, the strip's stills, records, and the author's OK to commit.
+
+**Status, 2026-11-11:** tasks 1–4 done, committed at the author's word (#229). The
+centre line's rule became 0.1 m (from 0.2 m); what was built and every result are in
+`docs/PHASE_BRIEF.md`, revision "step 2d: backing onto bay 9, built".

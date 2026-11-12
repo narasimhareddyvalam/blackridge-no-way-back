@@ -24,3 +24,5 @@
   triangles with its textures at 512 pixels by the same script.
 - `cladding_grey_diff_2k.jpg`: made by `tools/art/make_depot_textures.py` from Poly Haven's "Box
   Profile Metal Sheet" by Amal Kumar (CC0), turned grey.
+- `hazard_stripes.png`: drawn by `tools/art/make_depot_textures.py`, yellow and black stripes for
+  bay 9's dock lift; made for this game.

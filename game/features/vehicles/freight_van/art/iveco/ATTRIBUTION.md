@@ -30,6 +30,9 @@ request (decision C31):
   the rear door, which had none.
 - **Split into parts:**
   - both front doors with their windows, on their hinges;
+  - both rear doors (added on 2026-11-11 for step 2d, by the same script), each turning about
+    the body's outer rear corner so it opens to 270 degrees and lies against the side, as a
+    Daily's do on their long hinges; the rear plate goes with the left one;
   - the four wheels, each on its centre;
   - the steering wheel, on its column;
   - the windshield glass, on its own;

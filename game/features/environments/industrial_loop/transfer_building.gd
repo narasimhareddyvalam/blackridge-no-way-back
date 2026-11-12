@@ -4,10 +4,12 @@ extends Node3D
 ## 5 degree gable roof of corrugated iron; along its front the office's two lit storeys, eight
 ## truck docks, the van bay and a drive-in door. Part 2 puts the docks to work: seals, bumpers,
 ## levellers, dock lights and signals; docks 5 and 9 stand open, their doors raised into their
-## tracks with an arm light inside, and the lit floor behind them holds the staged loads.
+## tracks with an arm light inside, and the lit floor behind them holds the staged loads. Step 2d
+## sets bay 9's dock lift in a pit behind its door, with an inside light that the docking turns.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Staging = preload("dock_staging.gd")
+const DockLift = preload("dock_lift.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -52,6 +54,12 @@ const BAY_HEIGHT := 8.4
 const BAY_LIGHT := Color(0.94, 0.97, 1.0)
 const AISLE: Array[float] = [14.0, 10.0]
 const LANE := Color(0.95, 0.75, 0.05)
+const LIFT_PIT := Vector2(1.87, 2.46)
+const PIT_FLOOR := 0.05
+const INSIDE_SIGNAL := Vector2(-45.5, 3.0)
+const LIFT_CONTROLS := Vector2(-45.5, 2.3)
+const RED_LIT := Color(1.0, 0.08, 0.04)
+const GREEN_LIT := Color(0.1, 1.0, 0.35)
 const DEPOT_TEXTURES := "res://features/environments/depot_yard/polyhaven/textures/"
 const LOOP_TEXTURES := "res://features/environments/industrial_loop/polyhaven/textures/"
 const ART := "res://features/environments/industrial_loop/art/depot/"
@@ -62,6 +70,10 @@ var _concrete: ORMMaterial3D
 var _iron: ORMMaterial3D
 var _interior := Build.material(Color("d6d1c4"), 0.85)
 var _glass := StandardMaterial3D.new()
+var _red_on := Build.luminous(RED_LIT, 3.0)
+var _red_off := Build.material(Color(0.22, 0.04, 0.03), 0.4)
+var _green_on := Build.luminous(GREEN_LIT, 3.0)
+var _green_off := Build.material(Color(0.03, 0.18, 0.06), 0.4)
 
 
 func build(metal: Material) -> void:
@@ -82,6 +94,7 @@ func build(metal: Material) -> void:
 	_markers()
 	_doors()
 	_fittings()
+	_lift()
 	_lights()
 	_signals()
 	_arm_lights()
@@ -107,8 +120,19 @@ func _front() -> void:
 	_wall(office_end, BUILDING.end.x, 0.0, DOCK_FLOOR, face, docks, _concrete)
 	_wall(office_end, BUILDING.end.x, DOCK_FLOOR, EAVES, face, docks, _cladding)
 	var slab_end := DRIVE_IN - DRIVE_IN_OPENING.x / 2.0 - 0.1
-	_piece(Vector3((office_end + slab_end) / 2.0, DOCK_FLOOR / 2.0, BUILDING.get_center().y),
-		Vector3(slab_end - office_end, DOCK_FLOOR, BUILDING.size.y - WALL * 2.0), _concrete)
+	var back := BUILDING.position.y + WALL
+	var inside := BUILDING.end.y - WALL
+	var pit := Rect2(VAN_BAY - LIFT_PIT.x / 2.0, inside - LIFT_PIT.y, LIFT_PIT.x, LIFT_PIT.y)
+	_slab(office_end, pit.position.x, back, inside, 0.0)
+	_slab(pit.end.x, slab_end, back, inside, 0.0)
+	_slab(pit.position.x, pit.end.x, back, pit.position.y, 0.0)
+	_slab(pit.position.x, pit.end.x, pit.position.y, inside, DOCK_FLOOR - PIT_FLOOR)
+
+
+func _slab(x0: float, x1: float, z0: float, z1: float, sunk: float) -> void:
+	var top := DOCK_FLOOR - sunk
+	_piece(Vector3((x0 + x1) / 2.0, top / 2.0, (z0 + z1) / 2.0), Vector3(x1 - x0, top, z1 - z0),
+		_concrete)
 
 
 func _back_and_sides() -> void:
@@ -335,22 +359,59 @@ func _lights() -> void:
 
 func _signals() -> void:
 	var body := Build.material(Color(0.08, 0.08, 0.08), 0.6)
-	var centres: Array[float] = DOCKS.duplicate()
-	centres.append(VAN_BAY)
-	for index in range(centres.size()):
-		var open := OPEN_DOCKS.has(index)
-		var housing := Node3D.new()
-		housing.name = "DockSignal%d" % (index + 1)
-		housing.position = Vector3(centres[index] + SIGNAL_OFF, SIGNAL_HEIGHT, BUILDING.end.y + 0.05)
-		add_child(housing)
-		Build.box(housing, Vector3.ZERO, Vector3(0.16, 0.4, 0.1), body).name = "Housing"
-		var red := Build.luminous(Color(1.0, 0.08, 0.04), 3.0) if not open \
-			else Build.material(Color(0.22, 0.04, 0.03), 0.4)
-		var green := Build.luminous(Color(0.1, 1.0, 0.35), 3.0) if open \
-			else Build.material(Color(0.03, 0.18, 0.06), 0.4)
-		Build.box(housing, Vector3(0.0, 0.09, 0.055), Vector3(0.1, 0.1, 0.02), red).name = "Red"
-		Build.box(housing, Vector3(0.0, -0.09, 0.055), Vector3(0.1, 0.1, 0.02), green).name = \
-			"Green"
+	for index in range(DOCKS.size() + 1):
+		var housing := _signal("DockSignal%d" % (index + 1), Vector3(_dock_x(index) + SIGNAL_OFF,
+			SIGNAL_HEIGHT, BUILDING.end.y + 0.05), body)
+		_show(housing, OPEN_DOCKS.has(index))
+	var inside := _signal("DockSignalInside9", Vector3(INSIDE_SIGNAL.x,
+		DOCK_FLOOR + INSIDE_SIGNAL.y, BUILDING.end.y - WALL - 0.05), body)
+	inside.rotation.y = PI
+	_show(inside, false)
+
+
+## Bay 9's lights once the van is docked and chocked, or not: red outside, so the driver does
+## not pull away, and green inside, so loading may start; else green outside and red inside.
+func set_bay_nine_docked(docked: bool) -> void:
+	_show(get_node("DockSignal9") as Node3D, not docked)
+	_show(get_node("DockSignalInside9") as Node3D, docked)
+
+
+func _signal(label: String, at: Vector3, body: Material) -> Node3D:
+	var housing := Node3D.new()
+	housing.name = label
+	housing.position = at
+	add_child(housing)
+	Build.box(housing, Vector3.ZERO, Vector3(0.16, 0.4, 0.1), body).name = "Housing"
+	Build.box(housing, Vector3(0.0, 0.09, 0.055), Vector3(0.1, 0.1, 0.02), _red_off).name = "Red"
+	Build.box(housing, Vector3(0.0, -0.09, 0.055), Vector3(0.1, 0.1, 0.02), _green_off).name = \
+		"Green"
+	return housing
+
+
+func _show(housing: Node3D, green: bool) -> void:
+	(housing.get_node("Red") as MeshInstance3D).material_override = _red_off if green else _red_on
+	(housing.get_node("Green") as MeshInstance3D).material_override = _green_on if green \
+		else _green_off
+
+
+func _lift() -> void:
+	var lift := DockLift.new()
+	lift.name = "DockLift9"
+	lift.position = Vector3(VAN_BAY, DOCK_FLOOR, BUILDING.end.y - WALL - LIFT_PIT.y / 2.0)
+	add_child(lift)
+	lift.build()
+	var casing := Build.material(Color(0.95, 0.75, 0.05), 0.5)
+	var controls := Build.box(self, Vector3(LIFT_CONTROLS.x, DOCK_FLOOR + LIFT_CONTROLS.y,
+		BUILDING.end.y - WALL - 0.04), Vector3(0.16, 0.26, 0.08), casing)
+	controls.name = "DockLiftControls"
+	var button := Build.material(Color(0.06, 0.06, 0.06), 0.5)
+	for height: float in [0.06, -0.01]:
+		Build.box(controls, Vector3(0.0, height, -0.045), Vector3(0.05, 0.05, 0.012), button) \
+			.name = "Button"
+	var stop := Build.cylinder(controls, Vector3(0.0, -0.085, -0.05), 0.025, 0.02,
+		Build.material(Color(0.75, 0.05, 0.03), 0.5))
+	stop.rotation.x = PI / 2.0
+	stop.name = "EmergencyStop"
 
 
 func _box_in(node: Node3D) -> AABB:

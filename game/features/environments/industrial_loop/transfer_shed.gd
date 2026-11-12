@@ -16,6 +16,7 @@ const Guard = preload("res://features/characters/guard/guard.glb")
 const Yard = preload("transfer_yard.gd")
 const Ground = preload("depot_ground.gd")
 const Building = preload("transfer_building.gd")
+const VanBay = preload("van_bay.gd")
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -55,6 +56,7 @@ const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z
 
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
 var dock_rain_at := Vector3(-61.45, 4.6, 21.1)
+var bay_nine: Node
 var clearings: Array[Rect2] = [SPUR_PLOT, Ground.CLEARING]
 var yard_lamps: Array[Vector3] = Yard.LAMPS
 var yard_lamp_headings: Array[float] = Yard.LAMP_HEADINGS
@@ -112,6 +114,10 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	yard.name = "Yard"
 	add_child(yard)
 	yard.build(surface)
+	bay_nine = VanBay.new()
+	bay_nine.name = "BayNine"
+	add_child(bay_nine)
+	bay_nine.call("setup", building, yard.get_node("WheelChock"))
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"
@@ -148,6 +154,8 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 
 func watch(body: Node3D) -> void:
 	vehicle = body
+	if bay_nine != null:
+		bay_nine.set("vehicle", body)
 	_vehicle_front = Vector3.ZERO
 	_vehicle_rear = Vector3.ZERO
 	for child in body.get_children():
@@ -206,6 +214,8 @@ func hand_run_sheet() -> bool:
 
 
 func reset() -> void:
+	if bay_nine != null:
+		bay_nine.call("reset")
 	_check_left = -1.0
 	_target = 0.0
 	_angle = 0.0

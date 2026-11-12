@@ -146,8 +146,8 @@ IVECO_PARTS = {
     'iveco_exterior.glb': {'Body', 'BodyGlass', 'Headlights', 'TailLamps', 'FrontIndicatorLeft',
                            'FrontIndicatorRight', 'RearIndicatorLeft', 'RearIndicatorRight',
                            'Windshield', 'DriverDoor', 'DriverWindow', 'PassengerDoor',
-                           'PassengerWindow', 'WheelFrontLeft', 'WheelFrontRight',
-                           'WheelRearLeft', 'WheelRearRight'},
+                           'PassengerWindow', 'RearDoorLeft', 'RearDoorRight', 'WheelFrontLeft',
+                           'WheelFrontRight', 'WheelRearLeft', 'WheelRearRight'},
     'iveco_cab.glb': {'Cab', 'SteeringWheel'}}
 IVECO_INVERTED = {'iveco_exterior.glb': 49, 'iveco_cab.glb': 17}
 IVECO_TEXTURE = {'iveco_exterior.glb': 2048, 'iveco_cab.glb': 1024}
@@ -239,6 +239,13 @@ door, _, _, _ = places['DriverDoor']
 check(door[0] < 0 and door[2] < 0 and places['PassengerDoor'][0][0] > 0
       and places['Windshield'][2][2] + places['Windshield'][3][2] < 0,
       'Iveco faces -Z with the driver\'s door on the left (-X)')
+left, _, left_low, left_high = places['RearDoorLeft']
+right, _, right_low, right_high = places['RearDoorRight']
+check(left[0] < -0.95 and right[0] > 0.95 and left[2] > 2.3 and right[2] > 2.3
+      and left_low[0] > 0.1 and abs(left_high[0] - 1.0) < 0.05
+      and right_high[0] < -0.1 and abs(right_low[0] + 1.0) < 0.05,
+      'Iveco rear doors turn about the body\'s outer rear corners (step 2d): the left one at -X, '
+      'the right one at +X, each door reaching in from its pivot to the middle')
 hub, turn, _, _ = places['SteeringWheel']
 column = rotated(turn, np.array([0.0, 0.0, 1.0]))
 check(hub[0] < 0 and column[1] > 0.5 and column[2] > 0.5,

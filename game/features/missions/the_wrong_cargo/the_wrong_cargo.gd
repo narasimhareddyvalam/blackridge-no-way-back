@@ -12,6 +12,17 @@ const START := Transform3D(Basis(Vector3.UP, PI), Vector3(-28.0, 0.1, 93.0))
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
 const TITLE_LOOK := Vector3(1.3, 1.3, 0.7)
 const TITLE_FOV := 32.0
+const VAN_REAR := 3.01
+const REAR_REACH := Vector2(0.6, 1.8)
+const REAR_WIDTH := 1.2
+const MISSES := {
+	"fast": "Too fast: you met the dock at %.1f m/s. Pull forward and back in at walking pace.",
+	"far": "%.1f m short of the bumpers. Back in until they stop you.",
+	"crooked": "%.1f° off square. Pull forward, straighten up and back in.",
+	"off_centre": "%.2f m off the bay's centre. Pull forward and line up between the guides.",
+	"doors": "The rear doors are shut and can't open against the dock. Pull forward and open them.",
+}
+const MEASURES := {"fast": "arrived", "far": "gap", "crooked": "angle", "off_centre": "offset"}
 
 var vehicle: CharacterBody3D
 var stage: int = 0
@@ -61,6 +72,49 @@ func interact() -> String:
 	return "You hand the guard the run sheet."
 
 
+## What Ethan, on foot at `at`, can do here with E, or "" when nothing: the van's rear doors
+## from behind it, while it stands still.
+func foot_action(at: Vector3) -> String:
+	if not active or vehicle == null or bool(vehicle.get("occupied")):
+		return ""
+	var bay := _bay()
+	if bay != null and bool(bay.call("can_chock", at)):
+		return "Chock the rear wheel"
+	if bay != null and bool(bay.call("can_unchock", at)):
+		return "Take the chock out"
+	if _behind_the_van(at) and absf(float(vehicle.get("speed"))) < 0.1:
+		return "Close the rear doors" if bool(vehicle.get("rear_doors_open")) \
+			else "Open the rear doors"
+	return ""
+
+
+func do_foot_action(at: Vector3) -> String:
+	match foot_action(at):
+		"Chock the rear wheel":
+			_bay().call("chock_wheel")
+			return "You set the chock in front of the rear wheel."
+		"Take the chock out":
+			_bay().call("unchock")
+			return "You take the chock out and hang it back on the dock."
+		"Open the rear doors":
+			vehicle.set("rear_doors_open", true)
+			return "You swing the rear doors round and hook them back against the sides."
+		"Close the rear doors":
+			vehicle.set("rear_doors_open", false)
+			return "You close the rear doors."
+	return ""
+
+
+func _bay() -> Node:
+	return shed.get("bay_nine") as Node if shed != null else null
+
+
+func _behind_the_van(at: Vector3) -> bool:
+	var local := vehicle.to_local(at)
+	return local.z > VAN_REAR + REAR_REACH.x and local.z < VAN_REAR + REAR_REACH.y \
+		and absf(local.x) < REAR_WIDTH
+
+
 func recover() -> void:
 	vehicle.recover(recovery_pose)
 
@@ -83,7 +137,24 @@ func _update_objective() -> void:
 	var detail := "Next: %s." % NEXT[stage].to_lower()
 	if stage == 0 and shed != null:
 		if shed.vehicle_through():
-			detail = "Next: backing onto the dock."
+			var bay := _bay()
+			var verdict: String = bay.get("verdict")
+			if bool(bay.get("chocked")):
+				detail = "Next: the load."
+			elif verdict == "docked":
+				title = "CHOCK THE WHEEL"
+				detail = "Get out and press E at the rear wheel on the driver's side."
+			elif MISSES.has(verdict):
+				title = "BACK ONTO BAY 9"
+				detail = MISSES[verdict]
+				if MEASURES.has(verdict):
+					detail = detail % float((bay.get("measured") as Dictionary)[MEASURES[verdict]])
+			elif not bool(vehicle.get("rear_doors_open")):
+				title = "OPEN THE REAR DOORS"
+				detail = "They can't open once docked: stop, get out and press E at the back."
+			else:
+				title = "BACK ONTO BAY 9"
+				detail = "Press Q for reverse, then back in slowly between the guides to the bumpers."
 		elif shed.checking():
 			title = "WAIT AT THE GATE"
 			detail = "The guard is checking the run sheet."

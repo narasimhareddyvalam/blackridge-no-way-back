@@ -114,6 +114,8 @@ const Wiper = preload("wiper.gd")
 const VanParticles = preload("van_particles.gd")
 const WIPE_MAP_SIZE := Vector2i(512, 256)
 const DOOR_SWING := 0.541
+const REAR_SWING := PI * 1.5
+const REAR_DOOR_SECONDS := 2.4
 const GLARE_FALLOFF := 40.0
 const GLARE_RATE := 12.0
 const OFF_GLASS := Vector2(9.0, 9.0)
@@ -204,6 +206,8 @@ var _body := Node3D.new()
 var _cabin := Node3D.new()
 var _door: Node3D
 var _door_glass := Node3D.new()
+var _rear_doors: Array[Node3D] = []
+var _rear_open: float = 0.0
 var _powered_screens: Array[MeshInstance3D] = []
 var _dark_screens: Array[MeshInstance3D] = []
 var _powered_views: Array[SubViewport] = []
@@ -289,6 +293,7 @@ func _exterior() -> void:
 	outside.position = IVECO_PLACE
 	_body.add_child(outside)
 	_door = outside.get_node("DriverDoor") as Node3D
+	_rear_doors.assign([outside.get_node("RearDoorLeft"), outside.get_node("RearDoorRight")])
 	_turn_passenger_mirror(outside)
 	var headlights := outside.get_node("Headlights") as MeshInstance3D
 	var tail_lamps := outside.get_node("TailLamps") as MeshInstance3D
@@ -1255,6 +1260,17 @@ func clear_crack() -> void:
 	_glass.set_shader_parameter("crack_amount", 0.0)
 
 
+## The rear doors swing round to lie against the sides, the right one first, then the left,
+## as a driver opens a Daily's: each about 270 degrees on its long hinges.
+func _swing_rear_doors(delta: float) -> void:
+	_rear_open = move_toward(_rear_open, 1.0 if vehicle.rear_doors_open else 0.0,
+		delta / REAR_DOOR_SECONDS)
+	_rear_doors[1].rotation.y = REAR_SWING * smoothstep(0.0, 1.0, clampf(_rear_open * 2.0, 0.0,
+		1.0))
+	_rear_doors[0].rotation.y = -REAR_SWING * smoothstep(0.0, 1.0, clampf(_rear_open * 2.0 - 1.0,
+		0.0, 1.0))
+
+
 func update_vehicle(delta: float) -> void:
 	_rock_speed += (-ROCK_STIFFNESS * _rock - ROCK_DAMPING * _rock_speed) * delta
 	_rock += _rock_speed * delta
@@ -1284,6 +1300,7 @@ func update_vehicle(delta: float) -> void:
 				"lowered", lowered)
 	_door.rotation.y = -vehicle.driver_door * DOOR_SWING
 	_door_glass.rotation.y = _door.rotation.y
+	_swing_rear_doors(delta)
 	_light_the_cab(delta)
 	if vehicle.engine_on != _screens_on:
 		_power_screens(vehicle.engine_on)

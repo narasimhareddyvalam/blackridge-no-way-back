@@ -522,6 +522,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif _needs_sheet() and driver.global_position.distance_to(world.run_sheet_spot) \
 				< SHEET_RANGE:
 			_sign_run_sheet()
+		elif not _foot_task().is_empty():
+			hud.notify(cargo.do_foot_action(driver.global_position))
 		elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			if _needs_sheet():
 				hud.notify("Sign the run sheet at the office first.")
@@ -692,6 +694,9 @@ func _hint(delta: float) -> String:
 			if driver.global_position.distance_to(world.run_sheet_spot) < SHEET_RANGE:
 				return "E  Sign the run sheet"
 			return ""
+		var task := _foot_task()
+		if not task.is_empty():
+			return "E  " + task
 		if driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			return "E  Get in the van"
 		if driver.global_position.distance_to(_walk_from) > WALK_LESSON:
@@ -705,6 +710,12 @@ func _hint(delta: float) -> String:
 		return ""
 	_teach_driving(delta)
 	return _lessons.tick(delta)
+
+
+func _foot_task() -> String:
+	if _mission != cargo or not driver.active or van.occupied:
+		return ""
+	return cargo.foot_action(driver.global_position)
 
 
 func _teach_driving(delta: float) -> void:

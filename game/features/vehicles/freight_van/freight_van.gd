@@ -36,6 +36,8 @@ var throttle: float = 0.0
 var scripted_brake: float = 0.0
 var scripted_steer: float = 0.0
 var driver_door: float = 0.0
+var rear_doors_open: bool = false
+var chocked: bool = false
 var speed: float = 0.0
 var actual_speed: float = 0.0
 var steering: float = 0.0
@@ -112,6 +114,8 @@ func _physics_process(delta: float) -> void:
 		var drag := 0.28 + absf(speed) * 0.035 + speed * speed * 0.001
 		speed = move_toward(speed, 0.0, drag * delta)
 		speed = clampf(speed + drive_force * delta + pull, -reverse_speed, speed_limit)
+	if chocked and speed > 0.0:
+		speed = 0.0
 	var yaw := speed * lock_curvature * delta if locked \
 		else speed / wheelbase * tan(steering * _steering_limit()) * delta
 	if not _rotation_blocked(yaw):
@@ -304,6 +308,8 @@ func recover(at: Transform3D) -> void:
 	gear = 1
 	indicator = 0
 	hazards_on = false
+	rear_doors_open = false
+	chocked = false
 	_turn_started = false
 	reset_physics_interpolation()
 

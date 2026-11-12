@@ -3268,6 +3268,20 @@ tag `a5`. Pictures the author approved or rejected are filed in
        aside for the polish pass; step 2d, backing onto bay 9, starts, toward a playable
        Mission 2.
 
+228. **Step 2d's decisions**
+     - **The author's answers** (to Claude Code's three questions, after its 2d brief in
+       `docs/PHASE_BRIEF.md`): "Ethan, on foot (Recommended)", "Yes, open them first
+       (Recommended)", "Retry on the spot (Recommended)".
+     - **Decision:** U1 a, Ethan chocks a rear wheel on foot; U2 a, the van's rear doors open
+       before backing in, so they are cut from the model and the hold is built; U3 a, a bad
+       docking is retried on the spot. The build of 2d follows.
+
+229. **Step 2d committed; 2e next**
+     - **The author's message:** "ok" (to Claude Code's question: "Should I commit step 2d,
+       then start 2e, the load and the seal?")
+     - **Decision:** step 2d committed on `develop`, not pushed; step 2e starts with its
+       research and brief, before any code.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it

@@ -1,0 +1,46 @@
+mutation_pit_filled: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G1: under the platform the pit is open (1 bodies there), and nothing solid stands in the doorway above the dock floor (0)
+mutation_lift_sunk: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G1: bay 9's lift stands behind its door, its platform's top flush with the dock floor (1.250 m) inside the opening's width (x -48.67 to -46.83) and behind the wall 
+mutation_inside_light_green: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G2: before the van docks, bay 9 shows green outside and red on its inside light, which faces into the shed beside the door
+mutation_guides_gone: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: Bay 9 has two solid wheel guides, their inner faces 1.25 m either side of its centre line, the lane between them clear and the guides ended before z 26 (0 solid, 0 
+mutation_doors_half_open: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G3: on foot behind the stopped van the hint offers the rear doors (E  Open the rear doors), and E swings both open and back against the sides (180° and 180°)
+clone restored byte for byte after each
+mutation_doors_from_anywhere: exit 1; BAY NINE RESULT: 8/18 passed; 10 failed; fails on its check: True
+    FAIL: G3: beside the van, not behind it, E gets Ethan in rather than opening the doors (E  Open the rear doors)
+    FAIL: G5: stopped 7.86 m short of the bumpers, it is no docking, and the objective says how far (BACK ONTO BAY 9: Press Q for reverse, then back in slowly between the gui
+    FAIL: G5: backed on with the rear doors shut, it is no docking; bay 9 stays green and the objective says why (BACK ONTO BAY 9: Press Q for reverse, then back in slowly be
+    FAIL: G5: arriving at 0.0 m/s, it is no docking; bay 9 stays green and the objective names the speed (OPEN THE REAR DOORS: They can't open once docked: stop, get out and 
+    FAIL: G4: backed on slowly with the doors open, the van docks: its rear 7.86 m from the bumpers, 0.0° from square, 0.00 m off the centre line, arrived at 0.0 m/s; the obj
+    FAIL: G6 and G2: beside the rear wheel the hint offers the chock (E  Close the rear doors); E puts it in front of the wheel (9.44 m off), and bay 9 turns red outside and 
+    FAIL: Docked and chocked, the step ends and points at the load (OPEN THE REAR DOORS: They can't open once docked: stop, get out and press E at the back.)
+    FAIL: G6: with the chock in, Ethan at the wheel in first gear cannot drive off (0.000 m; in the van false, gear 1)
+    FAIL: G2: E at the wheel takes the chock out again (E  Open the rear doors): it hangs back on its holder (0.11 m) and bay 9 turns green outside and red inside
+    FAIL: The bay 9 checks finish within 280 s
+mutation_speed_ignored: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G5: arriving at 4.8 m/s, it is no docking; bay 9 stays green and the objective names the speed (CHOCK THE WHEEL: Get out and press E at the rear wheel on the driver
+mutation_doors_ignored: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G5: backed on with the rear doors shut, it is no docking; bay 9 stays green and the objective says why (CHOCK THE WHEEL: Get out and press E at the rear wheel on th
+mutation_short_ignored: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G5: stopped 0.69 m short of the bumpers, it is no docking, and the objective says how far (BACK ONTO BAY 9: The rear doors are shut and can't open against the dock.
+mutation_square_ignored: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G5: backed on 3.2° off square (its rear -0.01 m from the bumpers), it is no docking, and the objective says so (BACK ONTO BAY 9: 0.27 m off the bay's centre. Pull f
+clone restored byte for byte after each
+mutation_centre_ignored: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G5: backed on square but 0.17 m off the centre line (its rear 0.00 m from the bumpers), it is no docking, and the objective says so (BACK ONTO BAY 9: The rear doors
+mutation_chock_holds_nothing: exit 1; BAY NINE RESULT: 15/19 passed; 4 failed; fails on its check: True
+    FAIL: G6: with the chock in, Ethan at the wheel in first gear cannot drive off (5.753 m; in the van true, gear 1)
+    FAIL: G2: E at the wheel takes the chock out again (R  Recover the van to the last checkpoint): it hangs back on its holder (2.02 m) and bay 9 turns green outside and red
+    FAIL: G5: backed on 0.0° off square (its rear 7.86 m from the bumpers), it is no docking, and the objective says so (OPEN THE REAR DOORS: They can't open once docked: sto
+    FAIL: G5: backed on square but 0.17 m off the centre line (its rear 7.86 m from the bumpers), it is no docking, and the objective says so (OPEN THE REAR DOORS: They can't
+mutation_lights_never_turn: exit 1; BAY NINE RESULT: 18/19 passed; 1 failed; fails on its check: True
+    FAIL: G6 and G2: beside the rear wheel the hint offers the chock (E  Chock the rear wheel); E puts it in front of the wheel (0.00 m off), and bay 9 turns red outside and 
+mutation_chock_from_afar: exit 1; BAY NINE RESULT: 15/19 passed; 4 failed; fails on its check: True
+    FAIL: G6: with the chock in, Ethan at the wheel in first gear cannot drive off (0.000 m; in the van false, gear -1)
+    FAIL: G2: E at the wheel takes the chock out again (R  Recover the van to the last checkpoint): it hangs back on its holder (0.11 m) and bay 9 turns green outside and red
+    FAIL: G5: backed on 0.0° off square (its rear 7.86 m from the bumpers), it is no docking, and the objective says so (OPEN THE REAR DOORS: They can't open once docked: sto
+    FAIL: G5: backed on square but 0.17 m off the centre line (its rear 7.86 m from the bumpers), it is no docking, and the objective says so (OPEN THE REAR DOORS: They can't
+clone restored byte for byte after each
