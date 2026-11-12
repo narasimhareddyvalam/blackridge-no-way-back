@@ -11,6 +11,10 @@
 - **Size:** 1.12 x 3.30 x 2.21 m (scaled to 3.3 m long with its forks).
 - **Contents:** 7,786 faces. Its textures are larger than the game needs and are to be
   reduced in its game files.
-- **Branding:** None seen.
-- **Game files:** not made yet; the depot's build step makes slimmed copies.
+- **Branding:** its body carries the lettering "SQUIRE" and "e-TL2" and an S mark. A web
+  search on 2026-11-11 found no forklift maker of that name, so it reads as the modeller's
+  own invented make; no real maker's name or logo was seen.
+- **Game files:** `game/features/environments/industrial_loop/art/depot/forklift.glb`, made
+  by `tools/art/convert_depot_models.py` on 2026-11-11: 7,786 triangles as made, its specular
+  map left out, its textures halved to 1024 pixels and saved as JPEG.
 - **Git:** `.gitignore` keeps these files out of Git; only this README is tracked.

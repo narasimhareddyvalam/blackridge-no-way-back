@@ -894,6 +894,7 @@ func _transfer_shed() -> void:
 	_lamp_post(transfer_shed.lamp_at, 0.0)
 	for index in range(transfer_shed.yard_lamps.size()):
 		_lamp_post(transfer_shed.yard_lamps[index], transfer_shed.yard_lamp_headings[index])
+	lamp_rain.add_volume(LampRain.DOCK, Transform3D(Basis.IDENTITY, transfer_shed.dock_rain_at))
 
 
 func _boundary() -> void:

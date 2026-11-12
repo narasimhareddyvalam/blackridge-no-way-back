@@ -1,9 +1,9 @@
 extends SceneTree
-## The depot's stills (step 2c revised, part 1), in a 1280x800 window on Mission 2's start save:
-## the driver's seat at the gate's stop line and in the court, the docks, the office and the east
-## side at eye height, the depot from above at night, then the same view and a plan from straight
-## above in a debug light (ambient 6, no fog), which is not the game's look. Real keys and clicks
-## are swallowed. Usage, from the repository root:
+## The depot's stills (step 2c revised, parts 1 and 2), in a 1280x800 window on Mission 2's start
+## save: the driver's seat at the gate's stop line and in the court, the docks, the views into the
+## open docks 5 and 9, the office and the east side at eye height, the depot from above at night,
+## then the same view and a plan from straight above in a debug light (ambient 6, no fog), which
+## is not the game's look. Real keys and clicks are swallowed. Usage, from the repository root:
 ##   HOME="$PWD/.scratch-home" Godot --path game --script ../tools/captures/capture_depot.gd \
 ##     -- <absolute output folder>
 
@@ -12,6 +12,8 @@ const STOP_LINE_VAN := Vector3(-71.0, 0.1, 60.9)
 const COURT_VAN := Vector3(-62.0, 0.1, 42.0)
 const COURT_HEADING := 0.15
 const DOCKS := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
+const DOCK_5 := [Vector3(-65.5, 1.7, 29.0), Vector3(-63.6, 2.4, 14.0), 50.0]
+const BAY_9 := [Vector3(-49.5, 1.7, 28.0), Vector3(-47.4, 2.3, 14.0), 50.0]
 const OFFICE := [Vector3(-80.0, 1.7, 36.0), Vector3(-88.0, 3.0, 20.0), 60.0]
 const EAST_SIDE := [Vector3(-33.0, 1.7, 45.0), Vector3(-33.0, 4.0, -5.0), 60.0]
 const ABOVE := [Vector3(-66.0, 55.0, 95.0), Vector3(-60.0, 0.0, 22.0), 50.0]
@@ -55,7 +57,7 @@ func _run() -> void:
 	_app.call("_begin")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_folder = OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() \
-		else ProjectSettings.globalize_path("res://").path_join("../captures/transfer_shed/2c_p1")
+		else ProjectSettings.globalize_path("res://").path_join("../captures/transfer_shed/2c_p2")
 	DirAccess.make_dir_recursive_absolute(_folder)
 	_van = _app.get_node("FreightVan")
 	var world: Node3D = _app.get_node("IndustrialLoop")
@@ -72,6 +74,8 @@ func _run() -> void:
 	await _driver_view("1_driver_at_the_stop_line", STOP_LINE_VAN, 0.0)
 	await _driver_view("2_driver_in_the_court", COURT_VAN, COURT_HEADING)
 	await _view("3_docks_at_eye_height", DOCKS)
+	await _view("3b_into_dock_5", DOCK_5)
+	await _view("3c_into_bay_9", BAY_9)
 	await _view("4_office_and_walkway", OFFICE)
 	await _view("5_east_side_and_cut_walls", EAST_SIDE)
 	await _view("6_depot_from_above", ABOVE)

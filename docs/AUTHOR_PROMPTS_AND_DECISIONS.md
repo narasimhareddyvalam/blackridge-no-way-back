@@ -3246,6 +3246,28 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **The author's answer:** "Commit it (Recommended)", over "Changes first" and "Not yet".
      - **Decision:** part 1 committed on `develop`, not pushed; part 2 waits for its own OK.
 
+225. **Part 2**
+     - **The author's message:** "okay proceed"
+     - **Done:** part 2's design written before any code as the last revision of
+       `docs/PHASE_BRIEF.md` (rules F1-F8, predictions) and its tasks in
+       `docs/DEPOT_PLAN.md`.
+
+226. **A question, mid-run**
+     - **The author's message** (after stopping a tool call, which the author says was a
+       mistake): "do you feel like its too much about story and very less about game? and also
+       i interrupted bymistakenly, answer me after you are done with your current task"
+     - **Done:** part 2's last task carried on; then the answer: the build leans toward
+       scenery, not story; the game's second half (Mission 2's inspection, vehicle and guard
+       escape, Mission 3, the combat encounter, fail and retry) is not built yet. Suggested:
+       part 3 (the parked vehicles) set aside for the polish pass, Mission 2 made playable end
+       to end next, then combat.
+
+227. **Part 2 committed; bay 9 next**
+     - **The author's message:** "yes commit it and then start on bay 9"
+     - **Decision:** part 2 committed on `develop`, not pushed; part 3 of the bigger depot set
+       aside for the polish pass; step 2d, backing onto bay 9, starts, toward a playable
+       Mission 2.
+
 ## Waiting for the author
 
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it
@@ -3265,3 +3287,5 @@ tag `a5`. Pictures the author approved or rejected are filed in
   alone, and what a screen reader announced, if one was tried (#123).
 - Set aside until the author returns to it: the game logo without its painted scene, and the
   studio intro and title-screen stills (#103–#104).
+- Set aside for the polish pass: part 3 of the bigger depot, the parked trucks, trailers and
+  cars (#227).

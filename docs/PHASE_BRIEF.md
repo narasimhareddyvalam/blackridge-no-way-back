@@ -5053,3 +5053,126 @@ Most are vendor or consultant pages, not standards; their figures are rules of t
   the drive-in door dark (above); the metal roof dark from above at night, as metal is.
 - **Not done:** part 2 (the docks at work, the shed's lights and inside, the rain), part 3 (the
   parked things), the GPU price (D9); the commit, with the author's OK.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 2: the docks at work, before any code)
+
+- **Status:** at the author's word, "okay proceed" (#225). The docks of part 1, at work at night:
+  values marked † are Claude Code's calls. Models: Maxwell autodoors' foam seal and leveller, and
+  for the inside Kamran Mughal's forklift, FFeller's pallet jack and widthRider's pallet (all
+  CC BY 4.0), Poly Haven's cardboard boxes (CC0, from the depot yard's set).
+- **What it adds:**
+  - **at each dock (1–9):** Maxwell's black foam seal framing the door; two black rubber bumpers
+    on the dock face, their tops at the dock floor (1.3 m), standing 0.13 m proud †; a yellow edge
+    along the dock face's top †; an LED light over the door aimed down at the bay (neutral white,
+    no shadows) †; a red/green signal beside the door, red while the door is shut and green at an
+    open, ready dock †; Maxwell's leveller in the pit inside docks 1–8, its deck level with the
+    floor. Bay 9, the van bay, has no leveller: its dock lift comes with 2d (T1);
+  - **two docks open †:** dock 5 (empty, ready) and bay 9 (waiting for Ethan's van), their doors
+    raised, a dock light on an arm inside each, aimed out into the bay;
+  - **the inside by the docks:** LED high-bay lights in two rows under the roof, cool white †;
+    yellow lane lines on the floor; pallets with cartons staged inside the open docks, the
+    forklift by dock 5 and the pallet jack by bay 9 †. It stays dry: no rain falls inside, and the
+    drops stop on the roof's overhang and the seals' head pads;
+  - **the drive-in door:** a light over it, so the metal shutter shows;
+  - **the rain:** one long rain volume along the dock front (a new B1 scene, `lamp_rain_dock.tscn`,
+    46 x 1.2 m) † in place of one per dock light, so the depot's lamps (the five yard lights, the
+    gate lamp and the dock front) make seven volumes, all raining within B1's eight.
+- **Rules part 2's tests measure (`test_mission_two.gd` unless named):**
+
+| # | Rule |
+| --- | --- |
+| F1 | Each of the nine docks has a seal framing its door, on the wall's face |
+| F2 | Each dock has two solid bumpers on the dock face, their tops 1.3 m up (within 5 cm), 0.10–0.20 m proud, beside the door |
+| F3 | Docks 1–8 each have a leveller in the floor inside, its deck at 1.3 m (within 5 cm) |
+| F4 | A light over each of the ten doors, aimed down, lit |
+| F5 | A red/green signal beside each dock door: one lens lit, green at docks 5 and 9, red at the others |
+| F6 | Doors 5 and 9 are open, each with a lit arm light inside; the inside by the docks is lit (at least eight lights under the roof) and the forklift, pallet jack and pallets stand inside |
+| F7 | The dock front has a rain volume (`test_lamp_rain_config.gd`, `test_lamp_rain_state.gd`: 20 volumes); from the court every depot lamp's volume rains at once, and no volume's box reaches inside the shed |
+| F8 | Every suite passes (the struck man's fall reported if it moves); the new model files keep within the art check; their authors are in the credits |
+
+- **Predictions (before any code):** at night from the court, a row of lit docks: a pool of
+  white light under each door on the wet apron with rain falling through it, black seals with
+  their stripes, red signals at the shut doors and green at docks 5 and 9; through those two open
+  doors the lit inside, pallets and the forklift; the drive-in shutter grey under its light. The
+  GPU price grows with ten spot lights and sixteen inside; still within D9's 1.5 ms †.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 2: built)
+
+- **Built** (`transfer_building.gd`: the fittings, lights, signals, open doors, arm and bay
+  lights and lanes; new `dock_staging.gd`; new `game/effects/lamp_rain_dock.tscn`, placed by
+  `industrial_loop.gd` at the shed's `dock_rain_at`; `tools/art/convert_depot_models.py`
+  rewritten with seven jobs): at the nine docks, Maxwell autodoors' foam seals, 18 solid rubber
+  bumpers, the yellow dock edge, a red/green signal beside each door (green at docks 5 and 9) and
+  an LED light over each of the ten doors; Maxwell's leveller in docks 1–8; docks 5 and 9 open,
+  each door's panel raised into its tracks under the roof, with an arm light inside aimed out
+  into its bay; inside, ten LED high-bay lights, yellow aisle and staging lines, six
+  stretch-wrapped pallets holding 96 cartons, the forklift behind dock 5 with its forks down, the
+  pallet jack under bay 9's second load, five empty pallets stacked on the pier between dock 8
+  and bay 9; the dock front's rain (20 volumes in all).
+- **Where it differs from the plan:**
+  - **the bay lights** hang in rows at z 15 and 5 from x −78 to −46 (ten), not at z 16 and 9
+    from −82 to −42 †: a front row at z 16 that reaches the floor would also light the apron
+    outside the shut doors (the lights cast no shadows), and the back row lights the shed's back
+    half;
+  - **the dock front's rain** spans x −82.45 to −40.45 and z 20.5 to 21.7 (centred at
+    (−61.45, 4.6, 21.1), half-extents 21 x 0.1 x 0.6, 4,700 drops and 2,700 splashes at the door
+    scene's density), not 46 m centred at (−64, 4.6, 20.9) †: it covers the nine docks and the
+    drive-in door, and its drops start clear of the seals' head pads (0.46 m proud, up to 4.77 m)
+    and of the roof's overhang;
+  - **the pallets** are sized as the American 48 x 40 in pallet (1.219 x 1.016 x 0.15 m), since
+    Blackridge is an American town; the scan is a Euro pallet †;
+  - **a fourth prop job, `carton`:** Poly Haven's carton has 16,952 triangles, so 96 of them
+    would cost 1.6 million; it is reduced to 399 (textures at 512 pixels) and drawn as one
+    MultiMesh;
+  - **the forklift's** lettering, "SQUIRE" and "e-TL2", names no forklift maker a web search
+    found (2026-11-11); the pallet's blocks carry no EPAL or EUR stamp;
+  - **the dock door** was re-made by the rewritten script: 5,341 triangles (5,346), its unused
+    trim materials dropped, still without textures.
+- **Tests first** (`logs/phase_2/step2c_p2/`): `task1_before/` Mission 2 46/49 (F1–F3), art 2
+  failures → `task1_after/` 49/49, 0; `task2_before/` 49/51 (F4, F5) → `task2_after/` 51/51;
+  `task3_before/` 50/53 (E4's open doors, F6 twice), the menus 19/20, art 4 failures →
+  `task3_after/` 53/53, 20/20, art 0 (`task3_convert/`); `task4_before/` the lamp rain's config
+  364/365 and state 13/15 (19 volumes; 6 of the depot's in the court) → `task4_after/` 455/455
+  and 15/15. Two flaws in the new checks were fixed before any code: E4's open test shrank a box
+  of no thickness, which turns its depth inside out, so a shut door could pass as open; F6
+  counted pallets with a `[0-9]` pattern, which Godot's `match` does not support.
+- **Mutations** (`mutations/`, `mutations_summary.txt`; on an APFS clone, restored byte for byte
+  after each): the seals gone (F1), the bumpers not solid (F2), the levellers sunk 0.2 m (F3),
+  the dock lights aimed up (F4), every signal red (F5), dock 5 shut (E4, F6), the open panels
+  left in their doorways (E4), the arm lights off (F6), the bay lights dark (F6), the forklift in
+  the court (F6), the dock rain gone (the count, the court), the dock rain inside the shed (the
+  dry inside): all twelve exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 30 runs exit 0 with part 1's counts but Mission
+  2's (53/53) and the lamp rain's (455/455, 15/15); art 0 failures; no SCRIPT or SHADER ERROR.
+  **The struck man's fall moved (F8):** 3.7 s, his hips 2.4 m out, 10 of 11 parts seen when
+  Ethan leans (part 1: 5.3 s, 2.0 m, 9 of 11); both collision checks still pass. Probes
+  (`fall_probes/`, `fall_probes_summary.txt`): with the bumpers not solid, or the two open doors'
+  bodies back, or both, he falls as in part 1. So C57's finding that after the first extra body
+  the fall stays put does not hold: it flips between these two outcomes with the exact set of
+  bodies the world builds.
+- **The rain from the court:** before the docks all seven of the depot's volumes rain (the state
+  test's new check). Nearer the gate, B1's cap of eight leaves the east yard light's rain off
+  (`LampRainStreet18`, 39–52 m from the van at z 50–61), since two street lamps outside the gate
+  are nearer (a scratch probe; the cap is Assignment 6's and was not changed).
+- **The GPU price** (D9; `gpu_price/NOTE.txt`; new `game/tests/gpu_price_depot.gd`, read by
+  `tools/tests/gpu_price.py`): part 2's additions (162 nodes and the dock front's rain) cost
+  0.84 ms of GPU time a frame from the court (95% interval 0.80 to 0.89), within 1.5 ms †.
+  Hiding the whole shed cannot price it: that uncovers the hill and the forest behind it, which
+  cost the GPU more than the shed (median −1.02 ms over 22 cycles; three cycles held hitches).
+  Part 1's shell against the old warehouse box cannot be measured now. Apple M4, on battery
+  (15%), Low Power Mode off.
+- **The stills** (`captures/transfer_shed/2c_p2/`, with new views into docks 5 and 9).
+  **Claude Code's reading against the predictions (a claim, not a check):** as predicted: the row
+  of lit docks with the seals' black pads and grey stripes, a light over each door, red signals
+  at the shut doors and green beside docks 5 and 9; through the two open doors the lit inside,
+  the wrapped loads, the forklift's mast behind dock 5's loads and the pallet jack at bay 9, each
+  arm light at its door's edge; rain falling before the doors. Not as predicted: the drive-in
+  shutter still reads dark under its light (fully metallic, it shows what it reflects, and the
+  light aims down past its face); a bright band along the dock foot in views 2 to 3c, which
+  Claude Code first took for the dock rain's splashes. A probe
+  (`probe_dock_5_van_away_rain_on_then_hidden.png`) shows it is the van's headlights: the capture
+  leaves the van in the court facing the docks after the driver views; with the van away there
+  is no band, the dock rain on or hidden. The wrapped loads read white where those headlights
+  reach them.
+- **Committed** on `develop` at the author's word (#227), not pushed. **Not done:** 2d and 2e,
+  next; part 3 (the parked trucks, trailers and cars), set aside for the polish pass (#227).

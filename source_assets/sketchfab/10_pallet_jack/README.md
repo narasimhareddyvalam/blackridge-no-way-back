@@ -12,5 +12,7 @@
 - **Contents:** 6,450 faces. Its textures are larger than the game needs and are to be
   reduced in its game files.
 - **Branding:** None seen.
-- **Game files:** not made yet; the depot's build step makes slimmed copies.
+- **Game files:** `game/features/environments/industrial_loop/art/depot/pallet_jack.glb`,
+  made by `tools/art/convert_depot_models.py` on 2026-11-11: 6,450 triangles as made, its
+  textures halved to 1024 pixels and saved as JPEG.
 - **Git:** `.gitignore` keeps these files out of Git; only this README is tracked.

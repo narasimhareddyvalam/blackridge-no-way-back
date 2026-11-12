@@ -1,0 +1,4 @@
+probe_bumpers_not_solid: exit 0; rest 5.3 s; hips 2.0 m; parts 9 of 11; COLLISION RESULT: 44/44 passed; 0 failed
+probe_door_bodies_back: exit 0; rest 5.3 s; hips 2.0 m; parts 9 of 11; COLLISION RESULT: 44/44 passed; 0 failed
+probe_both: exit 0; rest 5.3 s; hips 2.0 m; parts 9 of 11; COLLISION RESULT: 44/44 passed; 0 failed
+clone restored byte for byte

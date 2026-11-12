@@ -527,8 +527,12 @@ func _credits_text() -> String:
 		+ "the Microsoft Rocketbox avatar library, with its seated idle. Copyright (c) 2020 "
 		+ "Microsoft, released under the MIT license:")
 	lines.append(_plain_text(ROCKETBOX_LICENSE))
-	_section(lines, "THE DEPOT", "\"Industrial Overhead Door\" by Maxwell autodoors (Sketchfab: "
-		+ "maihupronoob), licensed CC BY 4.0: the transfer shed's dock doors.")
+	_section(lines, "THE DEPOT", "\"Industrial Overhead Door\", \"Foam Pad Dock Seal\" and "
+		+ "\"DLHH Electrohydraulic Dock Leveler\" by Maxwell autodoors (Sketchfab: maihupronoob), "
+		+ "licensed CC BY 4.0: the transfer shed's dock doors, seals and levellers. \"Warehouse "
+		+ "Forklift Gameready\" by Kamran Mughal (Sketchfab: absologixemployee), \"Pallet Jack\" by "
+		+ "FFeller and \"Euro pallet photoscanned\" by widthRider, licensed CC BY 4.0: the "
+		+ "forklift, the pallet jack and the pallets inside the docks.")
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

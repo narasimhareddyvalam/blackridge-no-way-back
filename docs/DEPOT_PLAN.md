@@ -169,3 +169,44 @@ E1–E10). Research: `docs/DEPOT_RESEARCH.md`.
 - [x] **Step 4: Stills** with `capture_depot.gd` in a window (the author is told first), read against the
   brief's predictions.
 - [x] **Step 5: Records**, then ask the author to commit.
+
+---
+
+# The bigger depot, part 2: Implementation Plan
+
+**Goal:** The docks at work (rules F1–F8 in `docs/PHASE_BRIEF.md`, revision "part 2: the docks at
+work"): seals, bumpers, levellers, lights, signals, two open docks with the lit inside, and the dock
+front's rain.
+
+**Architecture:** `transfer_building.gd` gains the dock fittings, lights, signals, open doors and
+the inside, from models made by `tools/art/convert_depot_models.py` (new jobs `dock_seal`,
+`dock_leveller`, `forklift`, `pallet_jack`, `pallet`, textures at most 1024). B1 gains
+`game/effects/lamp_rain_dock.tscn` (the door scene's settings, its box 23 x 0.1 x 0.6 half-extents
+and its counts scaled to its area), placed by `industrial_loop.gd` from a position the shed
+exposes (`dock_rain_at`).
+
+**Numbers:** seals on docks at x −80 + 4n and −47.75; bumpers at x c ± 1.25, 0.25 wide, 0.45
+tall, top 1.3, 0.13 proud; lights at (c, 4.95, 20.25); signals at (c + 1.75, 2.6, 20.1); levellers
+centred 1.2 m inside (z 18.6); open docks 5 (x −64) and 9 (x −47.75); bay lights at z 16 and 9,
+x −82..−42 every 8 m, y 8.4; the dock rain volume centred at (−64.0, 4.6, 20.9).
+
+### Task 1: Seals, bumpers and levellers (F1–F3), with their art and credits
+- Tests first: F1–F3 in `_check_docks`; the art check's `dock_seal.glb`, `dock_leveller.glb`
+  entries; `test_menus.gd` unchanged (Maxwell autodoors is credited).
+- Then: the two conversion jobs, the fittings in `transfer_building.gd`, `SOURCES.md`, ATTRIBUTION.
+### Task 2: Lights and signals (F4, F5)
+- Tests first: F4, F5. Then: ten `DockLight*` SpotLight3D with fixtures, nine `DockSignal*`.
+### Task 3: The open docks and the inside (F6), with their art and credits
+- Tests first: F6; the art check's `forklift.glb`, `pallet_jack.glb`, `pallet.glb`; `test_menus.gd`
+  CREDITED gains "Kamran Mughal", "FFeller", "widthRider".
+- Then: the three conversion jobs; doors 5 and 9 open, arm lights, bay lights, lanes, props.
+### Task 4: The dock front's rain (F7)
+- Tests first: `test_lamp_rain_config.gd` gains `lamp_rain_dock.tscn`; `test_lamp_rain_state.gd`
+  counts 20 and checks the court's active set and the shed's dry inside.
+- Then: the scene, `dock_rain_at`, the placement.
+### Task 5: Every suite, mutations, stills, GPU price, records, and the author's OK to commit.
+
+**Status, 2026-11-11:** tasks 1–5 done, committed at the author's word (#227). What was
+built, where it differs from the numbers above (the bay lights' rows, the dock rain's box, the
+American pallet, a fourth prop job for the carton) and every result are in `docs/PHASE_BRIEF.md`,
+revision "part 2: built".

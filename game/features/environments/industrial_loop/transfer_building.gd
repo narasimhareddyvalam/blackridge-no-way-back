@@ -2,10 +2,12 @@ extends Node3D
 ## The bigger depot's transfer shed (docs/PHASE_BRIEF.md, Phase 2 step 2c revised, part 1): a
 ## 50 x 30 m metal building in grey box-profile sheeting over a 1.3 m concrete dock face, under a
 ## 5 degree gable roof of corrugated iron; along its front the office's two lit storeys, eight
-## truck docks, the van bay and a drive-in door. Doors fill the openings (Task 3); the docks'
-## seals, lights and inside come in part 2.
+## truck docks, the van bay and a drive-in door. Part 2 puts the docks to work: seals, bumpers,
+## levellers, dock lights and signals; docks 5 and 9 stand open, their doors raised into their
+## tracks with an arm light inside, and the lit floor behind them holds the staged loads.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
+const Staging = preload("dock_staging.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -30,6 +32,26 @@ const DOWNPIPES: Array[float] = [-89.6, -74.0, -62.0, -54.0, -40.4]
 const OFFICE_GLOW := Color(1.0, 0.93, 0.82)
 const SHUTTER_SCALE := 1.2
 const DOOR_SET_BACK := 0.06
+const SEAL_BASE := 1.15
+const BUMPER := Vector3(0.25, 0.45, 0.13)
+const BUMPER_OFF := 1.1
+const LEVELLER_IN := 1.22
+const LEVELLER_RAISE := 0.01
+const OPEN_DOCKS: Array[int] = [4, 8]
+const LIGHT_ABOVE := 0.6
+const DOCK_LIGHT := Color(1.0, 0.96, 0.9)
+const SIGNAL_OFF := 2.0
+const SIGNAL_HEIGHT := 2.4
+const RAISED := 0.35
+const TRACK_INSIDE := 0.34
+const ARM_HEIGHT := 2.1
+const ARM_LIGHT := Color(1.0, 0.97, 0.92)
+const BAY_ROWS: Array[float] = [15.0, 5.0]
+const BAY_XS: Array[float] = [-78.0, -70.0, -62.0, -54.0, -46.0]
+const BAY_HEIGHT := 8.4
+const BAY_LIGHT := Color(0.94, 0.97, 1.0)
+const AISLE: Array[float] = [14.0, 10.0]
+const LANE := Color(0.95, 0.75, 0.05)
 const DEPOT_TEXTURES := "res://features/environments/depot_yard/polyhaven/textures/"
 const LOOP_TEXTURES := "res://features/environments/industrial_loop/polyhaven/textures/"
 const ART := "res://features/environments/industrial_loop/art/depot/"
@@ -59,6 +81,13 @@ func build(metal: Material) -> void:
 	_office(metal)
 	_markers()
 	_doors()
+	_fittings()
+	_lights()
+	_signals()
+	_arm_lights()
+	_bay_lights()
+	_lanes()
+	Staging.build(self, DOCK_FLOOR)
 
 
 func _front() -> void:
@@ -247,12 +276,100 @@ func _markers() -> void:
 		add_child(marker)
 
 
+func _fittings() -> void:
+	var seal := load(ART + "dock_seal.glb") as PackedScene
+	var leveller := load(ART + "dock_leveller.glb") as PackedScene
+	var rubber := Build.material(Color(0.05, 0.05, 0.05), 0.9)
+	var centres: Array[float] = DOCKS.duplicate()
+	centres.append(VAN_BAY)
+	for index in range(centres.size()):
+		var x := centres[index]
+		var pads := seal.instantiate() as Node3D
+		pads.name = "DockSeal%d" % (index + 1)
+		pads.position = Vector3(x, SEAL_BASE, BUILDING.end.y)
+		add_child(pads)
+		for side: float in [-1.0, 1.0]:
+			Build.box(self, Vector3(x + side * BUMPER_OFF, DOCK_FLOOR - BUMPER.y / 2.0,
+				BUILDING.end.y + BUMPER.z / 2.0), BUMPER, rubber, true).name = "DockBumper"
+		if index < DOCKS.size():
+			var deck := leveller.instantiate() as Node3D
+			deck.name = "DockLeveller%d" % (index + 1)
+			deck.position = Vector3(x, DOCK_FLOOR + LEVELLER_RAISE,
+				BUILDING.end.y - WALL - LEVELLER_IN)
+			add_child(deck)
+			deck.position.z += BUILDING.end.y - WALL - 0.01 - _box_in(deck).end.z
+	var west := OFFICE.end.x
+	var east := DRIVE_IN - DRIVE_IN_OPENING.x / 2.0
+	Build.box(self, Vector3((west + east) / 2.0, DOCK_FLOOR - 0.03, BUILDING.end.y + 0.01),
+		Vector3(east - west, 0.06, 0.02), Build.material(Color(0.86, 0.66, 0.08), 0.5)) \
+		.name = "DockEdge"
+
+
+func _lights() -> void:
+	var housing := Build.material(Color(0.12, 0.12, 0.12), 0.6)
+	var lens := Build.luminous(DOCK_LIGHT, 2.5)
+	var tops: Array[Vector2] = []
+	var centres: Array[float] = DOCKS.duplicate()
+	centres.append(VAN_BAY)
+	for x in centres:
+		tops.append(Vector2(x, DOCK_FLOOR + DOCK_OPENING.y))
+	tops.append(Vector2(DRIVE_IN, DRIVE_IN_OPENING.y))
+	for index in range(tops.size()):
+		var top := tops[index]
+		var height := top.y + LIGHT_ABOVE
+		Build.box(self, Vector3(top.x, height + 0.05, BUILDING.end.y + 0.14), Vector3(0.42, 0.16,
+			0.28), housing).name = "DockLightFixture"
+		Build.box(self, Vector3(top.x, height - 0.035, BUILDING.end.y + 0.2), Vector3(0.34, 0.01,
+			0.18), lens).name = "DockLightLens"
+		var light := SpotLight3D.new()
+		light.name = "DockLight%d" % (index + 1)
+		add_child(light)
+		light.position = Vector3(top.x, height, BUILDING.end.y + 0.3)
+		light.look_at(Vector3(top.x, 0.0, BUILDING.end.y + 3.2), Vector3.UP)
+		light.light_color = DOCK_LIGHT
+		light.light_energy = 3.0
+		light.spot_angle = 55.0
+		light.spot_range = 10.0
+		light.shadow_enabled = false
+
+
+func _signals() -> void:
+	var body := Build.material(Color(0.08, 0.08, 0.08), 0.6)
+	var centres: Array[float] = DOCKS.duplicate()
+	centres.append(VAN_BAY)
+	for index in range(centres.size()):
+		var open := OPEN_DOCKS.has(index)
+		var housing := Node3D.new()
+		housing.name = "DockSignal%d" % (index + 1)
+		housing.position = Vector3(centres[index] + SIGNAL_OFF, SIGNAL_HEIGHT, BUILDING.end.y + 0.05)
+		add_child(housing)
+		Build.box(housing, Vector3.ZERO, Vector3(0.16, 0.4, 0.1), body).name = "Housing"
+		var red := Build.luminous(Color(1.0, 0.08, 0.04), 3.0) if not open \
+			else Build.material(Color(0.22, 0.04, 0.03), 0.4)
+		var green := Build.luminous(Color(0.1, 1.0, 0.35), 3.0) if open \
+			else Build.material(Color(0.03, 0.18, 0.06), 0.4)
+		Build.box(housing, Vector3(0.0, 0.09, 0.055), Vector3(0.1, 0.1, 0.02), red).name = "Red"
+		Build.box(housing, Vector3(0.0, -0.09, 0.055), Vector3(0.1, 0.1, 0.02), green).name = \
+			"Green"
+
+
+func _box_in(node: Node3D) -> AABB:
+	var seen := AABB()
+	for found in node.find_children("*", "MeshInstance3D", true, false):
+		var part := found as MeshInstance3D
+		var box: AABB = global_transform.affine_inverse() * part.global_transform * part.get_aabb()
+		seen = box if not seen.has_volume() else seen.merge(box)
+	return seen
+
+
 func _doors() -> void:
 	var face := BUILDING.end.y - DOOR_SET_BACK
 	for index in range(DOCKS.size() + 1):
-		var x := DOCKS[index] if index < DOCKS.size() else VAN_BAY
-		_door("DockDoor%d" % (index + 1), DockDoor.instantiate() as Node3D,
-			Vector3(x, DOCK_FLOOR, face), DOCK_OPENING)
+		var open := OPEN_DOCKS.has(index)
+		var door := _door("DockDoor%d" % (index + 1), DockDoor.instantiate() as Node3D,
+			Vector3(_dock_x(index), DOCK_FLOOR, face), DOCK_OPENING, not open)
+		if open:
+			_raise(door)
 	var shutter := (load(SHUTTERS + "rollershutter_door.gltf") as PackedScene).instantiate() as Node3D
 	shutter.scale = Vector3.ONE * SHUTTER_SCALE
 	var holder := _door("DriveInDoor", shutter, Vector3(DRIVE_IN, 0.0, face), DRIVE_IN_OPENING)
@@ -266,12 +383,15 @@ func _doors() -> void:
 		fitted.end.z - DOOR_SET_BACK - 0.01)
 
 
-func _door(name: String, model: Node3D, at: Vector3, opening: Vector2) -> Node3D:
+func _door(name: String, model: Node3D, at: Vector3, opening: Vector2,
+		shut: bool = true) -> Node3D:
 	var holder := Node3D.new()
 	holder.name = name
 	holder.position = at
 	add_child(holder)
 	holder.add_child(model)
+	if not shut:
+		return holder
 	var shape := BoxShape3D.new()
 	shape.size = Vector3(opening.x, opening.y, 0.2)
 	var collision := CollisionShape3D.new()
@@ -282,6 +402,99 @@ func _door(name: String, model: Node3D, at: Vector3, opening: Vector2) -> Node3D
 	body.add_child(collision)
 	holder.add_child(body)
 	return holder
+
+
+func _dock_x(index: int) -> float:
+	return DOCKS[index] if index < DOCKS.size() else VAN_BAY
+
+
+func _raise(holder: Node3D) -> void:
+	var head := DOCK_OPENING.y + RAISED
+	var panel := holder.get_child(0) as Node3D
+	panel.rotation.x = -PI / 2.0
+	panel.position = Vector3(0.0, head, -TRACK_INSIDE)
+	var steel := Build.material(Color(0.62, 0.64, 0.66), 0.45)
+	var x := holder.position.x
+	var inside := BUILDING.end.y - WALL - 0.06
+	for side: float in [-1.0, 1.0]:
+		var edge := x + side * (DOCK_OPENING.x / 2.0 + 0.05)
+		Build.box(self, Vector3(edge, DOCK_FLOOR + head / 2.0, inside), Vector3(0.05, head, 0.08),
+			steel).name = "DoorTrack"
+		var length := DOCK_OPENING.y + TRACK_INSIDE
+		Build.box(self, Vector3(edge, DOCK_FLOOR + head, inside - length / 2.0), Vector3(0.05,
+			0.08, length), steel).name = "DoorTrack"
+	Build.box(self, Vector3(x, DOCK_FLOOR + head + 0.25, inside), Vector3(DOCK_OPENING.x + 0.3,
+		0.06, 0.06), steel).name = "DoorSpringShaft"
+
+
+func _arm_lights() -> void:
+	var steel := Build.material(Color(0.16, 0.16, 0.17), 0.5)
+	var lens := Build.luminous(ARM_LIGHT, 2.5)
+	var inside := BUILDING.end.y - WALL
+	for index in OPEN_DOCKS:
+		var x := _dock_x(index)
+		var mount := Vector3(x + DOCK_OPENING.x / 2.0 + 0.35, DOCK_FLOOR + ARM_HEIGHT, inside - 0.05)
+		var head := Vector3(x + DOCK_OPENING.x / 2.0 - 0.15, DOCK_FLOOR + ARM_HEIGHT, inside - 0.45)
+		Build.box(self, mount, Vector3(0.12, 0.2, 0.1), steel).name = "DockArmBracket"
+		var arm := Build.box(self, (mount + head) / 2.0, Vector3(0.04, 0.04, mount.distance_to(head)),
+			steel)
+		arm.look_at(head, Vector3.UP)
+		arm.name = "DockArm"
+		var light := SpotLight3D.new()
+		light.name = "DockArmLight%d" % (index + 1)
+		add_child(light)
+		light.position = head
+		light.look_at(Vector3(x - 0.4, DOCK_FLOOR + 0.4, BUILDING.end.y + 6.0), Vector3.UP)
+		var lamp := Build.box(light, Vector3(0.0, 0.0, 0.1), Vector3(0.24, 0.18, 0.22), steel)
+		lamp.name = "DockArmLamp"
+		Build.box(light, Vector3(0.0, 0.0, -0.015), Vector3(0.2, 0.14, 0.01), lens).name = \
+			"DockArmLens"
+		light.light_color = ARM_LIGHT
+		light.light_energy = 2.0
+		light.spot_angle = 28.0
+		light.spot_range = 14.0
+		light.shadow_enabled = false
+
+
+func _bay_lights() -> void:
+	var housing := Build.material(Color(0.55, 0.57, 0.6), 0.4)
+	var lens := Build.luminous(BAY_LIGHT, 3.0)
+	var count := 0
+	for z in BAY_ROWS:
+		var roof := EAVES + (BUILDING.end.y - z) * tan(deg_to_rad(PITCH_DEGREES))
+		for x in BAY_XS:
+			count += 1
+			var at := Vector3(x, BAY_HEIGHT, z)
+			Build.cylinder(self, at + Vector3(0.0, 0.08, 0.0), 0.22, 0.16, housing, 0.12).name = \
+				"BayLightFixture"
+			Build.cylinder(self, at, 0.2, 0.01, lens).name = "BayLightLens"
+			var cord := roof - BAY_HEIGHT - 0.16
+			Build.cylinder(self, at + Vector3(0.0, 0.16 + cord / 2.0, 0.0), 0.008, cord, housing) \
+				.name = "BayLightCord"
+			var light := SpotLight3D.new()
+			light.name = "BayLight%d" % count
+			light.position = at - Vector3(0.0, 0.02, 0.0)
+			light.rotation.x = -PI / 2.0
+			light.light_color = BAY_LIGHT
+			light.light_energy = 4.5
+			light.spot_angle = 60.0
+			light.spot_range = 10.5
+			light.shadow_enabled = false
+			add_child(light)
+
+
+func _lanes() -> void:
+	var paint := Build.material(LANE, 0.6)
+	var west := OFFICE.end.x + 0.2
+	var east := DRIVE_IN - DRIVE_IN_OPENING.x / 2.0 - 0.4
+	for z in AISLE:
+		Build.box(self, Vector3((west + east) / 2.0, DOCK_FLOOR + 0.003, z), Vector3(east - west,
+			0.004, 0.1), paint).name = "LaneLine"
+	var back := BUILDING.end.y - WALL - 0.15
+	for index in range(DOCKS.size()):
+		var x := (_dock_x(index) + _dock_x(index + 1)) / 2.0
+		Build.box(self, Vector3(x, DOCK_FLOOR + 0.003, (AISLE[0] + back) / 2.0), Vector3(0.1, 0.004,
+			back - AISLE[0]), paint).name = "LaneLine"
 
 
 func _surface(root: String, asset: String, resolution: String, tile: float) -> ORMMaterial3D:

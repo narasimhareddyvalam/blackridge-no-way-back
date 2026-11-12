@@ -157,6 +157,9 @@ func _check_gate() -> void:
 	var booth := _check_booth(shed)
 	_check_ground(shed, _app.get_node("IndustrialLoop"))
 	_check_building(shed, _app.get_node("IndustrialLoop"))
+	_check_docks(shed)
+	_check_dock_lights(shed)
+	_check_inside(shed)
 	_check_yard(shed, _app.get_node("IndustrialLoop"))
 	var eye := _van.get_node("VanPresentation").get("driving_camera") as Camera3D
 	_watch_gate(shed)
@@ -493,10 +496,16 @@ func _check_building(shed: Node3D, world: Node3D) -> void:
 					solid = solid or blocker.grow(0.0).encloses(AABB(opening.position, Vector3(
 						opening.size.x, opening.size.y, 0.0)))
 		var face := AABB(opening.position, Vector3(opening.size.x, opening.size.y, 0.0))
-		if door_node == null or not seen.has_volume() or not seen.grow(0.001).encloses(face) \
+		var doorway := AABB(face.position + Vector3(0.1, 0.1, -0.2), Vector3(face.size.x - 0.2,
+			face.size.y - 0.2, 0.4))
+		if door_name in ["DockDoor5", "DockDoor9"]:
+			if door_node == null or (seen.has_volume() and seen.intersects(doorway)) or solid:
+				undoored.append(door_name + " not open")
+		elif door_node == null or not seen.has_volume() or not seen.grow(0.001).encloses(face) \
 				or not solid:
 			undoored.append(door_name)
-	_check(undoored.is_empty(), "E4: a closed, solid door fills each opening (missing: %s)"
+	_check(undoored.is_empty(), ("E4: a closed, solid door fills each opening but docks 5 "
+		+ "and 9, which stand open (wrong: %s)")
 		% ", ".join(undoored))
 	_check(wrong.is_empty(), ("E4: nine dock openings 2.74 x 3.05 m from 1.3 m up at x -80 + 4n "
 		+ "and -47.75, and the drive-in door's 3.7 x 2.9 m at the yard's level at x -42.75 (wrong: "
@@ -509,6 +518,142 @@ func _check_building(shed: Node3D, world: Node3D) -> void:
 		and door_box.position.y < 0.05 and absf(door_box.get_center().z - 20.0) < 0.3
 		and door_box.position.x > OFFICE.position.x and door_box.end.x < OFFICE.end.x,
 		"E5: the office is lit inside, and its door stands at the yard's level in the front wall")
+
+
+const DOCK_XS: Array[float] = [-80.0, -76.0, -72.0, -68.0, -64.0, -60.0, -56.0, -52.0, -47.75]
+
+
+func _seen(node: Node) -> AABB:
+	var seen := AABB()
+	if node == null:
+		return seen
+	for found in node.find_children("*", "MeshInstance3D", true, false):
+		var part := found as MeshInstance3D
+		var box: AABB = part.global_transform * part.get_aabb()
+		seen = box if not seen.has_volume() else seen.merge(box)
+	return seen
+
+
+func _check_docks(shed: Node3D) -> void:
+	var unsealed: Array[String] = []
+	for index in range(DOCK_XS.size()):
+		var x := DOCK_XS[index]
+		var seal := _seen(shed.get_node_or_null("Building/DockSeal%d" % (index + 1)))
+		if not seal.has_volume() or seal.position.x > x - 1.47 or seal.end.x < x + 1.47 \
+				or seal.position.y > 1.35 or seal.end.y < 4.4 or seal.position.z < 19.95 \
+				or seal.end.z > 20.7:
+			unsealed.append(str(index + 1))
+	_check(unsealed.is_empty(), "F1: each dock has a seal framing its door on the wall's face "
+		+ "(wrong: %s)" % ", ".join(unsealed))
+	var bumpers := shed.find_children("DockBumper*", "MeshInstance3D", true, false)
+	var bumped: Array[String] = []
+	for index in range(DOCK_XS.size()):
+		var x := DOCK_XS[index]
+		var near := bumpers.filter(func(found: Node) -> bool:
+			var box: AABB = (found as MeshInstance3D).global_transform \
+				* (found as MeshInstance3D).get_aabb()
+			var off := absf(box.get_center().x - x)
+			return off >= 0.8 and off <= 1.5 and absf(box.end.y - 1.3) <= 0.05 \
+				and box.end.z - 20.0 >= 0.1 and box.end.z - 20.0 <= 0.2 \
+				and found.find_children("*", "CollisionShape3D", true, false).size() > 0)
+		if near.size() != 2:
+			bumped.append(str(index + 1))
+	_check(bumpers.size() == 18 and bumped.is_empty(), ("F2: two solid bumpers under each "
+		+ "door, tops at 1.3 m and 0.10-0.20 m proud (%d bumpers; wrong: %s)") % [bumpers.size(),
+		", ".join(bumped)])
+	var unlevelled: Array[String] = []
+	for index in range(DOCK_XS.size()):
+		var x := DOCK_XS[index]
+		var leveller := _seen(shed.get_node_or_null("Building/DockLeveller%d" % (index + 1)))
+		if index == DOCK_XS.size() - 1:
+			if leveller.has_volume():
+				unlevelled.append("9 has one")
+		elif not leveller.has_volume() or absf(leveller.end.y - 1.3) > 0.05 \
+				or leveller.position.z < 17.0 or leveller.end.z > 19.8 \
+				or absf(leveller.get_center().x - x) > 0.2:
+			unlevelled.append(str(index + 1))
+	_check(unlevelled.is_empty(), "F3: docks 1-8 each have a leveller inside, its deck at 1.3 m, "
+		+ "and bay 9 none (wrong: %s)" % ", ".join(unlevelled))
+
+
+func _lit(lens: MeshInstance3D) -> bool:
+	var surface := lens.get_active_material(0) as StandardMaterial3D
+	return surface != null and surface.emission_enabled
+
+
+func _check_dock_lights(shed: Node3D) -> void:
+	var tops: Array[Vector2] = []
+	for x in DOCK_XS:
+		tops.append(Vector2(x, 4.35))
+	tops.append(Vector2(-42.75, 2.9))
+	var lights := shed.find_children("DockLight*", "SpotLight3D", true, false)
+	var dark: Array[String] = []
+	for top in tops:
+		var over := lights.filter(func(node: Node) -> bool:
+			var light := node as SpotLight3D
+			var at := light.global_position
+			var aim := -light.global_basis.z.normalized()
+			return absf(at.x - top.x) < 0.3 and at.y - top.y > 0.3 and at.y - top.y < 1.2 \
+				and at.z >= 20.0 and at.z <= 20.6 and aim.dot(Vector3.DOWN) > 0.5 \
+				and light.light_energy > 0.0 and light.visible)
+		if over.size() != 1:
+			dark.append("%.2f" % top.x)
+	_check(lights.size() == 10 and dark.is_empty(), ("F4: a lit light over each of the ten "
+		+ "doors, aimed down (%d lights; wrong at x %s)") % [lights.size(), ", ".join(dark)])
+	var wrong: Array[String] = []
+	for index in range(DOCK_XS.size()):
+		var housing := shed.get_node_or_null("Building/DockSignal%d" % (index + 1)) as Node3D
+		var red := housing.get_node_or_null("Red") as MeshInstance3D if housing != null else null
+		var green := housing.get_node_or_null("Green") as MeshInstance3D \
+			if housing != null else null
+		var want_green := index == 4 or index == 8
+		if red == null or green == null or _lit(green) != want_green or _lit(red) == want_green \
+				or absf(housing.global_position.x - DOCK_XS[index]) > 2.2 \
+				or housing.global_position.y < 1.8 or housing.global_position.y > 3.0:
+			wrong.append(str(index + 1))
+	_check(wrong.is_empty(), ("F5: a red/green signal beside each dock door, green at docks 5 "
+		+ "and 9 and red at the others (wrong: %s)") % ", ".join(wrong))
+
+
+func _check_inside(shed: Node3D) -> void:
+	var space := shed.get_world_3d().direct_space_state
+	var clear: Array[String] = []
+	for index: int in [4, 8]:
+		var x := DOCK_XS[index]
+		var box := BoxShape3D.new()
+		box.size = Vector3(2.4, 2.6, 0.2)
+		var query := PhysicsShapeQueryParameters3D.new()
+		query.shape = box
+		query.transform = Transform3D(Basis.IDENTITY, Vector3(x, 2.8, 19.88))
+		var arm := shed.get_node_or_null("Building/DockArmLight%d" % (index + 1)) as SpotLight3D
+		var aim := -arm.global_basis.z.normalized() if arm != null else Vector3.ZERO
+		if not space.intersect_shape(query, 1).is_empty() or arm == null \
+				or arm.light_energy <= 0.0 or aim.dot(Vector3.BACK) < 0.5 \
+				or arm.global_position.z > 20.0 or absf(arm.global_position.x - x) > 2.0:
+			clear.append(str(index + 1))
+	_check(clear.is_empty(), "F6: docks 5 and 9 stand open, a lit arm light inside each aimed out "
+		+ "into its bay (wrong: %s)" % ", ".join(clear))
+	var lights := shed.find_children("BayLight*", "Light3D", true, false)
+	var lit := lights.filter(func(node: Node) -> bool:
+		var light := node as Light3D
+		var at := light.global_position
+		return SHED.has_point(Vector2(at.x, at.z)) and at.y > 7.0 and at.y < 9.0 \
+			and light.light_energy > 0.0)
+	var props: Array[String] = []
+	for entry: Array in [["Building/Forklift", Vector2(-64.0, 15.0), 8.0],
+			["Building/PalletJack", Vector2(-47.75, 16.0), 6.0]]:
+		var node := shed.get_node_or_null(entry[0]) as Node3D
+		var centre: Vector2 = entry[1]
+		if node == null or Vector2(node.global_position.x, node.global_position.z) \
+				.distance_to(centre) > float(entry[2]) or node.global_position.y < 1.25:
+			props.append(String(entry[0]).get_file())
+	var building := shed.get_node_or_null("Building")
+	var pallets := 0 if building == null else building.get_children().filter(
+		func(node: Node) -> bool: return String(node.name).begins_with("Pallet") \
+			and not String(node.name).begins_with("PalletJack")).size()
+	_check(lit.size() >= 8 and props.is_empty() and pallets >= 4, ("F6: the inside by the docks is "
+		+ "lit (%d lights under the roof) with the forklift, the pallet jack and %d pallets "
+		+ "(missing: %s)") % [lit.size(), pallets, ", ".join(props)])
 
 
 func _check_yard(shed: Node3D, world: Node3D) -> void:

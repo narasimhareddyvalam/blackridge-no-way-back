@@ -1,0 +1,48 @@
+14:55:22 | INFO: Data are loaded, start creating Blender stuff
+14:55:22 | INFO: Blender create Mesh node ForkLift_ForkLift_01_0
+14:55:23 | INFO: glTF import finished in 0.01s
+Warning: No mesh data to join
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+14:55:23 | INFO: Starting glTF 2.0 export
+14:55:23 | INFO: Extracting primitive: ForkLift_ForkLift_01_0
+14:55:23 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+14:55:23 | INFO: Primitives created: 1
+14:55:23 | INFO: Finished glTF 2.0 export in 0.2961421012878418 s
+
+CONVERTED forklift: 7786 triangles, 1.12 x 3.30 x 2.21 m, 1 materials, images [(1024, 1024)], 756.6 kB
+14:55:23 | INFO: Data are loaded, start creating Blender stuff
+14:55:23 | INFO: Blender create Mesh node pallet jack__0
+14:55:23 | INFO: glTF import finished in 0.01s
+Warning: No mesh data to join
+14:55:23 | INFO: Starting glTF 2.0 export
+14:55:23 | INFO: Extracting primitive: pallet jack__0
+14:55:23 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+14:55:23 | INFO: Primitives created: 1
+14:55:23 | INFO: Finished glTF 2.0 export in 0.16700506210327148 s
+
+CONVERTED pallet_jack: 6450 triangles, 0.78 x 1.60 x 1.21 m, 1 materials, images [(1024, 1024)], 615.3 kB
+14:55:24 | INFO: Data are loaded, start creating Blender stuff
+14:55:24 | INFO: Blender create Mesh node palette_LOD_0_palette_mat_0
+14:55:24 | INFO: glTF import finished in 0.04s
+Warning: No mesh data to join
+14:55:24 | INFO: Starting glTF 2.0 export
+14:55:24 | INFO: Extracting primitive: palette_LOD_0_palette_mat_0
+14:55:25 | INFO: Primitives created: 1
+14:55:25 | INFO: Finished glTF 2.0 export in 0.33852720260620117 s
+
+CONVERTED pallet: 3000 triangles, 1.01 x 1.22 x 0.15 m, 1 materials, images [(1024, 1024)], 382.0 kB
+14:55:25 | INFO: Data are loaded, start creating Blender stuff
+14:55:25 | INFO: Blender create Mesh node cardboard_box_01
+14:55:25 | INFO: glTF import finished in 0.02s
+Warning: No mesh data to join
+14:55:25 | INFO: Starting glTF 2.0 export
+14:55:25 | INFO: Extracting primitive: cardboard_box_01
+14:55:25 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+14:55:25 | INFO: Primitives created: 1
+14:55:25 | INFO: Finished glTF 2.0 export in 0.0241091251373291 s
+
+CONVERTED carton: 399 triangles, 0.39 x 0.51 x 0.34 m, 1 materials, images [(512, 512)], 105.3 kB
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

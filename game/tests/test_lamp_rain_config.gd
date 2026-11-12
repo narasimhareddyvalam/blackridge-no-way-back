@@ -35,6 +35,11 @@ const VARIANTS := {
 		"scatter": 60.0, "splash": PLAIN_SPLASH,
 		"aabb": AABB(Vector3(-1.5, -3.5, -1.5), Vector3(3.0, 4.0, 3.0)),
 		"collider": Vector3(3.0, 4.0, 3.0), "collider_at": Vector3(0.0, -1.5, 0.0)},
+	"res://effects/lamp_rain_dock.tscn": {"root": "LampRainDock",
+		"box": Vector3(21.0, 0.1, 0.6), "direction": SLANT, "drops": 4700, "splashes": 2700,
+		"scatter": 60.0, "splash": PLAIN_SPLASH,
+		"aabb": AABB(Vector3(-21.5, -5.1, -1.5), Vector3(43.0, 5.6, 3.0)),
+		"collider": Vector3(43.0, 5.6, 3.0), "collider_at": Vector3(0.0, -2.3, 0.0)},
 }
 const WATER := Color(0.88, 0.89, 0.9, 1.0)
 const SCATTER := "res://effects/scatter_particle.gdshader"

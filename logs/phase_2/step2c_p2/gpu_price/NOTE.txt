@@ -1,0 +1,29 @@
+The bigger depot's GPU price (docs/PHASE_BRIEF.md rule D9), 2026-11-11, Claude Code.
+
+Conditions: MacBook Air, Apple M4, on battery (15%, discharging), Low Power Mode off; the game's
+1280x800 window with MetalFX at 0.75, vsync on; Apple's Metal Performance HUD logging each frame's
+GPU time (MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1). View: the court at eye height, from
+(-58, 1.7, 36) looking at (-62, 3, 20), fov 60; 8 lamp rain volumes raining in every block.
+
+Commands, from the repository root:
+  MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 HOME="$PWD/.scratch-home" \
+    /Applications/Godot.app/Contents/MacOS/Godot --path game --resolution 1280x800 \
+    --script res://tests/gpu_price_depot.gd [-- --only=P2 --cycles=40] > <log> 2>&1
+  python3 tools/tests/gpu_price.py <log>
+
+run_depot.log (case D9, the whole transfer shed shown and hidden, 24 cycles of 1 s blocks):
+  the parser's mean is -0.057 ms, 95% interval -2.280 to 2.167 (RESULT.txt), not settled. Three
+  blocks held hitches (cycles 1, 11 and 23: frames of 42-59 ms), which spoil the mean. In every
+  other cycle the shed shown cost LESS GPU time than hidden: median -1.02 ms over 22 cycles
+  (middle half -1.27 to -0.88). Hidden, the shed no longer hides the hill and the forest behind
+  it, which cost the GPU more than the shed does, so this case cannot price the shed itself. The
+  frames a second it prints (44.2 shown, 50.4 hidden) come from the same hitches.
+
+run_part2.log (case P2, only what part 2 added shown and hidden, the shell kept, 40 cycles):
+  162 nodes (seals, bumpers, levellers, the dock edge, the ten dock lights, the signals, the two
+  arm lights, the ten bay lights, the lanes, the open doors' tracks, the staged loads, the
+  forklift and the pallet jack) and the dock front's rain volume: 0.843 ms, 95% interval 0.800 to
+  0.887, within the 1.5 ms budget (RESULT_part2.txt); frames a second 52.5 shown, 55.7 hidden.
+
+Not measured: part 1's shell against the scene D9 was written over (the old warehouse box), which
+is gone from the world.

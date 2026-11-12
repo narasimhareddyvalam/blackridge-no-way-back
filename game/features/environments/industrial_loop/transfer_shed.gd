@@ -54,6 +54,7 @@ const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z
 	LANE_WIDTH + CORNER_RADIUS * 2.0 + 2.0, 20.0)
 
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
+var dock_rain_at := Vector3(-61.45, 4.6, 21.1)
 var clearings: Array[Rect2] = [SPUR_PLOT, Ground.CLEARING]
 var yard_lamps: Array[Vector3] = Yard.LAMPS
 var yard_lamp_headings: Array[float] = Yard.LAMP_HEADINGS

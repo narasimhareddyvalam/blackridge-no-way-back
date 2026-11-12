@@ -11,6 +11,9 @@
 - **Size:** 0.87 x 1.20 x 0.19 m, laid flat (it came standing on its edge); a scanned Euro pallet, a little larger than the real 0.8 x 1.2 x 0.144 m.
 - **Contents:** 42,662 faces. Its textures are larger than the game needs and are to be
   reduced in its game files.
-- **Branding:** Check the corner blocks for EPAL or EUR stamps (trademarks) when making the game files.
-- **Game files:** not made yet; the depot's build step makes slimmed copies.
+- **Branding:** checked on 2026-11-11 at full size: no EPAL or EUR stamp on its blocks.
+- **Game files:** `game/features/environments/industrial_loop/art/depot/pallet.glb`, made by
+  `tools/art/convert_depot_models.py` on 2026-11-11: sized as the American 48 x 40 in pallet
+  (1.219 x 1.016 x 0.15 m), since the game is set in an American town; reduced to 3,000
+  triangles; its wood matte; its textures halved to 1024 pixels and saved as JPEG.
 - **Git:** `.gitignore` keeps these files out of Git; only this README is tracked.

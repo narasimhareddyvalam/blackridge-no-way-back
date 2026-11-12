@@ -1,6 +1,44 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
+**Last run:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
+second Claude account: the docks at work. Seals, 18 solid bumpers, the dock edge, a light over
+each of the ten doors and red/green signals at the nine docks; levellers in docks 1–8; docks 5
+and 9 open, their panels raised into tracks, an arm light inside each; inside, ten high-bay
+lights, lanes, six wrapped pallets of 96 cartons, the forklift, the pallet jack and a stack of
+empties (new `dock_staging.gd`); the dock front's rain (new `game/effects/lamp_rain_dock.tscn`,
+20 volumes). Its design and results are the last two revisions of `docs/PHASE_BRIEF.md` (rules
+F1–F8, then "part 2: built"); its tasks end `docs/DEPOT_PLAN.md`. **Tests**
+(`logs/phase_2/step2c_p2/`): Mission 2 46/49 → 53/53 over three tasks, each failing first; the
+lamp rain's config 364/365 → 455/455 and state 13/15 → 15/15; the menus 19/20 → 20/20; art
+4 → 0 failures; twelve mutations exit 1, each on its own check (`mutations_summary.txt`); import
+clean. Every suite, each as `LOG_DIR=logs/phase_2/step2c_p2/suites scripts/run-test.sh
+<test>.gd <fps> 300` for the 30 runs, then `python3 tools/tests/check_first_drive_art.py`
+(`suites/SUMMARY.txt`): all exit 0 with part 1's counts but Mission 2's and the lamp rain's; no
+SCRIPT or SHADER ERROR. **The struck man's fall moved** (3.7 s, 2.4 m; part 1 5.3 s, 2.0 m),
+both collision checks passing; `fall_probes_summary.txt` shows it flips between the two with the
+exact set of bodies. GPU price (`gpu_price/NOTE.txt`): part 2's additions 0.84 ms (0.80–0.89),
+within D9's 1.5 ms, from `MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 HOME="$PWD/.scratch-home" godot
+--path game --resolution 1280x800 --script res://tests/gpu_price_depot.gd -- --only=P2
+--cycles=40` and `python3 tools/tests/gpu_price.py <log>` (its output for A6's logs unchanged).
+Stills: `captures/transfer_shed/2c_p2/` from `tools/captures/capture_depot.gd` (two new views).
+**Changed:** `transfer_building.gd`, new `dock_staging.gd`, `transfer_shed.gd`,
+`industrial_loop.gd`, `lamp_rain.gd`, new `lamp_rain_dock.tscn`,
+`industrial_loop/art/depot/` (`dock_door.glb` re-made, new `dock_seal.glb`, `dock_leveller.glb`,
+`forklift.glb`, `pallet_jack.glb`, `pallet.glb`, `carton.glb` and their extracted textures,
+`ATTRIBUTION.md`), `tools/art/convert_depot_models.py`, `front_menu.gd` (credits),
+`test_mission_two.gd`, `test_lamp_rain_config.gd`, `test_lamp_rain_state.gd`, `test_menus.gd`,
+new `gpu_price_depot.gd`, `tools/tests/gpu_price.py`, `check_first_drive_art.py`,
+`capture_depot.gd`, `SOURCES.md`, three `source_assets/sketchfab/<model>/README.md`,
+`docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`, the prompt log (#225–#227), this note; committed
+on `develop` at the author's word (#227). **Rely on:** `develop` is 10 commits ahead of
+`origin/develop`, unpushed until A6 is graded; the bumpers are solid but nothing inside the shed
+is; the capture script leaves the van in the court with its headlights on the docks, which
+lights views 2 to 3c. **Unverified:** the look in motion and from the van backing in; the
+drive-in shutter, still dark; the east yard light's rain, off near the gate under B1's cap of
+eight. **Next:** step 2d, backing onto bay 9, toward a playable Mission 2 (#227); part 3 (the
+parked trucks, trailers and cars) waits for the polish pass.
+
+**Before it:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
 Claude account: the bigger depot's platform cut into the hill behind 65 concrete walls (11 m at
 the back), the 50 x 30 m shed (`transfer_building.gd`) in grey box-profile cladding over a 1.3 m
 concrete dock face, the office's two lit storeys, nine of Maxwell autodoors' dock doors and Poly
@@ -32,7 +70,7 @@ at work (seals, levellers, bumpers, a light over each door, red and green lights
 the docks lit and dry, rain in every lamp's light), each step approved. **Unverified:** the GPU
 price (D9); the drive-in shutter, dark until part 2's lights; how the walls read from the hill.
 
-**Before it:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+**Before that:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
 the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
 concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
 not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
@@ -74,7 +112,7 @@ realistic lights and rain at and inside the docks (#219–#220,
 `source_assets/sketchfab/<model>/` (the .glb out of Git, a README each in Git), at real sizes.
 No brief or code yet.
 
-**Before that:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+**Earlier:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
 account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
 its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
 to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
@@ -118,7 +156,7 @@ yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the 
 committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
-**Earlier:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+**Earlier still:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
 second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
 3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
 beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
@@ -134,7 +172,7 @@ unpushed until the author says. **Next:** the author's OK to build r1 and the gu
 in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
 **Unverified:** every look in the r1 revision; the † values are proposals.
 
-**Earlier still:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Before those:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

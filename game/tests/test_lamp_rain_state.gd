@@ -12,6 +12,9 @@ const RANGE := 65.0
 const LANE := 1.25
 const DEPOT_SAMPLE := 1010
 const HILL_SAMPLE := 420
+const COURT := Vector3(-55.0, 0.1, 30.0)
+const DEPOT := Rect2(-95.0, -15.0, 72.0, 76.0)
+const SHED_INSIDE := AABB(Vector3(-89.75, 0.0, -9.75), Vector3(49.5, 9.0, 29.5))
 
 var _checks: int = 0
 var _failures: int = 0
@@ -55,16 +58,17 @@ func _run() -> void:
 	await _check_arrival()
 	await _check_pause()
 	await _check_hidden()
+	await _check_court()
 	await _check_far_from_lamps()
 	_finish()
 
 
 func _check_start() -> void:
 	var near := _within_range()
-	_check(_rain.volumes.size() == 19,
+	_check(_rain.volumes.size() == 20,
 		"Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the " +
-		"floodlight, the door lamp, the transfer shed's gate lamp and its yard's 5 " +
-		"lights (%d)" % _rain.volumes.size())
+		"floodlight, the door lamp, the transfer shed's gate lamp, its yard's 5 lights and " +
+		"its dock front (%d)" % _rain.volumes.size())
 	_check(near.size() == 3 and _states_match(near),
 		"At the start, the 3 lamps within 65 m of the camera rain and the other 10 are off and " +
 		"hidden (%s)" % _names(near))
@@ -150,6 +154,30 @@ func _check_hidden() -> void:
 	_check(_states_match(active) and _rain.activations == before + active.size(),
 		"Shown again, each volume clears its old drops and restarts, already falling (%d starts)"
 		% (_rain.activations - before))
+
+
+func _check_court() -> void:
+	_van.call("recover", Transform3D(Basis.IDENTITY, COURT))
+	await _seconds(0.5)
+	var depot: Array[int] = []
+	for index in range(_rain.volumes.size()):
+		var at: Vector3 = _rain.volumes[index].global_position
+		if DEPOT.has_point(Vector2(at.x, at.z)):
+			depot.append(index)
+	var raining := depot.all(func(index: int) -> bool:
+		return _rain.is_active(index) and _rain.rain(index).emitting)
+	_check(depot.size() == 7 and raining and _rain.active_count() <= 8,
+		("In the court before the docks, the transfer shed's 7 volumes (its gate lamp, its yard's " +
+		"5 lights and its dock front) all rain at once, within B1's 8 (%s; %d active)")
+		% [_names(depot), _rain.active_count()])
+	var wet: Array[String] = []
+	for index in range(_rain.volumes.size()):
+		var drops: GPUParticles3D = _rain.rain(index)
+		var half := (drops.process_material as ParticleProcessMaterial).emission_box_extents
+		if (drops.global_transform * AABB(-half, half * 2.0)).intersects(SHED_INSIDE):
+			wet.append(String(_rain.volumes[index].name))
+	_check(wet.is_empty(), "No rain volume's box reaches inside the transfer shed (%s)"
+		% ", ".join(wet))
 
 
 func _check_far_from_lamps() -> void:

@@ -14,6 +14,9 @@ block's that follows it, so a drift in the GPU's time over a minute cancels. It 
 budgets in CHANGE-BRIEF.md section 8, with a 95% interval from the cycles' spread. Several logs
 are read as one (their runs never overlap in time), so an effect measured in two runs pools its
 cycles. Frames a second, from the HUD's present intervals, are shown beside them for reference.
+The bigger depot's cases (game/tests/gpu_price_depot.gd, docs/PHASE_BRIEF.md rule D9: the whole
+shed, D9, and part 2's additions, P2) are read the same way and set against the depot's budget,
+outside the effects' total.
 """
 import re
 import statistics
@@ -21,6 +24,7 @@ import sys
 from datetime import datetime
 
 BUDGETS = {"A1": 0.25, "A2": 0.20, "B1": 0.70, "B2": 0.30}
+DEPOT_BUDGETS = {"D9": 1.5, "P2": 1.5}
 TOTAL_BUDGET = 1.45
 HUD = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+) .*metal-HUD: (.*)$")
 BLOCK = re.compile(r"GPU PRICE BLOCK\|(\w+)\|(on|off)\|cycle (\d+)\|time ([\d.]+)-([\d.]+)"
@@ -90,7 +94,7 @@ def main(*paths):
         "95% +/-", "state"))
     print("%-3s %-18s %6s %7s %7s" % ("", "", "", "shown", "hidden"))
     results = {}
-    for effect in BUDGETS:
+    for effect in {**BUDGETS, **DEPOT_BUDGETS}:
         mine = [b for b in blocks if b["effect"] == effect]
         if not mine:
             continue
@@ -124,15 +128,16 @@ def main(*paths):
         "fx", "price ms", "95% interval", "budget", "against it", "frames/s shown, hidden"))
     total, total_var = 0.0, 0.0
     for effect, (price, half, fps_on, fps_off) in results.items():
-        budget = BUDGETS[effect]
+        budget = BUDGETS.get(effect, DEPOT_BUDGETS.get(effect))
         low, high = price - half, price + half
         verdict = ("within" if high <= budget else "over" if low > budget
                    else "not settled at this precision")
-        total += price
-        total_var += (half / 1.96) ** 2
+        if effect in BUDGETS:
+            total += price
+            total_var += (half / 1.96) ** 2
         print("%-3s %10.3f %9.3f to %7.3f %8.2f  %-30s %.1f, %.1f" % (
             effect, price, low, high, budget, verdict, fps_on, fps_off))
-    if len(results) == len(BUDGETS):
+    if all(effect in results for effect in BUDGETS):
         half = 1.96 * total_var ** 0.5
         verdict = ("within" if total + half <= TOTAL_BUDGET else "over"
                    if total - half > TOTAL_BUDGET else "not settled at this precision")

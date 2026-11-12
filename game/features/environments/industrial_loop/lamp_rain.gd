@@ -9,6 +9,7 @@ const POST = preload("res://effects/lamp_rain_post.tscn")
 const STREET = preload("res://effects/lamp_rain_street.tscn")
 const FLOODLIGHT = preload("res://effects/lamp_rain_floodlight.tscn")
 const DOOR = preload("res://effects/lamp_rain_door.tscn")
+const DOCK = preload("res://effects/lamp_rain_dock.tscn")
 const RANGE := 65.0
 const MOST_ACTIVE := 8
 const POST_HEAD := Vector3(-1.9, 6.4, 0.0)

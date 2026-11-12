@@ -350,5 +350,45 @@ if (DEPOT / 'dock_door.glb').exists():
           'depot/dock_door.glb carries no textures (its wall is gone)')
     check((DEPOT / 'dock_door.glb').stat().st_size < FILE_LIMIT, 'The dock door file is under 25 MB')
 print(f'GEOMETRY: depot/dock_door.glb: {door_triangles} triangles')
+
+
+def image_size(data):
+    if data[:8] == b'\x89PNG\r\n\x1a\n':
+        return int.from_bytes(data[16:20], 'big'), int.from_bytes(data[20:24], 'big')
+    if data[:2] == b'\xff\xd8':
+        index = 2
+        while index < len(data) - 9:
+            marker = data[index + 1]
+            length = int.from_bytes(data[index + 2:index + 4], 'big')
+            if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+                return (int.from_bytes(data[index + 7:index + 9], 'big'),
+                        int.from_bytes(data[index + 5:index + 7], 'big'))
+            index += 2 + length
+    if data[:4] == b'RIFF':
+        return webp_size(data)
+    return (0, 0)
+
+
+DEPOT_MODELS = {'dock_seal.glb': (2000, False), 'dock_leveller.glb': (12000, True),
+                'forklift.glb': (12000, True), 'pallet_jack.glb': (8000, True),
+                'pallet.glb': (6000, True), 'carton.glb': (1000, True)}
+for name, (limit, textured) in DEPOT_MODELS.items():
+    triangles = 0
+    check((DEPOT / name).exists(), f'depot/{name} exists, made game-ready')
+    if not (DEPOT / name).exists():
+        continue
+    document, binary = gltf_parts(DEPOT / name)
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            triangles += document['accessors'][primitive['indices']]['count'] // 3
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(image_size(binary[start:start + view['byteLength']])))
+    check(0 < triangles < limit, f'depot/{name} bounded geometry (<{limit} triangles)')
+    check(bool(sizes) == textured and all(0 < size <= 1024 for size in sizes),
+          f'depot/{name} textures at most 1024 pixels ({len(sizes)})')
+    print(f'GEOMETRY: depot/{name}: {triangles} triangles, textures {sizes}')
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)
