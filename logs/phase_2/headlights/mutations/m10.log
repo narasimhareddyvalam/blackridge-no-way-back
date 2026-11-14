@@ -1,0 +1,40 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The van has two headlight SpotLight3Ds (found 2)
+PASS: Headlight 0 is on a layer the driving camera sees (layers 1, cull mask 15)
+PASS: Headlight 0 lights the world layer
+PASS: Headlight 0 casts shadows, which its pattern needs
+PASS: Headlight 0 uses the low-beam pattern
+PASS: Headlight 1 is on a layer the driving camera sees (layers 1, cull mask 15)
+PASS: Headlight 1 lights the world layer
+PASS: Headlight 1 casts shadows, which its pattern needs
+PASS: Headlight 1 uses the low-beam pattern
+PASS: Headlights start on, on low beams
+PASS: A real L press switches both headlights to high beams
+PASS: A second L press switches both headlights off
+PASS: A third L press brings the low beams back
+PASS: High beams reach 260 m, with more light than the low beams (1147 against 650)
+PASS: Low beams light the road to about 40 m ahead (4% of their light 10 m ahead) and fade out by 55 m (0.4%), the light gone by 70 m
+PASS: High beams light far up the road, above the low beam's cutoff, and keep the low beam's near light (59.7x brighter 1 degree above the horizon, 138% of it 8 degrees down)
+PASS: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 34972/40135 cd, (0.0, -2.0) 25590/24223 cd, (-10.0, 0.0) 4695/4703 cd, (10.0, 0.0) 5670/5562 cd, (0.0, 3.0) 2824/2739 cd, (20.0, 0.0) 929/921 cd, (0.0, -4.0) 13532/12715 cd, (-5.0, 1.5) 5223/4910 cd)
+PASS: High beams are as much brighter as the measured lamps: 40135 cd at their brightest against the low beam's 22740, energy 1147 against 650
+PASS: The low beam fades as a real one does: 4% of its centre at 20 degrees to the side, 4% on the ground just ahead
+PASS: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 21937/22740 cd, (0.0, -2.0) 14971/14705 cd, (-10.0, -2.0) 4426/4438 cd, (10.0, -2.0) 4426/4399 cd, (20.0, -1.0) 725/691 cd, (-5.0, -3.0) 6536/6481 cd, (0.0, -4.0) 5334/5157 cd, (0.0, 1.5) 483/446 cd)
+PASS: The headlights shine both patterns as drawn, not a stale import (largest difference 0 of 255)
+PASS: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 1.75% down (1.00 degrees below the horizon), within 1.5% to 2.0%
+PASS: The trunks' bark is darkened for the rain (the lightest bark is 60% of the dry texture)
+PASS: Rain falls through the beams, lit by the low and then the high pattern (8 layers)
+PASS: No rain shows in the dark with the lights off
+PASS: High beams show at least 3x as much rain as low beams (16.0 against 5.0)
+PASS: Each beam lights the rain-filled air it crosses, with its own pattern, reach and strength, on low and on high beams
+PASS: No haze shows with the headlights off
+PASS: The beams' air scatters as the street lamps' does (0.016 against 0.016)
+PASS: High beams are aimed level, as the measured lamps (-0.0 degrees)
+PASS: The headlamps light as real ones do, behind their clear covers: the low-beam projector on low beams, the high-beam reflector too on high beams, nothing with the lights off, so the housing and the indicator show through ({ "low": (1.0, 0.0), "high": (1.0, 1.0), "off": (0.0, 0.0) })
+FAIL: The oncoming van's headlamps are aimed, as bright and lit as the player's, on both beams
+HEADLIGHTS RESULT: 31/32 passed; 1 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+WARNING: 22 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

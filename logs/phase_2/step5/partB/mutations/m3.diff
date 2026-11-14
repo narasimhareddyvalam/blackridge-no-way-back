@@ -1,0 +1,4 @@
+63c63
+< const MILE := 1609.344
+---
+> const MILE := 1500.0

@@ -1,0 +1,12 @@
+GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75, headlights 2
+HUD lines 38, frames 1282
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+HHZ driver                  9     204     221     30.201     29.340     0.929     0.239  0 particles; -
+HLN driver                  9     225     223     28.874     28.896    -0.022     0.172  0 particles; -
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+HHZ      0.929     0.690 to   1.169        -  an option, no budget           31.9, 34.4
+HLN     -0.022    -0.194 to   0.150        -  an option, no budget           34.7, 34.9

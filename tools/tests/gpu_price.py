@@ -43,6 +43,9 @@ LIGHTING.update({view + step: None for view in "RV" for step in ("LA", "FR", "PR
 ## #277's puddles (tools/captures/trial_puddles.gd): PD rippled, PV with V3's reflections, PF the
 ## reflections across the whole wet film.
 LIGHTING.update({view + step: None for view in "RAD" for step in ("PD", "PV", "PF")})
+## #281's headlights (tools/captures/trial_headlights.gd), from the driver's seat: HZ haze in
+## the rain along the beams, LN the lit headlamp lens.
+LIGHTING.update({"HHZ": None, "HLN": None})
 TOTAL_BUDGET = 1.45
 HUD = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+) .*metal-HUD: (.*)$")
 BLOCK = re.compile(r"GPU PRICE BLOCK\|(\w+)\|(on|off)\|cycle (\d+)\|time ([\d.]+)-([\d.]+)"

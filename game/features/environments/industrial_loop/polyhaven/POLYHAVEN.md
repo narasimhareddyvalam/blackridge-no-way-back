@@ -24,3 +24,7 @@ Attribution is not required; authors are recorded for credits.
 | textures | [brushed_concrete_03](https://polyhaven.com/a/brushed_concrete_03) | Brushed Concrete 03 | 1k | Amal Kumar | 2727836 |
 | textures | [green_metal_rust](https://polyhaven.com/a/green_metal_rust) | Green Metal Rust | 1k | Rob Tuytel | 442141 |
 | textures | [leafy_grass](https://polyhaven.com/a/leafy_grass) | Leafy Grass | 1k | Charlotte Baglioni | 3671524 |
+| models | [can_rusted](https://polyhaven.com/a/can_rusted) | Can Rusted | 1k | Rahul Chaudhary | 2113689 |
+| models | [plastic_bottle_gallon](https://polyhaven.com/a/plastic_bottle_gallon) | Plastic Bottle Gallon | 1k | Rahul Chaudhary | 1385300 |
+| models | [wine_bottles_01](https://polyhaven.com/a/wine_bottles_01) | Wine Bottles 01 | 1k | Rico Cilliers, Jurita Burger | 3909317 |
+| models | [trashbag](https://polyhaven.com/a/trashbag) | Trashbag | 1k | Benny Weimer | 1699464 |

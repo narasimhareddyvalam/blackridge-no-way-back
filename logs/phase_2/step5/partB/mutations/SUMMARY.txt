@@ -1,0 +1,5 @@
+Part B mutations (#267), each on an APFS clone, test_roadside.gd at 60 fps, diffs beside:
+m1  valley delineators 120 m apart on straights, not 61     exit 1, 3/4: K1 (76 m at the widest)
+m2  the weathered speed limit at sample 30, not the start   exit 1, 3/4: K2
+m3  mile 1 at 1500 m, not 1609                            exit 1, 3/4: K3
+m4  the second branch left at a hairpin, not moved clear   exit 1, 3/4: K4 ("branch in a rail or wall")

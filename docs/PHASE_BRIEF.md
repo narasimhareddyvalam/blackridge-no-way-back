@@ -6287,3 +6287,146 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Known:** the town road stays darker than the author's street photo: that stretch has one
   small lamp, which lights little round it for the road to mirror; the photo's long streaks also
   come from glow and many lamps in a row, not kept or not there.
+
+## Revision 2026-11-13 (Phase 2, step 5 brought forward, part B: the forest highway's roadside (#267, #279), built)
+
+- **Delineators along the valley** (`ghat_dressing.gd`'s `_delineators()`, `_valley_step()`): white
+  posts with their reflectors on the verge, 200 ft (61 m) apart on straights, the MUTCD's rural
+  spacing, and S = 3 sqrt(R - 50) ft on curves (MUTCD 3F.04), never where a barrier stands nor in
+  a driveway, a plot's frontage (the world's flat plots, grown 2 m) or the shed's spur; 75 of
+  them. The climbs keep theirs every 26 m.
+- **Signs** (the road sign atlas, `tools/make_road_signs.py`, five cells added at its end so the
+  others keep theirs): a SPEED LIMIT 45 (R2-1, 24 x 30 in) at the loop's start, weathered
+  (faded, grime run down from its top, rust from its bolt holes, blended over it) and its post
+  leaning 4 degrees, and a clean one where the valley begins after the descent; two deer crossings
+  (W11-3, a 30 in diamond, a leaping deer); mile markers (D10-1, 10 x 36 in, white on green) at
+  the start and 1,609 m on. The first deer sign stood over the green guide sign 90 m from the start
+  in the first stills, and was moved 34 m past the speed limit.
+- **Branches and litter** (Poly Haven, CC0: Dry Branches Medium 01, and the new Can Rusted,
+  Plastic Bottle Gallon, Wine Bottles 01 (one bottle, on its side), Trashbag; the depot yard's
+  Old Tyre and Metal Trash Can): three branches on the verge, one just onto the asphalt's edge,
+  never more than 0.3 m into it; litter on the verges, none on the asphalt; each at the nearest
+  stretch of verge with no rail or wall on its side and away from hairpins and the lay-by (in
+  the first stills a branch lay in a hairpin's stone wall); a solid bin on the lay-by's open
+  side with a bag and a can beside it (the wall side would have cut 4 cm into its wall).
+- **Rules:** new `test_roadside.gd` K1-K4: the valley's delineators (K1), the speed limits (K2),
+  the deer signs and mile markers (K3), the branches, litter and bin, none in a rail or wall
+  (K4).
+- **Results** (`logs/phase_2/step5/partB/`): K4 caught the branch 0.53 m onto the asphalt and the
+  bag 0.24 m (moved out by their measured spread), then 4/4; `test_ghat_road.gd` 33/33; four
+  mutations exit 1 on their own checks (`mutations/SUMMARY.txt`); every suite (`suites/`).
+- **Stills** (`captures/roadside/partB/labelled_roadside.png`, `tools/captures/capture_roadside.gd`):
+  at night, lit by the van's own headlights 20 m back, from 6 m short of each item.
+- **Known:** the forest's trunks look pale where the headlights strike them.
+
+## Revision 2026-11-14 (the headlights (#280-#281), built)
+
+- **Found** (`tools/captures/trial_headlit_trunks.gd`, a probe in a game window): the headlights
+  alone whiten the trunks beside the road. At zero energy they go dark, and a plain 8% bark
+  still nearly whitens, because C44's low beam kept full strength out to 9 degrees each side.
+  Raising AgX's white point did not help.
+- **The measured low beam** (C60): `tools/make_low_beam_pattern.py` now draws the pattern from
+  UMTRI-2004-23's measured medians (`tools/data/umtri_2004_23_low_beam_medians.csv`, Table 4's
+  middle rows: the low beams of the 20 best-selling US cars of 2004, 45L-45R by 7U-5D). It
+  interpolates in log10 between the measured points, falls 0.06 decades a degree below 5D and
+  0.05 a degree above 7U. The brightest point is 22,740 cd at 1D 1R; 10 degrees to each side
+  gives about an eighth of it.
+- **The aim:** the low beams are 0.5 degrees down (`LOW_BEAM_TILT`, was 2 for both beams), so
+  the hot spot at 1D lands 38 m ahead from the lamps' 0.99 m, where the study's 0.66 m lamps put
+  it. High beams keep 2 degrees (`HIGH_BEAM_TILT`), set in `_aim_beam` with each switch.
+- **Haze in the rain:** each headlight carries a `Mist` box 40 m deep
+  (`freight_van/beam_mist.gdshader`, the street lamps' `lamp_mist.gdshader` with the beam's
+  pattern in place of its round cone), scattering as the lamps' (0.016). `_aim_beam` gives it
+  the beam's pattern, reach and strength; it hides with the lights.
+- **Not used:** the lit lens (not chosen); "Spatial Light Shaft" (CC0), tried first for the
+  haze, did not show from the driver's seat.
+- **Rules:** `test_headlights.gd` (C44's and C45's checks restated on the road in the aimed
+  lamp's angles):
+  - the road at the lane's centre gets at least 5% of its 10 m light at 40 m and under 2% at
+    55 m (was the pattern's 10% edge);
+  - 20 degrees to the side is at most a quarter of the centre at 1D, and 15D at most a tenth;
+  - new: the pattern matches the measured medians within 20% at eight test points;
+  - new: the hot spot lands within 10% of the study's 38 m;
+  - new: the mist follows each beam, is hidden with the lights off and scatters as the lamps'
+    air does;
+  - new: high beams keep their 2 degrees;
+  - new: the lamps shine the pattern as drawn. The first stills of the build showed the old
+    beam with a far stronger haze: Godot's imported copy of the PNG was still the one from
+    November 3, since a headless run does not re-import, and the tests had read the PNG
+    itself. The check compares the lamp's own texture with the PNG. Re-imported with
+    `Godot --headless --path game --import`.
+- **Results** (`logs/phase_2/headlights/`):
+  - before: 21/27 (six new checks fail); after: 28/28;
+  - six mutations exit 1 on their own checks, m6 a stale import (`mutations/SUMMARY.txt`);
+  - the trial's GPU price, on battery: haze 0.93 ms (+/- 0.24), lens -0.02 ms
+    (`trial/price.txt`).
+- **Stills:** the trial `captures/headlights/trial/labelled_headlights.png`; the trunks
+  `captures/headlit_trunks/trial/labelled_headlit_trunks.png`; the build, before and now,
+  `captures/headlights/built/before_and_now.png` (the roadside's stills again in `built/`).
+
+## Revision 2026-11-14 (the headlamps and the high beam (#282), built)
+
+- **The holes** (C61): lit, the headlamp's lens (`Headlights`, the clear cover and the lamp
+  parts behind it) was one flat white glow (`Build.luminous`), so the indicator in its outer
+  corner showed as a dark hole and the reflectors vanished. Measured from the lens mesh: the
+  low beam's projector lens at (0.708, 1.006), 24 mm in radius; the high beam's reflector bowl
+  at (0.792, 1.077), 65 mm, both in the mesh's own space, mirrored.
+- **Lit as real lamps:** `freight_van/headlamp_lens.gdshader` keeps the cover glass (the
+  model's own texture, metallic and roughness) and lights only what is on:
+  - low beams: the projector, its glow spreading 1.4 times its radius;
+  - high beams: the bowl too, brightest at its bulb, falling off toward its rim, each 15 mm
+    facet a little brighter or dimmer;
+  - lights off: nothing.
+  `VanPresentation.lit_lens()` and `light_lens()` set it on both vans.
+- **The measured high beam:** `tools/make_high_beam_pattern.py` now adds UMTRI-2001-19's
+  measured US high beam (`tools/data/umtri_2001_19_us_high_beam_medians.csv`, Table 6's
+  medians: the best-selling 2000 US cars, brightest 39,590 cd at H 1R) to the measured low
+  beam, which stays lit, drawn 0.5 degrees lower for its aim.
+  - The brightest point of the two is 41,981 cd, 1.846 times the low beam's, so
+    `HIGH_BEAM_ENERGY` is 1,200 (was 850).
+  - High beams are aimed level, as the high beams were measured (`HIGH_BEAM_TILT` 0, was 2
+    degrees down).
+  - The generators share `make_low_beam_pattern.py`'s reading and interpolation.
+- **The oncoming van:** its lamps take the van's aims and energies for each beam (it had 650
+  and 2 degrees down on both) and the same lit lens.
+- **Rules:** `test_headlights.gd` now has 32 checks. New or changed:
+  - the high beam matches the measured high beam plus the low beam within 20% at eight points;
+  - its energy over the low beam's matches their brightest points within 2%;
+  - high beams are aimed level;
+  - the high beams' light 1 degree above the horizon is over 3 times the low beam's, and 8
+    degrees down at least 97% of it (texture times energy);
+  - the lens: the projector lit on low, the bowl too on high, nothing off, and the cover clear;
+  - the oncoming van matches the player's on both beams;
+  - both patterns as drawn, not stale imports.
+- **Results** (`logs/phase_2/headlights/`):
+  - before: 27/32 (five checks fail); after: 32/32; `test_oncoming_van.gd` 21/21;
+  - eleven mutations exit 1 on their own checks (`mutations/SUMMARY.txt`);
+  - the high-beam PNG's import was stale until re-imported, which the extended check caught
+    (208 of 255).
+- **Stills:** `captures/headlights/r2/labelled_headlamps.png` (before, low, high, off: the
+  headlamp close, the driver's seat, the van from 7 m), by `tools/captures/capture_headlights.gd`.
+
+## Revision 2026-11-14 (the low beams' reach (#283), built)
+
+- **Asked:** "low beams shouldnt make that much road visible."
+- **Found** (`tools/captures/trial_low_reach.gd`, stills in `captures/headlights/reach_trial/`):
+  the road's brightness from the driver's seat every 10 m. The measured beam aimed 0.5 degrees
+  down lit the road at 40-50 m more than C45's beam did. The haze adds mostly near the van. The
+  aim decides the far road.
+- **The aim** (C62): UN Regulation 48, 6.2.6.1.2, sets the dipped beam's initial aim by the lamp's
+  lower edge. These lamps' edge is 0.91 m up (measured from the lens mesh to the road), where R48
+  allows -1.0% to -1.5% or, at the manufacturer's discretion, -1.5% to -2.0%. The cutoff is
+  aimed at -1.75%, the middle of the second, so `LOW_BEAM_TILT` is -1.25 (was -0.5). The
+  measured beam's own cutoff, the steepest fall at V, sits 0.25 degrees up.
+- **The high beam** keeps the low beam lit at that aim: `tools/make_high_beam_pattern.py`'s
+  `LOW_TILT` is -1.25. The two together are brightest at 40,135 cd, 1.765 times the low beam's,
+  so `HIGH_BEAM_ENERGY` is 1,147 (was 1,200).
+- **Rules** (`test_headlights.gd`, 32 checks):
+  - the aim check is now R48's: the cutoff's inclination lies within the band for the lens's
+    measured height (it was the hot spot landing where the study's lamps put it);
+  - C45's reach check is relaxed from 5% at 40 m and 2% at 55 m to 3% and 1%. C45's own beam
+    gave 0.3% at 40 m, and the author asked for less road than the 8% at 0.5 degrees. Now: 4%
+    and 0.4%.
+- **Results:** before: 29/32 (the R48 aim and the two high-beam checks fail); after: 32/32.
+- **Stills:** `captures/headlights/r3/labelled_low_reach.png` (C45's beam, last time, now low
+  and high, from outside, lights off).

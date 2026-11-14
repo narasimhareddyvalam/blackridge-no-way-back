@@ -1,0 +1,4 @@
+56c56
+< const VALLEY_TANGENT := 61.0
+---
+> const VALLEY_TANGENT := 120.0

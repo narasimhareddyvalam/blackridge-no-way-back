@@ -1,0 +1,28 @@
+#281 mutations, each on an APFS clone, test_headlights.gd at 60 fps:
+m1  the low beams aimed 2 degrees down, as before           exit 1, 30/32 passed; 2 failed
+      FAIL: Low beams light the road to about 40 m ahead (0% of their light 10 m ahead) and fade out by 55 m (0.0%), the l
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 3.06% down (1.75 degrees below 
+m2  the old pattern back (git's low_beam_pattern.png)       exit 1, 29/32 passed; 3 failed
+      FAIL: Low beams light the road to about 40 m ahead (2% of their light 10 m ahead) and fade out by 55 m (0.2%), the l
+      FAIL: High beams light far up the road, above the low beam's cutoff, and keep the low beam's near light (44.8x brigh
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 20572/22740 c
+m3  no mist on the headlights                               exit 1, 29/32 passed; 3 failed
+      FAIL: Each beam lights the rain-filled air it crosses, with its own pattern, reach and strength, on low and on high 
+      FAIL: No haze shows with the headlights off
+      FAIL: The beams' air scatters as the street lamps' does (-1.000 against 0.016)
+m4  the beams' air scattering twice the lamps'              exit 1, 31/32 passed; 1 failed
+      FAIL: The beams' air scatters as the street lamps' does (0.032 against 0.016)
+m5  the mist keeps the low beam's pattern on high beams     exit 1, 31/32 passed; 1 failed
+      FAIL: Each beam lights the rain-filled air it crosses, with its own pattern, reach and strength, on low and on high 
+m6  a stale import: the old pattern's imported copy, the new PNG exit 1, 31/32 passed; 1 failed
+      FAIL: The headlights shine both patterns as drawn, not a stale import (largest difference 174 of 255)
+m7  high beams aimed 2 degrees down, as before              exit 1, 31/32 passed; 1 failed
+      FAIL: High beams are aimed level, as the measured lamps (-2.0 degrees)
+m8  high beams at 850, as before                            exit 1, 31/32 passed; 1 failed
+      FAIL: High beams are as much brighter as the measured lamps: 40135 cd at their brightest against the low beam's 2274
+m9  the lamp one flat glow again                            exit 1, 31/32 passed; 1 failed
+      FAIL: The headlamps light as real ones do, behind their clear covers: the low-beam projector on low beams, the high-
+m10  the oncoming van's lamps at 650 on both beams           exit 1, 31/32 passed; 1 failed
+      FAIL: The oncoming van's headlamps are aimed, as bright and lit as the player's, on both beams
+m11  the old high-beam pattern back (git's high_beam_pattern.png) exit 1, 31/32 passed; 1 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 40135

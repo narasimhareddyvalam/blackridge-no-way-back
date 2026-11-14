@@ -233,7 +233,8 @@ func _ground_and_roads() -> void:
 	dressing.name = "GhatDressing"
 	add_child(dressing)
 	var openings: Array[Vector3] = [TransferShed.road_opening()]
-	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS, openings)
+	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS, openings,
+		_flat_plots())
 	var yard := ShaderMaterial.new()
 	yard.shader = ASPHALT
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)

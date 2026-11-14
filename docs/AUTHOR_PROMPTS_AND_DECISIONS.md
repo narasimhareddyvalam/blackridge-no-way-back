@@ -3851,6 +3851,92 @@ tag `a5`. Pictures the author approved or rejected are filed in
        on to part B (the forest highway's roadside).
      - **The author's message:** "okay"
 
+280. **Part B shown; more kinds of tree, the pale trunks**
+     - **Claude Code's report:** part B, the forest highway's roadside, built and tested
+       (`test_roadside.gd` 4/4, four mutations exit 1, every suite exit 0), shown in
+       `captures/roadside/partB/labelled_roadside.png`; noticed that the tree trunks look pale
+       where the headlights strike them, not changed.
+     - **The author's message:** "also add different types of trees instead of only one? change
+       it into more realistic - One thing I noticed: where the headlights hit them, the tree
+       trunks look quite pale. I haven't changed that."
+     - **Asked:** which forest, how the trees are made, and whether a game window may open to
+       measure a headlit trunk; the author chose "Pacific Northwest (Recommended)" (Douglas fir,
+       western hemlock, western red cedar, red alder and bigleaf maple, bare and mossy in the
+       cold season), "Real models near the road (Recommended)" (detailed free models within 20 m
+       of the road, the code-built trees behind) and "Yes, open it (Recommended)".
+
+281. **The headlit trunks measured; the headlights made more realistic**
+     - **Claude Code's report:** a probe in a game window showed the headlights alone whiten the
+       trunks (at zero energy they go dark; even a plain 8% bark nearly whitens), because the
+       low beam stays at full strength to 9 degrees each side, where ECE R112's low beam gives
+       about a fifth; AgX's white point did not help; the trial
+       (`tools/captures/trial_headlit_trunks.gd`) shown as
+       `captures/headlit_trunks/trial/labelled_headlit_trunks.png` (1 now, brightest trunk
+       217/255; 2 real side fall-off, 155/255); asked which beam to use.
+     - **The author's message** (in place of an answer): "also make the headlights more
+       realistic with shaders add texture maybe. see if there are already shaders existing to
+       use maybe idk?"
+     - **Claude Code's research:** Godot 4.7.2 has no IES profiles (a measured profile is turned
+       into a spotlight's projector texture instead); UMTRI-2004-23 (Schoettle, Sivak,
+       Flannagan and Kosmatka, University of Michigan, 2004) tabulates the measured low beams of
+       the best-selling US cars from 45L to 45R and 7U to 5D; existing free Godot shaders for a
+       visible beam ("Spatial Light Shaft" by absentSpaghetti and "Fake Godrays" by Ivan Isaev,
+       both CC0, godotshaders.com); no Godot headlamp lens shader found.
+     - **Asked** which to try (A the measured beam, B beam haze in the rain, C a lit headlamp lens,
+       D the trial's ECE beam); **the author's answer:** "can i see picture of all to select
+       one??"
+     - **Claude Code's report:** all five tried on the running game
+       (`tools/captures/trial_headlights.gd`, no game file changed) and shown as
+       `captures/headlights/trial/labelled_headlights.png`: 1 now; A the measured beam (the
+       pattern from UMTRI-2004-23's medians, aimed 0.75 degrees down for lamps 1.15 m up; free);
+       D the ECE beam (free); B A with haze in the rain (the street lamps' own mist shader
+       given the beam's pattern; 0.93 ms of GPU time, measured on battery); C A with a lit lens
+       (a bright core and reflector facets; no measurable cost). "Spatial Light Shaft" (CC0)
+       was tried first for B and did not show from the driver's seat, behind its cone's tip.
+     - **Asked** which beam and which add-ons; **the author chose** "A. Measured beam
+       (Recommended)" and, of the add-ons, "B. Haze in the rain" (not C, the lit lens).
+     - **Built** (decision C60): the measured low beam aimed 0.5 degrees down, haze on each
+       headlight; `test_headlights.gd` 28/28, six mutations exit 1 (one a stale import, which
+       the first stills of the build had shown), 40 suite runs exit 0; shown
+       `captures/headlights/built/before_and_now.png`.
+
+282. **Holes in the headlamps; the beams on the road, low and high as in real life**
+     - **Claude Code's report:** the measured low beam and the haze built (C60), shown
+       `captures/headlights/built/before_and_now.png`; asked for the author's look and the OK to
+       commit.
+     - **The author's message:** "there are also holes in the headlights of the van when we look
+       from outside. and also make sure the focus is on the road and make sure low beam and high
+       beam works correctly as if in real life."
+     - **Built** (decision C61): the headlamps lit behind a clear cover (the projector on low
+       beams, the reflector too on high beams), the measured US high beam of UMTRI-2001-19 with
+       the low beam still lit, aimed level, energy 1,200; the oncoming van the same;
+       `test_headlights.gd` 32/32, eleven mutations exit 1, 40 suite runs exit 0; shown
+       `captures/headlights/r2/labelled_headlamps.png`. Claude Code's calls, reported: the low
+       beam stays lit under the high beam (not confirmed for the 2014 Daily), and "the focus on
+       the road" read as the beams' light.
+
+283. **Low beams light too much road**
+     - **Claude Code's report:** the lit headlamps and the measured high beam (C61), shown in
+       `captures/headlights/r2/labelled_headlamps.png`; asked for the author's look and the OK
+       to commit.
+     - **The author's message:** "low beams shouldnt make that much road visible."
+     - **Built** (decision C62): the road's brightness measured every 10 m for five aims and the
+       haze (`tools/captures/trial_low_reach.gd`); the low beams aimed as UN Regulation 48
+       allows lamps 0.91 m up, cutoff 1.75% down (1.25 degrees, was 0.5), the high beam's energy
+       1,147; `test_headlights.gd` 32/32 with R48's aim check and C45's reach check relaxed to 3%
+       at 40 m; shown `captures/headlights/r3/labelled_low_reach.png`.
+
+284. **The low beams kept; what next**
+     - **Claude Code's report:** the low beams aimed as UN R48 allows (C62), 11 mutations exit 1,
+       40 suite runs exit 0; asked whether the reach is right and for the OK to commit.
+     - **The author's message:** "alright lets keep that for now. whats next"
+
+285. **Proceed: commit, then everything next**
+     - **Claude Code's report:** what is next: commit part B and the headlights (44 files), the
+       Pacific Northwest trees (#280), part C (the town, #267), then step 3 part 2 and step 4;
+       asked whether to commit and start the trees.
+     - **The author's message:** "alright proceed. finish everything and tell me"
+
 ## Waiting for the author
 
 - Step 2f (#243–#248): part 1 built, with A (smooth on foot), B (the rear doors by Ethan) and C

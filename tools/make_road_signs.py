@@ -2,7 +2,11 @@
 
 Each 256-pixel cell holds one sign face, four to a row. Warning signs are black on yellow
 diamonds, chevrons and advisory-speed plates are black on yellow rectangles, ROAD CLOSED is
-black on white, SCENIC VIEW is white on brown, and the bus stop flag is white on blue.
+black on white, SCENIC VIEW is white on brown, and the bus stop flag is white on blue. Added
+for #267's roadside (MUTCD sizes): the SPEED LIMIT 45 regulatory sign (R2-1, 24 x 30 in, black
+on white, drawn in a 30 in cell), also weathered (faded, grimed, rust from its bolt holes); the
+deer crossing (W11-3, a leaping deer on a yellow diamond); mile markers 0 and 1 (D10-1, white on
+green, 10 x 36 in, drawn in a 36 in cell).
 Corners outside each sign are transparent.
 
 Usage, from the repository root:
@@ -26,7 +30,8 @@ CELLS = ["hairpin_left", "hairpin_right", "curve_left", "curve_right",
          "chevron_left", "chevron_right", "speed_15", "speed_20",
          "speed_25", "steep_grade", "grade_9", "road_closed",
          "landslide", "scenic_view", "low_gear", "pedestrian",
-         "ahead", "arrow_down_left", "bus_stop", "blank"]
+         "ahead", "arrow_down_left", "bus_stop", "blank",
+         "limit_45", "limit_45_weathered", "deer_crossing", "mile_0", "mile_1"]
 
 
 def font(size):
@@ -177,6 +182,103 @@ def bus_stop(draw):
         draw.text((128 - width / 2, y), line, font=face, fill=WHITE)
 
 
+GREEN = (0, 104, 56, 255)
+RUST = (122, 64, 30)
+
+
+def regulatory(draw, lines, sizes):
+    """A portrait 24 x 30 in sign in a 30 in cell: white, a black border, black words."""
+    width = round(CELL * 24 / 30)
+    left = (CELL - width) // 2
+    draw.rounded_rectangle((left, 2, left + width - 1, CELL - 3), radius=10, fill=WHITE)
+    draw.rounded_rectangle((left + 7, 9, left + width - 8, CELL - 10), radius=7, outline=BLACK,
+                           width=5)
+    tops = [44, 98, 168]
+    for line, size, top in zip(lines, sizes, tops):
+        draw.text((CELL / 2, top), line, fill=BLACK, font=font(size), anchor="mm")
+    return left, width
+
+
+def weather(cell, left, width):
+    """Years of sun and road grime: faded toward grey, soft dark streaks run down from its top,
+    rust from its two bolt holes; each blended over the sign, never cutting through it."""
+    import random
+    random.seed(45)
+    pixels = cell.load()
+    for y in range(CELL):
+        for x in range(left, left + width):
+            r, g, b, a = pixels[x, y]
+            if a == 0:
+                continue
+            fade = 0.8 + 0.06 * math.sin(x * 0.05 + y * 0.02)
+            r, g, b = (round(c * fade + 205 * (1 - fade)) for c in (r, g, b))
+            pixels[x, y] = (min(255, r + 6), min(255, g + 4), b, a)
+    grime = Image.new("RGBA", (CELL, CELL), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(grime)
+    for _ in range(18):
+        x = random.randint(left + 10, left + width - 10)
+        length = random.randint(40, 150)
+        for step in range(length):
+            shade = round(46 * (1 - step / length))
+            draw.point((x + round(math.sin(step * 0.08) * 1.5), 12 + step),
+                       fill=(96, 90, 78, shade))
+            draw.point((x + 1 + round(math.sin(step * 0.08) * 1.5), 12 + step),
+                       fill=(96, 90, 78, shade // 2))
+    for hole in (18, CELL - 18):
+        cx = CELL // 2
+        draw.ellipse((cx - 4, hole - 4, cx + 4, hole + 4), fill=(60, 60, 58, 255))
+        for _ in range(4):
+            dx = random.randint(-5, 5)
+            run = random.randint(10, 30)
+            for step in range(run):
+                draw.point((cx + dx, hole + 4 + step), fill=RUST + (round(120 * (1 - step / run)),))
+    mask = Image.new("L", (CELL, CELL), 0)
+    mask.paste(cell.split()[3])
+    grime.putalpha(Image.composite(grime.split()[3], Image.new("L", (CELL, CELL), 0), mask))
+    cell.alpha_composite(grime)
+
+
+def ellipse_points(cx, cy, rx, ry, turn, count=28):
+    return [(cx + rx * math.cos(t) * math.cos(turn) - ry * math.sin(t) * math.sin(turn),
+             cy + rx * math.cos(t) * math.sin(turn) + ry * math.sin(t) * math.cos(turn))
+            for t in (2 * math.pi * k / count for k in range(count))]
+
+
+def limb(draw, points, width):
+    draw.line(points, fill=BLACK, width=width, joint="curve")
+    for x, y in (points[0], points[-1]):
+        draw.ellipse((x - width / 2, y - width / 2, x + width / 2, y + width / 2), fill=BLACK)
+
+
+def deer(draw):
+    """The W11-3 leaping deer, leaping to the left: its body tilted up into the leap, its neck
+    rising to its head and antlers, its forelegs tucked forward, its hind legs stretched back."""
+    draw.polygon(ellipse_points(132, 124, 46, 19, -0.28), fill=BLACK)
+    draw.polygon([(96, 118), (84, 92), (78, 82), (90, 78), (104, 100), (112, 116)], fill=BLACK)
+    draw.polygon(ellipse_points(78, 80, 13, 7, -0.5), fill=BLACK)
+    draw.polygon([(66, 82), (60, 88), (66, 89)], fill=BLACK)
+    limb(draw, [(84, 72), (80, 58), (72, 50)], 4)
+    limb(draw, [(80, 60), (88, 52)], 3)
+    limb(draw, [(88, 70), (92, 56), (100, 50)], 4)
+    limb(draw, [(91, 58), (86, 50)], 3)
+    limb(draw, [(104, 132), (86, 140), (74, 150)], 7)
+    limb(draw, [(112, 134), (98, 148), (88, 162)], 7)
+    limb(draw, [(168, 120), (190, 140), (212, 152)], 8)
+    limb(draw, [(162, 128), (182, 150), (198, 168)], 8)
+    draw.polygon([(176, 110), (190, 100), (188, 112)], fill=BLACK)
+
+
+def milepost(draw, number):
+    """A D10-1 reference post sign, 10 x 36 in, in a 36 in cell: white on green."""
+    width = round(CELL * 10 / 36)
+    left = (CELL - width) // 2
+    draw.rounded_rectangle((left, 2, left + width - 1, CELL - 3), radius=6, fill=GREEN)
+    draw.rounded_rectangle((left + 4, 6, left + width - 5, CELL - 7), radius=4, outline=WHITE,
+                           width=3)
+    draw.text((CELL / 2, 46), "MILE", fill=WHITE, font=font(16), anchor="mm")
+    draw.text((CELL / 2, 140), str(number), fill=WHITE, font=font(62), anchor="mm")
+
+
 def main():
     rows = (len(CELLS) + COLUMNS - 1) // COLUMNS
     atlas = Image.new("RGBA", (CELL * COLUMNS, CELL * rows), (0, 0, 0, 0))
@@ -211,6 +313,15 @@ def main():
             text_cell(draw, ["AHEAD"], YELLOW, BLACK, BLACK, [58])
         elif name == "arrow_down_left":
             arrow_down_left(draw)
+        elif name.startswith("limit_45"):
+            left, width = regulatory(draw, ["SPEED", "LIMIT", "45"], [38, 38, 84])
+            if name.endswith("weathered"):
+                weather(cell, left, width)
+        elif name == "deer_crossing":
+            diamond(draw)
+            deer(draw)
+        elif name.startswith("mile_"):
+            milepost(draw, int(name.split("_")[1]))
         elif name == "bus_stop":
             bus_stop(draw)
         atlas.paste(cell, ((index % COLUMNS) * CELL, (index // COLUMNS) * CELL))

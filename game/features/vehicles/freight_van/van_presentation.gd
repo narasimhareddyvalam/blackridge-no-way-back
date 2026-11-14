@@ -96,6 +96,8 @@ const ROOF_SLOPE := Vector2(0.0, -0.05)
 const ROOF_AIR := 0.8
 const LOOK_UP := 1.05
 const BEAM_RAIN = preload("beam_rain.gdshader")
+const BEAM_MIST = preload("beam_mist.gdshader")
+const HEADLAMP_LENS = preload("headlamp_lens.gdshader")
 const RAIN_LAYERS: Array[float] = [3.0, 4.5, 6.5, 9.0, 12.5, 17.0, 23.0, 31.0]
 const LAMP_FRONT := -2.31
 const RAIN_SLANT := 0.08
@@ -111,7 +113,11 @@ const HIGH_BEAM = preload("art/high_beam_pattern.png")
 const LOW_BEAM_RANGE := 70.0
 const HIGH_BEAM_RANGE := 260.0
 const LOW_BEAM_ENERGY := 650.0
-const HIGH_BEAM_ENERGY := 850.0
+const HIGH_BEAM_ENERGY := 1147.0
+const LOW_BEAM_TILT := -1.25
+const HIGH_BEAM_TILT := 0.0
+const BEAM_MIST_DEPTH := 40.0
+const BEAM_MIST_SCATTERING := 0.016
 const WipeMap = preload("windshield_wipe_map.gd")
 const Wiper = preload("wiper.gd")
 const VanParticles = preload("van_particles.gd")
@@ -247,7 +253,7 @@ var _seal := Build.material(Color("0b0d0f"), 0.55)
 var _amber := Build.luminous(Color("ff9e30"), 1.2)
 var _red := Build.luminous(Color("e1442e"))
 var _tail := Build.luminous(Color("68251e"))
-var _lens_on := Build.luminous(Color("e9ebdc"), 2.0)
+var _lens_on := ShaderMaterial.new()
 var _lens_reversing := Build.luminous(Color("f4f1e6"), 2.5)
 
 
@@ -320,12 +326,12 @@ func _exterior() -> void:
 	for side in [-1, 1]:
 		var headlight := SpotLight3D.new()
 		headlight.position = Vector3(side * HEADLIGHT.x, HEADLIGHT.y, HEADLIGHT.z)
-		headlight.rotation_degrees.x = -2.0
 		headlight.light_color = Color("fff0db")
 		headlight.spot_angle = 35.0
 		headlight.spot_angle_attenuation = 0.2
 		headlight.spot_attenuation = 1.0
 		headlight.shadow_enabled = true
+		_beam_mist(headlight)
 		_aim_beam(headlight, false)
 		headlight.light_cull_mask = 1
 		_body.add_child(headlight)
@@ -1101,6 +1107,56 @@ func _aim_beam(headlight: SpotLight3D, high: bool) -> void:
 	headlight.light_projector = HIGH_BEAM if high else LOW_BEAM
 	headlight.spot_range = HIGH_BEAM_RANGE if high else LOW_BEAM_RANGE
 	headlight.light_energy = HIGH_BEAM_ENERGY if high else LOW_BEAM_ENERGY
+	headlight.rotation_degrees.x = HIGH_BEAM_TILT if high else LOW_BEAM_TILT
+	var air := (headlight.get_node("Mist") as MeshInstance3D).material_override as ShaderMaterial
+	var colour := headlight.light_color.srgb_to_linear() * headlight.light_energy
+	air.set_shader_parameter("light_colour", Vector3(colour.r, colour.g, colour.b))
+	air.set_shader_parameter("pattern", headlight.light_projector)
+	air.set_shader_parameter("light_range", headlight.spot_range)
+
+
+static func lit_lens(lens: MeshInstance3D) -> ShaderMaterial:
+	var glass := lens.mesh.surface_get_material(0) as BaseMaterial3D
+	var lit := ShaderMaterial.new()
+	lit.shader = HEADLAMP_LENS
+	if glass != null:
+		lit.set_shader_parameter("glass_texture", glass.albedo_texture)
+		lit.set_shader_parameter("glass_colour", glass.albedo_color)
+		lit.set_shader_parameter("glass_metallic", glass.metallic)
+		lit.set_shader_parameter("glass_roughness", glass.roughness)
+	lens.material_override = lit
+	return lit
+
+
+static func light_lens(lit: ShaderMaterial, low: bool, high: bool) -> void:
+	lit.set_shader_parameter("low_lit", 1.0 if low else 0.0)
+	lit.set_shader_parameter("high_lit", 1.0 if high else 0.0)
+
+
+func _light_lens(lens: MeshInstance3D, low: bool, high: bool) -> void:
+	if lens.material_override != _lens_on:
+		_lens_on = lit_lens(lens)
+	light_lens(_lens_on, low, high)
+
+
+func _beam_mist(headlight: SpotLight3D) -> void:
+	var radius := BEAM_MIST_DEPTH * tan(deg_to_rad(headlight.spot_angle))
+	var air := ShaderMaterial.new()
+	air.shader = BEAM_MIST
+	air.set_shader_parameter("half_size", Vector3(radius, radius, BEAM_MIST_DEPTH * 0.5))
+	air.set_shader_parameter("tan_half", tan(deg_to_rad(headlight.spot_angle)))
+	air.set_shader_parameter("light_decay", headlight.spot_attenuation)
+	air.set_shader_parameter("scattering", BEAM_MIST_SCATTERING)
+	air.set_shader_parameter("fade_begin", 1.0e6)
+	var box := BoxMesh.new()
+	box.size = Vector3(radius * 2.0, radius * 2.0, BEAM_MIST_DEPTH)
+	var mist := MeshInstance3D.new()
+	mist.name = "Mist"
+	mist.mesh = box
+	mist.material_override = air
+	mist.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mist.position = Vector3(0.0, 0.0, -BEAM_MIST_DEPTH * 0.5)
+	headlight.add_child(mist)
 
 
 func _moon_roof() -> void:
@@ -1488,7 +1544,7 @@ func update_vehicle(delta: float) -> void:
 			_aim_beam(headlight, _high_beams_shown)
 	_light_the_rain()
 	for lens in _front_lenses:
-		lens.material_override = _lens_on if vehicle.headlights_on else null
+		_light_lens(lens, vehicle.headlights_on, vehicle.headlights_on and vehicle.high_beams)
 	var reversing: bool = vehicle.gear < 0 and vehicle.engine_on
 	_reverse_lenses.visible = reversing
 	for lamp in _reverse_lights:
