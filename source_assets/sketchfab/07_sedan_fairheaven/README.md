@@ -12,5 +12,7 @@
 - **Contents:** 19,703 faces. Its textures are larger than the game needs and are to be
   reduced in its game files.
 - **Branding:** The author's own made-up "Fairheaven" badges and number plates; the plates are to be replaced.
-- **Game files:** not made yet; the depot's build step makes slimmed copies.
+- **Game files:** `game/features/environments/industrial_loop/art/town/sedan.glb`, made by
+  `tools/art/convert_town_models.py -- sedan` on 2026-11-14 (11,350 triangles), parked on main
+  street (#267, part C); its plates kept, the author's own made-up ones.
 - **Git:** `.gitignore` keeps these files out of Git; only this README is tracked.

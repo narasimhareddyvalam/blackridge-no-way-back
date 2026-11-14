@@ -63,6 +63,8 @@ var roadside_mature: int = 0
 var species := {}
 var collision_area: Rect2
 var _models := {}
+## Plots cleared without moving any other tree: a tree there is drawn, then left out.
+var _cleared_after: Array[Rect2] = []
 var sapling_count: int = 0
 var collider_count: int = 0
 var _blocked := PackedByteArray()
@@ -75,7 +77,9 @@ var _clearance: float = 0.0
 
 
 func build(_road_points: PackedVector3Array, clearance: float, clearings: Array[Rect2],
-		area: Rect2, collision_area: Rect2, seed_value: int, terrain: Node3D) -> void:
+		area: Rect2, collision_area: Rect2, seed_value: int, terrain: Node3D,
+		cleared_after: Array[Rect2] = []) -> void:
+	_cleared_after = cleared_after
 	_area = area
 	_terrain = terrain
 	self.collision_area = collision_area
@@ -172,11 +176,13 @@ func _build_saplings(seed_value: int, bark: Material, needles: Material) -> void
 				var turn := Basis(Vector3.UP, rng.randf() * TAU).scaled(
 					Vector3.ONE * rng.randf_range(0.8, 1.25))
 				var ground := _ground(px, pz) + 0.02
-				tiles[tile]["transforms"][variant].append(
-					Transform3D(turn, Vector3(px - centre.x, ground, pz - centre.y)))
 				var shade := rng.randf_range(0.85, 1.1)
-				tiles[tile]["colours"][variant].append(Color(shade, shade, shade, 1.0))
-				sapling_count += 1
+				if not _cleared_after.any(func(plot: Rect2) -> bool:
+						return plot.has_point(Vector2(px, pz))):
+					tiles[tile]["transforms"][variant].append(
+						Transform3D(turn, Vector3(px - centre.x, ground, pz - centre.y)))
+					tiles[tile]["colours"][variant].append(Color(shade, shade, shade, 1.0))
+					sapling_count += 1
 			z += CELL
 		x += CELL
 	for tile: Vector2i in tiles:
@@ -230,6 +236,9 @@ func _place(tiles: Dictionary, x: float, z: float, rng: RandomNumberGenerator,
 	var ground := _ground(x, z)
 	var shade := rng.randf_range(0.78, 1.05)
 	var tint := rng.randf_range(0.96, 1.04)
+	for plot in _cleared_after:
+		if plot.has_point(Vector2(x, z)):
+			return
 	var placed := Transform3D(lean * turn, Vector3(x - centre.x, ground, z - centre.y))
 	var kind := _kind(x, z)
 	var trunk: Variant = variant

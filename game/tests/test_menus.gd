@@ -9,7 +9,8 @@ const KEYS: Array[String] = ["W / S", "A / D", "SPACE", "Z / C", "J / K", "MOUSE
 const CREDITED: Array[String] = ["NRVALAM WORKS", "Max", "CC BY 4.0", "Mixamo", "Poly Haven",
 	"Alex Murias", "Microsoft Rocketbox", "Construction_Male_08", "Maxwell autodoors",
 	"Kamran Mughal", "FFeller", "widthRider", "Red Fox (Sketchfab: nokillnando)", "GloriousGlider8",
-	"Marcel Bankmann", "PlantCatalog", "lolipop_1707", "SirSonat", "Godot Engine", "MIT"]
+	"Marcel Bankmann", "PlantCatalog", "lolipop_1707", "SirSonat", "SavinienBerault", "evan4129",
+	"Daniel Zhabotinsky", "Godot Engine", "MIT"]
 
 var _checks: int = 0
 var _failures: int = 0

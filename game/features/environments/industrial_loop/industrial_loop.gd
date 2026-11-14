@@ -17,6 +17,7 @@ const ForestFloor = preload("forest_floor.gd")
 const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
 const TransferShed = preload("transfer_shed.gd")
+const TownStation = preload("town_station.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -151,6 +152,7 @@ func _ready() -> void:
 	_street_furniture()
 	_boundary()
 	_transfer_shed()
+	_town()
 	_reflections()
 	_forest()
 	lamp_rain.name = "LampRain"
@@ -254,6 +256,7 @@ func _flat_plots() -> Array[Rect2]:
 	plots.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	plots.append(Rect2(SILOS[0] - 8, SILO_Z - 8, SILOS[1] - SILOS[0] + 16, 16))
 	plots.append_array(TransferShed.flat_plots())
+	plots.append(TownStation.PLOT)
 	return plots
 
 
@@ -917,6 +920,13 @@ func _transfer_shed() -> void:
 	lamp_rain.add_volume(LampRain.DOCK, Transform3D(Basis.IDENTITY, transfer_shed.dock_rain_at))
 
 
+func _town() -> void:
+	var town := TownStation.new()
+	town.name = "TownStation"
+	add_child(town)
+	town.build(terrain)
+
+
 func _boundary() -> void:
 	var walls := StaticBody3D.new()
 	walls.name = "Boundary"
@@ -941,7 +951,7 @@ func _forest() -> void:
 	forest.name = "RoadsideForest"
 	add_child(forest)
 	forest.build(road_points, FOREST_CLEARANCE, clearings, TERRAIN_AREA.grow(-4.0),
-		PLAYABLE_AREA, 42019, terrain)
+		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT] as Array[Rect2])
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
@@ -949,7 +959,8 @@ func _forest() -> void:
 	for index in range(road_points.size()):
 		mowed.append(RoadsideGrass.MOWED if road.sections[index] == GhatRoad.Section.VALLEY
 			else 0.0)
-	forest_floor.build(road_points, clearings, 42020, terrain, mowed)
+	forest_floor.build(road_points, clearings, 42020, terrain, mowed,
+		[TownStation.PLOT] as Array[Rect2])
 	grass = RoadsideGrass.new()
 	grass.name = "RoadsideGrass"
 	add_child(grass)

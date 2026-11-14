@@ -6498,3 +6498,58 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Stills:** `captures/trees/labelled_trees.png`.
 - **Noticed, not changed:** the guide sign "BLACKRIDGE PASS 3/4 MI" shows its white legend
   without its green board in the headlights (both are retroreflective on a real sign).
+
+## Revision 2026-11-14 (Phase 2, step 5 brought forward, part C: the gas station and main street (#267, #285), built)
+
+- **Where** (the author's choice, #268): a level plot south of the valley road, x -4 to 54, z 174
+  to 196 (`TownStation.PLOT`), between the road's edge (z about 171.5) and the town's backdrop
+  (z 197); the road runs straight there at z 168.6-170.3.
+- **Built** (`town_station.gd`, C64):
+  - **The canopy and islands:** a canopy 18 x 9 m, 4.6 m up (US canopies are 4.42-4.88 m clear),
+    white with a red band. Two islands 10 x 1.2 m, 0.15 m high, 4 m apart, their noses yellow;
+    four columns with STOP ENGINE / NO SMOKING labels; four dispensers (SavinienBerault's
+    unbranded pump); four bollards (168 mm, 1 m). Eight downlights, 15 each, no shadows.
+  - **The ground:** an asphalt forecourt, a concrete slab under the canopy, two concrete
+    driveways 8 m wide.
+  - **The store:** 13 x 7 m, 4 m high, painted plaster; its glass shows its lit inside
+    (`store_interior.png`); GROCERY on its fascia, OPEN 24 HOURS in its window; a warm spill
+    light at its front; a utility box at its side.
+  - **The sidewalk:** a 0.15 m kerb carrying a pedestal payphone (evan4129's scan), a newspaper
+    box, a steel-and-slat bench, Poly Haven's rusted trash can, an ice merchandiser (ICE), a
+    propane exchange cage of welded wire with eight Poly Haven cylinders, and the air and water
+    machine.
+  - **The price sign:** a pylon by the road, its cabinet facing along the road both ways: GAS,
+    then REGULAR 3.59, PLUS 3.89 and DIESEL 4.19 in red seven-segment digits with the 9/10 cent
+    (`town_signs.png`, `tools/art/make_town_signs.py`).
+  - **Main street:** three shops 7 m wide, 4.6 m high (brick, plaster), shut behind painted metal
+    shutters 4.6 x 3 m, with faded fascias (HARDWARE, LAUNDROMAT, BARBER) and a Poly Haven
+    security light each. Seven parking bays, with the sedan (`tools/art/convert_town_models.py`)
+    and Poly Haven's covered car.
+- **The forest kept** (`roadside_forest.gd`, `forest_floor.gd`): the plot's 60 trees, 19
+  saplings and its ferns and branches are left out after their random numbers are drawn, so no
+  other tree moves.
+  - Adding the plot to the forest's clearings had shifted every tree scattered after it (the
+    clearing is tested after the draw); that moved the trunk 11 m from the driver's eye that
+    hides the oncoming van at its start, and put the struck man over the cab at 60 km/h.
+  - Kept this way, every collider outside the plot keeps its x, z and radius (checked against the
+    world without the town; 14 beside the plot raised or lowered up to 0.36 m by its levelling).
+  - The oncoming van, the hit and collision pass with seed 284.
+- **Rules:** new `test_town.gd` N1-N8:
+  - the plot level and treeless;
+  - nothing within 1 m of the asphalt (measured at each body's corners from the asphalt's edge);
+  - the van fits: canopy at least 4.42 m, lane at least 3.5 m, its 2.3 x 2.2 x 5.6 m box driven
+    in, between the islands and out;
+  - the props counted, the shutters down;
+  - the downlights inside the canopy, pointing down, without shadows, and the signs and windows
+    glowing;
+  - no real brand;
+  - every piece solid.
+  `test_roadside_trees.gd` T8 re-pinned to the world with the town. Credits: "THE GAS STATION
+  AND MAIN STREET" (SavinienBerault, evan4129, Daniel Zhabotinsky).
+- **Results** (`logs/phase_2/town/`):
+  - before: 6/8 (no props, no lights); after: 8/8;
+  - six mutations exit 1 (`mutations/SUMMARY.txt`);
+  - GPU 0.36 ms (0.06-0.66), on battery (`price/price.txt`).
+- **Stills:** `captures/town/labelled_town.png`.
+- **Noticed, not changed:** the town backdrop's orange glow sprite hangs close behind the store,
+  seen from the forecourt as a large orange ball; it was made to be seen from far off.

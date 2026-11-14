@@ -29,3 +29,8 @@ Attribution is not required; authors are recorded for credits.
 | models | [wine_bottles_01](https://polyhaven.com/a/wine_bottles_01) | Wine Bottles 01 | 1k | Rico Cilliers, Jurita Burger | 3909317 |
 | models | [trashbag](https://polyhaven.com/a/trashbag) | Trashbag | 1k | Benny Weimer | 1699464 |
 | textures | [chinese_hackberry_bark](https://polyhaven.com/a/chinese_hackberry_bark) | Chinese Hackberry Bark | 2k | Charlotte Baglioni | 16611083 |
+| models | [modular_street_seating](https://polyhaven.com/a/modular_street_seating) | Modular Street Seating | 1k | Stuart Attenborrow | 7617972 |
+| models | [propane_tank](https://polyhaven.com/a/propane_tank) | Propane Tank | 1k | Slinc | 2214101 |
+| models | [utility_box_02](https://polyhaven.com/a/utility_box_02) | Utility Box 02 | 1k | James Ray Cock | 2029240 |
+| textures | [painted_plaster_wall](https://polyhaven.com/a/painted_plaster_wall) | Painted Plaster Wall | 2k | Amal Kumar | 9341235 |
+| textures | [painted_brick](https://polyhaven.com/a/painted_brick) | Painted Brick | 2k | Amal Kumar | 9842615 |

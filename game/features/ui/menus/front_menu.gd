@@ -544,6 +544,10 @@ func _credits_text() -> String:
 		+ "\"Western Red Cedar *Inspired* Tree - WINTER Ver.\" by SirSonat, licensed CC BY 4.0: "
 		+ "the hemlocks, young firs and cedars by the forest highway, the cedar narrowed and each "
 		+ "given a lighter far version. The red alders were built for this game.")
+	_section(lines, "THE GAS STATION AND MAIN STREET", "\"Gas pump\" by SavinienBerault, "
+		+ "\"Pay phone Scan MEDPOLY\" by evan4129 and \"Fairheaven LT '80\" by Daniel "
+		+ "Zhabotinsky, licensed CC BY 4.0: the station's pumps, its payphone and the sedan "
+		+ "parked on main street, each reduced for the game.")
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

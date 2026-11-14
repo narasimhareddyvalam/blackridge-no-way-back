@@ -3942,6 +3942,9 @@ tag `a5`. Pictures the author approved or rejected are filed in
        placed by kind in the first 8 m of forest without moving a tree, with far versions;
        `test_roadside_trees.gd` 8/8, six mutations exit 1; shown
        `captures/trees/labelled_trees.png`.
+     - **Then** committed the trees (`52f4390`); part C built (decision C64): the gas station and
+       main street on the south valley road, the plot's trees left out without moving any other;
+       `test_town.gd` 8/8, six mutations exit 1; shown `captures/town/labelled_town.png`.
 
 ## Waiting for the author
 

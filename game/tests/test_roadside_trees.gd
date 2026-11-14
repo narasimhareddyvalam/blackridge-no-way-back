@@ -12,8 +12,10 @@ extends SceneTree
 ## T5 the alders bare: no leaves (no alpha-cut surface), their seed cones and catkins kept.
 ## T6 the foliage sways: every alpha-cut surface uses the forest's needle shader, with its wind.
 ## T7 the price: no model over 30,000 triangles.
-## T8 nothing moved: as many trees, saplings and colliders as before (#280's baseline), with the
-##    colliders' centroid where it was.
+## T8 nothing moved: as many trees, saplings and colliders as before (#280's baseline, less the
+##    60 trees and 19 saplings on #267 part C's town plot, left out without moving any other:
+##    every other collider kept its x, z and radius, 14 beside the plot raised or lowered up to
+##    0.36 m by its levelling), with the colliders' centroid where it is.
 
 const KINDS: Array[String] = ["red_alder", "young_fir", "mountain_hemlock", "western_red_cedar"]
 const HEIGHTS := {"red_alder": Vector2(10.0, 25.0), "young_fir": Vector2(3.0, 12.0),
@@ -23,8 +25,8 @@ const BAND := 8.0
 const LEAST := 20
 const NEEDLES := "res://features/environments/industrial_loop/conifer_needles.gdshader"
 const MOST_TRIANGLES := 30000
-const BASELINE := {"trees": 11819, "saplings": 6622, "colliders": 9828}
-const CENTROID := Vector3(243.899, 32.39941, -24.23578)
+const BASELINE := {"trees": 11759, "saplings": 6603, "colliders": 9768}
+const CENTROID := Vector3(245.2233, 32.58152, -25.51315)
 const TRUNK_MATCH := 0.15
 
 var _checks: int = 0
