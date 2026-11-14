@@ -3936,6 +3936,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Pacific Northwest trees (#280), part C (the town, #267), then step 3 part 2 and step 4;
        asked whether to commit and start the trees.
      - **The author's message:** "alright proceed. finish everything and tell me"
+     - **Done:** committed part B and the headlights (`2afcb81`, on `develop`, films left out, not
+       pushed); the Pacific Northwest roadside trees built (decision C63): mountain hemlock,
+       young Douglas firs and western red cedar from Sketchfab (CC BY), red alders built bare,
+       placed by kind in the first 8 m of forest without moving a tree, with far versions;
+       `test_roadside_trees.gd` 8/8, six mutations exit 1; shown
+       `captures/trees/labelled_trees.png`.
 
 ## Waiting for the author
 

@@ -6430,3 +6430,71 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Results:** before: 29/32 (the R48 aim and the two high-beam checks fail); after: 32/32.
 - **Stills:** `captures/headlights/r3/labelled_low_reach.png` (C45's beam, last time, now low
   and high, from outside, lights off).
+
+## Revision 2026-11-14 (the Pacific Northwest roadside trees (#280, #285), built)
+
+- **Asked:** different kinds of tree, more realistic; the author chose the Pacific Northwest and
+  real models near the road, then asked to finish everything without stopping (#285), so the
+  choices below are Claude Code's (C63), shown to the author afterwards.
+- **Found on Sketchfab** (CC BY):
+  - PlantCatalog's "Realistic HD" series has mountain hemlock (19,316 faces, the lightest), but
+    no western hemlock, Douglas fir or western red cedar;
+  - lolipop_1707's "Realistic fir trees pack" has young firs, with levels of detail;
+  - SirSonat's "Western Red Cedar *Inspired*" has a winter version.
+  - No usable red alder or bigleaf maple: the candidates were stylised (a purple alder), broken
+    scans or leafy.
+- **Kept** in `source_assets/sketchfab/14_mountain_hemlock`, `15_fir_pack` and
+  `16_western_red_cedar` (READMEs in Git).
+- **Converted** by `tools/art/convert_roadside_trees.py` into
+  `game/features/environments/industrial_loop/art/trees/`:
+  - the hemlock, 22 m;
+  - the cedar without its mushrooms, stood where they stood, 24 m and narrowed to 60% (its
+    modelled trunk was 2.1 m thick at breast height);
+  - four young firs, 4.6-9.7 m;
+  - each with a far version: a quarter of its foliage cards, grown 1.6 times, its wood decimated
+    to 15%;
+  - foliage alpha cut, textures as WebP.
+- **The red alders**, built by `tools/art/build_red_alder.py`:
+  - three trees, 13, 16 and 19 m (11,134-25,082 triangles), each a straight trunk into a narrow
+    rounded crown, upward limbs, branches and twigs;
+  - seed cones and catkins on 15% of the twig tips;
+  - bark grey from Poly Haven's Chinese Hackberry Bark (CC0, `tools/art/make_alder_bark.py`);
+  - far versions of trunk and limbs (1,128-1,464).
+- **Placed** (`roadside_forest.gd`):
+  - each tree in the first 8 m beyond the clearance takes a kind by a hash of its place (seed
+    284), so the forest's random sequence, and every tree's place, size and turn, are unchanged;
+  - the first 4 m: red alder 42%, young fir 33%, cedar 10%, hemlock 10%, mature fir 5%;
+  - 4-8 m: hemlock 30%, cedar 25%, mature fir 30%, alder 15%;
+  - their bark wet like the conifers'; their foliage in the needles' shader, with its wind;
+  - trunk colliders sized from each model's trunk at breast height and the tree's size;
+  - detailed within 20 m, far versions to 50 m (alders 90 m), then the code-built far conifer of
+    the nearest height; shadows from the far versions within 25 m.
+- **GPU price** (`tools/captures/capture_trees.gd` price, `logs/phase_2/trees/price/`, on
+  battery):
+  - 16 m band to 180 m: 50 ms; with far versions to 120 m: 17-22 ms;
+  - now: near 0.37 ms, far 0.98 ms, shadows 0.38 ms, about 1.7 ms in all (all together 3.1 ms,
+    0.3-5.9). The Mac ran on battery at about 26 frames a second either way, so this wants a
+    run on power.
+- **Rules:** new `test_roadside_trees.gd` T1-T8 (the kinds, where each grows, their heights,
+  trunks, the bare alders, the foliage's wind, at most 30,000 triangles a model, nothing moved:
+  11,819 trees, 6,622 saplings, 9,828 colliders, their centroid). Credits: "THE ROADSIDE TREES"
+  (`test_menus.gd` names PlantCatalog, lolipop_1707 and SirSonat).
+- **Results** (`logs/phase_2/trees/`):
+  - before: 2/5 (no kinds); after: 8/8;
+  - six mutations exit 1 (`mutations/SUMMARY.txt`); m5 first survived because it drew from
+    Godot's global generator, and was rewritten to draw from the forest's own;
+  - hit speeds 12/12, collision 44/44, the regression 64/64 after the change.
+- **The struck man's fall** (the body set, as the memory of 2026-11-11 warns): with the trees'
+  colliders sized to their trunks, the hit at 60 km/h flipped. With seed 280 he went up the
+  bonnet and over the cab, lying 2.4 m behind the bumper; with 281, 5.6 m behind. With 282
+  he lies 1.8 m ahead, but `test_oncoming_van.gd` then failed: its check that the hill hides
+  the oncoming van at its start casts a ray against every solid body, and a tree trunk, not the
+  hill, had been hiding it; with 282 a narrower trunk let it through. 283 failed that check too.
+  With 284 (kept) all three pass. Two of the five layouts put him over the cab at 60 km/h and
+  three left the oncoming van in sight, so both checks are fragile whatever the trees do: the
+  hit wants its own look (continuous collision on his body, or the cab's shape), and the
+  oncoming van's hiding wants the terrain alone (the ray against the ground's layer), not
+  another seed.
+- **Stills:** `captures/trees/labelled_trees.png`.
+- **Noticed, not changed:** the guide sign "BLACKRIDGE PASS 3/4 MI" shows its white legend
+  without its green board in the headlights (both are retroreflective on a real sign).

@@ -46,6 +46,9 @@ LIGHTING.update({view + step: None for view in "RAD" for step in ("PD", "PV", "P
 ## #281's headlights (tools/captures/trial_headlights.gd), from the driver's seat: HZ haze in
 ## the rain along the beams, LN the lit headlamp lens.
 LIGHTING.update({"HHZ": None, "HLN": None})
+## #280's roadside kinds (tools/captures/capture_trees.gd), from the driver's seat: all (TRS), their
+## near versions (TRN), far versions (TRF) and shadow casters (TRH).
+LIGHTING.update({key: None for key in ("TRS", "TRN", "TRF", "TRH")})
 TOTAL_BUDGET = 1.45
 HUD = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+) .*metal-HUD: (.*)$")
 BLOCK = re.compile(r"GPU PRICE BLOCK\|(\w+)\|(on|off)\|cycle (\d+)\|time ([\d.]+)-([\d.]+)"

@@ -539,6 +539,11 @@ func _credits_text() -> String:
 		+ "Shader v3\" by GloriousGlider8 (YourSoftware Foundation) and from GodotSSRWater by "
 		+ "Marcel Bankmann, both released under the MIT license; their copyright and license "
 		+ "notices are kept in the game's wet ground shader.")
+	_section(lines, "THE ROADSIDE TREES", "\"Realistic HD Mountain hemlock (21/43)\" by "
+		+ "PlantCatalog, \"Realistic fir trees pack (LODS, gameready)\" by lolipop_1707 and "
+		+ "\"Western Red Cedar *Inspired* Tree - WINTER Ver.\" by SirSonat, licensed CC BY 4.0: "
+		+ "the hemlocks, young firs and cedars by the forest highway, the cedar narrowed and each "
+		+ "given a lighter far version. The red alders were built for this game.")
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

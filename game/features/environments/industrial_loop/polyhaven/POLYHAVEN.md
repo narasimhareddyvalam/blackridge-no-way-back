@@ -28,3 +28,4 @@ Attribution is not required; authors are recorded for credits.
 | models | [plastic_bottle_gallon](https://polyhaven.com/a/plastic_bottle_gallon) | Plastic Bottle Gallon | 1k | Rahul Chaudhary | 1385300 |
 | models | [wine_bottles_01](https://polyhaven.com/a/wine_bottles_01) | Wine Bottles 01 | 1k | Rico Cilliers, Jurita Burger | 3909317 |
 | models | [trashbag](https://polyhaven.com/a/trashbag) | Trashbag | 1k | Benny Weimer | 1699464 |
+| textures | [chinese_hackberry_bark](https://polyhaven.com/a/chinese_hackberry_bark) | Chinese Hackberry Bark | 2k | Charlotte Baglioni | 16611083 |
