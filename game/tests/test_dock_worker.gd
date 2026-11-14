@@ -4,7 +4,10 @@ extends SceneTree
 ## on the dock floor in the corner east of bay 9's lift, along the edge rail, out of the way of
 ## the load's approach, the lift and the way to the dock stair; solid; the seal log and the pen
 ## cup on the desk; and the chair in sight through bay 9's doorway from where Ethan stands behind
-## the van. A headless run draws nothing, so the look is not checked here.
+## the van. Part 2: he sits at it (W7), and when bay 9's van's doors shut he stands, takes the
+## seal log, walks down the dock stair and out by the side door to the doors, seals them with
+## C-TPAT's view, verify, tug, twist (W8-W10) and comes back to sit (W11). A headless run draws
+## nothing, so the look is not checked here.
 
 const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const NOT_CAMERA_WALLS := 0xFFFFFFFF & ~8
@@ -26,6 +29,18 @@ const WALK_ROOM := 0.6
 const SIGHTS: Array[Vector3] = [Vector3(-47.6, 1.7, 25.0), Vector3(-47.5, 1.75, 21.6),
 	Vector3(-47.2, 2.3, 23.0)]
 
+## Part 2: the worker at his desk and his round to seal bay 9's van (step 3 of #253).
+const DOCKED := Vector3(-47.75, 0.1, 23.16)
+const SEAT_TOP := 0.47
+const SEAT_ABOVE := Vector2(0.03, 0.2)
+const ON_SEAT := 0.15
+const LANDING := Vector3(-44.2, 1.3, 12.4)
+const STAIR_FOOT := Vector3(-44.2, 0.0, 15.5)
+const SIDE_DOOR := Vector3(-41.2, 0.0, 17.5)
+const PASSES := 0.6
+const ROUND := 60.0
+const NUMBER := "SL483201"
+
 var _checks: int = 0
 var _failures: int = 0
 var _scratch: String
@@ -44,7 +59,7 @@ func _check(condition: bool, description: String) -> void:
 
 
 func _run() -> void:
-	create_timer(120.0, true, false, true).timeout.connect(_timeout)
+	create_timer(240.0, true, false, true).timeout.connect(_timeout)
 	_scratch = OS.get_temp_dir().path_join("blackridge-dock-worker-%d-%d.cfg" % [
 		OS.get_process_id(), Time.get_ticks_usec()])
 	_store(START_SAVE)
@@ -56,6 +71,11 @@ func _run() -> void:
 	await physics_frame
 	await physics_frame
 	_check_station()
+	_app.call("_resume")
+	for frame in range(30):
+		await physics_frame
+	_check_seated("W7 at the start")
+	await _check_round()
 	_finish()
 
 
@@ -136,6 +156,106 @@ func _check_station() -> void:
 
 
 ## `box`'s footprint on the floor.
+func _parts() -> Dictionary:
+	var shed := _app.find_child("TransferShed", true, false)
+	var worker := shed.find_child("DockWorker", true, false) as Node3D
+	var station := shed.find_child("DockStation", true, false) as Node3D
+	var model := worker.get_node("Model") as Node3D
+	return {"shed": shed, "worker": worker, "station": station, "model": model,
+		"player": model.find_children("*", "AnimationPlayer", true, false)[0],
+		"skeleton": model.find_children("*", "Skeleton3D", true, false)[0],
+		"chair": station.get("chair"), "log": station.get_node("SealLog")}
+
+
+func _pelvis(parts: Dictionary) -> Vector3:
+	var skeleton := parts["skeleton"] as Skeleton3D
+	return (skeleton.global_transform * skeleton.get_bone_global_pose(
+		skeleton.find_bone("Bip01 Pelvis"))).origin
+
+
+func _check_seated(when: String) -> void:
+	var parts := _parts()
+	var worker := parts["worker"] as Node3D
+	var chair := parts["chair"] as Node3D
+	var pelvis := _pelvis(parts)
+	var seat := chair.global_position + Vector3.UP * SEAT_TOP
+	var above := pelvis.y - seat.y
+	var across := Vector2(pelvis.x - seat.x, pelvis.z - seat.z).length()
+	var facing := (parts["model"] as Node3D).global_basis.z.normalized().dot(Vector3.RIGHT)
+	var clip := String((parts["player"] as AnimationPlayer).current_animation)
+	var log_back := (parts["log"] as Node3D).is_visible_in_tree()
+	_check(worker.visible and bool(worker.get("home")) and clip == "SitIdle"
+		and above >= SEAT_ABOVE.x and above <= SEAT_ABOVE.y and across <= ON_SEAT
+		and facing > 0.9 and log_back, "%s he sits at his desk: %s, his hips %.2f m over the " % [
+		when, clip, above] + "seat and %.2f m from its middle, facing the desk (%.2f), the log on "
+		% [across, facing] + "it %s" % log_back)
+
+
+func _check_round() -> void:
+	var parts := _parts()
+	var worker := parts["worker"] as Node3D
+	var player := parts["player"] as AnimationPlayer
+	var van := _app.get_node("FreightVan") as Node3D
+	van.call("recover", Transform3D(Basis(Vector3.UP, PI), DOCKED))
+	van.set("rear_doors_open", false)
+	for frame in range(10):
+		await physics_frame
+	(parts["shed"] as Node).call("call_dock_hand", van, NUMBER)
+	var clips: Array[String] = []
+	var carried := false
+	var landing := INF
+	var foot := INF
+	var door := INF
+	var sealed_during := ""
+	var entered := false
+	var time := 0.0
+	var home_at := -1.0
+	while time < ROUND + 5.0:
+		await physics_frame
+		time += 1.0 / Engine.physics_ticks_per_second
+		var clip := String(player.current_animation)
+		if clips.is_empty() or clips[-1] != clip:
+			clips.append(clip)
+		var hand := worker.find_child("Clipboard", true, false) as Node3D
+		if hand != null and hand.is_visible_in_tree() \
+				and not (parts["log"] as Node3D).is_visible_in_tree():
+			carried = true
+		var at := worker.global_position
+		landing = minf(landing, at.distance_to(LANDING))
+		foot = minf(foot, at.distance_to(STAIR_FOOT))
+		door = minf(door, at.distance_to(SIDE_DOOR))
+		if sealed_during.is_empty() and bool(van.get("sealed")):
+			sealed_during = clip
+		var inside := van.to_local(at + Vector3.UP * 0.9)
+		entered = entered or (absf(inside.x) < 0.9 and absf(inside.z) < 2.4)
+		if bool(worker.get("home")) and time > 2.0:
+			home_at = time
+			break
+	for frame in range(30):
+		await physics_frame
+	var order := ["StandUp", "Walk", "Seal", "Check", "Note", "Walk", "SitDown"]
+	var seen := []
+	var next := 0
+	for clip in clips:
+		if next < order.size() and clip == order[next]:
+			seen.append(clip)
+			next += 1
+	_check(not clips.is_empty() and clips[0] == "StandUp" and carried, "W8 sent to seal, he stands "
+		+ "up from his desk and takes the seal log in his hand (%s, carried %s)" % [clips.slice(0, 3),
+		carried])
+	_check(landing < PASSES and foot < PASSES and door < PASSES and not entered,
+		"W9 his way: over the dock floor to the stair's landing (%.2f m), down the stair " % landing
+		+ "(%.2f m from its foot), out of the side door (%.2f m), never into the van" % [foot, door])
+	_check(next == order.size() and sealed_during == "Seal", "W10 at the doors, view, verify, "
+		+ "tug, twist (C-TPAT's VVTT): the seal put on in Seal (%s), then Check against " % sealed_during
+		+ "his log and Note (%s)" % [clips])
+	_check(home_at > 0.0 and home_at <= ROUND, "W11 back at his desk within the doors' %.0f s "
+		% ROUND + "(%.1f s)" % home_at)
+	for frame in range(int(Engine.physics_ticks_per_second * 4.5)):
+		await physics_frame
+	_check_seated("W11 back,")
+
+
 func _flat(box: AABB) -> Rect2:
 	return Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
 
@@ -172,7 +292,7 @@ func _remove() -> void:
 
 
 func _timeout() -> void:
-	_check(false, "The dock worker's checks finish within 120 s")
+	_check(false, "The dock worker's checks finish within 240 s")
 	_finish()
 
 

@@ -1,0 +1,13 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutW2/m2/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-14 13:53:48
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutW2/m2/game/features/characters/dock_worker/dock_worker.gd	2026-11-14 14:01:15
+@@ -194,7 +194,8 @@
+ 			_van.call("put_seal", _number)
+ 			sealed.emit()
+ 		if _timer >= _player.get_animation("Seal").length:
+-			_next("checking", "Check")
++			_timer = 0.0
++			state = "noting"
+ 	elif state == "checking" and _timer >= CHECK_SECONDS:
+ 		_next("noting", "Note")
+ 	elif state == "noting" and _timer >= NOTE_SECONDS:

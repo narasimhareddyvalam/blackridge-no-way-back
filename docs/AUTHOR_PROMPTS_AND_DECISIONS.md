@@ -3945,6 +3945,10 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Then** committed the trees (`52f4390`); part C built (decision C64): the gas station and
        main street on the south valley road, the plot's trees left out without moving any other;
        `test_town.gd` 8/8, six mutations exit 1; shown `captures/town/labelled_town.png`.
+     - **Then** committed the town (`c8ee987`); step 3 part 2 built: the dock worker seated at his
+       desk, standing, taking the log, down the stair, sealing with VVTT and back to sit, in
+       Rocketbox's own clips; `test_dock_worker.gd` 12/12, `test_sealing.gd` 13/13, six mutations
+       exit 1; shown `captures/dock_worker/part2/labelled_dock_worker.png`.
 
 ## Waiting for the author
 

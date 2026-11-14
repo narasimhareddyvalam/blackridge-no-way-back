@@ -19,13 +19,21 @@ game.
 | `Animations/m_idle_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 2,418,544 |
 | `Animations/m_walk_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_xy/` | 994,336 |
 | `Animations/m_try_door_outwards.max.fbx` | `Animations/all_animations_max_motextr_static/` | 1,972,496 |
+| `Animations/m_sit_down_table_right.max.fbx` | `Animations/all_animations_max_motextr_xyz/` | 1,640,064 |
+| `Animations/m_sit_stand_up_table_right.max.fbx` | `Animations/all_animations_max_motextr_xyz/` | 1,523,408 |
+| `Animations/m_sit_table_idle_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 7,189,408 |
+| `Animations/m_documents_check.max.fbx` | `Animations/all_animations_max_motextr_static/` | 3,057,824 |
+| `Animations/m_documents_note.max.fbx` | `Animations/all_animations_max_motextr_static/` | 2,221,712 |
 
 Each file is fetched from `https://raw.githubusercontent.com/microsoft/Microsoft-Rocketbox/master/Assets/`
 followed by its path in the library. The character has 9,515 triangles and an 80-bone 3ds Max
 Biped skeleton; the clip is 382 frames of a man breathing in a chair, its rest pose its own first
 frame. The dock worker has 8,474 triangles on the same skeleton (81 joints in the converted file);
 his clips are 351 frames of a standing idle, a 37-frame walk in place and 187 frames of a man
-trying a door outwards, his reach to the van doors' hasp. His specular maps are not downloaded:
+trying a door outwards, his reach to the van doors' hasp. On 2026-11-14 (step 3 of #253, part 2) his desk clips were added: sitting down to a table and
+standing up from it (109 and 96 frames, their root motion on the armature object, Bip01), a
+seated idle at a table (1,372 frames), checking a document (484) and noting in one (303). His
+specular maps are not downloaded:
 the converter does not use them.
 
 ## Converting

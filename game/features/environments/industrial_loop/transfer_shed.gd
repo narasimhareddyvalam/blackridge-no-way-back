@@ -22,6 +22,12 @@ const DockWorker = preload("res://features/characters/dock_worker/dock_worker.gd
 const WORKER_INSIDE := Vector3(-41.2, 0.0, 17.5)
 const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.9),
 	Vector3(-45.9, 0.0, 20.9), Vector3(-46.2, 0.0, 20.35), Vector3(-47.3, 0.0, 20.35)]
+## From beside his chair round behind it, between bay 9's staged load and the edge rail, to the
+## dock stair's landing (step 3 of #253); and from the landing down the stair to the side door.
+const WORKER_DESK_WAY: Array[Vector3] = [Vector3(-46.75, 1.3, 19.25), Vector3(-46.75, 1.3, 17.9),
+	Vector3(-46.35, 1.3, 17.3), Vector3(-46.35, 1.3, 15.6), Vector3(-45.3, 1.3, 12.4)]
+const WORKER_STAIR_WAY: Array[Vector3] = [Vector3(-44.2, 1.3, 12.4), Vector3(-44.2, 1.3, 12.92),
+	Vector3(-44.2, 0.0, 15.4), Vector3(-44.0, 0.0, 16.4)]
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -141,7 +147,8 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	dock_worker = DockWorker.new()
 	dock_worker.name = "DockWorker"
 	add_child(dock_worker)
-	dock_worker.call("setup", WORKER_INSIDE, WORKER_WAY)
+	dock_worker.call("setup", WORKER_INSIDE, WORKER_WAY, building.get_node("DockStation"),
+		WORKER_DESK_WAY, WORKER_STAIR_WAY)
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"

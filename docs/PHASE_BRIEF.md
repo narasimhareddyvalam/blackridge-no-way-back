@@ -6553,3 +6553,46 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Stills:** `captures/town/labelled_town.png`.
 - **Noticed, not changed:** the town backdrop's orange glow sprite hangs close behind the store,
   seen from the forecourt as a large orange ball; it was made to be seen from far off.
+
+## Revision 2026-11-14 (Phase 2, step 3 of #253, part 2: the dock worker at his desk and his seal check (#263, #285), built)
+
+- **The plan** (step 3's, #263): he sits at his dock desk, stands when the doors shut, takes the
+  seal log, walks out by the dock stair, seals the doors with C-TPAT's view, verify, tug, twist,
+  and comes back to sit, in Rocketbox's own clips.
+- **The clips** (Microsoft Rocketbox, MIT; `source_assets/rocketbox/README.md`): sitting down to
+  a table and standing up from it, a seated idle at a table, checking a document and noting in
+  it, added to `tools/art/convert_rocketbox.py`.
+  - Rocketbox's "xyz" clips keep their root motion on the armature object (Bip01), not a bone, so
+    the converter baked only the pelvis's own place and the seated end of sitting down stood him
+    at standing height. It now takes the object's motion for SitDown, SitIdle-loop and StandUp
+    (`MOVING`).
+  - Measured on the model: seated, his hips 0.576 m up (the chair's cushion is at 0.47 m);
+    sitting down ends 0.126 m to his left and 0.672 m ahead; standing up ends 0.514 m to his
+    right and 0.165 m ahead.
+- **His round** (`dock_worker.gd`):
+  - seated at the desk, his hips 0.05 m behind the chair's column, facing the desk;
+  - sent: stands up, the chair rolling back 0.3 m, and takes the log (the desk's clipboard
+    hidden, Poly Haven's Clipboard in his left hand);
+  - walks behind the chair, between the desk and bay 9's staged load, to the stair's landing,
+    down the stair and out by the side door (`WORKER_DESK_WAY`, `WORKER_STAIR_WAY` in
+    `transfer_shed.gd`), then the old way to the doors;
+  - seals (Seal: the bolt, tug and twist), checks the number against his log (Check, 3 s) and
+    notes it (Note, 2.5 s);
+  - walks back, sits down, the chair drawn in under him, the log back on the desk.
+  - His walk is 1.4 m/s (was 1.35), the usual adult pace, so the longer round fits the doors'
+    60 s (back in 58.9 s).
+- **Rules:** `test_dock_worker.gd` W7-W11:
+  - seated at the start (W7) and again after (W11), his hips 0.03-0.2 m over the seat and
+    within 0.15 m of its middle, facing the desk;
+  - stands up and takes the log (W8);
+  - by the landing, the stair's foot and the side door, never into the van (W9);
+  - Seal, Check, Note in order, the seal put on in Seal (W10);
+  - back within 60 s (W11).
+- **Results** (`logs/phase_2/step3/part2/`): before, 6/12 (my first run never left the title
+  screen, which pauses the tree; then W8 read the wrong clip); after, 12/12; `test_sealing.gd`
+  13/13; six mutations exit 1; every suite (41 runs exit 0); the art check first failed on its
+  rule that the worker's file holds three clips, updated to his eight, then 0 failures.
+- **Stills:** `captures/dock_worker/part2/labelled_dock_worker.png`.
+- **Known:** at the doors he stands in bay 9's lift pit behind the bridge plate stored upright in
+  the doorway (step 2e-3's sealing spot), so the sealing is mostly hidden from the dock floor; the
+  clipboard's hold in his hand is set by eye, unchecked close up.

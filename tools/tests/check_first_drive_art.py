@@ -364,9 +364,11 @@ if (WORKER / 'dock_worker.glb').exists():
     joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
     check(worker_triangles < 12000,
           'dock_worker/dock_worker.glb bounded geometry (<12000 triangles)')
-    check(clips == ['Idle-loop', 'Seal', 'Walk-loop'],
-          'dock_worker/dock_worker.glb carries three clips: the standing idle and the walk, '
-          'looping, and the reach to the doors\' hasp')
+    check(clips == ['Check', 'Idle-loop', 'Note', 'Seal', 'SitDown', 'SitIdle-loop', 'StandUp',
+                    'Walk-loop'],
+          'dock_worker/dock_worker.glb carries his eight clips: the standing idle and the walk, '
+          'looping, the reach to the doors\' hasp, and at his desk sitting down, the seated idle, '
+          'standing up, checking the log and noting in it')
     check(len(sizes) == 6 and max(sizes) <= 1024,
           'dock_worker/dock_worker.glb holds six WebP textures of at most 1024 pixels (colour and '
           'normal for head, work suit and hard hat)')

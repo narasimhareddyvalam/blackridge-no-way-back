@@ -1,6 +1,7 @@
 """Convert Microsoft Rocketbox characters and their clips into the game: the gate guard (C55),
 Security_Male_01 with a seated idle, and bay 9's dock worker (C58), Construction_Male_08 with a
-standing idle, a walk and the reach to the van doors' hasp.
+standing idle, a walk, the reach to the van doors' hasp, and at his desk (step 3 of #253): sitting
+down to it and standing up from it, a seated idle at it, checking a document and noting in it.
 
 Run from the repository root (a job's name after "--" converts that one alone):
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1 \\
@@ -11,14 +12,16 @@ game/features/characters/guard/guard.glb and game/features/characters/dock_worke
 What it changes:
 - each clip is baked onto the character bone by bone. A clip's rest pose is its own first
   frame, so each bone takes the turn the clip gives it in the armature's space, on the
-  character's own bone lengths, and the pelvis also takes the clip's place;
+  character's own bone lengths, and the pelvis also takes the clip's place; in SitDown,
+  SitIdle-loop and StandUp it takes the clip's root motion too (its armature object's), so he
+  sits into the chair, stays at the seat's height and rises from it;
 - the seated guard is turned to face Blender's -Y, a glTF model's front (the dock worker
   already faces it), and each character is moved so that his shoes stand at the origin, under
   his hips;
 - one roughness per part replaces Rocketbox's specular maps, and the colour and normal maps are
   halved to 1024 pixels and stored as WebP;
-- the clips are named as Godot imports them: SitIdle-loop, Idle-loop and Walk-loop loop, and
-  Seal plays once.
+- the clips are named as Godot imports them: SitIdle-loop, Idle-loop and Walk-loop loop; Seal,
+  SitDown, StandUp, Check and Note play once.
 """
 
 import math
@@ -31,6 +34,9 @@ from mathutils import Matrix, Vector
 SOURCE = pathlib.Path("source_assets/rocketbox")
 CLIPS = SOURCE / "Animations"
 MAX_TEXTURE = 1024
+## Clips whose root motion is kept: Rocketbox's "xyz" clips carry it on the armature object (its
+## Bip01 node), not a bone, so it is taken from the object relative to the character's own.
+MOVING = {"SitDown", "SitIdle-loop", "StandUp"}
 QUALITY = 90
 JOBS = {
     "guard": {
@@ -49,7 +55,12 @@ JOBS = {
         "prefix": "m108",
         "clips": [("Idle-loop", CLIPS / "m_idle_neutral_01.max.fbx"),
                   ("Walk-loop", CLIPS / "m_walk_neutral_01.max.fbx"),
-                  ("Seal", CLIPS / "m_try_door_outwards.max.fbx")],
+                  ("Seal", CLIPS / "m_try_door_outwards.max.fbx"),
+                  ("SitDown", CLIPS / "m_sit_down_table_right.max.fbx"),
+                  ("SitIdle-loop", CLIPS / "m_sit_table_idle_neutral_01.max.fbx"),
+                  ("StandUp", CLIPS / "m_sit_stand_up_table_right.max.fbx"),
+                  ("Check", CLIPS / "m_documents_check.max.fbx"),
+                  ("Note", CLIPS / "m_documents_note.max.fbx")],
         "roughness": {"head": 0.56, "body": 0.72, "helmet": 0.35},
         "turn": False,
         "names": ("DockWorker", "DockWorkerBody"),
@@ -67,7 +78,7 @@ def import_fbx(path):
     return next(o for o in new if o.type == "ARMATURE"), new
 
 
-def bake(character, clip, name):
+def bake(character, clip, name, moving=False):
     source_action = clip.animation_data.action
     start, end = (int(round(value)) for value in source_action.frame_range)
     if character.animation_data is not None:
@@ -89,8 +100,11 @@ def bake(character, clip, name):
             if source is None:
                 posed[bone.name] = base
                 continue
-            turn = source.matrix.to_3x3().normalized().to_4x4()
-            at = source.matrix.translation if bone.parent is None else base.translation
+            posing = source.matrix
+            if moving and bone.parent is None:
+                posing = character.matrix_world.inverted() @ clip.matrix_world @ posing
+            turn = posing.to_3x3().normalized().to_4x4()
+            at = posing.translation if bone.parent is None else base.translation
             wanted = Matrix.Translation(at) @ turn
             posed[bone.name] = wanted
             location, rotation, _ = (base.inverted() @ wanted).decompose()
@@ -204,10 +218,11 @@ def convert(job):
     baked = []
     for name, path in job["clips"]:
         clip, clip_objects = import_fbx(path)
+        moving = name in MOVING
         source_action = clip.animation_data.action
         for action in [a for a in bpy.data.actions if a is not source_action and a not in baked]:
             bpy.data.actions.remove(action)
-        baked.append(bake(character, clip, name))
+        baked.append(bake(character, clip, name, moving))
         for item in clip_objects:
             bpy.data.objects.remove(item, do_unlink=True)
         bpy.data.actions.remove(source_action)

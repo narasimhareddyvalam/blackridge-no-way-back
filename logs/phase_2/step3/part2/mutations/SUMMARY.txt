@@ -1,0 +1,15 @@
+Step 3 part 2 mutations, each on an APFS clone, test_dock_worker.gd at 60 fps:
+m1  he walks off without standing up                        exit 1, 10/12 passed; 2 failed
+      FAIL: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["Walk", "Seal", "Check"], car
+      FAIL: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT): the seal put on in Seal (Seal), then Check against
+m2  no check against the log, no note                       exit 1, 11/12 passed; 1 failed
+      FAIL: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT): the seal put on in Seal (Seal), then Check against
+m3  his way not by the stair                                exit 1, 11/12 passed; 1 failed
+      FAIL: W9 his way: over the dock floor to the stair's landing (0.85 m), down the stair (1.07 m from its foot), out of
+m4  the log left on the desk                                exit 1, 11/12 passed; 1 failed
+      FAIL: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["StandUp", "Walk", "Seal"], c
+m5  a slow look at the seal, 8 s                            exit 1, 11/12 passed; 1 failed
+      FAIL: W11 back at his desk within the doors' 60 s (63.9 s)
+m6  seated at the chair's column, not over the cushion      exit 1, 10/12 passed; 2 failed
+      FAIL: W7 at the start he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.25 m from its middle, facing
+      FAIL: W11 back, he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.25 m from its middle, facing the d
