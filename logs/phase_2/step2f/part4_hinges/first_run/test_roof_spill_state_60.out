@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Nothing spills as the scene loads, and the roof holds water
+PASS: Braking at rest spills nothing
+PASS: A hard brake below 8 m/s spills nothing (5.0 m/s)
+PASS: Coasting from 11.1 m/s spills nothing
+PASS: A hard brake from 12.0 m/s spills the roof water within 0.1 s (1 spill)
+PASS: It pours from the roof lip, (0.0, 2.206, -1.038) in the van's frame, and moves with the van
+PASS: While the van slows at 8.1 m/s², the spill's water surges forward at 8.0 m/s²
+PASS: A second hard brake from 9.9 m/s, inside the first spill's life, is ignored
+PASS: Holding the brake to a stop spills nothing more
+PASS: Stopped, the water no longer surges (0.00 m/s²)
+PASS: Another hard brake within the 20 s refill is ignored (13 s of refill left)
+PASS: Once the roof has refilled, the next hard brake spills again
+PASS: Freeing the van in the middle of a spill frees the spill with it, without errors
+ROOF SPILL STATE RESULT: 13/13 passed; 0 failed
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

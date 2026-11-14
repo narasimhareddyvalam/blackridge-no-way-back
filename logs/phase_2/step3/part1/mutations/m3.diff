@@ -1,0 +1,8 @@
+16c16
+< const DESK := Vector3(-45.31, FLOOR, 18.55)
+---
+> const DESK := Vector3(-45.31, FLOOR, 16.55)
+18c18
+< const CHAIR := Vector3(-46.14, FLOOR, 18.55)
+---
+> const CHAIR := Vector3(-46.14, FLOOR, 16.55)

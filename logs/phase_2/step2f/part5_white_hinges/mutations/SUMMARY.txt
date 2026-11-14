@@ -1,0 +1,3 @@
+Hinge mutations (#261), each on an APFS clone, test_rear_doors.gd at 60 fps:
+m3  the lower arms given the upper (painted) arm (m3.diff)    exit 1, 18/19, R12: lower arms not in the trim
+m4  the pad reaching 0.06 m onto the door (m4.diff, rebuilt)  exit 1, 18/19, R12: arms 0.059-0.060 m onto the doors

@@ -3282,8 +3282,586 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Decision:** step 2d committed on `develop`, not pushed; step 2e starts with its
        research and brief, before any code.
 
+230. **Step 2e's decisions**
+     - **The author's answers** (to Claude Code's two questions, after its 2e brief): "Ethan
+       loads it", over the recommended short cut and over watching the crew; "A dock worker
+       seals it", over the recommended Ethan sealing it.
+     - **Decision:** L1 c, Ethan rolls the pallet into the van himself with the pallet jack, as
+       on a driver-assist load: a new on-foot action, with a way onto the dock floor and the lift
+       worked by Ethan; L2 b, a dock worker, a stand-in like the gate's guard, seals the doors
+       while Ethan watches, then he checks it. The brief's parts are revised to match.
+
+231. **How the pallet goes into the van (step 2e-2)**
+     - **Claude Code's question** (while building 2e-2, after measuring the van): bay 9's van is
+       a low-roof Iveco Daily whose hold is about 1.5 m tall inside, and Ethan is 1.8 m; to push
+       the pallet forward against the bulkhead, as rule H2 says, he has to walk into the hold
+       behind the pallet jack, stooping, and he has no stooped walk. Options: stoop in, to the
+       bulkhead, with two Mixamo clips the author downloads for Ch33 (a crouched walk and a
+       push), recommended; or from the doorway, the pallet about 1.1 m inside over the rear
+       axle, H2 changed to say so.
+     - **The author's answer:** "Stoop in, to bulkhead (Recommended)".
+     - **Decision:** H2 stands as written. Ethan walks into the hold behind the jack, stooping,
+       and the pallet goes forward against the bulkhead. The author downloads Mixamo's
+       "Crouched Walking" and "Pushing" for Ch33 into `source_assets/mixamo/`; until they are
+       converted, the checks on Ethan's stoop fail.
+
+232. **The dock worker's candidates**
+     - **Claude Code's question** (for 2e-3, with 2e-2 at 16 of 17 checks, the last waiting on
+       the clips of #231): which of five Rocketbox characters (Construction_Male_08, _07,
+       Construction_Female_01, Construction_Male_02, Delivery_Male_01; their preview pictures
+       downloaded from the library into Claude Code's scratch folder) to download and render
+       beside Ethan at bay 9, as for the guard (#197).
+     - **The author's answer:** "open the photo for me to choose once please".
+     - **Done:** the picture of the five opened in Preview, and the question asked again.
+
+233. **The dock worker chosen for a render**
+     - **The author's answer:** "Male_08, yellow vest (Recommended)".
+     - **Decision:** Rocketbox's `Construction_Male_08` (yellow hi-vis vest with reflective
+       stripes, a radio on his shoulder, blue work suit, gloves, white hard hat) is downloaded
+       and rendered beside Ethan at bay 9; the author then decides whether he is the dock worker,
+       as the guard was decided (#197–#198).
+
+234. **The dock worker's render**
+     - **Done:** Rocketbox's `Construction_Male_08` (his FBX, colour and normal maps) and the
+       standing idle `m_idle_neutral_01` downloaded from the library's `master` branch into
+       Claude Code's scratch folder, outside the repository, and rendered in Blender (Cycles)
+       beside Ethan (1.83 m with his hard hat, Ethan 1.77 m), close on his face, vest and radio,
+       and in the game's view from behind Ethan with the worker at the van's doors 2.4 m ahead;
+       the three opened in Preview. Found: the character's own imported take has to be cleared,
+       or it puts him back where the file had him when Blender renders. Nothing in the project
+       changed.
+     - **Claude Code's question:** should he be bay 9's dock worker, who walks out and seals
+       the van's doors in 2e-3?
+
+235. **The dock worker chosen**
+     - **The author's answer:** "Use him (Recommended)".
+     - **Decision:** Rocketbox's `Construction_Male_08` is the dock worker at bay 9, a stand-in
+       like the gate guard (D6), under the same MIT licence (C58).
+
+236. **Who fetches Ethan's two clips**
+     - **The author's message** (on #231's two Mixamo clips): "can you not download them or use
+       from somewhere that already exists"
+     - **Claude Code's answer:** it cannot fetch them from Mixamo itself: Mixamo hands out
+       downloads only to a signed-in Adobe account, and it should not sign in as the author.
+       Rocketbox, where the guard and the dock worker came from, has crouching poses but no
+       crouched walk and no push, on a different skeleton (3ds Max Biped).
+     - **Claude Code's question:** how to get them: through the author's own Chrome, signed in
+       to Mixamo and driven by the Claude in Chrome extension (recommended), or built from what
+       Ethan has, a stoop over his walk with his hands held to the jack's handle.
+     - **The author's answer:** declined the question, to clarify it.
+
+237. **What Claude Code needs for the clips**
+     - **The author's message** (asked what they would like to clarify): "what all do you need?"
+     - **Claude Code's answer:** two clips for Ch33, as FBX Binary, With Skin, 30 fps, "In Place"
+       unticked, like his other five: a stooped walk inside the hold (Mixamo's "Crouched
+       Walking", the game's `CrouchWalk`) and a push behind the jack (Mixamo's "Pushing", the
+       game's `Push`). Through the author's Chrome: the Claude in Chrome extension connected to
+       this session, the author signed in to Mixamo there (Claude Code does not handle the
+       sign-in), the extension allowed on mixamo.com, and the author's OK to move only those
+       two files, by name, from where Chrome saves them into `source_assets/mixamo/`; Claude
+       Code would show each clip's Mixamo preview before downloading it. Built from Ethan's own
+       clips: only the author's OK, and the result would look stiffer than motion capture. No
+       free library beyond Rocketbox has been searched. Recommended: the Chrome route.
+
+238. **Ethan's clips downloaded, with a push stop**
+     - **The author's message:** "i downloaded three animations, i downloaded push stop
+       animation as well to make it more realistic. so make sure we are doing it realistic as
+       well"
+     - **Found:** `source_assets/mixamo/` still holds only the seven files of 2026-10-31, and no
+       new FBX is anywhere in the project folder. Claude Code did not look outside it (the
+       author's rule) and asked where the three files are.
+
+239. **The three clips moved in and measured**
+     - **The author's message:** "they are in downloads and yes you can move them"
+     - **Done:** only the FBX files directly in the author's Downloads folder were listed; the
+       three of 2026-11-12, `Crouch Walk Forward.fbx`, `Pushing.fbx` and `Push Stop.fbx`, moved
+       into `source_assets/mixamo/` (Git ignores its FBX files). Each was measured frame by
+       frame in Blender, and five stills rendered with the game's pallet jack, Blender's IK
+       holding his wrists to the sides of its handle's loop (Claude Code's scratch folder,
+       `push_preview/sheet.png`); nothing in the game changed.
+     - **Found:** all three are Ch33 on his 65-bone skeleton at 30 fps. Pushing: an 81-frame
+       loop (2.67 s), its feet at 0.377 m/s, leaning 32–40°, hands 1.10 m up and 0.78 m ahead,
+       head at most 1.41 m. Push Stop: 79 frames, starting on Pushing's first frame (0.01° per
+       bone), three more steps, a planted stance (frames 40–46, head 1.40 m), then standing up
+       (head 1.68 m) with his hands off the handle. Crouch Walk Forward: 35 frames at 1.69 m/s,
+       its arms flung out (left forward, right up by his head). Walking Backwards: 0.529 m/s.
+       The jack now moves at 0.9 m/s whatever clip plays. Research: a Rhodes University study
+       pushed 200–500 kg pallet jacks at 3.6 km/h; manual jacks have no brakes; safety guides
+       say to go slowly in a trailer's tight space; the low-roof Daily's rear door is 1,450 mm
+       high and its load space 1,545 mm (Iveco).
+     - **Claude Code's question:** build it this way? Both hands held on the handle's loop; the
+       jack moving at the pace of his feet (Pushing played 1.5 times faster on the dock and the
+       lift, about 0.57 m/s; its own 0.38 m/s in the van; the backward walk's 0.53 m/s pulling
+       outside; Pushing played backward, stooped, pulling out of the van); a slow start; the
+       push stop from the step he is on when W is let go or the load meets something, the load
+       rolling on with his last step; outside he then stands and lets go, in the van he stays
+       stooped on his planted feet; close to the handle when taking the jack (so he still fits
+       on the lift's deck), at arm's length while pushing; Crouch Walk Forward not used.
+
+240. **The push and the stop approved**
+     - **The author's answer:** "yes use it looks good"
+     - **Decision:** Ethan's push is built as #239 proposed, from Mixamo's Pushing and Push
+       Stop; Crouch Walk Forward is not used. Tests first, then the build, then the stills in
+       a game window (the author warned first) and the author's OK to commit step 2e.
+
+241. **The stills' game window**
+     - **Claude Code's question** (after reporting Ethan's push built, 21/21, ten mutations
+       exiting 1 and every suite passing, with three calls beyond the plan for the author to
+       check): is it OK to open a game window now for the stills?
+     - **The author's answer:** "ok"
+     - **Decision:** Claude Code opens a game window on the author's Mac for step 2e's stills.
+
+242. **The capture window, watched: not satisfied**
+     - **The author's messages** (while the stills' capture ran, with two screenshots: the game
+       window's dark view, and the dock worker standing by Ethan at the side door in the rain):
+       "i cant see anything? idk if its glitching", then "there are lot of glitches and lot of
+       unreal things happening like warehouse is empty compeltely. the doors of the van are
+       opened inwards. check everything and add realistic elements. what all should we do give
+       me ideas." and "idk not at all satisfied."
+     - **Found first:** the dark view was the capture script's own fault: its key presses carried
+       a device number the game's bindings ignore, so Ethan never left the van and the camera
+       showed nothing. The second run reached every still but its last two scenes, which it set
+       up by moving the van, the jack and Ethan directly.
+     - **Checked:** every still; the rear doors measured as they open (they swing outward and fold
+       flat against the van's sides, 0.98–1.16 m out; the capture opened them with the van
+       already against the dock, so they swung through the dock wall, which play forbids); what
+       the shed holds (six wrapped pallets, five empties, the forklift and the jack in 50 x 30 m).
+     - **Found in the game:** Pushing's 35–45° lean all the way, as if shoving a stalled car; in
+       the hold his hands up by his head, the jack's handle being fixed upright in its one mesh;
+       pulling out, a backward walk still leaning forward; a bright column of rain at the shed's
+       corner by the side door; the shed nearly empty, dim and without people.
+     - **From the capture script, not the game:** the doors through the dock wall, the jumps of
+       the jack, the pallet, Ethan and the van, the worker waiting beside Ethan in his path, the
+       wrong objective at the end, and views blocked by the pallet.
+     - **Claude Code's ideas:** finish the push (lean only to get going, then nearly upright;
+       the handle split to tilt to his hands and turn as he steers; pulling by walking back,
+       leaning back; the rear doors open only with room to swing); the shed at work (freight
+       staged in lanes with labels, racking, a checker's desk, safety signs and kit, a working
+       forklift, brighter even light, a forklift driver and a checker, sound); the sealed load
+       looking different (canon, the author's call); the yard's parked vehicles brought forward.
+       Recommended: the push first, then the stills by real play, then the shed at work.
+
+243. **Realistic minor details, to an Unreal standard**
+     - **The author's message** (on #242's ideas): "add realistic minor details to make it look
+       realisitc and professional. do it as if we are doing it in unreal"
+     - **Decision:** the ideas of #242 go ahead, finished to the standard of a professional
+       Unreal Engine project; the sealed load's look stays the author's call (canon). Claude Code
+       researches first and writes the brief before any code, as for every step.
+     - **Done:** research, then the brief (`docs/PHASE_BRIEF.md`, "step 2f: the depot at work, to
+       a professional finish; written before any code"). Sources: pallet jacks
+       (https://racklify.com/encyclopedia/how-to-use-a-manual-pallet-jack-safely-beginners-guide-and-best-practices/,
+       https://safety.uoregon.edu/sites/safety1.uoregon.edu/files/safety_sheet_-_manual_pallet_jack_.pdf,
+       https://www.docsie.io/tutorials/warehouse/operate-a-manual-pallet-jack/); a cart-pushing
+       Mixamo character (https://cineversity.forums.maxon.net/topic/1759/modify-a-walk-cycle);
+       floor marking (https://www.creativesafetysupply.com/osha-floor-marking-requirements-you-should-know,
+       https://www.bradyid.com/applications/floor-marking-standards); light
+       (https://sloanled.com/downloads/ReferenceGuide-RecommendedLightLevels-US-Canada.pdf,
+       https://files.orionlighting.com/resources/RESOURCES/IES%20Brochure/IES%20Guideline%20and%20CCT%20Brochure.pdf);
+       extinguishers (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.157,
+       https://www.vectorsolutions.com/resources/blogs/osha-fire-extinguisher-mounting-height-placement-signage-requirements/);
+       eyewash (https://www.compliancesigns.com/blog/eyewash-stations-and-emergency-showers-where-when-and-how/,
+       https://na.bhs1.com/blog/post/eye-wash-stations-requirements-for-forklift-battery-rooms);
+       staging lanes (https://www.cisco-eagle.com/blog/?p=32,
+       https://racklify.com/encyclopedia/dock-door-signs-vs-floor-markings-which-is-right-for-your-dock/);
+       slab joints (https://www.forconstructionpros.com/concrete/article/20999043/rules-for-designing-contraction-joints);
+       forklift lights (https://www.yale.com/en-us/north-america/technology/safety-awareness/lights-alarms/,
+       https://www.cisco-eagle.com/blog/2016/04/14/how-forklift-warning-systems-help-separate-traffic-pedestrians);
+       dock controls (https://patents.google.com/patent/US6975226).
+     - **Claude Code's question:** the brief's parts in its order (the push finished, then the
+       shed's fabric, the shed at work and the yard), and whether the upright push is built from
+       Ethan's Walking or from a slower Mixamo walk the author downloads.
+
+244. **Step 2f's brief approved**
+     - **The author's answers:** "Yes, in this order (Recommended)" (the push finished, then the
+       shed's fabric, the shed at work, the yard) and "Use his own Walking (Recommended)" (the
+       upright push built from Ethan's Walking, switched only if it looks slow in the stills).
+     - **Decision:** part 1, step 2e's push finished, goes ahead: tests first.
+
+245. **The real-play capture, watched: not smooth**
+     - **The author's message** (while the capture played): "not able to climb stairs
+       smoothly, the scenes are breaking. make sure everything is smooth as butter. why is he
+       walking into the nothingnesS? the doors of the van should be opened first by the user.
+       create a smooth animation to create back doors of the van, then he needs to get into the
+       warehouse to do the lift thingy."
+     - **Found** (a frame-by-frame run in a scratch copy, and the stills):
+       - **The stair:** Ethan steps onto its first tread in one frame (+0.195 m, his camera with
+         him), then stalls there with W held, juddering 2 mm, for 6 s in the run (up to 12 s in
+         the capture), until his direction changes; then he takes the other six risers in five
+         jumps of 0.21-0.30 m, each in one frame (`driver.gd`, `_try_step`). The stair's test
+         passed because it only checks that he gets to the top.
+       - **"The scenes are breaking":** the capture switched the window to its own camera for
+         each still and back, and paused while it saved each picture; stills 06-07 put that
+         camera inside Ethan's back.
+       - **"Walking into the nothingness":** the capture's setup moved the van to bay 9 with
+         `recover()`, which also shuts the rear doors, so the van stood docked with its doors
+         shut, which play never allows; the pallet met shut doors, the hold stayed empty (stills
+         09-10), and the script kept walking Ethan to the spots it expected.
+       - **The objective** goes back to "LOAD THE PALLET: Go in by the side door and up the
+         stair" whenever Ethan lets go of the jack to work the lift (`_loading()`).
+       - **The doors:** in play E at the back opens them, but they swing by themselves while
+         Ethan stands still.
+     - **Sources** on Mixamo's stair clips: https://community.adobe.com/t5/mixamo-discussions/descending-stairs-animation-is-bad/m-p/12780972,
+       https://forum.reallusion.com/PrintTopic439194.aspx.
+     - **Claude Code's question:** three parts in order, tests first, reported after each: A,
+       smooth on foot (an incline for his body hidden under the stair, leg IK setting his feet on
+       the treads, the camera and body gliding over single steps, the camera easing back out
+       after a wall); B, Ethan opens and closes the rear doors himself, his hand on them; C, the
+       objectives in order and a capture of the whole job by the game's keys from the van
+       stopped in the court with its doors shut, its stills from a hidden camera, with the
+       depot's frame rate logged. Also whether the author downloads Mixamo's "Ascending Stairs"
+       and "Descending Stairs" for Ch33, and which moment "the nothingness" was, if another.
+
+246. **Not yet professional: the warehouse empty; A, B and C approved**
+     - **The author's message** (on #245's plan): "i am still not happy with the details of the
+       game. it looks like a amature game. no minute detailings like nothing in warehouse no
+       items, etc, doesnt feel like a real warehouse. check for already existing models to use
+       them in our game. and proceed with A,B,C"
+     - **Decision:** #245's parts A, B and C go ahead in that order, tests first; no Mixamo stair
+       clips were downloaded, so the stair is built from Ethan's own walk. Existing free models
+       for a working warehouse are searched for now, for step 2f's parts 2 and 3 (#244).
+     - **Done (A):** the stair's hidden incline, Ethan's stair steps and his camera
+       (`docs/PHASE_BRIEF.md`, "step 2f, part 1: the push finished, and Ethan smooth on foot (A),
+       built"); `test_stair.gd` 1/15 → 17/17, fourteen mutations exit 1, every suite exit 0; the
+       film `captures/stair/a/stair_up_and_down.mp4`. The models' shortlist was searched through
+       the catalogues' public web pages (Poly Haven, Sketchfab, ambientCG, Poly Pizza), Blender's
+       add-on not being connected; nothing fetched yet.
+
+247. **A seen in the report; B goes ahead**
+     - **The author's message** (on part A's report): "okay proceed"
+     - **Decision:** part B, Ethan opening and closing the rear doors himself, goes ahead, tests
+       first; then C.
+     - **Done (B and C):** `docs/PHASE_BRIEF.md`, "step 2f, part 1: the rear doors by Ethan's hands
+       (B) and the job in order (C), built": `test_rear_doors.gd` 6/14 → 16/16, thirteen
+       mutations exit 1; `test_loading.gd` 22/23 → 23/23; the film of the whole job by real play
+       and its stills; the frame rate measured, 60 inside the shed and 47–57 outside.
+
+248. **Can Claude Code make animations itself?**
+     - **The author's question** (while B began): "can you not create animations like opening back
+       door of the van etc? just curious?"
+     - **Claude Code's answer:** yes: B is that animation, made in the game as the stair's was, on
+       Ethan's own captured walks with IK holding his hand to each door and the door turning with
+       it; clips keyframed by hand in Blender are possible but look stiff beside motion capture,
+       which is why a captured clip was suggested for the stair; it cannot record motion capture
+       or sign in to Mixamo for the author.
+
+249. **Ethan's legs cross on the stair**
+     - **The author's message** (on the report of A–C): "the legs are becoming cross and its weird
+       when the ethan is climbing stairs idk if you missed it or idk check for me and report to me
+       once"
+     - **Claude Code's finding and fix:** not missed by chance: the stair's feet were set where
+       the walk clip's stand, narrow and to one side, and going down across his turning body with
+       his feet left pinned as he turned at the top; each foot now lands under its own hip, square
+       to the flight, his feet turning with him on the landing; rule S11 in `test_stair.gd`
+       (`docs/PHASE_BRIEF.md`, revision of 2026-11-13).
+
+250. **The jack's handle vanishes as he pushes**
+     - **The author's message** (on the report of #249): "and when hes pushing the pallet hes
+       pushing into the rod and rod disappears and appears back again. it shouldnt be like that.
+       that is what i am saying to you focus on minor minute details please."
+     - **Claude Code's finding and fix:** the film showed it: leaning in, his chest and chin went
+       into the handle's top, and stooped in the hold its rod ran into his hip, measured 0.16 m
+       inside him; his hands lay open on the loop. His back now straightens just enough to keep
+       the handle out, the stooped handle tilts to where his arms reach, and his hands close round
+       the loop with the thumb on top; rules H11 and H12 in `test_loading.gd`
+       (`docs/PHASE_BRIEF.md`, revision of 2026-11-13).
+
+251. **Film the fixes**
+     - **The author's message** (on the report of #249 and #250, asked whether to film the job
+       and the stair in a game window): "film it"
+
+252. **Five details seen while the film played**
+     - **The author's message** (watching the Movie Maker window, with two screenshots: Ethan
+       pushing the pallet onto the lift past its pendant post, and the van's open right rear door
+       from behind): "there is gap between van rear door and the hinge, the door appears to not
+       be attached to van and appears to float and when the ethan is reversing the car, zoom into
+       the rear camera the pallet is making the pole(controls for lift) disappear when hes
+       pushing the pallet into it. the animation when hes pushing the pallet outisde the van is
+       just reverse animation of pushing it(change it into realistic thing i dont like it). the
+       legs are still weird when climing stairs. they are becoming cross. just make it natural or
+       remove stairs and add a slope idk."
+     - **Claude Code's findings** (the film, `captures/loading/e/job.avi`): each rear door turns
+       about a point 0.156 m outside its own edge, which a Daily's 270° doors need, but no hinge
+       is drawn across that gap, so the door floats; the lift's pendant post stands on its deck
+       in the load's path; on the stair his feet land in one line and a leg crosses at the top;
+       his camera goes black inside the open door or the van as he walks round it.
+     - **The author's choices** (asked): reversing, "Screen shows rear camera" (the game view is
+       the van's rear camera while in reverse); the stair, "Mixamo stair clips (Recommended)" (the
+       author downloads Ascending and Descending Stairs); pulling out of the van, "Mixamo pulling
+       clip".
+
+253. **The guard who seals, the depot, the van's loading, the clips**
+     - **The author's message** (while the camera at the doors was being checked): "continue
+       sorry, i had my laptop go to sleep and the security guard appears out of nowhere for the
+       seal. make it realistic. i dont like how it is inside the depot. its empty. make the
+       pushing pallet into van more realistic. the lift etc all that. do research of how they
+       work in real life. add already available assets into the depot. make everything realistic
+       as fuck. also the animations for running up stairs and pulling out the pallet is in
+       downloads. make the security guard sit on a chair near the depot door. i downloaded
+       animations for security guard to sit in the chair and to standup from it and come to seal
+       the van. make him sit at the view where user sees him standup and sitdown all that. all
+       are in downloads."
+     - **Found:** the film's black stretches were first put down to the laptop sleeping while
+       it recorded; that was wrong: step 2's film, the Mac kept awake, showed them again. His
+       camera backs through bay 9's open door into the dark behind the dock's face as he closes
+       the doors (fixed with camera-only walls in the open dock doors; brief, step 2).
+     - **The author's answers** (asked): who seals, "Keep the dock worker (Recommended)" (bay 9's
+       hi-vis dock worker, C58, seated on a chair by the dock door); sitting back down, "its in
+       downloads, male sitting pose"; the stair, "i downloaded running up animation and running
+       down animation as well" (`Running Up Stairs.fbx`, `Descending Stairs.fbx`); the order,
+       "Clips, then guard, then depot (Recommended)": 1 the rear camera while reversing, 2 the
+       pull and stair clips, 3 the seated sealer, 4 research and the van's loading and the lift,
+       5 the depot dressed with existing models, each shown before the next.
+
+254. **Step 1 of #253 reported; step 2's stair**
+     - **Claude Code's report:** the hinges, the pendant post and the rear camera built and
+       tested; the black frames from the laptop's sleep; the stair clips step 0.23 m and are fast;
+       Male Sitting Pose is a still, so sitting back down needs Stand To Sit or an ease.
+     - **The author's answers** (asked): "Rebuild to fit (Recommended)" (the dock stair 6 steps
+       of 0.22 m on 0.25 m treads); "Their own speed when running" (walking plays the stair clips
+       slowed to a walk's cadence, running at their own speed).
+
+255. **The walk down the stair**
+     - **The author's message** (on the report that Descending Stairs.fbx is a crouch): "i dont
+       think there are any, it says thats the walking down stairs animation"
+     - **Claude Code's answer:** all 13 frames rendered: a crouch into a squat, the feet never
+       lower; perhaps a trimmed download; if not, the walk down stays his walk with the stair
+       stepping.
+
+256. **What is next**
+     - **The author's message:** "whats next"
+     - **Claude Code's answer:** finish step 2 (the stair's last checks, Pull Heavy Object for
+       pulling out, a film), then step 3 (the dock worker on his chair), step 4 (research, the van's
+       loading and the lift), step 5 (the depot dressed); waiting on the commit and physics
+       interpolation.
+
+257. **Step 2 goes on**
+     - **The author's message:** "okay proceed"
+     - **Asked** (the jack he pulls out of the hold is empty; a loader walks it back easily): the
+       author chose "Heavy pull anyway" (Pull Heavy Object for pulling the empty jack out too,
+       0.24 m/s, straining as if loaded) over walking back bent.
+
+258. **The boxes in the way, walls seen through, the hinges**
+     - **The author's message** (on step 2's report, with two screenshots of the film: inside the
+       shed by bay 9 at 2:41, a wrapped pallet in front of the van bay; the van's open rear from
+       behind at 3:40): "move the boxes from there and also, i can see through the walls of the
+       shed, make sure that doesnt happen. the hinges on the van dont look realistic and looks
+       disgusting. check if we have another van model that we can use or check for assets and
+       resources to just import and use it."
+     - **Done:** Pallet5 moved to wait in front of dock 8 (H14); the drive-in door filled by the
+       plain shutter alone (Poly Haven's file holds two narrow shutters side by side; E4 now checks
+       every point of each closed opening); the pull's head room fixed (a crouch at the knees, the
+       ceiling taken from where his head is).
+     - **Asked** (no free van with opening rear doors found; 270° hinges have two pivots): the
+       author chose "Search harder for a new van".
+
+259. **The hinges, in Blender**
+     - **Claude Code's report:** no free van better than the Daily found (the modern ones are
+       paid Store models, none listing hinges or working rear doors); recommended real 270°
+       hinges on the Daily.
+     - **The author's message:** "alright, do it in blender it might be better"
+
+260. **The hinges, not seen from outside**
+     - **Claude Code's report:** the Blender strap hinges built, two a door at 0.52 and 1.65 m;
+       R10 18/18, two mutations exit 1, 35 suite runs exit 0, the art check 0 failures; stills in
+       `captures/hinges/blender/`.
+     - **The author's message:** "i dont want them to  be seen from outside the van. (the hinges)"
+     - **Asked** (the doors turn on a pin at the outer rear corner, the only place they fold 270
+       degrees flat; whatever holds it sits outside the corner): body-coloured and slim, removed,
+       or doors opening only 180 degrees with the hinges inside. The author picked "Doors open
+       only 180°", then: "wrong option. idk what will make it look realistic"
+
+261. **Compact white hinges**
+     - **Claude Code's answer:** a real Daily's hinges show from outside, but as a small, short
+       hinge in each rear corner, not a long strap across the door; offered compact black,
+       compact in the van's white, or none, as stills side by side.
+     - **The author's choice:** "Compact, painted the van's white, so it blends into the body"
+
+262. **The level of detail**
+     - **Claude Code's report:** the hinges compact (a 0.03 m pad, 0.039 m tall), fitted to the
+       pillar's face as measured on the Iveco, the upper in the doors' white paint, the lower in
+       the black trim they sit on; R12 19/19, two mutations exit 1, 35 suite runs exit 0.
+     - **The author's message:** "that is the level of detail i want. make sure to do everything
+       at that level. i am okay with hinges now. do the game entirely like that. small detail by
+       detail."
+
+263. **Step 3: the dock worker at his station**
+     - **Claude Code's plan:** a dock desk on the dock floor just inside bay 9's open door with a
+       real chair (Poly Haven), the seal log and a box of seals; seated and alive while Ethan
+       loads; when the doors shut he stands, takes a seal and his clipboard, walks out by the dock
+       stair, puts the bolt through the hasp, snaps the cap, tugs, twists and checks the number
+       (C-TPAT's VVTT), walks back and sits down; Rocketbox's own clips (stand up, sit down,
+       seated idles, documents check) recommended over the Mixamo downloads (a different
+       skeleton; Male Sitting Pose a still); the desk and chair placed first and shown in stills.
+     - **The author's message:** "okay"
+
+264. **The station's stills: the chair, the lane's floor**
+     - **Claude Code's report:** the desk (Poly Haven's Metal Office Desk) along the edge rail in
+       the corner east of bay 9's lift, the Plastic Monobloc Chair in its kneehole, the seal log
+       and a pen cup on it; seen from the yard and the van's doors through the doorway; stills in
+       `captures/dock_station/part1/`. Asked to open the sheet, Claude Code opened it.
+     - **The author's message** (with a crop of the close still: the floor below the edge rail):
+       "change the chair for me and also, inside the dock change the flooring - [Image #9] , the
+       mud floor"
+
+265. **The chair: a swivel office chair**
+     - **Claude Code's report:** the lane floored with the shed's concrete, flush with the apron
+       (E11, 540 points; E4 measures the drive-in opening from that floor); Poly Haven has no
+       office chair, and Blender (for Sketchfab) was not running.
+     - **Asked:** the author chose "Office chair (Recommended)": the author opens Blender with its
+       MCP addon, and Claude Code finds a free black swivel office chair on Sketchfab.
+
+266. **What Sketchfab offers; the plastic chair removed**
+     - **Claude Code's report:** Red Fox's office chair (CC BY, credited) at the desk, sized by its
+       seat; the lane floored in the shed's concrete; the pen cup and seal log set on the desk top
+       (W2 had caught them 7.4 cm and 3 mm into it); 36 suite runs exit 0. Asked whether to remove
+       the unused plastic chair.
+     - **The author's message:** "tell me wht all can we use from sketchfab? remove the plastic
+       chair as well"
+     - **Done:** the Plastic Monobloc Chair's folder (1.9 MB) removed from the game, its rows from
+       the fetch list and the Poly Haven manifest; the desk, clipboard and pen cup listed in
+       `SOURCES.md`.
+
+267. **Props: the forest highway, main street and the gas station, and a warehouse like a photo**
+     - **Claude Code's answer** (to "give me ideas of what props we can use in our game"): props by
+       place, from `GAME_STORY.md` and `GAME_DESIGN.md`: the transfer shed and bay 9's desk, the
+       container yard, Mission 2's story props, the van's cab, the forest highway, main street and
+       the gas station, the docks, the airfield and the family house.
+     - **The author's message** (with a photo of a warehouse aisle: tall pallet racking with green
+       uprights and yellow beams stacked with flat cardboard, yellow and white lane lines on a
+       grey concrete floor, rows of high-bay lights, white ducts under an open steel roof):
+       "do these - The forest highway (Mission 1's collision) - Roadside reflector posts, guard
+       rails ✓, a weathered speed sign, a deer-crossing sign, mile markers, a fallen branch or
+       two, litter on the verge, a lay-by with a bin., Main street and the gas station (Act I) -
+       Fuel pumps, a price sign, an ice chest and propane cage, a newspaper box, a payphone (a
+       nice fit with the burner calls), parked cars, a bench, a bus stop ✓, shop shutters. and
+       for the shed, i want it to look something like this - [Image #10]"
+
+268. **Where main street goes, and the order**
+     - **Claude Code's plan:** written into `docs/PHASE_BRIEF.md` before any code (revision "step 5
+       brought forward"): A the shed's racking, lines, roof and lights like the photo; B the forest
+       highway's roadside; C main street and the gas station, on a new plot.
+     - **Asked:** the author chose "South valley road (Recommended)" (the gas station and two or
+       three shopfronts along the southern valley road, about x 20, z 176, the town's backdrop
+       behind) and "Shed, highway, town (Recommended)".
+
+269. **On power**
+     - **Claude Code's report:** part A built (racking, stock, lines, roof, services, aisle
+       lights; `test_racking.gd` 11/11); the GPU price unsettled (2.9 ms, plus or minus 4.1) with
+       the Mac at 4% battery, throttled to 30 fps; asked to plug in before the suites.
+     - **The author's message:** "plugged in, continue"
+
+270. **Real light, puddles and rain on the ground**
+     - **Claude Code's report:** part A built and tested (racking, stock, lines, roof, services,
+       aisle lights; 11/11, eight mutations, 37 suite runs; GPU 1.52 ms on power); the ceiling
+       dim, as the game computes no bounced light.
+     - **The author's message:** "i like it, but the lighting inside the shed and overall in the
+       game is not realistic i mean the way it falls on the ground or items etc. its not real
+       light physics like in real life. same with puddles and rain water puddles and the way rain
+       falls on the ground on road and depot"
+
+271. **Research the wet road; the frame rate**
+     - **Claude Code's report:** what the game lacks for real light (no shadows from the shed's
+       23 lights, no ambient occlusion, no bounced light, the moon's specular off) and for rain
+       on the ground (no ripples, no splashes beyond the lamps, the depot's concrete never wet);
+       proposed a measured comparison of lighting options before building.
+     - **The author's message:** "the wet road shader isnt realistic and what i want. do research
+       and proceed. its okay to go above 60 fps right or am i wrong"
+     - **Claude Code's answer:** above 60 fps is always fine; the risk is frames slower than
+       16.7 ms, under 60; for this game a steady 45-60 plays well, an uneven one does not.
+
+272. **Label the comparison, and look for ready-made shaders**
+     - **Claude Code's report:** a measured comparison of lighting options at three places
+       (`captures/lighting/compare/`, `logs/phase_2/lighting/compare/price.txt`): shadows from
+       lights within 30 m 3.1-4.6 ms, ambient occlusion 0.1 ms, screen-space bounced light
+       0.5-0.95 ms, SDFGI 1.9-3.1 ms; the road and the apron already under 60 fps (45 and 52).
+     - **The author's messages:** "i am confused with the photos idk which one we want to go
+       with?/ the depot floor is still unreal and bad"; then, when Claude Code offered to make the
+       call itself: "no i mean add names and show it to me, i want to choose. check for realistic
+       shaders if we can use directly?"
+
+273. **None of the lighting looks real; try Rain Puddles V3**
+     - **Claude Code's report:** labelled sheets of the six lighting options at the three places
+       (`captures/lighting/compare/labelled_*.png`); ready-made shaders checked for licence and
+       fit: Rain Puddles V3 (GloriousGlider8, MIT with credit; its reflections from marcelb's
+       GodotSSRWater, MIT) usable; shadecore_dev's CC0 puddles not safely (Zavie's Shadertoy
+       ripples, likely non-commercial); gameidea's pack paid and not redistributable; Weather FX
+       Free CC BY 4.0.
+     - **Asked:** lighting, the author answered "nothing looks realistic for me"; wet ground, the
+       author chose "Try Rain Puddles V3 first" (as it comes, on the apron and road, labelled
+       before/after stills).
+
+274. **Two reference photos of a rainy night**
+     - **Claude Code's report:** Rain Puddles V3 tried as it comes (`captures/wet_ground/v3_trial/
+       labelled_v3_trial.png`, 0.9-2.5 ms): its puddles reflect and ripple, but hard-edged blobs
+       over half the ground, dry elsewhere, not where drainage puts water; asked for photos of
+       what a real rainy night looks like to the author.
+     - **The author's message:** two pictures (`[Image #11]`, `[Image #12]`): a street at night in
+       heavy rain under warm sodium lamps, the whole road a dark mirror with long vertical
+       reflections of each lamp, the lit rain falling through each lamp's cone, glow round the
+       lamps, a red traffic light and parked cars; and a loading dock at night in rain, its wet
+       concrete apron dark and glossy with puddles in its low spots and long reflections of the
+       wall lights, warm and cool lights mixed, a canopy, rain against the lights.
+
+275. **Five fixes toward the photos**
+     - **Claude Code's report:** the photos and the game compared point by point (a sheet in its
+       scratch folder, the author's photos not filed in the project): the road wet only in
+       patches, no lamp reflections, no glow, blacks lifted by fog and ambient light, the dock's
+       concrete dry and matte, faint haze in the lamps' cones; five fixes proposed, each shown as
+       a labelled before-and-after: wet ground everywhere, real lamp reflections (specular 1.0,
+       reflection probes), glow round lights, darker nights (the fog's colour and the ambient
+       light, protected since Assignment 6), light in the rain.
+     - **Asked:** the author chose "All five (Recommended)": the fog's colour and the ambient light
+       may be darkened; the AgX exposure of 1.3 is asked about separately if still needed.
+
+276. **Keep the haze; then the streaks**
+     - **Claude Code's report:** fix 1, the wet ground (`wet_ground.gdshader`: the road, the depot
+       yard and the dock apron), built; fixes 2-5 tried on the running game, each added on top of
+       the one before, at the road, the apron and the depot yard
+       (`captures/wet_ground/night_look/labelled_*.png`, `logs/phase_2/wet_ground/night_look/`):
+       reflections 0.5-0.6 ms, glow 0.6-0.7 ms, darker free, haze free (the road's 3.0 ms reading
+       unsettled, plus or minus 6.7).
+     - **Asked:** the author kept only "6. Light in the rain" of fixes 3-6, and chose "Yes, do the
+       streaks" (the lamps' brightness and the wet road's smoothness made closer to real, shown
+       as a labelled before-and-after).
+
+277. **Rippled puddles, and V3's water combined with the wet ground**
+     - **Claude Code's report:** the streak steps tried, each on top of the last
+       (`captures/wet_ground/streaks/labelled_streaks.png`): B lamps like real ones (cone 75
+       degrees, reach 25 m, specular 1.0; 0.4-0.8 ms), C the road's film rain-roughened (0.25;
+       free), D the puddles rippled (0.08; free).
+     - **The author's answer:** "D. Rippled puddles, also add the shader of water v3 that you
+       added before to all these"; asked how, the author chose "Combine them (Recommended)": the
+       wet ground kept, its puddles given V3's own mirror reflections and ripples on the road,
+       the dock apron and the depot yard.
+
+278. **Reflections across the whole wet surface**
+     - **Claude Code's report:** the wet ground's puddles rippled (0.08) and given V3's reflections,
+       shown step by step at the road, the apron and the depot yard
+       (`captures/wet_ground/puddles/labelled_puddles.png`, `logs/phase_2/wet_ground/puddles/`);
+       found that reading the screen for them moved the ground into Godot's transparent pass,
+       which turned off Godot's own reflections on the film; so a fourth step, the reflections
+       across the whole wet film, blurred by its roughness (1.2-2.0 ms).
+     - **Asked:** the author chose "4. Whole wet surface".
+
+279. **Commit, then part B**
+     - **Claude Code's report:** the wet ground, its reflections and the lamps' haze built and
+       tested (`test_wet_ground.gd` 5/5, five mutations, 38 suite runs exit 0); the before-and-now
+       sheet (`captures/wet_ground/final/before_and_now.png`); asked for the OK to commit
+       everything since the last commit to `develop`, labelled "(agent)" and not pushed, and to go
+       on to part B (the forest highway's roadside).
+     - **The author's message:** "okay"
+
 ## Waiting for the author
 
+- Step 2f (#243–#248): part 1 built, with A (smooth on foot), B (the rear doors by Ethan) and C
+  (the job in order, its film); waiting for the author's look at the film and their OK to commit
+  step 2e, part 1 and A–C; whether to turn on physics interpolation and bring the yard within the
+  frame's budget (60 inside the shed, 47–57 outside); then parts 2–4 with existing models.
+  Still for the author to check from #240: steering only as the jack rolls, the strap's 1.2 m
+  reach, his pace held on slopes.
+- #253's steps 1, 2 and the fixes of #258-#259 built, not committed: the author's look at the
+  Blender hinges (`captures/hinges/blender/`), then step 3 (the dock worker seated by the dock
+  door), 4 (the van's loading and the lift) and 5 (the depot dressed).
 - Assignment 6: submitted on Canvas (#181); `a6` is `0216d23`, and `main` is merged up to it
   (#180). Step 6 is Codex's, at the author's
   direction, kept (#171).

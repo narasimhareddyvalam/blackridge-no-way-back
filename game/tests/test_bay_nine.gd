@@ -4,6 +4,8 @@ extends SceneTree
 ## pit, its lights, its wheel guides and its chock. Ethan's actions use the real keys. A headless
 ## run draws nothing, so the look is not checked here.
 
+## The shed's camera walls (layer 8) in its open dock doors are solid to nothing but his camera.
+const NOT_CAMERA_WALLS := 0xFFFFFFFF & ~8
 const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const BAY := -47.75
 const DOCK_FLOOR := 1.3
@@ -14,6 +16,7 @@ const TO_THE_REAR: Array[Vector3] = [Vector3(-1.7, 0.0, 1.5), Vector3(-1.5, 0.0,
 	Vector3(0.0, 0.0, 4.3)]
 const BESIDE := Vector3(-1.6, 0.0, 0.5)
 const SWUNG := 250.0
+const WALL_BESIDE := Vector3(1.4, 1.25, 1.6)
 const VAN_REAR := Vector3(0.0, 1.0, 3.01)
 const BUMPERS := 20.13
 const CHOCK_SPOT := Vector3(-0.872, 0.15, 1.48)
@@ -26,6 +29,7 @@ const CROOKED := 3.5
 const TURN_AT := 4.5
 const OFF_CENTRE := 0.17
 const AT_THE_DOOR := Vector3(-2.0, 0.0, -0.5)
+const DOORS_BY_HAND := 26.0
 
 var _checks: int = 0
 var _failures: int = 0
@@ -49,7 +53,7 @@ func _check(condition: bool, description: String) -> void:
 
 
 func _run() -> void:
-	create_timer(280.0, true, false, true).timeout.connect(_timeout)
+	create_timer(400.0, true, false, true).timeout.connect(_timeout)
 	_scratch = OS.get_temp_dir().path_join("blackridge-bay-nine-%d-%d.cfg" % [
 		OS.get_process_id(), Time.get_ticks_usec()])
 	_store(START_SAVE)
@@ -132,11 +136,13 @@ func _check_rear_doors() -> void:
 	await _walk(TO_THE_REAR)
 	var asks := _hint()
 	await _key(KEY_E)
-	await _seconds(2.5)
+	await _until(_doors_done, DOORS_BY_HAND)
+	await _seconds(0.3)
 	var opened := _door_angles()
 	var again := _hint()
 	await _key(KEY_E)
-	await _seconds(2.5)
+	await _until(_doors_done, DOORS_BY_HAND)
+	await _seconds(0.3)
 	var closed := _door_angles()
 	_check(asks == "E  Open the rear doors" and opened.x >= SWUNG and opened.y >= SWUNG
 		and again == "E  Close the rear doors",
@@ -144,6 +150,29 @@ func _check_rear_doors() -> void:
 		+ "both open and back against the sides (%.0f° and %.0f°)") % [asks, opened.x, opened.y])
 	_check(closed.x >= 0.0 and closed.y >= 0.0 and closed.x < 1.0 and closed.y < 1.0,
 		"G3: E again closes them (%.1f° and %.1f°)" % [closed.x, closed.y])
+	var wall := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(0.2, 2.5, 3.0)
+	shape.shape = box
+	wall.add_child(shape)
+	root.add_child(wall)
+	wall.global_transform = Transform3D(_van.global_basis, _van.to_global(WALL_BESIDE))
+	await _seconds(0.5)
+	await _key(KEY_E)
+	await _seconds(2.5)
+	var kept := _door_angles()
+	var told := (_hud.get("_notice") as Label).text
+	wall.queue_free()
+	await _seconds(0.3)
+	if kept.x >= 1.0 or kept.y >= 1.0:
+		await _key(KEY_E)
+		await _until(_doors_done, DOORS_BY_HAND)
+		await _seconds(0.3)
+	_check(kept.x < 1.0 and kept.y < 1.0 and told.begins_with("No room"),
+		("G3: with a wall %.1f m beside the van, E at its back leaves the rear doors shut, for "
+		+ "there is no room to swing them round to its sides (%s; %.1f° and %.1f°)")
+		% [WALL_BESIDE.x - 1.0 - box.size.x / 2.0, told, kept.x, kept.y])
 	await _walk([BESIDE])
 	_check(_hint() == "E  Get in the van",
 		"G3: beside the van, not behind it, E gets Ethan in rather than opening the doors (%s)"
@@ -203,8 +232,8 @@ func _check_docking() -> void:
 		("G6 and G2: beside the rear wheel the hint offers the chock (%s); E puts it in front of "
 		+ "the wheel (%.2f m off), and bay 9 turns red outside and green inside") % [offered,
 		under])
-	_check(_objective() == "MISSION 2 IS BEING BUILT" and _detail() == "Next: the load.",
-		"Docked and chocked, the step ends and points at the load (%s: %s)" % [_objective(),
+	_check(_objective() == "LOAD THE PALLET",
+		"Docked and chocked, the objective turns to loading the pallet (%s: %s)" % [_objective(),
 		_detail()])
 	await _walk([AT_THE_DOOR])
 	await _key(KEY_E)
@@ -322,7 +351,8 @@ func _open_doors_and_board() -> void:
 	await _until(_on_foot, 8.0)
 	await _walk(TO_THE_REAR)
 	await _key(KEY_E)
-	await _seconds(2.5)
+	await _until(_doors_done, DOORS_BY_HAND)
+	await _seconds(0.3)
 	await _walk([BESIDE])
 	await _key(KEY_E)
 	await _until(_in_the_van, 8.0)
@@ -377,6 +407,11 @@ func _on_foot() -> bool:
 	return not bool(_van.get("occupied")) and not bool(_app.get("_boarding"))
 
 
+## Ethan done at the rear doors by hand (part B): they take him as long as a driver.
+func _doors_done() -> bool:
+	return not bool(_van.call("rear_doors_busy"))
+
+
 func _until(done: Callable, limit: float) -> void:
 	var time := 0.0
 	while not done.call() and time < limit:
@@ -399,6 +434,7 @@ func _bodies_in(size: Vector3, at: Vector3) -> Array[Dictionary]:
 	query.shape = box
 	query.transform = Transform3D(Basis.IDENTITY, at)
 	query.exclude = [_van.get_rid()]
+	query.collision_mask = NOT_CAMERA_WALLS
 	return _van.get_world_3d().direct_space_state.intersect_shape(query, 8)
 
 
@@ -448,7 +484,7 @@ func _remove() -> void:
 
 
 func _timeout() -> void:
-	_check(false, "The bay 9 checks finish within 280 s")
+	_check(false, "The bay 9 checks finish within 400 s")
 	_finish()
 
 

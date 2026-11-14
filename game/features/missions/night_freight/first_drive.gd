@@ -354,6 +354,12 @@ func _save_checkpoint(announce: bool = true) -> Error:
 	return _write_progress(config, announce)
 
 
+## Saves a checkpoint another mission reached, such as Mission 2's "loaded" (step 2e-3), into the
+## same progress file, announced as Mission 1's are.
+func save_progress(config: ConfigFile) -> Error:
+	return _write_progress(config, true)
+
+
 func _save_finished() -> void:
 	_write_progress(WrongCargo.start_progress(), false)
 

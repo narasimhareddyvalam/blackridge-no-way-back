@@ -1,0 +1,4 @@
+40c40
+< 	chair.global_transform = Transform3D(Basis(Vector3.UP, PI / 2.0), CHAIR)
+---
+> 	chair.global_transform = Transform3D(Basis(Vector3.UP, -PI / 2.0), CHAIR)

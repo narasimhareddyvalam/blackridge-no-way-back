@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: G1: the road, the depot yard and the dock apron are drawn wet by wet_ground.gdshader: drenched, asphalt 0.7 and concrete 0.5 porous, their puddles rippled (0.08) and reflecting, the whole wet film reflecting, the rain's ripples drawn (so)
+FAIL: G2: the shader compiles with its drainage, puddle and reflection settings, its puddles rippled and its film reflecting by default
+PASS: G3: the road tells the shader where across it each point is (0 at its left edge, 1 at its right) and its half width, so water lies at its edges and in its wheel paths
+PASS: G4: the dock apron drains to the slot drain along its outer edge and holds water in its saw-cut joints every 15 ft
+PASS: G5: every lamp's cone is lit by the rain in it four times its old haze (19 of 19)
+WET GROUND RESULT: 4/5 passed; 1 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

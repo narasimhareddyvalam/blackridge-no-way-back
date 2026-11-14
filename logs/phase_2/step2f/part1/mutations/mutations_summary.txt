@@ -1,0 +1,24 @@
+Step 2f part 1, Ethan's push finished (#244), with step 2e's push mutations renamed to the new
+checks: eighteen mutations, each on an APFS clone of game/ with its own HOME, run by
+mutations_part1.py (beside this file) in three lanes; each undoes one part and its test must
+exit 1 on its own check. Each lane's clone was restored byte for byte after each mutation
+(lane*.txt). Logs: <mutation>/<test>_60fps.log.
+
+mutation_doors_open_anywhere: exit 1; BAY NINE RESULT: 19/20 passed; 1 failed; fails on its check: True; script error: False
+mutation_fixed_pace: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+mutation_handle_upright: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+mutation_instant_start: exit 1; LOADING RESULT: 20/22 passed; 2 failed; fails on its check: True; script error: False
+mutation_leans_all_the_way: exit 1; LOADING RESULT: 16/22 passed; 6 failed; fails on its check: True; script error: False
+mutation_no_hands: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+mutation_no_lead: exit 1; LOADING RESULT: 18/22 passed; 4 failed; fails on its check: True; script error: False
+mutation_no_push_stop: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_pulls_at_arms_length: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_pulls_upright_in_van: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_slides_off_the_plate: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_stands_in_van: exit 1; LOADING RESULT: 19/22 passed; 3 failed; fails on its check: True; script error: False
+mutation_stoops_at_the_door: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+mutation_stop_without_travel: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_thin_dock_rain: exit 1; LAMP RAIN STATE RESULT: 14/16 passed; 2 failed; fails on its check: True; script error: False
+mutation_van_at_dock_rate: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_walk_stop_lets_go: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+mutation_wrists_on_the_bar: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False

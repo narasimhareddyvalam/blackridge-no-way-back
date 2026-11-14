@@ -71,6 +71,7 @@ var _signed: bool = false
 var _sheet_token: int = 0
 var _lessons := DriveLessons.new()
 var _walk_from := Vector3.ZERO
+var _document_at := Vector3.ZERO
 var _odometer: float = 0.0
 var _stuck_for: float = 0.0
 var _call_done: bool = false
@@ -110,7 +111,13 @@ func _ready() -> void:
 	cargo.name = "TheWrongCargo"
 	add_child(cargo)
 	cargo.objective_changed.connect(_route_objective)
+	cargo.seal_checked.connect(_show_seal_check)
+	cargo.checkpoint_reached.connect(route.save_progress)
 	cargo.shed = world.transfer_shed
+	cargo.driver = driver
+	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
+	var stairs: Array[Dictionary] = [(world.transfer_shed.get("side_door") as Node).call("stair")]
+	driver.set("stairs", stairs)
 	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
 	route.configure(van)
 	_pick_mission()
@@ -355,6 +362,7 @@ func _begin_on_foot() -> void:
 func _sign_run_sheet() -> void:
 	_sheet_token += 1
 	var token := _sheet_token
+	_document_at = world.run_sheet_spot
 	hud.show_document(Mission.RUN_SHEET)
 	await get_tree().create_timer(SIGN_DELAY, false).timeout
 	if token != _sheet_token:
@@ -363,6 +371,18 @@ func _sign_run_sheet() -> void:
 	_signed = true
 	_walk_from = driver.global_position
 	hud.set_objective("GET IN THE VAN", "Walk to the driver's door, on the left, and press E.")
+	await get_tree().create_timer(SHEET_HOLD, false).timeout
+	if token == _sheet_token:
+		_close_run_sheet()
+
+
+## Mission 2's seal check (step 2e-3): the bolt's, the cap's and the run sheet's numbers side by
+## side on a sheet, put away with E or after a while, as the run sheet is.
+func _show_seal_check(words: String) -> void:
+	_sheet_token += 1
+	var token := _sheet_token
+	_document_at = driver.global_position
+	hud.show_document(words)
 	await get_tree().create_timer(SHEET_HOLD, false).timeout
 	if token == _sheet_token:
 		_close_run_sheet()
@@ -517,13 +537,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied:
 			_exit_van()
 		elif hud.document_visible():
-			if _signed:
+			if _signed or _mission == cargo:
 				_close_run_sheet()
 		elif _needs_sheet() and driver.global_position.distance_to(world.run_sheet_spot) \
 				< SHEET_RANGE:
 			_sign_run_sheet()
+		elif van.rear_doors_busy():
+			return
 		elif not _foot_task().is_empty():
-			hud.notify(cargo.do_foot_action(driver.global_position))
+			var said: String = cargo.do_foot_action(driver.global_position)
+			if not said.is_empty():
+				hud.notify(said)
 		elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			if _needs_sheet():
 				hud.notify("Sign the run sheet at the office first.")
@@ -672,8 +696,8 @@ func _process(delta: float) -> void:
 	var ground := Vector2(van.global_position.x, van.global_position.z)
 	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
 		_recover()
-	if hud.document_visible() and driver.global_position.distance_to(world.run_sheet_spot) \
-			> SHEET_WALK_AWAY + SHEET_RANGE and _signed:
+	if hud.document_visible() and driver.global_position.distance_to(_document_at) \
+			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission == cargo):
 		_close_run_sheet()
 	hud.set_hint(_hint(0.2))
 
@@ -697,6 +721,8 @@ func _hint(delta: float) -> String:
 		var task := _foot_task()
 		if not task.is_empty():
 			return "E  " + task
+		if van.rear_doors_busy():
+			return ""
 		if driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			return "E  Get in the van"
 		if driver.global_position.distance_to(_walk_from) > WALK_LESSON:
@@ -713,7 +739,7 @@ func _hint(delta: float) -> String:
 
 
 func _foot_task() -> String:
-	if _mission != cargo or not driver.active or van.occupied:
+	if _mission != cargo or not driver.active or van.occupied or van.rear_doors_busy():
 		return ""
 	return cargo.foot_action(driver.global_position)
 

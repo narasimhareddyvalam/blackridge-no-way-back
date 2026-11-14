@@ -1,0 +1,2 @@
+mutation_walls_from_inside_too: exit 0; LOADING RESULT: 27/27 passed; 0 failed; fails on its check: False; script error: False
+clone restored byte for byte after each

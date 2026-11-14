@@ -12,6 +12,14 @@ const PLATFORM := Rect2(-92.0, -13.0, 66.0, 68.0)
 const SHED := Rect2(-90.0, -10.0, 50.0, 30.0)
 const APRON := Rect2(-90.0, 20.0, 50.0, 15.0)
 const SURFACE := 0.02
+const WetGround = preload("res://features/environments/industrial_loop/wet_ground.gdshader")
+const RIPPLES := "res://features/environments/industrial_loop/art/wet_ground/ripple_data.png"
+const CONCRETE := ("res://features/environments/depot_yard/polyhaven/textures/"
+	+ "concrete_floor_worn_001/concrete_floor_worn_001_%s_2k.jpg")
+const CONCRETE_TILE := 2.5
+const CONCRETE_POROSITY := 0.5
+const DRAIN_REACH := 4.0
+const JOINT_SPACING := 180 * 0.0254
 const PAINT := 0.006
 const BAY_LINES: Array[float] = [-82.0, -78.0, -74.0, -70.0, -66.0, -62.0, -58.0, -54.0, -50.0,
 	-45.5]
@@ -41,7 +49,7 @@ const GUIDES := Vector2(-47.75, 1.25)
 const GUIDE := Vector3(0.15, 0.2, 3.5)
 const GUIDE_FROM := 20.5
 const GUIDE_FLARE := Vector2(0.3, 1.0)
-const GUIDE_STOP := 0.35
+const GUIDE_STOP := 0.2
 const CHOCK_HOLDER := Vector3(-45.8, 0.6, 20.0)
 const CHOCK := Vector3(0.22, 0.2, 0.3)
 
@@ -52,7 +60,7 @@ var _steel := Build.material(Color(0.6, 0.62, 0.62), 0.5)
 
 func build(asphalt: Material) -> void:
 	var slab := Build.material(Color(0.46, 0.46, 0.44), 0.6)
-	_ground("DockApron", APRON, slab)
+	_ground("DockApron", APRON, _wet_concrete())
 	_ground("YardAsphaltSouth", Rect2(PLATFORM.position.x, APRON.end.y, PLATFORM.size.x,
 		PLATFORM.end.y - APRON.end.y), asphalt)
 	_ground("YardAsphaltEast", Rect2(SHED.end.x, PLATFORM.position.y, PLATFORM.end.x - SHED.end.x,
@@ -81,6 +89,26 @@ func build(asphalt: Material) -> void:
 		Color("f2f1ea"), 1.7)
 	_sign("STAFF PARKING ONLY", Vector3(-83.2, 0.0, 41.9), PI / 2.0, Color("f2f1ea"),
 		Color("1f4f9c"), 1.3)
+
+
+## The dock apron's concrete in the rain (#275, `wet_ground.gdshader`): Poly Haven's worn concrete
+## floor, drenched, draining away from the docks to the slot drain along its outer edge, its
+## saw-cut control joints every 15 ft (4.57 m) holding water, a few shallow dips.
+func _wet_concrete() -> ShaderMaterial:
+	var wet := ShaderMaterial.new()
+	wet.shader = WetGround
+	var maps := {"color": "diff", "normal": "nor_gl", "arm": "arm"}
+	for map: String in maps:
+		wet.set_shader_parameter("aggregate_" + map, load(CONCRETE % maps[map]))
+	wet.set_shader_parameter("rain_ripples", load(RIPPLES))
+	wet.set_shader_parameter("texture_scale", 1.0 / CONCRETE_TILE)
+	wet.set_shader_parameter("dry_color", Vector3(0.95, 0.95, 0.95))
+	wet.set_shader_parameter("porosity", CONCRETE_POROSITY)
+	wet.set_shader_parameter("slab", true)
+	wet.set_shader_parameter("drain", Vector4(APRON.position.x, APRON.end.y, 1.0, 0.0))
+	wet.set_shader_parameter("drain_reach", DRAIN_REACH)
+	wet.set_shader_parameter("joint_spacing", JOINT_SPACING)
+	return wet
 
 
 func _ground(name: String, rect: Rect2, surface: Material) -> void:

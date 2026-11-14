@@ -1,0 +1,4 @@
+321c321
+< 	tool.set_color(place)
+---
+> 	pass

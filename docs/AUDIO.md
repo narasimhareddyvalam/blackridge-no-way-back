@@ -9,7 +9,7 @@ been used here. Preview approval and final selection remain open.
 
 ## Current assets
 
-All nineteen WAV files in `game/features/audio/first_drive/` were synthesized for
+All twenty-one WAV files in `game/features/audio/first_drive/` were synthesized for
 this prototype with the original source
 `source_assets/audio/first_drive/synthesize.py`. They are mono, 16-bit PCM at
 22,050 Hz before Godot import. They are provisional synthesized effects, not
@@ -36,6 +36,8 @@ recordings of a real vehicle, and have no third-party asset source.
 | `breathing.wav` | Ethan's shaky breathing in the quiet ending after the hit: three breaths with a tremble on each exhale | 9.9 s | Loop, fading in |
 | `engine_tick.wav` | The hot engine ticking as it cools in the quiet ending | 0.06 s | One shot, twelve times at random gaps |
 | `skid.wav` | Locked tyres skidding on the wet crossing paint: tyre hiss, rubber scrub and a squeal near 960 Hz (added 2026-11-01, Run 24 step 3) | 2.0 s | Loop while the locked wheels brake, louder with speed |
+| `door_latch.wav` | A rear door's latch: a 96 Hz thud, the bolt's rattle, a metal ring near 1.9 and 2.7 kHz and the catch's second click (added 2026-11-12, step 2f part 1 B, #247) | 0.4 s | One shot as a door shuts; quieter as its handle frees the latch |
+| `door_stay.wav` | A rear door's stay on the van's side: a softer 74 Hz knock and a click (added 2026-11-12, step 2f part 1 B, #247) | 0.35 s | One shot as the stay catches a door folded back; quieter as Ethan tugs it off |
 
 These files can be opened individually for audition. The in-game mix has Master,
 Vehicle, Ambience, and Music sliders under Settings, reached from the title screen or the pause

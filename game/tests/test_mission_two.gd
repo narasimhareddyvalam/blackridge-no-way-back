@@ -1,5 +1,7 @@
 extends SceneTree
 
+## The shed's camera walls (layer 8) in its open dock doors are solid to nothing but his camera.
+const NOT_CAMERA_WALLS := 0xFFFFFFFF & ~8
 const CARGO := "res://features/missions/the_wrong_cargo/the_wrong_cargo.gd"
 const AT_THE_YARD := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=2\n"
 const LOADED := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=1\n"
@@ -16,6 +18,12 @@ const OFFICE := Rect2(-90.0, 12.0, 8.0, 8.0)
 const DOCK_SIZE := Vector2(2.74, 3.05)
 const DRIVE_IN_SIZE := Vector2(3.7, 2.9)
 const DRIVE := Rect2(-74.0, 51.9, 21.0, 3.1)
+const VAN_SILL := 0.4
+const VAN_PASSAGE := AABB(Vector3(-48.6, 0.45, 19.8), Vector3(1.7, 0.8, 0.15))
+## The drive-in lane inside the shed (#264): from the dock floor's edge to the east wall, and on
+## under the drive-in door to the apron, whose top it is flush with.
+const LANE := Rect2(-44.65, -9.7, 4.35, 29.7)
+const APRON_TOP := 0.02
 
 var _checks: int = 0
 var _failures: int = 0
@@ -157,6 +165,7 @@ func _check_gate() -> void:
 	var booth := _check_booth(shed)
 	_check_ground(shed, _app.get_node("IndustrialLoop"))
 	_check_building(shed, _app.get_node("IndustrialLoop"))
+	_check_lane_floor(shed)
 	_check_docks(shed)
 	_check_dock_lights(shed)
 	_check_inside(shed)
@@ -425,6 +434,54 @@ func _check_ground(shed: Node3D, world: Node3D) -> void:
 		sloping, unheld])
 
 
+## E11: the drive-in lane is floored, as a shed's is, with a concrete slab, never the hill's dirt:
+## at every point of a 0.5 m grid over it a ray down from just above the apron's height (below
+## anything standing on the floor, such as the dock stair) meets the shed's own body at that
+## height, where the shed draws a slab in a textured concrete.
+func _check_lane_floor(shed: Node3D) -> void:
+	var body := shed.get_node_or_null("Building/ShedBody")
+	var slabs: Array[MeshInstance3D] = []
+	for found in shed.find_children("LaneFloor*", "MeshInstance3D", true, false):
+		slabs.append(found as MeshInstance3D)
+	var ray := PhysicsRayQueryParameters3D.new()
+	ray.collision_mask = NOT_CAMERA_WALLS
+	var space := _app.get_world_3d().direct_space_state
+	var points := 0
+	var bare := 0
+	var undrawn := 0
+	var worst := ""
+	var x := LANE.position.x + 0.05
+	while x < LANE.end.x:
+		var z := LANE.position.y + 0.05
+		while z < LANE.end.y:
+			points += 1
+			ray.from = Vector3(x, APRON_TOP + 0.04, z)
+			ray.to = Vector3(x, -0.5, z)
+			var hit := space.intersect_ray(ray)
+			var top := (hit.get("position", Vector3.INF) as Vector3).y
+			if hit.is_empty() or hit["collider"] != body or absf(top - APRON_TOP) > 0.005:
+				bare += 1
+				if worst == "":
+					worst = "(%.2f, %.2f): %s at %.3f m" % [x, z, "nothing" if hit.is_empty()
+						else String((hit["collider"] as Node).name), top]
+			var drawn := false
+			for slab in slabs:
+				var box := slab.global_transform * slab.get_aabb()
+				var paint := slab.get_active_material(0) as BaseMaterial3D
+				if Rect2(box.position.x, box.position.z, box.size.x, box.size.z).has_point(
+						Vector2(x, z)) and absf(box.end.y - APRON_TOP) < 0.005 and paint != null \
+						and paint.albedo_texture != null:
+					drawn = true
+			if not drawn:
+				undrawn += 1
+			z += 0.5
+		x += 0.5
+	_check(points > 0 and bare == 0 and undrawn == 0, ("E11: the drive-in lane inside the shed "
+		+ "is a concrete slab flush with the apron, %.2f m up, never the hill's dirt: of %d points, "
+		+ "%d not on the shed's slab (first %s), %d not drawn in its textured concrete") % [
+		APRON_TOP, points, bare, worst, undrawn])
+
+
 func _check_building(shed: Node3D, world: Node3D) -> void:
 	var body := shed.get_node_or_null("Building/ShedBody") as StaticBody3D
 	var boxes: Array[AABB] = []
@@ -462,11 +519,16 @@ func _check_building(shed: Node3D, world: Node3D) -> void:
 		if marker == null or marker.global_position.distance_to(sill) > 0.02:
 			wrong.append(entry[0])
 			continue
-		var hole := AABB(Vector3(sill.x - size.x / 2.0, sill.y, 19.0), Vector3(size.x, size.y, 2.0))
+		var floor := APRON_TOP if entry[0] == "DriveInOpening" else sill.y
+		var hole := AABB(Vector3(sill.x - size.x / 2.0, floor, 19.0), Vector3(size.x,
+			size.y - (floor - sill.y), 2.0))
 		var edges: Array[Vector3] = [Vector3(hole.position.x - 0.05, sill.y + size.y / 2.0, 19.9),
 			Vector3(hole.end.x + 0.05, sill.y + size.y / 2.0, 19.9),
 			Vector3(sill.x, hole.end.y + 0.05, 19.9)]
-		if sill.y > 0.0:
+		if entry[0] == "DockOpening9":
+			edges.append_array([Vector3(sill.x - 1.15, sill.y - 0.05, 19.9),
+				Vector3(sill.x + 1.15, sill.y - 0.05, 19.9)])
+		elif sill.y > 0.0:
 			edges.append(Vector3(sill.x, sill.y - 0.05, 19.9))
 		var overlaps := boxes.any(func(box: AABB) -> bool: return box.intersects(hole.grow(-0.02)))
 		var framed := edges.all(func(point: Vector3) -> bool:
@@ -483,10 +545,12 @@ func _check_building(shed: Node3D, world: Node3D) -> void:
 			Vector3(size.x - 0.06, size.y - 0.06, 0.1))
 		var seen := AABB()
 		var solid := false
+		var parts: Array[AABB] = []
 		if door_node != null:
 			for found in door_node.find_children("*", "MeshInstance3D", true, false):
 				var part := found as MeshInstance3D
 				var box: AABB = part.global_transform * part.get_aabb()
+				parts.append(box)
 				seen = box if not seen.has_volume() else seen.merge(box)
 			for found in door_node.find_children("*", "CollisionShape3D", true, false):
 				var shape := found as CollisionShape3D
@@ -502,14 +566,21 @@ func _check_building(shed: Node3D, world: Node3D) -> void:
 			if door_node == null or (seen.has_volume() and seen.intersects(doorway)) or solid:
 				undoored.append(door_name + " not open")
 		elif door_node == null or not seen.has_volume() or not seen.grow(0.001).encloses(face) \
-				or not solid:
+				or not solid or not _filled(parts, face):
 			undoored.append(door_name)
 	_check(undoored.is_empty(), ("E4: a closed, solid door fills each opening but docks 5 "
-		+ "and 9, which stand open (wrong: %s)")
+		+ "and 9, which stand open, every point of it, no gap to see through (wrong: %s)")
 		% ", ".join(undoored))
 	_check(wrong.is_empty(), ("E4: nine dock openings 2.74 x 3.05 m from 1.3 m up at x -80 + 4n "
-		+ "and -47.75, and the drive-in door's 3.7 x 2.9 m at the yard's level at x -42.75 (wrong: "
-		+ "%s)") % ", ".join(wrong))
+		+ "and -47.75, framed by the wall (bay 9's below only beside its passage), and the drive-in "
+		+ "door's 3.7 x 2.9 m at the yard's level at x -42.75 (wrong: %s)") % ", ".join(wrong))
+	var through := boxes.filter(func(box: AABB) -> bool: return box.intersects(VAN_PASSAGE))
+	var kerb := boxes.any(func(box: AABB) -> bool:
+		return box.has_point(Vector3(-47.75, VAN_SILL - 0.1, 19.9)))
+	_check(through.is_empty() and kerb,
+		("E4: under bay 9's door a passage as wide as its lift's pit reaches down to a 0.4 m sill, "
+		+ "a kerb below it (%d walls in it; kerb %s), so the lowered lift meets a van's floor "
+		+ "(step 2e)") % [through.size(), kerb])
 	var light := shed.get_node_or_null("Building/OfficeLight") as OmniLight3D
 	var door := shed.get_node_or_null("Building/OfficeDoor") as MeshInstance3D
 	var door_box: AABB = door.global_transform * door.get_aabb() if door != null else AABB()
@@ -549,18 +620,21 @@ func _check_docks(shed: Node3D) -> void:
 	var bumped: Array[String] = []
 	for index in range(DOCK_XS.size()):
 		var x := DOCK_XS[index]
+		var van_bay := index == DOCK_XS.size() - 1
+		var span := Vector2(0.6, 1.0) if van_bay else Vector2(0.8, 1.5)
+		var top := VAN_SILL if van_bay else 1.3
 		var near := bumpers.filter(func(found: Node) -> bool:
 			var box: AABB = (found as MeshInstance3D).global_transform \
 				* (found as MeshInstance3D).get_aabb()
 			var off := absf(box.get_center().x - x)
-			return off >= 0.8 and off <= 1.5 and absf(box.end.y - 1.3) <= 0.05 \
+			return off >= span.x and off <= span.y and absf(box.end.y - top) <= 0.05 \
 				and box.end.z - 20.0 >= 0.1 and box.end.z - 20.0 <= 0.2 \
 				and found.find_children("*", "CollisionShape3D", true, false).size() > 0)
 		if near.size() != 2:
 			bumped.append(str(index + 1))
 	_check(bumpers.size() == 18 and bumped.is_empty(), ("F2: two solid bumpers under each "
-		+ "door, tops at 1.3 m and 0.10-0.20 m proud (%d bumpers; wrong: %s)") % [bumpers.size(),
-		", ".join(bumped)])
+		+ "door, tops at 1.3 m (bay 9's at its 0.4 m sill, where a van's rear meets them) and "
+		+ "0.10-0.20 m proud (%d bumpers; wrong: %s)") % [bumpers.size(), ", ".join(bumped)])
 	var unlevelled: Array[String] = []
 	for index in range(DOCK_XS.size()):
 		var x := DOCK_XS[index]
@@ -615,6 +689,25 @@ func _check_dock_lights(shed: Node3D) -> void:
 		+ "and 9 and red at the others (wrong: %s)") % ", ".join(wrong))
 
 
+## Whether `parts` between them cover every point of `face`, on a 5 cm grid: no gap between a
+## door's panels to see out through (#258).
+func _filled(parts: Array[AABB], face: AABB) -> bool:
+	var steps := Vector2i(ceili(face.size.x / 0.05), ceili(face.size.y / 0.05))
+	for i in range(steps.x + 1):
+		for j in range(steps.y + 1):
+			var point := face.position + Vector3(face.size.x * i / steps.x,
+				face.size.y * j / steps.y, 0.0)
+			var behind := false
+			for box in parts:
+				if box.position.x - 0.001 <= point.x and point.x <= box.end.x + 0.001 \
+						and box.position.y - 0.001 <= point.y and point.y <= box.end.y + 0.001:
+					behind = true
+					break
+			if not behind:
+				return false
+	return true
+
+
 func _check_inside(shed: Node3D) -> void:
 	var space := shed.get_world_3d().direct_space_state
 	var clear: Array[String] = []
@@ -625,6 +718,7 @@ func _check_inside(shed: Node3D) -> void:
 		var query := PhysicsShapeQueryParameters3D.new()
 		query.shape = box
 		query.transform = Transform3D(Basis.IDENTITY, Vector3(x, 2.8, 19.88))
+		query.collision_mask = NOT_CAMERA_WALLS
 		var arm := shed.get_node_or_null("Building/DockArmLight%d" % (index + 1)) as SpotLight3D
 		var aim := -arm.global_basis.z.normalized() if arm != null else Vector3.ZERO
 		if not space.intersect_shape(query, 1).is_empty() or arm == null \

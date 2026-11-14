@@ -1,0 +1,4 @@
+1356c1356
+< 			var bracket_mesh := (made.get_node("HingeBracket%s%s" % ["Upper" if hinge > 0 else "",
+---
+> 			var bracket_mesh := (made.get_node("HingeBracket%s%s" % ["" if hinge > 0 else "",

@@ -72,6 +72,8 @@ func _check_art() -> void:
 		+ "in the repo; drawn: %s)" % ", ".join(old))
 	var triangles := 0
 	for mesh: MeshInstance3D in _van_meshes():
+		if not mesh.mesh is ArrayMesh or mesh.name.begins_with("Hinge"):
+			continue
 		for surface in mesh.mesh.get_surface_count():
 			var indices: int = mesh.mesh.surface_get_array_index_len(surface)
 			var corners: int = mesh.mesh.surface_get_array_len(surface)

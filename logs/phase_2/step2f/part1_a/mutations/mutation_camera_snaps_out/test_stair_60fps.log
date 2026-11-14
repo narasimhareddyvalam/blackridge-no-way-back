@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: Ethan out of the van on foot, his hips', ankles' and toes' bones found
+PASS: S1 up: Ethan walks the stair at a stair's pace, 0.355 m/s across the floor (against 0.355), never stalling (0.239 m/s at the slowest, 0.372 at the fastest), and gets to the landing (true, 1.30 m up)
+FAIL: S2 up: nothing jumps: in any one frame his body rises or drops at most 0.004 m, his camera 0.029 and his hips 0.012 (at most 0.02)
+PASS: S3 up: each planted foot stands on its step: its sole at most 0.001 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 10 plants
+PASS: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 1, 2, 3, 4, 5, 6, 7] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+PASS: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most -0.001 m into one (at most 0.01)
+PASS: S6 up: his cadence on the stair is a stair's, 75 steps a minute (against 76 ± 10)
+PASS: S1 down: Ethan walks the stair at a stair's pace, 0.526 m/s across the floor (against 0.542), never stalling (0.437 m/s at the slowest, 0.673 at the fastest), and gets to the lane (true, 0.00 m up)
+FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.006 m, his camera 0.208 and his hips 0.018 (at most 0.02)
+PASS: S3 down: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 12 plants
+PASS: S4 down: one tread a step, his feet taking turns: the steps he plants on [7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0, 0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+PASS: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most -0.001 m into one (at most 0.01)
+PASS: S6 down: his cadence on the stair is a stair's, 119 steps a minute (against 117 ± 10)
+FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5, 6] by foot [1, 0, 1, 0, 1, 0]; no foot at most -0.001 m into a step, nothing jumping more than 0.029 m a frame, and he reaches the landing (1.30 m up)
+PASS: S9: up a 20° slope he walks along it without stepping up: his body, hips and camera rise at most 0.017 m a frame (at most 0.02), 0.60 m up at its top
+PASS: S7: onto a 0.15 m kerb his body steps up as before (0.160 m in one frame; on top true), but his camera and hips glide up, at most 0.017 and 0.016 m a frame (at most 0.025), the camera settled 0.000 m from its usual height 0.5 s on (the kerb's ground clear: true)
+FAIL: S8: a wall 1 m behind him pulls his camera in at once (0.76 m from his head, then 0.76, at most 1.00); once the wall is gone it eases back out, at most 2.741 m a frame (at most 0.12), 3.20 m out within 0.02 s (free: 3.50 m)
+STAIR RESULT: 13/17 passed; 4 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

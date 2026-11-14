@@ -1,0 +1,3 @@
+mutation_no_camera_walls: exit 1; SEALING RESULT: 12/13 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H4: closing them in the court, his camera never backs through bay 9's open door into the dark behind the dock's face, where the view goes black (behind it in 160 of 1136 frames, at most 0.56 m)
+clone restored byte for byte after each

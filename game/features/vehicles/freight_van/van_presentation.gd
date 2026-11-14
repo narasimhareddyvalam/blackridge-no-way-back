@@ -57,6 +57,9 @@ const REVERSE_LAMP := Vector3(0.86, 1.0, 2.84)
 const REVERSE_ENERGY := 6.0
 const REVERSE_RANGE := 14.0
 const REVERSE_GAIN := 3.0
+const REVERSE_CAMERA := Vector3(0, 2.15, 3.0)
+const REVERSE_TURN := Vector3(-0.28, PI, 0)
+const REVERSE_FIELD := 85.0
 const TAIL_GLOW := Vector2(0.25, 1.0)
 const TAIL_GLOW_RANGE := 5.0
 const INDICATORS: Array[String] = ["FrontIndicatorLeft", "RearIndicatorLeft",
@@ -116,6 +119,11 @@ const WIPE_MAP_SIZE := Vector2i(512, 256)
 const DOOR_SWING := 0.541
 const REAR_SWING := PI * 1.5
 const REAR_DOOR_SECONDS := 2.4
+const HINGE_HEIGHTS: Array[float] = [0.52, 1.65]
+## The rear doors' strap hinges, built in Blender by `tools/art/build_van_hinges.py` (#259).
+const HINGES = preload("art/van_hinges.glb")
+const SWING_SAMPLES := 9
+const SINK_PER_KG := 0.00005
 const GLARE_FALLOFF := 40.0
 const GLARE_RATE := 12.0
 const OFF_GLASS := Vector2(9.0, 9.0)
@@ -148,6 +156,8 @@ const COWL := 0.1
 const HEAD_WATCH := 1.0
 
 var driving_camera: Camera3D
+var rear_camera: Camera3D
+var _rear_guides: CanvasLayer
 var navigation: Control
 var night_dimming: Node
 var mirrors: Array[SubViewport] = []
@@ -207,6 +217,7 @@ var _cabin := Node3D.new()
 var _door: Node3D
 var _door_glass := Node3D.new()
 var _rear_doors: Array[Node3D] = []
+var _bolt_seal: Node3D
 var _rear_open: float = 0.0
 var _powered_screens: Array[MeshInstance3D] = []
 var _dark_screens: Array[MeshInstance3D] = []
@@ -294,6 +305,8 @@ func _exterior() -> void:
 	_body.add_child(outside)
 	_door = outside.get_node("DriverDoor") as Node3D
 	_rear_doors.assign([outside.get_node("RearDoorLeft"), outside.get_node("RearDoorRight")])
+	_hasp()
+	_rear_hinges(outside)
 	_turn_passenger_mirror(outside)
 	var headlights := outside.get_node("Headlights") as MeshInstance3D
 	var tail_lamps := outside.get_node("TailLamps") as MeshInstance3D
@@ -395,18 +408,51 @@ func _displays() -> void:
 	_powered_screens.append(_map_screen)
 	_dark_screens.append(_blank_screen(MAP_SCREEN, MAP_SIZE, MAP_TURN))
 	_powered_views.append_array([instruments, gps])
-	reverse_view = _camera_view(Vector3(0, 2.15, 3.0), Vector3(-0.28, PI, 0), REVERSE_PIXELS,
-		85.0)
+	reverse_view = _camera_view(REVERSE_CAMERA, REVERSE_TURN, REVERSE_PIXELS, REVERSE_FIELD)
 	reverse_view.get_camera_3d().cull_mask = 7
 	reverse_view.add_child(ParkingGuides.new())
 	var low_light := CameraAttributesPractical.new()
 	low_light.exposure_multiplier = REVERSE_GAIN
 	mirror_cameras[mirror_cameras.size() - 1].attributes = low_light
+	_rear_view(low_light)
 	reverse_screen = _dash_screen(reverse_view, MAP_SCREEN, MAP_SIZE, MAP_TURN, false,
 		2.0 * SCREEN_GAP)
 	_lcd(reverse_screen)
 	reverse_screen.visible = false
 	_screen_glass()
+
+
+## The reversing camera as the game's own view while the van is in reverse (#252): the same
+## camera, high on the van's back looking back and down past the bumper, with the same lens and
+## low-light gain, its parking guides drawn over the picture, as a driver watches it reversing.
+func _rear_view(low_light: CameraAttributes) -> void:
+	rear_camera = Camera3D.new()
+	rear_camera.name = "RearCamera"
+	rear_camera.position = REVERSE_CAMERA
+	rear_camera.rotation = REVERSE_TURN
+	rear_camera.fov = REVERSE_FIELD
+	rear_camera.cull_mask = 7
+	rear_camera.near = 0.1
+	rear_camera.far = driving_camera.far
+	rear_camera.attributes = low_light
+	add_child(rear_camera)
+	_rear_guides = CanvasLayer.new()
+	_rear_guides.name = "RearCameraGuides"
+	_rear_guides.layer = -1
+	_rear_guides.add_child(ParkingGuides.new())
+	_rear_guides.visible = false
+	add_child(_rear_guides)
+
+
+## In reverse, with the driver at the wheel, the game's view is the rear camera; out of it, his
+## own view again. Out of the van his own camera is someone else's to choose.
+func _follow_gear() -> void:
+	var reversing: bool = vehicle.gear < 0 and vehicle.occupied
+	if reversing and driving_camera.current:
+		rear_camera.make_current()
+	elif not reversing and rear_camera.current and vehicle.occupied:
+		driving_camera.make_current()
+	_rear_guides.visible = rear_camera.current
 
 
 func _lcd(screen: MeshInstance3D) -> void:
@@ -1157,8 +1203,10 @@ func _follow_ground(delta: float) -> void:
 		_ground_ray.to = vehicle.to_global(spot + Vector3.DOWN * 2.0)
 		var hit := space.intersect_ray(_ground_ray)
 		ground.append(vehicle.to_local(hit.position).y if not hit.is_empty() else _ground_rest)
-	var front := (ground[0] + ground[1]) * 0.5
-	var rear := (ground[2] + ground[3]) * 0.5
+	var sink := float(vehicle.load_kg) * SINK_PER_KG
+	var share := _rear_share()
+	var front := (ground[0] + ground[1]) * 0.5 - sink * (1.0 - share)
+	var rear: float = (ground[2] + ground[3]) * 0.5 - sink * share
 	var target := Vector3(atan2(front - rear, WHEEL_SPOTS[2].z - WHEEL_SPOTS[0].z),
 		(front + rear) * 0.5 - _ground_rest,
 		atan2((ground[1] + ground[3]) * 0.5 - (ground[0] + ground[2]) * 0.5,
@@ -1166,6 +1214,12 @@ func _follow_ground(delta: float) -> void:
 	_tilt = _tilt.lerp(target, 1.0 - exp(-delta * TILT_RATE))
 	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x + _rock, 0.0, _tilt.z)),
 		Vector3(0.0, _tilt.y, 0.0))
+
+
+## How much of the load's weight the rear axle carries, by where the load stands between the
+## axles (step 2e): all of it over the rear axle, none over the front.
+func _rear_share() -> float:
+	return (float(vehicle.load_z) - WHEEL_SPOTS[0].z) / (WHEEL_SPOTS[2].z - WHEEL_SPOTS[0].z)
 
 
 func settle() -> void:
@@ -1260,9 +1314,127 @@ func clear_crack() -> void:
 	_glass.set_shader_parameter("crack_amount", 0.0)
 
 
+## A steel hasp across the rear doors where they meet, just under the handle, each half on its
+## own door, and the shipper's bolt seal through it once the van is sealed (step 2e-3): a yellow
+## coated steel bolt and its barrel cap, as ISO 17712 high-security seals are made.
+func _hasp() -> void:
+	var steel := Build.material(Color(0.42, 0.43, 0.45), 0.4)
+	steel.metallic = 0.8
+	var point: Vector3 = vehicle.call("seal_point")
+	var across := vehicle.global_basis.x.normalized()
+	var back := vehicle.global_basis.z.normalized()
+	for index in range(2):
+		var door := _rear_doors[index]
+		var side := -1.0 if index == 0 else 1.0
+		var at := door.to_local(point + across * side * 0.03 - back * 0.012)
+		Build.box(door, at, Vector3(0.05, 0.07, 0.008), steel).name = "Hasp"
+	_bolt_seal = Node3D.new()
+	_bolt_seal.name = "BoltSeal"
+	_rear_doors[1].add_child(_bolt_seal)
+	_bolt_seal.position = _rear_doors[1].to_local(point)
+	var yellow := Build.material(Color(0.95, 0.78, 0.05), 0.45)
+	var bolt := Build.cylinder(_bolt_seal, Vector3.ZERO, 0.004, 0.085, yellow)
+	bolt.rotation.z = PI / 2.0
+	var cap := Build.cylinder(_bolt_seal, Vector3(0.05, 0.0, 0.0), 0.0095, 0.03, yellow)
+	cap.rotation.z = PI / 2.0
+	Build.box(_bolt_seal, Vector3(-0.045, -0.018, 0.0), Vector3(0.008, 0.035, 0.026), yellow)
+	_bolt_seal.visible = false
+
+
+## The rear doors' hinges, two a door above and below its tail lamp, as a Daily's 270-degree
+## doors hang (#252): each door turns about a pin out beyond its own edge, so that it can fold
+## flat against the side, and a compact arm on the door runs from its edge round to the pin,
+## where a bracket on the body's rear corner holds the pin's barrel; each in the finish of the
+## door where it sits, the white paint above, the black trim below (#261, `build_van_hinges.py`).
+func _rear_hinges(art: Node3D) -> void:
+	var made := HINGES.instantiate() as Node3D
+	for index in range(_rear_doors.size()):
+		var door := _rear_doors[index]
+		var side := "L" if index == 0 else "R"
+		for hinge in range(HINGE_HEIGHTS.size()):
+			var height := HINGE_HEIGHTS[hinge]
+			var level := "Upper" if hinge > 0 else ""
+			var bracket_mesh := (made.get_node("HingeBracket%s%s" % [level, side])
+				as MeshInstance3D).mesh
+			var arm := MeshInstance3D.new()
+			arm.mesh = (made.get_node("HingeArm%s%s" % [level, side]) as MeshInstance3D).mesh
+			arm.name = "HingeArm%d" % hinge
+			arm.position = Vector3(0.0, height - door.position.y, 0.0)
+			door.add_child(arm)
+			var bracket := MeshInstance3D.new()
+			bracket.mesh = bracket_mesh
+			bracket.name = "HingeBracket%d_%d" % [index, hinge]
+			bracket.position = Vector3(door.position.x, height, door.position.z)
+			art.add_child(bracket)
+	made.free()
+
+
+## Whether both rear doors have room to swing their 270 degrees round to the van's sides,
+## sampled every 30 degrees along each one's arc: nothing of the world's in the way, such as a
+## wall, a post or the dock, the van's own bodies left out.
+func rear_swing_clear() -> bool:
+	var space := get_world_3d().direct_space_state
+	var query := PhysicsShapeQueryParameters3D.new()
+	var box := BoxShape3D.new()
+	query.shape = box
+	query.collision_mask = 1
+	var own: Array[RID] = [vehicle.get_rid()]
+	for body in vehicle.find_children("*", "CollisionObject3D", true, false):
+		own.append((body as CollisionObject3D).get_rid())
+	query.exclude = own
+	for index in range(_rear_doors.size()):
+		var door := _rear_doors[index]
+		var extent := _door_extent(door)
+		box.size = (extent.size - Vector3(0.04, 0.04, 0.0)).max(Vector3.ONE * 0.01)
+		var way := 1.0 if index == 1 else -1.0
+		for step in range(1, SWING_SAMPLES + 1):
+			var angle := way * REAR_SWING * step / SWING_SAMPLES
+			query.transform = door.get_parent().global_transform * Transform3D(
+				Basis(Vector3.UP, angle), door.position) * Transform3D(Basis.IDENTITY,
+				extent.get_center())
+			if not space.intersect_shape(query, 1).is_empty():
+				return false
+	return true
+
+
+## Rear door `index` (0 left, 1 right), hinged at its origin, for Ethan's hands on it.
+func rear_door(index: int) -> Node3D:
+	return _rear_doors[index]
+
+
+## Rear door `index`'s extent in its own frame.
+func rear_door_extent(index: int) -> AABB:
+	return _door_extent(_rear_doors[index])
+
+
+func _door_extent(door: Node3D) -> AABB:
+	var into := door.global_transform.affine_inverse()
+	var extent := AABB()
+	var first := true
+	var meshes := door.find_children("*", "MeshInstance3D", true, false)
+	if door is MeshInstance3D:
+		meshes.append(door)
+	for found in meshes:
+		var mesh := found as MeshInstance3D
+		if mesh.name.begins_with("Hinge"):
+			continue
+		var part: AABB = into * mesh.global_transform * mesh.get_aabb()
+		extent = part if first else extent.merge(part)
+		first = false
+	return extent
+
+
 ## The rear doors swing round to lie against the sides, the right one first, then the left,
 ## as a driver opens a Daily's: each about 270 degrees on its long hinges.
 func _swing_rear_doors(delta: float) -> void:
+	_bolt_seal.visible = bool(vehicle.get("sealed"))
+	var by_hand: Array[float] = vehicle.call("rear_door_angles")
+	if not by_hand.is_empty():
+		_rear_doors[0].rotation.y = -by_hand[0]
+		_rear_doors[1].rotation.y = by_hand[1]
+		_rear_open = 1.0 if by_hand[0] >= REAR_SWING - 0.01 and by_hand[1] >= REAR_SWING - 0.01 \
+			else 0.0
+		return
 	_rear_open = move_toward(_rear_open, 1.0 if vehicle.rear_doors_open else 0.0,
 		delta / REAR_DOOR_SECONDS)
 	_rear_doors[1].rotation.y = REAR_SWING * smoothstep(0.0, 1.0, clampf(_rear_open * 2.0, 0.0,
@@ -1376,6 +1548,7 @@ func update_vehicle(delta: float) -> void:
 	roof.set_shader_parameter("runner_travel", _roof_water.runner_travel)
 	roof.set_shader_parameter("runner_speed", _roof_water.runner_speed)
 	reverse_screen.visible = vehicle.gear < 0 and _screens_on
+	_follow_gear()
 	for index in range(mirror_cameras.size()):
 		mirror_cameras[index].global_transform = _mirror_frames[index].global_transform \
 			* mirror_poses[index]
@@ -1389,7 +1562,7 @@ func update_vehicle(delta: float) -> void:
 			_mirror_clock[index] = maxf(_mirror_clock[index] - 1.0 / MIRROR_RATES[index], 0.0)
 			mirrors[index].render_target_update_mode = SubViewport.UPDATE_ONCE
 			mirror_updates[index] += 1
-	if vehicle.gear >= 0:
+	if vehicle.gear >= 0 or rear_camera.current:
 		_reverse_clock = 0.0
 		return
 	_reverse_clock += delta

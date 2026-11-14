@@ -34,7 +34,7 @@ curve_z = SubResource("Curve_rain_flat")
 
 [sub_resource type="ParticleProcessMaterial" id="Process_rain"]
 emission_shape = 3
-emission_box_extents = Vector3(21, 0.1, 0.6)
+emission_box_extents = Vector3(21, 0.1, 1.75)
 direction = Vector3(0.08, -0.997, 0)
 spread = 4.0
 initial_velocity_min = 3.5
@@ -121,7 +121,7 @@ one_shot = false
 preprocess = 1.1
 explosiveness = 0.0
 collision_base_size = 0.01
-visibility_aabb = AABB(-21.5, -5.1, -1.5, 43, 5.6, 3)
+visibility_aabb = AABB(-21.5, -5.1, -2.65, 43, 5.6, 5.3)
 local_coords = false
 transform_align = 3
 process_material = SubResource("Process_rain")
@@ -134,7 +134,7 @@ lifetime = 0.2
 one_shot = false
 preprocess = 0.0
 explosiveness = 0.0
-visibility_aabb = AABB(-21.5, -5.1, -1.5, 43, 5.6, 3)
+visibility_aabb = AABB(-21.5, -5.1, -2.65, 43, 5.6, 5.3)
 local_coords = false
 process_material = SubResource("Process_splash")
 draw_pass_1 = SubResource("Quad_splash")
@@ -142,7 +142,7 @@ draw_pass_1 = SubResource("Quad_splash")
 [node name="Collider" type="GPUParticlesCollisionHeightField3D" parent="."]
 cull_mask = 4294967293
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3, 0)
-size = Vector3(43, 5.6, 3)
+size = Vector3(43, 5.6, 5.3)
 resolution = 0
 update_mode = 1
 follow_camera_enabled = false

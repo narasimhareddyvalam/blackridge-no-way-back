@@ -1,0 +1,4 @@
+62c62
+< uniform bool film_reflections = true;
+---
+> uniform bool film_reflections = false;

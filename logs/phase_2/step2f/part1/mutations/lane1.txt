@@ -1,0 +1,24 @@
+mutation_fixed_pace: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "Walk", "Idle"]), then walks nearly upright behind it (leaning 3° at most), the jack at the pace of his feet, 1.200 m/s, his plante
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push"] and inside ["Push"], his head at most 1.471 m above the h
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack", "Idle"]), his planted feet slipping at most 0.
+    FAIL: H2: W let go on the dock as he walks behind it (["Push", "PushStop", "", "Idle"]), the load rolls on 0.00 m with his last step, his planted feet slipping at most 0.108 m/s; then he stands (Idle)
+    FAIL: H2: W let go while he leans in to get it going (["Push", "PushStop", "", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at mos
+mutation_no_hands: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "Walk", "Idle"]), then walks nearly upright behind it (leaning 12° at most), the jack at the pace of his feet, 0.900 m/s, his plant
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push"], his head at most 1.499 m abo
+    FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Push held, true; his toes at most 0.046 m up), his hands on the handle (0.504 m off it, 0.20 m below the top of h
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.020 m/s,
+    FAIL: H2: W let go on the dock as he walks behind it (["Push", "Walk", "Idle"]), the load rolls on 0.72 m with his last step, his planted feet slipping at most 0.019 m/s; then he stands (Idle), his ha
+mutation_no_push_stop: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: W let go while he leans in to get it going (["Push", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at most 0.010 m/s; the
+mutation_van_at_dock_rate: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push"], his head at most 1.508 m abo
+mutation_stands_in_van: exit 1; LOADING RESULT: 19/22 passed; 3 failed; fails on its check: True; script error: False
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push", "Walk"], his head at most 1.8
+    FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Idle held, false; his toes at most 0.020 m up), his hands on the handle (0.000 m off it, 0.68 m below the top of 
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack", "Idle"]), his planted feet slipping at most 0.
+mutation_instant_start: exit 1; LOADING RESULT: 20/22 passed; 2 failed; fails on its check: True; script error: False
+    FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "Walk", "Idle"]), then walks nearly upright behind it (leaning 8° at most), the jack at the pace of his feet, 0.900 m/s, his plante
+    FAIL: H2: W let go while he leans in to get it going (["Push", "Walk", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at most 0.008 
+clone restored byte for byte after each

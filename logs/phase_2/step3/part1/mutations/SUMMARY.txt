@@ -1,0 +1,6 @@
+Step 3, part 1 mutations (#264-#265), each on an APFS clone, at 60 fps:
+m1  the lane slab's top at 0.0, not the apron's 0.02 (m1.diff)   test_mission_two  exit 1, 54/55, E11: 540 of 540 points off the slab
+m2  the chair turned to face away from the desk (m2.diff)     test_dock_worker  exit 1, 5/6, W4
+m3  the station 2 m south, beside the staged load (m3.diff)   test_dock_worker  exit 1, 5/6, W3: 0.26 m from the load (survived the first W3, which had no load rule; the rule was added and rerun)
+m4  the chair without its body (m4.diff)                      test_dock_worker  exit 1, 4/6, W5 and W6
+Before (logs ../before/): E11 540/540 off the slab; W1 no station; the menus without the chair's maker; W2 caught the pen cup 7.4 cm and the clipboard 3 mm into the desk.

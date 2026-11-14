@@ -1,0 +1,12 @@
+HUD lines 91, frames 3676
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+AV3 A                      12     323     328     22.305     20.456     1.852     0.342  0 particles; -
+RV3 R                      14     388     392     23.946     23.003     0.945     0.199  0 particles; -
+DV3 D                      14     440     452     19.473     16.950     2.526     0.325  0 particles; -
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+AV3      1.852     1.510 to   2.195        -  an option, no budget           37.6, 38.4
+RV3      0.945     0.746 to   1.145        -  an option, no budget           39.3, 39.7
+DV3      2.526     2.200 to   2.851        -  an option, no budget           44.0, 44.9

@@ -1,6 +1,8 @@
 extends Node
 
 signal objective_changed(title: String, detail: String)
+signal seal_checked(words: String)
+signal checkpoint_reached(config: ConfigFile)
 
 const MISSION := "the_wrong_cargo"
 const NAME := "The Wrong Cargo"
@@ -23,6 +25,12 @@ const MISSES := {
 	"doors": "The rear doors are shut and can't open against the dock. Pull forward and open them.",
 }
 const MEASURES := {"fast": "arrived", "far": "gap", "crooked": "angle", "off_centre": "offset"}
+const CLEAR_OF_DOCK := 2.5
+const SEAL_NUMBER := "4182260"
+const LOADED_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14))
+const SEAL_CHECK := "BOLT SEAL CHECK\n\nBolt ............ %s\nCap ............. %s\n" \
+	+ "Run sheet ....... %s\n\nViewed, verified, tugged and twisted:\nthe same number, whole " \
+	+ "and tight."
 
 var vehicle: CharacterBody3D
 var stage: int = 0
@@ -30,8 +38,12 @@ var recovery_pose := START
 var fleeing: bool = false
 var active: bool = false
 var shed: Node3D
+## Ethan on foot, who works the van's rear doors by hand (part B); the app gives him.
+var driver: Node3D
 
 var _shown := ""
+var _seal_checked := false
+var _hand_when_shut := false
 
 
 static func valid_progress(config: ConfigFile) -> bool:
@@ -50,11 +62,15 @@ static func start_progress() -> ConfigFile:
 func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	vehicle = van
 	stage = config.get_value("cargo", "stage")
-	recovery_pose = START
+	recovery_pose = LOADED_AT if stage == 1 else START
 	vehicle.recover(recovery_pose)
+	vehicle.call("unload")
+	_seal_checked = stage >= 1
 	if shed != null:
 		shed.reset()
 		shed.watch(vehicle)
+		if stage >= 1:
+			shed.call("restore_loaded", vehicle, SEAL_NUMBER)
 	_shown = ""
 	_update_objective()
 
@@ -77,19 +93,56 @@ func interact() -> String:
 func foot_action(at: Vector3) -> String:
 	if not active or vehicle == null or bool(vehicle.get("occupied")):
 		return ""
+	var jack := _jack()
+	if jack != null and bool(jack.get("held")):
+		return jack.call("action", at)
 	var bay := _bay()
+	var door: Node = shed.get("side_door") if shed != null else null
+	if door != null and not bool(door.get("door_open")) and bool(door.call("near_door", at)):
+		return "Open the door"
+	var lift_text: String = bay.call("lift_action", at) if bay != null else ""
+	var jack_text: String = jack.call("action", at) if jack != null else ""
+	if not lift_text.is_empty() and not jack_text.is_empty():
+		var lift_nearer := float(bay.call("pendant_reach", at)) < float(jack.call("reach", at))
+		return lift_text if lift_nearer else jack_text
+	if not lift_text.is_empty() or not jack_text.is_empty():
+		return lift_text + jack_text
 	if bay != null and bool(bay.call("can_chock", at)):
 		return "Chock the rear wheel"
 	if bay != null and bool(bay.call("can_unchock", at)):
 		return "Take the chock out"
 	if _behind_the_van(at) and absf(float(vehicle.get("speed"))) < 0.1:
+		if bool(vehicle.get("sealed")):
+			return "" if _seal_checked else "Check the seal"
 		return "Close the rear doors" if bool(vehicle.get("rear_doors_open")) \
 			else "Open the rear doors"
 	return ""
 
 
 func do_foot_action(at: Vector3) -> String:
-	match foot_action(at):
+	var action := foot_action(at)
+	match action:
+		"Take the pallet jack":
+			_jack().call("take")
+			return ""
+		"Set the pallet down":
+			_jack().call("set_down")
+			return ""
+		"Let go of the jack":
+			_jack().call("let_go")
+			return ""
+		"Strap the load":
+			_jack().call("strap")
+			return "You strap the load down to the floor rings."
+		"Push it fully in or out first", "Pull the jack out first", \
+				"Push it in against the bulkhead first":
+			return action
+		"Open the door":
+			(shed.get("side_door") as Node).call("open_door")
+			return "You push the side door open."
+		"Lower the lift", "Raise the lift":
+			_bay().call("operate_lift")
+			return ""
 		"Chock the rear wheel":
 			_bay().call("chock_wheel")
 			return "You set the chock in front of the rear wheel."
@@ -97,16 +150,92 @@ func do_foot_action(at: Vector3) -> String:
 			_bay().call("unchock")
 			return "You take the chock out and hang it back on the dock."
 		"Open the rear doors":
-			vehicle.set("rear_doors_open", true)
-			return "You swing the rear doors round and hook them back against the sides."
+			if not bool(vehicle.call("rear_swing_clear")):
+				return "No room: the rear doors swing round past the sides as they open."
+			vehicle.call("open_rear_doors", driver)
+			return ""
 		"Close the rear doors":
-			vehicle.set("rear_doors_open", false)
-			return "You close the rear doors."
+			if _clearance() < CLEAR_OF_DOCK:
+				return "Pull forward first: the doors swing out past the sides as they close."
+			if bool(vehicle.call("close_rear_doors", driver)):
+				_hand_when_shut = _loaded()
+			return ""
+		"Check the seal":
+			_check_seal()
+			return "View, verify, tug, twist: the seal is whole and its number matches."
 	return ""
+
+
+## Ethan's check of the seal (H5): the numbers side by side, then "loaded" saves stage 1 (H6).
+func _check_seal() -> void:
+	_seal_checked = true
+	var number := str(vehicle.get("seal_number"))
+	seal_checked.emit(SEAL_CHECK % [number, number, SEAL_NUMBER])
+	stage = 1
+	var config := start_progress()
+	config.set_value("cargo", "stage", stage)
+	checkpoint_reached.emit(config)
+	_update_objective()
+
+
+## The strapped load in the van and the lift back up: loading is done (step 2e).
+func _loaded() -> bool:
+	var stack: Node3D = _jack().call("in_van") as Node3D
+	return stack != null and stack.has_meta("strapped") \
+		and bool(shed.get_node("Building/DockLift9").call("at_top"))
+
+
+func _clearance() -> float:
+	var bay := _bay()
+	return float(bay.call("clearance")) if bay != null else INF
+
+
+func _jack() -> Node:
+	return shed.get("pallet_jack") as Node if shed != null else null
 
 
 func _bay() -> Node:
 	return shed.get("bay_nine") as Node if shed != null else null
+
+
+## The loading's objective, once the van is docked and chocked (step 2e), only ever going on as
+## the job does (#245): the pallet set down on the lift waits for the lift to go down, then to be
+## rolled in.
+func _loading() -> Array[String]:
+	var jack := _jack()
+	var stack: Node3D = jack.call("in_van") as Node3D
+	var lift := shed.get_node("Building/DockLift9")
+	if stack != null and stack.has_meta("strapped"):
+		if bool(lift.call("at_top")):
+			return ["TAKE THE CHOCK OUT", "Press E at the chock by the rear wheel on the driver's side."]
+		return ["RAISE THE LIFT", "Press E at the pendant on the lift's deck."]
+	if stack != null:
+		return ["STRAP THE LOAD", "Beside the pallet in the hold, E straps it to the floor rings."]
+	if bool(jack.get("held")):
+		return ["ROLL THE PALLET IN",
+			"W and S push and pull the jack, A and D steer; E sets it down at the bulkhead."]
+	if jack.call("on_lift") != null:
+		if bool(lift.call("at_bottom")):
+			return ["ROLL THE PALLET IN",
+				"Behind its handle E takes the jack again; W pushes the pallet into the hold."]
+		return ["LOWER THE LIFT", "By the pendant on its deck, E lowers the lift with the pallet."]
+	return ["LOAD THE PALLET",
+		"Go in by the side door and up the stair; take the pallet jack at bay 9."]
+
+
+## The objective once loaded and the chock is out: pull forward, close the doors, the seal.
+func _sealing() -> Array[String]:
+	if not _loaded() or bool(_bay().get("chocked")):
+		return []
+	if bool(vehicle.get("sealed")):
+		return ["CHECK THE SEAL",
+			"Press E at the doors: the bolt's and the cap's number against the run sheet's."]
+	if not bool(vehicle.get("rear_doors_open")):
+		return ["WAIT FOR THE SEAL", "The dock hand is coming out to seal the doors; stand clear."]
+	if _clearance() < CLEAR_OF_DOCK:
+		return ["PULL FORWARD",
+			"Drive on until the van's rear is 2.5 m from the bumpers, so the doors can close."]
+	return ["CLOSE THE REAR DOORS", "Get out and press E at the back of the van."]
 
 
 func _behind_the_van(at: Vector3) -> bool:
@@ -128,6 +257,10 @@ func place_next() -> String:
 
 
 func _physics_process(_delta: float) -> void:
+	if _hand_when_shut and not bool(vehicle.call("rear_doors_busy")):
+		_hand_when_shut = false
+		if not bool(vehicle.get("rear_doors_open")):
+			shed.call("call_dock_hand", vehicle, SEAL_NUMBER)
 	if active and stage == 0:
 		_update_objective()
 
@@ -139,8 +272,14 @@ func _update_objective() -> void:
 		if shed.vehicle_through():
 			var bay := _bay()
 			var verdict: String = bay.get("verdict")
-			if bool(bay.get("chocked")):
-				detail = "Next: the load."
+			var sealing := _sealing()
+			if not sealing.is_empty():
+				title = sealing[0]
+				detail = sealing[1]
+			elif bool(bay.get("chocked")):
+				var loading := _loading()
+				title = loading[0]
+				detail = loading[1]
 			elif verdict == "docked":
 				title = "CHOCK THE WHEEL"
 				detail = "Get out and press E at the rear wheel on the driver's side."

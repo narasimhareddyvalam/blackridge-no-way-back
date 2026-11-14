@@ -1,0 +1,21 @@
+mutation_no_glide_up_a_step: exit 1; STAIR RESULT: 16/17 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S7: onto a 0.15 m kerb his body steps up as before (0.160 m in one frame; on top true), but his camera and hips glide up, at most 0.160 and 0.154 m a frame (at most 0.025), the camera settled 0.
+mutation_camera_snaps_out: exit 1; STAIR RESULT: 13/17 passed; 4 failed; fails on its check: True; script error: False
+    FAIL: S2 up: nothing jumps: in any one frame his body rises or drops at most 0.004 m, his camera 0.029 and his hips 0.012 (at most 0.02)
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.006 m, his camera 0.208 and his hips 0.018 (at most 0.02)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5, 6] by foot [1, 0, 1, 0
+    FAIL: S8: a wall 1 m behind him pulls his camera in at once (0.76 m from his head, then 0.76, at most 1.00); once the wall is gone it eases back out, at most 2.741 m a frame (at most 0.12), 3.20 m out
+mutation_camera_no_look_ahead: exit 1; STAIR RESULT: 16/17 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.006 m, his camera 0.208 and his hips 0.018 (at most 0.02)
+mutation_feet_left_as_walked: exit 1; STAIR RESULT: 12/17 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: S3 up: each planted foot stands on its step: its sole at most 0.001 m off the step under it (at most 0.03), its toes at most 0.048 m into a step (at most 0.01), over 10 plants
+    FAIL: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.085 m into one (at most 0.01)
+    FAIL: S3 down: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most 0.037 m into a step (at most 0.01), over 12 plants
+    FAIL: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.154 m into one (at most 0.01)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5, 6] by foot [1, 0, 1, 0
+mutation_planted_foot_creeps: exit 1; STAIR RESULT: 13/17 passed; 4 failed; fails on its check: True; script error: False
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot [0, 1, 0,
+    FAIL: S6 up: his cadence on the stair is a stair's, 128 steps a minute (against 76 ± 10)
+    FAIL: S4 down: one tread a step, his feet taking turns: the steps he plants on [7, 6, 6, 5, 4, 4, 3, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [
+    FAIL: S6 down: his cadence on the stair is a stair's, 187 steps a minute (against 117 ± 10)
+clone restored byte for byte after each

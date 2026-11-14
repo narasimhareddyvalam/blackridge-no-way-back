@@ -1,0 +1,4 @@
+79c79
+< const JOIST_STEP := 2.0625
+---
+> const JOIST_STEP := 1.8333

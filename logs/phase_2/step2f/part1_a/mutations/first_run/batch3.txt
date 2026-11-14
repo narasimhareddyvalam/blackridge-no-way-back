@@ -1,0 +1,18 @@
+mutation_heel_never_lifts: exit 1; STAIR RESULT: 13/17 passed; 4 failed; fails on its check: True; script error: False
+    FAIL: S3 up: each planted foot stands on its step: its sole at most 0.003 m off the step under it (at most 0.03), its toes at most 0.059 m into a step (at most 0.01), over 11 plants
+    FAIL: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.083 m into one (at most 0.01)
+    FAIL: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.091 m into one (at most 0.01)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5, 6] by foot [1, 0, 1, 0
+mutation_any_foot_first: exit 1; STAIR RESULT: 16/17 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 3, 4, 5, 6] by foot [1, 0
+mutation_swing_from_heel_up: exit 1; STAIR RESULT: 16/17 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5, 6] by foot [1, 0, 1, 0
+mutation_hips_not_lowered: exit 1; STAIR RESULT: 11/17 passed; 6 failed; fails on its check: True; script error: False
+    FAIL: S3 up: each planted foot stands on its step: its sole at most 0.086 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 17 plants
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot [0,
+    FAIL: S6 up: his cadence on the stair is a stair's, 149 steps a minute (against 76 ± 10)
+    FAIL: S3 down: each planted foot stands on its step: its sole at most 0.012 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 5 plants
+    FAIL: S4 down: one tread a step, his feet taking turns: the steps he plants on [7, 0, 0, 0, 0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [1, 1, 0, 1, 0]
+    FAIL: S6 down: his cadence on the stair is a stair's, 0 steps a minute (against 117 ± 10)
+mutation_no_sequence: exit 0; STAIR RESULT: 17/17 passed; 0 failed; fails on its check: False; script error: False
+clone restored byte for byte after each

@@ -523,16 +523,22 @@ func _credits_text() -> String:
 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
 		+ "characters, with Mixamo animations.")
-	_section(lines, "THE GATE GUARD", "The guard at the transfer shed is Security_Male_01 from "
-		+ "the Microsoft Rocketbox avatar library, with its seated idle. Copyright (c) 2020 "
-		+ "Microsoft, released under the MIT license:")
+	_section(lines, "THE GATE GUARD AND THE DOCK WORKER", "The guard at the transfer shed is "
+		+ "Security_Male_01 and the dock worker at bay 9 is Construction_Male_08, both from the "
+		+ "Microsoft Rocketbox avatar library, with its seated and standing idles, its walk and "
+		+ "its reach to a door. Copyright (c) 2020 Microsoft, released under the MIT license:")
 	lines.append(_plain_text(ROCKETBOX_LICENSE))
 	_section(lines, "THE DEPOT", "\"Industrial Overhead Door\", \"Foam Pad Dock Seal\" and "
 		+ "\"DLHH Electrohydraulic Dock Leveler\" by Maxwell autodoors (Sketchfab: maihupronoob), "
 		+ "licensed CC BY 4.0: the transfer shed's dock doors, seals and levellers. \"Warehouse "
 		+ "Forklift Gameready\" by Kamran Mughal (Sketchfab: absologixemployee), \"Pallet Jack\" by "
 		+ "FFeller and \"Euro pallet photoscanned\" by widthRider, licensed CC BY 4.0: the "
-		+ "forklift, the pallet jack and the pallets inside the docks.")
+		+ "forklift, the pallet jack and the pallets inside the docks. \"Office Chair\" by Red "
+		+ "Fox (Sketchfab: nokillnando), licensed CC BY 4.0: the dock worker's chair at bay 9.")
+	_section(lines, "THE WET GROUND", "Rain ripples and reflections adapted from \"Rain Puddle "
+		+ "Shader v3\" by GloriousGlider8 (YourSoftware Foundation) and from GodotSSRWater by "
+		+ "Marcel Bankmann, both released under the MIT license; their copyright and license "
+		+ "notices are kept in the game's wet ground shader.")
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

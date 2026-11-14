@@ -69,6 +69,18 @@ func _check_start() -> void:
 		"Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the " +
 		"floodlight, the door lamp, the transfer shed's gate lamp, its yard's 5 lights and " +
 		"its dock front (%d)" % _rain.volumes.size())
+	var dock: Node3D = null
+	for volume in _rain.volumes:
+		if volume.name.begins_with("LampRainDock"):
+			dock = volume
+	var drops := dock.get_node("LampRain") as GPUParticles3D if dock != null else null
+	var box: Vector3 = (drops.process_material as ParticleProcessMaterial).emission_box_extents \
+		if drops != null else Vector3.ZERO
+	var near_edge := dock.global_position.z - box.z if dock != null else -INF
+	_check(dock != null and box.z * 2.0 >= 3.5 and near_edge >= 20.5 and near_edge <= 20.55,
+		("The dock front's rain fills the band its door lights light, %.2f m out over the apron "
+		+ "from %.2f m (clear of the seals at 20.5), not a thin sheet that looks solid end on")
+		% [box.z * 2.0, near_edge])
 	_check(near.size() == 3 and _states_match(near),
 		"At the start, the 3 lamps within 65 m of the camera rain and the other 10 are off and " +
 		"hidden (%s)" % _names(near))

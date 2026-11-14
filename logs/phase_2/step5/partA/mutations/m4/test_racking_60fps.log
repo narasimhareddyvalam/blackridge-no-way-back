@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: R0: the transfer shed has its racking (Building/Racking)
+PASS: R1: 6 rows of 7 bays, one single and five back to back (1 single, 5 double, 11 frame lines of 8 frames), each frame 20 ft tall and 42 in deep, beams 96 in clear (2.438) at 60, 120 and 180 in (1.524, 3.048, 4.572), two decks a level (462 beams, 462 decks)
+PASS: R2: the rows stand on the dock floor (1.300 m) inside the free floor behind the cross-aisle (x -81.89 to -49.50, z -9.45 to 8.25), 0.30 m off the back wall and ending 1.61 m before the cross-aisle's line
+PASS: R3: the aisles between the rows leave a counterbalance forklift its 12.5 ft (3.81 m) between the loads' faces (narrowest 3.81 m of 5), and each aisle's entrance has its numbered board, 01 to 06, facing the cross-aisle at 2.0 to 2.8 m (so)
+PASS: R4: a yellow guard across each row's end at the cross-aisle and a post protector on every post facing an aisle (so)
+PASS: R5: the rows are solid and the aisles clear from the floor to 2 m (so)
+PASS: R7: the racks hold stock as real ones do (every load on its own pallet, each pallet on the floor or a beam level within its 3 in overhang, 3 in clear of the posts and its neighbour, each load 4 in under the beam above, at least 70% of the 616 places full, nothing named as the mission's pallets)
+PASS: R8: the floor is lined as the photo's: yellow 4 in lines down both sides of every aisle and a white walkway down the aisle by the rail (so)
+FAIL: R9: long-span joists every 2.07 m or less span the shed from wall to wall under its deck, under a white liner; the staging lanes' row of five lights stays and three hang down each aisle, each at least 0.3 m from a joist, all under the roof (the joists end 1.97 and 5.37 m from the gables; BayLight6 0.19 m from a joist, 0.97 m under the roof; BayLight7 0.19 m from a joist, 1.49 m under the roof; BayLight8 0.19 m from a joist, 1.84 m under the roof)
+PASS: R10: ducts and sprinkler mains run the shed's width above the racks, the sprinkler heads at least NFPA 13's 18 in over the stock (so)
+PASS: R6: the racking's top, 7.40 m, is at least 0.5 m under the lights at 8.4 m and NFPA 13's 18 in under the roof
+RACKING RESULT: 10/11 passed; 1 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

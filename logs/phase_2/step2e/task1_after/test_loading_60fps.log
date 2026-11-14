@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: the van docked at bay 9 and chocked
+PASS: H8: the shed's side door, beside the drive-in lane, keeps Ethan out while shut (true); the hint offers it (E  Open the door) and E swings it open (95°)
+PASS: H8: inside, the stair climbs from the drive-in lane to the dock floor, Ethan's feet 1.30 m up at its top, and its rail keeps him from stepping off its open side (true)
+PASS: H1: on the deck the hint offers the lift (E  Lower the lift); E lowers it to the van's floor (0.461 m against 0.461), its bridge plate laid on the floor (its edge 0.461 m up at z 20.29), Ethan riding it (his feet 0.46 m)
+PASS: H1: E again raises it flush with the dock floor (1.300 m), its plate stored upright (its edge 1.85 m up), Ethan with it (1.30 m)
+LOADING RESULT: 5/5 passed; 0 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

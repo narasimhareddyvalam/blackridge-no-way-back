@@ -14,5 +14,9 @@
 - **Branding:** None seen.
 - **Game files:** `game/features/environments/industrial_loop/art/depot/pallet_jack.glb`,
   made by `tools/art/convert_depot_models.py` on 2026-11-11: 6,450 triangles as made, its
-  textures halved to 1024 pixels and saved as JPEG.
+  textures halved to 1024 pixels and saved as JPEG. On 2026-11-12 (step 2f, #244) the same job
+  cut it into three meshes as a real jack moves: `Chassis` (the frame and forks), `Steering`
+  (the pump and its twin wheels, turning on the pump's vertical axis 0.689 m behind the middle)
+  and `Tiller` (the shaft, loop and lever, hinged inside the steering unit at the shaft's foot,
+  0.30 m up). The game credits FFeller for the model and this change.
 - **Git:** `.gitignore` keeps these files out of Git; only this README is tracked.

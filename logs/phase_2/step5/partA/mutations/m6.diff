@@ -1,0 +1,4 @@
+63c63
+< const LINE_WIDE := 4 * INCH
+---
+> const LINE_WIDE := 6 * INCH

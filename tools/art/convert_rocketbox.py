@@ -1,35 +1,61 @@
-"""Convert Microsoft Rocketbox's Security_Male_01 and a seated idle into the gate guard (C55).
+"""Convert Microsoft Rocketbox characters and their clips into the game: the gate guard (C55),
+Security_Male_01 with a seated idle, and bay 9's dock worker (C58), Construction_Male_08 with a
+standing idle, a walk and the reach to the van doors' hasp.
 
-Run from the repository root:
+Run from the repository root (a job's name after "--" converts that one alone):
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1 \\
-        --python tools/art/convert_rocketbox.py
+        --python tools/art/convert_rocketbox.py [-- guard | dock_worker]
 
 It reads source_assets/rocketbox/ (its README.md lists the files) and writes
-game/features/characters/guard/guard.glb. What it changes:
-- the clip m_sit_chair_breathe_01 is baked onto the guard bone by bone. The clip's rest pose is
-  its own first frame, so each bone takes the turn the clip gives it in the armature's space, on
-  the guard's own bone lengths, and the pelvis also takes the clip's place;
-- he is turned to face Blender's -Y, a glTF model's front, and moved so that his shoes stand at
-  the origin, under his hips;
+game/features/characters/guard/guard.glb and game/features/characters/dock_worker/dock_worker.glb.
+What it changes:
+- each clip is baked onto the character bone by bone. A clip's rest pose is its own first
+  frame, so each bone takes the turn the clip gives it in the armature's space, on the
+  character's own bone lengths, and the pelvis also takes the clip's place;
+- the seated guard is turned to face Blender's -Y, a glTF model's front (the dock worker
+  already faces it), and each character is moved so that his shoes stand at the origin, under
+  his hips;
 - one roughness per part replaces Rocketbox's specular maps, and the colour and normal maps are
   halved to 1024 pixels and stored as WebP;
-- the one clip is named SitIdle-loop, which Godot imports as SitIdle, looping.
+- the clips are named as Godot imports them: SitIdle-loop, Idle-loop and Walk-loop loop, and
+  Seal plays once.
 """
 
 import math
 import pathlib
+import sys
 
 import bpy
 from mathutils import Matrix, Vector
 
 SOURCE = pathlib.Path("source_assets/rocketbox")
-CHARACTER = SOURCE / "Security_Male_01"
-CLIP = SOURCE / "Animations" / "m_sit_chair_breathe_01.max.fbx"
-TARGET = pathlib.Path("game/features/characters/guard/guard.glb")
-CLIP_NAME = "SitIdle-loop"
-ROUGHNESS = {"head": 0.56, "body": 0.72, "equipment": 0.5}
+CLIPS = SOURCE / "Animations"
 MAX_TEXTURE = 1024
 QUALITY = 90
+JOBS = {
+    "guard": {
+        "character": SOURCE / "Security_Male_01",
+        "fbx": "Security_Male_01.fbx",
+        "prefix": "m171",
+        "clips": [("SitIdle-loop", CLIPS / "m_sit_chair_breathe_01.max.fbx")],
+        "roughness": {"head": 0.56, "body": 0.72, "equipment": 0.5},
+        "turn": True,
+        "names": ("Guard", "GuardBody"),
+        "target": pathlib.Path("game/features/characters/guard/guard.glb"),
+    },
+    "dock_worker": {
+        "character": SOURCE / "Construction_Male_08",
+        "fbx": "Construction_Male_08.fbx",
+        "prefix": "m108",
+        "clips": [("Idle-loop", CLIPS / "m_idle_neutral_01.max.fbx"),
+                  ("Walk-loop", CLIPS / "m_walk_neutral_01.max.fbx"),
+                  ("Seal", CLIPS / "m_try_door_outwards.max.fbx")],
+        "roughness": {"head": 0.56, "body": 0.72, "helmet": 0.35},
+        "turn": False,
+        "names": ("DockWorker", "DockWorkerBody"),
+        "target": pathlib.Path("game/features/characters/dock_worker/dock_worker.glb"),
+    },
+}
 
 
 def import_fbx(path):
@@ -41,12 +67,12 @@ def import_fbx(path):
     return next(o for o in new if o.type == "ARMATURE"), new
 
 
-def bake(guard, clip):
+def bake(character, clip, name):
     source_action = clip.animation_data.action
     start, end = (int(round(value)) for value in source_action.frame_range)
-    if guard.animation_data is not None:
-        guard.animation_data.action = None
-    bones = sorted(guard.pose.bones, key=lambda bone: len(bone.parent_recursive))
+    if character.animation_data is not None:
+        character.animation_data.action = None
+    bones = sorted(character.pose.bones, key=lambda bone: len(bone.parent_recursive))
     for bone in bones:
         bone.rotation_mode = "QUATERNION"
     previous = {}
@@ -77,8 +103,8 @@ def bake(guard, clip):
             if bone.parent is None:
                 bone.location = location
                 bone.keyframe_insert("location", frame=frame, group=bone.name)
-    action = guard.animation_data.action
-    action.name = CLIP_NAME
+    action = character.animation_data.action
+    action.name = name
     action.use_fake_user = True
     action.use_frame_range = True
     action.frame_start, action.frame_end = start, end
@@ -100,23 +126,26 @@ def lowest_point(meshes):
     return low
 
 
-def stand(guard, meshes, frame):
+def stand(character, meshes, frame, turn_to_front):
     bpy.context.scene.frame_set(frame)
-    hips = world_bone(guard, "Bip01 Pelvis")
-    knees = (world_bone(guard, "Bip01 L Calf") + world_bone(guard, "Bip01 R Calf")) / 2.0
-    facing = Vector((knees.x - hips.x, knees.y - hips.y))
-    turn = math.atan2(-1.0, 0.0) - math.atan2(facing.y, facing.x)
-    guard.matrix_world = Matrix.Rotation(turn, 4, "Z") @ guard.matrix_world
+    if turn_to_front:
+        hips = world_bone(character, "Bip01 Pelvis")
+        knees = (world_bone(character, "Bip01 L Calf")
+                 + world_bone(character, "Bip01 R Calf")) / 2.0
+        facing = Vector((knees.x - hips.x, knees.y - hips.y))
+        turn = math.atan2(-1.0, 0.0) - math.atan2(facing.y, facing.x)
+        character.matrix_world = Matrix.Rotation(turn, 4, "Z") @ character.matrix_world
+        bpy.context.view_layer.update()
+        print(f"  turned {math.degrees(turn):.1f} deg to face -Y")
+    hips = world_bone(character, "Bip01 Pelvis")
+    character.matrix_world = Matrix.Translation((-hips.x, -hips.y, -lowest_point(meshes))) \
+        @ character.matrix_world
     bpy.context.view_layer.update()
-    hips = world_bone(guard, "Bip01 Pelvis")
-    guard.matrix_world = Matrix.Translation((-hips.x, -hips.y, -lowest_point(meshes))) \
-        @ guard.matrix_world
-    bpy.context.view_layer.update()
-    hips = world_bone(guard, "Bip01 Pelvis")
-    print(f"  turned {math.degrees(turn):.1f} deg to face -Y; hips {hips.z:.3f} m above his shoes")
+    hips = world_bone(character, "Bip01 Pelvis")
+    print(f"  hips {hips.z:.3f} m above his shoes")
 
 
-def clean_materials(meshes):
+def clean_materials(meshes, job):
     for item in meshes:
         for slot in item.material_slots:
             material = slot.material
@@ -125,41 +154,42 @@ def clean_materials(meshes):
             for node in [n for n in tree.nodes if n.type in {"TEX_IMAGE", "NORMAL_MAP"}]:
                 tree.nodes.remove(node)
             shader = next(n for n in tree.nodes if n.type == "BSDF_PRINCIPLED")
+            textures = job["character"] / "Textures"
             colour = tree.nodes.new("ShaderNodeTexImage")
             colour.image = bpy.data.images.load(
-                str(CHARACTER / "Textures" / f"m171_{part}_color.tga"))
+                str(textures / f"{job['prefix']}_{part}_color.tga"))
             tree.links.new(colour.outputs["Color"], shader.inputs["Base Color"])
             normal = tree.nodes.new("ShaderNodeTexImage")
             normal.image = bpy.data.images.load(
-                str(CHARACTER / "Textures" / f"m171_{part}_normal.tga"))
+                str(textures / f"{job['prefix']}_{part}_normal.tga"))
             normal.image.colorspace_settings.name = "Non-Color"
             bend = tree.nodes.new("ShaderNodeNormalMap")
             tree.links.new(normal.outputs["Color"], bend.inputs["Color"])
             tree.links.new(bend.outputs["Normal"], shader.inputs["Normal"])
-            shader.inputs["Roughness"].default_value = ROUGHNESS[part]
+            shader.inputs["Roughness"].default_value = job["roughness"][part]
             shader.inputs["Metallic"].default_value = 0.0
             for image in (colour.image, normal.image):
                 while image.size[0] > MAX_TEXTURE:
                     image.scale(image.size[0] // 2, image.size[1] // 2)
 
 
-def push_track(guard, action):
-    data = guard.animation_data
+def push_track(character, action):
+    data = character.animation_data
     data.action = None
     track = data.nla_tracks.new()
-    track.name = CLIP_NAME
-    strip = track.strips.new(CLIP_NAME, int(action.frame_start), action)
+    track.name = action.name
+    strip = track.strips.new(action.name, int(action.frame_start), action)
     if hasattr(strip, "action_slot") and action.slots and strip.action_slot is None:
         strip.action_slot = action.slots[0]
 
 
-def export(guard, meshes):
+def export(character, meshes, target):
     bpy.ops.object.select_all(action="DESELECT")
-    for item in [guard] + meshes:
+    for item in [character] + meshes:
         item.select_set(True)
-    bpy.context.view_layer.objects.active = guard
-    TARGET.parent.mkdir(parents=True, exist_ok=True)
-    bpy.ops.export_scene.gltf(filepath=str(TARGET), export_format="GLB", use_selection=True,
+    bpy.context.view_layer.objects.active = character
+    target.parent.mkdir(parents=True, exist_ok=True)
+    bpy.ops.export_scene.gltf(filepath=str(target), export_format="GLB", use_selection=True,
                               export_animation_mode="NLA_TRACKS", export_force_sampling=True,
                               export_anim_slide_to_zero=True,
                               export_image_format="WEBP", export_image_quality=QUALITY,
@@ -167,25 +197,35 @@ def export(guard, meshes):
                               export_lights=False, export_extras=False)
 
 
-bpy.ops.wm.read_factory_settings(use_empty=True)
-guard, objects = import_fbx(CHARACTER / "Export" / "Security_Male_01.fbx")
-meshes = [o for o in objects if o.type == "MESH"]
-clip, clip_objects = import_fbx(CLIP)
-source_action = clip.animation_data.action
-for action in [a for a in bpy.data.actions if a is not source_action]:
-    bpy.data.actions.remove(action)
-baked = bake(guard, clip)
-for item in clip_objects:
-    bpy.data.objects.remove(item, do_unlink=True)
-bpy.data.actions.remove(source_action)
-stand(guard, meshes, int(baked.frame_start))
-clean_materials(meshes)
-push_track(guard, baked)
-guard.name = "Guard"
-for item in meshes:
-    item.name = "GuardBody"
-export(guard, meshes)
-triangles = sum(sum(len(p.vertices) - 2 for p in m.data.polygons) for m in meshes)
-print(f"{TARGET}: {triangles} triangles, {len(guard.data.bones)} bones, clip {CLIP_NAME} "
-      f"frames {int(baked.frame_start)}-{int(baked.frame_end)}, "
-      f"{TARGET.stat().st_size / 1e6:.1f} MB")
+def convert(job):
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    character, objects = import_fbx(job["character"] / "Export" / job["fbx"])
+    meshes = [o for o in objects if o.type == "MESH"]
+    baked = []
+    for name, path in job["clips"]:
+        clip, clip_objects = import_fbx(path)
+        source_action = clip.animation_data.action
+        for action in [a for a in bpy.data.actions if a is not source_action and a not in baked]:
+            bpy.data.actions.remove(action)
+        baked.append(bake(character, clip, name))
+        for item in clip_objects:
+            bpy.data.objects.remove(item, do_unlink=True)
+        bpy.data.actions.remove(source_action)
+    character.animation_data.action = baked[0]
+    stand(character, meshes, int(baked[0].frame_start), job["turn"])
+    clean_materials(meshes, job)
+    for action in baked:
+        push_track(character, action)
+    character.name, body = job["names"]
+    for item in meshes:
+        item.name = body
+    export(character, meshes, job["target"])
+    triangles = sum(sum(len(p.vertices) - 2 for p in m.data.polygons) for m in meshes)
+    clips = ", ".join(f"{a.name} {int(a.frame_start)}-{int(a.frame_end)}" for a in baked)
+    print(f"{job['target']}: {triangles} triangles, {len(character.data.bones)} bones, clips "
+          f"{clips}, {job['target'].stat().st_size / 1e6:.1f} MB")
+
+
+wanted = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else list(JOBS)
+for job_name in wanted:
+    convert(JOBS[job_name])

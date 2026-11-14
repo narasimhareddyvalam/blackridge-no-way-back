@@ -8,10 +8,18 @@ dock_seal: Maxwell autodoors' Foam Pad Dock Seal, its gap widened to 2.80 m and 
 dock_leveller: Maxwell autodoors' DLHH Electrohydraulic Dock Leveler, its deck 2.13 x 2.44 m
     (7 x 8 ft) with the top of the deck at the origin and its lip facing out.
 forklift: Kamran Mughal's Warehouse Forklift, its forks toward +Z, its specular map left out.
-pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z.
+pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z, cut in three as
+    a real one moves (step 2f, #243): its frame (Chassis); its steering unit, the pump and its
+    twin wheels, turning on the pump's vertical axis 0.689 m behind the middle (Steering); and
+    its handle, the shaft, loop and lever, hinged inside the steering unit at the shaft's foot,
+    0.30 m up, tilting toward whoever holds it (Tiller).
 pallet: widthRider's photoscanned Euro pallet sized as the American 48 x 40 in pallet (1.219 m
     along Z, 1.016 m across, 0.15 m tall), reduced to about 3,000 triangles, its dry wood matte
     (its roughness came from its specular map).
+office_chair: Red Fox's (nokillnando) Office Chair, a fabric task chair on a five-star base with
+    castors, for bay 9's dock worker at his desk (#265), its seat at 0.47 m (the middle of a task
+    chair's 0.41-0.52 m), its front toward +Z, its origin on the floor under its gas lift, as its
+    source was centred.
 carton: Poly Haven's Cardboard Box 01 (CC0, the depot yard's copy) reduced to about 400
     triangles, its textures halved to 512 pixels, for the cartons on the staged pallets.
 Each model stands with its base at the origin; the door, seal and leveller face +Z in Godot;
@@ -20,7 +28,7 @@ textures larger than 1024 pixels are halved until they fit, and the four props' 
 Usage, from the repository root:
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1 \\
         --python tools/art/convert_depot_models.py -- dock_door dock_seal dock_leveller forklift \\
-        pallet_jack pallet carton
+        pallet_jack pallet carton office_chair
 """
 
 import pathlib
@@ -48,6 +56,13 @@ CARTON_TO = 400
 CARTON_LARGEST = 512
 UNUSED = ("Specular IOR Level", "Specular Tint")
 WOOD_ROUGHNESS = 0.85
+STEER_AXIS = 0.689
+STEER_HALF = 0.07
+STEER_FROM = 0.52
+TILLER_FOOT = (0.30, 0.76)
+TILLER_FROM = 0.32
+TILLER_BACK = 0.739
+TILLER_HALF = 0.2
 
 
 def load(name: str, path: pathlib.Path | None = None) -> list:
@@ -258,7 +273,69 @@ def pallet_jack() -> None:
     plain(meshes)
     rename("Scene_-_Root", "PalletJack")
     standing(meshes)
-    finish(meshes, "pallet_jack", "PalletJack", "JPEG")
+    finish_parts(jack_parts(meshes), "pallet_jack", "JPEG")
+
+
+def jack_parts(meshes: list) -> list:
+    """The jack's loose parts sorted into its frame, its steering unit and its handle, each
+    joined and its origin at the pivot it turns on (Blender's frame: Godot's +Z is -Y here)."""
+    for obj in bpy.context.scene.objects:
+        obj.select_set(obj in meshes)
+    bpy.context.view_layer.objects.active = meshes[0]
+    bpy.ops.object.join()
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
+    bpy.ops.mesh.separate(type="LOOSE")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    groups = {"Chassis": [], "Steering": [], "Tiller": []}
+    for obj in [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]:
+        low, high = bounds([obj])
+        back = -high[1]
+        across = max(abs(low[0]), abs(high[0]))
+        if low[2] >= TILLER_FROM - 0.001 and back >= TILLER_BACK and across <= TILLER_HALF:
+            groups["Tiller"].append(obj)
+        elif back >= STEER_FROM and across <= STEER_HALF:
+            groups["Steering"].append(obj)
+        else:
+            groups["Chassis"].append(obj)
+    pivots = {"Chassis": (0.0, 0.0, 0.0), "Steering": (0.0, -STEER_AXIS, 0.0),
+              "Tiller": (0.0, -TILLER_FOOT[1], TILLER_FOOT[0])}
+    parts = {}
+    for name, objects in groups.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        for obj in objects:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = objects[0]
+        bpy.ops.object.join()
+        part = bpy.context.view_layer.objects.active
+        part.name = name
+        part.data.name = name
+        bpy.context.scene.cursor.location = pivots[name]
+        bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+        parts[name] = part
+    parts["Tiller"].parent = parts["Steering"]
+    parts["Tiller"].matrix_parent_inverse = parts["Steering"].matrix_world.inverted()
+    print("JACK PARTS: %s" % ", ".join("%s %d parts" % (name, len(objects))
+                                       for name, objects in groups.items()))
+    return list(parts.values())
+
+
+def finish_parts(parts: list, name: str, images: str = "AUTO") -> None:
+    shrink_images(LARGEST)
+    bpy.ops.object.select_all(action="DESELECT")
+    for part in parts:
+        part.select_set(True)
+    bpy.context.view_layer.objects.active = parts[0]
+    TARGET.mkdir(parents=True, exist_ok=True)
+    path = TARGET / (name + ".glb")
+    bpy.ops.export_scene.gltf(filepath=str(path), export_format="GLB", use_selection=True,
+                              use_active_scene=True, export_apply=True, export_yup=True,
+                              export_cameras=False, export_lights=False,
+                              export_image_format=images, export_jpeg_quality=90)
+    low, high = bounds(parts)
+    print("CONVERTED %s: %d triangles in %d parts, %.2f x %.2f x %.2f m, %.1f kB" % (
+        name, triangles(parts), len(parts), high[0] - low[0], high[1] - low[1],
+        high[2] - low[2], path.stat().st_size / 1e3))
 
 
 def pallet() -> None:
@@ -278,8 +355,14 @@ def carton() -> None:
     finish(meshes, "carton", "Carton", "JPEG", CARTON_LARGEST)
 
 
+def office_chair() -> None:
+    meshes = load("13_office_chair")
+    finish(meshes, "office_chair", "OfficeChair", "JPEG")
+
+
 JOBS = {"dock_door": dock_door, "dock_seal": dock_seal, "dock_leveller": dock_leveller,
-        "forklift": forklift, "pallet_jack": pallet_jack, "pallet": pallet, "carton": carton}
+        "forklift": forklift, "pallet_jack": pallet_jack, "pallet": pallet, "carton": carton,
+        "office_chair": office_chair}
 
 if __name__ == "__main__":
     for job in sys.argv[sys.argv.index("--") + 1:]:

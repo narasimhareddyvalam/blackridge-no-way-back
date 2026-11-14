@@ -1,0 +1,3 @@
+mutation_post_not_solid: exit 1; LOADING RESULT: 26/27 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H13: the empty jack pushed straight at the pendant post, its forks lined up 0.20 m across it, stops against it and does not pass through (taken: true; its forks at the nearest -0.020 m from it)
+clone restored byte for byte after each

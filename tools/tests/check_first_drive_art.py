@@ -29,13 +29,15 @@ for path in sorted([*VAN.glob('*.glb'), *WORLD.glob('*.glb')]):
         data = document['accessors'][index]
         view = document['bufferViews'][data['bufferView']]
         width = {'VEC3': 3, 'VEC2': 2, 'SCALAR': 1}[data['type']]
-        return np.frombuffer(binary, dtype='<u4' if data['componentType'] == 5125 else '<f4',
+        kinds = {5123: '<u2', 5125: '<u4', 5126: '<f4'}
+        return np.frombuffer(binary, dtype=kinds[data['componentType']],
                              offset=view.get('byteOffset', 0) + data.get('byteOffset', 0),
                              count=data['count'] * width).reshape(-1, width)
 
     triangles = 0
     all_points = []
-    for index, primitive in enumerate(document['meshes'][0]['primitives']):
+    primitives = [part for mesh in document['meshes'] for part in mesh['primitives']]
+    for index, primitive in enumerate(primitives):
         positions = accessor(primitive['attributes']['POSITION'])
         normals = accessor(primitive['attributes']['NORMAL'])
         uvs = accessor(primitive['attributes']['TEXCOORD_0'])
@@ -62,8 +64,9 @@ for path in sorted([*VAN.glob('*.glb'), *WORLD.glob('*.glb')]):
               'Van body fits existing vehicle footprint with trim allowance')
     print(f'GEOMETRY: {path.name}: {triangles} triangles')
 
-check(len(list(VAN.glob('*.glb'))) == 5 and len(list(WORLD.glob('*.glb'))) == 3,
-      'All five vehicle assets (with the driver\'s door) and three depot props exist')
+check(len(list(VAN.glob('*.glb'))) == 6 and len(list(WORLD.glob('*.glb'))) == 3,
+      'All six vehicle assets (with the driver\'s door and the rear doors\' hinges) and three '
+      'depot props exist')
 
 COCKPIT = VAN / 'cockpit'
 COCKPIT_TRIANGLES = 900000
@@ -343,6 +346,82 @@ if (GUARD / 'guard.glb').exists():
     check((GUARD / 'guard.glb').stat().st_size < FILE_LIMIT, 'The guard file is under 25 MB')
 print(f'GEOMETRY: guard/guard.glb: {guard_triangles} triangles')
 
+WORKER = ROOT / 'game/features/characters/dock_worker'
+check(sorted(path.name for path in WORKER.glob('*.glb')) == ['dock_worker.glb'],
+      "Bay 9's dock worker exists: Microsoft Rocketbox's Construction_Male_08 (C58)")
+worker_triangles = 0
+if (WORKER / 'dock_worker.glb').exists():
+    document, binary = gltf_parts(WORKER / 'dock_worker.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            worker_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    clips = sorted(animation['name'] for animation in document.get('animations', []))
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(webp_size(binary[start:start + view['byteLength']])))
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(worker_triangles < 12000,
+          'dock_worker/dock_worker.glb bounded geometry (<12000 triangles)')
+    check(clips == ['Idle-loop', 'Seal', 'Walk-loop'],
+          'dock_worker/dock_worker.glb carries three clips: the standing idle and the walk, '
+          'looping, and the reach to the doors\' hasp')
+    check(len(sizes) == 6 and max(sizes) <= 1024,
+          'dock_worker/dock_worker.glb holds six WebP textures of at most 1024 pixels (colour and '
+          'normal for head, work suit and hard hat)')
+    check(joints == 81, 'dock_worker/dock_worker.glb keeps Rocketbox\'s 81-bone skeleton')
+    check((WORKER / 'dock_worker.glb').stat().st_size < FILE_LIMIT,
+          'The dock worker file is under 25 MB')
+print(f'GEOMETRY: dock_worker/dock_worker.glb: {worker_triangles} triangles')
+
+ETHAN = ROOT / 'game/features/characters/ethan'
+
+
+def hips_drift(document, binary, animation):
+    """How far, across the floor, an animation's hips get from where they start, at most and at
+    its end, in metres: the armature's own turn and 1/100 scale applied, glTF's Y up. In place,
+    only their sway is left: Pushing's swings 0.14 m to the side, and Push Stop ends 0.05 m to
+    one side; with their travel, Pushing's go 1.0 m and Push Stop's 0.82 m."""
+    hips = next(index for index, node in enumerate(document['nodes'])
+                if node.get('name') == 'mixamorig:Hips')
+    armature = next(node for node in document['nodes'] if node.get('name') == 'Armature')
+    x, y, z, w = armature.get('rotation', [0.0, 0.0, 0.0, 1.0])
+    turn = np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+                     [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+                     [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+    scale = armature.get('scale', [1.0, 1.0, 1.0])[0]
+    channel = next(c for c in animation['channels'] if c['target'].get('node') == hips
+                   and c['target']['path'] == 'translation')
+    output = document['accessors'][animation['samplers'][channel['sampler']]['output']]
+    view = document['bufferViews'][output['bufferView']]
+    start = view.get('byteOffset', 0) + output.get('byteOffset', 0)
+    points = np.frombuffer(binary, dtype='<f4', count=output['count'] * 3,
+                           offset=start).reshape(-1, 3) @ turn.T * scale
+    across = np.linalg.norm((points - points[0])[:, [0, 2]], axis=1)
+    return across.max(), across[-1]
+
+
+if (ETHAN / 'ethan.glb').exists():
+    document, binary = gltf_parts(ETHAN / 'ethan.glb')
+    animations = {animation['name']: animation for animation in document.get('animations', [])}
+    check(sorted(animations) == ['EnterVan', 'ExitVan', 'Idle-loop', 'PullBack-loop', 'Push-loop',
+                                 'PushStop', 'Run-loop', 'StairsUp-loop', 'Walk-loop',
+                                 'WalkBack-loop'],
+          'ethan/ethan.glb carries his ten clips: the idle, walk, walk back and run, looping, '
+          'the van\'s way in and out, Mixamo\'s Pushing, looping, and Push Stop (#240), and its '
+          'Running Up Stairs and Pull Heavy Object, looping (#254-#257)')
+    for name in ('Walk-loop', 'Push-loop', 'PushStop', 'StairsUp-loop', 'PullBack-loop'):
+        if name in animations:
+            most, end = hips_drift(document, binary, animations[name])
+            check(most < 0.25 and end < 0.06,
+                  f'ethan/ethan.glb\'s {name} walks in place, the game moving him: his hips get '
+                  f'at most {most:.3f} m from where they start across the floor, {end:.3f} m at '
+                  f'its end')
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(joints == 65, 'ethan/ethan.glb keeps Mixamo\'s 65-bone skeleton')
+    check((ETHAN / 'ethan.glb').stat().st_size < FILE_LIMIT, 'The Ethan file is under 25 MB')
+
 DEPOT = WORLD / 'depot'
 door_triangles = 0
 check((DEPOT / 'dock_door.glb').exists(),
@@ -397,5 +476,21 @@ for name, (limit, textured) in DEPOT_MODELS.items():
     check(bool(sizes) == textured and all(0 < size <= 1024 for size in sizes),
           f'depot/{name} textures at most 1024 pixels ({len(sizes)})')
     print(f'GEOMETRY: depot/{name}: {triangles} triangles, textures {sizes}')
+if (DEPOT / 'pallet_jack.glb').exists():
+    document, _ = gltf_parts(DEPOT / 'pallet_jack.glb')
+    nodes = {node.get('name'): (index, node) for index, node in enumerate(document['nodes'])}
+    steering = nodes.get('Steering', (None, {}))
+    tiller = nodes.get('Tiller', (None, {}))
+    at = steering[1].get('translation', [0.0, 0.0, 0.0])
+    foot = tiller[1].get('translation', [0.0, 0.0, 0.0])
+    hinged = tiller[0] is not None and tiller[0] in steering[1].get('children', [])
+    meshes = [name for name, (_, node) in nodes.items() if 'mesh' in node]
+    check(sorted(meshes) == ['Chassis', 'Steering', 'Tiller'] and hinged
+          and abs(at[0]) < 0.01 and abs(at[1]) < 0.01 and abs(at[2] - 0.689) < 0.01
+          and abs(foot[0]) < 0.01 and abs(foot[1] - 0.30) < 0.01 and abs(foot[2] - 0.071) < 0.01,
+          'depot/pallet_jack.glb turns and tilts as a real one: its frame, its steering unit '
+          'turning on the pump\'s axis 0.689 m behind its middle, and its handle hinged inside it '
+          f'at the shaft\'s foot, 0.30 m up (meshes {meshes}; steering at {at}, handle at {foot})')
+
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)

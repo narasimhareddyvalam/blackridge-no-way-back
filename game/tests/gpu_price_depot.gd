@@ -8,14 +8,22 @@ extends SceneTree
 ## longer hides the hill and forest behind it, so this case also prices what it covers. P2: only
 ## what part 2 added (the dock fittings, lights and signals, the arm and bay lights, the lanes, the
 ## open doors' tracks, the staged loads and the dock front's rain), the shell kept in both, so the
-## view behind stays covered. `-- --only=P2 --cycles=40` measures one case, with more cycles. It
-## changes no game file: it shows and hides nodes in the game.
+## view behind stays covered. RK (#267): the shed's racking and its fit-out (`racking.gd`: the
+## racks and their stock, the aisles' lines and lights, the joists, liner, ducts and sprinkler
+## mains), seen from the cross-aisle inside the shed; and its parts alone, to find what costs:
+## RL its aisle lights and fixtures, RW its stretch film, RA its frames and decks (each deck's
+## mesh cut out; the frames' slots cut out too until #267 drew them solid).
+## `-- --only=P2 --cycles=40` measures one
+## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
 
 const SETTLE := 3.0
 const CYCLES := 24
 const BLOCK := 1.0
 const SKIP := 0.3
 const VIEW := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
+const INSIDE := [Vector3(-50.0, 3.2, 12.0), Vector3(-68.0, 3.4, 1.0), 60.0]
+const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
+	"RA": ["Frames", "Decks"]}
 const PART_TWO := ["DockSeal", "DockBumper", "DockLeveller", "DockEdge", "DockLight", "DockSignal",
 	"DockArm", "BayLight", "LaneLine", "DoorTrack", "DoorSpringShaft", "Pallet", "StretchWrap",
 	"Cartons", "Forklift"]
@@ -62,6 +70,10 @@ func _run() -> void:
 	print("GPU PRICE: window %s, vsync %s, MetalFX scale %.2f" % [root.get_visible_rect().size,
 		DisplayServer.window_get_vsync_mode(), root.scaling_3d_scale])
 	for case: String in chosen:
+		var view: Array = INSIDE if case.begins_with("R") else VIEW
+		_camera.fov = view[2]
+		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
+		await _wait(1.0)
 		await _alternate(case)
 	print("GPU PRICE DONE")
 	quit()
@@ -76,7 +88,8 @@ func _alternate(case: String) -> void:
 			await _wait(BLOCK)
 			var ended := Time.get_unix_time_from_system()
 			print("GPU PRICE BLOCK|%s|%s|cycle %d|time %.3f-%.3f|skip %.2f|particles %d|%s|%s"
-				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0, "the court",
+				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
+				"the cross-aisle" if case.begins_with("R") else "the court",
 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
 				int(_rain.call("active_count"))]])
 	_show(case, true)
@@ -86,6 +99,15 @@ func _alternate(case: String) -> void:
 func _show(case: String, shown: bool) -> void:
 	if case == "D9":
 		_shed.visible = shown
+		return
+	if case == "RK":
+		(_shed.get_node("Building/Racking") as Node3D).visible = shown
+		return
+	if RACK_PARTS.has(case):
+		for found in _shed.get_node("Building/Racking").get_children():
+			if (RACK_PARTS[case] as Array).any(func(prefix: String) -> bool:
+					return String(found.name).begins_with(prefix)):
+				(found as Node3D).visible = shown
 		return
 	for node in _added:
 		node.visible = shown

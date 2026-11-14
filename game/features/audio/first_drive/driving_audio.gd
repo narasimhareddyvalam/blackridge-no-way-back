@@ -31,6 +31,8 @@ var _call_connect: AudioStreamPlayer
 var _call_end: AudioStreamPlayer
 var _breathing: AudioStreamPlayer
 var _tick: AudioStreamPlayer
+var _door_latch: AudioStreamPlayer
+var _door_stay: AudioStreamPlayer
 var _engine_level: float = 1.0
 var _hush: float = 1.0
 var _breath: float = 0.0
@@ -62,12 +64,24 @@ func configure(van: CharacterBody3D) -> void:
 	_breathing = _player("breathing", "Vehicle", BREATH_DB, true)
 	_breathing.stop()
 	_tick = _player("engine_tick", "Vehicle", -18)
+	_door_latch = _player("door_latch", "Vehicle", -6)
+	_door_stay = _player("door_stay", "Vehicle", -8)
 	_rng.seed = 7
 	vehicle.indicator_clicked.connect(_indicator)
 	vehicle.switch_operated.connect(func() -> void: _click.play())
 	vehicle.wiper_swept.connect(func() -> void: _wiper.play())
 	vehicle.window_operated.connect(func() -> void: _window.play())
 	vehicle.collided.connect(_impact)
+	vehicle.rear_door_sounded.connect(_door_sound)
+
+
+## The rear doors as Ethan works them: the latch's clunk as one shuts, softer as its handle frees
+## it; the stay's knock as it catches one folded back, softer as he tugs one off it.
+func _door_sound(kind: String) -> void:
+	var latch := kind == "latch" or kind == "release"
+	var player := _door_latch if latch else _door_stay
+	player.volume_db = -6.0 if kind == "latch" else (-8.0 if kind == "stay" else -16.0)
+	player.play()
 
 
 func _player(

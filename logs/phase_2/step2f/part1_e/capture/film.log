@@ -1,0 +1,57 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+Movie Maker mode enabled, recording movie in 1280×800 @ 30 FPS...
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+--------------------------------------------------------------------------------
+Done recording movie at path: /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/captures/loading/e/job.avi
+6217 frames at 30 FPS (movie length: 00:03:27:07), recorded in 00:03:49 (90% of real-time speed).
+CPU render time: 13.05 seconds (average: 2.10 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 29.43 seconds (average: 4.73 ms/frame)
+--------------------------------------------------------------------------------
+
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.7.2.stable.official (ed1daf0bf001b61586d9930840f2f1394092c079)
+Dumping the backtrace. 
+Load address: 1049d0000
+
+[1] 1a17ee144 (libsystem_platform.dylib+4144) - _sigtramp + 56
+[2] 1a17fe2d8 (libc++.1.dylib+72d8) - std::__1::recursive_mutex::lock()
+[3] 1a17fe2d8 (libc++.1.dylib+72d8) - std::__1::recursive_mutex::lock()
+[4] 1055a89b4 (main+bd89b4) - main + 4767424
+[5] 1055a8de4 (main+bd8de4) - main + 4768496
+[6] 105645bd0 (main+c75bd0) - main + 5411036
+[7] 109481cb8 (main+4ab1cb8) - ZSTD_decompressStream_simpleArgs + 3546196
+[8] 1097b4af4 (main+4de4af4) - ZSTD_decompressStream_simpleArgs + 6900368
+[9] 1097b2d7c (main+4de2d7c) - ZSTD_decompressStream_simpleArgs + 6892824
+[10] 1097b4344 (main+4de4344) - ZSTD_decompressStream_simpleArgs + 6898400
+[11] 1091c6558 (main+47f6558) - ZSTD_decompressStream_simpleArgs + 681204
+[12] 105142ec4 (main+772ec4) - main + 156624
+[13] 1050ba104 (main+6ea104) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[14] 1050bfbe4 (main+6efbe4) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[15] 1a09de17c (CoreFoundation+7617c) - __CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__ + 148
+[16] 1a0a6d288 (CoreFoundation+105288) - ___CFXRegistrationPost_block_invoke + 92
+[17] 1a0a6d1cc (CoreFoundation+1051cc) - _CFXRegistrationPost + 440
+[18] 1a09aa35c (CoreFoundation+4235c) - _CFXNotificationPost + 688
+[19] 19ce6337c (Foundation+937c) - -[NSNotificationCenter postNotificationName:object:userInfo:] + 88
+[20] 1a68983e4 (AppKit+23e3e4) - -[NSApplication terminate:] + 1616
+[21] 1050b9f50 (main+6e9f50) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[22] 1a09e8ca0 (CoreFoundation+80ca0) - __CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__ + 36
+[23] 1a09e8b98 (CoreFoundation+80b98) - __CFRunLoopDoObservers + 648
+[24] 1a09e8208 (CoreFoundation+80208) - __CFRunLoopRun + 908
+[25] 1a0ac2c10 (CoreFoundation+15ac10) - _CFRunLoopRunSpecificWithOptions + 536
+[26] 1ab1a05e0 (HIToolbox+bb5e0) - RunCurrentEventLoopInMode + 320
+[27] 1ab1a396c (HIToolbox+be96c) - ReceiveNextEventCommon + 492
+[28] 1ab329db8 (HIToolbox+244db8) - _BlockUntilNextEventMatchingListInMode + 48
+[29] 1a69d48c0 (AppKit+37a8c0) - _DPSBlockUntilNextEventMatchingListInMode + 292
+[30] 1a669359c (AppKit+3959c) - _DPSNextEvent + 576
+[31] 1a6e2a5f8 (AppKit+7d05f8) - -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 832
+[32] 1a6e2a0e8 (AppKit+7d00e8) - -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:] + 344
+[33] 1a6686920 (AppKit+2c920) - -[NSApplication run] + 396
+[34] 10511cea4 (main+74cea4) - main (in Godot) + 944
+[35] 19c750d7c (dyld+31d7c) - start + 6652
+-- END OF C++ BACKTRACE --
+================================================================

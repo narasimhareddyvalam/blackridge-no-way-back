@@ -1,0 +1,22 @@
+mutation_wrists_on_the_bar: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "Walk", "Idle"]), then walks nearly upright behind it (leaning 12° at most), the jack at the pace of his feet, 0.900 m/s, his plant
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push"], his head at most 1.499 m abo
+    FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Push held, true; his toes at most 0.046 m up), his hands on the handle (0.056 m off it, 0.31 m below the top of h
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.020 m/s,
+    FAIL: H2: W let go on the dock as he walks behind it (["Push", "Walk", "Idle"]), the load rolls on 0.72 m with his last step, his planted feet slipping at most 0.019 m/s; then he stands (Idle), his ha
+mutation_stoops_at_the_door: exit 1; LOADING RESULT: 17/22 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push"], his head at most 1.523 m abo
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.031 m/s,
+    FAIL: H1: E at the pendant raises the lift again with the jack on it (0.47 m), the load left in the van
+    FAIL: H2: W let go on the dock as he walks behind it (["Walk", "Idle"]), the load rolls on 0.05 m with his last step, his planted feet slipping at most 1.699 m/s; then he stands (Idle), his hands on t
+    FAIL: H2: W let go while he leans in to get it going (["Walk", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at most 1.608 m/s; the
+mutation_pulls_at_arms_length: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.018 m/s,
+mutation_walk_stop_lets_go: exit 1; LOADING RESULT: 21/22 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: W let go on the dock as he walks behind it (["Push", "Walk", "Idle"]), the load rolls on 0.72 m with his last step, his planted feet slipping at most 0.019 m/s; then he stands (Idle), his ha
+mutation_doors_open_anywhere: exit 1; BAY NINE RESULT: 19/20 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: G3: with a wall 0.3 m beside the van, E at its back leaves the rear doors shut, for there is no room to swing them round to its sides (You swing the rear doors round and hook them back against t
+mutation_thin_dock_rain: exit 1; LAMP RAIN STATE RESULT: 14/16 passed; 2 failed; fails on its check: True; script error: False
+    FAIL: The dock front's rain fills the band its door lights light, 3.50 m out over the apron from 19.35 m (clear of the seals at 20.5), not a thin sheet that looks solid end on
+    FAIL: No rain volume's box reaches inside the transfer shed (LampRainDock19)
+clone restored byte for byte after each

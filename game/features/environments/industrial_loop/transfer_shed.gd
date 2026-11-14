@@ -17,6 +17,11 @@ const Yard = preload("transfer_yard.gd")
 const Ground = preload("depot_ground.gd")
 const Building = preload("transfer_building.gd")
 const VanBay = preload("van_bay.gd")
+const PalletJack = preload("pallet_jack.gd")
+const DockWorker = preload("res://features/characters/dock_worker/dock_worker.gd")
+const WORKER_INSIDE := Vector3(-41.2, 0.0, 17.5)
+const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.9),
+	Vector3(-45.9, 0.0, 20.9), Vector3(-46.2, 0.0, 20.35), Vector3(-47.3, 0.0, 20.35)]
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -55,8 +60,13 @@ const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z
 	LANE_WIDTH + CORNER_RADIUS * 2.0 + 2.0, 20.0)
 
 var lamp_at := Vector3(LANE_X + LANE_WIDTH / 2.0 + 1.6, 0.0, GATE_Z + 3.0)
-var dock_rain_at := Vector3(-61.45, 4.6, 21.1)
+var dock_rain_at := Vector3(-61.45, 4.6, 22.25)
 var bay_nine: Node
+var side_door: Node
+var pallet_jack: Node
+var dock_worker: Node3D
+
+var _jack_start := Transform3D()
 var clearings: Array[Rect2] = [SPUR_PLOT, Ground.CLEARING]
 var yard_lamps: Array[Vector3] = Yard.LAMPS
 var yard_lamp_headings: Array[float] = Yard.LAMP_HEADINGS
@@ -117,7 +127,21 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	bay_nine = VanBay.new()
 	bay_nine.name = "BayNine"
 	add_child(bay_nine)
-	bay_nine.call("setup", building, yard.get_node("WheelChock"))
+	bay_nine.call("setup", building, yard.get_node("WheelChock"), building.get_node("DockLift9"))
+	side_door = building.get_node("DockAccess")
+	pallet_jack = PalletJack.new()
+	pallet_jack.name = "PalletJackRig"
+	add_child(pallet_jack)
+	var loads: Array[Node3D] = []
+	for index in range(1, 7):
+		loads.append(building.get_node("Pallet%d" % index) as Node3D)
+	var jack := building.get_node("PalletJack") as Node3D
+	_jack_start = jack.global_transform
+	pallet_jack.call("setup", jack, loads, building, building.get_node("DockLift9"))
+	dock_worker = DockWorker.new()
+	dock_worker.name = "DockWorker"
+	add_child(dock_worker)
+	dock_worker.call("setup", WORKER_INSIDE, WORKER_WAY)
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"
@@ -156,6 +180,8 @@ func watch(body: Node3D) -> void:
 	vehicle = body
 	if bay_nine != null:
 		bay_nine.set("vehicle", body)
+	if pallet_jack != null:
+		pallet_jack.call("watch", body)
 	_vehicle_front = Vector3.ZERO
 	_vehicle_rear = Vector3.ZERO
 	for child in body.get_children():
@@ -165,6 +191,23 @@ func watch(body: Node3D) -> void:
 			_vehicle_front = shape.position + Vector3(0.0, 0.0, -half.z)
 			_vehicle_rear = shape.position + Vector3(0.0, 0.0, half.z)
 			return
+
+
+## Bay 9's staged load, the one under the pallet jack, put in `van`'s hold strapped down.
+func stow_load(van: Node3D) -> void:
+	pallet_jack.call("stow", get_node("Building/Pallet6"))
+
+
+## As a reload at Mission 2's stage 1 finds it: loaded, the doors shut and sealed (H6).
+func restore_loaded(van: Node3D, seal_number: String) -> void:
+	stow_load(van)
+	van.set("rear_doors_open", false)
+	van.call("put_seal", seal_number)
+
+
+## Sends the dock worker out to seal `van`'s shut rear doors with the seal numbered `number`.
+func call_dock_hand(van: Node3D, number: String) -> void:
+	dock_worker.call("go_seal", van, number)
 
 
 func barrier_open() -> bool:
@@ -216,6 +259,12 @@ func hand_run_sheet() -> bool:
 func reset() -> void:
 	if bay_nine != null:
 		bay_nine.call("reset")
+	if side_door != null:
+		side_door.call("reset")
+	if pallet_jack != null:
+		pallet_jack.call("reset", _jack_start)
+	if dock_worker != null:
+		dock_worker.call("reset")
 	_check_left = -1.0
 	_target = 0.0
 	_angle = 0.0

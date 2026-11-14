@@ -1,0 +1,6 @@
+mutation_feet_as_the_walk_put_them: exit 1; STAIR RESULT: 17/19 passed; 2 failed; fails on its check: True; script error: False
+    FAIL: S11 up: his legs never cross: each planted foot under its own hip, at most 0.041 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.145 m apart (at lea
+    FAIL: S11 down: his legs never cross: each planted foot under its own hip, at most 0.041 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.145 m apart (at l
+mutation_hips_follow_the_foot_sooner: exit 1; STAIR RESULT: 18/19 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.006 m, his camera 0.018 and his hips 0.020 (at most 0.02)
+clone restored byte for byte after each

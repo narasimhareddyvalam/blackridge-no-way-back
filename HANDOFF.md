@@ -1,6 +1,165 @@
 # HANDOFF.md
 
-**Last run:** Phase 2, step 2d built (#227–#229), 2026-11-11, on the author's second Claude
+**Last run:** Phase 2, step 2f part 1 (#243–#246), 2026-11-12, on the author's second Claude account:
+step 2e's push finished (#243–#244), then, after the author watched the real-play capture and found
+the stair jerky (#245), part A of the plan they approved with B and C (#246): Ethan smooth on foot.
+**The push finished:** the jack's tiller cut from its mesh (Chassis, Steering, Tiller), tilting to
+his hands and turning with A and D; upright behind it once rolling; pulling upright outside the van;
+the rear doors open only where their swing is clear (G3); the dock front's rain 3.5 m deep.
+**A:** under the dock stair's drawn steps, one hidden incline along its nosings (`dock_access.gd`,
+`stair()`); near it Ethan's stair steps (`driver/stair_steps.gd`, `feet_flat.gd`, `ankle_watch.gd`):
+his walk slowed to 76 steps a minute up and kept at its 116 down (Di Giulio et al. 2019: about 76
+and 117), each foot set on its own tread by leg IK, one tread a step, heel lifting as his walk's,
+hips lowered to the standing foot, the foot behind first after a stop; kerbs and single steps glide
+his camera and model up and down over about a quarter second; his camera comes in at once, eases
+back out, and eases in ahead of a rail his walk takes it behind (`driver.gd`). Measured first: the
+old stair stalled him on its first tread up to 12 s, then jumped him 0.21–0.30 m a frame. Design
+and results: `docs/PHASE_BRIEF.md`'s last revision; tasks in `docs/DEPOT_PLAN.md` (part 1,
+continued). **Tests:** part 1's: `test_loading.gd` 22/22, `test_bay_nine.gd` 20/20, rain 455/455 and
+16/16, eighteen mutations, the 33 suites (`logs/phase_2/step2f/part1/`). A's:
+`LOG_DIR=logs/phase_2/step2f/part1_a/after scripts/run-test.sh test_stair.gd 60 300`, 1/15
+(`part1_a/before/`) → 17/17, exit 0; fourteen mutations exit 1 on their own checks
+(`part1_a/mutations/`, `mutations_part1_a.py` beside them; a fifteenth found an untested rule, which
+was removed); every suite by `bash logs/phase_2/step2f/part1_a/suites/run_suites.sh <scratch>`
+(three APFS workers, each run by `scripts/run-test.sh`): 34 runs exit 0 with the baseline's counts,
+`test_stair.gd` 17/17, the art check 0 failures (`part1_a/suites/SUMMARY.txt`);
+`HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import`: exit 0, no errors, the
+new `.uid` sidecars, the real save folder unchanged. **Film:** `captures/stair/a/stair_up_and_down.mp4`
+(44 s, Movie Maker, `tools/captures/capture_stair.gd`) and stills 01–04; the two raw AVIs beside them
+(107 and 111 MB) are not for Git. **Changed (A):** `dock_access.gd`, `driver.gd`, new `stair_steps.gd`,
+`feet_flat.gd`, `ankle_watch.gd` (and their `.uid`), `app/first_drive.gd` (gives Ethan the stair),
+new `test_stair.gd`, new `tools/captures/capture_stair.gd`, the brief, the plan, the prompt log
+(#245–#246), this note; with step 2e and part 1, **not committed**. **Rely on:** `develop` is 11
+commits ahead of `origin/develop`, unpushed until A6 is graded; `stair_steps.gd`'s `STRIKES`,
+`LIFTS`, `SIDES`, `ANKLE_UP`, `TOE_REACH` were measured from Ethan's Walking (31 frames) and must be
+measured again if that clip changes; `test_stair.gd` takes about two minutes. **Unverified:** the
+look in motion beyond the film; the lane's floor reads as dirt and the lane is dark (part 2).
+**Then #249, 2026-11-13:** his legs crossed on the stair; each foot now lands under its own hip
+(`stair_steps.gd`'s `SIDES` 0.103/−0.071, square to the flight, `_turn_with()` on the level; knee
+poles over the feet in `driver.gd`); `test_stair.gd` 17/19 → 19/19 (S11), four mutations exit 1,
+36 suite runs exit 0 (`logs/phase_2/step2f/part1_d/`); not yet filmed again. **Then #250:** the jack's handle went into his chest and face and his hands lay open on it;
+new `driver/handle_clear.gd` (his back straightened clear of the handle, under the hold's roof) and
+`driver/hand_grip.gd` (hands turned and closed round the loop), `push_gait.gd`'s `GRIP_STOOPED`
+(0.47, 0.96), `pallet_jack.gd` gives the handle and its bars; `test_loading.gd` 23/24 → 25/25 (H11,
+H12), six mutations exit 1, 36 suite runs exit 0 (`logs/phase_2/step2f/part1_e/`); not filmed. **Then #252-#253:** the rear doors' hinges (`_rear_hinges()`), the lift's pendant post moved to the
+entry's far corner and made solid (`dock_lift.gd`), the rear camera as the view in reverse
+(`_rear_view()`, `_follow_gear()`); R10, R11, H13, the dash check; 36 suite runs exit 0
+(`logs/phase_2/step2f/part1_f/`). Five new Mixamo clips clone-copied into `source_assets/mixamo/`
+(not yet converted): Running Up Stairs, Descending Stairs, Pull Heavy Object, Stand Up, Male
+Sitting Pose; next, step 2 of #253 (the clips), then the seated sealer, the van's loading, the
+depot. **Step 2 of #253 built (#254-#257, not committed):** the captured climb (`StairsUp`), the stair
+rebuilt to 6 risers of 0.217 m on 0.25 m treads, the heavy pull in the hold (`PullBack`) with a
+bend under the roof; `test_stair.gd` 28/28, `test_loading.gd` 27/27, 36 suite runs exit 0, art 0
+failures (`logs/phase_2/step2f/part2_clips/`; `docs/PHASE_BRIEF.md`'s last revision). Descending
+Stairs.fbx is a crouch; going down keeps the walk gait. The film's black frames were his camera backing through bay 9's open door (not the laptop's sleep): camera-only walls in the open dock doors (`_camera_wall()`, layer 8), `test_sealing.gd` 12/13 → 13/13. Films: `captures/stair/step2/stair.mp4`, `captures/loading/step2/the_whole_job.mp4` (made before the camera walls). Next: step 3, the dock worker seated by
+the dock door (Stand Up, Male Sitting Pose, retargeted from Ch33 to Rocketbox). **Then #258-#259 (not committed):** Pallet5 moved to dock 8 (H14); the drive-in door filled by the plain shutter alone (E4); the pull's crouch under the door header; the rear doors' hinges made in Blender (`tools/art/build_van_hinges.py` into `freight_van/art/van_hinges.glb`, strap arm on the door, plate, lugs and capped pin on the body, at 0.52 and 1.65 m), R10 17/18 → 18/18, two mutations exit 1, the art check and `test_cockpit.gd` taught the new file, every suite in `logs/phase_2/step2f/part4_hinges/` (brief's last revision); stills in `captures/hinges/blender/` (`tools/captures/capture_hinges.gd`, windowed). **Then #260-#261:** the author did not want the hinges seen from outside; remade compact (a 0.03 m pad on the door, 0.039 m tall) in the finish of the door where each sits, the white paint above the lamp, the black trim below (R12, 19/19, two mutations exit 1, `logs/phase_2/step2f/part5_white_hinges/`; stills `captures/hinges/compact/`). The whole job's film still predates the camera walls. **Then step 3 of #253, part 1 (#263-#265, not committed):** bay 9's dock station (`dock_station.gd`): Poly Haven's Metal Office Desk along the edge rail east of the lift, Red Fox's Office Chair (Sketchfab, CC BY, `13_office_chair`, credited) in its kneehole, the seal log and pen cup on the desk; the drive-in lane floored in the shed's concrete at the apron's 0.02 m (`_lane_floor()`); new `test_dock_worker.gd` W1-W6 (6/6), Mission 2's E11 (55/55), the menus' credit (20/20), four mutations exit 1, suites in `logs/phase_2/step3/part1/`; stills `captures/dock_station/part1_built/`. The unused Plastic Monobloc Chair was removed (#266). Next: the worker seated (Rocketbox chair clips to fetch). **Then #266-#269 (not committed):** the plastic chair removed; the plan for step 5 brought forward written into the brief (#267; the author chose main street on the south valley road and the order shed, highway, town, #268); **part A built**: the shed's racking, stock, floor lines, joists, liner, ducts, sprinkler mains and aisle lights (`racking.gd`, `build_racking.py`, `build_shed_services.py`, `make_rack_textures.py`; `transfer_building.gd`'s staging row kept, its z 5 row moved onto the aisles), `test_racking.gd` 11/11, eight mutations exit 1, 37 suite runs exit 0 (`logs/phase_2/step5/partA/`), GPU price 1.52 ms (1.43-1.61) on power (`gpu_price/`), stills `captures/shed_racking/partA/`. Next: the author's look at part A, then part B (the forest highway), then C (main street). The dock worker's seating (step 3, part 2) waits behind them. **Then #270-#278 (not committed):** real light and the wet ground, toward the author's two photos of a rainy night: lighting options measured and shown labelled (`captures/lighting/compare/`; none kept); Rain Puddles V3 tried as it comes (`game/experiments/rain_puddles_v3/`); the new `wet_ground.gdshader` on the road, the depot yard and the dock apron (Lagarde's wet surfaces, drainage-placed puddles rippled at 0.08, V3's ripples and reflections combined, MIT, credited; the whole wet film reflecting, 1.2-2.0 ms), the road's strip carrying its place across as vertex colour, the lamps' cones four times their haze (`MIST_SCATTERING`); `test_wet_ground.gd` 5/5, five mutations exit 1, 38 suite runs exit 0 (`logs/phase_2/wet_ground/`). Not kept by the author: specular 1.0 and probes, glow, darker fog, lamps like real ones, a rougher film. Stills: `captures/wet_ground/` (trials) and `final/`. **Then B and C, approved (#247, "okay proceed"), 2026-11-12 to 13:** B, the rear doors by Ethan's
+hands (`freight_van/rear_door_hands.gd`; `driver.gd`'s `handling`, `door_step()`, `door_hand()`,
+a lean for reach; `freight_van.gd`'s `open_rear_doors()`, `close_rear_doors()`,
+`rear_doors_busy()`, `rear_door_hold()`, `rear_door_angles()`, signal `rear_door_sounded`; the
+mission and the app call them and ignore E while he works): right door by its handle pulled to 65°,
+walked round, pushed on to its stay; the left by its edge; closing the left first, tugged off its
+stay from past its edge, walked shut onto its latch; sounds `door_latch.wav` and `door_stay.wav`
+added to `synthesize.py` (the other nineteen byte for byte), `docs/AUDIO.md`. C: the objective
+only goes on (`the_wrong_cargo.gd`, the jack's `on_lift()`); `tools/captures/capture_loading.gd`
+rewritten to play the whole job by real play from the court, stills from a hidden SubViewport
+camera, `frames` argument logs frame times. **Tests:** `LOG_DIR=logs/phase_2/step2f/part1_b/after
+scripts/run-test.sh test_rear_doors.gd 60 300` 6/14 (`part1_b/before/`) → 16/16; thirteen
+mutations exit 1 (`part1_b/mutations/`, two untested rules removed); `test_bay_nine.gd` 20/20 and
+`test_sealing.gd` 11/11 now wait for the job (`DOORS_BY_HAND`); `test_loading.gd` 22/23
+(`part1_c/before/`) → 23/23 (H10); C's two mutations exit 1 (`part1_c/mutations/`); every suite,
+`bash logs/phase_2/step2f/part1_c/suites/run_suites.sh <scratch>`: 36 runs exit 0, art 0 failures
+(`part1_c/suites/SUMMARY.txt`; H10's last tightening, a test-only change, rerun alone 23/23).
+**Film:** `captures/loading/c/the_whole_job.mp4` (222 s, Movie Maker); stills
+`captures/loading/c_realtime/` (33, real time); the raw `captures/loading/c/job.avi` (622 MB) is
+not for Git. **Frame rate, real time, 60 Hz, vsync on:** court 55.9 fps, backing onto bay 9 47.2,
+stair 59.5, dock and hold 59.7, closing and seal 57.0 (`logs/phase_2/step2f/part1_c/capture/
+realtime.log`). **Next:** the author's look at the film and OK to commit step 2e, part 1 and A–C
+(label "(agent)", no co-author trailer, no push); whether to turn on physics interpolation (a
+`project.godot` change, the author's OK) and bring the yard within budget; then parts 2–4 from
+the models' shortlist (Blender's add-on must be connected to fetch the Sketchfab ones).
+
+**Before it:** Phase 2, step 2e finished: Ethan's push and stop (#236–#240), 2026-11-12, on the
+author's second Claude account. The author downloaded Mixamo's Pushing, Push Stop and Crouch Walk
+Forward for Ch33 (#238); Claude Code moved them, at their word, from the author's Downloads into
+`source_assets/mixamo/` (#239), measured them frame by frame and rendered five stills with the jack;
+the author approved the plan (#240, C59). Converted with `tools/art/convert_mixamo.py -- ethan`
+(Ethan alone): `Push` in place and `PushStop` with its travel taken out at knots every six frames;
+his six other clips, mesh and skin are byte for byte as before and `pedestrian.glb` is untouched;
+Crouch Walk Forward is not used. His new gait (`push_gait.gd`) plays them at the pace the load goes:
+Pushing 1.5 times faster on the dock and the lift (0.566 m/s), its own 0.377 m/s in the hold, a slow
+start (0.45 m/s²); the jack runs out from 1.17 m to arm's length (1.50 m); both wrists held on the
+handle's loop by two-bone IK; let go of outside, Push Stop from the step he is on, the load rolling
+on, then he stands and lets go; in the hold he holds Pushing's own planted frames, stooped; against
+something he finishes his steps up to the handle; pulling, he steps in and walks back outside, and
+plays Pushing backward in the hold. **Changed beyond the plan, for the author to check:** A and D
+steer only as the jack rolls; the strap's reach is 1.2 m (was 1.0 m); while pushing, his pace is the
+same on slopes and never more across the floor than his step. Design and results:
+`docs/PHASE_BRIEF.md`'s last revision ("step 2e: Ethan's push and stop, built"); tasks at the end of
+`docs/DEPOT_PLAN.md`. **Tests** (`logs/phase_2/step2e/`):
+`LOG_DIR=logs/phase_2/step2e/push_after7 scripts/run-test.sh test_loading.gd 60 450`, 16/21
+(`push_before/`) → 21/21, exit 0, and again 21/21 on the final code (`push_final/`), after a last
+rename that changed no behaviour and came after the mutations and suites;
+`python3 tools/tests/check_first_drive_art.py`, 1 failure → 0; ten mutations exit 1 on their own
+checks (`push_mutations/mutations_summary.txt`, its script beside it); every suite, each as
+`LOG_DIR=logs/phase_2/step2e/push_suites scripts/run-test.sh <test>.gd <fps> 450` for the 33 runs,
+then the art check (`push_suites/SUMMARY.txt`, `run_suites.sh` beside it): all exit 0 with the
+baseline's counts, `test_loading.gd` 21/21; no SCRIPT or SHADER ERROR; the struck man's fall did not
+move (hips 2.4 m out). `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import`:
+exit 0, no errors, the new `push_gait.gd.uid`, the real save folder unchanged. **Changed:**
+`tools/art/convert_mixamo.py`, `ethan.glb`, new `driver/push_gait.gd` (and its `.uid`), `driver.gd`,
+`pallet_jack.gd`, `test_loading.gd`, `check_first_drive_art.py`, `source_assets/mixamo/README.md`
+(the three new FBX files there are ignored by Git), `SOURCES.md`, `characters/ATTRIBUTION.md`,
+`docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`, `docs/DESIGN_DECISIONS.md` (C59), the prompt log
+(#236–#240), this note; with step 2e's first run below, **not committed**. **Rely on:** `develop` is
+11 commits ahead of `origin/develop`, unpushed until A6 is graded; `STOP_TRAVEL` in `push_gait.gd`
+must match the knots the converter prints, or his feet slide in the stop; `test_loading.gd` takes
+about five minutes (450 s timeout). **Unverified:** every look (nothing drawn yet): his lean, his
+grip, the stop, the hold; his feet slide sideways a little while steering; his palms sit up to 5 cm
+off the bar in a push's first 0.3 s from the close stance. **Next:** the stills (a game window: tell
+the author first), then the author's OK to commit step 2e.
+
+**Before that:** Phase 2, step 2e built (#230–#235), 2026-11-11, on the author's second Claude
+account: the load and the seal at bay 9, so Mission 2 plays from the gate to its "loaded"
+checkpoint. Ethan goes in by the shed's side door and up the stair, works the lift from its
+pendant (its 0.91 m bridge plate resting on the van's rear sill, through a passage cut under bay
+9's door to a 0.4 m sill), rolls the pallet on with the dock's pallet jack, rides down, pushes it
+into the van's measured hold stooping behind it (#231) against the bulkhead, straps it and pulls
+the jack out, the van settling on both axles; then the chock out, a pull forward of 2.5 m, the
+doors shut, Rocketbox's `Construction_Male_08` (C58) walking out to seal them, Ethan's check of
+the seal's number against the run sheet's, and stage 1 saved; a reload puts the van in front of
+bay 9, loaded and sealed. Design and results: the last revision of `docs/PHASE_BRIEF.md` ("step
+2e: the load and the seal, built"); tasks at the end of `docs/DEPOT_PLAN.md`. **Tests**
+(`logs/phase_2/step2e/`): `test_loading.gd` 1/5 → 16/17 (its one failure, Ethan's stoop, waits
+for the clips); the new `test_sealing.gd` → 11/11; Mission 2 54/54, bay 9 19/19, the menus 20/20,
+the art check 0 failures; sixteen of seventeen mutations exit 1 on their own checks, the
+seventeenth removed an allowance that proved unneeded (`mutations_summary.txt`). Every suite,
+each as `LOG_DIR=logs/phase_2/step2e/suites scripts/run-test.sh <test>.gd <fps> 450` for the 33
+runs (the 31 before, `test_loading.gd` and `test_sealing.gd` at 60), then
+`python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): all exit 0 but
+`test_loading.gd`, after two regressions the run found were fixed and rerun (`test_cockpit.gd`
+25/25, Mission 2 54/54); no SCRIPT or SHADER ERROR; the struck man's fall did not move (2.4 m).
+`guard.glb` is byte for byte as before. **Changed:** `transfer_building.gd`, `dock_lift.gd`,
+`dock_staging.gd`, `transfer_shed.gd`, `transfer_yard.gd` (the guides' collision 0.2 m),
+`van_bay.gd`, new `dock_access.gd` and `pallet_jack.gd`, new `van_hold.gd`, `freight_van.gd`,
+`van_presentation.gd`, `driver.gd`, `the_wrong_cargo.gd`, `night_freight/first_drive.gd`
+(`save_progress()`), `app/first_drive.gd`, `front_menu.gd` (credits), new
+`characters/dock_worker/` (`dock_worker.gd`, `dock_worker.glb` and its textures),
+`characters/ATTRIBUTION.md`, `tools/art/convert_rocketbox.py` (two jobs),
+`check_first_drive_art.py`, new `test_loading.gd` and `test_sealing.gd`, `test_mission_two.gd`,
+`test_bay_nine.gd`, `test_cockpit.gd`, `test_menus.gd`, `SOURCES.md`,
+`source_assets/rocketbox/README.md`, `docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`,
+`docs/DESIGN_DECISIONS.md` (C58), the prompt log (#230–#235), this note. **Not committed.**
+**Rely on:** `develop` is 11 commits ahead of `origin/develop`, unpushed until A6 is graded; the
+van's hold is built when its rear doors first open, so Mission 1 never has it; `test_loading.gd`
+takes about four minutes and `test_sealing.gd` about three (450 s timeouts); the scratch suite
+runner lists both. **Unverified:** every look (nothing drawn yet): the plate, the passage, Ethan
+stooped in the hold, the worker's walk and reach, the seal; the jack's forks pass through the
+van's 4.6 cm sill strip under the pallet. **Next:** the author's two Mixamo clips for Ch33,
+"Crouched Walking" and "Pushing" (#231), into `source_assets/mixamo/`; then convert them
+(`tools/art/convert_mixamo.py`, as `CrouchWalk` and `Push`), `test_loading.gd` to 17/17, the
+stills (a game window opens: tell the author first), and the author's OK to commit.
+
+**Earlier:** Phase 2, step 2d built (#227–#229), 2026-11-11, on the author's second Claude
 account: backing onto bay 9, the first step toward a playable Mission 2 (#226). Bay 9's dock
 lift in a pit behind its door (new `dock_lift.gd`), its inside light, two wheel guides and a
 chock on the dock face; the van's rear doors cut from the Iveco body (`tools/art/convert_iveco.py`)
@@ -24,7 +183,7 @@ in; `test_bay_nine.gd` takes about four minutes (run it with a 450 s timeout).
 players read the retry messages; the hold floor's 0.46 m against a real Daily's 0.68 m. **Next:**
 2e, the load and the seal: its research and brief first, then the author's OK (#229).
 
-**Before it:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
+**Earlier still:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
 second Claude account: the docks at work. Seals, 18 solid bumpers, the dock edge, a light over
 each of the ten doors and red/green signals at the nine docks; levellers in docks 1–8; docks 5
 and 9 open, their panels raised into tracks, an arm light inside each; inside, ten high-bay
@@ -62,7 +221,7 @@ drive-in shutter, still dark; the east yard light's rain, off near the gate unde
 eight. **Next:** step 2d, backing onto bay 9, toward a playable Mission 2 (#227); part 3 (the
 parked trucks, trailers and cars) waits for the polish pass.
 
-**Before that:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
+**Before those:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
 Claude account: the bigger depot's platform cut into the hill behind 65 concrete walls (11 m at
 the back), the 50 x 30 m shed (`transfer_building.gd`) in grey box-profile cladding over a 1.3 m
 concrete dock face, the office's two lit storeys, nine of Maxwell autodoors' dock doors and Poly
@@ -94,7 +253,7 @@ at work (seals, levellers, bumpers, a light over each door, red and green lights
 the docks lit and dry, rain in every lamp's light), each step approved. **Unverified:** the GPU
 price (D9); the drive-in shutter, dark until part 2's lights; how the walls read from the hill.
 
-**Earlier:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+**Long before:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
 the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
 concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
 not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
@@ -136,7 +295,7 @@ realistic lights and rain at and inside the docks (#219–#220,
 `source_assets/sketchfab/<model>/` (the .glb out of Git, a README each in Git), at real sizes.
 No brief or code yet.
 
-**Earlier still:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+**Longer before:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
 account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
 its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
 to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
@@ -180,7 +339,7 @@ yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the 
 committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
 glints, the guard through the window; the GPU price of the shadowed booth light.
 
-**Before those:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+**Longest before:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
 second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
 3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
 beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
@@ -196,7 +355,7 @@ unpushed until the author says. **Next:** the author's OK to build r1 and the gu
 in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
 **Unverified:** every look in the r1 revision; the † values are proposals.
 
-**Long before:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+**Older:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
 research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
 the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
 Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.

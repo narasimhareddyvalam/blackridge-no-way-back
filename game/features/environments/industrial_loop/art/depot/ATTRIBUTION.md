@@ -20,6 +20,11 @@
   map left out; the pallet sized as the American 48 x 40 in pallet, reduced to 3,000 triangles
   and made matte; their textures halved to at most 1024 pixels. Credited in the game's credits
   ("THE DEPOT").
+- `office_chair.glb`: "Office Chair" by Red Fox (Sketchfab `nokillnando`),
+  https://sketchfab.com/3d-models/office-chair-b228a29fa84544c2be501c295653ffe7, licensed CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/). Changed: sized by its seat to 0.47 m, centred on
+  its gas lift and its textures halved to 1024 pixels by `tools/art/convert_depot_models.py`.
+  Credited in the game's credits ("THE DEPOT").
 - `carton.glb`: Poly Haven's "Cardboard Box 01" by Rahul Chaudhary (CC0), reduced to 399
   triangles with its textures at 512 pixels by the same script.
 - `cladding_grey_diff_2k.jpg`: made by `tools/art/make_depot_textures.py` from Poly Haven's "Box

@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: the van docked at bay 9 and chocked, the pallet strapped in its hold
+PASS: H4: the way out of the van is clear over bay 9's wheel guide (true) but not against the dock's wall (false)
+PASS: H3: loaded, bay 9 still red outside (true), the objective asks for the chock to come out (TAKE THE CHOCK OUT); E at the wheel (E  Take the chock out) takes it out and bay 9 turns green outside (true)
+PASS: H4: the chock out, the objective asks to pull forward (PULL FORWARD); with the van's rear 1.66 m from the bumpers E at the doors (E  Close the rear doors) leaves them open (true) and the objective still says to pull forward first (PULL FORWARD)
+FAIL: H4: pulled forward until its rear is 2.67 m from the bumpers, E at the doors (E  Close the rear doors) closes them ((270.0, 270.0))
+FAIL: H5: the doors shut, the objective says to wait for the seal (CLOSE THE REAR DOORS); the dock worker walks out to the doors (inf m from the hasp at the closest, never through the van: true), puts the bolt seal on (after -1.0 s; seal shown: false) and walks back in (true)
+FAIL: H5: at the sealed doors E () shows the check: the number  on the bolt, on the cap and on the run sheet's seal line, side by side (0 times in it)
+FAIL: H5: sealed, the doors no longer open: the hint at them is "" and E leaves them shut
+FAIL: H6: checked, "loaded" saves Mission 2's stage 1 (stage 0 in the file) and the objective moves on (CLOSE THE REAR DOORS)
+FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middle) with the pallet strapped against the bulkhead in its hold (false), its doors shut and sealed, and Ethan in it (true)
+PASS: H6: started again from Mission 2's beginning, the pallet stands back on bay 9's staging spot, unstrapped (true), and the van is empty and unsealed (0 kg, sealed false)
+SEALING RESULT: 5/11 passed; 6 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

@@ -253,3 +253,85 @@ follows the model.
 **Status, 2026-11-11:** tasks 1–4 done, committed at the author's word (#229). The
 centre line's rule became 0.1 m (from 0.2 m); what was built and every result are in
 `docs/PHASE_BRIEF.md`, revision "step 2d: backing onto bay 9, built".
+
+## Step 2e: the load and the seal (rules H1–H9, the author's L1 c and L2 b, #230)
+
+**Goal:** a playable loading at bay 9: Ethan onto the dock, the lift, the pallet jack and the
+load, then the doors, the dock worker's seal, Ethan's check and the "loaded" checkpoint.
+**Tests:** `game/tests/test_loading.gd` (H1, H2, H8, H9) and `game/tests/test_sealing.gd`
+(H3–H6), by real keys from a set-up docking; `test_mission_two.gd`, `test_menus.gd` and the art
+check where they touch.
+
+### Task 1: Onto the dock and the lift (H1, H8)
+- Tests first: the side door, the stair and its rail, the lift worked from its pendant.
+- Then: `dock_access.gd`, `dock_lift.gd` (the lift as the moving body), the shed's wiring.
+### Task 2: The pallet jack and the load (H1, H2, H9)
+- Tests first: taking the jack, the toe guard, no room behind its handle, into the hold behind it
+  stooping, against the bulkhead, the straps, the van's settling, the plate on the van's sill.
+- Then: `pallet_jack.gd`, `van_hold.gd` (measured from the model), bay 9's passage under its
+  door, the longer plate, Ethan's stoop and push steps, the axle shares; the clips from the
+  author (#231).
+### Task 3: The doors and the seal (H3–H6)
+- Tests first: the chock out, pulling forward, the doors, the worker's seal, the check, the save
+  and the reload, a fresh start.
+- Then: the dock worker (C58: `tools/art/convert_rocketbox.py`'s second job, `dock_worker.gd`),
+  the hasp and the seal on the van, the objectives, `save_progress()`, the stage 1 restore.
+### Task 4: Every suite, mutations, stills, records, and the author's OK to commit.
+
+**Status, 2026-11-11:** tasks 1–3 built and every suite run, mutations done; waiting for the
+author's two Mixamo clips (#231) before the stoop check, the stills and the commit. What was
+built and every result are in `docs/PHASE_BRIEF.md`, revision "step 2e: the load and the seal,
+built".
+
+### Task 2, finished: Ethan's push and stop (#238–#240)
+- Tests first: the dock's pace and slow start, his feet, his palms on the handle's loop, his
+  reach, his head under the hold's roof and door, the hold at the bulkhead, the pull back out
+  and the stop (`test_loading.gd` 16/21); the art check's clips (1 failure).
+- Then: Pushing and Push Stop converted (`tools/art/convert_mixamo.py`, Ethan alone), his gait
+  (`push_gait.gd`), both hands on the handle (`driver.gd`), the jack moved by his feet
+  (`pallet_jack.gd`).
+
+**Status, 2026-11-12:** built; `test_loading.gd` 21/21, the art check 0 failures, ten mutations
+exit 1 on their own checks, every suite exits 0 with the baseline's counts. Waiting for the
+stills (a game window) and the author's OK to commit. Results: `docs/PHASE_BRIEF.md`, revision
+"step 2e: Ethan's push and stop, built".
+
+## Step 2f: the depot at work, to a professional finish (#242–#243)
+
+**Goal:** the depot as a working night-shift cross-dock, finished to the standard of a
+professional Unreal project: real references and standards, existing scanned assets, decals,
+rated light fixtures, people at work and their sounds, within the MacBook Air's budget.
+**Brief:** `docs/PHASE_BRIEF.md`, revision "step 2f: the depot at work, to a professional finish;
+written before any code". **Status, 2026-11-12:** approved (#244); part 1 built; after the
+author's #245, part 1 goes on with A (smooth on foot: built), B (Ethan opens the rear doors
+himself) and C (the job in order, and its capture), approved (#246); then parts 2–4, with existing
+models (the author's #246: "check for already existing models to use them in our game").
+
+### Part 1: step 2e's push finished
+- Tests first: the tilting, steering handle; the upright pace once rolling; pulling upright; the
+  doors' clear swing; no rain volume over a wall's top.
+- Then: the tiller cut from the jack's mesh, Ethan's gait, the doors, the rain column; the stills
+  by real play; the author's OK to commit 2e.
+### Part 1, continued (#245–#246)
+- **A, smooth on foot: built.** The stair's hidden incline, Ethan's stair steps (leg IK, a stair's
+  cadence), single steps gliding, his camera easing in and out (`test_stair.gd` 17/17).
+- **B, the rear doors by Ethan: built.** His hand on each door as it turns, pushed on to its stay
+  or walked shut onto its latch, the left first closing; the latch's and stay's sounds
+  (`test_rear_doors.gd` 16/16).
+- **C, the job in order: built.** The objective only goes on (`test_loading.gd` 23/23); the whole
+  job filmed by real play from the court (`captures/loading/c/the_whole_job.mp4`), stills from a
+  hidden camera; the depot's frame rate measured: 60 inside the shed, 47–57 outside.
+### Part 2 (2f-1): the shed's fabric
+- Tests first: the lumen method's lux on the dock and at staging; decals and fittings placed off
+  every route.
+- Then: slab joints and wear decals, sprinklers, trays, heaters, fans, high-bays, door numbers,
+  door panels and signals, posters, the notice board and the time clock.
+### Part 3 (2f-2): the shed at work
+- Tests first: extinguishers within 22.9 m and 0.9–1.5 m up, exit signs, walkways and routes
+  clear, the forklift kept 2 m from Ethan, the checker's scan.
+- Then: staging lanes and freight with labels, racking, the checker's station, safety kit and
+  signs, the charging station, wrap stand, hand trucks, bins and baler, the forklift driver and
+  the checker, the sounds.
+### Part 4 (2f-3): the yard
+- Tests first: the trailers, trucks and cars clear of the van's way to bay 9 and out.
+- Then: trailers at other docks, parked trucks and cars, a yard truck.

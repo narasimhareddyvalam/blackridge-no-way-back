@@ -15,7 +15,8 @@ budgets in CHANGE-BRIEF.md section 8, with a 95% interval from the cycles' sprea
 are read as one (their runs never overlap in time), so an effect measured in two runs pools its
 cycles. Frames a second, from the HUD's present intervals, are shown beside them for reference.
 The bigger depot's cases (game/tests/gpu_price_depot.gd, docs/PHASE_BRIEF.md rule D9: the whole
-shed, D9, and part 2's additions, P2) are read the same way and set against the depot's budget,
+shed, D9, and part 2's additions, P2; #267's racking and its fit-out, RK) are read the same way
+and set against the depot's budget,
 outside the effects' total.
 """
 import re
@@ -24,7 +25,24 @@ import sys
 from datetime import datetime
 
 BUDGETS = {"A1": 0.25, "A2": 0.20, "B1": 0.70, "B2": 0.30}
-DEPOT_BUDGETS = {"D9": 1.5, "P2": 1.5}
+DEPOT_BUDGETS = {"D9": 1.5, "P2": 1.5, "RK": 1.5, "RL": 1.5, "RW": 1.5, "RA": 1.5}
+## #270-#271's lighting options (game/tests/gpu_price_lighting.gd), priced for the author to
+## choose between: each its view's letter (S the shed, A the apron, R the town road) and the
+## option (SH shadows, AO ambient occlusion, IL screen-space bounced light, GI SDFGI, LT the
+## first three together). They have no budget.
+LIGHTING = {view + option: None for view in "SAR" for option in ("SH", "AO", "IL", "GI", "LT")}
+## #273's trial of Rain Puddles V3 as it comes (tools/captures/trial_rain_puddles_v3.gd): A the
+## dock apron, R the town road, D the freight depot's yard.
+LIGHTING.update({view + "V3": None for view in "ARD"})
+## #275's night look, each step added on top of the ones before it
+## (tools/captures/trial_night_look.gd): RF reflections, GL glow, DK darker, HZ haze.
+LIGHTING.update({view + step: None for view in "RAD" for step in ("RF", "GL", "DK", "HZ")})
+## #276's streaks (tools/captures/trial_streaks.gd): R the town lamp, V the valley road's row of
+## lamps; LA lamps like real ones, FR the film rain-roughened, PR the puddles rippled.
+LIGHTING.update({view + step: None for view in "RV" for step in ("LA", "FR", "PR")})
+## #277's puddles (tools/captures/trial_puddles.gd): PD rippled, PV with V3's reflections, PF the
+## reflections across the whole wet film.
+LIGHTING.update({view + step: None for view in "RAD" for step in ("PD", "PV", "PF")})
 TOTAL_BUDGET = 1.45
 HUD = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+) .*metal-HUD: (.*)$")
 BLOCK = re.compile(r"GPU PRICE BLOCK\|(\w+)\|(on|off)\|cycle (\d+)\|time ([\d.]+)-([\d.]+)"
@@ -94,7 +112,7 @@ def main(*paths):
         "95% +/-", "state"))
     print("%-3s %-18s %6s %7s %7s" % ("", "", "", "shown", "hidden"))
     results = {}
-    for effect in {**BUDGETS, **DEPOT_BUDGETS}:
+    for effect in {**BUDGETS, **DEPOT_BUDGETS, **LIGHTING}:
         mine = [b for b in blocks if b["effect"] == effect]
         if not mine:
             continue
@@ -130,6 +148,10 @@ def main(*paths):
     for effect, (price, half, fps_on, fps_off) in results.items():
         budget = BUDGETS.get(effect, DEPOT_BUDGETS.get(effect))
         low, high = price - half, price + half
+        if budget is None:
+            print("%-3s %10.3f %9.3f to %7.3f %8s  %-30s %.1f, %.1f" % (
+                effect, price, low, high, "-", "an option, no budget", fps_on, fps_off))
+            continue
         verdict = ("within" if high <= budget else "over" if low > budget
                    else "not settled at this precision")
         if effect in BUDGETS:

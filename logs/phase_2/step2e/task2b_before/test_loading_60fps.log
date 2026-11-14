@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: the van docked at bay 9 and chocked
+PASS: H8: the shed's side door, beside the drive-in lane, keeps Ethan out while shut (true); the hint offers it (E  Open the door) and E swings it open (95°)
+PASS: H8: inside, the stair climbs from the drive-in lane to the dock floor, Ethan's feet 1.30 m up at its top, and its rail keeps him from stepping off its open side (true)
+PASS: H1: on the deck the hint offers the lift (E  Lower the lift); E lowers it to the van's floor (0.461 m against 0.461), its bridge plate laid on the floor (its edge 0.461 m up at z 20.29), Ethan riding it (his feet 0.46 m)
+PASS: H1: E again raises it flush with the dock floor (1.300 m), its plate stored upright (its edge 1.85 m up), Ethan with it (1.30 m)
+PASS: H9: behind its handle the hint offers the jack (E  Take the pallet jack); E takes it, its forks raising the pallet above them 0.040 m off the floor
+FAIL: H9: pushed toward the next load, the pallet moves (0.01 m, 1°) and stops against it, never through it (1.09 m apart across, 0.00 along)
+PASS: H9: E sets the pallet down on the lift's deck (0.000 m above it) and E again lets go of the jack
+PASS: H1: by the pendant on the deck E lowers the lift (E  Lower the lift), the pallet riding it down to the van's floor (0.461 m against 0.461)
+FAIL: H2: E sets the pallet down in the hold and it goes with the van (at (-0.02, 0.61, 4.65) in the van's frame); pulled back, the jack comes out of the van and E lets go of it (true)
+FAIL: H2: the van settles at the rear axle by the estimate for 520 kg (0.000 m, against 0.026)
+FAIL: H2: at the van's doors E straps the load to the floor rings (E  Close the rear doors; 0 straps)
+FAIL: H1: E at the pendant raises the lift again with the jack on it (0.46 m), the load left in the van
+LOADING RESULT: 8/13 passed; 5 failed
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

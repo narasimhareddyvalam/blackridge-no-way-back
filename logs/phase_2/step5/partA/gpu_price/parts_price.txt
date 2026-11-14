@@ -1,0 +1,12 @@
+HUD lines 182, frames 7684
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+RL  the cross-aisle        27     838     842     19.808     19.417     0.338     3.079  0 particles; nodes toggled 1, rain volumes active 8
+RW  the cross-aisle        30     849     854     20.001     19.829     0.176     0.155  0 particles; nodes toggled 1, rain volumes active 8
+RA  the cross-aisle        30     873     878     19.666     19.400     0.266     0.125  0 particles; nodes toggled 1, rain volumes active 8
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+RL       0.338    -2.742 to   3.417     1.50  not settled at this precision  43.3, 43.4
+RW       0.176     0.021 to   0.330     1.50  within                         39.6, 39.7
+RA       0.266     0.141 to   0.391     1.50  within                         40.9, 41.1

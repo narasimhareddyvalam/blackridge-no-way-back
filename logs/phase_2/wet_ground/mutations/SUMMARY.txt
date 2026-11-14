@@ -1,0 +1,6 @@
+Wet ground mutations (#270-#278), each on an APFS clone, test_wet_ground.gd at 60 fps, diffs beside:
+m1  the apron concrete 0.3 porous, not 0.5           exit 1, 4/5: G1
+m2  the film not reflecting by default                exit 1, 4/5: G2
+m3  the road not telling the shader its place across  exit 1, 4/5: G3
+m4  the apron draining nowhere (reach 0)              exit 1, 4/5: G4
+m5  the lamp haze at its old 0.004                    exit 1, 4/5: G5

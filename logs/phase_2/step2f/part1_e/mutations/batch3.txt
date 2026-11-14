@@ -1,0 +1,5 @@
+mutation_straightens_through_the_roof: exit 1; LOADING RESULT: 24/25 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.020 m/s,
+mutation_hand_not_turned_to_the_bar: exit 1; LOADING RESULT: 24/25 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped round the loop, at most 0.045 m from its tube's middle, a finger's thickness and the
+clone restored byte for byte after each

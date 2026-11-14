@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: Ethan on foot behind the stopped van in the open court, offered the doors (E  Open the rear doors)
+PASS: R3 opening: nothing jumps: a door turns at most 2.5° a frame (at most 4), Ethan moves 0.025 m across and 0.001 m up a frame, his camera 0.025 m
+PASS: R2 opening: no door passes through him: his body is never nearer than 0.379 m to either door's slab (at least 0.27)
+PASS: R6 opening: whenever he moves he plays his walk forward or back at its own pace, his feet not sliding (kept)
+PASS: R1 opening: E sets Ethan to it (true); the right door does not move until his right palm is on its handle, and stays there while he pulls it to 90° (palm at most 0.002 m off it over 125 frames of the pull (at most 0.03))
+PASS: R1 opening: the left door goes only after the right, which is out of its way (225° when the left moves), his left palm on its release first and while he pulls it (palm at most 0.003 m off it over 125 frames of the pull (at most 0.03))
+PASS: R5: let go, the right door swings on by itself, slowing (125°/s at 150°, 75°/s at 250°), and its stay catches it at 270.0° with a bounce of 1.6° (at most 6°)
+PASS: R9 opening: each door sounds as it is worked: its latch freed by his hand, then its stay's knock as it catches it (["release", "release", "stay", "stay"])
+PASS: R4 opening: both doors end on their stays (270.0° and 270.0°); the van counts them open only once both are home (270.0° and 270.0° then); all in 15.9 s (at most 18)
+PASS: R4: a second on, both doors are still held back against the sides by their stays (270.0° and 270.0°), and E now offers to close them (E  Close the rear doors)
+PASS: R3 closing: nothing jumps: a door turns at most 2.4° a frame (at most 4), Ethan moves 0.025 m across and 0.000 m up a frame, his camera 0.025 m
+PASS: R2 closing: no door passes through him: his body is never nearer than 0.291 m to either door's slab (at least 0.27)
+PASS: R6 closing: whenever he moves he plays his walk forward or back at its own pace, his feet not sliding (kept)
+PASS: R8 closing: E sets Ethan to it (true); he takes the left door off its stay first, his hand on it as it moves, and shuts it before the right door leaves its stay (left shut at 9.1 s, right moving at 12.6 s), his hand on the right as it moves
+PASS: R9 closing: each door sounds as it is worked: tugged off its stay, then its latch's clunk as it shuts (["unhook", "latch", "unhook", "latch"])
+PASS: R8 closing: both doors end shut (0.0° and 0.0°), counted shut only once both are (0.0° and 0.0° then), in 19.1 s (at most 24, walking round to each side for its stay); E offers to open them again (E  Open the rear doors)
+REAR DOORS RESULT: 16/16 passed; 0 failed
+WARNING: 19 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

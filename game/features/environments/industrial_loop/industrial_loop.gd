@@ -1,12 +1,16 @@
 extends Node3D
 
 const Build = preload("res://shared/components/mesh_builder.gd")
-const ASPHALT = preload("wet_asphalt.gdshader")
+const ASPHALT = preload("wet_ground.gdshader")
+const RIPPLES = preload("art/wet_ground/ripple_data.png")
 const WALL = preload("industrial_wall.gdshader")
 const DepotDetail = preload("depot_detail.gd")
 const CONCRETE_COLOR = preload("art/concrete_albedo.png")
 const CONCRETE_NORMAL = preload("art/concrete_normal.png")
 const ASPHALT_COLOR = preload("art/asphalt_albedo.png")
+## How porous asphalt is, for its wet darkening (Lagarde: lerp(1, 0.2, porosity)).
+const ASPHALT_POROSITY := 0.7
+const ROAD_PLACE_SCALE := 8.0
 const ASPHALT_NORMAL = preload("art/asphalt_normal.png")
 const RoadsideForest = preload("roadside_forest.gd")
 const ForestFloor = preload("forest_floor.gd")
@@ -72,6 +76,10 @@ const POST_SHADOWS_TO := 45.0
 const HALO_SIZE := 2.4
 const HALO_STRENGTH := 0.8
 const MIST_BELOW := 0.6
+## How much a lamp's light the rain in its cone scatters toward the eye, per metre: four times
+## `lamp_mist.gdshader`'s own 0.004, as heavy rain lights up under a lamp (the author's street
+## photo; kept from the trial, #276).
+const MIST_SCATTERING := 0.016
 const SECURITY_LIGHT := "res://features/environments/depot_yard/polyhaven/models/security_light/" \
 	+ "security_light.gltf"
 const DEPOT_FRONT := 112.5
@@ -207,10 +215,11 @@ func _ground_and_roads() -> void:
 	asphalt.set_shader_parameter("aggregate_normal", _texture("tarred_gravel", "nor_gl"))
 	asphalt.set_shader_parameter("aggregate_arm", _texture("tarred_gravel", "arm"))
 	asphalt.set_shader_parameter("arm_roughness", 1.0)
-	asphalt.set_shader_parameter("damp_gloss", 1.0)
 	asphalt.set_shader_parameter("texture_scale", 1.0 / 2.2)
 	asphalt.set_shader_parameter("crack_amount", 0.0)
 	asphalt.set_shader_parameter("dry_color", Vector3(0.85, 0.85, 0.85))
+	asphalt.set_shader_parameter("rain_ripples", RIPPLES)
+	asphalt.set_shader_parameter("porosity", ASPHALT_POROSITY)
 	_road_strip(0.0, 0.0, asphalt, false)
 	_road_strip(GhatRoad.VERGE, -0.012, _surface("leaf_scattered_gravel", 1.8, false), true)
 	crossing = BusStop.new()
@@ -230,6 +239,9 @@ func _ground_and_roads() -> void:
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
 	yard.set_shader_parameter("aggregate_normal", ASPHALT_NORMAL)
 	yard.set_shader_parameter("dry_color", Vector3(0.48, 0.49, 0.50))
+	yard.set_shader_parameter("rain_ripples", RIPPLES)
+	yard.set_shader_parameter("porosity", ASPHALT_POROSITY)
+	yard.set_shader_parameter("slab", true)
 	_yard_surface = yard
 	_depot_ground(yard)
 
@@ -264,12 +276,14 @@ func _road_strip(extra: float, height: float, surface: Material, solid: bool) ->
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for index in range(count):
 		var next := (index + 1) % count
-		_road_vertex(tool, lefts[index], normals[index])
-		_road_vertex(tool, lefts[next], normals[next])
-		_road_vertex(tool, rights[index], normals[index])
-		_road_vertex(tool, rights[index], normals[index])
-		_road_vertex(tool, lefts[next], normals[next])
-		_road_vertex(tool, rights[next], normals[next])
+		var here := (widths[index] + extra) / ROAD_PLACE_SCALE
+		var there := (widths[next] + extra) / ROAD_PLACE_SCALE
+		_road_vertex(tool, lefts[index], normals[index], Color(0.0, here, 0.0))
+		_road_vertex(tool, lefts[next], normals[next], Color(0.0, there, 0.0))
+		_road_vertex(tool, rights[index], normals[index], Color(1.0, here, 0.0))
+		_road_vertex(tool, rights[index], normals[index], Color(1.0, here, 0.0))
+		_road_vertex(tool, lefts[next], normals[next], Color(0.0, there, 0.0))
+		_road_vertex(tool, rights[next], normals[next], Color(1.0, there, 0.0))
 	if solid:
 		_shoulder(tool, rights, across, 1.0)
 		_shoulder(tool, lefts, across, -1.0)
@@ -300,7 +314,11 @@ func _shoulder(tool: SurfaceTool, edge: PackedVector3Array, across: PackedVector
 		_road_vertex(tool, d, normal_next)
 
 
-func _road_vertex(tool: SurfaceTool, vertex: Vector3, normal: Vector3) -> void:
+## `place`: where across the road the vertex is (red, 0 its left edge, 1 its right) and the road's
+## half width there (green, over ROAD_PLACE_SCALE), for `wet_ground.gdshader`'s drainage.
+func _road_vertex(tool: SurfaceTool, vertex: Vector3, normal: Vector3,
+		place := Color(0.5, 0.0, 0.0)) -> void:
+	tool.set_color(place)
 	tool.set_normal(normal)
 	tool.set_uv(Vector2(vertex.x, vertex.z))
 	tool.add_vertex(vertex)
@@ -820,6 +838,7 @@ func _mist(light: SpotLight3D, depth: float) -> void:
 	air.set_shader_parameter("spot_falloff", light.spot_angle_attenuation)
 	air.set_shader_parameter("light_range", light.spot_range)
 	air.set_shader_parameter("light_decay", light.spot_attenuation)
+	air.set_shader_parameter("scattering", MIST_SCATTERING)
 	air.set_shader_parameter("fade_begin", light.distance_fade_begin
 		if light.distance_fade_enabled else 1.0e6)
 	air.set_shader_parameter("fade_length", light.distance_fade_length)

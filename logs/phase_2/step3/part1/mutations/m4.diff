@@ -1,0 +1,4 @@
+50c50
+< 	seat.add_child(column)
+---
+> 	pass

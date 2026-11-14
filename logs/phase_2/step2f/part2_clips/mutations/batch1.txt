@@ -1,0 +1,14 @@
+mutation_never_the_climb: exit 1; STAIR RESULT: 24/28 passed; 4 failed; fails on its check: True; script error: False
+    FAIL: S12 up: on the flight he climbs as a man climbs a stair, in the captured climb (StairsUp in 0% of its frames, at least 90%)
+    FAIL: S12 running up: on the flight he climbs as a man climbs a stair, in the captured climb (StairsUp in 0% of its frames, at least 90%)
+    FAIL: S1 running up: Ethan walks the stair at a stair's pace, 0.326 m/s across the floor (against 0.833), never stalling (0.281 m/s at the slowest, 0.360 at the fastest), and gets to the landing (true
+    FAIL: S6 running up: his cadence on the stair is a stair's, 76 steps a minute (against 200 ± 10)
+mutation_toes_into_the_tread: exit 1; STAIR RESULT: 25/28 passed; 3 failed; fails on its check: True; script error: False
+    FAIL: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.096 m into one (at most 0.01)
+    FAIL: S5 running up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.084 m into one (at most 0.01)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5] by foot [1, 0, 1, 0, 1
+mutation_camera_eases_in_hard: exit 1; STAIR RESULT: 27/28 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.008 m and his camera 0.021 (at most 0.02), his hips 0.019 (at most 0.020, a walk's)
+mutation_ducks_into_the_handle: exit 1; LOADING RESULT: 26/27 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs all the time he holds it, taking it, pushing, stooped in the van, pulling out, stoppin
+clone restored byte for byte after each

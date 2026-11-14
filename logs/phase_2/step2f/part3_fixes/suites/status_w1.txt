@@ -1,0 +1,12 @@
+first_drive_integration.gd:60:0
+test_rain_physics.gd:60:0
+test_wipers.gd:60:0
+test_collision.gd:60:0
+test_hit_speeds.gd:60:0
+test_mirrors.gd:60:0
+test_bay_nine.gd:60:0
+test_stair.gd:60:0
+test_roof_spill_config.gd:60:0
+test_wiper_flick_state.gd:60:0
+test_exhaust_vapour_state.gd:60:0
+test_night_dimming.gd:144:0

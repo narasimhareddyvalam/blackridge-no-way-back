@@ -1,0 +1,8 @@
+{
+	"destination": "game/features/environments/industrial_loop/art/dock_station",
+	"models": {
+		"metal_office_desk": "1k",
+		"clipboard": "1k",
+		"stationery_supplies": "1k"
+	}
+}

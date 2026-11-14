@@ -5,11 +5,18 @@ extends Node3D
 ## truck docks, the van bay and a drive-in door. Part 2 puts the docks to work: seals, bumpers,
 ## levellers, dock lights and signals; docks 5 and 9 stand open, their doors raised into their
 ## tracks with an arm light inside, and the lit floor behind them holds the staged loads. Step 2d
-## sets bay 9's dock lift in a pit behind its door, with an inside light that the docking turns.
+## sets bay 9's dock lift in a pit behind its door, with an inside light that the docking turns;
+## step 2e cuts a pedestrian door into the east wall, with the stair up to the dock floor inside,
+## and cuts a passage under bay 9's door down to a 0.4 m sill, as wide as the lift's pit, as a van
+## bay with a pit lift inside needs: the lowered deck meets the van's floor through it, and the
+## van's rear meets bumpers on the kerb below it.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Staging = preload("dock_staging.gd")
 const DockLift = preload("dock_lift.gd")
+const DockAccess = preload("dock_access.gd")
+const DockStation = preload("dock_station.gd")
+const Racking = preload("racking.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -27,12 +34,17 @@ const OFFICE_DOOR := Rect2(-89.3, 0.0, 0.95, 2.15)
 const OFFICE_WINDOWS: Array[Rect2] = [Rect2(-87.4, 1.0, 1.5, 1.2), Rect2(-84.6, 1.0, 1.5, 1.2),
 	Rect2(-89.2, 4.4, 1.5, 1.2), Rect2(-86.75, 4.4, 1.5, 1.2), Rect2(-84.3, 4.4, 1.5, 1.2)]
 const WALL := 0.25
+## The drive-in lane's slab: its top flush with the yard's apron outside the door.
+const LANE_TOP := 0.02
+const LANE_SLAB := 0.15
 const PLINTH := 1.0
 const OVERHANG := 0.4
 const ROOF_THICKNESS := 0.15
 const DOWNPIPES: Array[float] = [-89.6, -74.0, -62.0, -54.0, -40.4]
 const OFFICE_GLOW := Color(1.0, 0.93, 0.82)
-const SHUTTER_SCALE := 1.2
+## Poly Haven's file holds a plain shutter and one with graffiti side by side, each 1.08 x 2.4 m;
+## the plain one alone fills the drive-in door, its slats stretched across (#258).
+const SHUTTER_DEPTH := 1.2
 const DOOR_SET_BACK := 0.06
 const SEAL_BASE := 1.15
 const BUMPER := Vector3(0.25, 0.45, 0.13)
@@ -40,6 +52,7 @@ const BUMPER_OFF := 1.1
 const LEVELLER_IN := 1.22
 const LEVELLER_RAISE := 0.01
 const OPEN_DOCKS: Array[int] = [4, 8]
+const CAMERA_WALL_LAYER := 8
 const LIGHT_ABOVE := 0.6
 const DOCK_LIGHT := Color(1.0, 0.96, 0.9)
 const SIGNAL_OFF := 2.0
@@ -48,16 +61,19 @@ const RAISED := 0.35
 const TRACK_INSIDE := 0.34
 const ARM_HEIGHT := 2.1
 const ARM_LIGHT := Color(1.0, 0.97, 0.92)
-const BAY_ROWS: Array[float] = [15.0, 5.0]
+## The staging lanes' row; the racking's aisles have their own lights (`racking.gd`, #267).
+const BAY_ROWS: Array[float] = [15.0]
 const BAY_XS: Array[float] = [-78.0, -70.0, -62.0, -54.0, -46.0]
 const BAY_HEIGHT := 8.4
 const BAY_LIGHT := Color(0.94, 0.97, 1.0)
 const AISLE: Array[float] = [14.0, 10.0]
 const LANE := Color(0.95, 0.75, 0.05)
 const LIFT_PIT := Vector2(1.87, 2.46)
+const VAN_SILL := 0.4
+const VAN_BUMPER := Vector3(0.25, 0.25, 0.13)
+const VAN_BUMPER_OFF := 0.8
 const PIT_FLOOR := 0.05
 const INSIDE_SIGNAL := Vector2(-45.5, 3.0)
-const LIFT_CONTROLS := Vector2(-45.5, 2.3)
 const RED_LIT := Color(1.0, 0.08, 0.04)
 const GREEN_LIT := Color(0.1, 1.0, 0.35)
 const DEPOT_TEXTURES := "res://features/environments/depot_yard/polyhaven/textures/"
@@ -95,6 +111,9 @@ func build(metal: Material) -> void:
 	_doors()
 	_fittings()
 	_lift()
+	_access()
+	_station()
+	_racking()
 	_lights()
 	_signals()
 	_arm_lights()
@@ -114,7 +133,8 @@ func _front() -> void:
 	var centres: Array[float] = DOCKS.duplicate()
 	centres.append(VAN_BAY)
 	for x in centres:
-		docks.append(Rect2(x - DOCK_OPENING.x / 2.0, DOCK_FLOOR, DOCK_OPENING.x, DOCK_OPENING.y))
+		docks.append(_opening(x))
+	docks.append(_passage())
 	docks.append(Rect2(DRIVE_IN - DRIVE_IN_OPENING.x / 2.0, 0.0, DRIVE_IN_OPENING.x,
 		DRIVE_IN_OPENING.y))
 	_wall(office_end, BUILDING.end.x, 0.0, DOCK_FLOOR, face, docks, _concrete)
@@ -127,6 +147,18 @@ func _front() -> void:
 	_slab(pit.end.x, slab_end, back, inside, 0.0)
 	_slab(pit.position.x, pit.end.x, back, pit.position.y, 0.0)
 	_slab(pit.position.x, pit.end.x, pit.position.y, inside, DOCK_FLOOR - PIT_FLOOR)
+	_lane_floor(slab_end)
+
+
+## The drive-in lane's floor (#264): a concrete slab, as a shed's is, from the dock floor's edge
+## to the east wall and on under the drive-in door to the apron, its top flush with the apron's.
+func _lane_floor(from_x: float) -> void:
+	var x1 := BUILDING.end.x - WALL
+	var z0 := BUILDING.position.y + WALL
+	var z1 := BUILDING.end.y
+	var at := Vector3((from_x + x1) / 2.0, LANE_TOP - LANE_SLAB / 2.0, (z0 + z1) / 2.0)
+	var size := Vector3(x1 - from_x, LANE_SLAB, z1 - z0)
+	_piece(at, size, _concrete).name = "LaneFloor"
 
 
 func _slab(x0: float, x1: float, z0: float, z1: float, sunk: float) -> void:
@@ -140,13 +172,38 @@ func _back_and_sides() -> void:
 	var none: Array[Rect2] = []
 	_wall(BUILDING.position.x, BUILDING.end.x, 0.0, PLINTH, back, none, _concrete)
 	_wall(BUILDING.position.x, BUILDING.end.x, PLINTH, EAVES, back, none, _cladding)
+	var door: Array[Rect2] = [DockAccess.DOOR]
 	for x: float in [BUILDING.position.x + WALL / 2.0, BUILDING.end.x - WALL / 2.0]:
-		var depth := BUILDING.size.y - WALL * 2.0
-		_piece(Vector3(x, PLINTH / 2.0, BUILDING.get_center().y), Vector3(WALL, PLINTH, depth),
-			_concrete)
-		_piece(Vector3(x, (PLINTH + EAVES) / 2.0, BUILDING.get_center().y), Vector3(WALL,
-			EAVES - PLINTH, depth), _cladding)
+		var holes: Array[Rect2] = door if x > BUILDING.get_center().x else none
+		var z0 := BUILDING.position.y + WALL
+		var z1 := BUILDING.end.y - WALL
+		_side_wall(x, z0, z1, 0.0, PLINTH, holes, _concrete)
+		_side_wall(x, z0, z1, PLINTH, EAVES, holes, _cladding)
 		_gable(x)
+
+
+## A side wall along z at `x`, from y0 to y1, with `holes` as Rect2(z, y, width, height).
+func _side_wall(x: float, z0: float, z1: float, y0: float, y1: float, holes: Array[Rect2],
+		surface: Material) -> void:
+	var cuts: Array[float] = [z0, z1]
+	for hole in holes:
+		cuts.append(clampf(hole.position.x, z0, z1))
+		cuts.append(clampf(hole.end.x, z0, z1))
+	cuts.sort()
+	for index in range(cuts.size() - 1):
+		var a := cuts[index]
+		var b := cuts[index + 1]
+		if b - a < 0.001:
+			continue
+		var middle := (a + b) / 2.0
+		var spans: Array[Vector2] = [Vector2(y0, y1)]
+		for hole in holes:
+			if middle > hole.position.x and middle < hole.end.x:
+				spans = _without(spans, hole.position.y, hole.end.y)
+		for span in spans:
+			if span.y - span.x > 0.001:
+				_piece(Vector3(x, (span.x + span.y) / 2.0, middle), Vector3(WALL, span.y - span.x,
+					b - a), surface)
 
 
 func _wall(x0: float, x1: float, y0: float, y1: float, z: float, holes: Array[Rect2],
@@ -185,14 +242,15 @@ func _without(spans: Array[Vector2], low: float, high: float) -> Array[Vector2]:
 	return kept
 
 
-func _piece(at: Vector3, size: Vector3, surface: Material) -> void:
-	Build.box(self, at, size, surface)
+func _piece(at: Vector3, size: Vector3, surface: Material) -> MeshInstance3D:
+	var drawn := Build.box(self, at, size, surface)
 	var shape := BoxShape3D.new()
 	shape.size = size
 	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	collision.position = at
 	_body.add_child(collision)
+	return drawn
 
 
 func _gable(x: float) -> void:
@@ -308,13 +366,17 @@ func _fittings() -> void:
 	centres.append(VAN_BAY)
 	for index in range(centres.size()):
 		var x := centres[index]
+		var van_bay := index == DOCKS.size()
 		var pads := seal.instantiate() as Node3D
 		pads.name = "DockSeal%d" % (index + 1)
 		pads.position = Vector3(x, SEAL_BASE, BUILDING.end.y)
 		add_child(pads)
+		var size := VAN_BUMPER if van_bay else BUMPER
+		var off := VAN_BUMPER_OFF if van_bay else BUMPER_OFF
+		var top := VAN_SILL if van_bay else DOCK_FLOOR
 		for side: float in [-1.0, 1.0]:
-			Build.box(self, Vector3(x + side * BUMPER_OFF, DOCK_FLOOR - BUMPER.y / 2.0,
-				BUILDING.end.y + BUMPER.z / 2.0), BUMPER, rubber, true).name = "DockBumper"
+			Build.box(self, Vector3(x + side * off, top - size.y / 2.0,
+				BUILDING.end.y + size.z / 2.0), size, rubber, true).name = "DockBumper"
 		if index < DOCKS.size():
 			var deck := leveller.instantiate() as Node3D
 			deck.name = "DockLeveller%d" % (index + 1)
@@ -322,11 +384,13 @@ func _fittings() -> void:
 				BUILDING.end.y - WALL - LEVELLER_IN)
 			add_child(deck)
 			deck.position.z += BUILDING.end.y - WALL - 0.01 - _box_in(deck).end.z
-	var west := OFFICE.end.x
-	var east := DRIVE_IN - DRIVE_IN_OPENING.x / 2.0
-	Build.box(self, Vector3((west + east) / 2.0, DOCK_FLOOR - 0.03, BUILDING.end.y + 0.01),
-		Vector3(east - west, 0.06, 0.02), Build.material(Color(0.86, 0.66, 0.08), 0.5)) \
-		.name = "DockEdge"
+	var paint := Build.material(Color(0.86, 0.66, 0.08), 0.5)
+	var bay := _passage()
+	for run: Vector3 in [Vector3(OFFICE.end.x, bay.position.x, DOCK_FLOOR),
+			Vector3(bay.end.x, DRIVE_IN - DRIVE_IN_OPENING.x / 2.0, DOCK_FLOOR),
+			Vector3(bay.position.x, bay.end.x, VAN_SILL)]:
+		Build.box(self, Vector3((run.x + run.y) / 2.0, run.z - 0.03, BUILDING.end.y + 0.01),
+			Vector3(run.y - run.x, 0.06, 0.02), paint).name = "DockEdge"
 
 
 func _lights() -> void:
@@ -394,24 +458,33 @@ func _show(housing: Node3D, green: bool) -> void:
 		else _green_off
 
 
+func _access() -> void:
+	var access := DockAccess.new()
+	access.name = "DockAccess"
+	add_child(access)
+	access.build(_concrete, Build.material(Color(0.34, 0.4, 0.45), 0.5))
+
+
+func _racking() -> void:
+	var racking := Racking.new()
+	racking.name = "Racking"
+	add_child(racking)
+	racking.build()
+
+
+func _station() -> void:
+	var station := DockStation.new()
+	station.name = "DockStation"
+	add_child(station)
+	station.build()
+
+
 func _lift() -> void:
 	var lift := DockLift.new()
 	lift.name = "DockLift9"
 	lift.position = Vector3(VAN_BAY, DOCK_FLOOR, BUILDING.end.y - WALL - LIFT_PIT.y / 2.0)
 	add_child(lift)
 	lift.build()
-	var casing := Build.material(Color(0.95, 0.75, 0.05), 0.5)
-	var controls := Build.box(self, Vector3(LIFT_CONTROLS.x, DOCK_FLOOR + LIFT_CONTROLS.y,
-		BUILDING.end.y - WALL - 0.04), Vector3(0.16, 0.26, 0.08), casing)
-	controls.name = "DockLiftControls"
-	var button := Build.material(Color(0.06, 0.06, 0.06), 0.5)
-	for height: float in [0.06, -0.01]:
-		Build.box(controls, Vector3(0.0, height, -0.045), Vector3(0.05, 0.05, 0.012), button) \
-			.name = "Button"
-	var stop := Build.cylinder(controls, Vector3(0.0, -0.085, -0.05), 0.025, 0.02,
-		Build.material(Color(0.75, 0.05, 0.03), 0.5))
-	stop.rotation.x = PI / 2.0
-	stop.name = "EmergencyStop"
 
 
 func _box_in(node: Node3D) -> AABB:
@@ -430,9 +503,17 @@ func _doors() -> void:
 		var door := _door("DockDoor%d" % (index + 1), DockDoor.instantiate() as Node3D,
 			Vector3(_dock_x(index), DOCK_FLOOR, face), DOCK_OPENING, not open)
 		if open:
-			_raise(door)
+			_raise(door, DOCK_OPENING.y)
+			_camera_wall(index)
 	var shutter := (load(SHUTTERS + "rollershutter_door.gltf") as PackedScene).instantiate() as Node3D
-	shutter.scale = Vector3.ONE * SHUTTER_SCALE
+	var plain := shutter.get_node("rollershutter_door") as MeshInstance3D
+	for found in shutter.get_children():
+		if found != plain:
+			shutter.remove_child(found)
+			found.free()
+	var leaf := plain.get_aabb()
+	shutter.scale = Vector3(DRIVE_IN_OPENING.x / leaf.size.x, DRIVE_IN_OPENING.y / leaf.size.y,
+		SHUTTER_DEPTH)
 	var holder := _door("DriveInDoor", shutter, Vector3(DRIVE_IN, 0.0, face), DRIVE_IN_OPENING)
 	var fitted := AABB()
 	for found in shutter.find_children("*", "MeshInstance3D", true, false):
@@ -465,12 +546,42 @@ func _door(name: String, model: Node3D, at: Vector3, opening: Vector2,
 	return holder
 
 
+## A wall only Ethan's camera meets, across the open dock door `index` and, at bay 9, the
+## passage under it, so that his camera never backs through it into the dark behind the dock's
+## face; nothing else, the van, the jack or Ethan, meets it (#257).
+func _camera_wall(index: int) -> void:
+	var opening := _opening(_dock_x(index))
+	if index >= DOCKS.size():
+		opening = opening.merge(_passage())
+	var shape := BoxShape3D.new()
+	shape.size = Vector3(opening.size.x, opening.size.y, 0.05)
+	var collision := CollisionShape3D.new()
+	collision.shape = shape
+	var body := StaticBody3D.new()
+	body.name = "CameraWall%d" % (index + 1)
+	body.collision_layer = CAMERA_WALL_LAYER
+	body.collision_mask = 0
+	body.position = Vector3(opening.get_center().x, opening.get_center().y, BUILDING.end.y)
+	body.add_child(collision)
+	add_child(body)
+
+
 func _dock_x(index: int) -> float:
 	return DOCKS[index] if index < DOCKS.size() else VAN_BAY
 
 
-func _raise(holder: Node3D) -> void:
-	var head := DOCK_OPENING.y + RAISED
+func _opening(x: float) -> Rect2:
+	return Rect2(x - DOCK_OPENING.x / 2.0, DOCK_FLOOR, DOCK_OPENING.x, DOCK_OPENING.y)
+
+
+## The passage under bay 9's door, as wide as the lift's pit, from the van sill to the dock floor.
+func _passage() -> Rect2:
+	return Rect2(VAN_BAY - LIFT_PIT.x / 2.0, VAN_SILL, LIFT_PIT.x, DOCK_FLOOR - VAN_SILL)
+
+
+func _raise(holder: Node3D, height: float) -> void:
+	var head := height + RAISED
+	var sill := holder.position.y
 	var panel := holder.get_child(0) as Node3D
 	panel.rotation.x = -PI / 2.0
 	panel.position = Vector3(0.0, head, -TRACK_INSIDE)
@@ -479,12 +590,12 @@ func _raise(holder: Node3D) -> void:
 	var inside := BUILDING.end.y - WALL - 0.06
 	for side: float in [-1.0, 1.0]:
 		var edge := x + side * (DOCK_OPENING.x / 2.0 + 0.05)
-		Build.box(self, Vector3(edge, DOCK_FLOOR + head / 2.0, inside), Vector3(0.05, head, 0.08),
+		Build.box(self, Vector3(edge, sill + head / 2.0, inside), Vector3(0.05, head, 0.08),
 			steel).name = "DoorTrack"
-		var length := DOCK_OPENING.y + TRACK_INSIDE
-		Build.box(self, Vector3(edge, DOCK_FLOOR + head, inside - length / 2.0), Vector3(0.05,
+		var length := height + TRACK_INSIDE
+		Build.box(self, Vector3(edge, sill + head, inside - length / 2.0), Vector3(0.05,
 			0.08, length), steel).name = "DoorTrack"
-	Build.box(self, Vector3(x, DOCK_FLOOR + head + 0.25, inside), Vector3(DOCK_OPENING.x + 0.3,
+	Build.box(self, Vector3(x, sill + head + 0.25, inside), Vector3(DOCK_OPENING.x + 0.3,
 		0.06, 0.06), steel).name = "DoorSpringShaft"
 
 

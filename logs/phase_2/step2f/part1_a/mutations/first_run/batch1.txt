@@ -1,0 +1,35 @@
+mutation_steps_without_incline: exit 1; STAIR RESULT: 10/17 passed; 7 failed; fails on its check: True; script error: False
+    FAIL: S1 up: Ethan walks the stair at a stair's pace, 0.000 m/s across the floor (against 0.355), never stalling (0.000 m/s at the slowest, inf at the fastest), and gets to the landing (false, 0.00 m 
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot 
+    FAIL: S1 down: Ethan walks the stair at a stair's pace, 0.000 m/s across the floor (against 0.542), never stalling (0.000 m/s at the slowest, inf at the fastest), and gets to the lane (true, 0.00 m up
+    FAIL: S3 down: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 4 plants
+    FAIL: S4 down: one tread a step, his feet taking turns: the steps he plants on [1, 0, 0, 0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [1, 0, 1, 0]
+    FAIL: S6 down: his cadence on the stair is a stair's, 0 steps a minute (against 117 ± 10)
+    FAIL: S10: W let go halfway up (false) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 
+mutation_steps_up_slopes: exit 1; STAIR RESULT: 16/17 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S9: up a 20° slope he walks along it without stepping up: his body, hips and camera rise at most 0.137 m a frame (at most 0.02), 0.60 m up at its top
+mutation_pushed_down_the_incline: exit 1; STAIR RESULT: 10/17 passed; 7 failed; fails on its check: True; script error: False
+    FAIL: S1 up: Ethan walks the stair at a stair's pace, 0.065 m/s across the floor (against 0.355), never stalling (0.016 m/s at the slowest, 0.067 at the fastest), and gets to the landing (false, 0.51 
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 1, 2, 1, 2, 3, 2, 3, 2, 3, 4, 3, 4, 3, 4, 5] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot 
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.007 m, his camera 0.204 and his hips 0.022 (at most 0.02)
+    FAIL: S3 down: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 5 plants
+    FAIL: S4 down: one tread a step, his feet taking turns: the steps he plants on [4, 3, 2, 1, 0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [0, 1, 0, 1, 0]
+    FAIL: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.023 m into one (at most 0.01)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 1, 2, 3, 2, 3, 2, 3, 4, 3, 4, 3
+mutation_no_stair_given: exit 1; STAIR RESULT: 5/17 passed; 12 failed; fails on its check: True; script error: False
+    FAIL: S1 up: Ethan walks the stair at a stair's pace, 0.954 m/s across the floor (against 0.355), never stalling (0.950 m/s at the slowest, 1.476 at the fastest), and gets to the landing (true, 1.30 m
+    FAIL: S3 up: each planted foot stands on its step: its sole at most 0.001 m off the step under it (at most 0.03), its toes at most -0.021 m into a step (at most 0.01), over 1 plants
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0] (wanted [1, 2, 3, 4, 5, 6], the floor 0 and the landing 7), by foot [0]
+    FAIL: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.211 m into one (at most 0.01)
+    FAIL: S6 up: his cadence on the stair is a stair's, 0 steps a minute (against 76 ± 10)
+    FAIL: S1 down: Ethan walks the stair at a stair's pace, 1.713 m/s across the floor (against 0.542), never stalling (1.705 m/s at the slowest, 1.736 at the fastest), and gets to the lane (true, 0.00 m 
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.019 m, his camera 0.036 and his hips 0.027 (at most 0.02)
+    FAIL: S3 down: each planted foot stands on its step: its sole at most 0.001 m off the step under it (at most 0.03), its toes at most -0.021 m into a step (at most 0.01), over 1 plants
+    FAIL: S4 down: one tread a step, his feet taking turns: the steps he plants on [0] (wanted [6, 5, 4, 3, 2, 1], the floor 0 and the landing 7), by foot [0]
+    FAIL: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.200 m into one (at most 0.01)
+    FAIL: S6 down: his cadence on the stair is a stair's, 0 steps a minute (against 117 ± 10)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [3, 3] by foot [0, 1]; no foot at most
+mutation_walk_rate_up_the_stair: exit 1; STAIR RESULT: 15/17 passed; 2 failed; fails on its check: True; script error: False
+    FAIL: S1 up: Ethan walks the stair at a stair's pace, 0.538 m/s across the floor (against 0.355), never stalling (0.433 m/s at the slowest, 0.556 at the fastest), and gets to the landing (true, 1.30 m
+    FAIL: S6 up: his cadence on the stair is a stair's, 115 steps a minute (against 76 ± 10)
+clone restored byte for byte after each
