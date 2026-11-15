@@ -6784,3 +6784,147 @@ and no gas station: the town is backdrop blocks from z 207.
   in front and beside are blocked by the stair's wall and the dock's edge.
 - **Unverified:** the look in motion beyond the stills; the stair's 70° going down, for the author's
   eye.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253: the depot dressed, the rest; part D, the shed's floor, written before any code)
+
+- **Status:** written before any code, at the author's word (#292-#293: "skip my checks to last").
+  **Waiting for the author's OK.** Values marked † are Claude Code's proposals from the research
+  below, for the author to accept or change. The author's own checks (#287, step 4) move to the
+  end.
+- **What is left of step 2f's list** (mapped 2026-11-15). Already built: the racking, its stock,
+  guards, boards and aisle lines, the joists, liner, ducts, sprinkler mains and aisle lights (part
+  A); the dock signals outside and bay 9's inside, dock and arm lights, the staged loads, empties,
+  a parked forklift and a jack (`dock_staging.gd`); the dock desk (step 3). Not built: anything on
+  the floor itself, the heaters, fans, cable trays, door numbers, the dock doors' control panels,
+  the notice board, time clock and posters, the safety kit (extinguishers, exit signs, mirrors,
+  first aid, eyewash and spill kit), the work kit (charging station, wrap stand, hand trucks,
+  bins, baler), the walkway crossings and signs, the forklift driver and the checker, the shed's
+  sounds, and the yard's trailers, trucks and cars.
+- **The parts, in order †,** each with its tests first, mutations, every suite, stills from
+  where Ethan stands and the author's OK before the next:
+  - **D, the floor** (below);
+  - **E, overhead and on the walls:** unit heaters, high-volume low-speed fans clear of the
+    sprinklers, cable trays, each door's number large above it and its control panel, the notice
+    board, time clock and posters by the side door;
+  - **F, the safety and work kit:** as step 2f-2's list, extinguishers within 22.9 m of every
+    point of the dock floor, an exit sign over each exit;
+  - **G, the shed at work:** the forklift driver's loop with its blue spot and backup alarm,
+    stopping for Ethan, the checker at bay 9, and the sounds (forklift, alarm, fans, rain on the
+    roof, a radio);
+  - **H, the yard:** trailers backed onto other docks, trucks and cars parked, a yard truck (#227).
+
+### Part D: the shed's floor
+
+- **What exists:** the dock floor is one slab drawn in Poly Haven's `concrete_wall_006`, a wall
+  texture, tiled every 2.5 m, with no joints, wear or water; yellow lane lines at z 10 and 14 and
+  between the docks, the racking's aisle lines and walkway. The drive-in lane is the same.
+- **Research** (sources go in the prompt log with the build):
+  - **Joints:** ACI 302.1R and 360R space a slab's sawn contraction joints 24-36 times its
+    thickness, so 12-18 ft (3.7-5.5 m) for a 6 in slab, in panels no longer than 1.5 times their
+    width, lined up with the building's grid; sawn a quarter of the slab deep and about 1/8 in
+    (3 mm) wide, and, where hard forklift wheels cross them, filled flush with a semi-rigid
+    epoxy or polyurea, so they read as thin dark grey lines, not open cracks. A dock's commonest
+    defect is spalling along joints under wheel traffic, mended with grey epoxy patches.
+  - **The finish:** a warehouse floor is power-trowelled, smoother and shinier than a wall, and
+    burnished darker and glossier along the wheel paths.
+  - **Wear:** dark tyre marks along the forklift lanes and where trucks turn into aisles; rubber
+    scuffs and steel-wheel marks at each dock's leveller, where the edge angle is worn bright;
+    oil drips under a parked forklift (its drip spot); in rain, water blown in at an open door
+    and wet wheel tracks and footprints carried a few metres inside, drying as they go.
+- **Joint layout †:** joints between the docks, every 4.0 m in x (the docks' own spacing, inside
+  ACI's 3.7-5.5 m), and every 4.0 m in z from the dock face, so the panels are square; none
+  through the lift's pit or deck. In the drive-in lane, one joint along its middle.
+- **How it is drawn † (the author's choice; Claude Code recommends the first):**
+  1. **A floor map in the floor's own material (recommended):** a new shader beside
+     `wet_ground.gdshader` in `industrial_loop/` (not `game/shaders/`), drawing Poly Haven's
+     `concrete_floor_worn_001`, a floor texture already in the repo, as the base, and over it a
+     map of the dock floor drawn by a script (`tools/art/make_shed_floor.py`, as the textures'
+     scripts are): the joints, patches, burnished paths, tyre marks, scuffs, oil and the water's
+     reach, by world position. Nothing is projected, so nothing lands on Ethan, the jack, the
+     pallets or the van; one material, so it costs about what the slab costs now.
+  2. **Godot's `Decal` nodes**, as step 2f's brief first said: each mark a decal box. But every
+     moving thing here is on visual layer 1, which the van's lights need (`CHANGE-BRIEF.md` §5),
+     so decals would paint the soles of Ethan's shoes and the jack's wheels as they cross them;
+     keeping them off means changing those layers.
+- **Water at the doors †:** the wet reach a darker, glossier floor 2.0 m in from docks 5 and 9 and
+  the side door, then wet tracks fading out by 6 m; puddles only where the floor dips, at the
+  doors, not across the lanes; the wet film drawn as `wet_ground.gdshader` draws the apron's
+  (Lagarde's wet surfaces), with no ripples indoors.
+- **Rules a test can measure** (new `test_shed_floor.gd`, written first):
+  - **F1:** the dock floor and the lane use the new floor material; the slab's collision and
+    height are unchanged (the shapes and tops read before and after match).
+  - **F2:** every joint lies inside the dock floor or the lane, the spacings are 3.7-5.5 m both
+    ways, each panel's long side at most 1.5 times its short side, and no joint crosses the lift's
+    pit or deck.
+  - **F3:** tyre marks lie only on the forklift's ways (the cross-aisle between z 10 and 14 and
+    the racking's aisles), never on the white walkway or the staging lanes' loads.
+  - **F4:** oil lies only under the parked forklift's footprint (`dock_staging.gd`'s `FORKLIFT`).
+  - **F5:** scuffs lie only within 1.5 m of a dock's leveller or the lift's deck.
+  - **F6:** wetness lies only within 6 m of an open door and falls off inward.
+  - **F7:** the map is the script's: rebuilt, it comes out byte for byte the same.
+  - The marks are read from the map's own data (`marks()`), the way the racking hands out
+    `placements()`, since a headless run draws nothing.
+- **The GPU price †:** at most 0.3 ms more in the racking's view (RK) and at bay 9, on power, by
+  `game/tests/gpu_price_depot.gd` and the Metal HUD.
+- **Predictions:** the floor reads as a working dock from where Ethan stands, its joints visible
+  out to about 15 m and lost beyond; the wet reach at bay 9 shows the dock light's reflection;
+  the price about 0.1 ms; the most likely failure is the joints shimmering at a distance (caught
+  in the stills; the map's mipmaps are its cure).
+- **What could go wrong, and the check:** a mark under a load or the desk, where nothing would
+  wear (F3-F5); the floor's height or collision moved and the stair or jack tests failing (F1 and
+  every suite); the shader too dear (the GPU run); the floor too clean or too dirty (the author's
+  eye in the stills).
+- **Decisions for the author:** the order D-H; the floor map or decals; the 4.0 m joints; the
+  wet reach; the 0.3 ms budget.
+- **Not in this part:** anything standing on the floor (parts E-H), the yard's own concrete, new
+  mechanics.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253, part D: the shed's floor (#293-#294), built)
+
+- **The floor** (new `shed_floor.gd`, `shed_floor.gdshader`, both in `industrial_loop/`): the
+  dock floor's three slab pieces round the lift's pit (`DockFloor1`-`3`) and the drive-in lane
+  (`LaneFloor`) drawn in one shader material, Poly Haven's `concrete_floor_worn_001` (already in
+  the repo, CC0) projected from above, its edges from the side; the pit's own floor stays in the
+  wall concrete. Over it, four maps of 1,336 x 944 pixels (32 to a metre) the script paints when
+  the shed is built (about 32 ms), mipmapped: grime, gloss, wet and patch.
+- **Changed from the plan:**
+  - the map is painted by the game's own script at start rather than by a separate tool, so it
+    reads the racking's and the shed's constants and cannot fall out of step with them; F7 checks
+    that it comes out the same every time;
+  - the lane, 4.45 m wide, needs no joint along its middle (ACI's 5.5 m); it has the dock floor's
+    joints across it instead, in line with them;
+  - the x joints run every 4.0 m from -78 to -50 and the last panel to the lane is 5.3 m, so no
+    joint is 1.3 m from the edge; the z joints split the 29.5 m depth into seven 4.21 m panels;
+  - no separate puddles: the floor 0-2 m in from an open door is wet through (0.6-0.9), which is
+    standing water's darkening and gloss at this scale.
+- **The marks:** tyre marks and burnished paths along the cross-aisle (wheels 0.96 m apart, four
+  passes each), a 2 m turn into each of the six aisles and down it, the east aisle's kept off the
+  walkway; rubber scuffs in the metre before each of the eight levellers and the lift's deck; oil
+  under the parked forklift, today's drip and five older; sixteen epoxy repairs, each cut square
+  along its joint (0.2-0.5 x 0.08-0.16 m) where wheels cross, in the slab's own shade; rain in
+  from dock 5, bay 9 and the side door, the wheel tracks and the footprints to the stair drying
+  out by 6 m. Nothing under a load, the empty pallets, the desk, its chair or the stair.
+- **Found in the stills:** the floor first came out near black and glossy: Godot imports a
+  normal map as one, keeping only its x and y, so the shader read z as 0 and the floor faced
+  down; z is now rebuilt from x and y. The first patches were a fixed grey four times brighter
+  than this concrete and round, so they glowed as white blurs; now square, in the slab's shade.
+  The first scuffs were too faint (0.15-0.35); now 0.3-0.6.
+- **Rules:** new `test_shed_floor.gd` F0-F8, 18 checks: before any code 0/1 (no floor), then
+  18/18 (`logs/phase_2/step5/partD/before/`, `after/`). Thirteen mutations exit 1 on their own
+  checks (`mutations/SUMMARY.txt`, `mutations_partD.py`); on the way, d4 found the test's F3
+  message crashing when a mark did stray (fixed) and d8's first form was a parse error (redone).
+  `test_mission_two.gd` E11 asked the lane for a standard material's albedo texture; it now also
+  takes the floor's shader over its concrete texture (`_textured()`), and d13 (the lane
+  untextured) still fails it. Every suite on the final code, `bash
+  logs/phase_2/step5/partD/suites/run_suites.sh <scratch>`: 44 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`; the first run, before E11 was taught, in `suites/first_run/`).
+  The headless import exits 0 with the three new `.uid` sidecars, the real save folder unchanged.
+- **Not yet:** the GPU price (new cases FL and FB in `game/tests/gpu_price_depot.gd`, budget
+  0.3 ms in `tools/tests/gpu_price.py`): the author chose to price once, on power, after the
+  whole of Mission 2 is done (#296), not part by part. The stills were taken on battery.
+- **Stills:** `captures/shed_floor/partD/` and the floor before, `captures/shed_floor/before/`
+  (`tools/captures/capture_shed_floor.gd`): along the cross-aisle, the forklift, in from bay 9
+  and dock 5, before the levellers, down aisle 03, in from the side door, from high.
+- **Unverified:** the look in motion; the wet floor shows as darker, damp concrete but without
+  reflections (the shed has no screen-space reflections), and the footprints do not read one by
+  one; the oil is hidden under the forklift, as it would be.

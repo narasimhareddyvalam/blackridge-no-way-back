@@ -434,6 +434,15 @@ func _check_ground(shed: Node3D, world: Node3D) -> void:
 		sloping, unheld])
 
 
+## Whether a slab is drawn in a textured concrete: a material with its albedo texture, or the
+## shed's floor (`shed_floor.gd`, step 5 of #253, part D), a shader over its concrete texture.
+func _textured(paint: Material) -> bool:
+	if paint is BaseMaterial3D:
+		return (paint as BaseMaterial3D).albedo_texture != null
+	return paint is ShaderMaterial \
+		and (paint as ShaderMaterial).get_shader_parameter("floor_color") is Texture2D
+
+
 ## E11: the drive-in lane is floored, as a shed's is, with a concrete slab, never the hill's dirt:
 ## at every point of a 0.5 m grid over it a ray down from just above the apron's height (below
 ## anything standing on the floor, such as the dock stair) meets the shed's own body at that
@@ -467,10 +476,9 @@ func _check_lane_floor(shed: Node3D) -> void:
 			var drawn := false
 			for slab in slabs:
 				var box := slab.global_transform * slab.get_aabb()
-				var paint := slab.get_active_material(0) as BaseMaterial3D
 				if Rect2(box.position.x, box.position.z, box.size.x, box.size.z).has_point(
-						Vector2(x, z)) and absf(box.end.y - APRON_TOP) < 0.005 and paint != null \
-						and paint.albedo_texture != null:
+						Vector2(x, z)) and absf(box.end.y - APRON_TOP) < 0.005 \
+						and _textured(slab.get_active_material(0)):
 					drawn = true
 			if not drawn:
 				undrawn += 1

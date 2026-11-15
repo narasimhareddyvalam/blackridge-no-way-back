@@ -1,0 +1,70 @@
+d1  joints twice ACI's spacing           test_shed_floor.gd exit 1, 16/18 passed; 2 failed
+      FAIL: F2: joints 3.7-5.5 m apart both ways (across [8.00, 8.00, 8.00, 8.00, 5.30], along [4.21, 4.21, 4.21, 4.21, 4.
+      FAIL: F2: every panel at most 1.5:1 (worst 1.90)
+d2  a joint through the lift's pit       test_shed_floor.gd exit 1, 15/18 passed; 3 failed
+      FAIL: F2: 21 joints, every one on the dock floor or the lane, none across the lift's pit
+      FAIL: F2: joints 3.7-5.5 m apart both ways (across [4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 2.25, 3.05], alo
+      FAIL: F2: every panel at most 1.5:1 (worst 1.87)
+d3  patches off the joints               test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F2: 48 epoxy patches, each on a joint (within 0.10 m)
+d4  tyre marks over the walkway          test_shed_floor.gd exit 0, 18/18 passed; 0 failed
+d5  oil beyond the forklift              test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F4: 6 oil drips, all under the parked forklift
+d6  scuffs far from the levellers        test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F5: 442 scuffs, each within 1.5 m of a leveller or the lift's deck
+d7  tracks that never dry                test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F6: the floor dries inward: mean wetness 0-2 m 0.75, 2-4 m 0.74, 4-6 m 0.75
+d8  marks under the loads                test_shed_floor.gd exit 1, 0/1 passed; 1 failed
+      FAIL: F0: the shed has its floor (Building/ShedFloor) handing out its marks and joints
+d9  an unseeded draw                     test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F7: painted again, the floor's four maps and its marks come out the same
+d10  maps without mipmaps                 test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F7: each map carries its mipmaps, so the marks do not shimmer far off
+d11  the lane in plain concrete           test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F1: the dock floor's three pieces round the pit and the lane are drawn in the floor's own material (4 pieces)
+d12  the material missing a joint         test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F2: the material draws the joints the floor hands out
+
+Rerun (d4 was too mild at -45.0, its tracks only reaching the walkway line; d8 left an empty loop, a parse error):
+d4  tyre marks over the walkway          test_shed_floor.gd exit 0, 16/16 passed; 0 failed
+d8  marks under the loads                test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F8: every mark on the floor, none under a load, the empty pallets, the desk, its chair, the stair or in the li
+
+Rerun of d4 after the test's F3 message was fixed (it printed strays as format arguments, a SCRIPT ERROR that this runner, unlike run-test.sh, did not fail on):
+d4  tyre marks over the walkway          test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F3: 15172 tyre marks, all on the forklift's ways, none on the walkway, the staging lanes or a rack row ["(-44.
+
+d13, after test_mission_two.gd E11 learned the floor shader:
+d13  the lane untextured (E11 taught the floor) test_mission_two.gd exit 1, 54/55 passed; 1 failed
+      FAIL: E11: the drive-in lane inside the shed is a concrete slab flush with the apron, 0.02 m up, never the hill's di
+
+After the stills (patches cut square along their joint, in the slab's shade; scuffs stronger), d3 on the new patch code and every mutation again:
+d1  joints twice ACI's spacing           test_shed_floor.gd exit 1, 16/18 passed; 2 failed
+      FAIL: F2: joints 3.7-5.5 m apart both ways (across [8.00, 8.00, 8.00, 8.00, 5.30], along [4.21, 4.21, 4.21, 4.21, 4.
+      FAIL: F2: every panel at most 1.5:1 (worst 1.90)
+d2  a joint through the lift's pit       test_shed_floor.gd exit 1, 15/18 passed; 3 failed
+      FAIL: F2: 21 joints, every one on the dock floor or the lane, none across the lift's pit
+      FAIL: F2: joints 3.7-5.5 m apart both ways (across [4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 2.25, 3.05], alo
+      FAIL: F2: every panel at most 1.5:1 (worst 1.87)
+d3  patches off the joints               test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F2: 16 epoxy patches, each on a joint (within 0.10 m)
+d4  tyre marks over the walkway          test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F3: 15172 tyre marks, all on the forklift's ways, none on the walkway, the staging lanes or a rack row ["(-44.
+d5  oil beyond the forklift              test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F4: 6 oil drips, all under the parked forklift
+d6  scuffs far from the levellers        test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F5: 442 scuffs, each within 1.5 m of a leveller or the lift's deck
+d7  tracks that never dry                test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F6: the floor dries inward: mean wetness 0-2 m 0.75, 2-4 m 0.74, 4-6 m 0.75
+d8  marks under the loads                test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F8: every mark on the floor, none under a load, the empty pallets, the desk, its chair, the stair or in the li
+d9  an unseeded draw                     test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F7: painted again, the floor's four maps and its marks come out the same
+d10  maps without mipmaps                 test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F7: each map carries its mipmaps, so the marks do not shimmer far off
+d11  the lane in plain concrete           test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F1: the dock floor's three pieces round the pit and the lane are drawn in the floor's own material (4 pieces)
+d12  the material missing a joint         test_shed_floor.gd exit 1, 17/18 passed; 1 failed
+      FAIL: F2: the material draws the joints the floor hands out
+d13  the lane untextured (E11 taught the floor) test_mission_two.gd exit 1, 54/55 passed; 1 failed
+      FAIL: E11: the drive-in lane inside the shed is a concrete slab flush with the apron, 0.02 m up, never the hill's di

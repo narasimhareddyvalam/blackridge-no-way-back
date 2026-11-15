@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d4/game/features/environments/industrial_loop/shed_floor.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:51:25
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d4/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:52:25
+@@ -55,7 +55,7 @@
+ const WHEELS := 0.48
+ const TURN := 2.0
+ const AISLE_DEPTH := -8.0
+-const WALKWAY_WEST := -46.6
++const WALKWAY_WEST := -43.5
+ const TYRE := 0.09
+ const BURNISH := 0.35
+ const NEAR_WET := 2.0

@@ -4084,8 +4084,46 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (Recommended)": two commits on `develop`, labelled (agent), not pushed, step 4's strap
        stills left unfilmed.
 
+292. **What comes next**
+     - **The author's message:** "whats next?"
+     - **Answered** from `HANDOFF.md` and the brief: the author's checks of #287 and step 4 (stills
+       and a play), the Mixamo walking climb, step 4's strap stills, then step 5 of #253 (the
+       depot dressed: step 2f's parts 2-4, part A's racking already built), then Mission 2's
+       steps 3-8 (S1, S2, S4 and S5 still open); nothing started.
+
+293. **The author's checks to last; part D's plan**
+     - **The author's message:** "skip my checks to last."
+     - **Done:** the author's checks of #287 and step 4 moved to the end; what step 2f's list still
+       lacks mapped; part D, the shed's floor, written before any code in `docs/PHASE_BRIEF.md`
+       (its last revision), with parts E-H after it; waiting for the author's OK. Nothing built.
+
+294. **Part D: the floor painted into its own material**
+     - **Asked** how the floor's joints, wear and water are drawn; **the author chose** "Painted
+       into the floor (Recommended)": a floor material with a map drawn by a script, nothing
+       projected. Part D to be built as written, tests first.
+
+295. **Why the GPU price every time**
+     - **The author's message:** "what are we doing graphics cost everytime for?"
+     - **Answered:** why each part has been priced (the frame's budget on the Mac, headless runs
+       cannot price drawing, the depot's racking already at its 1.5 ms); that the floor is cheap
+       by construction; offered to price once at the end of step 5 instead. Waiting.
+
+296. **The GPU price after the whole mission**
+     - **The author's message:** "lets do it after entire mission is done"
+     - **Decided:** no GPU price per part; one windowed run (on power) once Mission 2 is finished,
+       over every part since the last price, the cases FL and FB among them. Part D's floor stays
+       unpriced until then.
+
+297. **Part D committed; part E's plan**
+     - **Asked** what next; **the author chose** "Commit, then plan E (Recommended)": part D
+       committed on `develop`, labelled (agent), not pushed; then part E written before any code
+       for the author's OK.
+
 ## Waiting for the author
 
+- Step 5 of #253, part D (#294): the shed's floor built and committed (#297), not pushed; the author's look at
+  `captures/shed_floor/partD/` beside `before/` (with the author's other checks, at the end);
+  its GPU price with the whole mission's (#296); then part E.
 - #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
   the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).

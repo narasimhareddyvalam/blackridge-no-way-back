@@ -13,6 +13,9 @@ extends SceneTree
 ## mains), seen from the cross-aisle inside the shed; and its parts alone, to find what costs:
 ## RL its aisle lights and fixtures, RW its stretch film, RA its frames and decks (each deck's
 ## mesh cut out; the frames' slots cut out too until #267 drew them solid).
+## FL and FB (step 5 of #253, part D): the shed's floor in its own material (`shed_floor.gd`)
+## against the plain concrete it replaced, swapped on the dock floor's pieces and the lane, from
+## the racking's view in the cross-aisle (FL) and looking into bay 9 (FB).
 ## `-- --only=P2 --cycles=40` measures one
 ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
 
@@ -22,6 +25,8 @@ const BLOCK := 1.0
 const SKIP := 0.3
 const VIEW := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
 const INSIDE := [Vector3(-50.0, 3.2, 12.0), Vector3(-68.0, 3.4, 1.0), 60.0]
+const BAY_NINE := [Vector3(-48.6, 2.9, 12.8), Vector3(-47.8, 1.3, 18.6), 60.0]
+const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "LaneFloor"]
 const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
 	"RA": ["Frames", "Decks"]}
 const PART_TWO := ["DockSeal", "DockBumper", "DockLeveller", "DockEdge", "DockLight", "DockSignal",
@@ -70,7 +75,9 @@ func _run() -> void:
 	print("GPU PRICE: window %s, vsync %s, MetalFX scale %.2f" % [root.get_visible_rect().size,
 		DisplayServer.window_get_vsync_mode(), root.scaling_3d_scale])
 	for case: String in chosen:
-		var view: Array = INSIDE if case.begins_with("R") else VIEW
+		var view: Array = INSIDE if case.begins_with("R") or case == "FL" else VIEW
+		if case == "FB":
+			view = BAY_NINE
 		_camera.fov = view[2]
 		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
 		await _wait(1.0)
@@ -89,7 +96,8 @@ func _alternate(case: String) -> void:
 			var ended := Time.get_unix_time_from_system()
 			print("GPU PRICE BLOCK|%s|%s|cycle %d|time %.3f-%.3f|skip %.2f|particles %d|%s|%s"
 				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
-				"the cross-aisle" if case.begins_with("R") else "the court",
+				"the cross-aisle" if case.begins_with("R") or case == "FL" else ("bay 9"
+				if case == "FB" else "the court"),
 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
 				int(_rain.call("active_count"))]])
 	_show(case, true)
@@ -102,6 +110,12 @@ func _show(case: String, shown: bool) -> void:
 		return
 	if case == "RK":
 		(_shed.get_node("Building/Racking") as Node3D).visible = shown
+		return
+	if case == "FL" or case == "FB":
+		var building := _shed.get_node("Building")
+		for piece: String in FLOOR_PIECES:
+			(building.get_node(piece) as MeshInstance3D).material_override = \
+				building.get("_floor") if shown else building.get("_concrete")
 		return
 	if RACK_PARTS.has(case):
 		for found in _shed.get_node("Building/Racking").get_children():

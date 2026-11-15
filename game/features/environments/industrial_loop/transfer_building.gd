@@ -17,6 +17,7 @@ const DockLift = preload("dock_lift.gd")
 const DockAccess = preload("dock_access.gd")
 const DockStation = preload("dock_station.gd")
 const Racking = preload("racking.gd")
+const ShedFloor = preload("shed_floor.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -83,6 +84,7 @@ const ART := "res://features/environments/industrial_loop/art/depot/"
 var _body: StaticBody3D
 var _cladding: ORMMaterial3D
 var _concrete: ORMMaterial3D
+var _floor: ShaderMaterial
 var _iron: ORMMaterial3D
 var _interior := Build.material(Color("d6d1c4"), 0.85)
 var _glass := StandardMaterial3D.new()
@@ -96,6 +98,10 @@ func build(metal: Material) -> void:
 	_cladding = _surface(DEPOT_TEXTURES, "box_profile_metal_sheet", "2k", 2.0)
 	_cladding.albedo_texture = load(ART + "cladding_grey_diff_2k.jpg")
 	_concrete = _surface(DEPOT_TEXTURES, "concrete_wall_006", "2k", 2.5)
+	var shed_floor := ShedFloor.new()
+	shed_floor.name = "ShedFloor"
+	add_child(shed_floor)
+	_floor = shed_floor.material
 	_iron = _surface(LOOP_TEXTURES, "corrugated_iron", "1k", 1.12)
 	_glass.albedo_color = Color(0.55, 0.64, 0.68, 0.3)
 	_glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
@@ -143,10 +149,11 @@ func _front() -> void:
 	var back := BUILDING.position.y + WALL
 	var inside := BUILDING.end.y - WALL
 	var pit := Rect2(VAN_BAY - LIFT_PIT.x / 2.0, inside - LIFT_PIT.y, LIFT_PIT.x, LIFT_PIT.y)
-	_slab(office_end, pit.position.x, back, inside, 0.0)
-	_slab(pit.end.x, slab_end, back, inside, 0.0)
-	_slab(pit.position.x, pit.end.x, back, pit.position.y, 0.0)
-	_slab(pit.position.x, pit.end.x, pit.position.y, inside, DOCK_FLOOR - PIT_FLOOR)
+	_slab(office_end, pit.position.x, back, inside, 0.0).name = "DockFloor1"
+	_slab(pit.end.x, slab_end, back, inside, 0.0).name = "DockFloor2"
+	_slab(pit.position.x, pit.end.x, back, pit.position.y, 0.0).name = "DockFloor3"
+	_slab(pit.position.x, pit.end.x, pit.position.y, inside, DOCK_FLOOR - PIT_FLOOR).name = \
+		"PitFloor"
 	_lane_floor(slab_end)
 
 
@@ -158,13 +165,15 @@ func _lane_floor(from_x: float) -> void:
 	var z1 := BUILDING.end.y
 	var at := Vector3((from_x + x1) / 2.0, LANE_TOP - LANE_SLAB / 2.0, (z0 + z1) / 2.0)
 	var size := Vector3(x1 - from_x, LANE_SLAB, z1 - z0)
-	_piece(at, size, _concrete).name = "LaneFloor"
+	_piece(at, size, _floor).name = "LaneFloor"
 
 
-func _slab(x0: float, x1: float, z0: float, z1: float, sunk: float) -> void:
+## A piece of the dock floor's slab, in the floor's own material (`shed_floor.gd`); the pit's
+## floor, `sunk` below it, in plain concrete.
+func _slab(x0: float, x1: float, z0: float, z1: float, sunk: float) -> MeshInstance3D:
 	var top := DOCK_FLOOR - sunk
-	_piece(Vector3((x0 + x1) / 2.0, top / 2.0, (z0 + z1) / 2.0), Vector3(x1 - x0, top, z1 - z0),
-		_concrete)
+	return _piece(Vector3((x0 + x1) / 2.0, top / 2.0, (z0 + z1) / 2.0), Vector3(x1 - x0, top,
+		z1 - z0), _concrete if sunk > 0.0 else _floor)
 
 
 func _back_and_sides() -> void:
