@@ -4086,10 +4086,10 @@ tag `a5`. Pictures the author approved or rejected are filed in
 
 ## Waiting for the author
 
-- #287 (C66): the docking and Ethan's legs fixed, not committed; the author's look at
-  `captures/docking/fixed/` and `captures/legs/fixed/` and a play; whether to commit them with step 4;
+- #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
+  the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).
-- Step 4 (#286, C65): built, not committed (#288 put #287 first), its strap stills not filmed; the author's look at the
+- Step 4 (#286, C65): committed (`866fbab`, not pushed), its strap stills not filmed; the author's look at the
   stills (`captures/loading/step4/`) and a play of the loading: holding E at the pendant,
   pumping the jack, strapping by hand, and whether the beep and the jack's sounds are right.
 - Step 2f (#243–#248): part 1 built, with A (smooth on foot), B (the rear doors by Ethan) and C
