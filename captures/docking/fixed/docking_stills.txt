@@ -1,0 +1,12 @@
+01_reverse_at_3.00_m: the game's view in reverse, reverse_at_3.00_m, the bay's verdict 
+02_reverse_at_1.00_m: the game's view in reverse, reverse_at_1.00_m, the bay's verdict 
+03_reverse_at_0.30_m: the game's view in reverse, reverse_at_0.30_m, the bay's verdict far
+04_reverse_at_0.10_m: the game's view in reverse, reverse_at_0.10_m, the bay's verdict docked
+05_reverse_at_0.00_m: the game's view in reverse, reverse_at_0.00_m, the bay's verdict docked
+06_reverse_at_the_line_turned_1.5_degrees: the game's view in reverse, reverse_at_the_line_turned_1.5_degrees, the bay's verdict docked
+07_dash_screen_at_1.00_m: the dash screen's picture
+08_plate_on_the_sill_along_the_deck: from (-46.95, 1.15, 18.9) looking at (-47.75, 0.55, 20.7)
+09_plate_on_the_sill_from_the_dock: from (-46.5, 2.7, 18.4) looking at (-47.75, 0.85, 20.7)
+10_docked_from_the_court: from (-44.2, 2.2, 26.5) looking at (-47.75, 1.0, 20.5)
+11_loaded_plate_on_the_sill_along_the_deck: from (-46.95, 1.15, 18.9) looking at (-47.75, 0.55, 20.7)
+12_loaded_plate_on_the_sill_from_the_dock: from (-46.5, 2.7, 18.4) looking at (-47.75, 0.85, 20.7)

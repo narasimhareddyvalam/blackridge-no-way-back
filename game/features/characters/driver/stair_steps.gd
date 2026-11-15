@@ -10,6 +10,10 @@ extends RefCounted
 ## its hidden incline at the stair's pace (`kept_pace()`, `climb()`). Going up the flight he
 ## climbs in Mixamo's captured climb (#253-#254), `clip()`, at a stair's cadence walking and at
 ## its own captured cadence running, his feet set on the treads in its rhythm as in his walk's.
+## Walking across the flight his feet step on across it where he is going, a foot needing no new
+## tread in turn, the climb only going up it; and
+## off the flight, on the floor or the landing, walking any way but along it, the stair lets his
+## feet go to his walk (#287).
 
 const FPS := 30.0
 const CYCLE := 31.0
@@ -39,17 +43,29 @@ const LEAVE := 0.5
 const BLEND_RATE := 1.0 / 0.3
 const SYNC := 1.5
 const SYNC_MOST := 0.2
-const LIFT_UP := 0.04
 const LIFT_DOWN := 0.03
+## Going up: how far a swinging foot rises above the tread ahead to clear it, and by when in its
+## swing it has done so and has risen the rest; going down: when it starts down, out over its own
+## nosing.
+const CLEAR_UP := 0.03
+const UP_FIRST := 0.4
+const UP_REST := 0.7
+const DOWN_FROM := 0.35
 const SETTLE_RATE := 1.0 / 0.3
 const DROP_RATE := 7.0
 const DROP_MOST := 0.35
-const STAIR_BEND := 0.05
+const STAIR_BEND := 0.0
 const REACH := 0.81
 const SOLE_FALL := 0.543
 const HEEL_UP_FALL := 1.3
 const STANCE_SLACK := 0.008
 const REACH_RATE := 0.6
+## How much of his walking must go along the flight for the stair to set his feet off it, and
+## for him to climb or for his feet to take treads in turn.
+const ALONG := 0.5
+## His hips' ground set between his feet's treads (0 the lower, 1 the higher), as a man on a stair
+## keeps his hips between his feet; his legs' reach lowers them further if the lower one needs it.
+const BETWEEN := 0.5
 
 var stair: Dictionary = {}
 var hurry := false
@@ -73,6 +89,7 @@ var _settled := 0.0
 var _drop_speed := 0.0
 var _reach_drop := 0.0
 var _was_yaw := NAN
+var _heading := Vector3.ZERO
 
 
 func active() -> bool:
@@ -97,6 +114,16 @@ func near(on: Dictionary, at: Vector3) -> bool:
 	var s := _along(on, at)
 	var off := absf((at - (on["foot"] as Vector3)).dot(on["across"]))
 	return s > -APPROACH and s < _flight(on) + LEAVE and off < float(on["width"]) / 2.0
+
+
+## Whether, off the flight on the floor or the landing, he walks any way but along it, so that
+## his walk, not the stair, sets his feet.
+func leaving(at: Vector3) -> bool:
+	if _heading == Vector3.ZERO:
+		return false
+	var s := _along(stair, at)
+	var off_flight := s < 0.0 or s > _flight(stair)
+	return off_flight and absf(_heading.dot(stair["up"])) < ALONG
 
 
 ## His feet start to be set on `on`'s treads, from where his ankles are (`feet`), walking along
@@ -160,8 +187,9 @@ func _cadence() -> float:
 ## clip taken up at that foot's own landing (`entry`), so that both feet keep their step.
 func _choose_gait(at: Vector3) -> void:
 	var s := _along(stair, at)
-	var wanted := CLIMB_GAIT if sense > 0 and s > CLIMB_FROM and s < _flight(stair) + CLIMB_TO \
-		else WALK_GAIT
+	var up_it := _heading.length_squared() < 0.01 or _heading.dot(stair["up"]) > ALONG
+	var wanted := CLIMB_GAIT if sense > 0 and up_it and s > CLIMB_FROM \
+		and s < _flight(stair) + CLIMB_TO else WALK_GAIT
 	if wanted == gait:
 		_pending = {}
 	elif _was_frame < 0.0:
@@ -271,7 +299,9 @@ func _leaves_floor() -> float:
 ## his hips' joints, before his legs' IK (`ankle_watch.gd`), over his model's `ground`.
 func step(at: Vector3, facing: Vector3, frame: float, walking: bool, heading: Vector3,
 		animated: Array[Vector3], hips: Array[Vector3], ground: float, delta: float) -> void:
-	var inside := near(stair, at)
+	_heading = Vector3(heading.x, 0.0, heading.z).normalized() if walking \
+		and heading.length_squared() > 0.01 else Vector3.ZERO
+	var inside := near(stair, at) and not leaving(at)
 	influence = move_toward(influence, 1.0 if inside else 0.0, BLEND_RATE * delta)
 	if walking and heading.length_squared() > 0.01:
 		var along := heading.dot(stair["up"])
@@ -301,7 +331,7 @@ func step(at: Vector3, facing: Vector3, frame: float, walking: bool, heading: Ve
 		falls[side] = _fall(side, frame, walking)
 		var lifted := maxf(animated[side].y - ground - ANKLE_UP - STANCE_SLACK, 0.0) \
 			if bool(gait["lifted"]) else _heel_up(side)
-		targets[side] = (_arc(side) if _swinging[side] else _holds[side]) + Vector3.UP * lifted
+		targets[side] = _arc(side) if _swinging[side] else _holds[side] + Vector3.UP * lifted
 	if walking:
 		_first = -1
 	_was_frame = frame if walking else -1.0
@@ -329,16 +359,21 @@ func _turn_with(at: Vector3, facing: Vector3) -> void:
 ## turned.
 func _lift(side: int, at: Vector3, frame: float) -> void:
 	var to_strike := _frames_until(frame, _strikes()[side]) / (FPS * rate())
-	var wanted := _along(stair, at) + sense * (pace() * to_strike + AHEAD)
+	var up: Vector3 = stair["up"]
+	var going := _heading if _heading != Vector3.ZERO else up * sense
+	var along_it := absf(going.dot(up)) >= ALONG
+	var hip := Vector3(at.x, 0.0, at.z) + _left(up * sense) * SIDES[side]
+	var aim := hip + going * (pace() * to_strike + AHEAD) if _heading != Vector3.ZERO \
+		or along_it else hip
+	var wanted := _along(stair, aim)
 	var chosen := _foothold(wanted)
 	var other := _steps[1 - side]
-	if int(chosen.x) == other and other > 0 and other < int(stair["risers"]):
+	if along_it and int(chosen.x) == other and other > 0 and other < int(stair["risers"]):
 		chosen = Vector2(other + sense, _place(other + sense, wanted))
 	_froms[side] = targets[side]
 	_lift_falls[side] = falls[side]
 	_steps[side] = int(chosen.x)
-	var point := Vector3(at.x, 0.0, at.z) + _left((stair["up"] as Vector3) * sense) * SIDES[side]
-	point += (stair["up"] as Vector3) * (chosen.y - _along(stair, point))
+	var point := aim + up * (chosen.y - wanted)
 	point.y = (stair["foot"] as Vector3).y + _top(int(chosen.x)) + ANKLE_UP
 	_holds[side] = point
 	_swinging[side] = true
@@ -379,31 +414,32 @@ func _place(index: int, wanted: float) -> float:
 	return index * tread - HEEL_BACK - TOE_ROOM
 
 
-## Where the foot `side` is on its swing: going up it rises first, its toes clear of the riser
-## they stood against, and then goes on over the nosing; going down it goes out over the nosing first and then down; on the level it lifts a
-## little as his walk's foot does.
+## Where the foot `side` is on its swing, rising or falling only as much as clears the steps it
+## passes, as a real foot does (#287): going up it rises first, a riser and a little, clear of the
+## tread ahead, while hardly moving on, then the rest by the next riser, and goes on over to land;
+## going down it goes out over its own nosing first and then down; on the level it lifts a little
+## as his walk's foot does.
 func _arc(side: int) -> Vector3:
 	var u := _swing[side]
 	var from := _froms[side]
 	var to := _holds[side]
 	var rise := to.y - from.y
+	var riser: float = stair["rise"]
 	var going: float
-	var lifting: float
-	var lift: float
+	var height: float
 	if rise > 0.02:
 		going = smoothstep(0.3, 1.0, u)
-		lifting = smoothstep(0.0, 0.55, u)
-		lift = LIFT_UP
+		var first := minf(rise, riser + CLEAR_UP)
+		height = from.y + first * smoothstep(0.0, UP_FIRST, u) \
+			+ (rise - first) * smoothstep(UP_FIRST, UP_REST, u)
 	elif rise < -0.02:
 		going = smoothstep(0.0, 0.75, u)
-		lifting = smoothstep(0.35, 1.0, u)
-		lift = LIFT_DOWN
+		height = lerpf(from.y, to.y, smoothstep(DOWN_FROM, 1.0, u)) + LIFT_DOWN * sin(PI * u)
 	else:
 		going = smoothstep(0.0, 1.0, u)
-		lifting = u
-		lift = 0.0
+		height = lerpf(from.y, to.y, u)
 	var point := Vector3(from.x, 0.0, from.z).lerp(Vector3(to.x, 0.0, to.z), going)
-	point.y = lerpf(from.y, to.y, lifting) + lift * sin(PI * u)
+	point.y = height
 	return point
 
 
@@ -428,22 +464,25 @@ func _fall(side: int, frame: float, walking: bool) -> float:
 		_strikes()[side], _lifts()[side])))
 
 
-## His hips lowered, smoothly, to his standing foot's tread, or, as a foot goes down to a lower
-## tread, down with it ahead of its landing, his knees a little more bent on the flight; and,
+## His hips lowered, smoothly, to between his feet's treads, following a foot going down to a lower
+## tread ahead of its landing, his knees a little more bent on the flight; and,
 ## quickly but never at a jump, by as much more as a standing leg could not reach its foot.
 func _lower_hips(at: Vector3, hips: Array[Vector3], delta: float) -> void:
 	var lowest := INF
+	var highest := -INF
 	for side in range(2):
 		var under := _holds[side].y
 		if _swinging[side]:
 			under = lerpf(_froms[side].y, _holds[side].y, smoothstep(0.0, 0.8, _swing[side]))
 			under = maxf(under, minf(_froms[side].y, _holds[side].y))
 		lowest = minf(lowest, under - ANKLE_UP)
+		highest = maxf(highest, under - ANKLE_UP)
+	var between := lerpf(lowest, highest, BETWEEN)
 	var tread: float = stair["tread"]
 	var s := _along(stair, at)
 	var on_flight := clampf((s + tread) / tread, 0.0, 1.0) \
 		* clampf((_flight(stair) + tread - s) / tread, 0.0, 1.0)
-	var wanted := (clampf(at.y - riding_above(at) - lowest, 0.0, DROP_MOST)
+	var wanted := (clampf(at.y - riding_above(at) - between, 0.0, DROP_MOST)
 		+ STAIR_BEND * on_flight) * influence
 	_drop_speed += (DROP_RATE * DROP_RATE * (wanted - _settled) - 2.0 * DROP_RATE
 		* _drop_speed) * delta

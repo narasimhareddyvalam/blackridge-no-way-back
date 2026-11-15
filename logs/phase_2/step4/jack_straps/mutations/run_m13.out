@@ -1,0 +1,8 @@
+Step 4 (2 and 3) mutations, each on an APFS clone, test_loading.gd at 60 fps:
+m13  strapped after the first strap                          exit 1, 32/33 passed; 1 failed
+      FAIL: H20: the hold has 6 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Hook the str
+m14  no lashing rings in the hold                            exit 1, 32/33 passed; 1 failed
+      FAIL: H20: the hold has 0 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Hook the str
+m15  he pushes from where he pumped, never stepping in       exit 1, 31/33 passed; 2 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+      FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped 

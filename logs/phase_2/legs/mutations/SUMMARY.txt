@@ -1,0 +1,19 @@
+Legs mutations (#287, steps 4-6), each on an APFS clone, its tests at 60 fps:
+l3  the climb plays walking across the flight        test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S14 walking across the flight his feet stay his own: the left at least -0.284 m to his left of the right (neve
+l7  the climbing foot up to the next tread at once   test_stair.gd exit 1, 31/33 passed; 2 failed
+      FAIL: S3 up: each planted foot stands on its step: its sole at most 0.217 m off the step under it (at most 0.03), it
+      FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 6, 6] (w
+l8  no foot kept on its own side                     test_on_foot.gd exit 1, 49/50 passed; 1 failed
+      FAIL: Walking and running each foot stays on its own side, its ankle at least 0.04 m from his hips' middle line ({ "
+    test_loading.gd exit 1, 34/35 passed; 1 failed
+      FAIL: H22: pushing on the dock, stooped in the hold and pulling out, each foot stays on its own side, its ankle at l
+l4  the crouch keeps stale ankles                    test_loading.gd exit 1, 33/35 passed; 2 failed
+      FAIL: H22: pushing on the dock, stooped in the hold and pulling out, each foot stays on its own side, its ankle at l
+      FAIL: H21: all the time he holds the jack, on the dock and stooped in the hold, each foot stays under him, at most 0
+l5  the swinging foot lifted by the walk on top of its arc test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S16 down the flight his knees bend at most to 48° (at least 68°, 179 frames)
+l6  his hips lowered to the lower foot               test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S16 down the flight his knees bend at most to 61° (at least 68°, 179 frames)
+l2  the stair keeps his feet walking across off the flight test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S15 from the stair's top along the landing his feet stay his own: the left at least 0.038 m to his left of the

@@ -1,0 +1,28 @@
+Step 4 (2 and 3) mutations, each on an APFS clone, test_loading.gd at 60 fps (run in three groups at once):
+m10  the pallet dropped at once                              exit 1, 32/33 passed; 1 failed
+      FAIL: H19: E opens the lowering valve: the pallet sinks slowly (0.040 m up, 0.000 m after 0.4 s), the oil hissing ba
+m11  no pause at neutral after the last stroke               exit 1, 24/33 passed; 9 failed
+      FAIL: H2: behind the handle again E takes the jack (E  Take the pallet jack) and pushes the pallet into the van, wal
+      FAIL: H2: under the van's low roof Ethan stoops (1.80 m tall, against 1.80 standing) in Pushing's own lean, his clip
+      FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Idle held, false; his toes at
+      FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (3.737 m from it), between t
+      FAIL: H20: the hold has 6 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Take the pal
+      FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (false), never Pushing pl
+      FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.000
+      FAIL: H1: E at the pendant raises the lift again with the jack on it (1.30 m), the load left in the van
+      FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped 
+m12  a strap thrown and hooked in one go                     exit 1, 32/33 passed; 1 failed
+      FAIL: H20: the hold has 6 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Hook the str
+m13  strapped after the first strap                          exit 1, 32/33 passed; 1 failed
+      FAIL: H20: the hold has 6 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Hook the str
+m14  no lashing rings in the hold                            exit 1, 32/33 passed; 1 failed
+      FAIL: H20: the hold has 0 lashing rings in its floor by its walls; strapping by hand, the hint offers ["Hook the str
+m15  he pushes from where he pumped, never stepping in       exit 1, 31/33 passed; 2 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+      FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped 
+m7  one stroke lifts the load                               exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+m8  the handle does not rock as he pumps                    exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+m9  W rolls the pallet still on the floor                   exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand

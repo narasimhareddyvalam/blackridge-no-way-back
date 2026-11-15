@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutJack/m7/m8/game/features/environments/industrial_loop/pallet_jack.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-14 17:10:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutJack/m7/m8/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-14 17:12:48
+@@ -599,7 +599,7 @@
+ 		tilt = clampf(atan2(_reach - grip.x - TILLER_FOOT.y, grip.y - TILLER_FOOT.x), 0.0,
+ 			TILT_MOST)
+ 	if _stroke >= 0.0:
+-		_tiller.rotation.x = maxf(tilt - _pump_depth * sin(PI * _stroke / STROKE), 0.0)
++		_tiller.rotation.x = tilt
+ 	else:
+ 		_tiller.rotation.x = move_toward(_tiller.rotation.x, tilt, TILT_RATE * delta)
+ 	_steering.rotation.y = move_toward(_steering.rotation.y, -steer * STEER_SWING,

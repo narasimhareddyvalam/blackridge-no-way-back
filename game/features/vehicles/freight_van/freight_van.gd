@@ -404,9 +404,21 @@ func unload() -> void:
 	rear_doors_open = false
 
 
-## Where a bridge plate laid into the hold rests on its rear sill, in the world.
+## Where a bridge plate laid into the hold rests on its rear sill, in the world, on the body as
+## it stands, settled under its load (#287).
 func sill() -> Vector3:
-	return to_global(VanHold.SILL)
+	return _visual.to_global(VanHold.SILL)
+
+
+## A point of the hold (`local`, in the van's frame) where the body puts it, settled under its
+## load and following the ground.
+func floor_point(local: Vector3) -> Vector3:
+	return _visual.to_global(local)
+
+
+## The van's body as drawn, which its hold and a load in it ride with.
+func body() -> Node3D:
+	return _visual
 
 
 ## A load of `kg` set down `at_z` along the van (its frame), so its weight sits where it stands.

@@ -19,6 +19,7 @@ const SWUNG := 250.0
 const WALL_BESIDE := Vector3(1.4, 1.25, 1.6)
 const VAN_REAR := Vector3(0.0, 1.0, 3.01)
 const BUMPERS := 20.13
+const VanBay = preload("res://features/environments/industrial_loop/van_bay.gd")
 const CHOCK_SPOT := Vector3(-0.872, 0.15, 1.48)
 const BY_THE_WHEEL := Vector3(-1.5, 0.0, 1.5)
 const GENTLE := 1.0
@@ -210,7 +211,7 @@ func _check_docking() -> void:
 		and fast_said.contains("fast") and fast_green,
 		("G5: arriving at %.1f m/s, it is no docking; bay 9 stays green and the objective names "
 		+ "the speed (%s)") % [fast["arrived"], fast_said])
-	_check(good["gap"] <= 0.3 and good["angle"] <= 3.0 and good["offset"] <= 0.1
+	_check(good["gap"] <= VanBay.DOCKED_WITHIN and good["angle"] <= 3.0 and good["offset"] <= 0.1
 		and good["arrived"] <= 1.4 and good_said.begins_with("CHOCK THE WHEEL") and _bay_green(),
 		("G4: backed on slowly with the doors open, the van docks: its rear %.2f m from the "
 		+ "bumpers, %.1f° from square, %.2f m off the centre line, arrived at %.1f m/s; the "

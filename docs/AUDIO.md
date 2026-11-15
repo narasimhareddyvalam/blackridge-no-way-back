@@ -39,6 +39,21 @@ recordings of a real vehicle, and have no third-party asset source.
 | `door_latch.wav` | A rear door's latch: a 96 Hz thud, the bolt's rattle, a metal ring near 1.9 and 2.7 kHz and the catch's second click (added 2026-11-12, step 2f part 1 B, #247) | 0.4 s | One shot as a door shuts; quieter as its handle frees the latch |
 | `door_stay.wav` | A rear door's stay on the van's side: a softer 74 Hz knock and a click (added 2026-11-12, step 2f part 1 B, #247) | 0.35 s | One shot as the stay catches a door folded back; quieter as Ethan tugs it off |
 
+### The loading sounds (Phase 2, step 4, #286)
+
+The five WAV files in `game/features/audio/loading/` were synthesized on 2026-11-14 by
+`source_assets/audio/loading/synthesize.py`, the same way and format as the first drive's: mono,
+16-bit PCM at 22,050 Hz, no third-party source, provisional like the rest. Each plays from a 3D
+player at its source, the lift's or the pallet jack's, on the Ambience bus with the rain.
+
+| File | Role | Source duration | Playback intent |
+| --- | --- | --- | --- |
+| `lift_beep.wav` | The dock lift's motion alarm: a piezo beep at 2.8 kHz, 0.3 s on and 0.3 s off | 0.6 s | Loop while the lift moves (its import loops forward) |
+| `jack_pump.wav` | One stroke of the pallet jack's handle: a creak, the piston's 95 Hz knock and the check valve's click | 0.5 s | One shot per stroke |
+| `jack_lower.wav` | The jack's lowering valve opened: oil hissing back, dying away | 1.2 s | One shot as a load is let down |
+| `strap_hook.wav` | A strap's steel hook snapped into a floor ring | 0.2 s | One shot per hook |
+| `ratchet_click.wav` | One pull of a ratchet strap: its pawl over three teeth, each a little higher | 0.32 s | One shot per pull |
+
 These files can be opened individually for audition. The in-game mix has Master,
 Vehicle, Ambience, and Music sliders under Settings, reached from the title screen or the pause
 menu (Run 34). While the title screen waits, the rain and the music keep playing. Headless checks

@@ -6,6 +6,7 @@ const StairSteps = preload("res://features/characters/driver/stair_steps.gd")
 const FeetFlat = preload("res://features/characters/driver/feet_flat.gd")
 const AnkleWatch = preload("res://features/characters/driver/ankle_watch.gd")
 const HandleClear = preload("res://features/characters/driver/handle_clear.gd")
+const Stance = preload("res://features/characters/driver/stance.gd")
 const HandGrip = preload("res://features/characters/driver/hand_grip.gd")
 const WALK_SPEED := 1.705
 const RUN_SPEED := 4.535
@@ -133,6 +134,7 @@ var _ankles: Array[int] = []
 var _soles: FeetFlat
 var _watch: AnkleWatch
 var _handle_clear: HandleClear
+var _stance: Stance
 var _crouch := 0.0
 var _fingers: HandGrip
 var _glide := 0.0
@@ -168,6 +170,10 @@ func _ready() -> void:
 	_player = _model.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
 	_skeleton = _model.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
 	_player.play("Idle")
+	_stance = Stance.new()
+	_stance.name = "FeetOnOwnSides"
+	_stance.player = _player
+	_skeleton.add_child(_stance)
 	_handle_clear = HandleClear.new()
 	_handle_clear.name = "BackClearOfHandle"
 	_skeleton.add_child(_handle_clear)
@@ -457,6 +463,11 @@ func push_grip() -> Vector2:
 
 
 ## How fully his hands hold what he pushes, 0 to 1.
+## Up to the handle he stood back from to pump the jack (#286).
+func push_step_in() -> void:
+	_gait.step_in()
+
+
 func hands_on_handle() -> float:
 	return _hold.influence
 
@@ -718,6 +729,8 @@ func _crouch_under_roof(delta: float) -> void:
 	_crouch = move_toward(_crouch, wanted, CROUCH_RATE * delta)
 	_model.position.y = _glide - _crouch
 	_watch.active = _crouch > 0.0
+	if not _watch.active:
+		_watch.seen = false
 	if _crouch <= 0.0 or not _watch.seen:
 		_legs.active = false
 		_legs.influence = 0.0

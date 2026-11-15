@@ -1,0 +1,14 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d4/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-14 18:13:16
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d4/game/features/vehicles/freight_van/van_presentation.gd	2026-11-14 18:15:09
+@@ -59,8 +59,8 @@
+ const REVERSE_GAIN := 3.0
+ ## The reversing camera on the roof's rear edge, where the Daily's sits in its third brake
+ ## light, tilted 45° down so its bumper shows along the picture's bottom (#287).
+-const REVERSE_CAMERA := Vector3(0, 2.22, 2.84)
+-const REVERSE_TURN := Vector3(-PI / 4.0, PI, 0)
++const REVERSE_CAMERA := Vector3(0, 2.15, 3.0)
++const REVERSE_TURN := Vector3(-0.28, PI, 0)
+ const REVERSE_FIELD := 85.0
+ const TAIL_GLOW := Vector2(0.25, 1.0)
+ const TAIL_GLOW_RANGE := 5.0

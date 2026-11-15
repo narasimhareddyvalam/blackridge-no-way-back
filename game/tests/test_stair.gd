@@ -60,9 +60,23 @@ const WALL_BEHIND := 1.0
 const SQUEEZED := 1.0
 const EASE_TICK := 0.12
 const OUT_AGAIN := 3.2
+const MID_FLIGHT := Vector3(-44.2, 0.0, 14.75)
+const ACROSS_TO := Vector3(-42.5, 0.0, 14.75)
+const ALONG_LANDING := Vector3(-45.6, 0.0, 13.4)
+const SIDE_APART := 0.05
+const SHINS_APART := 0.09
+const UNDER_HIM := 0.5
+const SETTLING := 0.3
+## On an ordinary stair (risers 0.17-0.18 m) knees bend to about 80-90° (inside angle) as a foot
+## swings; this dock stair's 0.217 m risers bend them further going down, the trailing foot clearing
+## its own nosing before it drops (70° measured, #287); going up, the captured climb's own knee
+## reaches 63°, which the stair must not bend further.
+const KNEE_DOWN_LEAST := 68.0
+const KNEE_UP_LEAST := 58.0
 const BONES := ["mixamorig_Hips", "mixamorig_LeftFoot", "mixamorig_RightFoot",
 	"mixamorig_LeftToeBase", "mixamorig_RightToeBase", "mixamorig_LeftToe_End",
-	"mixamorig_RightToe_End", "mixamorig_LeftUpLeg", "mixamorig_RightUpLeg"]
+	"mixamorig_RightToe_End", "mixamorig_LeftUpLeg", "mixamorig_RightUpLeg",
+	"mixamorig_LeftLeg", "mixamorig_RightLeg"]
 
 var _anim: AnimationPlayer
 var _checks: int = 0
@@ -113,6 +127,7 @@ func _run() -> void:
 	_check(_on_foot() and not _bone_ids.has(-1),
 		"Setup: Ethan out of the van on foot, his hips', ankles' and toes' bones found")
 	await _check_stair()
+	await _check_across()
 	await _check_run_up()
 	await _check_pause()
 	await _check_slope()
@@ -131,6 +146,69 @@ func _check_stair() -> void:
 	for leg: Array in [["up", up, UP_PACE, UP_CADENCE, 1], ["down", down, DOWN_PACE,
 			DOWN_CADENCE, -1]]:
 		_judge_flight(leg[0], leg[1], leg[2], leg[3], leg[4])
+	_judge_knees("up", up, KNEE_UP_LEAST)
+	_judge_knees("down", down, KNEE_DOWN_LEAST)
+
+
+## Walking across the flight, and from its top along the landing toward the dock (#287): his
+## feet stay his own, the left on his left, never crossing, his shins apart and each foot under
+## its own hip; walking across, he does not climb (S14, S15).
+func _check_across() -> void:
+	await _place(BELOW, Vector3.FORWARD)
+	await _walk_recorded(MID_FLIGHT, 8.0)
+	var across := await _walk_recorded(ACROSS_TO, 1.6)
+	_judge_own_feet("S14 walking across the flight", across, true)
+	await _place(BELOW, Vector3.FORWARD)
+	await _walk_recorded(ABOVE, 14.0)
+	var along := await _walk_recorded(ALONG_LANDING, 4.0)
+	_judge_own_feet("S15 from the stair's top along the landing", along, false)
+
+
+func _judge_own_feet(way: String, samples: Array[Dictionary], across: bool) -> void:
+	var apart := INF
+	var shins := INF
+	var away := 0.0
+	var climbing := 0
+	for sample in samples:
+		if float(sample["time"]) < SETTLING:
+			continue
+		var feet: Array = sample["feet"]
+		var left: Vector3 = sample["left"]
+		apart = minf(apart, ((feet[0][0] as Vector3) - (feet[1][0] as Vector3)).dot(left))
+		var knees: Array = sample["knees"]
+		var near := Geometry3D.get_closest_points_between_segments(knees[0], feet[0][0],
+			knees[1], feet[1][0])
+		shins = minf(shins, near[0].distance_to(near[1]))
+		for side in range(2):
+			away = maxf(away, _flat((feet[side][0] as Vector3) - (sample["joints"][side]
+				as Vector3)).length())
+		if across and str(sample["clip"]) == "StairsUp":
+			climbing += 1
+	_check(not samples.is_empty() and apart >= SIDE_APART and shins >= SHINS_APART
+		and away <= UNDER_HIM and climbing == 0,
+		("%s his feet stay his own: the left at least %.3f m to his left of the right (never "
+		+ "crossing), his shins at least %.3f m apart, each ankle at most %.2f m from its own "
+		+ "hip; %d frames in the climb walking across (%d frames)") % [way, apart, shins, away,
+		climbing, samples.size()])
+
+
+## His knees on the stair bend as a stair bends them, never folded deeper (S16): the inside angle
+## at each knee, between its hip and its ankle, on the flight.
+func _judge_knees(way: String, samples: Array[Dictionary], least: float) -> void:
+	var sharpest := 180.0
+	var counted := 0
+	for sample in samples:
+		var s := FOOT_Z - (sample["body"] as Vector3).z
+		if s < 0.0 or s > RISERS * TREAD:
+			continue
+		counted += 1
+		for side in range(2):
+			var knee: Vector3 = sample["knees"][side]
+			var hip: Vector3 = sample["joints"][side]
+			var ankle: Vector3 = sample["feet"][side][0]
+			sharpest = minf(sharpest, rad_to_deg((hip - knee).angle_to(ankle - knee)))
+	_check(counted > 0 and sharpest >= least, ("S16 %s the flight his knees bend at most to %.0f° "
+		+ "(at least %.0f°, %d frames)") % [way, sharpest, least, counted])
 
 
 ## Up the stair holding the run key: the climb at its own captured pace (#254).
@@ -140,6 +218,7 @@ func _check_run_up() -> void:
 	var up := await _walk_recorded(ABOVE, 14.0)
 	Input.action_release("sprint")
 	_judge_flight("running up", up, TREAD * RUN_UP_CADENCE / 60.0, RUN_UP_CADENCE, 1)
+	_judge_knees("running up", up, KNEE_UP_LEAST)
 
 
 func _judge_flight(way: String, samples: Array[Dictionary], pace: float, cadence: float,
@@ -350,7 +429,7 @@ func _sample(time: float) -> Dictionary:
 	return {"time": time, "clip": str(_anim.current_animation),
 		"body": _driver.global_position, "camera": _camera.global_position,
 		"hips": _pose[0], "feet": [[_pose[1], _pose[3], _pose[5]], [_pose[2], _pose[4], _pose[6]]],
-		"joints": [_pose[7], _pose[8]],
+		"joints": [_pose[7], _pose[8]], "knees": [_pose[9], _pose[10]],
 		"left": Vector3.UP.cross(Vector3(sin(turn), 0.0, cos(turn)))}
 
 

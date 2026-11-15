@@ -6596,3 +6596,191 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Known:** at the doors he stands in bay 9's lift pit behind the bridge plate stored upright in
   the doorway (step 2e-3's sealing spot), so the sealing is mostly hidden from the dock floor; the
   clipboard's hold in his hand is set by eye, unchecked close up.
+
+## Revision 2026-11-14 (Phase 2, step 4 of #253: the loading done as it is done for real (#286, decision C65), built)
+
+- **The author's choice** (#286): all four proposals shown in
+  `captures/step4_proposals/labelled_step4.png`: hold to run the lift, pump the jack's handle,
+  strap the load by hand, a real pendant and beep.
+- **1. Hold to run the lift** (ANSI MH29.1's press-and-hold controls, `dock_lift.gd`,
+  `van_bay.gd`):
+  - the lift moves only while E is held at its pendant, at 0.14 m/s as before, and stops where it
+    is when E is let go; pressed again it carries on the way it was going ("Hold to lower the
+    lift", "Hold to raise the lift");
+  - it also stops when Ethan, E still held, walks off the deck and out of the pendant's reach,
+    the same rule that offers it (the mission now passes Ethan to `operate_lift`);
+  - the bridge plate still comes down at the bottom and stows before the lift rises.
+- **4. The pendant and its beep:** Pentalift's standard two-button pendant, UP and DOWN with
+  their labels and a red emergency stop on top, its buttons facing the deck its operator stands
+  on (the first still showed them facing the dock floor, so he faced the back of the box; H16 now checks
+  it, 32/33 before the turn, `pendant_red/`); a motion alarm, a piezo beep at 2.8 kHz, 0.3 s
+  on and 0.3 s off, looping from under the deck while the lift moves and only then.
+- **2. Pumping the jack** (Dayton's, Strongway's and U-Line's manuals: the lever at raise, 3 to 7
+  strokes; `pallet_jack.gd`, `push_gait.gd`, `driver.gd`):
+  - taken under a load, the jack leaves it on the floor and the hint offers "Pump the handle";
+    W and A/D do nothing until it is up;
+  - he takes it standing back at arm's length (1.45 m behind its middle) where there is room, as
+    operators pump, and close behind its handle where there is less than 0.1 m more (on the
+    lift's deck);
+  - each E is one stroke of 0.5 s: the handle lifted from where his hands hold it up toward
+    upright, at most 20°, and pulled back down, with the pump's knock; the forks rise at its end;
+    four full strokes lift the pallet 4 cm clear; shorter strokes (where the handle is nearly
+    upright already) lift less each, up to seven;
+  - after the last stroke the lever goes back to neutral for 0.4 s, E doing nothing meanwhile, so
+    a quick extra press does not open the lowering valve; then he steps in to the handle, in the
+    gait's own step-in, and pushes as before;
+  - setting the pallet down opens the lowering valve: it sinks over 1.2 s with the oil's hiss,
+    and only then is the next E offered.
+  - **What did not work first:** a stroke pulled down toward him from the pushing tilt swung the
+    loop into his hips (H11, -0.131 m), and starting the push from arm's length left his hands
+    off the loop as he leaned in (H12, 0.123 m); the stroke now goes up from his grip and he
+    steps in before pushing.
+- **3. Strapping by hand** (cargo securement guides; `van_hold.gd`, `pallet_jack.gd`):
+  - the hold's floor has lashing rings by each wall, folding D-rings in recessed plates, three a
+    side 0.64 m apart from just behind the bulkhead (z 0.05, 0.69, 1.33, x ±0.8): their exact
+    places on a 2014 Daily are not confirmed;
+  - for each of two straps the hint offers in turn "Hook the strap to the floor ring", "Throw
+    the strap over the load", "Hook it to the far ring" and "Ratchet the strap tight" four times;
+    the hooks clack into the rings and each pull of the ratchet clicks three times as its pawl
+    walks over the gear; the webbing's 5 cm of slack is taken up over the four pulls;
+  - the load counts as strapped only after the second strap's last pull; a reload at stage 1
+    finds both straps on and tight.
+- **Sounds:** five synthesized by `source_assets/audio/loading/synthesize.py`
+  (`game/features/audio/loading/`, listed in `docs/AUDIO.md`), on the Ambience bus.
+- **Rules,** `test_loading.gd`:
+  - H15 a short hold moves the lift a little and it stops when let go, the hint offering to carry
+    on; H16 the pendant's UP, DOWN and stop facing the deck, its beep looping while it moves and silent when
+    still; H17 walking off the deck with E held stops it;
+  - H18 taken, the pallet stays on the floor and W does not roll it; he stands back to pump; 3 to
+    7 strokes, each rocking the handle at least 15° and knocking, raise it step by step; then the
+    hint offers to set it down and he steps in; H19 the lowering valve lets it sink slowly with
+    the hiss, no other offer meanwhile;
+  - H20 the lashing rings; the strap steps in order; the hooks' clack and the ratchet's clicks;
+    strapped only after the last; two straps hooked in rings, tight, each with its ratchet;
+  - the test now counts a clip's settling from each segment's start, as its notes say: a push
+    starting again in the same clip had been counted as settled from its first frame.
+- **Results** (`logs/phase_2/step4/`): before, 25/30 (the lift); the beep before it looped, 29/30;
+  walking away before the fix, 7/31; pumping before, 17/33; strapping before, 32/33; after,
+  33/33; six mutations of the lift and pendant and nine of the jack and straps exit 1
+  (`lift/mutations/`, `jack_straps/mutations/`).
+- **The capture** (`tools/captures/capture_loading.gd`) holds E for the lift, pumps, waits for the
+  lowering and straps step by step, with new stills of the pendant, the stroke, the lowering and
+  each strap step.
+
+## Revision 2026-11-14 (#287, steps 1-3 of #289: the reversing camera, one stopping distance and the floor under load, built)
+
+- **The author's report** (#287): the parking guides float or pass through objects; the red line
+  must mark exactly where to stop at the dock and agree with the docking; parts of the van or the
+  dock seem to sink below the lift. **Found** (two read-only investigations, checked in the code):
+  - the guides were a fixed drawing in screen fractions (`parking_guides.gd`, from Phase 1),
+    never matched to the camera: about 1.9 times too wide, spreading where lines on the ground
+    meet at the horizon, drawn over everything;
+  - the camera floated 0.18 m behind the body's rear edge, tilted 16° down, so the bumper never
+    showed and the ground began 1.21 m behind it; the dock's bumpers left the picture below a gap
+    of 0.97 m;
+  - the red line lay about 2.1 m behind the van, while the bay docked within 0.3 m, and the lift's
+    0.91 m plate reached the sill only within 0.25 m;
+  - nothing sinks: the van keeps its height; close in, the plate stored upright at the dock's edge
+    fills the picture; under the 520 kg load the body drawn settled 1.4 cm while the hold, the
+    sill the plate aims at and the loaded pallet stayed on the van's unsettled frame.
+- **Step 1, the camera and its guides** (`van_presentation.gd`, `parking_guides.gd`):
+  - the camera on the roof's rear edge, where the Daily's sits in its third brake light, at
+    (0, 2.22, 2.84), 0.023 m behind the body's surface, tilted 45° down: the bumper along the
+    picture's bottom, the ground from 5 cm behind it;
+  - the guides worked out on the ground every frame: points every 0.25 m back to 3 m, found by
+    rays down to the ground, drawn where the camera showing the picture sees them (the game's
+    view in reverse and the dash screen alike); two lines the van's 2.0 m apart, red to 0.5 m,
+    yellow to 1 m, green to 3 m, with marks at 0.5, 1, 2 and 3 m; a piece the camera cannot see
+    behind something standing there is left out, and a line stops where the ground gives way to
+    something standing on it.
+- **Step 2, one stopping distance** (`parking_guides.gd`'s `STOP_LINE`, `van_bay.gd`):
+  - a red stop line across the van's width on the ground 0.10 m behind its bumper; the bay docks
+    within `STOP_LINE`, the same constant;
+  - the bay measures at its two bumpers (0.8 m either side of its centre line, read from
+    `transfer_building.gd`) and takes the nearer, as the line reaches the nearer one first when
+    the van is not square;
+  - 0.10 m keeps the plate resting at least 0.10 m (4 in) onto the van's floor, the overlap dock
+    plates are made for, even 3° from square, the most the bay allows (at 0.15 m, square, it was
+    only 0.095 m);
+  - the objective's "short of the bumpers" now says "Back in until the red line reaches them".
+- **Step 3, the floor under load** (`freight_van.gd`, `van_presentation.gd`, `dock_lift.gd`,
+  `pallet_jack.gd`, `van_bay.gd`): the hold's collision follows the body drawn; the sill and the
+  hold's floor (`sill()`, `floor_point()`) come from it; the lift keeps its plate resting on the
+  sill while the van settles; a load in the hold rides the body (`body()`).
+- **Rules:** new `test_rear_camera.gd` C1-C6 (the camera on the body; the bumper at the picture's
+  bottom on both screens; the guides on the ground, 2.0 m apart, parallel, marked; drawn where
+  their camera sees them; hidden behind a board; following a slope) and `test_docking.gd` K1-K5
+  (the stop line at the docking distance; backed in by keys and stopped at the line, straight and
+  turned 1.5°, it docks, stopped by the brake, not the bumpers; 0.1 m short, it does not; the
+  plate rests on the sill at every docked gap; loaded, the floor met is the floor drawn).
+  `test_dash_screen.gd`'s rear view now asks for a view looking back more than 0.6 (was 0.8,
+  the old 16° tilt); `test_bay_nine.gd`'s G4 docks within `DOCKED_WITHIN` (was 0.3).
+- **Results** (`logs/phase_2/docking/`): before, the rear camera 0/7, docking 0/4 and K5 4/5;
+  after, 7/7 and 5/5; `test_bay_nine.gd` 20/20, `test_dash_screen.gd` 16/16, `test_loading.gd`
+  33/33; ten mutations exit 1 (`mutations/SUMMARY.txt`; the first wall in C5 stood on the ground
+  the guides are found on, so a mutation that drew through things survived; C5 now uses a board
+  between the points found, and it fails).
+- **Stills:** `captures/docking/fixed/` (`tools/captures/capture_docking.gd`): the game's view
+  in reverse at 3, 1 and 0.3 m, at the line, touching and turned; the dash screen; the plate on
+  the sill along the deck and from the dock, empty and loaded; from the court.
+- **Known:** close in, the plate stored upright at the dock's edge fills the top of the rear
+  camera's picture, as the dock is built; the pallet jack keeps the deck's height, so in the
+  hold it stands about 1 cm above the floor once the van settles under the load it set down.
+
+## Revision 2026-11-15 (#287, steps 4-6 of #289: Ethan's legs, built)
+
+- **The author's report** (#287): his legs sometimes cross, look too short and change proportion as
+  he moves; find the cause in the rig, the clips, the IK, the blending or the scale.
+- **Found** (a read-only investigation, checked in the code): the rig and the clips are sound: no
+  bone changes length or scale in any clip, state or blend (thigh 0.41 m, shin 0.42 m, hips 0.94 m
+  up, height 1.78 m), every clip from the same skeleton, the IK unable to stretch a bone. The
+  causes are in the game's foot code and three clips:
+  - on and near the dock stair his feet were placed on the stair's own axis, and the stair took his
+    feet wherever he walked near it: walking across the flight or turning along the landing his
+    feet swapped sides (up to 0.23 m) and his shins touched, the climb playing as he stepped
+    sideways;
+  - the stair folded his knees to 33-53° (real stairs about 80-90°): the swinging foot took the
+    walk's own lift on top of its arc, climbing it rose to the next tread at once, and his hips
+    were lowered to the lower foot and 5 cm more;
+  - Pushing, Running and his walk back bring an ankle up to 0.03 m over his hips' middle line;
+  - for one frame as the crouch under the hold's roof began again, his legs reached for ankles
+    from before (a knee straight, an ankle 0.59 m out).
+  - Also noted, not changed: Ch33's trousers put the crotch 0.18 m below the hip joints, so the leg
+    looks shorter than its bones (the character's design); the climb is Mixamo's Running Up Stairs
+    slowed, a runner's knee drive (a walking climb clip would need the author's download).
+- **Step 4, his feet his own** (`stair_steps.gd`, `driver.gd`): off the flight, on the floor or the
+  landing, walking any way but along it (`ALONG`), the stair lets his feet go to his walk
+  (`leaving()`); a foot lifting aims where he is going, taking a new tread in turn only walking
+  along the flight; the climb plays only going up it; the crouch's ankle watcher forgets what it
+  saw whenever it stops.
+- **Step 5, his knees on the stair** (`stair_steps.gd`): a swinging foot follows its own arc alone;
+  climbing, it rises a riser and 3 cm, clear of the tread ahead, by 0.4 of its swing, the rest by
+  0.7, and goes on to land (`CLEAR_UP`, `UP_FIRST`, `UP_REST`); his hips' ground is set between
+  his feet's treads (`BETWEEN`), his legs' reach lowering it further if needed; no extra bend on
+  the flight (`STAIR_BEND` 0). Tried and not kept: his hips as high as his standing leg reaches
+  (he skipped treads going down) and an earlier drop going down (a foot clipped a nosing).
+- **Step 6, each foot on its own side** (new `stance.gd`): before his legs' IK, where a clip brings
+  an ankle nearer his hips' middle line than 0.045 m, his thigh turns out at the hip just enough;
+  off getting in and out of the van, whose steps pivot one foot round the other.
+- **Rules:** `test_stair.gd` S14 (across the flight) and S15 (from its top along the landing) his
+  feet his own (the left at least 0.05 m to his left, shins 0.09 m apart, each ankle within
+  0.5 m of its hip, no climb walking across), S16 his knees on the flight (at least 58° up, the
+  climb's own 63° allowing, and 68° down: this stair's 0.217 m risers are steeper than the
+  0.17-0.18 m of the studies, and the trailing foot must clear its own nosing; 75° was the first
+  target, 70° is what it reaches); `test_loading.gd` H21 (holding the jack each foot within its
+  leg's reach of its hip, 0.75 m, the push's lunge allowing, and never moving more than 0.08 m in
+  a frame) and H22 (pushing, stooped and pulling, each ankle at least 0.04 m on its own side);
+  `test_on_foot.gd`'s stance (walking and running, the same).
+- **Results** (`logs/phase_2/legs/`): before, S14 and S15 failed (feet swapped 0.203 and 0.153 m,
+  shins 0.007 and 0.001 m apart), S16 at 50° up and 34° down, H21 a foot 0.975 m in a frame, H22
+  and the stance -0.026 m; after, the stair 33/33 (knees 71° up, 70° down, 81° running up),
+  loading 35/35, on foot 50/50; every suite exit 0 but `test_loading.gd`'s H18 once under the
+  suites' load, which read the game's hint before its 0.2 s refresh (fixed in the test; three
+  copies at once 35/35, `suites/RERUN.txt`); seven mutations exit 1 (`mutations/SUMMARY.txt`; the first
+  version's turning of the side axis to his facing proved untested, both ways round, and was
+  removed).
+- **Stills:** `captures/legs/fixed/` (`tools/captures/capture_legs.gd`): up and down the stair,
+  across it, along the landing and running, each from beside, in front and behind; some views from
+  in front and beside are blocked by the stair's wall and the dock's edge.
+- **Unverified:** the look in motion beyond the stills; the stair's 70° going down, for the author's
+  eye.

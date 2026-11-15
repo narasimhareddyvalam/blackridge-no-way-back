@@ -19,7 +19,7 @@ const REAR_REACH := Vector2(0.6, 1.8)
 const REAR_WIDTH := 1.2
 const MISSES := {
 	"fast": "Too fast: you met the dock at %.1f m/s. Pull forward and back in at walking pace.",
-	"far": "%.1f m short of the bumpers. Back in until they stop you.",
+	"far": "%.1f m short of the bumpers. Back in until the red line reaches them.",
 	"crooked": "%.1f° off square. Pull forward, straighten up and back in.",
 	"off_centre": "%.2f m off the bay's centre. Pull forward and line up between the guides.",
 	"doors": "The rear doors are shut and can't open against the dock. Pull forward and open them.",
@@ -128,20 +128,25 @@ func do_foot_action(at: Vector3) -> String:
 		"Set the pallet down":
 			_jack().call("set_down")
 			return ""
+		"Pump the handle":
+			_jack().call("pump")
+			return ""
 		"Let go of the jack":
 			_jack().call("let_go")
 			return ""
-		"Strap the load":
-			_jack().call("strap")
-			return "You strap the load down to the floor rings."
+		"Hook the strap to the floor ring", "Throw the strap over the load", \
+				"Hook it to the far ring", "Ratchet the strap tight":
+			if bool(_jack().call("strap")):
+				return "You strap the load down to the floor rings."
+			return ""
 		"Push it fully in or out first", "Pull the jack out first", \
 				"Push it in against the bulkhead first":
 			return action
 		"Open the door":
 			(shed.get("side_door") as Node).call("open_door")
 			return "You push the side door open."
-		"Lower the lift", "Raise the lift":
-			_bay().call("operate_lift")
+		"Hold to lower the lift", "Hold to raise the lift":
+			_bay().call("operate_lift", driver)
 			return ""
 		"Chock the rear wheel":
 			_bay().call("chock_wheel")
@@ -208,9 +213,10 @@ func _loading() -> Array[String]:
 	if stack != null and stack.has_meta("strapped"):
 		if bool(lift.call("at_top")):
 			return ["TAKE THE CHOCK OUT", "Press E at the chock by the rear wheel on the driver's side."]
-		return ["RAISE THE LIFT", "Press E at the pendant on the lift's deck."]
+		return ["RAISE THE LIFT", "Hold E at the pendant on the lift's deck until it is up."]
 	if stack != null:
-		return ["STRAP THE LOAD", "Beside the pallet in the hold, E straps it to the floor rings."]
+		return ["STRAP THE LOAD", "Beside the pallet in the hold, E hooks each strap to a floor "
+			+ "ring, throws it over, hooks the far ring and ratchets it tight."]
 	if bool(jack.get("held")):
 		return ["ROLL THE PALLET IN",
 			"W and S push and pull the jack, A and D steer; E sets it down at the bulkhead."]
@@ -218,7 +224,8 @@ func _loading() -> Array[String]:
 		if bool(lift.call("at_bottom")):
 			return ["ROLL THE PALLET IN",
 				"Behind its handle E takes the jack again; W pushes the pallet into the hold."]
-		return ["LOWER THE LIFT", "By the pendant on its deck, E lowers the lift with the pallet."]
+		return ["LOWER THE LIFT", "By the pendant on its deck, hold E to lower the lift with the "
+			+ "pallet."]
 	return ["LOAD THE PALLET",
 		"Go in by the side door and up the stair; take the pallet jack at bay 9."]
 

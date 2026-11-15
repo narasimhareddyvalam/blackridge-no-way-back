@@ -3950,8 +3950,148 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Rocketbox's own clips; `test_dock_worker.gd` 12/12, `test_sealing.gd` 13/13, six mutations
        exit 1; shown `captures/dock_worker/part2/labelled_dock_worker.png`.
 
+286. **Step 4: proposals with research and pictures**
+     - **Claude Code's report:** part B and the headlights (`2afcb81`), the Pacific Northwest
+       roadside trees (`52f4390`), the gas station and main street (`c8ee987`) and the dock worker
+       at his desk (`282ac7f`) committed on `develop`, not pushed, every suite passing; found that
+       Mission 1's fall and the oncoming van's hiding depend on the forest's layout; asked whether
+       to propose step 4's changes to how the lift and the jack work, with research and pictures.
+     - **The author's message:** "yes"
+     - **Claude Code's research** (sources: MHI's lift glossary on press-and-hold controls under
+       ANSI MH29.1; Pentalift's dock lift controls; Dayton's, Strongway's and U-Line's pallet truck
+       manuals on raise, neutral and lower and 3-14 pumps; cargo securement guides on straps to
+       floor rings): four proposals shown with today's stills,
+       `captures/step4_proposals/labelled_step4.png`: 1 hold to run the lift, 2 pump the jack's
+       handle, 3 strap the load by hand, 4 the pendant with UP, DOWN and an emergency stop and a
+       warning beep.
+     - **Asked** which to build; **the author chose** all four: "1. Hold to run the lift, 2. Pump
+       the jack's handle, 3. Strap the load by hand, 4. A real pendant and beep".
+
+287. **Ethan's legs, and the docking, the reverse camera and the lift**
+     - **Claude Code's report:** none given yet; step 4 (#286) was built and its suites passed
+       (41 runs exit 0, `logs/phase_2/step4/suites/`), not yet committed; the author interrupted
+       the third filming of its stills.
+     - **The author's message** (two pasted requests joined by "aand"; the second ends mid-sentence
+       as pasted):
+
+       > The character's legs currently look unnatural. They sometimes cross over each other, appear too small or short, and change proportions during movement.
+       >
+       > I want you to fix this properly and make the character's body proportions, leg positioning, and animations **consistent, anatomically realistic, and natural**.
+       >
+       > Please make sure:
+       >
+       > - **Correct proportions:** Legs should have realistic length and thickness relative to the torso and the rest of the body. They should never appear stretched, compressed, or unusually small.
+       > - **No leg crossing or clipping:** Legs should not intersect, overlap unnaturally, or pass through each other during walking, running, turning, or standing.
+       > - **Natural movement:** Hip, knee, ankle, and foot movements should follow realistic human biomechanics, with proper joint bending and foot placement.
+       > - **Consistent appearance:** The character's leg length, body proportions, and overall appearance must remain identical across all animations, camera angles, and movement states.
+       > - **Realistic animations:** Avoid robotic movement, unnatural rotations, sliding feet, and sudden changes in leg positions.
+       > - **Proper rigging:** Check the skeleton, bone hierarchy, inverse kinematics, animation blending, and character scale to identify the actual cause of these issues.
+       >
+       > **Important:** Don't just visually hide the problems or apply temporary fixes. Investigate the root cause and fix the underlying rigging, animation, or scaling issues.
+       >
+       > I want the character to look like a realistically proportioned human with smooth, believable movements. Test the character from multiple camera angles and across all movement states to verify that the issues are completely resolved.
+       >
+       > Preserve the existing character design and gameplay functionality while making these improvements.
+
+       aand
+
+       > I want you to fix and improve the van docking system, reverse camera, and loading dock interactions to make everything **realistic, physically accurate, and consistent**.
+       >
+       > ### 1. Reverse camera guidelines
+       > - The reverse camera parking guidelines must be accurately projected onto the ground behind the van, not floating in the air or passing through objects.
+       > - The guidelines should follow the actual ground surface and maintain correct perspective, distance, and alignment as the van moves.
+       > - Make the guidelines look like a real vehicle's reverse camera, with realistic width, spacing, and distance indicators.
+       > - Ensure the guidelines remain stable without flickering, stretching, or shifting unnaturally.
+       >
+       > ### 2. Red stopping line and docking position
+       > - **The red line on the reverse camera must represent the exact position where the player needs to stop the van when reversing toward the loading dock wall.**
+       > - As the van approaches the wall, the player should be able to use the red line to judge when to stop.
+       > - When the correct stopping position is reached, the red line should align with the designated docking boundary.
+       > - Calculate the stopping position based on the van's actual rear bumper, collision geometry, and the loading dock's physical boundaries.
+       > - Make sure the player can stop at the correct position without the van clipping into the wall or stopping unrealistically far away.
+       > - The docking detection logic must agree with the reverse camera's stopping indicator. The player should not be told to stop at one position while the game expects another.
+       >
+       > ### 3. Loading dock and lift issues
+       > - Currently, parts of the van or loading dock sometimes disappear or sink below the lift during docking. Investigate and fix the root cause.
+       > - Ensure the van, loading dock, and lift remain correctly positioned relative to each other.
+       > - Check collision shapes, physics interactions, mesh transforms, object origins, and vertical alignment.
+       > - Prevent the van from sinking into the ground, passing through the lift, or clipping into the loading dock.
+       > - Ensure the loading dock geometry does not disappear due to rendering, occlusion, clipping, or incorrect object positioning.
+       > - The lift should remain physically stable and properly aligned with the loading dock and van.
+       >
+       > ### 4. Realistic docking experience
+       > - The entire docking process should feel like reversing a real delivery van toward a warehouse loading bay.
+       > - The reverse camera should have a believable field of view, perspective, and parking guideline placement.
+       > - The van should approach the dock smoothly, with realistic stopping distances.
+       > - The van's rear bumper, loading platform, dock wall, and lift should all align correctly.
+       > - Avoid sudden snapping, teleporting, floating objects, or unnatural movement.
+       > - Keep the experience immersive and visually realistic.
+       >
+       > ### 5. Testing and verification
+       > Test the complete docking sequence under different conditions:
+       > - Approaching the dock straight and at slight angles.
+       > - Reversing slowly toward the wall.
+       > - Stopping exactly when the red guideline indicates the correct position.
+       > - Moving forward and reversing again.
+       > - Checking the van, lift, and loading dock from multiple camera angles.
+       > - Repeating the docking process to identify intermittent clipping, disappearing geometry, or physics issues.
+       >
+       > **Important:** Don't apply temporary visual fixes or hardcode positions that only work in one scenario. Investigate the existing Godot scene structure, camera projection, collision geometry, physics, and docking logic.
+       >
+       > Fix the actual underlying issues and ensure the reverse camera, red stopping line, docking detection, van positioning, and lift geometry
+
+288. **The flagged things first**
+     - **Claude Code's report:** #287 logged; two read-only investigations started (Ethan's legs;
+       the docking, the reverse camera and the lift); step 4 built, suites passing, not
+       committed, its strap stills not filmed (the restart of the interrupted filming was
+       blocked); asked whether to film them and commit, or commit as it is.
+     - **The author's message:** "fix the things first i flagged"
+     - **Taken as:** #287's legs and docking come before step 4's stills and commit, which wait.
+
+289. **The fixes, in order**
+     - **Claude Code's report:** the two investigations' causes, checked in the code: the legs'
+       bones never change length; the crossing comes from the stair's foot placement on its own
+       axis (feet swapped up to 0.23 m walking across the flight or turning on the landing), the
+       stair's knee fold (33-53°) and hip drop (0.39 m), the narrow stance of Push, Run and
+       WalkBack, and a one-frame snap of the crouch IK; the parking guides are a fixed screen
+       drawing about 1.9 times too wide, the red line about 2.1 m behind the van against a
+       docked gap of 0.3 m, the bridge plate reaching only within 0.25 m, the plate filling the
+       rear camera close in (the van never sinks), and the drawn floor 1.4 cm below the physical
+       one under load. Six steps proposed: 1 the camera and guides from its projection, 2 one
+       stopping distance, 3 the floors under load, 4 the feet on the stair, 5 its knee depth and
+       hip drop, 6 the narrow stance; later, a walking climb clip (the author's download).
+     - **Asked** how to go through them; **the author chose** "All six in order (Recommended)":
+       docking 1-3, then legs 4-6, tests first and stills, a report after each part.
+
+290. **Continue**
+     - **Claude Code's report:** the docking part done (steps 1-3: the camera on the roof's edge
+       and its guides worked out on the ground, the red stop line 0.10 m behind the bumper the
+       bay docks within, measured at its bumpers, the floor, the pallet and the plate following
+       the body under load; 43 suites and the art check exit 0, ten mutations exit 1); step 4
+       (his feet his own walking across the flight and along the landing, the crouch's stale
+       ankles) built; step 5 (the knees on the stair) under way; the message was interrupted.
+     - **The author's message:** "aorry continue"
+
+291. **Commit both**
+     - **Claude Code's report:** #287 fixed: the reversing camera on the roof's edge and its guides
+       on the ground, one stopping distance (the red line 0.10 m, the bay's verdict at its
+       bumpers, the plate at least 0.10 m on the floor), the floor, pallet and plate settling with
+       the body; Ethan's feet his own on the stair, his knees 71° up and 70° down (were 50° and
+       34°), each foot on its own side pushing, running and walking back, the crouch's snap gone;
+       every suite exit 0 (H18 once under load, a test reading the hint before its refresh, fixed
+       and rerun); stills in `captures/docking/fixed/` and `captures/legs/fixed/`.
+     - **Asked** whether to commit step 4 and these; **the author chose** "Commit both
+       (Recommended)": two commits on `develop`, labelled (agent), not pushed, step 4's strap
+       stills left unfilmed.
+
 ## Waiting for the author
 
+- #287 (C66): the docking and Ethan's legs fixed, not committed; the author's look at
+  `captures/docking/fixed/` and `captures/legs/fixed/` and a play; whether to commit them with step 4;
+  a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).
+- Step 4 (#286, C65): built, not committed (#288 put #287 first), its strap stills not filmed; the author's look at the
+  stills (`captures/loading/step4/`) and a play of the loading: holding E at the pendant,
+  pumping the jack, strapping by hand, and whether the beep and the jack's sounds are right.
 - Step 2f (#243–#248): part 1 built, with A (smooth on foot), B (the rear doors by Ethan) and C
   (the job in order, its film); waiting for the author's look at the film and their OK to commit
   step 2e, part 1 and A–C; whether to turn on physics interpolation and bring the yard within the

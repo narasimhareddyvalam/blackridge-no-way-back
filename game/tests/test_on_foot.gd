@@ -18,6 +18,8 @@ const OFFICE_FRONT := 1.8
 const ROUND_THE_FRONT: Array[Vector3] = [Vector3(1.9, 0.0, -3.3), Vector3(-1.9, 0.0, -3.3),
 	Vector3(-2.02, 0.0, -0.51)]
 
+const OWN_SIDE := 0.04
+const STANCE_SECONDS := 1.0
 var _checks: int = 0
 var _failures: int = 0
 var _app: Node3D
@@ -61,6 +63,7 @@ func _run() -> void:
 	await _check_walk_to_van()
 	await _go_to_van()
 	await _check_walking()
+	await _check_stance()
 	await _check_boarding()
 	await _check_ignition()
 	await _check_cabin_light()
@@ -295,6 +298,45 @@ func _check_walking() -> void:
 	_check(run_clip == "Run" and absf(run_pace - Driver.RUN_SPEED) < 0.05,
 		"SHIFT runs at the Run clip's pace (%s, %.2f m/s)" % [run_clip, run_pace])
 	_check(_ethan_player().current_animation == "Idle", "Letting go returns him to Idle")
+
+
+## Walking and running, each foot stays on its own side, its ankle at least OWN_SIDE from his hips'
+## middle line, as a man's heels pass 0.08-0.12 m apart (#287): never crossing over.
+func _check_stance() -> void:
+	var skeleton := _driver.get_node("Ethan").find_children("*", "Skeleton3D", true,
+		false)[0] as Skeleton3D
+	var least := {}
+	var watch := func() -> void:
+		var way := str(_ethan_player().current_animation)
+		if not way in ["Walk", "Run"] or not bool(skeleton.get_meta("stance_watch", false)):
+			return
+		var bone_at := func(bone: String) -> Vector3:
+			return skeleton.global_transform * skeleton.get_bone_global_pose(
+				skeleton.find_bone(bone)).origin
+		var hips: Array[Vector3] = [bone_at.call("mixamorig_LeftUpLeg"),
+			bone_at.call("mixamorig_RightUpLeg")]
+		var mid := (hips[0] + hips[1]) / 2.0
+		var left := Vector3(hips[0].x - hips[1].x, 0.0, hips[0].z - hips[1].z).normalized()
+		var side := minf((bone_at.call("mixamorig_LeftFoot") - mid).dot(left),
+			-(bone_at.call("mixamorig_RightFoot") - mid).dot(left))
+		least[way] = minf(least.get(way, INF), side)
+	skeleton.skeleton_updated.connect(watch)
+	for way: String in ["Walk", "Run"]:
+		Input.action_press("accelerate")
+		if way == "Run":
+			Input.action_press("sprint")
+		await _seconds(0.3)
+		skeleton.set_meta("stance_watch", true)
+		await _seconds(STANCE_SECONDS)
+		skeleton.set_meta("stance_watch", false)
+		Input.action_release("sprint")
+		Input.action_release("accelerate")
+		await _seconds(0.5)
+		_driver.call("look_toward", -_flat(_driver.global_basis.z))
+	skeleton.skeleton_updated.disconnect(watch)
+	_check(least.size() == 2 and least.values().min() >= OWN_SIDE,
+		("Walking and running each foot stays on its own side, its ankle at least %.2f m from "
+		+ "his hips' middle line (%s)") % [OWN_SIDE, str(least)])
 
 
 func _check_boarding() -> void:

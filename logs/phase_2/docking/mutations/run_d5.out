@@ -1,0 +1,11 @@
+d5  the bay measures at the van's middle only        test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+d6  the bay docks within 0.3 m again                 test_docking.gd exit 1, 1/5 passed; 4 failed
+      FAIL: K1 the red stop line runs across the van (-1.00 to 1.00 m) on the ground 0.100-0.100 m behind its bumper, wher
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+      FAIL: K3 stopped with the red line 0.1 m short of the bumpers (0.194 m from them) it does not dock (docked), and the
+      FAIL: K4 at every gap the bay docks within the plate rests on the sill and reaches onto the floor (gap 0.000: docked
+d7  no red stop line                                 test_docking.gd exit 1, 2/5 passed; 3 failed
+      FAIL: K1 the red stop line runs across the van (inf to -inf m) on the ground inf--inf m behind its bumper, where the
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+      FAIL: K3 stopped with the red line 0.1 m short of the bumpers (0.001 m from them) it does not dock (docked), and the

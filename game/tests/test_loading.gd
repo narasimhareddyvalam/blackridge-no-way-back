@@ -24,6 +24,31 @@ const TO_THE_DOCK: Array[Vector3] = [Vector3(-44.2, 0.0, 13.4), Vector3(-45.6, 0
 const TO_THE_LIFT: Array[Vector3] = [Vector3(-46.2, 0.0, 15.0), Vector3(-46.2, 0.0, 18.4),
 	Vector3(-47.75, 0.0, 18.4)]
 const TRAVEL := 8.0
+const HOLD_TAP := 0.3
+const STROKE := 0.6
+## The game refreshes its hint every 0.2 s (`first_drive.gd`): read it once a refresh has passed.
+const HINT_REFRESH := 0.25
+const PUMPS := Vector2i(3, 7)
+const PUMP_ARC := 15.0
+const LOWERED := 1.6
+## A foot within its leg's reach of its own hip (thigh 0.41 m and shin 0.42 m), as far back as the
+## pushing clip's lunge takes it, leaning into the load.
+const FOOT_UNDER_HIP := 0.75
+const FOOT_JUMP := 0.08
+## Walking, a man's heels pass about 0.08-0.12 m apart: each ankle on its own side of the middle.
+const OWN_SIDE := 0.04
+const RING_X := 0.8
+const STRAP_STEP := 0.45
+const STRAP_PRESSES_MOST := 20
+const STRAP_ORDER: Array[String] = ["Hook the strap to the floor ring",
+	"Throw the strap over the load", "Hook it to the far ring", "Ratchet the strap tight",
+	"Ratchet the strap tight", "Ratchet the strap tight", "Ratchet the strap tight"]
+const STEPPED_IN := 1.0
+const STOOD_BACK := 1.3
+const CLOSE_BEHIND := 1.22
+const SINKING := 0.4
+const OFF_THE_DECK: Array[Vector3] = [Vector3(-46.3, 0.0, 18.4)]
+const DECK_HALF := 0.92
 const ROUND_THE_LOAD: Array[Vector3] = [Vector3(-46.3, 0.0, 18.4), Vector3(-46.3, 0.0, 15.0),
 	Vector3(-47.2, 0.0, 15.15)]
 const BEHIND_THE_HANDLE := 0.3
@@ -119,6 +144,7 @@ var _pull_outside: Array[String] = []
 var _bones := {}
 var _segment := ""
 var _last_clip := ""
+var _clip_segment := ""
 var _since_clip: int = 0
 var _clip_since := 0.0
 var _since_steer: int = STEER_SETTLED + 1
@@ -140,6 +166,10 @@ var _said: Array[String] = []
 var _saying := false
 var _down_said := ""
 var _body_clear := {}
+var _feet_off := 0.0
+var _own_side := {}
+var _feet_jump := 0.0
+var _last_feet: Array[Vector3] = []
 var _tips_off := {}
 var _post_clear := Vector3(INF, INF, INF)
 
@@ -209,8 +239,8 @@ func _check_way_onto_the_dock() -> void:
 func _check_lift() -> void:
 	await _walk(TO_THE_LIFT)
 	var offered := _hint()
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	await _check_hold_to_run()
+	await _hold_key(KEY_E, TRAVEL)
 	var lift := _shed.get_node_or_null("Building/DockLift9") as Node3D
 	var floor_y := _van.to_global(HOLD_FLOOR).y
 	var deck := lift.global_position.y if lift != null else INF
@@ -219,7 +249,7 @@ func _check_lift() -> void:
 	var raise := _hint()
 	var sill := _van.to_global(SILL)
 	var resting := _plate_underside_at(lift, sill.z) - sill.y
-	_check(offered == "E  Lower the lift" and absf(deck - floor_y) <= 0.02
+	_check(offered == "E  Hold to lower the lift" and absf(deck - floor_y) <= 0.02
 		and absf(resting) <= 0.012 and tip.z > sill.z + 0.05 and tip.y - floor_y < 0.12
 		and absf(feet - deck) < 0.06,
 		("H1: on the deck the hint offers the lift (%s); E lowers it to the van's floor (%.3f m "
@@ -227,12 +257,11 @@ func _check_lift() -> void:
 		+ "reaches %.2f m past it over the floor, its edge %.3f m above the floor; Ethan rides "
 		+ "it (his feet %.2f m)") % [offered, deck, floor_y, resting, tip.z - sill.z,
 		tip.y - floor_y, feet])
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	await _hold_key(KEY_E, TRAVEL)
 	deck = lift.global_position.y if lift != null else INF
 	tip = _lip_tip(lift)
 	feet = _driver.global_position.y
-	_check(raise == "E  Raise the lift" and absf(deck - DOCK_FLOOR) <= 0.01
+	_check(raise == "E  Hold to raise the lift" and absf(deck - DOCK_FLOOR) <= 0.01
 		and tip.y > deck + 0.4 and absf(feet - DOCK_FLOOR) < 0.06,
 		("H1: E again raises it flush with the dock floor (%.3f m), its plate stored upright (its "
 		+ "edge %.2f m up), Ethan with it (%.2f m)") % [deck, tip.y, feet])
@@ -262,10 +291,11 @@ func _check_loading() -> void:
 	await _key(KEY_E)
 	_saying = true
 	await _seconds(0.5)
+	await _check_pumping(load, floor_y)
 	var lifted := load.global_position.y - floor_y
 	_check(offered == "E  Take the pallet jack" and lifted > 0.015 and lifted < 0.12,
-		("H9: behind its handle the hint offers the jack (%s); E takes it, its forks raising the "
-		+ "pallet above them %.3f m off the floor") % [offered, lifted])
+		("H9: behind its handle the hint offers the jack (%s); E takes it, and pumped, its forks "
+		+ "raise the pallet above them %.3f m off the floor") % [offered, lifted])
 	_track()
 	_segment = "dock"
 	await _push_to(PAST_THE_GUARD, 25.0, 2.0)
@@ -293,8 +323,7 @@ func _check_loading() -> void:
 		+ "%.3f m off its loop") % [str(dock_clips), _lean.get("dock", INF), dock_pace,
 		_slip("dock"), start, START_SECONDS, walk_tilt.x, walk_tilt.y,
 		_hand_gap.get("dock", INF)])
-	await _key(KEY_E)
-	await _seconds(0.5)
+	await _check_lowering(load, lift)
 	await _key(KEY_E)
 	await _seconds(0.5)
 	var resting := absf(load.global_position.y - lift.global_position.y)
@@ -304,12 +333,11 @@ func _check_loading() -> void:
 		+ "E again lets go of the jack") % [resting, load.global_position.x - lift.global_position.x])
 	await _to_the_pendant()
 	var pendant := _hint()
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	await _hold_key(KEY_E, TRAVEL)
 	var floor_now := _van.to_global(HOLD_FLOOR).y
 	var riding := _driver.global_position.y - lift.global_position.y
-	_check(pendant == "E  Lower the lift" and absf(load.global_position.y - floor_now) < 0.02
-		and absf(riding) < 0.06,
+	_check(pendant == "E  Hold to lower the lift"
+		and absf(load.global_position.y - floor_now) < 0.02 and absf(riding) < 0.06,
 		("H1: by the pendant on the deck E lowers the lift (%s), the pallet riding it down to the "
 		+ "van's floor (%.3f m against %.3f), and Ethan with it (%.3f m off the deck)")
 		% [pendant, load.global_position.y, floor_now, riding])
@@ -322,6 +350,7 @@ func _check_loading() -> void:
 	var take := _hint()
 	await _key(KEY_E)
 	await _seconds(0.5)
+	await _pump()
 	_watching = true
 	_segment = "van"
 	await _push_to(TO_THE_BULKHEAD, 25.0, 0.8)
@@ -364,7 +393,7 @@ func _check_loading() -> void:
 		% [_player.current_animation, holding, toes, gap, clear, head + HAIR])
 	_segment = ""
 	await _key(KEY_E)
-	await _seconds(0.5)
+	await _seconds(LOWERED)
 	var inside := _van.to_local(load.global_position)
 	var against := inside.z - LOAD_HALF - BULKHEAD
 	_check(_van.is_ancestor_of(load) and absf(inside.x) < 0.1 and against >= -0.01
@@ -372,13 +401,7 @@ func _check_loading() -> void:
 		("H2: E sets the pallet down in the hold on its floor, forward against the bulkhead "
 		+ "(%.3f m from it), between the wheel arches (%.3f m off the middle), and it goes with "
 		+ "the van") % [against, inside.x])
-	var strap := _hint()
-	await _key(KEY_E)
-	await _seconds(0.5)
-	var straps := load.find_children("LoadStrap*", "Node3D", true, false).size()
-	_check(strap == "E  Strap the load" and straps >= 2,
-		("H2: beside it in the hold E straps the load down to the floor rings (%s; %d straps)")
-		% [strap, straps])
+	await _check_strapping(load)
 	_saying = false
 	var lowering := _said.find("LOWER THE LIFT")
 	_check(not _said.has("LOAD THE PALLET") and lowering >= 0
@@ -421,8 +444,7 @@ func _check_loading() -> void:
 		+ "(against %.4f)") % [LOAD_KG, rear_sink, total * share, front_sink,
 		total * (1.0 - share)])
 	await _to_the_pendant()
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	await _hold_key(KEY_E, TRAVEL)
 	_check(absf(lift.global_position.y - DOCK_FLOOR) < 0.01 and jack != null
 		and absf(jack.global_position.y - DOCK_FLOOR) < 0.02 and _van.is_ancestor_of(load),
 		("H1: E at the pendant raises the lift again with the jack on it (%.2f m), the load left "
@@ -432,6 +454,7 @@ func _check_loading() -> void:
 	await _walk(ROUND_THE_LOAD)
 	await _key(KEY_E)
 	await _seconds(0.5)
+	await _pump()
 	_segment = "stop"
 	await _push_to(ON_THE_DOCK, 10.0, 2.0)
 	await _seconds(STOP_WAIT)
@@ -447,7 +470,7 @@ func _check_loading() -> void:
 	_check_breakaway(load, before)
 	_segment = ""
 	await _key(KEY_E)
-	await _seconds(0.5)
+	await _seconds(LOWERED)
 	await _key(KEY_E)
 	await _seconds(0.5)
 	rig.call("reset", WALL_JACK)
@@ -495,6 +518,14 @@ func _check_loading() -> void:
 	_check(_post_clear.x >= 0.0 and _post_clear.y >= -0.01,
 		("H13: nothing goes through the lift's pendant post: the load stays outside it (at the "
 		+ "nearest %.3f m) and so does Ethan (%.3f m)") % [_post_clear.x, _post_clear.y])
+	_check(_own_side.size() == 3 and _own_side.values().min() >= OWN_SIDE,
+		("H22: pushing on the dock, stooped in the hold and pulling out, each foot stays on its "
+		+ "own side, its ankle at least %.2f m from his hips' middle line (%s)") % [OWN_SIDE,
+		str(_own_side)])
+	_check(_feet_off <= FOOT_UNDER_HIP and _feet_jump <= FOOT_JUMP,
+		("H21: all the time he holds the jack, on the dock and stooped in the hold, each foot "
+		+ "stays under him, at most %.2f m from its own hip, and never snaps, at most %.3f m in "
+		+ "a frame") % [_feet_off, _feet_jump])
 	_check(_tips_off.has("dock") and _tips_off.has("van")
 		and maxf(_tips_off["dock"], _tips_off["van"]) <= WRAPPED,
 		("H12: his hands hold the handle, not rest on it: pushing on the dock and in the van "
@@ -547,7 +578,8 @@ func _track() -> void:
 	for name: String in ["mixamorig_LeftToeBase", "mixamorig_RightToeBase",
 			"mixamorig_LeftHand", "mixamorig_RightHand", "mixamorig_LeftHandMiddle1",
 			"mixamorig_RightHandMiddle1", "mixamorig_LeftArm", "mixamorig_RightArm",
-			"mixamorig_HeadTop_End", "mixamorig_Neck", "mixamorig_Hips"]:
+			"mixamorig_HeadTop_End", "mixamorig_Neck", "mixamorig_Hips", "mixamorig_LeftFoot",
+			"mixamorig_RightFoot", "mixamorig_LeftUpLeg", "mixamorig_RightUpLeg"]:
 		_bones[name] = _skeleton.find_bone(name)
 	for part: Array in BODY:
 		for joint: String in [part[0], part[1]]:
@@ -565,18 +597,22 @@ func _track() -> void:
 ## at the clip's own pace, so slowly as a push gets going, and while steering.
 func _on_pose() -> void:
 	_watch_post()
+	if _jack == null or not _jack_held():
+		_last_feet.clear()
 	if _jack != null and _jack_held():
 		var where := _segment if _segment != "" else "taking it"
 		var nearest := _tiller_clear()
 		if nearest.x < (_body_clear.get(where, Vector2(INF, 0.0)) as Vector2).x:
 			_body_clear[where] = nearest
-		if _segment in ["dock", "van"] and _since_clip > SETTLED:
+		_watch_feet()
+		if _segment in ["dock", "van"] and _since_clip > SETTLED and _segment == _clip_segment:
 			_tips_off[_segment] = maxf(_tips_off.get(_segment, 0.0), _tips_from_loop())
 	if _segment == "" or _jack == null:
 		return
 	var clip := str(_player.current_animation)
-	if clip != _last_clip:
+	if clip != _last_clip or _segment != _clip_segment:
 		_last_clip = clip
+		_clip_segment = _segment
 		_since_clip = 0
 		_clip_since = 0.0
 	_since_clip += 1
@@ -636,6 +672,28 @@ func _on_pose() -> void:
 
 ## How far the handle's rod and loop are outside Ethan's body at the nearest, and which of
 ## `BODY`'s parts that is (its index): below 0, the handle is inside him.
+## Each ankle's distance across the floor from its own hip, and how far it moved since his last
+## pose, while he holds the jack (H21), in the world, where a step's glide keeps his feet still as
+## his body steps up; counted afresh from each take, which sets him behind its handle.
+func _watch_feet() -> void:
+	var feet: Array[Vector3] = []
+	for side: String in ["Left", "Right"]:
+		var ankle := _bone_at("mixamorig_%sFoot" % side)
+		var hip := _bone_at("mixamorig_%sUpLeg" % side)
+		_feet_off = maxf(_feet_off, _flat(ankle - hip).length())
+		feet.append(ankle)
+	var mid := (_bone_at("mixamorig_LeftUpLeg") + _bone_at("mixamorig_RightUpLeg")) / 2.0
+	var left := _flat(_bone_at("mixamorig_LeftUpLeg") - _bone_at("mixamorig_RightUpLeg")) \
+		.normalized()
+	if _segment in ["dock", "van", "pull"]:
+		var least := minf((feet[0] - mid).dot(left), -(feet[1] - mid).dot(left))
+		_own_side[_segment] = minf(_own_side.get(_segment, INF), least)
+	if _last_feet.size() == 2:
+		for side in range(2):
+			_feet_jump = maxf(_feet_jump, feet[side].distance_to(_last_feet[side]))
+	_last_feet = feet
+
+
 func _tiller_clear() -> Vector2:
 	var hand: Node3D = _tiller if _tiller != null else _jack
 	var nearest := Vector2(INF, -1.0)
@@ -937,6 +995,257 @@ func _behind_the_handle() -> Vector3:
 
 func _flat(value: Vector3) -> Vector3:
 	return Vector3(value.x, 0.0, value.z)
+
+
+## E held for `seconds` and let go, as a hand on a hold-to-run button.
+func _hold_key(code: Key, seconds: float) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = true
+	Input.parse_input_event(event)
+	await process_frame
+	await _seconds(seconds)
+	var up := InputEventKey.new()
+	up.keycode = code
+	up.physical_keycode = code
+	up.pressed = false
+	Input.parse_input_event(up)
+	await process_frame
+	await process_frame
+
+
+## A dock lift moves only while its button is held (ANSI MH29.1's press-and-hold controls, as
+## Pentalift's two-button pendant): a short press moves it a little and it stops when let go,
+## the hint then offering to carry on; its pendant has UP, DOWN and a red emergency stop, and it
+## beeps while it moves and only then (H15, H16); it stops when he walks away (H17).
+func _check_hold_to_run() -> void:
+	var lift := _shed.get_node_or_null("Building/DockLift9") as Node3D
+	await _check_walk_away(lift)
+	var top := lift.global_position.y
+	await _hold_key(KEY_E, HOLD_TAP)
+	var after := lift.global_position.y
+	await _seconds(1.0)
+	var still := lift.global_position.y
+	var offer := _hint()
+	var beep := lift.find_child("LiftBeep", true, false) as AudioStreamPlayer3D
+	var quiet := beep != null and not beep.playing
+	var event := InputEventKey.new()
+	event.keycode = KEY_E
+	event.physical_keycode = KEY_E
+	event.pressed = true
+	Input.parse_input_event(event)
+	await _seconds(1.5)
+	var beeping := beep != null and beep.playing and beep.stream is AudioStreamWAV \
+		and (beep.stream as AudioStreamWAV).loop_mode == AudioStreamWAV.LOOP_FORWARD
+	var up := InputEventKey.new()
+	up.keycode = KEY_E
+	up.physical_keycode = KEY_E
+	up.pressed = false
+	Input.parse_input_event(up)
+	await _seconds(0.3)
+	var moved := top - after
+	_check(moved > 0.01 and moved < 0.15 and absf(still - after) < 0.002
+		and offer == "E  Hold to lower the lift", ("H15: held a moment, the lift moves %.3f m and "
+		+ "stops when let go (%.4f m in the next second); the hint offers to carry on (%s)")
+		% [moved, still - after, offer])
+	var buttons := ["PendantUp", "PendantDown", "PendantStop"].filter(func(label: String) -> bool:
+		return lift.find_child(label, true, false) != null)
+	var box := lift.find_child("LiftPendant", true, false) as Node3D
+	var face := 0.0
+	if box != null and buttons.has("PendantUp"):
+		var out := _flat((lift.find_child("PendantUp", true, false) as Node3D).global_position
+			- box.global_position).normalized()
+		face = out.dot(_flat(lift.global_position - box.global_position).normalized())
+	_check(buttons.size() == 3 and face > 0.5 and beeping and quiet, ("H16: its pendant has UP, "
+		+ "DOWN and a red emergency stop (%s), its buttons facing the deck he works it from (%.2f), "
+		+ "and its beep loops on while it moves (%s), silent when still (%s)")
+		% [buttons, face, beeping, quiet])
+
+
+## A hand pallet jack lifts only as its handle is pumped (Dayton's, Strongway's and U-Line's
+## pallet truck manuals: the lever at raise, the handle pumped up and down): taken, the pallet
+## stays on the floor and W cannot roll it; each E is one stroke, the handle rocked down and back
+## and the forks raised a step with the pump's knock; 3 to 7 strokes lift it clear (H18).
+func _check_pumping(load: Node3D, floor_y: float) -> void:
+	var tiller := _shed.find_child("Tiller", true, false) as Node3D
+	var taken := load.global_position.y - floor_y
+	var offer := _hint()
+	var jack := _shed.find_child("PalletJack", true, false) as Node3D
+	var stood := _flat(jack.global_position - _driver.global_position).length()
+	var start := _flat(load.global_position)
+	Input.action_press("accelerate")
+	await _seconds(0.8)
+	Input.action_release("accelerate")
+	await _seconds(0.4)
+	var dragged := _flat(load.global_position).distance_to(start)
+	var steps: Array[float] = []
+	var arc := 0.0
+	var knocked := 0
+	var strokes := 0
+	var pump := _shed.find_child("JackPump", true, false) as AudioStreamPlayer3D
+	while _hint() == "E  Pump the handle" and strokes < 10:
+		var rest := tiller.rotation.x if tiller != null else 0.0
+		await _key(KEY_E)
+		strokes += 1
+		var played := false
+		var time := 0.0
+		while time < STROKE:
+			if tiller != null:
+				arc = maxf(arc, rad_to_deg(absf(tiller.rotation.x - rest)))
+			played = played or (pump != null and pump.playing)
+			await physics_frame
+			time += 1.0 / 60.0
+		knocked += 1 if played else 0
+		steps.append(load.global_position.y - floor_y)
+		await _seconds(HINT_REFRESH)
+	var rising := true
+	for index in range(1, steps.size()):
+		rising = rising and steps[index] > steps[index - 1] + 0.002
+	await _seconds(STEPPED_IN)
+	var after := _hint()
+	var close := _flat(jack.global_position - _driver.global_position).length()
+	_check(taken < 0.003 and offer == "E  Pump the handle" and dragged < 0.01
+		and strokes >= PUMPS.x and strokes <= PUMPS.y and rising and arc >= PUMP_ARC
+		and knocked == strokes and after == "E  Set the pallet down" and stood >= STOOD_BACK
+		and close <= CLOSE_BEHIND,
+		("H18: taken, the jack leaves the pallet on the floor (%.3f m) and the hint offers to "
+		+ "pump it (%s), W not rolling it (%.3f m); standing back at arm's length (%.2f m behind "
+		+ "its middle), %d strokes of E (3 to 7), each rocking the handle %.0f° and knocking "
+		+ "(%d), raise it step by step %s; then, the lever back at neutral, the hint offers to set "
+		+ "it down (%s) and he steps in to the handle (%.2f m)") % [taken, offer, dragged, stood,
+		strokes, arc, knocked, str(steps), after, close])
+
+
+## Pumped up again: E until the hint stops offering to pump.
+func _pump() -> void:
+	var strokes := 0
+	while _hint() == "E  Pump the handle" and strokes < 10:
+		await _key(KEY_E)
+		await _seconds(STROKE + HINT_REFRESH)
+		strokes += 1
+	await _seconds(STEPPED_IN)
+
+
+## E opens the jack's lowering valve: the pallet sinks slowly onto what is under it, the oil
+## hissing back, not dropped at once; until it rests the hint offers nothing (H19).
+func _check_lowering(load: Node3D, under: Node3D) -> void:
+	var start := load.global_position.y - under.global_position.y
+	await _key(KEY_E)
+	await _seconds(SINKING)
+	var midway := load.global_position.y - under.global_position.y
+	var hiss := _shed.find_child("JackLower", true, false) as AudioStreamPlayer3D
+	var hissing := hiss != null and hiss.playing
+	var during := _hint()
+	await _seconds(LOWERED - SINKING)
+	var rested := load.global_position.y - under.global_position.y
+	var after := _hint()
+	_check(midway > 0.005 and midway < start - 0.003 and hissing and during.is_empty()
+		and absf(rested) < 0.01 and after == "E  Let go of the jack",
+		("H19: E opens the lowering valve: the pallet sinks slowly (%.3f m up, %.3f m after %.1f "
+		+ "s), the oil hissing back (%s), no other offer meanwhile (%s), and rests (%.3f m) "
+		+ "within %.1f s, then the hint offers to let go (%s)") % [start, midway, SINKING,
+		hissing, during, rested, LOWERED, after])
+
+
+## Strapping by hand (cargo securement guides: a ratchet strap hooked to a floor ring, thrown over
+## the load, hooked to the ring opposite and ratcheted tight): the hold has lashing rings in its
+## floor by each wall; for each of two straps the hint offers each step in turn, the hooks clack
+## into their rings and each pull of the ratchet clicks; the load counts as strapped only after
+## the last click, and then both straps run from a floor ring over its top to the ring opposite,
+## drawn tight, each with its ratchet (H20).
+func _check_strapping(load: Node3D) -> void:
+	var rings := _van.find_children("FloorRing*", "Node3D", true, false)
+	var by_walls := 0
+	for node in rings:
+		var at := _van.to_local((node as Node3D).global_position)
+		if absf(absf(at.x) - RING_X) < 0.06 and absf(at.y - HOLD_FLOOR.y) < 0.02:
+			by_walls += 1
+	var offers: Array[String] = []
+	var hooked := 0
+	var clicked := 0
+	var early := false
+	var hook := _shed.find_child("StrapHook", true, false) as AudioStreamPlayer3D
+	var click := _shed.find_child("RatchetClick", true, false) as AudioStreamPlayer3D
+	var presses := 0
+	while _hint().begins_with("E  ") and _hint() != "E  Let go of the jack" \
+			and _hint() != "E  Pull the jack out first" and presses < STRAP_PRESSES_MOST:
+		var offer := _hint().trim_prefix("E  ")
+		offers.append(offer)
+		await _key(KEY_E)
+		presses += 1
+		await process_frame
+		hooked += 1 if offer.begins_with("Hook") and hook != null and hook.playing else 0
+		clicked += 1 if offer.begins_with("Ratchet") and click != null and click.playing else 0
+		await _seconds(STRAP_STEP)
+		early = early or (load.has_meta("strapped") and presses < STRAP_ORDER.size() * 2)
+	var straps := load.find_children("LoadStrap*", "Node3D", false, false)
+	var anchored := 0
+	var tight := 0
+	var ratchets := 0
+	var top := _load_top(load)
+	for node in straps:
+		var strap_node := node as Node3D
+		for end: String in ["HookNear", "HookFar"]:
+			var tip := strap_node.get_node_or_null(end) as Node3D
+			for ring in rings:
+				if tip != null and tip.global_position.distance_to(
+						(ring as Node3D).global_position) < 0.05:
+					anchored += 1
+					break
+		var over := strap_node.get_node_or_null("OverTop") as Node3D
+		if over != null and absf(over.global_position.y - top) < 0.012 \
+				and float(strap_node.get_meta("slack", 1.0)) < 0.001:
+			tight += 1
+		ratchets += 1 if strap_node.get_node_or_null("Ratchet") != null else 0
+	var expected: Array[String] = []
+	for index in range(2):
+		expected.append_array(STRAP_ORDER)
+	_check(by_walls >= 4 and offers == expected and hooked == 4 and clicked == 8 and not early
+		and load.has_meta("strapped") and straps.size() == 2 and anchored == 4 and tight == 2
+		and ratchets == 2,
+		("H20: the hold has %d lashing rings in its floor by its walls; strapping by hand, the "
+		+ "hint offers %s; the hooks clack into the rings (%d of 4) and each pull of the ratchet "
+		+ "clicks (%d of 8); strapped only after the last click (%s early); then %d straps, "
+		+ "their hooks in floor rings (%d of 4), drawn tight over the top (%d), each with its "
+		+ "ratchet (%d)") % [by_walls, str(offers), hooked, clicked, early, straps.size(),
+		anchored, tight, ratchets])
+
+
+func _load_top(load: Node3D) -> float:
+	var body := load.get_node("LoadBody/Shape") as CollisionShape3D
+	return load.global_position.y + (body.shape as BoxShape3D).size.y + 0.1
+
+
+## With E held, Ethan walks off the deck onto the dock floor: his hand leaves the pendant, so the
+## lift stops where it is and falls silent, though the key is still down (H17). He walks back.
+func _check_walk_away(lift: Node3D) -> void:
+	var top := lift.global_position.y
+	var event := InputEventKey.new()
+	event.keycode = KEY_E
+	event.physical_keycode = KEY_E
+	event.pressed = true
+	Input.parse_input_event(event)
+	await _seconds(0.2)
+	var started := top - lift.global_position.y
+	await _walk(OFF_THE_DECK, 3.0)
+	var left := lift.global_position.y
+	await _seconds(1.0)
+	var still := lift.global_position.y
+	var beep := lift.find_child("LiftBeep", true, false) as AudioStreamPlayer3D
+	var quiet := beep != null and not beep.playing
+	var up := InputEventKey.new()
+	up.keycode = KEY_E
+	up.physical_keycode = KEY_E
+	up.pressed = false
+	Input.parse_input_event(up)
+	await process_frame
+	var off := _driver.global_position.x - lift.global_position.x
+	_check(started > 0.005 and absf(still - left) < 0.002 and top - still < 0.25 and quiet
+		and off > DECK_HALF, ("H17: with E held Ethan starts the lift (%.3f m), then walks off its "
+		+ "deck (%.2f m from its middle): it stops (%.4f m in the next second, %.3f m down) and "
+		+ "falls silent (%s), E still held") % [started, off, still - left, top - still, quiet])
+	await _walk([TO_THE_LIFT[TO_THE_LIFT.size() - 1]])
 
 
 func _key(code: Key) -> void:

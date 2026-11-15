@@ -262,6 +262,14 @@ func _hold() -> void:
 	_play("Idle", STAND_BLEND, 1.0)
 
 
+## Up to the handle from where he stood back to pump the jack up (#286), as after the load
+## stopped against something.
+func step_in() -> void:
+	if gait == Gait.STAND and _slack > STEP_CLOSE:
+		gait = Gait.STEP_IN
+		_play("Walk", STAND_BLEND, STEP_RATE)
+
+
 ## Up to the handle after the load stopped against something, his walk at half its pace, so he
 ## stands close to it, as on the lift's deck with it.
 func _step_in(delta: float) -> Vector2:

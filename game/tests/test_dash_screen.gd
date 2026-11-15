@@ -221,7 +221,7 @@ func _check_rear_view() -> void:
 			and not found.get_parent() is SubViewport)
 	await _shift()
 	var back: bool = _app.get_viewport().get_camera_3d() == _van.call("get_camera")
-	_check(reversing and at.z > 2.5 and at.y > 1.8 and looks.z > 0.8 and looks.y < 0.0
+	_check(reversing and at.z > 2.5 and at.y > 1.8 and looks.z > 0.6 and looks.y < 0.0
 		and guided and back and int(_van.get("gear")) > 0,
 		("In reverse (by the gear key: %s) the game's view is the van's rear camera, high on "
 		+ "its back (%s in the van's frame) looking back and down (%s), the parking guides over "

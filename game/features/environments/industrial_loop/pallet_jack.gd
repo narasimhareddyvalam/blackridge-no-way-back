@@ -1,8 +1,11 @@
 extends Node
 ## Bay 9's pallet jack in Ethan's hands (docs/PHASE_BRIEF.md, step 2e, rules H2 and H9; the
-## author's L1 c, #230): E at its handle takes it, lifting the load its forks are under; W and S
+## author's L1 c, #230): E at its handle takes it; under a load, its lever at raise, each E is a
+## stroke of the handle, rocked down and back with the pump's knock, and four strokes lift the load
+## clear (3 to 7 in Dayton's, Strongway's and U-Line's manuals, #286); W and S
 ## push and pull it, going where his feet take it (his push gait, #239-#240), and A and D steer
-## it as it rolls, turning it about its middle; E sets the load down, and E again lets go. He
+## it as it rolls, turning it about its middle; E sets the load down, the lever at lower letting
+## it sink over 1.2 s as the oil hisses back, and E again lets go. He
 ## takes it close to its handle, and as he gets going it runs out to his arm's length, both his
 ## hands on its handle's loop. Its handle tilts down to his hands as a real one does, and springs
 ## back upright when he lets go; its steering unit turns as he steers (step 2f, #244). It is
@@ -68,7 +71,38 @@ const LOAD_KG := 520.0
 const STRAP_REACH := 1.35
 const RADIUS := 0.3
 const STRAP := Color(0.9, 0.48, 0.1)
-const STRAP_AT: Array[float] = [-0.32, 0.32]
+const VanHold = preload("res://features/vehicles/freight_van/van_hold.gd")
+## Strapped by hand (#286): each strap hooked to a floor ring, thrown over, hooked to the ring
+## opposite and ratcheted tight, its slack taken up over RATCHET_CLICKS pulls; two straps, on the
+## two rings nearest the bulkhead on each side.
+const STRAPS := 2
+const RATCHET_CLICKS := 4
+const SLACK := 0.05
+const STRAP_WIDE := 0.05
+const STRAP_THICK := 0.004
+const STRAP_TEXTS: Array[String] = ["Hook the strap to the floor ring",
+	"Throw the strap over the load", "Hook it to the far ring", "Ratchet the strap tight"]
+const HOOK_SOUND = preload("res://features/audio/loading/strap_hook.wav")
+const CLICK_SOUND = preload("res://features/audio/loading/ratchet_click.wav")
+## A stroke lifts the handle from where his hands hold it up toward upright, at most FULL_STROKE,
+## and pulls it back down; PUMPS full strokes lift a load clear, shorter ones (where he stands
+## close and the handle is nearly upright already) lift less each, up to PUMPS_MOST strokes (3 to
+## 7 in the manuals). He stands to pump as far back as there is room, at most at arm's length.
+const PUMPS := 4
+const PUMPS_MOST := 7
+const STROKE := 0.5
+const FULL_STROKE := deg_to_rad(20.0)
+const STANCE_STEP := 0.05
+## Standing back to pump only where there is at least this much room behind his close stance.
+const STANCE_LEAST := 0.1
+## How long the lever takes back to neutral after the last stroke, E doing nothing meanwhile, so
+## a quick extra press does not open the lowering valve.
+const TO_NEUTRAL := 0.4
+## How long the lowering valve takes to let a load down.
+const LOWER_SECONDS := 1.2
+const PUMP_SOUND = preload("res://features/audio/loading/jack_pump.wav")
+const LOWER_SOUND = preload("res://features/audio/loading/jack_lower.wav")
+const SOUND_DB := -4.0
 
 var held := false
 var jack: Node3D
@@ -87,6 +121,23 @@ var _query := PhysicsShapeQueryParameters3D.new()
 var _box := BoxShape3D.new()
 var _stand := PhysicsShapeQueryParameters3D.new()
 var _capsule := CapsuleShape3D.new()
+## The load being pumped up, where it stood, the strokes so far and the time into this one (or -1);
+## the forks' height, 0 lowered to 1 raised; and the time into lowering (or -1).
+var _under: Node3D
+var _under_rest := Transform3D.IDENTITY
+var _strokes := 0
+var _pump_depth := FULL_STROKE
+var _stroke := -1.0
+var _forks := 0.0
+var _lowering := -1.0
+var _neutral := 0.0
+var _strap_index := 0
+var _strap_stage := 0
+var _clicks := 0
+var _hook_sound: AudioStreamPlayer3D
+var _click_sound: AudioStreamPlayer3D
+var _pump_sound: AudioStreamPlayer3D
+var _lower_sound: AudioStreamPlayer3D
 
 
 func setup(jack_node: Node3D, loads: Array[Node3D], building: Node3D, lift: Node3D) -> void:
@@ -103,6 +154,22 @@ func setup(jack_node: Node3D, loads: Array[Node3D], building: Node3D, lift: Node
 	_capsule.radius = RADIUS
 	_stand.shape = _capsule
 	_stand.collision_mask = ALL_BUT_CAMERA
+	_pump_sound = _sound("JackPump", PUMP_SOUND)
+	_lower_sound = _sound("JackLower", LOWER_SOUND)
+	_hook_sound = _sound("StrapHook", HOOK_SOUND)
+	_click_sound = _sound("RatchetClick", CLICK_SOUND)
+
+
+func _sound(label: String, stream: AudioStream) -> AudioStreamPlayer3D:
+	var player := AudioStreamPlayer3D.new()
+	player.name = label
+	player.stream = stream
+	player.volume_db = SOUND_DB
+	player.bus = &"Ambience"
+	player.unit_size = 3.0
+	player.position = Vector3(0.0, 0.3, 0.5)
+	jack.add_child(player)
+	return player
 
 
 ## The van it may load: neither the jack nor any load ever pushes it, and a load in its hold has
@@ -120,6 +187,14 @@ func reset(start: Transform3D) -> void:
 	if held:
 		let_go()
 	carried = null
+	_under = null
+	_stroke = -1.0
+	_lowering = -1.0
+	_neutral = 0.0
+	_forks = 0.0
+	_strap_index = 0
+	_strap_stage = 0
+	_clicks = 0
 	_reparent(jack, _building)
 	jack.global_transform = start
 	_rest_handle()
@@ -138,7 +213,7 @@ func stow(stack: Node3D) -> void:
 	if not is_instance_valid(van):
 		return
 	var depth := HOLD.position.y + LOAD_HALF.y + 0.002
-	_reparent(stack, van)
+	_reparent(stack, _van_body())
 	stack.transform = Transform3D(Basis.IDENTITY, Vector3(0.0, VAN_FLOOR, depth))
 	_solid(stack, false)
 	van.call("add_load", LOAD_KG, depth)
@@ -170,10 +245,14 @@ func reach(at: Vector3) -> float:
 
 func action(at: Vector3) -> String:
 	if held:
+		if _under != null:
+			return "Pump the handle"
+		if _lowering >= 0.0 or _neutral > 0.0:
+			return ""
 		if carried != null:
 			return _set_down_text()
 		if can_strap(at):
-			return "Strap the load"
+			return STRAP_TEXTS[mini(_strap_stage, STRAP_TEXTS.size() - 1)]
 		return "Pull the jack out first" if _in_van() else "Let go of the jack"
 	if reach(at) >= REACH:
 		return ""
@@ -189,31 +268,125 @@ func can_strap(at: Vector3) -> bool:
 	return van.to_local(at).z - back < STRAP_REACH
 
 
-## Two ratchet straps over the load in the hold, each from a floor ring across its top to the
-## floor ring opposite.
-func strap() -> void:
+## The next step of strapping the load in the hold by hand: hook the strap to its floor ring,
+## throw it over, hook the ring opposite, then each pull of the ratchet takes up some slack. True
+## once both straps are tight.
+func strap() -> bool:
 	var stack := _unstrapped()
-	if stack != null:
-		_strap(stack)
+	if stack == null:
+		return false
+	var strap_node := stack.get_node_or_null("LoadStrap%d" % (_strap_index + 1)) as Node3D
+	match _strap_stage:
+		0:
+			strap_node = Node3D.new()
+			strap_node.name = "LoadStrap%d" % (_strap_index + 1)
+			strap_node.set_meta("slack", SLACK)
+			stack.add_child(strap_node)
+			_hook_sound.play()
+		2:
+			_hook_sound.play()
+		3:
+			_clicks += 1
+			strap_node.set_meta("slack", SLACK * (1.0 - float(_clicks) / RATCHET_CLICKS))
+			_click_sound.play()
+	if _strap_stage < 3:
+		_strap_stage += 1
+	_draw_strap(stack, strap_node, _strap_index, _strap_stage)
+	if _strap_stage == 3 and _clicks >= RATCHET_CLICKS:
+		_strap_index += 1
+		_strap_stage = 0
+		_clicks = 0
+		if _strap_index >= STRAPS:
+			stack.set_meta("strapped", true)
+			changed.emit()
+			return true
+	changed.emit()
+	return false
 
 
+## Both straps on at once, tight, as a reload at stage 1 finds them.
 func _strap(stack: Node3D) -> void:
-	var size := _load_size(stack)
+	for index in range(STRAPS):
+		var strap_node := Node3D.new()
+		strap_node.name = "LoadStrap%d" % (index + 1)
+		strap_node.set_meta("slack", 0.0)
+		stack.add_child(strap_node)
+		_draw_strap(stack, strap_node, index, 3)
+	stack.set_meta("strapped", true)
+	changed.emit()
+
+
+## Strap `index` drawn as far as `stage`: 1 hooked to its floor ring and up the near side, 2 thrown
+## over the top, its far end hanging, 3 hooked to the ring opposite with its ratchet, as tight as
+## its slack says. In the load's frame, from the hold's rings.
+func _draw_strap(stack: Node3D, strap_node: Node3D, index: int, stage: int) -> void:
+	for old in strap_node.get_children():
+		old.free()
 	var webbing := StandardMaterial3D.new()
 	webbing.albedo_color = STRAP
 	webbing.roughness = 0.8
-	for index in range(STRAP_AT.size()):
-		var strap_node := Node3D.new()
-		strap_node.name = "LoadStrap%d" % (index + 1)
-		stack.add_child(strap_node)
-		var z := STRAP_AT[index]
-		for side: float in [-1.0, 1.0]:
-			_strip(strap_node, Vector3(side * (size.x / 2.0 + 0.005), size.y / 2.0, z),
-				Vector3(0.004, size.y, 0.05), webbing)
-		_strip(strap_node, Vector3(0.0, size.y + 0.004, z), Vector3(size.x + 0.01, 0.004, 0.05),
-			webbing)
-	stack.set_meta("strapped", true)
-	changed.emit()
+	var steel := StandardMaterial3D.new()
+	steel.albedo_color = Color(0.25, 0.26, 0.27)
+	steel.metallic = 0.7
+	steel.roughness = 0.4
+	var size := _load_size(stack)
+	var slack := float(strap_node.get_meta("slack", 0.0))
+	var ring_z: float = VanHold.RINGS_Z[index]
+	var near := _ring_in(stack, -1.0, ring_z)
+	var far := _ring_in(stack, 1.0, ring_z)
+	var top_y := size.y + STRAP_THICK / 2.0 + slack
+	var near_top := Vector3(-size.x / 2.0, top_y, near.z)
+	var far_top := Vector3(size.x / 2.0, top_y, near.z)
+	_hook(strap_node, "HookNear", near, steel)
+	_band(strap_node, "NearSide", near, near_top, webbing)
+	if stage >= 2:
+		_band(strap_node, "OverTop", near_top, far_top, webbing)
+		var hang := far if stage >= 3 else far + Vector3(-0.05, 0.25, 0.0)
+		_band(strap_node, "FarSide", far_top, hang, webbing)
+	if stage >= 3:
+		_hook(strap_node, "HookFar", far, steel)
+		var ratchet := MeshInstance3D.new()
+		var body := BoxMesh.new()
+		body.size = Vector3(0.05, 0.1, 0.06)
+		ratchet.mesh = body
+		ratchet.material_override = steel
+		ratchet.name = "Ratchet"
+		ratchet.position = near.lerp(near_top, 0.4) + Vector3(-0.03, 0.0, 0.0)
+		strap_node.add_child(ratchet)
+
+
+func _ring_in(stack: Node3D, side: float, ring_z: float) -> Vector3:
+	var in_van := Vector3(side * VanHold.RING_X, VanHold.FLOOR + 0.01, ring_z)
+	if not is_instance_valid(van):
+		return Vector3(side * VanHold.RING_X, 0.01, 0.0)
+	return stack.to_local(van.to_global(in_van))
+
+
+func _hook(parent: Node3D, label: String, at: Vector3, surface: Material) -> void:
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.03, 0.02, 0.04)
+	var piece := MeshInstance3D.new()
+	piece.name = label
+	piece.mesh = mesh
+	piece.material_override = surface
+	piece.position = at
+	parent.add_child(piece)
+
+
+## A length of webbing from `from` to `to`, lying across the load's depth.
+func _band(parent: Node3D, label: String, from: Vector3, to: Vector3, surface: Material) -> void:
+	var along := to - from
+	var up := along.normalized()
+	var across := Vector3.BACK
+	var side := up.cross(across).normalized()
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(STRAP_THICK, along.length(), STRAP_WIDE)
+	var piece := MeshInstance3D.new()
+	piece.name = label
+	piece.mesh = mesh
+	piece.material_override = surface
+	piece.transform = Transform3D(Basis(side, up, across), (from + to) / 2.0)
+	parent.add_child(piece)
 
 
 ## The load in the van's hold, if there is one.
@@ -239,50 +412,91 @@ func on_lift() -> Node3D:
 	return null
 
 
+## The van's body as drawn, settled under its load: a load in the hold rides with it (#287).
+func _van_body() -> Node3D:
+	return van.call("body") as Node3D if van.has_method("body") else van
+
+
+## Whether `stack` has a strap on it, tight or not.
+func _tied(stack: Node3D) -> bool:
+	return stack.has_meta("strapped") or stack.get_node_or_null("LoadStrap1") != null
+
+
 func _unstrapped() -> Node3D:
 	var stack := in_van()
 	return stack if stack != null and not stack.has_meta("strapped") else null
-
-
-func _strip(parent: Node3D, at: Vector3, size: Vector3, surface: Material) -> void:
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	var piece := MeshInstance3D.new()
-	piece.mesh = mesh
-	piece.material_override = surface
-	piece.position = at
-	parent.add_child(piece)
 
 
 func take() -> void:
 	if not _room_behind():
 		return
 	held = true
-	_reach = GRIP_BACK
+	_reach = _take_reach()
 	driver.set("pushing", true)
-	var at := _grip_spot(jack.global_transform)
+	var at := _grip_spot(jack.global_transform, _reach)
 	driver.global_position = Vector3(at.x, driver.global_position.y, at.z)
-	carried = _load_on_forks()
-	if carried != null:
-		if _inside_van(carried.global_position) and is_instance_valid(van):
-			van.call("remove_load", LOAD_KG, van.to_local(carried.global_position).z)
-		_solid(carried, true)
-		_reparent(carried, _building)
-		_reparent(jack, _building)
-		carried.global_transform = _load_pose(jack.global_transform)
-	else:
-		_reparent(jack, _building)
+	var under := _load_on_forks()
+	_reparent(jack, _building)
+	if under != null and not _tied(under):
+		_under = under
+		_under_rest = under.global_transform
+		_strokes = 0
+		_forks = 0.0
 	changed.emit()
 
 
-func set_down() -> void:
-	if carried == null:
+## One stroke of the handle, the lever at raise: the forks go up a step at its end.
+func pump() -> void:
+	if _under == null or _stroke >= 0.0:
 		return
+	_stroke = 0.0
+	_pump_depth = minf(FULL_STROKE, _tiller.rotation.x) if _tiller != null else FULL_STROKE
+	_pump_sound.play()
+
+
+func _stroked(delta: float) -> void:
+	_stroke += delta
+	if _stroke < STROKE:
+		return
+	_stroke = -1.0
+	_strokes += 1
+	_forks = minf(_forks + _pump_depth / (PUMPS * FULL_STROKE), 1.0)
+	if _strokes >= PUMPS_MOST:
+		_forks = 1.0
+	_under.global_transform = _under_rest.translated(Vector3.UP * LIFT * _forks)
+	if _forks < 0.999:
+		return
+	carried = _under
+	_under = null
+	if _inside_van(carried.global_position) and is_instance_valid(van):
+		van.call("remove_load", LOAD_KG, van.to_local(carried.global_position).z)
+	_solid(carried, true)
+	_reparent(carried, _building)
+	carried.global_transform = _load_pose(jack.global_transform)
+	driver.call("push_step_in")
+	_neutral = TO_NEUTRAL
+	changed.emit()
+
+
+## The lever at lower: the load sinks with the forks over LOWER_SECONDS, then rests where it is.
+func set_down() -> void:
+	if carried == null or _lowering >= 0.0 or _neutral > 0.0:
+		return
+	_lowering = 0.0
+	_lower_sound.play()
+	changed.emit()
+
+
+func _lowered(delta: float) -> void:
+	_lowering += delta
+	_forks = clampf(1.0 - _lowering / LOWER_SECONDS, 0.0, 1.0)
+	carried.global_transform = _load_pose(jack.global_transform)
+	if _lowering < LOWER_SECONDS:
+		return
+	_lowering = -1.0
 	var pose := carried.global_transform
-	pose.origin.y -= LIFT
-	carried.global_transform = pose
 	if _inside_van(pose.origin):
-		_reparent(carried, van)
+		_reparent(carried, _van_body())
 		_solid(carried, false)
 		van.call("add_load", LOAD_KG, van.to_local(pose.origin).z)
 	else:
@@ -310,8 +524,16 @@ func let_go() -> void:
 func _physics_process(delta: float) -> void:
 	if not held or not is_instance_valid(driver):
 		return
+	_neutral = maxf(_neutral - delta, 0.0)
+	if _stroke >= 0.0:
+		_stroked(delta)
+	if _lowering >= 0.0 and carried != null:
+		_lowered(delta)
 	var steer := Input.get_axis("steer_right", "steer_left")
 	var drive := Input.get_action_strength("accelerate") - Input.get_action_strength("brake")
+	if _under != null or _lowering >= 0.0:
+		steer = 0.0
+		drive = 0.0
 	var pose := jack.global_transform
 	var ahead := _ahead(pose)
 	var arms := VAN_REACH if bool(driver.get("stooping")) else (PULL_REACH if drive < 0.0
@@ -382,7 +604,10 @@ func _turn_handle(steer: float, delta: float) -> void:
 		var grip: Vector2 = driver.call("push_grip")
 		tilt = clampf(atan2(_reach - grip.x - TILLER_FOOT.y, grip.y - TILLER_FOOT.x), 0.0,
 			TILT_MOST)
-	_tiller.rotation.x = move_toward(_tiller.rotation.x, tilt, TILT_RATE * delta)
+	if _stroke >= 0.0:
+		_tiller.rotation.x = maxf(tilt - _pump_depth * sin(PI * _stroke / STROKE), 0.0)
+	else:
+		_tiller.rotation.x = move_toward(_tiller.rotation.x, tilt, TILT_RATE * delta)
 	_steering.rotation.y = move_toward(_steering.rotation.y, -steer * STEER_SWING,
 		STEER_RATE * delta)
 
@@ -496,16 +721,34 @@ func _in_van() -> bool:
 		or (absf(standing.x) < VAN_SIDE and standing.z < VAN_REAR + CLEAR)
 
 
-func _grip_spot(pose: Transform3D) -> Vector3:
-	return pose.origin - _ahead(pose) * GRIP_BACK
+func _grip_spot(pose: Transform3D, reach: float = GRIP_BACK) -> Vector3:
+	return pose.origin - _ahead(pose) * reach
+
+
+## How far behind the jack taking it puts him: to pump a load up, as far back as there is room up
+## to arm's length; else close behind its handle.
+func _take_reach() -> float:
+	var under := _load_on_forks()
+	if under == null or _tied(under):
+		return GRIP_BACK
+	var reach := PUSH_REACH
+	while reach >= GRIP_BACK + STANCE_LEAST:
+		if _room_at(reach):
+			return reach
+		reach -= STANCE_STEP
+	return GRIP_BACK
 
 
 ## Whether Ethan can stand behind the handle where taking the jack puts him: a floor under that
 ## spot at his level, and room there for him.
 func _room_behind() -> bool:
+	return _room_at(GRIP_BACK)
+
+
+func _room_at(reach: float) -> bool:
 	if not is_instance_valid(driver):
 		return false
-	var spot := _grip_spot(jack.global_transform)
+	var spot := _grip_spot(jack.global_transform, reach)
 	spot.y = driver.global_position.y
 	var exclude: Array[RID] = [driver.get_rid()]
 	for holder: Node3D in [jack] + _loads:
@@ -560,7 +803,7 @@ func _load_on_forks() -> Node3D:
 func _load_pose(pose: Transform3D) -> Transform3D:
 	var ahead := _ahead(pose)
 	return Transform3D(Basis(Vector3.UP, atan2(ahead.x, ahead.z)),
-		pose.origin + ahead * LOAD_AHEAD + Vector3.UP * LIFT)
+		pose.origin + ahead * LOAD_AHEAD + Vector3.UP * LIFT * _forks)
 
 
 func _load_size(stack: Node3D) -> Vector3:

@@ -1,0 +1,14 @@
+test_materials.gd:60:0
+test_cockpit.gd:60:0
+test_on_foot.gd:60:0
+test_crossing.gd:60:0
+test_dash_screen.gd:60:0
+test_menus.gd:60:0
+test_loading.gd:60:0
+test_rear_doors.gd:60:0
+test_wet_ground.gd:60:0
+test_town.gd:60:0
+test_wiper_flick_config.gd:60:0
+test_exhaust_vapour_config.gd:60:0
+test_lamp_rain_state.gd:60:0
+test_night_dimming.gd:60:0

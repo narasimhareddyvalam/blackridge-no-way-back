@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/parking_guides.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d3/game/features/vehicles/freight_van/parking_guides.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/parking_guides.gd	2026-11-14 18:10:47
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d3/game/features/vehicles/freight_van/parking_guides.gd	2026-11-14 18:15:01
+@@ -14,7 +14,7 @@
+ ## plate, laid from the dock to the van's sill at its middle, rests at least 0.10 m (4 in) onto its
+ ## floor even with the van 3° from square, the most a bay allows.
+ const STOP_LINE := 0.10
+-const HALF_WIDTH := 1.0
++const HALF_WIDTH := 1.9
+ const REACH := 3.0
+ const STEP := 0.25
+ const TICK := 0.25

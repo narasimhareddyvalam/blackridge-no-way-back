@@ -1,0 +1,5 @@
+Step 4 (1 and 4) mutations, each on an APFS clone, test_loading.gd at 60 fps:
+m5  the beep plays once, not looped                         exit 1, 30/31 passed; 1 failed
+      FAIL: H16: its pendant has UP, DOWN and a red emergency stop (["PendantUp", "PendantDown", "PendantStop"]), and its 
+m6  no emergency stop on the pendant                        exit 1, 30/31 passed; 1 failed
+      FAIL: H16: its pendant has UP, DOWN and a red emergency stop (["PendantUp", "PendantDown"]), and its beep loops on w

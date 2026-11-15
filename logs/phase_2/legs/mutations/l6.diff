@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/driver/stair_steps.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutLegs/l4/l6/game/features/characters/driver/stair_steps.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/driver/stair_steps.gd	2026-11-15 07:26:08
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutLegs/l4/l6/game/features/characters/driver/stair_steps.gd	2026-11-15 07:31:22
+@@ -66,7 +66,7 @@
+ const ALONG := 0.5
+ ## His hips' ground set between his feet's treads (0 the lower, 1 the higher), as a man on a stair
+ ## keeps his hips between his feet; his legs' reach lowers them further if the lower one needs it.
+-const BETWEEN := 0.5
++const BETWEEN := 0.0
+ 
+ var stair: Dictionary = {}
+ var hurry := false

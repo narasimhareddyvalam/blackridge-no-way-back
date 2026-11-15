@@ -12,8 +12,13 @@ extends Node
 signal changed
 
 const CENTRE_X := -47.75
+const TransferBuilding = preload("transfer_building.gd")
+## The dock's two bumpers, either side of the bay's centre line.
+const BUMPER_X := TransferBuilding.VAN_BUMPER_OFF
 const BUMPERS_Z := 20.13
-const DOCKED_WITHIN := 0.3
+const ParkingGuides = preload("res://features/vehicles/freight_van/parking_guides.gd")
+## Docked within the reversing camera's red stop line (#287): one distance for both.
+const DOCKED_WITHIN := ParkingGuides.STOP_LINE
 const SQUARE_WITHIN := 3.0
 const CENTRED_WITHIN := 0.1
 const GENTLE := 1.4
@@ -37,6 +42,8 @@ var vehicle: CharacterBody3D
 var _building: Node3D
 var _chock: Node3D
 var _lift: Node3D
+## Whose hand is on the pendant's button, or null: the lift stops when E is let go or he leaves.
+var _holder: Node3D
 var _rest := Transform3D()
 var _arrived := 0.0
 var _still := 0.0
@@ -63,14 +70,20 @@ func reset() -> void:
 
 ## What E does to the lift for Ethan at `at`, on its deck, by its pendant, or "".
 func lift_action(at: Vector3) -> String:
-	if _lift == null or bool(_lift.call("moving")):
+	if _lift == null or bool(_lift.call("moving")) or not _at_controls(at):
 		return ""
+	if bool(_lift.call("travelling")):
+		return "Hold to raise the lift" if bool(_lift.call("rising")) \
+			else "Hold to lower the lift"
+	return "Hold to lower the lift" if bool(_lift.call("at_top")) else "Hold to raise the lift"
+
+
+## Whether Ethan at `at` can work the lift: on its deck or within reach of its pendant.
+func _at_controls(at: Vector3) -> bool:
 	var deck := _lift.global_position
 	var on_deck := absf(at.x - deck.x) < ON_DECK.x and absf(at.z - deck.z) < ON_DECK.y \
 		and absf(at.y - deck.y) < 0.3
-	if not on_deck and pendant_reach(at) > REACH:
-		return ""
-	return "Lower the lift" if bool(_lift.call("at_top")) else "Raise the lift"
+	return on_deck or pendant_reach(at) <= REACH
 
 
 ## How far Ethan at `at` is from the lift's pendant, across the deck, or INF on another level.
@@ -81,12 +94,17 @@ func pendant_reach(at: Vector3) -> float:
 	return Vector2(at.x - spot.x, at.z - spot.z).length()
 
 
-func operate_lift() -> void:
+## E pressed at the pendant by `holder`, who holds the button until he lets go or leaves.
+func operate_lift(holder: Node3D = null) -> void:
+	_holder = holder if holder != null else _lift
+	if bool(_lift.call("travelling")):
+		_lift.call("resume")
+		return
+	_lift.call("hold", true)
 	if bool(_lift.call("at_top")):
 		var docked := verdict == "docked" and is_instance_valid(vehicle)
-		var level := vehicle.to_global(HOLD_FLOOR).y if docked else LOWEST
-		var sill: Vector3 = vehicle.call("sill") if docked else Vector3.INF
-		_lift.call("lower", level, docked, sill)
+		var level := (vehicle.call("floor_point", HOLD_FLOOR) as Vector3).y if docked else LOWEST
+		_lift.call("lower", level, docked, vehicle if docked else null)
 	else:
 		_lift.call("raise")
 
@@ -128,6 +146,11 @@ func unchock() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _holder != null and (not Input.is_action_pressed("interact")
+			or not is_instance_valid(_holder)
+			or (_holder != _lift and not _at_controls(_holder.global_position))):
+		_holder = null
+		_lift.call("hold", false)
 	if not is_instance_valid(vehicle):
 		return
 	if chocked:
@@ -159,7 +182,11 @@ func _physics_process(delta: float) -> void:
 		_judge(rear, gap)
 
 
-func _judge(rear: Vector3, gap: float) -> void:
+func _judge(rear: Vector3, centre_gap: float) -> void:
+	var gap := centre_gap
+	var across := vehicle.global_basis.x.normalized()
+	for side: float in [-1.0, 1.0]:
+		gap = minf(gap, (rear + across * side * BUMPER_X).z - BUMPERS_Z)
 	var square := rad_to_deg(acos(clampf(-vehicle.global_basis.z.normalized().z, -1.0, 1.0)))
 	var offset := absf(rear.x - CENTRE_X)
 	measured = {"gap": maxf(gap, 0.0), "angle": square, "offset": offset, "arrived": _arrived}

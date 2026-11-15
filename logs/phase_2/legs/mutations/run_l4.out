@@ -1,0 +1,7 @@
+l4  the crouch keeps stale ankles                    test_loading.gd exit 1, 33/35 passed; 2 failed
+      FAIL: H22: pushing on the dock, stooped in the hold and pulling out, each foot stays on its own side, its ankle at l
+      FAIL: H21: all the time he holds the jack, on the dock and stooped in the hold, each foot stays under him, at most 0
+l5  the swinging foot lifted by the walk on top of its arc test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S16 down the flight his knees bend at most to 48° (at least 68°, 179 frames)
+l6  his hips lowered to the lower foot               test_stair.gd exit 1, 32/33 passed; 1 failed
+      FAIL: S16 down the flight his knees bend at most to 61° (at least 68°, 179 frames)

@@ -57,8 +57,10 @@ const REVERSE_LAMP := Vector3(0.86, 1.0, 2.84)
 const REVERSE_ENERGY := 6.0
 const REVERSE_RANGE := 14.0
 const REVERSE_GAIN := 3.0
-const REVERSE_CAMERA := Vector3(0, 2.15, 3.0)
-const REVERSE_TURN := Vector3(-0.28, PI, 0)
+## The reversing camera on the roof's rear edge, where the Daily's sits in its third brake
+## light, tilted 45° down so its bumper shows along the picture's bottom (#287).
+const REVERSE_CAMERA := Vector3(0, 2.22, 2.84)
+const REVERSE_TURN := Vector3(-PI / 4.0, PI, 0)
 const REVERSE_FIELD := 85.0
 const TAIL_GLOW := Vector2(0.25, 1.0)
 const TAIL_GLOW_RANGE := 5.0
@@ -416,7 +418,7 @@ func _displays() -> void:
 	_powered_views.append_array([instruments, gps])
 	reverse_view = _camera_view(REVERSE_CAMERA, REVERSE_TURN, REVERSE_PIXELS, REVERSE_FIELD)
 	reverse_view.get_camera_3d().cull_mask = 7
-	reverse_view.add_child(ParkingGuides.new())
+	reverse_view.add_child(_parking_guides())
 	var low_light := CameraAttributesPractical.new()
 	low_light.exposure_multiplier = REVERSE_GAIN
 	mirror_cameras[mirror_cameras.size() - 1].attributes = low_light
@@ -445,9 +447,15 @@ func _rear_view(low_light: CameraAttributes) -> void:
 	_rear_guides = CanvasLayer.new()
 	_rear_guides.name = "RearCameraGuides"
 	_rear_guides.layer = -1
-	_rear_guides.add_child(ParkingGuides.new())
+	_rear_guides.add_child(_parking_guides())
 	_rear_guides.visible = false
 	add_child(_rear_guides)
+
+
+func _parking_guides() -> Control:
+	var guides := ParkingGuides.new()
+	guides.van = vehicle
+	return guides
 
 
 ## In reverse, with the driver at the wheel, the game's view is the rear camera; out of it, his
@@ -1270,6 +1278,9 @@ func _follow_ground(delta: float) -> void:
 	_tilt = _tilt.lerp(target, 1.0 - exp(-delta * TILT_RATE))
 	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x + _rock, 0.0, _tilt.z)),
 		Vector3(0.0, _tilt.y, 0.0))
+	var hold := vehicle.get_node_or_null("Hold") as Node3D
+	if hold != null:
+		hold.transform = transform
 
 
 ## How much of the load's weight the rear axle carries, by where the load stands between the

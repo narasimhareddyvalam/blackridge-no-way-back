@@ -1,0 +1,7 @@
+Step 4 (2 and 3) mutations, each on an APFS clone, test_loading.gd at 60 fps:
+m7  one stroke lifts the load                               exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+m8  the handle does not rock as he pumps                    exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand
+m9  W rolls the pallet still on the floor                   exit 1, 32/33 passed; 1 failed
+      FAIL: H18: taken, the jack leaves the pallet on the floor (0.000 m) and the hint offers to pump it (E  Pump the hand

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/parking_guides.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d1/game/features/vehicles/freight_van/parking_guides.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/parking_guides.gd	2026-11-14 18:10:47
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutDock/d1/d1/game/features/vehicles/freight_van/parking_guides.gd	2026-11-14 18:14:40
+@@ -127,7 +127,7 @@
+ 	var point: Vector3 = hit["position"]
+ 	if last != INF and absf(point.y - last) > RISE_MOST:
+ 		return Vector3.INF
+-	return point + Vector3.UP * ABOVE
++	return point + Vector3.UP * 0.5
+ 
+ 
+ func _add(found: Array, camera: Camera3D, space: PhysicsDirectSpaceState3D, from: Vector3,

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutJack/m10/m10/game/features/environments/industrial_loop/pallet_jack.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-14 17:10:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutJack/m10/m10/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-14 17:12:13
+@@ -99,7 +99,7 @@
+ ## a quick extra press does not open the lowering valve.
+ const TO_NEUTRAL := 0.4
+ ## How long the lowering valve takes to let a load down.
+-const LOWER_SECONDS := 1.2
++const LOWER_SECONDS := 0.01
+ const PUMP_SOUND = preload("res://features/audio/loading/jack_pump.wav")
+ const LOWER_SOUND = preload("res://features/audio/loading/jack_lower.wav")
+ const SOUND_DB := -4.0

@@ -3,7 +3,10 @@ extends AnimatableBody3D
 ## pit behind the van bay's door, as real sites fit for vans, whose floors stand below a truck
 ## dock. Its steel deck, 1.83 x 2.44 m (6 x 8 ft), rests flush with the dock floor, its edges
 ## painted in yellow and black stripes, and carries whoever stands on it. Worked from its pendant,
-## it travels down to a van's floor and back up at about 0.14 m/s; its hinged bridge plate, 36 in
+## it travels down to a van's floor and back up at about 0.14 m/s while its button is held, and
+## stops where it is when let go (ANSI MH29.1's press-and-hold controls, as Pentalift's standard
+## two-button pendant: UP and DOWN, with a red emergency stop), beeping while it moves (#286);
+## its hinged bridge plate, 36 in
 ## (0.91 m) long as dock lifts offer for reaching into a vehicle, stored upright as a toe guard,
 ## comes down once the deck is there and rests on the van's rear sill, reaching over it onto the
 ## floor, and stands up again before it rises. The plate is solid on the van's layer, which the
@@ -23,14 +26,19 @@ const LIP_SECONDS := 0.8
 const STORED := -PI / 2.0
 const PENDANT := Vector3(-0.865, 0.0, -1.02)
 const POST := Vector2(0.02, 1.0)
+const BEEP = preload("res://features/audio/loading/lift_beep.wav")
+const BEEP_DB := -6.0
 
 var top := 0.0
+## Whether its button is being held: it moves only then.
+var held := false
 
 var _target := 0.0
 var _lip := 0.0
 var _lip_wanted := 0.0
 var _deploy := false
 var _rest := 0.0
+var _van: Node3D
 var _pivot: Node3D
 var _guard: CollisionShape3D
 
@@ -78,9 +86,30 @@ func build() -> void:
 		Vector3(POST.x * 2.0, 1.2, POST.x * 2.0))
 	var pendant := Build.box(self, PENDANT + Vector3.UP * 1.08, Vector3(0.1, 0.2, 0.07), casing)
 	pendant.name = "LiftPendant"
-	for height: float in [0.04, -0.04]:
-		Build.box(pendant, Vector3(0.0, height, -0.04), Vector3(0.04, 0.04, 0.012),
-			Build.material(Color(0.06, 0.06, 0.06), 0.5)).name = "Button"
+	var black := Build.material(Color(0.06, 0.06, 0.06), 0.5)
+	for button: Array in [["PendantUp", 0.035, "UP"], ["PendantDown", -0.035, "DOWN"]]:
+		var knob := Build.box(pendant, Vector3(0.0, button[1], 0.04), Vector3(0.04, 0.04, 0.012),
+			black)
+		knob.name = button[0]
+		var label := Label3D.new()
+		label.text = button[2]
+		label.font_size = 24
+		label.pixel_size = 0.0008
+		label.modulate = Color(0.08, 0.08, 0.08)
+		label.outline_size = 0
+		label.position = Vector3(0.0, float(button[1]) + 0.03, 0.0351)
+		pendant.add_child(label)
+	var stop := Build.cylinder(pendant, Vector3(0.0, 0.112, 0.0), 0.022, 0.024,
+		Build.material(Color(0.75, 0.05, 0.04), 0.4))
+	stop.name = "PendantStop"
+	var beep := AudioStreamPlayer3D.new()
+	beep.name = "LiftBeep"
+	beep.stream = BEEP
+	beep.volume_db = BEEP_DB
+	beep.bus = &"Ambience"
+	beep.unit_size = 4.0
+	beep.position = Vector3(0.0, -0.3, 0.0)
+	add_child(beep)
 
 
 func pendant() -> Vector3:
@@ -97,17 +126,40 @@ func at_bottom() -> bool:
 
 
 func moving() -> bool:
+	return held and travelling()
+
+
+## Whether its way is up: toward the dock floor.
+func rising() -> bool:
+	return is_equal_approx(_target, top)
+
+
+## Whether it is away from its top and its bottom, moving or stopped between them.
+func travelling() -> bool:
 	return not at_top() and not at_bottom()
+
+
+## Its button held (`on`) or let go: it moves only while held.
+func hold(on: bool) -> void:
+	held = on
+
+
+## Its button pressed again where it stopped: on toward where it was going.
+func resume() -> void:
+	held = true
 
 
 ## Down to the height `level` (a van's floor), the bridge plate laid on it if `deploy`: on the
 ## edge `support` (the van's rear sill) if the plate reaches it, else flat.
-func lower(level: float, deploy: bool, support := Vector3.INF) -> void:
+## Down to `level`, its plate laid onto the sill of `van` (`sill()`) when `deploy`, kept resting
+## on it as the van settles under its load (#287).
+func lower(level: float, deploy: bool, van: Node3D = null) -> void:
 	if at_top():
 		_target = level
 		_deploy = deploy
+		_van = van
 		_lip_wanted = 0.0
-		_rest = _rest_on(level, support)
+		_rest = _rest_on(level, _support())
 
 
 ## The plate's body, which a pallet jack rolls over once the plate is down.
@@ -126,22 +178,40 @@ func raise() -> void:
 
 
 func reset() -> void:
+	held = false
 	position.y = top
 	_target = top
 	_lip = 0.0
 	_lip_wanted = 0.0
+	_van = null
 	_pivot.rotation.x = STORED
 
 
 func _physics_process(delta: float) -> void:
+	if _lip >= 1.0 and _lip_wanted >= 1.0 and is_instance_valid(_van):
+		_rest = _rest_on(global_position.y, _support())
+		_pivot.rotation.x = -_rest
 	if not is_equal_approx(_lip, _lip_wanted):
 		_lip = move_toward(_lip, _lip_wanted, delta / LIP_SECONDS)
 		_pivot.rotation.x = lerpf(STORED, -_rest, smoothstep(0.0, 1.0, _lip))
 		return
+	var beeping := false
 	if not is_equal_approx(position.y, _target):
-		position.y = move_toward(position.y, _target, SPEED * delta)
+		if held:
+			position.y = move_toward(position.y, _target, SPEED * delta)
+			beeping = true
 	elif _target < top and _deploy and _lip_wanted == 0.0:
 		_lip_wanted = 1.0
+	var beep := get_node_or_null("LiftBeep") as AudioStreamPlayer3D
+	if beep != null and beep.playing != beeping:
+		if beeping:
+			beep.play()
+		else:
+			beep.stop()
+
+
+func _support() -> Vector3:
+	return _van.call("sill") if is_instance_valid(_van) else Vector3.INF
 
 
 ## The angle, tip up, at which the plate laid from the deck at `level` comes to rest with its

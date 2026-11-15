@@ -60,6 +60,7 @@ const THE_STAIR := [Vector3(-40.5, 2.35, 15.5), Vector3(-44.2, 1.1, 14.6), 60.0]
 const THE_LIFT_DOWN := [Vector3(-45.5, 2.5, 16.6), Vector3(-47.75, 0.6, 20.0), 60.0]
 const FROM_THE_BULKHEAD := [Vector3(-47.75, 1.95, 22.75), Vector3(-47.75, 1.0, 19.4), 72.0]
 const DOWN_THE_HOLD := [Vector3(-47.45, 1.9, 19.55), Vector3(-47.75, 0.9, 22.6), 70.0]
+const OVER_THE_LOAD := [Vector3(0.72, 1.95, -0.15), Vector3(-0.3, 1.1, 0.8), 80.0]
 const THE_WORKER := [Vector3(-44.9, 1.8, 21.3), Vector3(-47.75, 1.1, 23.1), 55.0]
 
 
@@ -240,7 +241,9 @@ func _loading() -> void:
 	await _walk(ROUND_THE_LOAD)
 	await _key(KEY_E)
 	await _seconds(0.8)
-	await _side("taken_close_to_the_handle")
+	await _side("taken_standing_back_to_pump")
+	await _pump(true)
+	await _side("pumped_up_and_stepped_in_close")
 	await _push_to(PAST_THE_GUARD, 25.0, 2.0, 0.9)
 	await _side("leaning_in_to_get_it_going")
 	await _push_to(PAST_THE_GUARD, 25.0, 2.0, 1.6)
@@ -251,15 +254,22 @@ func _loading() -> void:
 	await _side("against_the_toe_guard_stepped_up_to_it")
 	await _key(KEY_E)
 	await _seconds(0.5)
+	await _side("the_lowering_valve_open_the_pallet_sinking")
+	await _seconds(1.1)
 	await _key(KEY_E)
 	await _seconds(0.8)
 	await _to_the_pendant()
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	var pendant: Vector3 = _shed.get_node("Building/DockLift9").call("pendant") + Vector3.UP * 1.08
+	await _view("the_pendant_up_down_and_its_stop", [pendant + Vector3(0.35, 0.12, 0.45), pendant,
+		35.0])
+	await _hold_key(KEY_E, TRAVEL * 0.4)
+	await _view("held_the_lift_going_down_beeping", THE_LIFT_DOWN)
+	await _hold_key(KEY_E, TRAVEL * 0.6)
 	await _view("the_lift_down_its_plate_on_the_sill", THE_LIFT_DOWN)
 	await _walk([_behind_the_handle()])
 	await _key(KEY_E)
 	await _seconds(0.8)
+	await _pump(false)
 	await _push_to(TO_THE_BULKHEAD, 25.0, 0.8, 5.6)
 	await _view("into_the_van_stooped", FROM_THE_BULKHEAD)
 	await _eye("into_the_van_from_ethans_camera")
@@ -267,17 +277,53 @@ func _loading() -> void:
 	await _seconds(1.5)
 	await _view("against_the_bulkhead_stooped", DOWN_THE_HOLD)
 	await _key(KEY_E)
-	await _seconds(0.5)
-	await _key(KEY_E)
-	await _seconds(0.8)
-	await _view("strapped_down", DOWN_THE_HOLD)
+	await _seconds(1.6)
+	await _strap_by_hand()
+	await _view_by_van("strapped_down", OVER_THE_LOAD)
+	await _view("strapped_down_from_the_doors", DOWN_THE_HOLD)
 	await _pull(3.4, [[3.0, "pulling_out_stooped", FROM_THE_BULKHEAD],
 		[8.5, "out_and_walking_back_upright", []]])
 	await _key(KEY_E)
 	await _seconds(2.0)
 	await _to_the_pendant()
-	await _key(KEY_E)
-	await _seconds(TRAVEL)
+	await _hold_key(KEY_E, TRAVEL)
+
+
+## The jack pumped up, E a stroke at a time while the hint offers it, a still from beside at the
+## bottom and top of the first stroke when `stills`; then he steps in to the handle.
+func _pump(stills: bool) -> void:
+	var strokes := 0
+	while _hint_text() == "E  Pump the handle" and strokes < 10:
+		await _key(KEY_E)
+		if stills and strokes == 0:
+			await _seconds(0.2)
+			await _side("pumping_the_handle_lifted")
+			await _seconds(0.4)
+		else:
+			await _seconds(0.6)
+		strokes += 1
+	await _seconds(1.0)
+	_report.append("pumped up in %d strokes" % strokes)
+
+
+## Both straps by hand, E a step at a time, a still over the load after each of the first
+## strap's hook, throw and far hook.
+func _strap_by_hand() -> void:
+	var presses := 0
+	var stems := {1: "hooked_to_the_floor_ring", 2: "thrown_over_the_load",
+		3: "hooked_to_the_far_ring"}
+	while _hint_text().begins_with("E  ") and _hint_text() != "E  Let go of the jack" \
+			and _hint_text() != "E  Pull the jack out first" and presses < 20:
+		await _key(KEY_E)
+		presses += 1
+		await _seconds(0.45)
+		if stems.has(presses):
+			await _view_by_van(stems[presses], OVER_THE_LOAD)
+	_report.append("strapped by hand in %d presses" % presses)
+
+
+func _hint_text() -> String:
+	return (_hud.get("_hint") as Label).text
 
 
 ## The empty jack put back after the ride up: from behind its handle wherever it stands on the
@@ -584,6 +630,22 @@ func _key(code: Key) -> void:
 		event.set_meta(SENT, true)
 		Input.parse_input_event(event)
 		await process_frame
+	await process_frame
+	await process_frame
+
+
+## E held `seconds` at the pendant: the lift moves only while its button is held (#286).
+func _hold_key(code: Key, seconds: float) -> void:
+	for pressed in [true, false]:
+		var event := InputEventKey.new()
+		event.keycode = code
+		event.physical_keycode = code
+		event.pressed = pressed
+		event.set_meta(SENT, true)
+		Input.parse_input_event(event)
+		await process_frame
+		if pressed:
+			await _seconds(seconds)
 	await process_frame
 	await process_frame
 
