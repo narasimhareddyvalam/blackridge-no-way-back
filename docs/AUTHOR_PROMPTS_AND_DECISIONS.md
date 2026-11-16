@@ -4118,12 +4118,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** what next; **the author chose** "Commit, then plan E (Recommended)": part D
        committed on `develop`, labelled (agent), not pushed; then part E written before any code
        for the author's OK.
+     - **Done:** committed as `37c37bf`; part E written in `docs/PHASE_BRIEF.md` (its last
+       revision), waiting for the author's OK.
+
+298. **Part E's choices**
+     - **Asked** three things; **the author chose** "Yes, cover the floor (Recommended)" (a third
+       sprinkler main over the staging lanes and the cross-aisle), "6 heaters, 2 turning fans
+       (Recommended)" and "Blender script (Recommended)". Part E to be built as written, tests
+       first.
+
+299. **Part E committed; part F's plan**
+     - **Asked** what next; **the author chose** "Commit, then plan F (Recommended)": part E
+       committed on `develop`, labelled (agent), not pushed; then part F written before any code
+       for the author's OK.
 
 ## Waiting for the author
 
 - Step 5 of #253, part D (#294): the shed's floor built and committed (#297), not pushed; the author's look at
   `captures/shed_floor/partD/` beside `before/` (with the author's other checks, at the end);
-  its GPU price with the whole mission's (#296); then part E.
+  its GPU price with the whole mission's (#296).
+- Step 5 of #253, part E (#298): the fit-out built and committed (#299), not pushed; the author's look at
+  `captures/shed_fitout/partE/` (at the end); its GPU price with the mission's; then part F.
 - #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
   the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).

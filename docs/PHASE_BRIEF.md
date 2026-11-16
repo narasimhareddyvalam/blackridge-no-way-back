@@ -6928,3 +6928,140 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Unverified:** the look in motion; the wet floor shows as darker, damp concrete but without
   reflections (the shed has no screen-space reflections), and the footprints do not read one by
   one; the oil is hidden under the forklift, as it would be.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253, part E: overhead and on the walls, written before any code)
+
+- **Status:** written before any code, at the author's word (#297). **Waiting for the author's OK.**
+  Values marked † are Claude Code's proposals from the research below. No GPU price for this part
+  (#296): its cases are added to `gpu_price_depot.gd` for the run after the whole mission.
+- **What exists** (mapped 2026-11-15): the joists, liner, two duct runs (z 11.5 and -3) and two
+  sprinkler mains with pendent heads every 10 ft (z 2 and -6.5), all over the racks; nothing over
+  the staging lanes or the cross-aisle but the duct and the staging row of lights. Each dock has
+  its outside light and signal; only bay 9 has an inside signal. The open docks' sectional doors
+  lift straight up the wall, 0.34 m inside it, to about 7.7 m. No door numbers, no control
+  stations, no heaters, fans or cable trays, nothing on the walls by the side door.
+- **Research** (sources go in the prompt log with the build):
+  - **Unit heaters:** a dock is heated by gas-fired propeller unit heaters hung from the roof
+    steel, usually 8-14 ft (2.4-4.3 m) up, aimed down and along the dock wall to wash the cold
+    doors, each with its flue out through the roof and its gas drop with a shut-off valve.
+  - **High-volume low-speed fans:** up to 24 ft (7.3 m) across; NFPA 13 (since 2013) wants each
+    centred roughly between four sprinklers, at least 3 ft (0.9 m) below their deflectors, and
+    shut down by the sprinkler waterflow alarm; OSHA wants blades guarded below 7 ft, so they hang
+    well above 10 ft (3 m). In winter they turn slowly, about 10-30 rpm, to push warm air down.
+  - **Sprinklers:** NFPA 13 covers the whole floor, not only the storage; ordinary hazard heads at
+    most 15 ft (4.6 m) apart and 130 ft² each.
+  - **Cable trays:** steel ladder tray 12-24 in wide along the walls, hung on threaded rod at most
+    every 8-12 ft (2.4-3.7 m), with drops down to each door's operator and control station.
+  - **Each dock door:** its number large on the wall beside it (18 in, 0.46 m, stencilled), a
+    door operator on the wall at the top of its track, and a control station about 60 in (1.5 m)
+    up beside the opening (NEMA 4X: door open, close and stop; leveller raise and lip; restraint
+    engage and release; red and green lights inside, as bay 9's).
+  - **By the employees' door:** a time clock with its card racks, about 4-5 ft (1.2-1.5 m) up,
+    and a notice board with the federal posters employers must display (OSHA's "Job Safety and
+    Health: It's the Law", the minimum wage, EEO "Know Your Rights", FMLA, USERRA, EPPA), drawn
+    as their layouts with their titles and no other text †.
+- **The parts †:**
+  1. **Unit heaters:** five along the dock wall, one between each pair of docks and one at bay 9
+     †, hung from the joists 2 m in from the wall (clear of the raised doors), 4.3 m above the dock
+     floor †, aimed 30° down toward the doors; each with its flue to the roof and its gas drop;
+     one more over the drive-in lane by the side door.
+  2. **Fans:** two 7.3 m (24 ft) fans over the staging lanes †, at z 15, hung from the joists,
+     their blades at least 3 m above the dock floor and 0.9 m below the sprinkler heads, turning
+     at 20 rpm †, clear of the racks, the lights and the duct.
+  3. **Sprinklers over the staging and the cross-aisle †:** a third main at z 15 with pendent heads
+     every 10 ft, as the two over the racks, so the fans sit between heads and the whole floor is
+     covered (NFPA 13). This adds to part A's services; the author may leave it out.
+  4. **Cable trays:** a 12 in ladder tray along the dock wall and the east wall at 6 m †, on rods
+     every 3 m, with a conduit drop to each operator and control station.
+  5. **At each dock (1-8 and bay 9):** its number beside the opening (0.46 m digits, 2.6 m up †,
+     never behind the raised door), its door operator, its control station at 1.5 m on the pier
+     beside the opening, and its inside red and green lights (bay 9's kept as now; the others red,
+     their doors shut). Bay 9 keeps its lift's pendant.
+  6. **By the side door, on the lane's east wall:** the time clock with its card racks and the
+     notice board with the posters, between the door and the stair, at the heights above, clear
+     of the door's swing and Ethan's way to the stair.
+- **Made †:** the heater, fan, tray, operator, control station, clock and board drawn in Blender by
+  a script at their makers' sizes (`tools/art/build_shed_fitout.py`, as the racking and the hinges
+  were), their labels, numbers and posters by a texture script (`tools/art/make_shed_signs.py`),
+  multi-meshes where repeated; or existing CC0/CC BY models from Poly Haven or Sketchfab where one
+  fits (Sketchfab needs Blender's add-on connected).
+- **Rules a test can measure** (new `test_shed_fitout.gd`, written first):
+  - **E1:** six heaters, each 2.4-4.3 m above its floor, aimed down, its flue reaching the roof,
+    clear of every door's raised panel and track, the racks and the lights.
+  - **E2:** two fans, each at most 7.3 m across, blades at least 3.05 m above the dock floor and
+    0.9 m below every sprinkler head, outside the racks' footprint, turning (their angle changes
+    between frames), clear of the joists, duct and lights.
+  - **E3:** sprinkler heads over the staging and the cross-aisle no more than 4.6 m apart (if the
+    author keeps part 3).
+  - **E4:** the trays along their walls, a rod at least every 3.7 m, clear of every door opening
+    and light.
+  - **E5:** docks 1-9 numbered in order, west to east, each number beside its opening and never
+    behind its raised door; a control station and inside lights at each, centred 1.2-1.6 m above
+    the dock floor, out of the opening and the leveller's way; bay 9's lights still follow the
+    docking (`test_bay_nine.gd`).
+  - **E6:** the clock and the board within 3 m of the side door, the clock's face 1.2-1.5 m up,
+    the posters' middles 1.2-1.7 m up, none in the door's swing or on Ethan's way to the stair
+    (`test_stair.gd`, `test_loading.gd`).
+  - **E7:** nothing new is solid where Ethan, the jack or the dock worker go (their tests, every
+    suite).
+- **Predictions:** the dock wall reads as a working dock's from the staging lanes, the numbers
+  readable from the cross-aisle; the fans' slow turn the one thing moving overhead; the most
+  likely failures are a heater or fan colliding with the joists or the raised doors (E1, E2) and
+  a number hidden by a raised door (E5).
+- **Decisions for the author:** five heaters plus one, or fewer; two fans or one, and turning or
+  still; the sprinklers over the staging (part 3), yes or no; posters with their titles only; made
+  in Blender by script or from existing models.
+- **Not in this part:** the safety and work kit (F), people and sounds (G), the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part E: overhead and on the walls (#297-#298), built)
+
+- **Built** (new `shed_fitout.gd`, built by `transfer_building.gd`'s `_fitout()`; parts by new
+  `tools/art/build_shed_fitout.py` into `art/fitout/shed_fitout.glb`, signs by new
+  `tools/art/make_shed_signs.py`; the sprinkler parts are part A's):
+  - **Heaters:** five gas unit heaters (0.76 x 0.66 x 0.60 m) along the dock wall at x -78, -70,
+    -62, -54 and -50 and one over the lane by the side door, hung level, their bottoms 13 ft
+    (3.97 m) above their floors, their louvers turning the air 30° down at the doors; each on two
+    rods from a strut across two joists, its flue to the roof, its gas drop with a shut-off from a
+    gas main run through the joists.
+  - **Fans:** two 20 ft (6.1 m) fans at x -74 and -58, z 15.55, blades 6 m above the dock floor,
+    each on a 3 m channel across two joists' bottom chords, turning at 15 rpm.
+  - **Sprinklers over the staging and the cross-aisle:** three mains at z 9.7, 13.6 and 17.5
+    (3.9 m apart, the last 2.25 m from the dock wall), pendent heads every 8 ft 9 in (112 ft²
+    each), phased so that each fan is centred between four heads, 1.44 m below the lowest.
+  - **Trays:** 12 in ladder tray 0.8 m off the dock wall and the east wall, 6 m above the dock
+    floor, in sections of about 3 m on trapezes and rods; conduit down to each control station
+    and across to the tray.
+  - **At each dock (1-9):** its number on a safety-yellow plate on the pier east of its door, 2.3
+    m up; its control station (door, leveler, restraint) at 1.45 m; its operator at the top of its
+    track; its inside red and green lights (`DockSignalInside1`-`8` new, red; bay 9's as before).
+  - **By the side door:** the time clock at 1.35 m with a card rack either side, and the notice
+    board with the six federal posters (titles only, `posters.png`).
+- **Changed from the plan:**
+  - the fans are 20 ft, not 24 ft: the staging row's lights hang every 8 m along z 15, so a
+    7.3 m fan cannot turn anywhere along it without passing under one (a fan's blades under a
+    lamp make it flicker); 6.1 m fans fit between the lights with 0.95 m to spare;
+  - the fans turn at 15 rpm, not 20 (still in the 10-30 rpm of a winter's destratifying speed);
+  - the heaters hang 2.75 m in from the dock wall, not 2 m, so their flues clear the new
+    sprinkler main at z 17.5;
+  - three sprinkler lines, not one, so that the last stands within half a spacing of the dock
+    wall and each head covers less than 130 ft² (NFPA 13, ordinary hazard);
+  - the dock numbers are painted plain, not stencilled (the stencil's bridges sliced the digits).
+- **Found on the way:**
+  - the test's E3 found the first sprinkler head on each line placed past the wall (`ceil` for
+    `floor`); fixed;
+  - in the stills, the control station's red STOP sat on the wrong row: the Blender script gave
+    faces their materials by counting, and the export's face order is not the build's; each part
+    now marks its own new faces. Then the buttons were mirrored against their legend: seen from
+    the front (-z), a part's right is -x; fixed in the script.
+- **Rules:** new `test_shed_fitout.gd` E0-E6, 23 checks: before any code 0/1, then 23/23
+  (`logs/phase_2/step5/partE/before/`, `after/`). Sixteen mutations exit 1 on their own checks
+  (`mutations/SUMMARY.txt`, `mutations_partE.py`). Every suite, `bash
+  logs/phase_2/step5/partE/suites/run_suites.sh <scratch>`: 45 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`). The headless import exits 0.
+- **Not yet:** the GPU price (new case FE in `game/tests/gpu_price_depot.gd`, budget 0.5 ms), with
+  the whole mission's (#296).
+- **Stills:** `captures/shed_fitout/partE/` (`tools/captures/capture_shed_fitout.gd`): the dock
+  wall from the staging lanes, a fan overhead, a control station, the side door's wall, the
+  staging lanes' overhead, the heater over the lane.
+- **Unverified:** the look in motion (the fans turning); the federal posters as titled layouts
+  only; the operator boxes are small and high and barely show.

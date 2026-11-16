@@ -1,0 +1,61 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e3/game/features/environments/industrial_loop/shed_fitout.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:30:05
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e3/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:33:08
+@@ -165,7 +165,7 @@
+ 			var at := heater.origin + along * side * ROD_APART
+ 			rods.append(_upright(Vector3(at.x, top, at.z), hang - top))
+ 		var flue := heater.origin + heater.basis * Vector3(0.0, 0.0, FLUE_BACK)
+-		flues.append(_upright(Vector3(flue.x, top, flue.z), Racking.underside(flue.z) - top))
++		flues.append(_upright(Vector3(flue.x, top, flue.z), chord(flue.z) - top))
+ 		var inlet := heater * GAS_INLET
+ 		var gas := chord(inlet.z) + GAS_ABOVE_CHORD
+ 		drops.append(_upright(inlet, gas - inlet.y))
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/tests/gpu_price_depot.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e3/game/tests/gpu_price_depot.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/tests/gpu_price_depot.gd	2026-11-16 09:33:09
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e3/game/tests/gpu_price_depot.gd	2026-11-15 10:46:24
+@@ -16,9 +16,6 @@
+ ## FL and FB (step 5 of #253, part D): the shed's floor in its own material (`shed_floor.gd`)
+ ## against the plain concrete it replaced, swapped on the dock floor's pieces and the lane, from
+ ## the racking's view in the cross-aisle (FL) and looking into bay 9 (FB).
+-## FE (part E): the shed's fit-out overhead and on its walls (`shed_fitout.gd`: the heaters, fans,
+-## sprinklers over the staging, trays, the docks' kit and the side door's), shown and hidden, from
+-## the staging lanes looking along the dock wall.
+ ## `-- --only=P2 --cycles=40` measures one
+ ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
+ 
+@@ -29,7 +26,6 @@
+ const VIEW := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
+ const INSIDE := [Vector3(-50.0, 3.2, 12.0), Vector3(-68.0, 3.4, 1.0), 60.0]
+ const BAY_NINE := [Vector3(-48.6, 2.9, 12.8), Vector3(-47.8, 1.3, 18.6), 60.0]
+-const STAGING := [Vector3(-48.0, 2.9, 11.0), Vector3(-70.0, 7.6, 17.5), 65.0]
+ const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "LaneFloor"]
+ const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
+ 	"RA": ["Frames", "Decks"]}
+@@ -82,8 +78,6 @@
+ 		var view: Array = INSIDE if case.begins_with("R") or case == "FL" else VIEW
+ 		if case == "FB":
+ 			view = BAY_NINE
+-		elif case == "FE":
+-			view = STAGING
+ 		_camera.fov = view[2]
+ 		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
+ 		await _wait(1.0)
+@@ -103,7 +97,7 @@
+ 			print("GPU PRICE BLOCK|%s|%s|cycle %d|time %.3f-%.3f|skip %.2f|particles %d|%s|%s"
+ 				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
+ 				"the cross-aisle" if case.begins_with("R") or case == "FL" else ("bay 9"
+-				if case == "FB" else ("the staging lanes" if case == "FE" else "the court")),
++				if case == "FB" else "the court"),
+ 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
+ 				int(_rain.call("active_count"))]])
+ 	_show(case, true)
+@@ -116,9 +110,6 @@
+ 		return
+ 	if case == "RK":
+ 		(_shed.get_node("Building/Racking") as Node3D).visible = shown
+-		return
+-	if case == "FE":
+-		(_shed.get_node("Building/ShedFitout") as Node3D).visible = shown
+ 		return
+ 	if case == "FL" or case == "FB":
+ 		var building := _shed.get_node("Building")

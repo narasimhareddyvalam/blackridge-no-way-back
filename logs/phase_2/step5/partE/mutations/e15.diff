@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e15/game/features/environments/industrial_loop/shed_fitout.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:30:05
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e15/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:34:13
+@@ -77,7 +77,7 @@
+ const TRAY_EAST := Vector2(18.95, -9.0)
+ const TRAPEZE := 0.5
+ ## The side door's wall: the clock and its racks, the notice board and its posters.
+-const CLOCK := Vector3(EAST_WALL, LANE_FLOOR + 1.35, 16.2)
++const CLOCK := Vector3(EAST_WALL, LANE_FLOOR + 1.35, 13.0)
+ const RACK_APART := 0.4
+ const BOARD := Vector3(EAST_WALL, LANE_FLOOR + 1.47, 14.9)
+ const POSTER_SIZE := Vector2(0.28, 0.36)

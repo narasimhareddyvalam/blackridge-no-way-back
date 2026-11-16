@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_building.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e14/game/features/environments/industrial_loop/transfer_building.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_building.gd	2026-11-16 09:29:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e14/game/features/environments/industrial_loop/transfer_building.gd	2026-11-16 09:34:08
+@@ -445,7 +445,7 @@
+ 		var shut := _signal("DockSignalInside%d" % (index + 1), Vector3(DOCKS[index]
+ 			+ INSIDE_PIER, DOCK_FLOOR + INSIDE_SIGNAL.y, BUILDING.end.y - WALL - 0.05), body)
+ 		shut.rotation.y = PI
+-		_show(shut, false)
++		_show(shut, true)
+ 	var inside := _signal("DockSignalInside9", Vector3(INSIDE_SIGNAL.x,
+ 		DOCK_FLOOR + INSIDE_SIGNAL.y, BUILDING.end.y - WALL - 0.05), body)
+ 	inside.rotation.y = PI
