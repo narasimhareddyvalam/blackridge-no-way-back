@@ -7065,3 +7065,122 @@ and no gas station: the town is backdrop blocks from z 207.
   staging lanes' overhead, the heater over the lane.
 - **Unverified:** the look in motion (the fans turning); the federal posters as titled layouts
   only; the operator boxes are small and high and barely show.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part F: the safety and work kit, written before any code)
+
+- **Status:** written before any code, at the author's word (#299). **Waiting for the author's OK.**
+  Values marked † are Claude Code's proposals. No GPU price for this part (#296); its case is
+  added for the run after the mission.
+- **What exists** (mapped 2026-11-16): the shed's only door for people is the side door in the
+  east wall (the office's door opens outside, its walls shut it off from the shed); no
+  extinguisher, exit sign, emergency light, mirror, first-aid kit or eyewash anywhere; one parked
+  forklift (Kamran Mughal's model; whether it is electric or propane is not recorded) and one
+  pallet jack. **Found:** west of x -82 and north of the office (z -9.75 to 12), a 7.75 x 21.75 m
+  strip of the shed has no dock floor: it lies at the yard's 0.02 m, 1.28 m below the dock floor,
+  behind the single rack row.
+- **Research** (sources go in the prompt log with the build):
+  - **Exits:** IBC Table 1006.2.1 lets a storage (S-1) space have one exit only up to 29 people;
+    at the code's 500 ft² a person this shed's 16,000 ft² holds 32, so it needs two exits, as far
+    apart as practical. OSHA 1910.37(b): each exit marked by a lit EXIT sign, letters at least
+    6 in (0.15 m) high with 3/4 in strokes, and signs pointing the way wherever the exit is not in
+    sight; NFPA 101 wants emergency lights along the way out.
+  - **Extinguishers:** OSHA 1910.157(d)(2) and NFPA 10: a Class A extinguisher within 75 ft
+    (22.9 m) of travel from any point, on a hanger with its top no more than 5 ft (1.53 m) up and
+    its bottom at least 4 in (0.1 m) off the floor, a sign above it seen from the aisle.
+  - **Forklifts:** an electric truck charges at a charger on the wall in a marked, ventilated area
+    with no smoking, an eyewash within 10 s (about 55 ft, 17 m) unobstructed (ANSI Z358.1) and a
+    spill kit for electrolyte (1910.178(g)); a propane truck's spare cylinders sit in a locked cage
+    outside, never indoors.
+  - **Mirrors:** convex safety mirrors 18-36 in (0.46-0.91 m) across, high on the rack ends where
+    each aisle meets the cross-aisle, so a driver and a walker see each other.
+  - **First aid:** an ANSI Z308.1 class B cabinet where it can be reached quickly, usually by the
+    employees' door or the office.
+  - **Work kit:** a hand stretch-wrap dispenser by the staging lanes, two-wheel hand trucks by the
+    dock piers, grey bins, a vertical cardboard baler (about 1.8 x 1.5 x 0.9 m) with its bales.
+  - **Walkways:** a marked pedestrian crossing where the white walkway meets the cross-aisle, and
+    signs for forklift traffic and the speed limit (5 mph inside, a common site rule).
+- **The parts †:**
+  1. **The missing floor (found):** the dock floor extended over the strip west of x -82, as a
+     real shed's floor is one level, its joints and marks continued (part D's map widened); the
+     single rack row then stands 0.15 m off the new floor's west wall as now.
+  2. **A second exit †:** a steel door in the west wall at the cross-aisle's end (z 12, behind
+     the strip), outward-opening as exits are, with its lit EXIT sign; the side door gets its
+     sign too; directional EXIT signs at the cross-aisle's ends; battery emergency lights
+     ("bug-eyes") by both exits and over the dock.
+  3. **Extinguishers:** as few as cover every point of the dock floor and the lane within 22.9 m
+     of travel round the racks, the loads and the office (likely five or six), each on a wall or
+     a rack end at the cross-aisle, top 1.5 m up, its red sign above.
+  4. **Charging † (if the forklift is electric):** a charger on the office's east wall at the
+     cross-aisle's west end, a yellow-hatched area before it, NO SMOKING, the eyewash and the spill
+     kit within 17 m; **or, if propane:** a cylinder cage outside by the side door.
+  5. **Mirrors:** one on each rack row's end facing its aisle's mouth, 2.4 m up †, 0.6 m across.
+  6. **First aid** by the side door; **the work kit** by the staging lanes and bay 9; **the
+     crossing and signs** where the walkway meets the cross-aisle, and on the walls.
+- **Made †:** in Blender by script (`tools/art/build_shed_kit.py`), signs by
+  `make_shed_signs.py`, as part E.
+- **Rules a test can measure** (new `test_shed_kit.gd`, written first):
+  - **F1:** the dock floor covers the shed's whole inside at 1.3 m but the lane, the pit and the
+    office; part D's checks hold on the larger floor.
+  - **F2:** two exits for people, at least half the shed's diagonal apart (IBC's rule for two
+    exits, 1007.1.1: 0.5 x 58 m = 29 m unsprinklered, a third of it sprinklered), each with a lit
+    sign, letters at least 0.15 m high; every point of the floor within 76 m (250 ft) of travel of
+    an exit; an emergency light by each exit.
+  - **F3:** every point of the dock floor and the lane within 22.9 m of travel of an
+    extinguisher (a shortest path on a 0.5 m grid round the racks, the loads and the office), each
+    top at most 1.53 m up and bottom at least 0.1 m.
+  - **F4:** the charging area marked, the eyewash within 17 m of the charger in a straight,
+    unblocked line (or the propane cage outside, none indoors).
+  - **F5:** a mirror at every aisle's mouth, facing into the cross-aisle, 0.46-0.91 m across.
+  - **F6:** the first-aid cabinet within 5 m of the side door; the crossing on the walkway's line
+    across the cross-aisle; nothing new solid on Ethan's, the jack's or the dock worker's ways
+    (their tests, every suite).
+- **Decisions for the author:** electric or propane forklift; the second exit (yes, and where);
+  extending the floor over the strip.
+- **Not in this part:** the forklift driver and the checker, sounds (G), the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part F: the safety and work kit (#299-#300), built)
+
+- **Built** (new `shed_kit.gd`, built by `transfer_building.gd`'s `_kit()`; parts by new
+  `tools/art/build_shed_kit.py` into `art/fitout/shed_kit.glb`, which reuses
+  `build_shed_fitout.py`'s parts maker; part F's signs added to `make_shed_signs.py`):
+  - **The floor over the strip:** `DockFloor4`, x -89.75 to -82, z -9.75 to 12, at 1.3 m, in part
+    D's floor material, its joints at -86 and -82 (panels 3.75 and 4 m), the forklift's way into
+    the charging bay marked; `shed_floor.gd`'s map widened to x -89.75, `test_shed_floor.gd`
+    taught the strip (18/18).
+  - **Lights over the strip (not in the plan):** it had none, being unfloored; three linear
+    high-bays as the aisles' (`StripLight1`-`3`).
+  - **The west exit:** a steel door with its push bar in the west wall at z 3.5-4.45
+    (`WEST_EXIT`, its hole cut by `_back_and_sides()`), 51.5 m from the side door; outside, its
+    landing at the floor's height, a six-riser stair down to the yard and its rails.
+  - **Exit signs and emergency lights:** a lit EXIT sign over each exit and two double-faced signs
+    hung over the cross-aisle at x -70 and -58, each arrow toward the nearer exit; seven
+    battery emergency lights (by both exits inside, over the west exit outside, over the dock
+    wall, down the lane and the strip).
+  - **Extinguishers:** eight Class A on their hangers, tops 1.45 m above their floors, each with
+    its sign: the strip's west wall, the ends of rows 2, 4 and 6 at the cross-aisle, the piers by
+    docks 2 and 6, and the lane's east wall by the side door and at z 0; the farthest point of the
+    floor is 21.9 m of travel from one (75 ft is 22.9 m).
+  - **Charging:** the charger on the office's back wall in a hatched bay, NO SMOKING by it, the
+    eyewash on the west wall 5.3 m off in a clear line, the spill kit beside it.
+  - **Mirrors:** a 24 in convex mirror at each of the six aisles' mouths, 2.9 m up on the posts
+    opposite the aisle boards (the last aisle's at 2.95 m, above board 06).
+  - **First aid** by the side door (4.2 m from it); **the work kit** in the strip (a baler, two
+    bales, two bins, two hand trucks) and a stretch-wrap stand by dock 5's loads, each solid;
+    **the crossing** of five bars over the cross-aisle on the walkway's line, a CAUTION
+    FORKLIFT TRAFFIC sign at its start and two SPEED LIMIT 5 MPH signs.
+- **Changed from the plan:** eight extinguishers, not five or six, as the travel round the racks
+  and down the lane needs; mirrors 2.9 m up, not 2.4 m, to clear the aisle boards; the strip lit.
+- **Found on the way:** the test's line from the charger to the eyewash first started inside the
+  office's wall; it now runs from where one stands, 0.6 m before each.
+- **Rules:** new `test_shed_kit.gd` F0-F6, 17 checks, the travel measured as the shortest way
+  on a 0.5 m grid round the racks, the loads, the office, the desk, the forklift and the kit:
+  before any code 0/2, then 17/17 (`logs/phase_2/step5/partF/before/`, `after/`). Sixteen
+  mutations exit 1 on their own checks (`mutations/SUMMARY.txt`, `mutations_partF.py`); f5 first
+  survived, the light outside over the west exit standing in for the one inside, so F2 now counts
+  only lights inside. Every suite, `bash logs/phase_2/step5/partF/suites/run_suites.sh
+  <scratch>`: 46 runs exit 0, the art check 0 failures (`suites/SUMMARY.txt`; F2's tightening, a
+  test-only change, rerun alone 17/17). The headless import exits 0.
+- **Not yet:** the GPU price (new case FK, budget 0.4 ms), with the whole mission's (#296).
+- **Stills:** `captures/shed_kit/partF/` (`tools/captures/capture_shed_kit.gd`).
+- **Unverified:** the west exit cannot be used in play (its door stays shut, as the mission has
+  no use for it); the federal and safety signs' small print is drawn as bars.

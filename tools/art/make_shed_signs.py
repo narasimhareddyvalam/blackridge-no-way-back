@@ -9,7 +9,12 @@
 - `station_legend.png`: a dock control station's legend plate: DOOR (OPEN, CLOSE, STOP),
   LEVELER (RAISE, LIP) and RESTRAINT (ENGAGE, RELEASE);
 - `clock_face.png`: a time clock's display and card slot;
-- `time_cards.png`: a card rack's cards.
+- `time_cards.png`: a card rack's cards;
+- part F's safety signs: `exit.png`, `exit_left.png` and `exit_right.png` (red EXIT on white, its
+  letters filling 6 in of a 0.33 x 0.2 m face, OSHA 1910.37(b)), `extinguisher_sign.png`,
+  `eyewash_sign.png`, `first_aid_sign.png`, `no_smoking.png` (at the battery charger),
+  `speed_limit.png` (5 MPH) and `forklift_sign.png` (CAUTION, FORKLIFT TRAFFIC), in the ANSI Z535
+  colours: red for fire, green for first aid and eyewash, yellow for caution.
 
 The same every run (no randomness). Usage, from the repository root:
     python3 -I tools/art/make_shed_signs.py
@@ -132,6 +137,44 @@ def time_cards():
     image.save(OUT / "time_cards.png")
 
 
+def exit_signs():
+    red = (200, 16, 20)
+    for name, arrow in [("exit", ""), ("exit_left", "<"), ("exit_right", ">")]:
+        image = Image.new("RGB", (330, 200), WHITE)
+        draw = ImageDraw.Draw(image)
+        draw.rectangle((4, 4, 325, 195), outline=(60, 60, 60), width=4)
+        left = 90 if arrow == "<" else 20
+        right = 240 if arrow == ">" else 310
+        centred(draw, (left, 18, right, 182), "EXIT", 150, red)
+        if arrow:
+            tip = 26 if arrow == "<" else 304
+            back = 70 if arrow == "<" else 260
+            draw.polygon([(tip, 100), (back, 60), (back, 140)], fill=red)
+        image.save(OUT / f"{name}.png")
+
+
+def safety_signs():
+    signs = [("extinguisher_sign", (190, 20, 24), WHITE, ["FIRE", "EXTINGUISHER"]),
+             ("eyewash_sign", (20, 130, 60), WHITE, ["EMERGENCY", "EYE WASH"]),
+             ("first_aid_sign", (20, 130, 60), WHITE, ["+", "FIRST AID"]),
+             ("no_smoking", WHITE, (190, 20, 24), ["NO SMOKING", "BATTERY", "CHARGING AREA"]),
+             ("speed_limit", WHITE, BLACK, ["SPEED", "LIMIT", "5", "MPH"]),
+             ("forklift_sign", YELLOW, BLACK, ["CAUTION", "FORKLIFT", "TRAFFIC"])]
+    for name, ground, ink, lines in signs:
+        image = Image.new("RGB", (240, 300), ground)
+        draw = ImageDraw.Draw(image)
+        draw.rectangle((5, 5, 234, 294), outline=ink, width=6)
+        top = 116 if name == "no_smoking" else 20
+        step = (280 - top) // len(lines)
+        for index, line in enumerate(lines):
+            size = 120 if line in ("+", "5") else 40
+            centred(draw, (12, top + index * step, 228, top + (index + 1) * step), line, size, ink)
+        if name == "no_smoking":
+            draw.ellipse((70, 8, 170, 108), outline=ink, width=10)
+            draw.line((86, 24, 154, 92), fill=ink, width=10)
+        image.save(OUT / f"{name}.png")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     numbers()
@@ -139,6 +182,8 @@ def main():
     legend()
     clock_face()
     time_cards()
+    exit_signs()
+    safety_signs()
     for name in sorted(OUT.glob("*.png")):
         print(f"Wrote {name.relative_to(ROOT)}")
 

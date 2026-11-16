@@ -26,7 +26,13 @@ const FLOOR_TEXTURES := "res://features/environments/depot_yard/polyhaven/textur
 const DOCK := Rect2(-82.0, -9.75, 37.3, 29.5)
 const LANE := Rect2(-44.7, -9.75, 4.45, 29.5)
 const PIT := Rect2(-48.685, 17.29, 1.87, 2.46)
-const MAP := Rect2(-82.0, -9.75, 41.75, 29.5)
+## The strip west of the office's end, north of the office, floored at the dock's height too
+## (#300), with its joints at -86 and -82 (panels 3.75 and 4 m) and the forklift's charging bay.
+const STRIP := Rect2(-89.75, -9.75, 7.75, 21.75)
+const STRIP_JOINT_X: Array[float] = [-86.0, -82.0]
+const CHARGING_PATH: Array[Vector2] = [Vector2(-80.5, 12.0), Vector2(-82.5, 11.0),
+	Vector2(-87.0, 11.0)]
+const MAP := Rect2(-89.75, -9.75, 49.5, 29.5)
 const PER_METRE := 32
 const FACE := 19.75
 const DOCKS: Array[float] = [-80.0, -76.0, -72.0, -68.0, -64.0, -60.0, -56.0, -52.0]
@@ -111,8 +117,11 @@ func joints() -> Array:
 	var found := []
 	for x in JOINT_X:
 		found.append({"from": Vector2(x, DOCK.position.y), "to": Vector2(x, DOCK.end.y)})
+	for x in STRIP_JOINT_X:
+		found.append({"from": Vector2(x, STRIP.position.y), "to": Vector2(x, STRIP.end.y)})
 	for z in joint_z():
-		found.append({"from": Vector2(DOCK.position.x, z), "to": Vector2(DOCK.end.x, z)})
+		var west := STRIP.position.x if z < STRIP.end.y else DOCK.position.x
+		found.append({"from": Vector2(west, z), "to": Vector2(DOCK.end.x, z)})
 		found.append({"from": Vector2(LANE.position.x, z), "to": Vector2(LANE.end.x, z)})
 	return found
 
@@ -136,15 +145,18 @@ func _material() -> void:
 			maps[index])
 	material.set_shader_parameter("map_rect", Vector4(MAP.position.x, MAP.position.y,
 		MAP.size.x, MAP.size.y))
-	material.set_shader_parameter("joint_rect", Vector4(DOCK.position.x, DOCK.position.y,
+	material.set_shader_parameter("joint_rect", Vector4(MAP.position.x, MAP.position.y,
 		MAP.end.x, MAP.end.y))
-	material.set_shader_parameter("joint_x", PackedFloat32Array(JOINT_X))
-	material.set_shader_parameter("joint_x_count", JOINT_X.size())
+	var xs: Array[float] = STRIP_JOINT_X.duplicate()
+	xs.append_array(JOINT_X)
+	material.set_shader_parameter("joint_x", PackedFloat32Array(xs))
+	material.set_shader_parameter("joint_x_count", xs.size())
 	material.set_shader_parameter("joint_z", PackedFloat32Array(joint_z()))
 	material.set_shader_parameter("joint_z_count", joint_z().size())
 
 
-## Tyre marks and burnished paths on the cross-aisle, each turn into an aisle and down it.
+## Tyre marks and burnished paths on the cross-aisle, each turn into an aisle and down it, and
+## the way into the charging bay.
 func _ways() -> void:
 	var rows := Racking.rows(Racking.frame_lines())
 	var paths: Array[PackedVector2Array] = [PackedVector2Array([Vector2(DOCK.position.x + 1.0,
@@ -162,6 +174,7 @@ func _ways() -> void:
 			path.append(centre + Vector2(side * cos(angle), sin(angle)) * TURN)
 		path.append(Vector2(middle, AISLE_DEPTH))
 		paths.append(path)
+	paths.append(PackedVector2Array(CHARGING_PATH))
 	for path in paths:
 		_along(path, 0.0, BURNISH, 0.05, 1)
 		for wheel: float in [-WHEELS, WHEELS]:
@@ -343,7 +356,8 @@ func _brush(pixels: int, strength: float) -> Image:
 
 ## Whether a point is on the floor, out of the pit and clear of what stands on it.
 func _free(at: Vector2) -> bool:
-	if not (DOCK.has_point(at) or LANE.has_point(at)) or PIT.has_point(at):
+	if not (DOCK.has_point(at) or STRIP.has_point(at) or LANE.has_point(at)) \
+			or PIT.has_point(at):
 		return false
 	for load in LOADS:
 		if Rect2(load - LOAD_SIZE / 2.0, LOAD_SIZE).has_point(at):

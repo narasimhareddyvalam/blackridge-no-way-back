@@ -19,6 +19,9 @@ extends SceneTree
 ## FE (part E): the shed's fit-out overhead and on its walls (`shed_fitout.gd`: the heaters, fans,
 ## sprinklers over the staging, trays, the docks' kit and the side door's), shown and hidden, from
 ## the staging lanes looking along the dock wall.
+## FK (part F): the safety and work kit (`shed_kit.gd`: the strip's lights, the west exit, signs,
+## extinguishers, the charging bay, mirrors, the work kit), shown and hidden, from the staging
+## lanes.
 ## `-- --only=P2 --cycles=40` measures one
 ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
 
@@ -30,7 +33,7 @@ const VIEW := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
 const INSIDE := [Vector3(-50.0, 3.2, 12.0), Vector3(-68.0, 3.4, 1.0), 60.0]
 const BAY_NINE := [Vector3(-48.6, 2.9, 12.8), Vector3(-47.8, 1.3, 18.6), 60.0]
 const STAGING := [Vector3(-48.0, 2.9, 11.0), Vector3(-70.0, 7.6, 17.5), 65.0]
-const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "LaneFloor"]
+const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "DockFloor4", "LaneFloor"]
 const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
 	"RA": ["Frames", "Decks"]}
 const PART_TWO := ["DockSeal", "DockBumper", "DockLeveller", "DockEdge", "DockLight", "DockSignal",
@@ -82,7 +85,7 @@ func _run() -> void:
 		var view: Array = INSIDE if case.begins_with("R") or case == "FL" else VIEW
 		if case == "FB":
 			view = BAY_NINE
-		elif case == "FE":
+		elif case == "FE" or case == "FK":
 			view = STAGING
 		_camera.fov = view[2]
 		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
@@ -103,7 +106,8 @@ func _alternate(case: String) -> void:
 			print("GPU PRICE BLOCK|%s|%s|cycle %d|time %.3f-%.3f|skip %.2f|particles %d|%s|%s"
 				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
 				"the cross-aisle" if case.begins_with("R") or case == "FL" else ("bay 9"
-				if case == "FB" else ("the staging lanes" if case == "FE" else "the court")),
+				if case == "FB" else ("the staging lanes" if case == "FE" or case == "FK"
+				else "the court")),
 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
 				int(_rain.call("active_count"))]])
 	_show(case, true)
@@ -119,6 +123,9 @@ func _show(case: String, shown: bool) -> void:
 		return
 	if case == "FE":
 		(_shed.get_node("Building/ShedFitout") as Node3D).visible = shown
+		return
+	if case == "FK":
+		(_shed.get_node("Building/ShedKit") as Node3D).visible = shown
 		return
 	if case == "FL" or case == "FB":
 		var building := _shed.get_node("Building")

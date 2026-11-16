@@ -19,6 +19,7 @@ const DockStation = preload("dock_station.gd")
 const Racking = preload("racking.gd")
 const ShedFloor = preload("shed_floor.gd")
 const ShedFitout = preload("shed_fitout.gd")
+const ShedKit = preload("shed_kit.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -33,6 +34,9 @@ const DRIVE_IN_OPENING := Vector2(3.7, 2.9)
 const OFFICE := Rect2(-90.0, 12.0, 8.0, 8.0)
 const OFFICE_STOREY := 3.5
 const OFFICE_DOOR := Rect2(-89.3, 0.0, 0.95, 2.15)
+## The second exit for people (#300; IBC 1006.2.1): a steel door in the west wall at the dock
+## floor, as Rect2(z, y, width, height), its stair down outside (`shed_kit.gd`).
+const WEST_EXIT := Rect2(3.5, 1.3, 0.95, 2.13)
 const OFFICE_WINDOWS: Array[Rect2] = [Rect2(-87.4, 1.0, 1.5, 1.2), Rect2(-84.6, 1.0, 1.5, 1.2),
 	Rect2(-89.2, 4.4, 1.5, 1.2), Rect2(-86.75, 4.4, 1.5, 1.2), Rect2(-84.3, 4.4, 1.5, 1.2)]
 const WALL := 0.25
@@ -125,6 +129,7 @@ func build(metal: Material) -> void:
 	_station()
 	_racking()
 	_fitout()
+	_kit()
 	_lights()
 	_signals()
 	_arm_lights()
@@ -157,6 +162,8 @@ func _front() -> void:
 	_slab(office_end, pit.position.x, back, inside, 0.0).name = "DockFloor1"
 	_slab(pit.end.x, slab_end, back, inside, 0.0).name = "DockFloor2"
 	_slab(pit.position.x, pit.end.x, back, pit.position.y, 0.0).name = "DockFloor3"
+	_slab(BUILDING.position.x + WALL, office_end, back, OFFICE.position.y, 0.0).name = \
+		"DockFloor4"
 	_slab(pit.position.x, pit.end.x, pit.position.y, inside, DOCK_FLOOR - PIT_FLOOR).name = \
 		"PitFloor"
 	_lane_floor(slab_end)
@@ -188,7 +195,8 @@ func _back_and_sides() -> void:
 	_wall(BUILDING.position.x, BUILDING.end.x, PLINTH, EAVES, back, none, _cladding)
 	var door: Array[Rect2] = [DockAccess.DOOR]
 	for x: float in [BUILDING.position.x + WALL / 2.0, BUILDING.end.x - WALL / 2.0]:
-		var holes: Array[Rect2] = door if x > BUILDING.get_center().x else none
+		var west: Array[Rect2] = [WEST_EXIT]
+		var holes: Array[Rect2] = door if x > BUILDING.get_center().x else west
 		var z0 := BUILDING.position.y + WALL
 		var z1 := BUILDING.end.y - WALL
 		_side_wall(x, z0, z1, 0.0, PLINTH, holes, _concrete)
@@ -482,6 +490,13 @@ func _access() -> void:
 	access.name = "DockAccess"
 	add_child(access)
 	access.build(_concrete, Build.material(Color(0.34, 0.4, 0.45), 0.5))
+
+
+func _kit() -> void:
+	var kit := ShedKit.new()
+	kit.name = "ShedKit"
+	add_child(kit)
+	kit.build()
 
 
 func _fitout() -> void:

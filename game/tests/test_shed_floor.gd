@@ -17,6 +17,9 @@ const LANE_TOP := 0.02
 const DOCK := Rect2(-82.0, -9.75, 37.3, 29.5)
 const LANE := Rect2(-44.7, -9.75, 4.45, 29.5)
 const PIT := Rect2(-48.685, 17.29, 1.87, 2.46)
+## The strip west of x -82, floored since #300, and its charging bay, a forklift's way too.
+const STRIP := Rect2(-89.75, -9.75, 7.75, 21.75)
+const CHARGING := Rect2(-88.6, 8.5, 6.7, 3.5)
 ## ACI 302.1R / 360R: joints 24-36 times a 6 in slab's thickness apart, panels at most 1.5:1.
 const JOINT_LEAST := 3.7
 const JOINT_MOST := 5.5
@@ -93,11 +96,11 @@ func _check_slab() -> void:
 	var material: Material = _floor.get("material")
 	var pieces := _shed.find_children("DockFloor*", "MeshInstance3D", true, false)
 	pieces.append_array(_shed.find_children("LaneFloor*", "MeshInstance3D", true, false))
-	var drawn := material is ShaderMaterial and pieces.size() == 4
+	var drawn := material is ShaderMaterial and pieces.size() == 5
 	for found in pieces:
 		drawn = drawn and (found as MeshInstance3D).get_active_material(0) == material
-	_check(drawn, "F1: the dock floor's three pieces round the pit and the lane are drawn in "
-		+ "the floor's own material (%d pieces)" % pieces.size())
+	_check(drawn, "F1: the dock floor's four pieces (round the pit and over the strip) and "
+		+ "the lane are drawn in the floor's own material (%d pieces)" % pieces.size())
 	var body := _shed.get_node_or_null("Building/ShedBody") as StaticBody3D
 	var tops := {}
 	if body != null:
@@ -108,11 +111,12 @@ func _check_slab() -> void:
 			var size := (shape.shape as BoxShape3D).size
 			var top := snappedf(shape.position.y + size.y / 2.0, 0.001)
 			var at := Vector2(shape.position.x, shape.position.z)
-			if DOCK.grow(0.01).has_point(at) and absf(top - DOCK_FLOOR) < 0.001 and size.y > 1.0:
+			if (DOCK.grow(0.01).has_point(at) or STRIP.grow(0.01).has_point(at)) \
+					and absf(top - DOCK_FLOOR) < 0.001 and size.y > 1.0:
 				tops["dock"] = tops.get("dock", 0.0) + size.x * size.z
 			elif LANE.grow(0.3).has_point(at) and absf(top - LANE_TOP) < 0.001:
 				tops["lane"] = tops.get("lane", 0.0) + size.x * size.z
-	var dock_area := DOCK.get_area() - PIT.get_area()
+	var dock_area := DOCK.get_area() - PIT.get_area() + STRIP.get_area()
 	_check(absf(tops.get("dock", 0.0) - dock_area) < 0.5 and tops.get("lane", 0.0) > 120.0,
 		"F1: the slab stays solid at 1.3 m over the dock floor (%.1f of %.1f m²) and the lane at "
 		% [tops.get("dock", 0.0), dock_area] + "0.02 m (%.1f m²)" % tops.get("lane", 0.0))
@@ -128,7 +132,7 @@ func _check_joints() -> void:
 	for joint: Dictionary in joints:
 		var from: Vector2 = joint["from"]
 		var to: Vector2 = joint["to"]
-		var on_dock := DOCK.grow(0.01).has_point(from) and DOCK.grow(0.01).has_point(to)
+		var on_dock := _on_dock(from) and _on_dock(to)
 		var on_lane := LANE.grow(0.01).has_point(from) and LANE.grow(0.01).has_point(to)
 		inside = inside and (on_dock or on_lane)
 		var box := Rect2(from, Vector2.ZERO).expand(to).grow(0.003)
@@ -141,7 +145,7 @@ func _check_joints() -> void:
 			zs.append(from.y)
 	_check(inside and not crosses_pit, "F2: %d joints, every one on the dock floor or the lane, "
 		% joints.size() + "none across the lift's pit")
-	var across := _gaps(xs, DOCK.position.x, DOCK.end.x)
+	var across := _gaps(xs, STRIP.position.x, DOCK.end.x)
 	var along := _gaps(zs, DOCK.position.y, DOCK.end.y)
 	var lane_along := _gaps(lane_zs, LANE.position.y, LANE.end.y)
 	var spaced := not across.is_empty() and not along.is_empty() and not lane_along.is_empty()
@@ -191,7 +195,8 @@ func _check_tyres() -> void:
 		var centre: Vector2 = mark["centre"]
 		var radius: float = mark["radius"]
 		var way := -1
-		if centre.y >= CROSS_AISLE.x and centre.y <= CROSS_AISLE.y and DOCK.has_point(centre):
+		if (centre.y >= CROSS_AISLE.x and centre.y <= CROSS_AISLE.y and DOCK.has_point(centre)) \
+				or CHARGING.has_point(centre):
 			way = 0
 		for index in range(aisles.size()):
 			if aisles[index].has_point(centre):
@@ -206,8 +211,9 @@ func _check_tyres() -> void:
 				strays.append(str(centre.snapped(Vector2.ONE * 0.01)))
 		else:
 			seen[way] = true
-	_check(kept, "F3: %d tyre marks, all on the forklift's ways, none on the walkway, the "
-		% marks.size() + "staging lanes or a rack row %s" % (str(strays) if not strays.is_empty() else ""))
+	_check(kept, "F3: %d tyre marks, all on the forklift's ways (the charging bay's too), none "
+		% marks.size() + "on the walkway, the staging lanes or a rack row %s"
+		% (str(strays) if not strays.is_empty() else ""))
 	_check(seen.size() == aisles.size() + 1, "F3: tyre marks along the cross-aisle and down each "
 		+ "of the %d aisles (%d ways marked)" % [aisles.size(), seen.size()])
 
@@ -288,7 +294,8 @@ func _check_clear() -> void:
 	var under := 0
 	for mark: Dictionary in _floor.call("marks"):
 		var centre: Vector2 = mark["centre"]
-		on_floor = on_floor and (DOCK.has_point(centre) or LANE.has_point(centre))
+		on_floor = on_floor and (DOCK.has_point(centre) or STRIP.has_point(centre)
+			or LANE.has_point(centre))
 		for rect in keep:
 			if rect.has_point(centre):
 				under += 1
@@ -314,6 +321,10 @@ func _check_same() -> void:
 	again.free()
 	_check(same, "F7: painted again, the floor's four maps and its marks come out the same")
 	_check(mipmapped, "F7: each map carries its mipmaps, so the marks do not shimmer far off")
+
+
+func _on_dock(point: Vector2) -> bool:
+	return DOCK.grow(0.01).has_point(point) or STRIP.grow(0.01).has_point(point)
 
 
 func _of(kind: String) -> Array:

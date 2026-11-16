@@ -4131,6 +4131,20 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** what next; **the author chose** "Commit, then plan F (Recommended)": part E
        committed on `develop`, labelled (agent), not pushed; then part F written before any code
        for the author's OK.
+     - **Done:** committed as `100a085`; part F written in `docs/PHASE_BRIEF.md` (its last
+       revision); found a strip of the shed with no dock floor (west of x -82, north of the
+       office); waiting for the author's OK.
+
+300. **Part F's choices**
+     - **Asked** three things; **the author chose** "Electric (Recommended)" (a charger with its
+       eyewash and spill kit), "Yes, west wall (Recommended)" (a second exit door) and "Extend
+       the floor (Recommended)" (the dock floor over the strip west of x -82). Part F to be built
+       as written, tests first.
+
+301. **Part F committed; part G's plan**
+     - **Asked** what next; **the author chose** "Commit, then plan G (Recommended)": part F
+       committed on `develop`, labelled (agent), not pushed; then part G written before any code
+       for the author's OK.
 
 ## Waiting for the author
 
@@ -4138,7 +4152,9 @@ tag `a5`. Pictures the author approved or rejected are filed in
   `captures/shed_floor/partD/` beside `before/` (with the author's other checks, at the end);
   its GPU price with the whole mission's (#296).
 - Step 5 of #253, part E (#298): the fit-out built and committed (#299), not pushed; the author's look at
-  `captures/shed_fitout/partE/` (at the end); its GPU price with the mission's; then part F.
+  `captures/shed_fitout/partE/` (at the end); its GPU price with the mission's.
+- Step 5 of #253, part F (#300): the safety and work kit built and committed (#301), not pushed; the author's look
+  at `captures/shed_kit/partF/` (at the end); its GPU price with the mission's; then part G.
 - #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
   the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).

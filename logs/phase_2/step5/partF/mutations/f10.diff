@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_kit.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutF/f10/game/features/environments/industrial_loop/shed_kit.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_kit.gd	2026-11-16 11:04:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutF/f10/game/features/environments/industrial_loop/shed_kit.gd	2026-11-16 11:06:30
+@@ -47,7 +47,7 @@
+ const CHARGER := Vector3(-86.5, FLOOR + 1.1, OFFICE_BACK)
+ const CHARGING_BAY := Rect2(-88.5, 8.6, 4.0, 3.38)
+ const EYEWASH := Vector3(WEST_WALL, FLOOR + 1.0, 7.8)
+-const SPILL_KIT := Vector2(-88.9, 9.4)
++const SPILL_KIT := Vector2(-88.9, -4.0)
+ const FIRST_AID := Vector3(EAST_WALL, LANE_FLOOR + 1.4, 13.3)
+ const BALER := Vector2(-89.3, -6.0)
+ const BALES: Array[Vector2] = [Vector2(-88.9, -3.6), Vector2(-87.6, -3.6)]
