@@ -4,7 +4,8 @@ The gate guard at Mission 2's transfer shed (decision C55) and bay 9's dock work
 from the Microsoft Rocketbox avatar library, https://github.com/microsoft/Microsoft-Rocketbox,
 released by Microsoft under the MIT licence (`LICENSE.md` beside this file). Claude Code
 downloaded these files from the library's `master` branch on 2026-11-11, after the author chose
-each from a render (the guard #197–#198, the dock worker #232–#235), and converts them into the
+each from a render (the guard #197–#198, the dock worker #232–#235, the forklift driver
+#303, fetched 2026-11-16), and converts them into the
 game.
 
 ## Files
@@ -16,6 +17,8 @@ game.
 | `Animations/m_sit_chair_breathe_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 2,537,504 |
 | `Construction_Male_08/Export/Construction_Male_08.fbx` | `Avatars/Professions/Construction_Male_08/Export/` | 584,816 |
 | `Construction_Male_08/Textures/m108_{head,body,helmet}_{color,normal}.tga` | `Avatars/Professions/Construction_Male_08/Textures/` | 63 MB in all |
+| `Construction_Male_07/Export/Construction_Male_07.fbx` | `Avatars/Professions/Construction_Male_07/Export/` | 566,144 |
+| `Construction_Male_07/Textures/m107_{head,body,helmet}_{color,normal}.tga` | `Avatars/Professions/Construction_Male_07/Textures/` | 63 MB in all |
 | `Animations/m_idle_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 2,418,544 |
 | `Animations/m_walk_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_xy/` | 994,336 |
 | `Animations/m_try_door_outwards.max.fbx` | `Animations/all_animations_max_motextr_static/` | 1,972,496 |

@@ -96,3 +96,30 @@ author's request:
 - **Textures:** halved from 2048 to 1024 pixels and stored as WebP.
 - **In the game:** he comes out of the transfer shed's side door to seal a loaded van's doors
   at bay 9 and walks back in (`dock_worker.gd`, `transfer_shed.gd`).
+
+## The forklift driver
+
+`forklift_driver/forklift_driver.glb`, with the textures Godot extracts next to it, is made from
+the Microsoft Rocketbox avatar library (part G of step 5 of #253; the author chose him from the
+library's previews, #303):
+
+- **Source:** https://github.com/microsoft/Microsoft-Rocketbox: the avatar
+  `Assets/Avatars/Professions/Construction_Male_07` and the animation
+  `Assets/Animations/all_animations_max_motextr_static/m_sit_table_idle_neutral_01.max.fbx`
+  (already here for the dock worker), the avatar downloaded on 2026-11-16
+  (`source_assets/rocketbox/README.md`).
+- **Licence:** MIT, copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`); the
+  in-game credits carry the notice.
+
+### Changes
+
+Claude Code converted the download with `tools/art/convert_rocketbox.py` (its `forklift_driver`
+job) on 2026-11-16, at the author's request:
+
+- **The clip:** the seated idle at a table baked onto him bone by bone, named `SitIdle-loop`
+  (Godot imports it as the looping `SitIdle`), his arms forward.
+- **Materials and textures:** as the dock worker's: one roughness per part (head 0.56, work
+  suit 0.72, hard hat 0.35), no specular maps, textures halved to 1024 pixels as WebP.
+- **In the game:** seated on the shed's forklift, his hands set on its wheel and his feet on its
+  plate by two-bone IK and his head turned the way he backs (`forklift_truck.gd`,
+  `look_travel.gd`).

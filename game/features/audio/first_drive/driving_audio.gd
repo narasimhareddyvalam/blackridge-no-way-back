@@ -1,5 +1,6 @@
 extends Node
 
+const SHELTER_DB := 14.0
 const ROOT := "res://features/audio/first_drive/"
 const MUSIC_DB := -13.0
 const CALL_DUCK := -13.0
@@ -35,6 +36,9 @@ var _door_latch: AudioStreamPlayer
 var _door_stay: AudioStreamPlayer
 var _engine_level: float = 1.0
 var _hush: float = 1.0
+## How sheltered a place is from the rain, 0 outside to 1 under a roof (the transfer shed's,
+## `shed_sounds.gd`, #302): the yard's rain falls away by SHELTER_DB at the camera under one.
+var shelter := Callable()
 var _breath: float = 0.0
 var _ticks_left: int = 0
 var _tick_wait: float = 0.0
@@ -114,7 +118,11 @@ func _process(delta: float) -> void:
 	_engine.pitch_scale = (0.78 + speed * 1.05) * lerpf(0.6, 1.0, _engine_level)
 	_engine.volume_db = -18.0 + speed * 5.0 + opening * 3.0 \
 		+ linear_to_db(maxf(_engine_level, 0.0001)) + hush
-	_rain.volume_db = lerpf(-24.0, -7.0, opening) + hush
+	var covered := 0.0
+	var listener := get_viewport().get_camera_3d()
+	if shelter.is_valid() and listener != null:
+		covered = float(shelter.call(listener.global_position))
+	_rain.volume_db = lerpf(-24.0, -7.0, opening) + hush - SHELTER_DB * covered
 	_cabin_rain.volume_db = lerpf(-6.0, -28.0, opening) + hush
 	_tires.volume_db = linear_to_db(maxf(0.0001, speed * 0.45)) + hush
 	_skid.volume_db = (SKID_DB + linear_to_db(clampf(absf(vehicle.speed) / SKID_FULL, 0.05, 1.0))

@@ -1,0 +1,71 @@
+g1  the forklift not giving way          test_shed_work.gd exit 1, 22/24 passed; 2 failed
+      FAIL: W10: with Ethan in its way on the cross-aisle it stops, at least 2 m short of him (-2.25 m)
+      FAIL: W10: and goes on when he has left its way (inf s)
+g2  over 5 mph                           test_shed_work.gd exit 0, 24/24 passed; 0 failed
+g3  full speed in the aisle              test_shed_work.gd exit 0, 24/24 passed; 0 failed
+g4  the load carried high                test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W3: the load carried 0.10-0.15 m up whenever it moves loaded (1147 frames out)
+g5  the blue spot always ahead           test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W5: its blue spot 3-5 m ahead in its direction of travel (494 frames out of 2733)
+g6  the alarm going forward too          test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W6: its alarm only while it backs (2239 frames wrong, 494 backing)
+g7  no horn                              test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W7: its horn at aisle 03's mouth going in and coming out (0 of 0 horns)
+g8  the driver not looking back          test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W8: the driver looks the way he backs (his head turned at least 45°)
+g9  his hands off the wheel              test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W9: the driver seated, his hands on the wheel (0.386 m) and his feet on the plate (0.000 m)
+g10  working with no one near             test_shed_work.gd exit 0, 24/24 passed; 0 failed
+g11  its load named as the mission's      test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: W1: its load is its own, not one of the mission's Pallet<n>
+g12  the worker over the lowered lift     test_shed_work.gd exit 1, 22/24 passed; 2 failed
+      FAIL: S5: with the lift down, he scans from beside it and waits off its deck rather than step to his chair over the 
+      FAIL: S5: and sits down once it is up again (0.0 s)
+g13  a pallet scanned again               test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: S4: the same pallet set down again does not send him a second time
+g14  the yard's rain under the roof       test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: R2: under the roof the yard's rain falls away (-24.0 dB outside, -24.0 dB inside)
+g15  heaters always on                    test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: R3: each heater heard where it hangs, running on its thermostat, 50-70% of the time over two hours
+g16  the radio loud                       test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: R5: a radio on the dock desk playing low
+g17  the scan place on the deck           test_shed_work.gd exit 1, 23/24 passed; 1 failed
+      FAIL: S5: with the lift down, he scans from beside it and waits off its deck rather than step to his chair over the 
+
+After W1 checked turning too, W4 had the first loaded run free and W10 moved to the second trip (g2, g3, g10 had survived; g3 retargeted to the aisle step's own limit):
+g1  the forklift not giving way          test_shed_work.gd exit 1, 23/25 passed; 2 failed
+      FAIL: W10: with Ethan in its way on the cross-aisle it stops, at least 2 m short of him (-2.25 m)
+      FAIL: W10: and goes on when he has left its way (inf s)
+g2  over 5 mph                           test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W4: never over 5 mph (fastest 2.52 m/s), slower in the aisle (1.00 m/s)
+g3  full speed in the aisle              test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W4: never over 5 mph (fastest 2.20 m/s), slower in the aisle (1.45 m/s)
+g4  the load carried high                test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W3: the load carried 0.10-0.15 m up whenever it moves loaded (2634 frames out)
+g5  the blue spot always ahead           test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W5: its blue spot 3-5 m ahead in its direction of travel (988 frames out of 5382)
+g6  the alarm going forward too          test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W6: its alarm only while it backs (4394 frames wrong, 988 backing)
+g7  no horn                              test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W7: its horn at aisle 03's mouth going in and coming out (0 of 0 horns)
+g8  the driver not looking back          test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W8: the driver looks the way he backs (his head turned at least 45°)
+g9  his hands off the wheel              test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W9: the driver seated, his hands on the wheel (0.386 m) and his feet on the plate (0.000 m)
+g10  working with no one near             test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W1: parked while no one is near (moved 0.000 m, turned 1.523 rad)
+g11  its load named as the mission's      test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: W1: its load is its own, not one of the mission's Pallet<n>
+g12  the worker over the lowered lift     test_shed_work.gd exit 1, 23/25 passed; 2 failed
+      FAIL: S5: with the lift down, he scans from beside it and waits off its deck rather than step to his chair over the 
+      FAIL: S5: and sits down once it is up again (0.0 s)
+g13  a pallet scanned again               test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: S4: the same pallet set down again does not send him a second time
+g14  the yard's rain under the roof       test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: R2: under the roof the yard's rain falls away (-24.0 dB outside, -24.0 dB inside)
+g15  heaters always on                    test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: R3: each heater heard where it hangs, running on its thermostat, 50-70% of the time over two hours
+g16  the radio loud                       test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: R5: a radio on the dock desk playing low
+g17  the scan place on the deck           test_shed_work.gd exit 1, 24/25 passed; 1 failed
+      FAIL: S5: with the lift down, he scans from beside it and waits off its deck rather than step to his chair over the 

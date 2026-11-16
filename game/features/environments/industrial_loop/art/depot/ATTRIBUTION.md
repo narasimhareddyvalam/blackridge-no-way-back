@@ -16,7 +16,9 @@
   https://sketchfab.com/3d-models/pallet-jack-eccf1ee2e5d64743a7b4be69acfc734f; `pallet.glb`:
   "Euro pallet photoscanned" by widthRider (Sketchfab `widthRider`),
   https://sketchfab.com/3d-models/euro-pallet-photoscanned-84132ceb4323477292ccf22a349b9f9d.
-  All three CC BY 4.0, changed by `tools/art/convert_depot_models.py`: the forklift's specular
+  All three CC BY 4.0, changed by `tools/art/convert_depot_models.py`: the forklift's carriage
+  (its forks, fork plate and load backrest) cut from its body so that it rides up the mast
+  (part G of step 5 of #253, #302); the forklift's specular
   map left out; the pallet sized as the American 48 x 40 in pallet, reduced to 3,000 triangles
   and made matte; their textures halved to at most 1024 pixels. Credited in the game's credits
   ("THE DEPOT").

@@ -70,6 +70,8 @@ var dock_rain_at := Vector3(-61.45, 4.6, 22.25)
 var bay_nine: Node
 var side_door: Node
 var pallet_jack: Node
+var forklift: Node3D
+var _scanned: Array[Node3D] = []
 var dock_worker: Node3D
 
 var _jack_start := Transform3D()
@@ -135,6 +137,7 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	add_child(bay_nine)
 	bay_nine.call("setup", building, yard.get_node("WheelChock"), building.get_node("DockLift9"))
 	side_door = building.get_node("DockAccess")
+	forklift = building.get_node("Forklift") as Node3D
 	pallet_jack = PalletJack.new()
 	pallet_jack.name = "PalletJackRig"
 	add_child(pallet_jack)
@@ -147,6 +150,7 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	dock_worker = DockWorker.new()
 	dock_worker.name = "DockWorker"
 	add_child(dock_worker)
+	dock_worker.set("lift", building.get_node("DockLift9"))
 	dock_worker.call("setup", WORKER_INSIDE, WORKER_WAY, building.get_node("DockStation"),
 		WORKER_DESK_WAY, WORKER_STAIR_WAY)
 	_markings()
@@ -263,7 +267,18 @@ func hand_run_sheet() -> bool:
 	return true
 
 
+## Bay 9's dock worker sent to scan each pallet as it is first set down on the lift (#302).
+func _send_to_scan() -> void:
+	if pallet_jack == null or dock_worker == null:
+		return
+	var load := pallet_jack.call("on_lift") as Node3D
+	if load != null and not _scanned.has(load) and dock_worker.get("state") == "seated":
+		_scanned.append(load)
+		dock_worker.call("go_scan", load)
+
+
 func reset() -> void:
+	_scanned.clear()
 	if bay_nine != null:
 		bay_nine.call("reset")
 	if side_door != null:
@@ -281,6 +296,7 @@ func reset() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_send_to_scan()
 	if _check_left >= 0.0:
 		_check_left -= delta
 		if _check_left < 0.0:

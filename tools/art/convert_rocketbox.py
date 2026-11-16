@@ -1,11 +1,13 @@
 """Convert Microsoft Rocketbox characters and their clips into the game: the gate guard (C55),
 Security_Male_01 with a seated idle, and bay 9's dock worker (C58), Construction_Male_08 with a
 standing idle, a walk, the reach to the van doors' hasp, and at his desk (step 3 of #253): sitting
-down to it and standing up from it, a seated idle at it, checking a document and noting in it.
+down to it and standing up from it, a seated idle at it, checking a document and noting in it;
+and the shed's forklift driver (part G of step 5 of #253, #303), Construction_Male_07, seated at
+the wheel in the seated idle at a table, his arms forward.
 
 Run from the repository root (a job's name after "--" converts that one alone):
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1 \\
-        --python tools/art/convert_rocketbox.py [-- guard | dock_worker]
+        --python tools/art/convert_rocketbox.py [-- guard | dock_worker | forklift_driver]
 
 It reads source_assets/rocketbox/ (its README.md lists the files) and writes
 game/features/characters/guard/guard.glb and game/features/characters/dock_worker/dock_worker.glb.
@@ -65,6 +67,17 @@ JOBS = {
         "turn": False,
         "names": ("DockWorker", "DockWorkerBody"),
         "target": pathlib.Path("game/features/characters/dock_worker/dock_worker.glb"),
+    },
+    "forklift_driver": {
+        "character": SOURCE / "Construction_Male_07",
+        "fbx": "Construction_Male_07.fbx",
+        "prefix": "m107",
+        "clips": [("SitIdle-loop", CLIPS / "m_sit_table_idle_neutral_01.max.fbx")],
+        "roughness": {"head": 0.56, "body": 0.72, "helmet": 0.35},
+        "turn": False,
+        "names": ("ForkliftDriver", "ForkliftDriverBody"),
+        "target": pathlib.Path(
+            "game/features/characters/forklift_driver/forklift_driver.glb"),
     },
 }
 

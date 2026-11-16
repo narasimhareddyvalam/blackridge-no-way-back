@@ -10,9 +10,12 @@ extends Node3D
 ## (Check) and noted (Note). Then he walks back the same way, puts the log down and sits at his
 ## desk again, the chair rolling back as he rises and in under him as he sits. He waits rather
 ## than walk into anyone: Ethan is the only one about. He reads the van and changes it only by
-## sealing it.
+## sealing it. Since part G of step 5 he also scans each pallet Ethan sets down on bay 9's lift
+## (`go_scan`, #302).
 
 signal sealed
+## A pallet's label read with his handheld scanner as Ethan set it down on bay 9's lift (#302).
+signal scanned(load: Node3D)
 
 const Model = preload("res://features/characters/dock_worker/dock_worker.glb")
 const CLIPBOARD := "res://features/environments/industrial_loop/art/dock_station/models/" \
@@ -40,10 +43,25 @@ const SEAT_BACK := 0.05
 const CHAIR_ROLL := 0.3
 ## His hand's hold on the log: the clipboard in the left hand, held flat against the forearm.
 const HAND := "Bip01 L Hand"
+## The scan (part G of step 5 of #253, #302): from beside the lift's deck, off its north-east
+## corner and clear of Ethan's way and of the pendant (at the deck's north-west corner), he reads
+## the label of a pallet just set down on bay 9's lift with a handheld scanner in his right hand,
+## its beep a second into the look, and goes back to his desk.
+const SCAN_AT := Vector3(-46.6, 1.3, 17.05)
+const SCAN_SECONDS := 3.0
+const LIFT_DECK := Vector2(1.87, 2.46)
+const BEEP_AT := 1.0
+const SCANNER_HAND := "Bip01 R Hand"
+const SCANNER_AT := Vector3(-0.06, 0.03, 0.02)
+const SCANNER := Vector3(0.07, 0.17, 0.045)
+const BEEP := preload("res://features/audio/shed/scanner_beep.wav")
 const HOLD_TURN := Vector3(PI / 2.0, 0.0, PI / 2.0)
 const HOLD_AT := Vector3(0.06, 0.02, 0.0)
 
 var home := true
+## Bay 9's lift: he waits rather than step onto its deck while it is not up at the dock floor
+## (his chair's sitting-down place is 5 cm onto its east rim).
+var lift: Node3D
 var state := "seated"
 
 var _model: Node3D
@@ -64,6 +82,10 @@ var _log: Node3D
 var _clipboard: Node3D
 var _seated := Vector3.ZERO
 var _facing := Vector3.RIGHT
+var _job := "seal"
+var _scan_load: Node3D
+var _scanner: Node3D
+var _beep: AudioStreamPlayer3D
 
 
 ## `inside` is the side door's inside, `way` the points from there to the van's back; `station`
@@ -87,6 +109,7 @@ func setup(inside: Vector3, way: Array[Vector3], station: Node3D,
 	add_child(_model)
 	_player = _model.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
 	_hold_clipboard()
+	_hold_scanner()
 	var body := SphereShape3D.new()
 	body.radius = KEEP_CLEAR
 	_query.shape = body
@@ -105,7 +128,21 @@ func reset() -> void:
 	_model.rotation.y = _heading(_facing)
 	_chair.global_transform = _chair_home
 	_carry(false)
+	_scan_load = null
+	_job = "seal"
 	_player.play("SitIdle")
+
+
+## Over to bay 9's lift to scan `load`'s label, if he is at his desk.
+func go_scan(load: Node3D) -> void:
+	if state != "seated" or load == null:
+		return
+	_scan_load = load
+	_job = "scan"
+	state = "standing"
+	home = false
+	_timer = 0.0
+	_player.play("StandUp", BLEND)
 
 
 ## Out to `van`'s rear doors to seal them with the seal numbered `number`.
@@ -114,6 +151,7 @@ func go_seal(van: Node3D, number: String) -> void:
 		return
 	_van = van
 	_number = number
+	_job = "seal"
 	state = "standing"
 	home = false
 	_timer = 0.0
@@ -124,10 +162,12 @@ func _physics_process(delta: float) -> void:
 	match state:
 		"standing":
 			_stand(delta)
-		"out", "back":
+		"out", "back", "to_scan":
 			_walk(delta)
 		"sealing", "checking", "noting":
 			_seal(delta)
+		"scanning":
+			_scan(delta)
 		"sitting":
 			_sit(delta)
 
@@ -139,6 +179,12 @@ func _stand(delta: float) -> void:
 	if _timer < length:
 		return
 	global_position = _seated + _local(STAND_TO)
+	if _job == "scan":
+		_carry_scanner(true)
+		state = "to_scan"
+		_route = [SCAN_AT] as Array[Vector3]
+		_player.play("Walk", BLEND)
+		return
 	_carry(true)
 	state = "out"
 	_route = _desk_way.duplicate()
@@ -159,7 +205,7 @@ func _walk(delta: float) -> void:
 		_route.pop_front()
 		return
 	var step := to.normalized() * minf(WALK * delta, to.length())
-	if _crowded(global_position + step):
+	if _crowded(global_position + step) or _over_lowered_lift(global_position + step):
 		_play("Idle")
 		return
 	_face(to, delta)
@@ -169,6 +215,14 @@ func _walk(delta: float) -> void:
 
 
 func _arrived() -> void:
+	if state == "to_scan":
+		state = "scanning"
+		_timer = 0.0
+		var at := _scan_load.global_position if is_instance_valid(_scan_load) \
+			else global_position + Vector3.LEFT
+		_model.rotation.y = atan2(at.x - global_position.x, at.z - global_position.z)
+		_player.play("Check", BLEND)
+		return
 	if state == "out":
 		state = "sealing"
 		_timer = 0.0
@@ -182,6 +236,7 @@ func _arrived() -> void:
 		global_position = _seated - _local(SIT_FROM)
 		_model.rotation.y = _heading(_facing)
 		_carry(false)
+		_carry_scanner(false)
 		_player.play("SitDown", BLEND)
 
 
@@ -209,6 +264,18 @@ func _seal(delta: float) -> void:
 		over.reverse()
 		_route.append_array(over)
 		_route.append(_seated - _local(SIT_FROM))
+		_play("Walk")
+
+
+func _scan(delta: float) -> void:
+	var before := _timer
+	_timer += delta
+	if before < BEEP_AT and _timer >= BEEP_AT:
+		_beep.play()
+		scanned.emit(_scan_load)
+	if _timer >= SCAN_SECONDS:
+		state = "back"
+		_route = [_seated - _local(SIT_FROM)] as Array[Vector3]
 		_play("Walk")
 
 
@@ -263,9 +330,67 @@ func _hold_clipboard() -> void:
 	_clipboard.transform = Transform3D(Basis.from_euler(HOLD_TURN), HOLD_AT)
 
 
+## A handheld barcode scanner, its body and grip, in his right hand while he scans.
+func _hold_scanner() -> void:
+	var skeleton := _model.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
+	if skeleton.find_bone(SCANNER_HAND) < 0:
+		return
+	var hand := BoneAttachment3D.new()
+	hand.name = "RightHand"
+	hand.bone_name = SCANNER_HAND
+	skeleton.add_child(hand)
+	_scanner = Node3D.new()
+	_scanner.name = "Scanner"
+	hand.add_child(_scanner)
+	var scale := 1.0 / maxf(skeleton.global_basis.get_scale().x, 0.0001)
+	_scanner.scale = Vector3.ONE * scale
+	_scanner.position = SCANNER_AT * scale
+	var casing := StandardMaterial3D.new()
+	casing.albedo_color = Color(0.12, 0.13, 0.14)
+	casing.roughness = 0.5
+	var window := StandardMaterial3D.new()
+	window.albedo_color = Color(0.6, 0.05, 0.05)
+	window.emission_enabled = true
+	window.emission = Color(0.8, 0.05, 0.05)
+	var body := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = SCANNER
+	body.mesh = box
+	body.material_override = casing
+	_scanner.add_child(body)
+	var lens := MeshInstance3D.new()
+	var glass := BoxMesh.new()
+	glass.size = Vector3(SCANNER.x - 0.01, 0.02, 0.005)
+	lens.mesh = glass
+	lens.material_override = window
+	lens.position = Vector3(0.0, SCANNER.y / 2.0 - 0.012, SCANNER.z / 2.0)
+	_scanner.add_child(lens)
+	_scanner.visible = false
+	_beep = AudioStreamPlayer3D.new()
+	_beep.name = "ScannerBeep"
+	_beep.stream = BEEP
+	_beep.bus = "Ambience"
+	_beep.volume_db = -8.0
+	_beep.unit_size = 3.0
+	add_child(_beep)
+
+
+func _carry_scanner(carrying: bool) -> void:
+	if _scanner != null:
+		_scanner.visible = carrying
+
+
 func _face(direction: Vector3, delta: float) -> void:
 	_model.rotation.y = lerp_angle(_model.rotation.y, atan2(direction.x, direction.z),
 		1.0 - exp(-delta * TURN_RATE))
+
+
+## Whether `at` lies over bay 9's lift deck while the deck is not up at the dock floor.
+func _over_lowered_lift(at: Vector3) -> bool:
+	if lift == null or not is_instance_valid(lift) or bool(lift.call("at_top")):
+		return false
+	var local := lift.to_local(at)
+	return absf(local.x) <= LIFT_DECK.x / 2.0 and absf(local.z) <= LIFT_DECK.y / 2.0
 
 
 ## Whether someone stands where he would step: he waits for them instead of walking through.

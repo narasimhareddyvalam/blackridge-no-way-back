@@ -7184,3 +7184,110 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Stills:** `captures/shed_kit/partF/` (`tools/captures/capture_shed_kit.gd`).
 - **Unverified:** the west exit cannot be used in play (its door stays shut, as the mission has
   no use for it); the federal and safety signs' small print is drawn as bars.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part G: the shed at work, people and sound, written before any code)
+
+- **Status:** written before any code, at the author's word (#301). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. No GPU price for this part (#296).
+- **What exists** (mapped 2026-11-16): the parked forklift is Kamran Mughal's model as one mesh,
+  so its forks cannot lift; no one drives it. Bay 9's dock worker (Rocketbox `Construction_Male_08`)
+  sits at his desk and seals the van. Rocketbox's clips on hand: idle, walk, sitting in a chair,
+  sitting down and standing up at a table, checking and noting documents, trying a door. The shed
+  makes no sound of its own: the rain heard inside is the yard's.
+- **Research** (sources go in the prompt log with the build):
+  - **Forklift practice:** OSHA 1910.178(n): travel with the load low (forks 4-6 in up) and
+    tilted back; slow down and sound the horn at cross aisles and where the view is blocked;
+    yield to people on foot; look in the direction of travel; a common site limit of 5 mph
+    (2.2 m/s) inside, slower in aisles and turning. A blue warning spot is projected 3-5 m ahead
+    of (or behind, when reversing) the truck; a reversing alarm sounds while it backs, as a
+    tonal beeper about 1 kHz or the quieter broadband "white noise" alarm many sites now use.
+  - **Putaway:** a pallet is driven from a staging lane into an aisle, the truck squares up to
+    the rack, lifts to the beam's level, creeps in, lowers onto the beam, backs out with the
+    forks level and lowers them to travel height.
+  - **Sounds in a metal shed at night in heavy rain:** rain drumming on the steel roof louder than
+    any outside, heaters' fans and burners cycling on their thermostats, an electric forklift's
+    motor whine and hydraulic pump, its horn and alarm, the big fans' soft whoosh.
+- **The parts †:**
+  1. **The forklift made able to work:** its carriage and forks cut from its one mesh by script
+     (as the pallet jack's tiller was, #240), so they rise up its mast; the change credited (CC BY).
+  2. **A driver and his loop:** a Rocketbox warehouse worker † seated on it (the author picks the
+     avatar from renders, as for the guard and the dock worker; a Rocketbox seated clip with his
+     hands on the wheel †); a loop of about 90 s †: from its parking place to dock 5's staging lane,
+     a pallet of its own picked up (not one of the mission's), driven at 2.2 m/s on the cross-aisle
+     and slower in the aisle, put away on aisle 03's first beam, the forks lowered, back to park.
+     The blue spot ahead or behind as it goes, the alarm while it backs, a horn tap at each aisle
+     mouth; it stops and waits when Ethan is within 3 m of its path ahead †, and never comes
+     within 2 m of him. Its oil drip (part D) stays at its parking place.
+  3. **The checker †:** bay 9's dock worker scans each pallet as Ethan rolls it onto the lift (he
+     stands, walks to the lift's side, scans its label, walks back), or no checker: the author's
+     choice, as it adds a beat to Mission 2's loading.
+  4. **Sounds** (synthesized by a new `source_assets/audio/shed/synthesize.py`, on the Ambience
+     bus, each from its source): rain on the roof inside the shed (replacing the yard's rain
+     there); the heaters' fans and burners, cycling †; the fans' whoosh; the forklift's motor,
+     pump, horn and reversing alarm (tonal or broadband: the author's choice); a radio on the dock
+     desk playing low † (provisional, for ElevenLabs later, as `docs/AUDIO.md` records).
+- **Rules a test can measure** (new `test_shed_work.gd`, written first): the loop completes
+  within its time and puts its pallet on the beam within 0.05 m; the forks at travel height
+  (0.10-0.15 m) whenever it moves loaded; never faster than 2.2 m/s, slower in the aisle; the
+  blue spot 3-5 m ahead in its direction of travel; the alarm only while reversing; a horn at
+  each aisle mouth it passes; with Ethan placed in its way, it stops at least 2 m short and goes
+  on when he leaves; the mission's tests unchanged (every suite); the roof's rain louder inside
+  than the yard's rain there; each source playing from where it is.
+- **Decisions for the author:** the forklift's loop; the driver's look (renders to choose from);
+  the checker or not; tonal or broadband alarm; the radio.
+- **Not in this part:** the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part G: the shed at work, people and sound (#301-#303), built)
+
+- **The forklift** (new `game/features/vehicles/forklift/forklift_truck.gd`, built by
+  `dock_staging.gd` in place of the parked model; `transfer_shed.gd` hands it out as `forklift`
+  and the app gives it Ethan): Kamran Mughal's truck with its carriage cut free
+  (`convert_depot_models.py`'s `forklift()`, 88 loose parts in front of the mast's channels and no
+  higher than the backrest; the textures came out byte for byte the same), its node's origin at
+  the front axle so it turns on the spot about it as a three-wheel electric truck does. While the
+  camera is within 60 m it works in trips with a pallet of its own (`PutawayLoad`, drawn with its
+  own seed so no staged load or empty moved): from dock 6's lane to the empty floor place facing
+  aisle 03 at z 7.56 (found from the racking's own draw), and back. Its load 0.12 m up while it
+  travels, 2.2 m/s at most and 1.0 m/s in the aisle, its horn at the aisle's mouth, its blue spot
+  4 m ahead in its direction of travel, its broadband alarm while it backs; it slows so as to stop
+  2 m short of Ethan in its way and does not turn while he is within its swing.
+- **Its driver** (`Construction_Male_07`, the author's choice from Rocketbox's previews, #303;
+  `convert_rocketbox.py`'s `forklift_driver` job): seated on the cushion against its backrest in
+  Rocketbox's seated idle at a table, his wrists set 7 cm behind his grips on the wheel and his
+  feet on the plate by two `TwoBoneIK3D`, his head and neck turned 75° over his right shoulder as
+  he backs (new `look_travel.gd`).
+- **The scan** (#302, "Yes, he scans"): when a pallet is first set down on bay 9's lift
+  (`pallet_jack.gd`'s `on_lift()`, watched by `transfer_shed.gd`), the dock worker stands, walks
+  to his place off the deck's north-east corner, faces the pallet with a handheld scanner in his
+  right hand, reads it with its beep (`scanned`) and goes back to his desk. He now waits rather
+  than step onto the deck while the lift is not up: his chair's sitting-down place is 5 cm onto
+  its east rim.
+- **Sounds** (new `source_assets/audio/shed/synthesize.py`, ten WAVs in
+  `game/features/audio/shed/`, `docs/AUDIO.md`; new `shed_sounds.gd`): rain drumming on the roof
+  from four places under it; the yard's rain 14 dB lower under the roof (`driving_audio.gd`'s
+  `shelter`, fading in from the open doors over 4 m); each heater on its thermostat, 240 s on and
+  150 s off a third of a round apart, lighting with its ticks; the fans' swish; a small radio on
+  the dock desk playing low; the forklift's motor, pump, horn and alarm; the scanner's beep.
+- **Changed from the plan:** the putaway goes to a floor place, not the first beam: the model's
+  mast is 2.21 m tall with no inner stage, so lifting to the 60 in beam would carry the carriage
+  above the mast's top; and the mast does not tilt back, as it is not cut from the body (the load
+  rides level).
+- **Found on the way:** the driver's IK first seemed not to work: his bones read from outside a
+  skeleton update are the pose before the modifiers (as `test_on_foot.gd` found, #287), so his fit
+  is now measured on `skeleton_updated`. The test's first Ethan check stood him where the truck
+  was stopping anyway and read a turn on the spot as standing still. Three mutations survived
+  the first test (the top speed never reached, the aisle's own limit doubled in code, a wake-up
+  that only turns): the test now lets the first loaded run go free, puts Ethan in the second
+  trip's long run, and checks turning while parked; the doubled limit was removed.
+- **Rules:** new `test_shed_work.gd`, 25 checks over both trips: W0-W10 (the truck), S1-S5 (the
+  scan), R1-R5 (the sounds); before any code 0/1, then 25/25
+  (`logs/phase_2/step5/partG/before/`, `after/`). `test_menus.gd` learned the new avatar's
+  credit. Seventeen mutations exit 1 on their own checks (`mutations/SUMMARY.txt`,
+  `mutations_partG.py`, three at a time); every suite, `bash
+  logs/phase_2/step5/partG/suites/run_suites.sh <scratch>`: 47 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`). The headless import exits 0.
+- **Not yet:** the GPU price (the forklift's lights, the driver), with the whole mission's (#296).
+- **Stills:** `captures/shed_work/partG/` (`tools/captures/capture_shed_work.gd`, by the truck's
+  phases in real time).
+- **Unverified:** the look and sound in motion; the driver's hands on the wheel's upper rim at
+  his chest's height, where this model's wheel sits; his fingers are not closed round it.

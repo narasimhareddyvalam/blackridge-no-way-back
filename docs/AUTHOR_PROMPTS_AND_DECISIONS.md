@@ -4145,6 +4145,26 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** what next; **the author chose** "Commit, then plan G (Recommended)": part F
        committed on `develop`, labelled (agent), not pushed; then part G written before any code
        for the author's OK.
+     - **Done:** committed as `ef2b50b`; part G written in `docs/PHASE_BRIEF.md` (its last
+       revision); waiting for the author's OK.
+
+302. **Part G's choices**
+     - **Asked** four things; **the author chose** "Yes, the full loop (Recommended)" (the forks
+       cut free, a seated Rocketbox driver chosen from renders, the putaway loop, OSHA's rules,
+       stopping for Ethan), "Yes, he scans" (bay 9's dock worker scans each pallet as Ethan rolls
+       it onto the lift), "Broadband (Recommended)" (the white-noise reversing alarm) and "Yes,
+       provisional (Recommended)" (a radio low on the dock desk). Part G to be built as written,
+       tests first.
+
+303. **The forklift driver's look**
+     - **Shown** nine Rocketbox workers on a labelled sheet (their library previews); **the author
+       chose** "G, orange hi-vis (Recommended)": `Construction_Male_07`, an orange hi-vis vest
+       over blue workwear and an orange hard hat.
+
+304. **Part G committed; part H's plan**
+     - **Asked** what next; **the author chose** "Commit, then plan H (Recommended)": part G
+       committed on `develop`, labelled (agent), not pushed; then part H written before any code
+       for the author's OK.
 
 ## Waiting for the author
 
@@ -4154,7 +4174,9 @@ tag `a5`. Pictures the author approved or rejected are filed in
 - Step 5 of #253, part E (#298): the fit-out built and committed (#299), not pushed; the author's look at
   `captures/shed_fitout/partE/` (at the end); its GPU price with the mission's.
 - Step 5 of #253, part F (#300): the safety and work kit built and committed (#301), not pushed; the author's look
-  at `captures/shed_kit/partF/` (at the end); its GPU price with the mission's; then part G.
+  at `captures/shed_kit/partF/` (at the end); its GPU price with the mission's.
+- Step 5 of #253, part G (#302-#303): the shed at work built and committed (#304), not pushed; the author's look at
+  `captures/shed_work/partG/` and a listen (at the end); then part H, the yard.
 - #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
   the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).

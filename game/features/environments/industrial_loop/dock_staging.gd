@@ -7,6 +7,7 @@ extends RefCounted
 ## and each load is one node (its pallet, cartons, wrap and body) that can be moved whole.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
+const ForkliftTruck = preload("res://features/vehicles/forklift/forklift_truck.gd")
 const ART := "res://features/environments/industrial_loop/art/depot/"
 const LOADS: Array[Vector2] = [Vector2(-64.55, 16.45), Vector2(-63.45, 16.45),
 	Vector2(-64.55, 15.15), Vector2(-63.45, 15.15), Vector2(-52.0, 16.6), Vector2(-47.2, 16.6)]
@@ -16,6 +17,12 @@ const EMPTY_COUNT := 5
 const FORKLIFT := Vector2(-63.2, 12.4)
 const FORKLIFT_HEADING := 0.2
 const FORKLIFT_SIZE := Vector3(1.12, 2.21, 3.3)
+## The forklift's own load (part G of step 5 of #253): a pallet of cartons in dock 6's staging
+## lane, which it carries to aisle 03 and back; drawn with its own seed so that the staged loads
+## and the empties stay as they were.
+const PUTAWAY := Vector2(-60.0, 16.3)
+const PUTAWAY_LAYERS := 3
+const PUTAWAY_SEED := 302
 const JACK := Vector2(-47.2, 16.35)
 const JACK_BODY := Vector3(0.6, 1.2, 0.4)
 const PALLET := Vector3(1.016, 0.15, 1.219)
@@ -45,6 +52,7 @@ static func build(shed: Node3D, floor_y: float) -> void:
 			top - bottom, ROWS * CARTON.z + 0.04), film).name = "StretchWrap"
 		_solid(stack, "LoadBody", Vector3(COLUMNS * CARTON.x + 0.03, top - FORK_GAP, PALLET.z),
 			Vector3.UP * FORK_GAP)
+	var putaway := _putaway(shed, pallet, carton, film, floor_y)
 	source.free()
 	for layer in range(EMPTY_COUNT):
 		var at := Vector3(EMPTIES.x + random.randf_range(-0.02, 0.02),
@@ -56,11 +64,27 @@ static func build(shed: Node3D, floor_y: float) -> void:
 	empties.position = Vector3(EMPTIES.x, floor_y, EMPTIES.y)
 	shed.add_child(empties)
 	_solid(empties, "StackBody", Vector3(PALLET.x, EMPTY_COUNT * PALLET.y, PALLET.z))
-	var forklift := _place(shed, "forklift.glb", "Forklift", Vector3(FORKLIFT.x, floor_y,
-		FORKLIFT.y), FORKLIFT_HEADING)
-	_solid(forklift, "ForkliftBody", FORKLIFT_SIZE)
+	var forklift := ForkliftTruck.new()
+	shed.add_child(forklift)
+	forklift.call("park", putaway)
 	var jack := _place(shed, "pallet_jack.glb", "PalletJack", Vector3(JACK.x, floor_y, JACK.y), PI)
 	_solid(jack, "JackBody", JACK_BODY, Vector3(0.0, 0.0, 0.6))
+
+
+static func _putaway(shed: Node3D, pallet: PackedScene, carton: MeshInstance3D,
+		film: Material, floor_y: float) -> Node3D:
+	var random := RandomNumberGenerator.new()
+	random.seed = PUTAWAY_SEED
+	var stack := _pallet(shed, pallet, "PutawayLoad", Vector3(PUTAWAY.x, floor_y, PUTAWAY.y),
+		0.0)
+	_cartons(stack, carton, PUTAWAY_LAYERS, random)
+	var bottom := PALLET.y / 2.0
+	var top := PALLET.y + PUTAWAY_LAYERS * CARTON.y + 0.01
+	Build.box(stack, Vector3(0.0, (bottom + top) / 2.0, 0.0), Vector3(COLUMNS * CARTON.x + 0.03,
+		top - bottom, ROWS * CARTON.z + 0.04), film).name = "StretchWrap"
+	_solid(stack, "LoadBody", Vector3(COLUMNS * CARTON.x + 0.03, top - FORK_GAP, PALLET.z),
+		Vector3.UP * FORK_GAP)
+	return stack
 
 
 static func _pallet(shed: Node3D, scene: PackedScene, label: String, at: Vector3,

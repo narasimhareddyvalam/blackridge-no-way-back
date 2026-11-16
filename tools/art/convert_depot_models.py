@@ -7,7 +7,8 @@ dock_seal: Maxwell autodoors' Foam Pad Dock Seal, its gap widened to 2.80 m and 
     3.25 m tall, its back at the origin so it mounts on the wall's face.
 dock_leveller: Maxwell autodoors' DLHH Electrohydraulic Dock Leveler, its deck 2.13 x 2.44 m
     (7 x 8 ft) with the top of the deck at the origin and its lip facing out.
-forklift: Kamran Mughal's Warehouse Forklift, its forks toward +Z, its specular map left out.
+forklift: Kamran Mughal's Warehouse Forklift, its forks toward +Z, its specular map left out, its
+carriage (forks, plate and load backrest) cut from the truck to ride up its mast (#302).
 pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z, cut in three as
     a real one moves (step 2f, #243): its frame (Chassis); its steering unit, the pump and its
     twin wheels, turning on the pump's vertical axis 0.689 m behind the middle (Steering); and
@@ -261,11 +262,45 @@ def dock_leveller() -> None:
     finish(meshes, "dock_leveller", "DockLeveller")
 
 
+## The forklift's carriage (part G of step 5 of #253, #302): its forks, fork plate and load
+## backrest, every loose part in front of the mast's channels (Godot z 0.55 m on) and no higher
+## than the backrest's top (1.47 m), cut free to ride up the mast.
+CARRIAGE_FRONT = 0.55
+CARRIAGE_TOP = 1.47
+
+
 def forklift() -> None:
     meshes = load("09_forklift")
     plain(meshes)
     standing(meshes)
-    finish(meshes, "forklift", "Forklift", "JPEG")
+    for obj in bpy.context.scene.objects:
+        obj.select_set(obj in meshes)
+    bpy.context.view_layer.objects.active = meshes[0]
+    bpy.ops.object.join()
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
+    bpy.ops.mesh.separate(type="LOOSE")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    groups = {"Truck": [], "Carriage": []}
+    for obj in [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]:
+        low, high = bounds([obj])
+        front = -high[1]
+        carriage = front >= CARRIAGE_FRONT - 0.001 and high[2] <= CARRIAGE_TOP
+        groups["Carriage" if carriage else "Truck"].append(obj)
+    parts = []
+    for name, objects in groups.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        for obj in objects:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = objects[0]
+        bpy.ops.object.join()
+        part = bpy.context.view_layer.objects.active
+        part.name = name
+        part.data.name = name
+        parts.append(part)
+    print("FORKLIFT PARTS: %s" % ", ".join("%s %d parts" % (name, len(objects))
+                                           for name, objects in groups.items()))
+    finish_parts(parts, "forklift", "JPEG")
 
 
 def pallet_jack() -> None:

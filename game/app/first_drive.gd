@@ -2,6 +2,7 @@ extends Node3D
 
 const Driver = preload("res://features/characters/driver/driver.gd")
 const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
+const ShedSounds = preload("res://features/environments/industrial_loop/shed_sounds.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
@@ -116,6 +117,8 @@ func _ready() -> void:
 	cargo.shed = world.transfer_shed
 	cargo.driver = driver
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
+	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
+	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
 	var stairs: Array[Dictionary] = [(world.transfer_shed.get("side_door") as Node).call("stair")]
 	driver.set("stairs", stairs)
 	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)

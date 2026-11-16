@@ -20,6 +20,7 @@ const Racking = preload("racking.gd")
 const ShedFloor = preload("shed_floor.gd")
 const ShedFitout = preload("shed_fitout.gd")
 const ShedKit = preload("shed_kit.gd")
+const ShedSounds = preload("shed_sounds.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -130,6 +131,7 @@ func build(metal: Material) -> void:
 	_racking()
 	_fitout()
 	_kit()
+	_sounds()
 	_lights()
 	_signals()
 	_arm_lights()
@@ -490,6 +492,14 @@ func _access() -> void:
 	access.name = "DockAccess"
 	add_child(access)
 	access.build(_concrete, Build.material(Color(0.34, 0.4, 0.45), 0.5))
+
+
+func _sounds() -> void:
+	var fitout := get_node("ShedFitout")
+	var sounds := ShedSounds.new()
+	sounds.name = "ShedSounds"
+	add_child(sounds)
+	sounds.build(fitout.call("placements", "Heaters"), fitout.call("placements", "Fans"))
 
 
 func _kit() -> void:
