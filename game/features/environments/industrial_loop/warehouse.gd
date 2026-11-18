@@ -10,8 +10,13 @@ extends Node3D
 ## 1014: handrails 34-38 in on both sides; 1015: a 42 in guard where the landing drops more than
 ## 30 in), the fire department connection and key box beside it; scuppers through the parapet with
 ## downpipes to splash blocks. Its walls, dock face, doors, landing and steps are solid.
+## Part C: one dock may stand open, its door raised into its tracks as the shed's open docks, a
+## wall only the camera meets across it; inside, the floor at the dock's height over the whole
+## warehouse, the leveller at the open door, pallets staged, the ends of the first racks beyond
+## and a high bay light over the bay; on the court each door's number and its guide lines.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
+const Staging = preload("dock_staging.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const ART := "res://features/environments/industrial_loop/art/depot/"
 const TEXTURES := "res://features/environments/depot_yard/polyhaven/textures/"
@@ -43,10 +48,21 @@ const STAIR_WIDTH := 1.12
 const HANDRAIL := 0.9
 const GUARD := 1.1
 const PIPE_RADIUS := 0.06
+const RAISED := 0.35
+const TRACK_INSIDE := 0.34
+const LEVELLER_IN := 1.22
+const CAMERA_WALL_LAYER := 8
+const COURT_NUMBER_OUT := 4.0
+const GUIDE := Vector3(0.1, 0.004, 8.0)
+const GUIDE_OFF := 1.6
+const GUIDE_FROM := 0.6
+const BAY_LIGHT := Color(0.94, 0.97, 1.0)
+const RACK_IN := 7.0
 
 var rect: Rect2
 var height := 10.0
 var docks: Array[float] = []
+var _open := -1
 var _openings: Array[Rect2] = []
 var _joints := {}
 var _rails: Array[Node3D] = []
@@ -58,15 +74,18 @@ var _seam := Build.material(Color(0.16, 0.16, 0.16), 0.7)
 var _steel := Build.material(Color(0.36, 0.38, 0.39), 0.45)
 var _red_off := Build.material(Color(0.22, 0.04, 0.03), 0.4)
 var _green_on := Build.luminous(Color(0.1, 1.0, 0.35), 3.0)
+var _red_on := Build.luminous(Color(1.0, 0.08, 0.04), 3.0)
+var _green_off := Build.material(Color(0.03, 0.18, 0.06), 0.4)
 
 
 ## Builds the warehouse on `footprint` (x, z), `tall` high, its docks at `dock_xs` on its north
 ## face and its man door at `man_x`, its stair going down toward `stair_side` (-1 west, 1 east).
 func build(footprint: Rect2, tall: float, dock_xs: Array[float], man_x: float,
-		stair_side: float, metal: Material) -> void:
+		stair_side: float, metal: Material, open_index: int = -1) -> void:
 	rect = footprint
 	height = tall
 	docks = dock_xs
+	_open = open_index
 	_paint = _surface(Color(0.74, 0.73, 0.7))
 	_base = _surface(Color(0.46, 0.46, 0.45))
 	_body = StaticBody3D.new()
@@ -83,6 +102,29 @@ func build(footprint: Rect2, tall: float, dock_xs: Array[float], man_x: float,
 	_wall_packs()
 	_man_door(door, stair_side)
 	_drains()
+	_court()
+	_inside()
+
+
+## Which dock stands open (0 the first), or -1.
+func open_dock() -> int:
+	return _open
+
+
+## The open dock's outside signal: red with a van docked there, so it does not pull away, else
+## green.
+func set_docked(docked: bool) -> void:
+	if _open < 0:
+		return
+	var lamp := get_node("DockSignal%d" % (_open + 1)) as Node3D
+	(lamp.get_node("Red") as MeshInstance3D).material_override = _red_on if docked else _red_off
+	(lamp.get_node("Green") as MeshInstance3D).material_override = _green_off if docked \
+		else _green_on
+
+
+## Where the open dock's bumpers meet a backing van: its centre (x) and their face (z).
+func open_bumpers() -> Vector2:
+	return Vector2(docks[_open], rect.end.y + BUMPER.z)
 
 
 ## Each dock's opening in the north face, as Rect2(x, y, width, height), west to east.
@@ -243,13 +285,19 @@ func _docks() -> void:
 		holder.position = Vector3(x, DOCK_FLOOR, face)
 		add_child(holder)
 		holder.add_child(DockDoor.instantiate())
+		if index == _open:
+			_raise(holder)
 		var shape := BoxShape3D.new()
 		shape.size = Vector3(DOCK_OPENING.x, DOCK_OPENING.y, 0.2)
 		var collision := CollisionShape3D.new()
 		collision.shape = shape
 		collision.position = Vector3(0.0, DOCK_OPENING.y / 2.0, rect.end.y - 0.1 - face)
 		var body := StaticBody3D.new()
-		body.name = "DoorBody"
+		body.name = "DoorBody" if index != _open else "CameraWall"
+		if index == _open:
+			body.collision_layer = CAMERA_WALL_LAYER
+			body.collision_mask = 0
+			collision.position.z += 0.1
 		body.add_child(collision)
 		holder.add_child(body)
 		var pads := seal.instantiate() as Node3D
@@ -276,6 +324,117 @@ func _docks() -> void:
 		number.shaded = true
 		number.double_sided = false
 		_dock_light(index, x, housing)
+
+
+## The open door raised into its tracks inside, as the shed's open docks (`transfer_building.gd`'s
+## `_raise`).
+func _raise(holder: Node3D) -> void:
+	var head := DOCK_OPENING.y + RAISED
+	var panel := holder.get_child(0) as Node3D
+	panel.rotation.x = -PI / 2.0
+	panel.position = Vector3(0.0, head, -TRACK_INSIDE)
+	var x := holder.position.x
+	var inside := rect.end.y - WALL - 0.06
+	for side: float in [-1.0, 1.0]:
+		var edge := x + side * (DOCK_OPENING.x / 2.0 + 0.05)
+		Build.box(self, Vector3(edge, DOCK_FLOOR + head / 2.0, inside), Vector3(0.05, head, 0.08),
+			_steel).name = "DoorTrack"
+		var length := DOCK_OPENING.y + TRACK_INSIDE
+		Build.box(self, Vector3(edge, DOCK_FLOOR + head, inside - length / 2.0), Vector3(0.05,
+			0.08, length), _steel).name = "DoorTrack"
+	Build.box(self, Vector3(x, DOCK_FLOOR + head + 0.25, inside), Vector3(DOCK_OPENING.x + 0.3,
+		0.06, 0.06), _steel).name = "DoorSpringShaft"
+
+
+## Each door's number painted on the court before it, and its guide lines either side.
+func _court() -> void:
+	var yellow := Build.material(Color(0.86, 0.66, 0.08), 0.6)
+	for index in range(docks.size()):
+		var x := docks[index]
+		var number := Build.text(self, "%d" % (index + 1), Vector3(x, 0.025, rect.end.y
+			+ COURT_NUMBER_OUT), 160, yellow.albedo_color)
+		number.name = "CourtNumber%d" % (index + 1)
+		number.rotation.x = -PI / 2.0
+		number.shaded = true
+		number.double_sided = false
+		for side: float in [-1.0, 1.0]:
+			var line := Build.box(self, Vector3(x + side * GUIDE_OFF, 0.022, rect.end.y
+				+ GUIDE_FROM + GUIDE.z / 2.0), GUIDE, yellow)
+			line.name = "GuideLine"
+			line.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
+## Inside: the floor at the dock's height over the whole warehouse; at the open dock its
+## leveller, two pallets staged, the first racks' ends beyond and a high bay light.
+func _inside() -> void:
+	var slab := _surface(Color(0.55, 0.55, 0.53))
+	var inner := Vector3(rect.size.x - WALL * 2.0, DOCK_FLOOR, rect.size.y - WALL * 2.0)
+	var centre := Vector3(rect.get_center().x, DOCK_FLOOR / 2.0, rect.get_center().y)
+	Build.box(self, centre, inner, slab).name = "InteriorFloor"
+	_solid(centre, inner)
+	if _open < 0:
+		return
+	var x := docks[_open]
+	var wall_in := rect.end.y - WALL
+	var deck := (load(ART + "dock_leveller.glb") as PackedScene).instantiate() as Node3D
+	deck.name = "DockLeveller%d" % (_open + 1)
+	add_child(deck)
+	deck.position = Vector3(x, DOCK_FLOOR + 0.01, wall_in - LEVELLER_IN)
+	var reach := _box_in(deck)
+	deck.position.z += wall_in - 0.01 - reach.end.z
+	var pallet := load(ART + "pallet.glb") as PackedScene
+	var source := (load(ART + "carton.glb") as PackedScene).instantiate() as Node3D
+	var carton := source.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
+	var film := Staging._film()
+	var random := RandomNumberGenerator.new()
+	random.seed = 315
+	var layers := 3
+	for index in range(2):
+		var holder := Node3D.new()
+		holder.name = "BayPallet%d" % (index + 1)
+		add_child(holder)
+		holder.position = Vector3(x - 0.75 + index * 1.5, DOCK_FLOOR, wall_in - 3.6)
+		holder.add_child(pallet.instantiate())
+		Staging._cartons(holder, carton, layers, random)
+		var top := Staging.PALLET.y + layers * Staging.CARTON.y + 0.01
+		var bottom := Staging.PALLET.y - 0.02
+		Build.box(holder, Vector3(0.0, (bottom + top) / 2.0, 0.0), Vector3(Staging.COLUMNS
+			* Staging.CARTON.x + 0.03, top - bottom, Staging.ROWS * Staging.CARTON.z + 0.04),
+			film).name = "StretchWrap"
+		_solid(holder.position + Vector3.UP * top / 2.0, Vector3(1.2, top, 1.0))
+	source.free()
+	var orange := Build.material(Color(0.86, 0.36, 0.06), 0.5)
+	var blue := Build.material(Color(0.12, 0.25, 0.48), 0.5)
+	for side: float in [-1.0, 1.0]:
+		var end_x := x + side * 2.6
+		var z := wall_in - RACK_IN
+		for depth: float in [0.0, -1.07]:
+			Build.box(self, Vector3(end_x, DOCK_FLOOR + 3.0, z + depth), Vector3(0.08, 6.0, 0.08),
+				blue).name = "RackEnd"
+		for level: float in [1.8, 3.6, 5.4]:
+			Build.box(self, Vector3(end_x - side * 1.4, DOCK_FLOOR + level, z), Vector3(2.7, 0.12,
+				0.05), orange).name = "RackEndBeam"
+	var light := SpotLight3D.new()
+	light.name = "BayLight1"
+	add_child(light)
+	light.position = Vector3(x, height - PARAPET - DECK - 0.6, wall_in - 3.0)
+	light.look_at(Vector3(x, DOCK_FLOOR, wall_in - 3.0) + Vector3(0.0, 0.0, 0.01), Vector3.UP)
+	light.light_color = BAY_LIGHT
+	light.light_energy = 3.0
+	light.spot_angle = 60.0
+	light.spot_range = 12.0
+	light.shadow_enabled = false
+	Build.box(self, light.position + Vector3.UP * 0.1, Vector3(0.5, 0.12, 0.5), Build.luminous(
+		BAY_LIGHT, 1.5)).name = "BayLightFixture"
+
+
+func _box_in(node: Node3D) -> AABB:
+	var merged := AABB()
+	for found in node.find_children("*", "MeshInstance3D", true, false):
+		var mesh := found as MeshInstance3D
+		var box := global_transform.affine_inverse() * mesh.global_transform * mesh.get_aabb()
+		merged = box if not merged.has_volume() else merged.merge(box)
+	return merged
 
 
 func _dock_light(index: int, x: float, housing: Material) -> void:

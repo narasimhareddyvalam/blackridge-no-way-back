@@ -15,6 +15,11 @@ const Build = preload("res://shared/components/mesh_builder.gd")
 const Fence = preload("chain_link_fence.gd")
 const Booth = preload("guard_booth.gd")
 const Warehouse = preload("warehouse.gd")
+const DockJudge = preload("dock_judge.gd")
+const TRAILER := preload("res://features/environments/industrial_loop/art/depot/trailer_dryvan.glb")
+const FORKLIFT := preload("res://features/environments/industrial_loop/art/depot/forklift.glb")
+const DUMPSTERS := preload("res://features/environments/industrial_loop/art/depot/dumpsters.glb")
+const PALLET := preload("res://features/environments/industrial_loop/art/depot/pallet.glb")
 const Guard = preload("res://features/characters/compound_guard/compound_guard.glb")
 const MOTOR := preload("res://features/audio/shed/forklift_pump.wav")
 const GROUND := 0.0
@@ -51,10 +56,33 @@ const WAREHOUSE_NAMES: Array[String] = ["WarehouseWest", "WarehouseEast"]
 const DOCK_XS: Array[Array] = [[141.0, 145.0, 149.0, 153.0, 157.0, 161.0],
 	[240.0, 244.0, 248.0, 252.0, 256.0, 260.0, 264.0]]
 const MAN_DOOR_XS: Array[float] = [135.6, 234.6]
+## Part C: the east warehouse's door 3 open; the yard dressed, all of it clear of the van's way
+## from the gate to door 3.
+const OPEN_DOCK := DOOR - 1
+const TRAILER_HALF := 6.875
+const TRAILER_WIDTH := 2.41
+const DOCK_GAP := 0.02
+const TRAILER_DOCKS: Array[int] = [1, 3]
+const REAR_AXLE := -4.9
+const CHOCK := Vector3(0.25, 0.2, 0.3)
+const CHOCK_OUT := 1.0
+const CHOCK_AHEAD := 1.25
+const POLES: Array[Vector3] = [Vector3(172.0, 0.0, 145.4), Vector3(222.0, 0.0, 145.4),
+	Vector3(268.0, 0.0, 145.4)]
+const POLE_TALL := 9.0
+const FLOOD := Color(0.96, 0.97, 1.0)
+const PALLET_STACKS: Array[Vector3] = [Vector3(168.2, 0.0, 110.0), Vector3(168.2, 0.0, 113.0)]
+const PALLET_HIGH := 14
+const PALLET_SIZE := Vector3(1.0, 0.144, 1.2)
+const FORKLIFT_AT := Transform3D(Basis(Vector3.UP, PI / 2.0), Vector3(229.0, 0.0, 124.0))
+const FORKLIFT_BOX := Vector3(1.1, 2.2, 3.0)
+const DUMPSTERS_AT := Transform3D(Basis(Vector3.UP, PI / 2.0), Vector3(150.0, 0.0, 97.0))
+const DUMPSTER_BOX := Vector3(1.75, 1.54, 4.36)
 
 var vehicle: CharacterBody3D
 var driver_eye: Node3D
 var booth: Node3D
+var judge: Node
 
 var _fence_runs: Array = []
 var _footprints: Array[Rect2] = []
@@ -97,13 +125,32 @@ func build_warehouses(footprints_xz: Array[Rect2], heights: Array[float], metal:
 		add_child(house)
 		var docks: Array[float] = []
 		docks.assign(DOCK_XS[index])
-		house.build(footprints_xz[index], heights[index], docks, MAN_DOOR_XS[index], 1.0, metal)
+		var open := OPEN_DOCK if index == 1 else -1
+		house.build(footprints_xz[index], heights[index], docks, MAN_DOOR_XS[index], 1.0, metal,
+			open)
 		_footprints.append(footprints_xz[index])
+	var east := get_node(WAREHOUSE_NAMES[1]) as Node3D
+	var bumpers: Vector2 = east.call("open_bumpers")
+	judge = DockJudge.new()
+	judge.name = "DoorThreeJudge"
+	judge.set("centre_x", bumpers.x)
+	judge.set("bumpers_z", bumpers.y)
+	add_child(judge)
+	judge.connect("changed", func() -> void:
+		east.call("set_docked", judge.get("verdict") == "docked"))
+	_dress(footprints_xz[0])
+
+
+## The east warehouse's door 3, where the van docks.
+func door_house() -> Node3D:
+	return get_node(WAREHOUSE_NAMES[1]) as Node3D
 
 
 ## The van Ethan drives: its front and rear, read from its collision shape.
 func watch(van: CharacterBody3D) -> void:
 	vehicle = van
+	if judge != null:
+		judge.set("vehicle", van)
 	for child in van.get_children():
 		if child is CollisionShape3D and (child as CollisionShape3D).shape is BoxShape3D:
 			var shape := child as CollisionShape3D
@@ -120,6 +167,9 @@ func reset() -> void:
 	_check_left = -1.0
 	_window_down = false
 	_place_gate()
+	if judge != null:
+		judge.call("reset")
+		door_house().call("set_docked", false)
 
 
 func fence_runs() -> Array:
@@ -245,6 +295,104 @@ func _boundary() -> void:
 			fence.run(self, _body, Vector3(a.x, GROUND, a.y), Vector3(b.x, GROUND, b.y),
 				OUTWARD[index])
 			_fence_runs.append({"from": a, "to": b})
+
+
+## The yard at night (part C): floodlights on poles along the north fence; trailers dropped
+## square at two of the west warehouse's docks (`west`), on their landing gear, a tandem
+## chocked; empty pallets stacked by its east wall; the forklift parked by the east warehouse;
+## the dumpsters behind the west one. Each solid.
+func _dress(west: Rect2) -> void:
+	var steel := Build.material(Color(0.5, 0.52, 0.52), 0.5)
+	steel.metallic = 0.6
+	for index in range(POLES.size()):
+		var at := POLES[index]
+		Build.cylinder(self, at + Vector3.UP * POLE_TALL / 2.0, 0.1, POLE_TALL, steel).name = \
+			"FloodPole"
+		_solid_box(at + Vector3.UP * 1.0, Vector3(0.3, 2.0, 0.3))
+		_footprints.append(Rect2(at.x - 0.15, at.z - 0.15, 0.3, 0.3))
+		var head := at + Vector3(0.0, POLE_TALL, -0.35)
+		Build.box(self, head, Vector3(0.6, 0.12, 0.45), steel).name = "FloodHead"
+		var light := SpotLight3D.new()
+		light.name = "Flood%d" % (index + 1)
+		add_child(light)
+		light.position = head - Vector3(0.0, 0.1, 0.0)
+		light.look_at(at + Vector3(0.0, 0.0, -20.0), Vector3.UP)
+		light.light_color = FLOOD
+		light.light_energy = 40.0
+		light.spot_angle = 60.0
+		light.spot_range = 45.0
+		light.shadow_enabled = index == 1
+	var bumper_face := west.end.y + 0.13
+	var docks: Array = DOCK_XS[0]
+	for slot in range(TRAILER_DOCKS.size()):
+		var x: float = docks[TRAILER_DOCKS[slot]]
+		var at := Transform3D(Basis.IDENTITY, Vector3(x, GROUND + PAVING_TOP, bumper_face
+			+ DOCK_GAP + TRAILER_HALF))
+		var trailer := TRAILER.instantiate() as Node3D
+		trailer.name = "DroppedTrailer%d" % (slot + 1)
+		add_child(trailer)
+		trailer.global_transform = at
+		trailer.set_meta("rear_z", at.origin.z - TRAILER_HALF)
+		var gear := trailer.find_child("LandingGear", true, false) as Node3D
+		trailer.set_meta("gear_down", _lowest(gear) - GROUND - PAVING_TOP if gear != null else 1.0)
+		_solid_box(at.origin + Vector3.UP * 2.175, Vector3(TRAILER_WIDTH, 4.35, TRAILER_HALF
+			* 2.0))
+		_footprints.append(Rect2(x - TRAILER_WIDTH / 2.0, at.origin.z - TRAILER_HALF,
+			TRAILER_WIDTH, TRAILER_HALF * 2.0))
+		_chock(at * Vector3(CHOCK_OUT, 0.0, REAR_AXLE + CHOCK_AHEAD))
+	for index in range(PALLET_STACKS.size()):
+		var holder := Node3D.new()
+		holder.name = "PalletStack%d" % (index + 1)
+		add_child(holder)
+		holder.position = PALLET_STACKS[index] + Vector3.UP * PAVING_TOP
+		for level in range(PALLET_HIGH - index * 3):
+			var deck := PALLET.instantiate() as Node3D
+			holder.add_child(deck)
+			deck.position = Vector3(0.0, level * PALLET_SIZE.y, 0.0)
+			deck.rotation.y = PI / 2.0 if level % 2 == 1 and index == 0 else 0.0
+		var tall := (PALLET_HIGH - index * 3) * PALLET_SIZE.y
+		_solid_box(holder.position + Vector3.UP * tall / 2.0, Vector3(1.2, tall, 1.2))
+		_footprints.append(Rect2(holder.position.x - 0.6, holder.position.z - 0.6, 1.2, 1.2))
+	var forklift := FORKLIFT.instantiate() as Node3D
+	forklift.name = "ParkedForklift"
+	add_child(forklift)
+	forklift.global_transform = FORKLIFT_AT.translated(Vector3.UP * PAVING_TOP)
+	_solid_box(FORKLIFT_AT.origin + Vector3.UP * FORKLIFT_BOX.y / 2.0, Vector3(FORKLIFT_BOX.z,
+		FORKLIFT_BOX.y, FORKLIFT_BOX.x))
+	_footprints.append(Rect2(FORKLIFT_AT.origin.x - FORKLIFT_BOX.z / 2.0, FORKLIFT_AT.origin.z
+		- FORKLIFT_BOX.x / 2.0, FORKLIFT_BOX.z, FORKLIFT_BOX.x))
+	var bins := DUMPSTERS.instantiate() as Node3D
+	bins.name = "Dumpsters"
+	add_child(bins)
+	bins.global_transform = DUMPSTERS_AT.translated(Vector3.UP * PAVING_TOP)
+	_solid_box(DUMPSTERS_AT.origin + Vector3.UP * DUMPSTER_BOX.y / 2.0, Vector3(
+		DUMPSTER_BOX.z, DUMPSTER_BOX.y, DUMPSTER_BOX.x))
+	_footprints.append(Rect2(DUMPSTERS_AT.origin.x - DUMPSTER_BOX.z / 2.0, DUMPSTERS_AT.origin.z
+		- DUMPSTER_BOX.x / 2.0, DUMPSTER_BOX.z, DUMPSTER_BOX.x))
+
+
+func _chock(at: Vector3) -> void:
+	var wedge := MeshInstance3D.new()
+	wedge.name = "WheelChock"
+	var prism := PrismMesh.new()
+	prism.size = Vector3(CHOCK.z, CHOCK.y, CHOCK.x)
+	prism.left_to_right = 0.0
+	wedge.mesh = prism
+	wedge.material_override = Build.material(Color(0.85, 0.65, 0.08), 0.8)
+	add_child(wedge)
+	wedge.global_transform = Transform3D(Basis(Vector3.UP, PI / 2.0), at + Vector3.UP
+		* (PAVING_TOP + CHOCK.y / 2.0))
+
+
+func _lowest(node: Node3D) -> float:
+	var lowest := INF
+	for found in node.find_children("*", "MeshInstance3D", true, false):
+		var mesh := found as MeshInstance3D
+		lowest = minf(lowest, (mesh.global_transform * mesh.get_aabb()).position.y)
+	if node is MeshInstance3D:
+		var own := node as MeshInstance3D
+		lowest = minf(lowest, (own.global_transform * own.get_aabb()).position.y)
+	return lowest
 
 
 func _gate_leaf() -> void:

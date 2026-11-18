@@ -7646,3 +7646,47 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Unverified:** the look in daylight is never seen (the game is at night); the walls read
   nearly black between the lights; the door numbers on the walls are dark at night (part C paints
   them on the court too).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part C: the loading bay, the yard dressed, stage 3 (#317), built)
+
+- **Built** (`warehouse.gd`'s open dock, inside and court; new `dock_judge.gd`, bay 9's judgement
+  without its lift and chock; `compound.gd`'s door 3, judge and dressing; the mission's docking,
+  stage 3 and its reload in `the_wrong_cargo.gd`; `app/first_drive.gd` calls the mission's new
+  `restore_place()` after Continue recovers the van):
+  - **Door 3:** the east warehouse's third dock open, its door raised into its tracks as the
+    shed's open docks, a wall only the camera meets across it (layer 8), its outside signal green
+    until the van docks and red once it has.
+  - **Inside:** the floor at the dock's 1.22 m over the whole warehouse (no void behind any
+    door); at door 3 the shed's leveller, two pallets loaded as the shed's staged loads (three
+    layers of 2 x 3 cartons in stretch wrap), the ends of the first racks 7 m in (blue uprights,
+    orange beams) and a high bay light over the bay; beyond it dark.
+  - **The court:** each door's number painted on the court 4 m out, guide lines either side of
+    every east door, 8 m long, as the shed's.
+  - **The yard:** three LED floods on 9 m poles along the north fence, aimed 20 m into the court
+    (energy 40, 60 degrees: the first stills at 5 and 8 lit no pool on the ground, the light
+    falling with the square of distance), shadows only on the middle one; the shed's dry van
+    trailer dropped square at the west warehouse's docks 2 and 4, 0.02 m off the bumpers, on
+    its landing gear, a tandem chocked; two stacks of empty pallets by the west warehouse's east
+    wall; the forklift parked by the east one's west wall; the dumpsters behind the west one;
+    each solid, nothing in the van's way from the gate to door 3.
+  - **The docking:** judged as bay 9's (within the red stop line, 0.10 m, 3 degrees and 0.1 m of
+    door 3's centre, at walking pace, the rear doors open); a miss names what was wrong in bay
+    9's words ("the door's centre" for "the bay's centre"); OPEN THE REAR DOORS first if they
+    are shut. Docked: stage 3 saved ("The warehouse compound", the escape's start), and the
+    objective "MISSION 2 IS BEING BUILT / Next: the hill road."
+  - **The reload at stage 3:** his van in the yard's bay, sealed, the dark van docked at door 3
+    with its rear doors open (`restore_place()`, since recovering a van shuts its doors), the
+    compound's gate shut.
+- **Rules:** new `test_loading_bay.gd` L0-L5, 10 checks: without the open door 0/1
+  (`logs/phase_2/mission2_step5/partC/before/`), then 10/10 (`after/`), backing onto door 3 by
+  real key presses: short of the bumpers 0.58 m, then docked 0.003 m, 0.0 degrees, 0.00 m off.
+  Nineteen mutations exit 1, each on its own check (`partC/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partC/suites/run_suites.sh <scratch>`: 52 runs exit 0 (`test_mission_two.gd` 55/55, `test_save_rules.gd` 29/29, the forest 8/8, `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0 failures. The headless import exits 0.
+- **Not yet:** the GPU price (new case CP, budget 1.0 ms †), with the whole mission's (#296).
+- **Stills:** `captures/compound/partC/` (`tools/captures/capture_loading_bay.gd`); the first
+  showed single cartons on the bay's pallets, now loads as the shed's.
+- **Unverified:** a van's floor (0.6 m) at a 1.22 m truck dock is a real mismatch, left as it
+  is since nothing is unloaded here (step 6 begins at the docking); the floods' brightness
+  beside the container yard's masts (energy 6 at 18 m, likely dim for the same reason).
+- **With part C, step 5 is built.** Next: step 6 (the escape: the guards as stand-ins or
+  Assignment 9's technique, being caught and the retry, the anonymous warning, S3, the gap).

@@ -245,6 +245,8 @@ func _begin() -> void:
 		_begun = true
 		_leave_title()
 		van.recover(_mission.recovery_pose)
+		if _mission.has_method("restore_place"):
+			_mission.call("restore_place")
 		van.foot_on_brake = _mission.fleeing
 		if _has_progress():
 			_continue_in_van()

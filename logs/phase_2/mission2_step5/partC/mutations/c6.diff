@@ -1,0 +1,78 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c6/game/features/environments/industrial_loop/warehouse.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:43:57
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c6/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:46:21
+@@ -415,7 +415,7 @@
+ 			Build.box(self, Vector3(end_x - side * 1.4, DOCK_FLOOR + level, z), Vector3(2.7, 0.12,
+ 				0.05), orange).name = "RackEndBeam"
+ 	var light := SpotLight3D.new()
+-	light.name = "BayLight1"
++	light.name = "Lamp1"
+ 	add_child(light)
+ 	light.position = Vector3(x, height - PARAPET - DECK - 0.6, wall_in - 3.0)
+ 	light.look_at(Vector3(x, DOCK_FLOOR, wall_in - 3.0) + Vector3(0.0, 0.0, 0.01), Vector3.UP)
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/tests/gpu_price_depot.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c6/game/tests/gpu_price_depot.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/tests/gpu_price_depot.gd	2026-11-18 12:46:23
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c6/game/tests/gpu_price_depot.gd	2026-11-18 11:53:38
+@@ -27,9 +27,6 @@
+ ## court.
+ ## CY (Mission 2's step 4): the container yard (`container_yard.gd`: the fence and gate, the
+ ## stacks, the masts and their four lights, the dark van), shown and hidden, from the driveway.
+-## CP (Mission 2's step 5): the warehouse compound (`compound.gd`, `warehouse.gd`: the fence and
+-## gate, the booth and its guard, both warehouses with their dock lights, wall packs, the open bay,
+-## the floods, the trailers and the yard's kit), shown and hidden, from its court.
+ ## `-- --only=P2 --cycles=40` measures one
+ ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
+ 
+@@ -42,7 +39,6 @@
+ const BAY_NINE := [Vector3(-48.6, 2.9, 12.8), Vector3(-47.8, 1.3, 18.6), 60.0]
+ const STAGING := [Vector3(-48.0, 2.9, 11.0), Vector3(-70.0, 7.6, 17.5), 65.0]
+ const DRIVEWAY := [Vector3(100.0, 1.7, 172.0), Vector3(100.0, 3.0, 140.0), 60.0]
+-const COURT := [Vector3(205.0, 1.7, 143.0), Vector3(240.0, 3.0, 128.0), 65.0]
+ const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "DockFloor4", "LaneFloor"]
+ const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
+ 	"RA": ["Frames", "Decks"]}
+@@ -53,7 +49,6 @@
+ var _app: Node3D
+ var _shed: Node3D
+ var _yard: Node3D
+-var _compound: Node3D
+ var _rain: Node3D
+ var _camera: Camera3D
+ var _cycles := CYCLES
+@@ -72,7 +67,6 @@
+ 	var world: Node3D = _app.get_node("IndustrialLoop")
+ 	_shed = world.get("transfer_shed")
+ 	_yard = world.get("container_yard")
+-	_compound = world.get("compound")
+ 	_rain = world.get("lamp_rain")
+ 	_camera = Camera3D.new()
+ 	_camera.name = "GpuPriceCourt"
+@@ -103,8 +97,6 @@
+ 			view = STAGING
+ 		elif case == "CY":
+ 			view = DRIVEWAY
+-		elif case == "CP":
+-			view = COURT
+ 		_camera.fov = view[2]
+ 		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
+ 		await _wait(1.0)
+@@ -125,8 +117,7 @@
+ 				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
+ 				"the cross-aisle" if case.begins_with("R") or case == "FL" else ("bay 9"
+ 				if case == "FB" else ("the staging lanes" if case == "FE" or case == "FK"
+-				else ("the driveway" if case == "CY" else ("the compound's court"
+-				if case == "CP" else "the court")))),
++				else ("the driveway" if case == "CY" else "the court"))),
+ 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
+ 				int(_rain.call("active_count"))]])
+ 	_show(case, true)
+@@ -145,9 +136,6 @@
+ 		return
+ 	if case == "CY":
+ 		_yard.visible = shown
+-		return
+-	if case == "CP":
+-		_compound.visible = shown
+ 		return
+ 	if case == "YV":
+ 		(_shed.get_node("YardVehicles") as Node3D).visible = shown

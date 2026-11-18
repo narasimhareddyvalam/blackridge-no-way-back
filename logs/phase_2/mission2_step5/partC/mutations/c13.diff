@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c13/game/features/environments/industrial_loop/compound.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:45:22
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c13/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:46:59
+@@ -67,7 +67,7 @@
+ const CHOCK := Vector3(0.25, 0.2, 0.3)
+ const CHOCK_OUT := 1.0
+ const CHOCK_AHEAD := 1.25
+-const POLES: Array[Vector3] = [Vector3(172.0, 0.0, 145.4), Vector3(222.0, 0.0, 145.4),
++const POLES: Array[Vector3] = [Vector3(172.0, 0.0, 145.4), Vector3(222.0, 0.0, 140.0),
+ 	Vector3(268.0, 0.0, 145.4)]
+ const POLE_TALL := 9.0
+ const FLOOD := Color(0.96, 0.97, 1.0)

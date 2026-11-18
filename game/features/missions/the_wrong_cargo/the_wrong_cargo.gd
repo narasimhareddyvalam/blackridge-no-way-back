@@ -30,6 +30,8 @@ const SEAL_NUMBER := "4182260"
 const LOADED_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14))
 ## Where the dark van waits in the container yard, nose to the gate (`container_yard.gd`).
 const DARK_VAN := Transform3D(Basis(Vector3.UP, PI), Vector3(104.5, 0.1, 140.0))
+## The dark van docked at the compound's door 3 (step 5): its rear 0.03 m off the bumpers.
+const AT_DOOR_THREE := Transform3D(Basis(Vector3.UP, PI), Vector3(248.0, 0.1, 134.67))
 const SEAL_CHECK := "BOLT SEAL CHECK\n\nBolt ............ %s\nCap ............. %s\n" \
 	+ "Run sheet ....... %s\n\nViewed, verified, tugged and twisted:\nthe same number, whole " \
 	+ "and tight."
@@ -68,7 +70,7 @@ static func start_progress() -> ConfigFile:
 func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	vehicle = van
 	stage = config.get_value("cargo", "stage")
-	recovery_pose = LOADED_AT if stage == 1 else (DARK_VAN if stage == 2 else START)
+	recovery_pose = [START, LOADED_AT, DARK_VAN, AT_DOOR_THREE][stage]
 	vehicle.recover(recovery_pose)
 	vehicle.call("unload")
 	(vehicle.get_node("VanPresentation") as Node).call("set_paint", Color.WHITE)
@@ -79,14 +81,20 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	if compound != null:
 		compound.call("reset")
 		compound.call("watch", vehicle)
+		var judge := compound.get("judge") as Node
+		if judge != null and not judge.is_connected("changed", _judged):
+			judge.connect("changed", _judged)
 	if shed != null:
 		shed.reset()
 		shed.watch(vehicle)
 		if stage == 1:
 			shed.call("restore_loaded", vehicle, SEAL_NUMBER)
-		elif stage == 2 and yard != null:
+		elif stage >= 2 and yard != null:
 			yard.call("restore_swapped", vehicle, func() -> void:
 				shed.call("restore_loaded", vehicle, SEAL_NUMBER))
+	if stage == 3:
+		vehicle.recover(recovery_pose)
+		restore_place()
 	_shown = ""
 	_update_objective()
 
@@ -320,8 +328,19 @@ func _to_the_yard() -> Array[String]:
 ## The objective from the swap to the loading bay (step 5; its words drafts for the author, S3).
 func _to_the_compound() -> Array[String]:
 	if bool(compound.call("vehicle_through")):
-		return ["BACK ONTO DOOR %d" % compound.DOOR,
-			"The east warehouse's open door: Q for reverse, then back in slowly."]
+		var judge := compound.get("judge") as Node
+		var verdict := String(judge.get("verdict"))
+		var title := "BACK ONTO DOOR %d" % compound.DOOR
+		if MISSES.has(verdict):
+			var words := String(MISSES[verdict]).replace("the bay's centre", "the door's centre")
+			if MEASURES.has(verdict):
+				words = words % float((judge.get("measured") as Dictionary)[MEASURES[verdict]])
+			return [title, words]
+		if not bool(vehicle.get("rear_doors_open")):
+			return ["OPEN THE REAR DOORS",
+				"They can't open once docked: stop, get out and press E at the back."]
+		return [title, "The east warehouse's open door: Q for reverse, then back in slowly "
+			+ "between the guides to the bumpers."]
 	if bool(compound.call("checking")):
 		return ["WAIT AT THE GATE", "The guard is checking the run sheet."]
 	if bool(compound.call("gate_open")):
@@ -335,6 +354,28 @@ func _to_the_compound() -> Array[String]:
 		"Out of the yard and east on the valley road; the compound's gate is on the left."]
 
 
+## Docked at door 3 (step 5): the guards' recognition is the escape's start (step 6, S1), so
+## stage 3 is saved here.
+func _judged() -> void:
+	var judge := compound.get("judge") as Node
+	if not active or stage != 2 or String(judge.get("verdict")) != "docked":
+		_update_objective()
+		return
+	stage = 3
+	recovery_pose = AT_DOOR_THREE
+	var config := start_progress()
+	config.set_value("cargo", "stage", stage)
+	checkpoint_reached.emit(config)
+	_update_objective()
+
+
+## What a reload puts back that recovering the van does not: docked at door 3, its rear doors
+## open, as they had to be to dock.
+func restore_place() -> void:
+	if stage == 3 and vehicle != null:
+		vehicle.set("rear_doors_open", true)
+
+
 func _behind_the_van(at: Vector3) -> bool:
 	var local := vehicle.to_local(at)
 	return local.z > VAN_REAR + REAR_REACH.x and local.z < VAN_REAR + REAR_REACH.y \
@@ -343,6 +384,7 @@ func _behind_the_van(at: Vector3) -> bool:
 
 func recover() -> void:
 	vehicle.recover(recovery_pose)
+	restore_place()
 
 
 func place_reached() -> String:

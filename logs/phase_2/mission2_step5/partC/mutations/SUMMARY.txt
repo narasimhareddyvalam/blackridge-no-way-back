@@ -1,0 +1,41 @@
+c1  door 3 shut                    test_loading_bay.gd exit 1, 6/10 passed; 4 failed
+      FAIL: L1: door 3 open, its door raised into its tracks, the other six shut
+      FAIL: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 0 pallets, 0 racks' e
+      FAIL: L4: 0.58 m short of door 3's bumpers, no docking, and the objective says how far (BACK ONTO DOOR 3 / The east 
+      FAIL: L4: backed onto door 3 (0.003 m, 0.0°, 0.00 m off), its signal red, stage 3 saved, the objective names the hil
+c2  its door not raised            test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L1: door 3 open, its door raised into its tracks, the other six shut
+c3  the floor half the warehouse   test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 2 pallets, 10 racks' 
+c4  no leveller                    test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 2 pallets, 10 racks' 
+c5  one pallet                     test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 1 pallets, 10 racks' 
+c6  the bay unlit                  test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 2 pallets, 10 racks' 
+c7  no numbers on the court        test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L2: each east door's number on the court (0), guide lines either side of door 3
+c8  short guide lines              test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L2: each east door's number on the court (7), guide lines either side of door 3
+c9  every flood casting shadows    test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L3: 3 floodlights on 3 poles, shadows on at most one
+c10  trailers skewed                test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L3: two trailers dropped square at the west docks on their gear; pallet stacks, a forklift and dumpsters; each
+c11  trailers off the bumpers       test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L3: two trailers dropped square at the west docks on their gear; pallet stacks, a forklift and dumpsters; each
+c12  the forklift not solid         test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L3: two trailers dropped square at the west docks on their gear; pallet stacks, a forklift and dumpsters; each
+c13  a pole in the way              test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L3: nothing in the van's way from the gate to door 3 ([[P: (221.85, 139.85), S: (0.3, 0.3)]])
+c14  docked a metre out             test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L4: 0.58 m short of door 3's bumpers, no docking, and the objective says how far (MISSION 2 IS BEING BUILT / N
+c15  the signal stays green         test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L4: backed onto door 3 (0.003 m, 0.0°, 0.00 m off), its signal red, stage 3 saved, the objective names the hil
+c16  stage 3 not saved              test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L4: backed onto door 3 (0.003 m, 0.0°, 0.00 m off), its signal red, stage 3 saved, the objective names the hil
+c17  the reload not docked          test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L5: reloaded at stage 3: the dark van docked at door 3 (5.360 m), its doors open, his own van sealed in the ya
+c18  its doors shut on a reload     test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L5: reloaded at stage 3: the dark van docked at door 3 (0.030 m), its doors open, his own van sealed in the ya
+c19  a miss not named               test_loading_bay.gd exit 1, 9/10 passed; 1 failed
+      FAIL: L4: 0.58 m short of door 3's bumpers, no docking, and the objective says how far (BACK ONTO DOOR 3 / The east 

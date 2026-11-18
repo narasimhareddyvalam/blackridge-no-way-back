@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c19/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-18 12:42:46
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c19/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-18 12:47:23
+@@ -331,7 +331,7 @@
+ 		var judge := compound.get("judge") as Node
+ 		var verdict := String(judge.get("verdict"))
+ 		var title := "BACK ONTO DOOR %d" % compound.DOOR
+-		if MISSES.has(verdict):
++		if false:
+ 			var words := String(MISSES[verdict]).replace("the bay's centre", "the door's centre")
+ 			if MEASURES.has(verdict):
+ 				words = words % float((judge.get("measured") as Dictionary)[MEASURES[verdict]])
