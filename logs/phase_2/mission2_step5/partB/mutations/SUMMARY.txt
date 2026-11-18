@@ -1,0 +1,63 @@
+b1  the Phase 1 boxes kept         test_warehouses.gd exit 1, 20/21 passed; 1 failed
+      FAIL: W0: both warehouses rebuilt in the compound, the Phase 1 boxes gone
+b2  a warehouse moved              test_warehouses.gd exit 1, 16/21 passed; 5 failed
+      FAIL: W1: WarehouseWest where it stood, 34.35 x 24.00 m and 9.99 m high
+      FAIL: W4: WarehouseWest's 6 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+      FAIL: W1: WarehouseEast where it stood, 36.43 x 24.00 m and 10.53 m high
+      FAIL: W2: WarehouseEast's panels jointed at the piers, never across a door, the widest 9.0 m (12 sealed joints)
+      FAIL: W4: WarehouseEast's 7 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+b3  a metre lower                  test_warehouses.gd exit 1, 17/21 passed; 4 failed
+      FAIL: W1: WarehouseWest where it stood, 33.35 x 23.00 m and 8.99 m high
+      FAIL: W3: WarehouseWest's parapet 2.00 m over its roof, capped all round
+      FAIL: W1: WarehouseEast where it stood, 35.43 x 23.00 m and 9.53 m high
+      FAIL: W3: WarehouseEast's parapet 2.00 m over its roof, capped all round
+b4  joints across doors            test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W2: WarehouseWest's panels jointed at the piers, never across a door, the widest 9.0 m (10 sealed joints)
+      FAIL: W2: WarehouseEast's panels jointed at the piers, never across a door, the widest 9.0 m (10 sealed joints)
+b5  12 m panels                    test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W2: WarehouseWest's panels jointed at the piers, never across a door, the widest 12.0 m (6 sealed joints)
+      FAIL: W2: WarehouseEast's panels jointed at the piers, never across a door, the widest 12.0 m (7 sealed joints)
+b6  a low parapet                  test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W3: WarehouseWest's parapet 0.30 m over its roof, capped all round
+      FAIL: W3: WarehouseEast's parapet 0.30 m over its roof, capped all round
+b7  no coping                      test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W3: WarehouseWest's parapet 1.00 m over its roof, capped all round
+      FAIL: W3: WarehouseEast's parapet 1.00 m over its roof, capped all round
+b8  docks at 1.3 m                 test_warehouses.gd exit 1, 17/21 passed; 4 failed
+      FAIL: W4: WarehouseWest's 6 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+      FAIL: W5: WarehouseWest's man door: 7 risers of 0.186 m, treads 0.280 m, a landing 1.50 m deep at the floor
+      FAIL: W4: WarehouseEast's 7 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+      FAIL: W5: WarehouseEast's man door: 7 risers of 0.186 m, treads 0.280 m, a landing 1.50 m deep at the floor
+b9  bumpers low                    test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W4: WarehouseWest's 6 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+      FAIL: W4: WarehouseEast's 7 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+b10  no signals                     test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W4: WarehouseWest's 6 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+      FAIL: W4: WarehouseEast's 7 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door,
+b11  six steep risers               test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W5: WarehouseWest's man door: 6 risers of 0.203 m, treads 0.280 m, a landing 1.50 m deep at the floor
+      FAIL: W5: WarehouseEast's man door: 6 risers of 0.203 m, treads 0.280 m, a landing 1.50 m deep at the floor
+b12  short treads                   test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W5: WarehouseWest's man door: 7 risers of 0.174 m, treads 0.250 m, a landing 1.50 m deep at the floor
+      FAIL: W5: WarehouseEast's man door: 7 risers of 0.174 m, treads 0.250 m, a landing 1.50 m deep at the floor
+b13  low handrails                  test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W5: WarehouseWest's stair railed both sides [0.7999976789708, 0.7999976789708] m over its nosings, its landing
+      FAIL: W5: WarehouseEast's stair railed both sides [0.7999976789708, 0.7999976789708] m over its nosings, its landing
+b14  a low guard                    test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W5: WarehouseWest's stair railed both sides [0.89999770281266, 0.89999770281266] m over its nosings, its landi
+      FAIL: W5: WarehouseEast's stair railed both sides [0.89999770281266, 0.89999770281266] m over its nosings, its landi
+b15  downpipes short of the ground  test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W6: WarehouseWest's 4 downpipes from scuppers at its roof to the ground
+      FAIL: W6: WarehouseEast's 4 downpipes from scuppers at its roof to the ground
+b16  wall packs casting shadows     test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W8: WarehouseWest's 3 wall packs over its court, 5.5-8 m up, no shadows
+      FAIL: W8: WarehouseEast's 4 wall packs over its court, 5.5-8 m up, no shadows
+b17  walls not solid                test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W7: WarehouseWest's walls, dock face, doors and landing solid (not: south, west, east, the dock face, a pier)
+      FAIL: W7: WarehouseEast's walls, dock face, doors and landing solid (not: south, west, east, the dock face, a pier)
+b18  no dock lights                 test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W8: WarehouseWest's dock light over each of its 0 doors, no shadows
+      FAIL: W8: WarehouseEast's dock light over each of its 0 doors, no shadows
+b19  doors not solid                test_warehouses.gd exit 1, 19/21 passed; 2 failed
+      FAIL: W7: WarehouseWest's walls, dock face, doors and landing solid (not: a shut door)
+      FAIL: W7: WarehouseEast's walls, dock face, doors and landing solid (not: a shut door)

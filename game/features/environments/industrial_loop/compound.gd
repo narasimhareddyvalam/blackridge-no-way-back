@@ -14,6 +14,7 @@ signal run_sheet_checked
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Fence = preload("chain_link_fence.gd")
 const Booth = preload("guard_booth.gd")
+const Warehouse = preload("warehouse.gd")
 const Guard = preload("res://features/characters/compound_guard/compound_guard.glb")
 const MOTOR := preload("res://features/audio/shed/forklift_pump.wav")
 const GROUND := 0.0
@@ -44,6 +45,12 @@ const BOOTH_FACE_X := GATE_X - 2.0
 const BOOTH_Z := GATE_Z + STOP_LINE_OUT + 1.9
 ## The door the guard sends the van to (a draft for the author, S1/S3).
 const DOOR := 3
+## The warehouses' docks and man doors (part B): six docks on the west one, seven on the east,
+## 4 m apart; each man door near its west corner, its stair down toward the docks.
+const WAREHOUSE_NAMES: Array[String] = ["WarehouseWest", "WarehouseEast"]
+const DOCK_XS: Array[Array] = [[141.0, 145.0, 149.0, 153.0, 157.0, 161.0],
+	[240.0, 244.0, 248.0, 252.0, 256.0, 260.0, 264.0]]
+const MAN_DOOR_XS: Array[float] = [135.6, 234.6]
 
 var vehicle: CharacterBody3D
 var driver_eye: Node3D
@@ -80,6 +87,18 @@ func build(surface: Material, concrete: Material, metal: Material, wall: Materia
 	var white := Build.material(Color(0.92, 0.92, 0.9), 0.6)
 	Build.box(self, Vector3(GATE_X, PAVING_TOP + 0.003, GATE_Z + STOP_LINE_OUT),
 		Vector3(GATE_WIDE - 0.4, 0.004, 0.3), white).name = "StopLine"
+
+
+## The two warehouses on `footprints` (x, z), `heights` high (part B), west then east.
+func build_warehouses(footprints_xz: Array[Rect2], heights: Array[float], metal: Material) -> void:
+	for index in range(footprints_xz.size()):
+		var house := Warehouse.new()
+		house.name = WAREHOUSE_NAMES[index]
+		add_child(house)
+		var docks: Array[float] = []
+		docks.assign(DOCK_XS[index])
+		house.build(footprints_xz[index], heights[index], docks, MAN_DOOR_XS[index], 1.0, metal)
+		_footprints.append(footprints_xz[index])
 
 
 ## The van Ethan drives: its front and rear, read from its collision shape.

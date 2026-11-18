@@ -40,6 +40,8 @@ const CONTAINER_YARD_PLOT := Rect2(62.0, 130.0, 76.0, 41.0)
 ## The warehouse compound (Mission 2's step 5, `compound.gd`) and its driveway to the road.
 const COMPOUND_PLOT := Rect2(126.0, 90.0, 150.0, 58.0)
 const COMPOUND_DRIVE_PLOT := Rect2(193.5, 146.0, 10.5, 24.0)
+## The Phase 1 warehouses the compound rebuilds (part B, `warehouse.gd`), west and east.
+const COMPOUND_WAREHOUSES: Array[Vector3] = [Vector3(150, 0, 112), Vector3(250, 0, 120)]
 const SILOS: Array[float] = [466.0, 482.0]
 const SILO_Z := 62.0
 const DEPOT_PLOT := Rect2(-62, 72, 68, 58)
@@ -131,6 +133,7 @@ var forest: Node3D
 var forest_floor: Node3D
 var container_yard: Node3D
 var compound: Node3D
+var warehouse_heights: Array[float] = []
 var grass: Node3D
 var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
@@ -432,9 +435,12 @@ func _buildings() -> void:
 	for item: Vector3 in WAREHOUSES:
 		var size := Vector3(_random.randf_range(24, 38), _random.randf_range(9, 15), 23)
 		warehouse_widths.append(size.x)
+		warehouse_heights.append(size.y)
 		if item == WAREHOUSES[WAREHOUSES.size() - 1]:
 			continue
 		clearings.append(Rect2(item.x - size.x / 2 - 4, item.z - 15.5, size.x + 8, 33.4))
+		if COMPOUND_WAREHOUSES.has(item):
+			continue
 		Build.box(self, item + Vector3.UP * size.y / 2, size, masonry, true)
 		Build.box(self, item + Vector3.UP * (size.y + 0.18),
 			size * Vector3(1.025, 0, 1.025) + Vector3.UP * 0.36, _metal)
@@ -941,6 +947,14 @@ func _compound() -> void:
 	compound.name = "WarehouseCompound"
 	add_child(compound)
 	compound.build(_yard_surface, _concrete, _metal, _wall_material(Color("aeb1ad")))
+	var houses: Array[Rect2] = []
+	var heights: Array[float] = []
+	for item in COMPOUND_WAREHOUSES:
+		var index := WAREHOUSES.find(item)
+		houses.append(Rect2(item.x - warehouse_widths[index] / 2.0, item.z - 11.5,
+			warehouse_widths[index], 23.0))
+		heights.append(warehouse_heights[index])
+	compound.build_warehouses(houses, heights, _metal)
 
 
 func _town() -> void:

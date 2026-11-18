@@ -7606,3 +7606,43 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Stills:** `captures/compound/partA/` (`tools/captures/capture_compound.gd`); the first showed
   the booth's sign wider than the booth and mirrored from behind, now shorter and one-sided.
 - **Unverified:** the look in motion; her head's turn in play; the 13 s at the gate in play.
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part B: the warehouses rebuilt (#315-#316), built)
+
+- **Built** (new `warehouse.gd`, built twice by `compound.gd`'s `build_warehouses()` as
+  `WarehouseWest` and `WarehouseEast`; `industrial_loop.gd` no longer draws the two Phase 1
+  boxes, `COMPOUND_WAREHOUSES`, but still makes their random draws and keeps their clearings, so
+  nothing else in the world moves; their heights kept in `warehouse_heights`):
+  - **Where and how high:** each on its Phase 1 footprint, 23 m deep: the west one 33.35 m wide
+    at (150, 112), 9.99 m high; the east one 35.43 m at (250, 120), 10.53 m.
+  - **Tilt-up concrete:** 0.2 m walls in Poly Haven's concrete (`concrete_wall_006`) painted
+    light grey over a darker 1.22 m dock face; two reveal lines; sealed vertical joints, each
+    panel as wide as it may be up to 9 m with its joint 0.3 m clear of every door (the widest
+    9.0 m); a parapet 1.0 m over the roof deck, capped all round with metal coping; three
+    rooftop units on curbs and a roof hatch.
+  - **Docks:** six on the west warehouse (x 141-161) and seven on the east (x 240-264), on their
+    north faces, 4 m apart, 2.74 x 3.05 m at a 1.22 m floor, each with the shed's overhead door
+    shut and solid, its foam seal, two bumpers whose tops meet the floor's height, its signal
+    (green, no truck at it), its number above it and its dock light, as the shed's; LED wall
+    packs 6.5 m up over every other pier, no shadows.
+  - **The man door:** near each warehouse's west corner, a steel door at the dock floor with its
+    frame and lever, a 1.5 x 1.5 m landing, a stair of seven 0.174 m risers and 0.28 m treads
+    down toward the docks (IBC 1011.5.2), handrails 0.9 m over the nosings on both sides (1014),
+    a 1.1 m guard round the landing's open edges (1015); beside it the fire department
+    connection's two inlets, its FDC sign and the key box.
+  - **Drains:** four scuppers through the parapet at the roof's level, two at the back and one
+    on each side, each with its downpipe to a splash block.
+  - **Not built:** drive-in doors (each would need a ramp about 10 m long up to the dock floor;
+    the plan did not ask for one).
+- **Rules:** new `test_warehouses.gd` W0-W8, 21 checks: without the warehouses 0/1
+  (`logs/phase_2/mission2_step5/partB/before/`), then 19/19, then the dock light over each door
+  (seen missing in the first stills, against the shed's) 19/21 → 21/21 (`after/`). Nineteen
+  mutations exit 1, each on its own check (`partB/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partB/suites/run_suites.sh <scratch>`: 51 runs exit 0 (the forest
+  8/8 unchanged, `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0
+  failures.
+- **Stills:** `captures/compound/partB/` (`tools/captures/capture_warehouses.gd`); the first
+  also showed the FDC sign too large and glowing, now a small white plate with red letters.
+- **Unverified:** the look in daylight is never seen (the game is at night); the walls read
+  nearly black between the lights; the door numbers on the walls are dark at night (part C paints
+  them on the court too).

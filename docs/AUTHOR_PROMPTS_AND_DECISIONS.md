@@ -4245,11 +4245,23 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** whether to commit part A; **the author chose** "Commit, then part B
        (Recommended)": part A committed on `develop`, labelled (agent), not pushed; then part B,
        both warehouses rebuilt where they stand, tests first.
+     - **Done (part B, not committed):** both warehouses rebuilt as tilt-up concrete warehouses
+       where the Phase 1 boxes stood (`warehouse.gd`): panels jointed at the piers, a capped
+       parapet, rooftop units; six and seven docks with doors, seals, bumpers, signals, numbers,
+       dock lights and wall packs; a man door each with its landing, stair and rails to IBC
+       1011-1015, the fire department connection and key box; scuppers and downpipes;
+       `test_warehouses.gd` 0/1 then 21/21, nineteen mutations exit 1, 51 suite runs exit 0;
+       stills `captures/compound/partB/`. Waiting for the author's OK to commit.
+
+317. **Part B committed; part C**
+     - **Asked** whether to commit part B; **the author chose** "Commit, then part C
+       (Recommended)": part B committed on `develop`, labelled (agent), not pushed; then part C,
+       tests first.
 
 ## Waiting for the author
 
-- Mission 2's step 5 (#314-#316): part A committed, not pushed; parts B (the
-  warehouses) and C (the loading bay, the yard dressed, stage 3) next. Whether the compound's
+- Mission 2's step 5 (#314-#316): part A committed, not pushed; part B (the warehouses)
+  committed (#317), not pushed; part C (the loading bay, the yard dressed, stage 3) next. Whether the compound's
   guards are armed (her pistol is left out for now).
 - Mission 2's step 4 (#312-#313): committed, not pushed; the author's look at
   `captures/container_yard/step4/` (at the end), the code's and the objectives' words (S3), and
