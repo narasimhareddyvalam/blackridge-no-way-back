@@ -15,7 +15,9 @@ extends SceneTree
 ## T8 nothing moved: as many trees, saplings and colliders as before (#280's baseline, less the
 ##    60 trees and 19 saplings on #267 part C's town plot, left out without moving any other:
 ##    every other collider kept its x, z and radius, 14 beside the plot raised or lowered up to
-##    0.36 m by its levelling), with the colliders' centroid where it is.
+##    0.36 m by its levelling; and less the 81 trees and 28 saplings on Mission 2's container
+##    yard, left out the same way: every other collider kept its x, z and radius, 22 within 4.7 m
+##    of the yard raised or lowered up to 0.62 m), with the colliders' centroid where it is.
 
 const KINDS: Array[String] = ["red_alder", "young_fir", "mountain_hemlock", "western_red_cedar"]
 const HEIGHTS := {"red_alder": Vector2(10.0, 25.0), "young_fir": Vector2(3.0, 12.0),
@@ -25,8 +27,8 @@ const BAND := 8.0
 const LEAST := 20
 const NEEDLES := "res://features/environments/industrial_loop/conifer_needles.gdshader"
 const MOST_TRIANGLES := 30000
-const BASELINE := {"trees": 11759, "saplings": 6603, "colliders": 9768}
-const CENTROID := Vector3(245.2233, 32.58152, -25.51315)
+const BASELINE := {"trees": 11678, "saplings": 6575, "colliders": 9687}
+const CENTROID := Vector3(246.4673, 32.82821, -26.99913)
 const TRUNK_MATCH := 0.15
 
 var _checks: int = 0

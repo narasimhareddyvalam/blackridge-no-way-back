@@ -13,7 +13,8 @@
 - part F's safety signs: `exit.png`, `exit_left.png` and `exit_right.png` (red EXIT on white, its
   letters filling 6 in of a 0.33 x 0.2 m face, OSHA 1910.37(b)), `extinguisher_sign.png`,
   `eyewash_sign.png`, `first_aid_sign.png`, `no_smoking.png` (at the battery charger),
-  `speed_limit.png` (5 MPH) and `forklift_sign.png` (CAUTION, FORKLIFT TRAFFIC), in the ANSI Z535
+  `speed_limit.png` (5 MPH), `forklift_sign.png` (CAUTION, FORKLIFT TRAFFIC) and, for the container
+  yard's gate (Mission 2's step 4), `no_entry.png` (NO UNAUTHORIZED ENTRY), in the ANSI Z535
   colours: red for fire, green for first aid and eyewash, yellow for caution.
 
 The same every run (no randomness). Usage, from the repository root:
@@ -159,7 +160,8 @@ def safety_signs():
              ("first_aid_sign", (20, 130, 60), WHITE, ["+", "FIRST AID"]),
              ("no_smoking", WHITE, (190, 20, 24), ["NO SMOKING", "BATTERY", "CHARGING AREA"]),
              ("speed_limit", WHITE, BLACK, ["SPEED", "LIMIT", "5", "MPH"]),
-             ("forklift_sign", YELLOW, BLACK, ["CAUTION", "FORKLIFT", "TRAFFIC"])]
+             ("forklift_sign", YELLOW, BLACK, ["CAUTION", "FORKLIFT", "TRAFFIC"]),
+             ("no_entry", WHITE, (190, 20, 24), ["NO", "UNAUTHORIZED", "ENTRY"])]
     for name, ground, ink, lines in signs:
         image = Image.new("RGB", (240, 300), ground)
         draw = ImageDraw.Draw(image)

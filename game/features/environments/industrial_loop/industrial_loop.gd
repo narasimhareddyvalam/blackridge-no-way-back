@@ -18,6 +18,7 @@ const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
 const TransferShed = preload("transfer_shed.gd")
 const TownStation = preload("town_station.gd")
+const ContainerYard = preload("container_yard.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -33,6 +34,8 @@ const PLAYABLE_AREA := Rect2(-140, -290, 780, 510)
 const WAREHOUSES: Array[Vector3] = [Vector3(60, 0, 115), Vector3(150, 0, 112),
 	Vector3(250, 0, 120), Vector3(-71, 0, 26)]
 const CONTAINER_ROW := Vector3(100, 0, 145)
+## The container yard (Mission 2's step 4, `container_yard.gd`), its driveway to the road.
+const CONTAINER_YARD_PLOT := Rect2(62.0, 130.0, 76.0, 41.0)
 const SILOS: Array[float] = [466.0, 482.0]
 const SILO_Z := 62.0
 const DEPOT_PLOT := Rect2(-62, 72, 68, 58)
@@ -122,6 +125,7 @@ var run_sheet_spot := Vector3.ZERO
 var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
+var container_yard: Node3D
 var grass: Node3D
 var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
@@ -152,6 +156,7 @@ func _ready() -> void:
 	_street_furniture()
 	_boundary()
 	_transfer_shed()
+	_container_yard()
 	_town()
 	_reflections()
 	_forest()
@@ -257,6 +262,7 @@ func _flat_plots() -> Array[Rect2]:
 	plots.append(Rect2(SILOS[0] - 8, SILO_Z - 8, SILOS[1] - SILOS[0] + 16, 16))
 	plots.append_array(TransferShed.flat_plots())
 	plots.append(TownStation.PLOT)
+	plots.append(CONTAINER_YARD_PLOT)
 	return plots
 
 
@@ -431,13 +437,6 @@ func _buildings() -> void:
 			Build.box(self, item + Vector3(x, 2.6, 11.58), Vector3(5.8, 5.2, 0.1), siding)
 			Build.box(self, item + Vector3(x, 0.65, 12.8), Vector3(6.5, 1.3, 2.2), _concrete)
 		Build.box(self, item + Vector3(0, size.y + 0.7, 0), Vector3(6, 1.4, 4), _metal)
-	for index in range(9):
-		var at := CONTAINER_ROW + Vector3(index * 12, 1.4, 0)
-		var surface := _wall_material(Color.from_hsv(0.5 + index * 0.015, 0.3, 0.25))
-		Build.box(self, at, Vector3(10, 2.8, 3.2), surface, true)
-		for rib in range(13):
-			Build.box(self, at + Vector3(-4.8 + rib * 0.8, 0, 1.62),
-				Vector3(0.055, 2.7, 0.035), _metal)
 	clearings.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	for x in SILOS:
 		Build.cylinder(self, Vector3(x, 9, SILO_Z), 5.8, 18, siding)
@@ -737,6 +736,8 @@ func _office_lights(office: Node3D) -> void:
 func _street_furniture() -> void:
 	clearings.append(FENCE_PLOT)
 	for x in range(FENCE_FROM, FENCE_TO, 10):
+		if x >= CONTAINER_YARD_PLOT.position.x - 2.0:
+			continue
 		Build.box(self, Vector3(x, 1.1, FENCE_Z), Vector3(0.08, 2.2, 0.08), _metal)
 		Build.box(self, Vector3(x + 5, 1.8, FENCE_Z), Vector3(10, 0.04, 0.04), _metal)
 		Build.box(self, Vector3(x + 5, 0.7, FENCE_Z), Vector3(10, 0.04, 0.04), _metal)
@@ -920,6 +921,13 @@ func _transfer_shed() -> void:
 	lamp_rain.add_volume(LampRain.DOCK, Transform3D(Basis.IDENTITY, transfer_shed.dock_rain_at))
 
 
+func _container_yard() -> void:
+	container_yard = ContainerYard.new()
+	container_yard.name = "ContainerYard"
+	add_child(container_yard)
+	container_yard.build(_yard_surface)
+
+
 func _town() -> void:
 	var town := TownStation.new()
 	town.name = "TownStation"
@@ -951,7 +959,7 @@ func _forest() -> void:
 	forest.name = "RoadsideForest"
 	add_child(forest)
 	forest.build(road_points, FOREST_CLEARANCE, clearings, TERRAIN_AREA.grow(-4.0),
-		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT] as Array[Rect2])
+		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT, CONTAINER_YARD_PLOT] as Array[Rect2])
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
@@ -960,7 +968,7 @@ func _forest() -> void:
 		mowed.append(RoadsideGrass.MOWED if road.sections[index] == GhatRoad.Section.VALLEY
 			else 0.0)
 	forest_floor.build(road_points, clearings, 42020, terrain, mowed,
-		[TownStation.PLOT] as Array[Rect2])
+		[TownStation.PLOT, CONTAINER_YARD_PLOT] as Array[Rect2])
 	grass = RoadsideGrass.new()
 	grass.name = "RoadsideGrass"
 	add_child(grass)

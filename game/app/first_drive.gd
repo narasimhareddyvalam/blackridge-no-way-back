@@ -115,6 +115,7 @@ func _ready() -> void:
 	cargo.seal_checked.connect(_show_seal_check)
 	cargo.checkpoint_reached.connect(route.save_progress)
 	cargo.shed = world.transfer_shed
+	cargo.yard = world.container_yard
 	cargo.driver = driver
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y9/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:49:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y9/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:50:40
+@@ -282,7 +282,7 @@
+ 			if _keys_left == 0:
+ 				_gate_target = GATE_WIDE
+ 	elif _gate_target > 0.0 and gate_open() and _behind_the_gate():
+-		_gate_target = 0.0
++		_gate_target = GATE_WIDE
+ 	var moving := not is_equal_approx(_gate_open, _gate_target)
+ 	_gate_open = move_toward(_gate_open, _gate_target, GATE_SPEED * delta)
+ 	_place_gate()

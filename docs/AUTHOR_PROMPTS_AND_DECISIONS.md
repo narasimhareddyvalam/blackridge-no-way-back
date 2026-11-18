@@ -4200,7 +4200,34 @@ tag `a5`. Pictures the author approved or rejected are filed in
        committed on `develop`, labelled (agent), not pushed; then what is left of Mission 2 laid
        out, with the story questions it needs.
 
+311. **Mission 2's next step**
+     - **Shown** what is left of Mission 2 (steps 3-8 of its brief and the story questions each
+       needs); **the author chose** "Step 4: container yard (Recommended)": the container yard and
+       the swap, planned before any code.
+     - **Done:** step 4 written in `docs/PHASE_BRIEF.md` (its last revision); waiting for the
+       author's OK.
+
+312. **Step 4's choices**
+     - **Asked** three things; **the author chose** "Blender script (Recommended)" (the ISO
+       containers drawn by script), "Charcoal grey (Recommended)" (the dark van) and "Yes, build it
+       (Recommended)": step 4 to be built as written, tests first.
+     - **Done:** step 4 built (not committed): the yard fenced, the gate and its keypad, 88
+       containers, the bay, the dark van and the swap, stage 2 saved and reloaded;
+       `test_container_yard.gd` 0/1 then 17/17, twenty mutations exit 1, 49 suite runs (T8's
+       baseline lowered for the yard's trees, then 8/8); `test_sealing.gd` H6 and
+       `test_mission_two.gd`'s Continue learned the new step; stills
+       `captures/container_yard/step4/`. Waiting for the author's OK to commit.
+
+313. **Step 4 committed; what next**
+     - **Asked** whether to commit step 4; **the author chose** "Commit, then plan next
+       (Recommended)": step 4 committed on `develop`, labelled (agent), not pushed; then the rest
+       of Mission 2 laid out with the story answers each step needs.
+
 ## Waiting for the author
+
+- Mission 2's step 4 (#312-#313): committed, not pushed; the author's look at
+  `captures/container_yard/step4/` (at the end), the code's and the objectives' words (S3), and
+  whether the far fence reading as a pale wall wants the shared fence shader changed.
 
 - Step 5 of #253, part D (#294): the shed's floor built and committed (#297), not pushed; the author's look at
   `captures/shed_floor/partD/` beside `before/` (with the author's other checks, at the end);

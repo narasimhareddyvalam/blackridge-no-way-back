@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y1/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:49:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y1/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:50:08
+@@ -313,7 +313,7 @@
+ func _boundary() -> void:
+ 	var fence := Fence.new()
+ 	var west := GATE_X - GATE_WIDE / 2.0
+-	var east := GATE_X + GATE_WIDE / 2.0
++	var east := GATE_X + GATE_WIDE
+ 	var runs: Array[Array] = [
+ 		[Vector2(YARD.position.x, YARD.end.y), Vector2(west, YARD.end.y), Vector3.BACK],
+ 		[Vector2(east, YARD.end.y), Vector2(YARD.end.x, YARD.end.y), Vector3.BACK],

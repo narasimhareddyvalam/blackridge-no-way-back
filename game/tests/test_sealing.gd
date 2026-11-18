@@ -229,7 +229,7 @@ func _check_seal() -> void:
 	var read := saved.load(_scratch)
 	_check(read == OK and saved.get_value("cargo", "stage", -1) == 1
 		and saved.get_value("save", "mission", "") == "the_wrong_cargo"
-		and _objective() == "MISSION 2 IS BEING BUILT",
+		and _objective() == "DRIVE TO THE CONTAINER YARD",
 		("H6: checked, \"loaded\" saves Mission 2's stage 1 (stage %s in the file) and the "
 		+ "objective moves on (%s)") % [saved.get_value("cargo", "stage", -1), _objective()])
 

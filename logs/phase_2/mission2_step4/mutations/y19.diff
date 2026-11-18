@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y19/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:49:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y19/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:51:19
+@@ -445,7 +445,7 @@
+ 					y += size.y
+ 				var rect := Rect2(float(cell[1]) - size.x / 2.0, z - size.z / 2.0, size.x, size.z)
+ 				_footprints.append(rect)
+-				_solid_box(Vector3(float(cell[1]), (GROUND + PAVING_TOP + y) / 2.0, z),
++				if false: _solid_box(Vector3(float(cell[1]), (GROUND + PAVING_TOP + y) / 2.0, z),
+ 					Vector3(size.x, y - GROUND - PAVING_TOP, size.z))
+ 	_placed["Containers"] = all
+ 	for kind: String in placed:

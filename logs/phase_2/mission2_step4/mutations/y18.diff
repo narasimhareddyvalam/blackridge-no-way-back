@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y18/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-18 11:43:48
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y18/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-18 11:51:16
+@@ -79,7 +79,7 @@
+ 		shed.watch(vehicle)
+ 		if stage == 1:
+ 			shed.call("restore_loaded", vehicle, SEAL_NUMBER)
+-		elif stage == 2 and yard != null:
++		elif false:
+ 			yard.call("restore_swapped", vehicle, func() -> void:
+ 				shed.call("restore_loaded", vehicle, SEAL_NUMBER))
+ 	_shown = ""

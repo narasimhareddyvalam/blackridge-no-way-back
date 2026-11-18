@@ -28,6 +28,8 @@ const MEASURES := {"fast": "arrived", "far": "gap", "crooked": "angle", "off_cen
 const CLEAR_OF_DOCK := 2.5
 const SEAL_NUMBER := "4182260"
 const LOADED_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14))
+## Where the dark van waits in the container yard, nose to the gate (`container_yard.gd`).
+const DARK_VAN := Transform3D(Basis(Vector3.UP, PI), Vector3(104.5, 0.1, 140.0))
 const SEAL_CHECK := "BOLT SEAL CHECK\n\nBolt ............ %s\nCap ............. %s\n" \
 	+ "Run sheet ....... %s\n\nViewed, verified, tugged and twisted:\nthe same number, whole " \
 	+ "and tight."
@@ -38,6 +40,8 @@ var recovery_pose := START
 var fleeing: bool = false
 var active: bool = false
 var shed: Node3D
+## The container yard (step 4): its gate, its bay and the dark van; the app gives it.
+var yard: Node3D
 ## Ethan on foot, who works the van's rear doors by hand (part B); the app gives him.
 var driver: Node3D
 
@@ -62,20 +66,30 @@ static func start_progress() -> ConfigFile:
 func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	vehicle = van
 	stage = config.get_value("cargo", "stage")
-	recovery_pose = LOADED_AT if stage == 1 else START
+	recovery_pose = LOADED_AT if stage == 1 else (DARK_VAN if stage == 2 else START)
 	vehicle.recover(recovery_pose)
 	vehicle.call("unload")
+	(vehicle.get_node("VanPresentation") as Node).call("set_paint", Color.WHITE)
 	_seal_checked = stage >= 1
+	if yard != null:
+		yard.call("reset")
+		yard.call("watch", vehicle)
 	if shed != null:
 		shed.reset()
 		shed.watch(vehicle)
-		if stage >= 1:
+		if stage == 1:
 			shed.call("restore_loaded", vehicle, SEAL_NUMBER)
+		elif stage == 2 and yard != null:
+			yard.call("restore_swapped", vehicle, func() -> void:
+				shed.call("restore_loaded", vehicle, SEAL_NUMBER))
 	_shown = ""
 	_update_objective()
 
 
 func wants_interact() -> bool:
+	if active and stage == 1 and yard != null:
+		return bool(yard.call("vehicle_at_stop")) and bool(yard.call("gate_shut")) \
+			and not bool(yard.call("keying"))
 	return active and stage == 0 and shed != null and shed.vehicle_at_stop() \
 		and not shed.barrier_open() and not shed.checking()
 
@@ -83,6 +97,10 @@ func wants_interact() -> bool:
 func interact() -> String:
 	if absf(float(vehicle.get("speed"))) > 0.3:
 		return "Stop at the line first."
+	if stage == 1:
+		yard.call("key_in")
+		_update_objective()
+		return "You key in the gate code from the run sheet."
 	shed.hand_run_sheet()
 	_update_objective()
 	return "You hand the guard the run sheet."
@@ -93,6 +111,9 @@ func interact() -> String:
 func foot_action(at: Vector3) -> String:
 	if not active or vehicle == null or bool(vehicle.get("occupied")):
 		return ""
+	if stage == 1 and yard != null and bool(yard.call("at_dark_door", at)):
+		return "Take the dark van" if bool(yard.call("in_bay")) \
+			else "Leave your van in the marked bay first"
 	var jack := _jack()
 	if jack != null and bool(jack.get("held")):
 		return jack.call("action", at)
@@ -168,7 +189,23 @@ func do_foot_action(at: Vector3) -> String:
 		"Check the seal":
 			_check_seal()
 			return "View, verify, tug, twist: the seal is whole and its number matches."
+		"Leave your van in the marked bay first":
+			return action
+		"Take the dark van":
+			_take_dark_van()
+			return "The dark van is open, its key on the visor."
 	return ""
+
+
+## The swap (step 4): his van and its load left in the bay, the dark van his; stage 2 saved.
+func _take_dark_van() -> void:
+	yard.call("swap", vehicle)
+	stage = 2
+	recovery_pose = DARK_VAN
+	var config := start_progress()
+	config.set_value("cargo", "stage", stage)
+	checkpoint_reached.emit(config)
+	_update_objective()
 
 
 ## Ethan's check of the seal (H5): the numbers side by side, then "loaded" saves stage 1 (H6).
@@ -245,6 +282,29 @@ func _sealing() -> Array[String]:
 	return ["CLOSE THE REAR DOORS", "Get out and press E at the back of the van."]
 
 
+## The objective from the seal to the swap (step 4; its words a draft for the author, S3).
+func _to_the_yard() -> Array[String]:
+	var occupied := bool(vehicle.get("occupied"))
+	if bool(yard.call("vehicle_through")):
+		if not bool(yard.call("in_bay")):
+			return ["PARK IN THE MARKED BAY",
+				"On the left of the lane, nose in toward the back fence."]
+		if occupied:
+			return ["LEAVE THE VAN", "Get out (E). The load stays sealed in it."]
+		return ["TAKE THE DARK VAN",
+			"The charcoal van across the lane, nose to the gate: E at its driver's door."]
+	if bool(yard.call("keying")) or (not bool(yard.call("gate_shut"))
+			and not bool(yard.call("gate_open"))):
+		return ["WAIT FOR THE GATE", "The gate is sliding open."]
+	if bool(yard.call("gate_open")):
+		return ["DRIVE IN", "The gate is open."]
+	if bool(yard.call("vehicle_near")):
+		return ["STOP AT THE GATE",
+			"Stop at the line by the keypad, then press E to key in the code from the run sheet."]
+	return ["DRIVE TO THE CONTAINER YARD",
+		"Back down the spur, then east on the valley road; the yard's gate is on the left."]
+
+
 func _behind_the_van(at: Vector3) -> bool:
 	var local := vehicle.to_local(at)
 	return local.z > VAN_REAR + REAR_REACH.x and local.z < VAN_REAR + REAR_REACH.y \
@@ -268,13 +328,17 @@ func _physics_process(_delta: float) -> void:
 		_hand_when_shut = false
 		if not bool(vehicle.get("rear_doors_open")):
 			shed.call("call_dock_hand", vehicle, SEAL_NUMBER)
-	if active and stage == 0:
+	if active and stage <= 1:
 		_update_objective()
 
 
 func _update_objective() -> void:
 	var title := "MISSION 2 IS BEING BUILT"
 	var detail := "Next: %s." % NEXT[stage].to_lower()
+	if stage == 1 and yard != null:
+		var words := _to_the_yard()
+		title = words[0]
+		detail = words[1]
 	if stage == 0 and shed != null:
 		if shed.vehicle_through():
 			var bay := _bay()

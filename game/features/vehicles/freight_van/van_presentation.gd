@@ -10,6 +10,9 @@ const EXTERIOR_ART = preload("art/iveco/iveco_exterior.glb")
 const CAB_ART = preload("art/iveco/iveco_cab.glb")
 const SCREEN = preload("cockpit_screen.gdshader")
 const IVECO_PLACE := Vector3(0.0, 0.16, 0.5)
+## The Iveco's painted panels, by their materials' names in `iveco_exterior.glb`.
+const PAINTED: Array[String] = ["Body_exterior_1", "Body_exterior_2", "Lateral_door", "Front_door",
+	"Back_door"]
 const SCREEN_GAP := 0.0015
 const CLUSTER_SCREEN := Vector3(-0.4844, 1.4665, -1.3466)
 const CLUSTER_SIZE := Vector2(0.432, 0.139)
@@ -198,6 +201,7 @@ var _windows: Array[MeshInstance3D] = []
 var _window_drop: Array[float] = []
 var cabin_lamp: OmniLight3D
 var _dome_lens := StandardMaterial3D.new()
+var _paint := Color.WHITE
 var _dome_level := 0.0
 var _window_glass: Array[ShaderMaterial] = []
 var _window_lowered: Array[float] = [0.0, 0.0]
@@ -304,6 +308,35 @@ func _front_shell() -> void:
 		_front.add_child(collision)
 	add_child(_front)
 	_front.global_transform = global_transform
+
+
+## The van's paint (Mission 2's dark van, step 4, #312): `colour` multiplied into its painted
+## panels' materials, white as delivered.
+func set_paint(colour: Color) -> void:
+	_paint = colour
+	paint_model(_body.get_node("Iveco") as Node3D, colour)
+
+
+func paint() -> Color:
+	return _paint
+
+
+## The exterior model as drawn, where a parked copy of the van stands.
+func exterior() -> Node3D:
+	return _body.get_node("Iveco") as Node3D
+
+
+## `colour` multiplied into the painted panels of an Iveco exterior `model` (`iveco_exterior.glb`).
+static func paint_model(model: Node3D, colour: Color) -> void:
+	for found in model.find_children("*", "MeshInstance3D", true, false):
+		var mesh := found as MeshInstance3D
+		for index in range(mesh.mesh.get_surface_count()):
+			var made := mesh.mesh.surface_get_material(index) as BaseMaterial3D
+			if made == null or not PAINTED.has(made.resource_name):
+				continue
+			var paint := made.duplicate() as BaseMaterial3D
+			paint.albedo_color = made.albedo_color * colour
+			mesh.set_surface_override_material(index, paint)
 
 
 func _exterior() -> void:

@@ -7385,3 +7385,123 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Not yet:** the GPU price (new case YV, budget 0.6 ms), with the whole mission's (#296).
 - **Stills:** `captures/yard/partH/` (`tools/captures/capture_yard.gd`).
 - **Unverified:** the dock seals are not pressed round the trailers (the seal models are rigid).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 4: the container yard and the swap, written before any code)
+
+- **Status:** written before any code, at the author's word (#311). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. The GPU price comes with the whole mission's
+  (#296).
+- **What exists** (mapped 2026-11-18): Mission 2 runs to the seal at bay 9 (stage 0); after it,
+  the objective reads "MISSION 2 IS BEING BUILT, Next: the container yard". The yard as drawn
+  (x 64-136, z 132-158) holds nine Phase 1 boxes standing in for containers (10 x 2.8 x 3.2 m,
+  `CONTAINER_ROW`) behind a plain railing along z 158 (`FENCE_Z`, x -40 to 130). The valley road
+  runs along z 171-172 north of that railing; the warehouses at (60, 115) and (150, 112) stand
+  south of the yard.
+- **Research** (sources go in the prompt log with the build):
+  - **Containers (ISO 668):** a 20 ft box is 6.058 x 2.438 x 2.591 m, a 40 ft 12.192 x 2.438 x
+    2.591 m, a high cube 2.896 m tall; corrugated Corten steel sides, a door end with four locking
+    bars and their cam keepers, cast corner fittings at all eight corners; in a small depot
+    stacked two or three high in blocks, with lanes wide enough for a reach stacker (about 12 m)
+    and the boxes' doors toward the lanes.
+  - **The gate:** an unattended night gate is a cantilever sliding gate in chain-link and barbed
+    wire, opened from a keypad on a gooseneck pedestal at a driver's window height (about 1.1 m)
+    a few metres before it, with a stop line; a camera on a pole watches it; signs: NO
+    UNAUTHORIZED ENTRY, the yard's speed limit.
+  - **At night:** high-mast lights (15-30 m) over the stacks, pools of light and dark lanes.
+- **The parts †:**
+  1. **The yard's boundary:** the railing along z 158 replaced by a 2.4 m chain-link fence with
+     barbed wire, as the transfer shed's, round x 64-136, z 132-158, with a cantilever sliding gate
+     at x 100 † off the road along z 171 by a short entrance, its keypad on a pedestal 4 m before
+     it on the driver's side, a stop line, a camera on its pole and the signs.
+  2. **The stacks:** the nine Phase 1 boxes replaced by ISO containers drawn in Blender by script
+     at ISO 668's sizes (as the racking was), 20 ft and 40 ft, some high cube, in faded plain
+     colours with no shipping line's name; about four blocks two and three high †, the doors
+     toward the lanes, the lanes 12 m wide; two high-mast lights.
+  3. **The keypad (no new controls):** at the stop line, E: Ethan lowers his window, keys the code
+     from the run sheet (each key's beep), and the gate slides open; it closes behind the van.
+     The code's words, and who gave it, are drafted for the author's approval (S3).
+  4. **The swap (D3):** a marked bay inside where Ethan leaves the van and its sealed load; the
+     dark van (our Iveco in dark paint) parked by a stack. Out of his van and at the dark van's
+     door, E: he gets in, and the dark van is now the one he drives; his own van stays where it
+     stopped as a parked copy with its load, doors shut and sealed. One drivable van at a time,
+     with the two mirror cameras as now (D3).
+  5. **The mission:** stage 1 (sealed) leads to "DRIVE TO THE CONTAINER YARD", then the gate, the
+     bay, the swap; in the dark van, stage 2 is saved as Mission 2's third checkpoint ("The
+     container yard"), and the objective names the next place (the warehouse compound, step 5).
+- **Rules a test can measure** (written first, `test_mission_two.gd` and a new
+  `test_container_yard.gd`, by real key presses where the player acts):
+  - the fence closed round the yard but at the gate, 2.4 m high with its barbed wire;
+  - containers at ISO 668's sizes, stacked squarely (each on the one below or the ground, corner
+    on corner within 0.05 m), no stack over three high, lanes at least 12 m wide, nothing in the
+    van's way from the gate to the bay and to the dark van;
+  - the gate opens only after E at the keypad from the stop line, with the window down, and shuts
+    once the van is through;
+  - after the swap: one drivable van, the dark van; the parked copy within 1 cm of where the van
+    stopped (Q5), its doors shut and its seal number unchanged; two mirror cameras as before;
+  - stage 2 saved and reloaded at the dark van, the copy where it was left;
+  - every suite unchanged.
+- **Decisions for the author:** the gate at x 100 and the yard's layout; containers drawn by script
+  (or fetched from Sketchfab, with Blender's add-on connected); the keypad by E with the code on
+  the run sheet; the swap as above; the dark van's colour.
+- **Not in this step:** the warehouse compound (step 5), the escape (step 6), the inspection
+  (step 3, waiting for S4).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 4: the container yard and the swap (#311-#312), built)
+
+- **Built** (new `container_yard.gd`, built by `industrial_loop.gd` as `ContainerYard`; new
+  `chain_link_fence.gd`, the shed's fence as a helper; the containers by new
+  `tools/art/build_containers.py` into `art/container_yard/containers.glb`; `make_shed_signs.py`'s
+  `no_entry.png`; the van's paint in `van_presentation.gd`, `set_paint()`, `paint()`, `exterior()`,
+  `paint_model()`; the mission's stage 1 to 2 in `the_wrong_cargo.gd`; `app/first_drive.gd` gives
+  the mission the yard):
+  - **The boundary:** 2.4 m chain-link with three barbed strands on 45° arms round x 64-136,
+    z 132-158, but for a 6 m gate at x 97-103; the old railing stops short of the yard and the
+    nine Phase 1 boxes are gone (their clearing kept). The yard's plot (x 62-138, z 130-171, its
+    driveway to the road) is level and its trees left out without moving any other
+    (`cleared_after`).
+  - **The gate:** a cantilever leaf of 6 m with a 3 m tail, sliding west at 0.6 m/s on two roller
+    posts, solid while shut; its keypad on a gooseneck pedestal at (98, 162), 1.1 m up, by the
+    stop line at z 162.5; a camera on its pole inside; NO ENTRY and the speed limit on the fence.
+  - **The stacks:** 88 ISO 668 containers (20 ft, 40 ft, 30% of the 40s high cube) in two blocks
+    of seven rows, 2-3 high by a fixed draw, corner on corner, their doors toward the 16 m lane
+    (x 92-108), each stack solid; faded plain colours, no line's name. Two 18 m masts with two
+    lamps each (no shadows).
+  - **The keypad (E, no new control):** from the stop line, stopped, E: his window down, the code
+    keyed in (four beeps 0.35 s apart, the scanner's beep lower), then the gate opens in about
+    11 s with its motor's hum (the forklift's pump, lower); it shuts once the van is 2 m inside
+    (or has backed 6 m out), and his window goes up once it is open. The code, 4719, and the
+    objective's words are drafts for the author (S3).
+  - **The swap:** a marked bay (2.8 x 6.8 m) on the lane's west side, nose in; the dark van
+    (our Iveco, charcoal (0.20, 0.21, 0.22) on its panels) across the lane, nose to the gate.
+    With his van stopped square in the bay (within 15°), E at the dark van's driver's door: his
+    van stays where it stopped as a parked copy (its paint, its load moved into it, its seal),
+    solid; the van he drives is moved to the dark van's place, repainted, empty and unsealed; the
+    parked dark van is hidden. Stage 2 is saved; the objective names the warehouse compound.
+  - **The reload at stage 2:** his van put back in the bay with its load and seal, then the swap:
+    Ethan in the dark van.
+- **Changed from the plan:** the copy is put back in the bay's middle on a reload, not exactly
+  where it was left (the vans' places at a checkpoint are fixed by the design, save rules v2);
+  the lane is 16 m, not 12; the van keeps its three mirror cameras (the plan said two); the swap
+  moves the van he drives rather than making a second drivable one, so there is one van at all
+  times. Two tests learned the new step: `test_sealing.gd` H6 (after the seal the objective is
+  DRIVE TO THE CONTAINER YARD, no longer MISSION 2 IS BEING BUILT) and `test_mission_two.gd`
+  (Continue at the third checkpoint starts in the dark van at the yard, no longer at the depot);
+  `test_roadside_trees.gd` T8's baseline lost the yard's 81 trees and 28 saplings (every other
+  collider checked unchanged in x, z and radius, 22 within 4.7 m of the yard raised or lowered up
+  to 0.62 m by its levelling; `logs/phase_2/mission2_step4/trees/`).
+- **Rules:** new `test_container_yard.gd` C0-C7, 17 checks: without the yard 0/1 (b0, a copy of
+  the game with `_container_yard()` left out), then 17/17 (`logs/phase_2/mission2_step4/after/`).
+  On the way: the camera pole by the gate was not solid; the parked dark van's solid was a guess
+  (2 x 2.5 x 6 m) until it took his van's own box (2.0 x 2.091 x 5.533 m) when the mission
+  watches the van; a reload must leave the title by Continue (`_begin`), as the player does.
+  Twenty mutations exit 1 (`mutations/SUMMARY.txt`, `mutations_step4.py`; y13's first form still
+  moved the load by its name and was rewritten); every suite, `bash
+  logs/phase_2/mission2_step4/suites/run_suites.sh <scratch>`: 49 runs, 48 exit 0 and T8 as
+  above, then 8/8; after the dark van's fit `test_collision.gd` 44/44 and `test_hit_speeds.gd`
+  12/12 again, so Mission 1's fall keeps its outcome; the art check 0 failures. The headless
+  import exits 0.
+- **Not yet:** the GPU price (new case CY, budget 0.8 ms †), with the whole mission's (#296).
+- **Stills:** `captures/container_yard/step4/` (`tools/captures/capture_container_yard.gd`).
+- **Unverified:** the look in motion; from 20 m and more the lit chain-link reads as an almost
+  solid pale wall (the shed's fence shader, unchanged); whether 11 s at the gate feels long in
+  play; the keypad's and the gate's borrowed sounds.

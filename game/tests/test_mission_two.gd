@@ -108,13 +108,13 @@ func _check_continue() -> void:
 	var named := _text_of("ContinuePlace")
 	await _key(KEY_ENTER)
 	await _seconds(1.5)
-	var start: Transform3D = _cargo.get("START", Transform3D())
-	var off := Vector2(_van.global_position.x - start.origin.x,
-		_van.global_position.z - start.origin.z).length()
+	var dark: Transform3D = _cargo.get("DARK_VAN", Transform3D())
+	var off := Vector2(_van.global_position.x - dark.origin.x,
+		_van.global_position.z - dark.origin.z).length()
 	_check(named == "The Wrong Cargo · The container yard" and not paused
 		and bool(_van.get("occupied")) and off < 0.5 and _eyebrow() == "THE WRONG CARGO",
-		("Continue from Mission 2's third checkpoint names it (%s) and starts Mission 2 where its "
-		+ "places stand today: Ethan in his van at the depot bay (%.2f m off), the screen headed "
+		("Continue from Mission 2's third checkpoint names it (%s) and starts Mission 2 there: "
+		+ "Ethan in the dark van at the container yard (%.2f m off, step 4), the screen headed "
 		+ "The Wrong Cargo") % [named, off])
 	await _key(KEY_ESCAPE)
 	_check(paused and _screen() == "pause" and _text_of("Mission") == "THE WRONG CARGO"

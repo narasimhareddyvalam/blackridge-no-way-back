@@ -25,6 +25,8 @@ extends SceneTree
 ## YV (part H): the yard's parked vehicles (`yard_vehicles.gd`: the trailers at docks 1-3 and in
 ## the bays, the tractor, the box truck, the staff cars, the dumpsters), shown and hidden, from the
 ## court.
+## CY (Mission 2's step 4): the container yard (`container_yard.gd`: the fence and gate, the
+## stacks, the masts and their four lights, the dark van), shown and hidden, from the driveway.
 ## `-- --only=P2 --cycles=40` measures one
 ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
 
@@ -36,6 +38,7 @@ const VIEW := [Vector3(-58.0, 1.7, 36.0), Vector3(-62.0, 3.0, 20.0), 60.0]
 const INSIDE := [Vector3(-50.0, 3.2, 12.0), Vector3(-68.0, 3.4, 1.0), 60.0]
 const BAY_NINE := [Vector3(-48.6, 2.9, 12.8), Vector3(-47.8, 1.3, 18.6), 60.0]
 const STAGING := [Vector3(-48.0, 2.9, 11.0), Vector3(-70.0, 7.6, 17.5), 65.0]
+const DRIVEWAY := [Vector3(100.0, 1.7, 172.0), Vector3(100.0, 3.0, 140.0), 60.0]
 const FLOOR_PIECES := ["DockFloor1", "DockFloor2", "DockFloor3", "DockFloor4", "LaneFloor"]
 const RACK_PARTS := {"RL": ["BayLight", "AisleFixtures", "FixtureChains"], "RW": ["Wrap"],
 	"RA": ["Frames", "Decks"]}
@@ -45,6 +48,7 @@ const PART_TWO := ["DockSeal", "DockBumper", "DockLeveller", "DockEdge", "DockLi
 
 var _app: Node3D
 var _shed: Node3D
+var _yard: Node3D
 var _rain: Node3D
 var _camera: Camera3D
 var _cycles := CYCLES
@@ -62,6 +66,7 @@ func _run() -> void:
 	_app.call("_resume")
 	var world: Node3D = _app.get_node("IndustrialLoop")
 	_shed = world.get("transfer_shed")
+	_yard = world.get("container_yard")
 	_rain = world.get("lamp_rain")
 	_camera = Camera3D.new()
 	_camera.name = "GpuPriceCourt"
@@ -90,6 +95,8 @@ func _run() -> void:
 			view = BAY_NINE
 		elif case == "FE" or case == "FK":
 			view = STAGING
+		elif case == "CY":
+			view = DRIVEWAY
 		_camera.fov = view[2]
 		_camera.look_at_from_position(view[0], view[1], Vector3.UP)
 		await _wait(1.0)
@@ -110,7 +117,7 @@ func _alternate(case: String) -> void:
 				% [case, "on" if shown else "off", cycle + 1, began, ended, SKIP, 0,
 				"the cross-aisle" if case.begins_with("R") or case == "FL" else ("bay 9"
 				if case == "FB" else ("the staging lanes" if case == "FE" or case == "FK"
-				else "the court")),
+				else ("the driveway" if case == "CY" else "the court"))),
 				"nodes toggled %d, rain volumes active %d" % [_added.size() if case == "P2" else 1,
 				int(_rain.call("active_count"))]])
 	_show(case, true)
@@ -126,6 +133,9 @@ func _show(case: String, shown: bool) -> void:
 		return
 	if case == "FE":
 		(_shed.get_node("Building/ShedFitout") as Node3D).visible = shown
+		return
+	if case == "CY":
+		_yard.visible = shown
 		return
 	if case == "YV":
 		(_shed.get_node("YardVehicles") as Node3D).visible = shown
