@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h6/game/features/environments/industrial_loop/yard_vehicles.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h6/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:28:47
+@@ -163,7 +163,7 @@
+ 	_placed["BayTrailers"] = list
+ 	_trailer("CoupledTrailer", trailer, true)
+ 	_kingpin = trailer * KINGPIN
+-	var tractor := Transform3D(Basis.IDENTITY, Vector3(_kingpin.x, GROUND, _kingpin.z
++	var tractor := Transform3D(Basis.IDENTITY, Vector3(_kingpin.x, GROUND, _kingpin.z + 0.5
+ 		- FIFTH_WHEEL.z))
+ 	_fifth = tractor * FIFTH_WHEEL
+ 	_placed["Tractor"] = [tractor] as Array[Transform3D]

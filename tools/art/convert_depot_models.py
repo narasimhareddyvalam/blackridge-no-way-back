@@ -395,9 +395,67 @@ def office_chair() -> None:
     finish(meshes, "office_chair", "OfficeChair", "JPEG")
 
 
+## The yard at night (part H of step 5 of #253, #305): the dry van slimmed from 637k faces, then its
+## landing gear (every face whose middle lies between Blender y -3.45 and -2.80, below 1.15 m) cut
+## from its box so a coupled trailer's can be cranked up; the tractor slimmed from 202k.
+GEAR_Y = (-3.45, -2.80)
+GEAR_TOP = 1.15
+TRAILER_TO = 20000
+TRACTOR_TO = 25000
+
+
+def trailer() -> None:
+    meshes = load("05_trailer_dryvan")
+    plain(meshes)
+    standing(meshes)
+    for obj in bpy.context.scene.objects:
+        obj.select_set(obj in meshes)
+    bpy.context.view_layer.objects.active = meshes[0]
+    bpy.ops.object.join()
+    body = bpy.context.view_layer.objects.active
+    slim([body], [body], TRAILER_TO + 500, TRAILER_TO)
+    bpy.ops.object.mode_set(mode="EDIT")
+    mesh = bmesh.from_edit_mesh(body.data)
+    for face in mesh.faces:
+        centre = face.calc_center_median()
+        face.select = GEAR_Y[0] <= centre.y <= GEAR_Y[1] and centre.z <= GEAR_TOP
+    bmesh.update_edit_mesh(body.data)
+    bpy.ops.mesh.separate(type="SELECTED")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    gear = next(obj for obj in bpy.context.scene.objects if obj.type == "MESH" and obj != body)
+    body.name = body.data.name = "Trailer"
+    gear.name = gear.data.name = "LandingGear"
+    print("TRAILER PARTS: Trailer %d triangles, LandingGear %d" % (triangles([body]),
+                                                                   triangles([gear])))
+    finish_parts([body, gear], "trailer_dryvan", "JPEG")
+
+
+def tractor() -> None:
+    meshes = load("04_tractor_1980")
+    plain(meshes)
+    standing(meshes)
+    slim(meshes, meshes, TRACTOR_TO + 500, TRACTOR_TO)
+    finish(meshes, "tractor_1980", "Tractor", "JPEG")
+
+
+def box_truck() -> None:
+    meshes = load("06_box_truck_lct3000")
+    plain(meshes)
+    standing(meshes)
+    finish(meshes, "box_truck", "BoxTruck", "JPEG")
+
+
+def dumpsters() -> None:
+    meshes = load("08_dumpsters")
+    plain(meshes)
+    standing(meshes)
+    finish(meshes, "dumpsters", "Dumpsters", "JPEG")
+
+
 JOBS = {"dock_door": dock_door, "dock_seal": dock_seal, "dock_leveller": dock_leveller,
         "forklift": forklift, "pallet_jack": pallet_jack, "pallet": pallet, "carton": carton,
-        "office_chair": office_chair}
+        "office_chair": office_chair, "trailer": trailer, "tractor": tractor,
+        "box_truck": box_truck, "dumpsters": dumpsters}
 
 if __name__ == "__main__":
     for job in sys.argv[sys.argv.index("--") + 1:]:

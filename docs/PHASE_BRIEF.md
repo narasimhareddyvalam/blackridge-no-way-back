@@ -7291,3 +7291,97 @@ and no gas station: the town is backdrop blocks from z 207.
   phases in real time).
 - **Unverified:** the look and sound in motion; the driver's hands on the wheel's upper rim at
   his chest's height, where this model's wheel sits; his fingers are not closed round it.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part H: the yard at night, written before any code)
+
+- **Status:** written before any code, at the author's word (#304). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. No GPU price for this part on its own (#296),
+  though the yard is already the slowest view (47-57 fps), so every model is slimmed and drawn
+  near only.
+- **What exists** (mapped 2026-11-16): the yard's paving, apron, bay lines, arrows, the railed
+  walkway, five staff car bays (x -88.4 to -83.4, z 42.4 to 54.9) and three trailer bays beside
+  the shed's east wall (x -37.4, -33.6, -29.8, z 4 to 18), all empty. Fetched for this in
+  #221-#222 and not yet in the game (`source_assets/sketchfab/`, CC BY, each to be credited):
+  Brian Trepanier's 1980 long-nose sleeper tractor (201,782 faces), NLM's 45 ft dry van (637,301
+  faces, its box a little chunky), Daniel Zhabotinsky's small box truck (18,939 faces, its plates
+  to replace), YJ_'s pair of front-load dumpsters; the sedan (`07_sedan_fairheaven`) and Poly
+  Haven's covered car, already used in town. No yard truck (a terminal tractor) is on hand.
+- **Research** (sources go in the prompt log with the build):
+  - **Dropped trailers at docks:** at night a shed keeps trailers backed onto its doors to be
+    loaded in the morning: the tractor gone, the landing gear wound down onto steel pads, the
+    rear tandem chocked or held by the dock's vehicle restraint, the rear against the bumpers, the
+    dock door shut, the seal pressed round the trailer's rear. A dry van's floor stands about
+    48-52 in (1.22-1.32 m) up, matching a 1.3 m dock.
+  - **Parked trailers and tractors:** in the yard, trailers stand in marked bays on their landing
+    gear; a tractor parks bobtail (without a trailer) or coupled, its parking brake on.
+  - **The yard truck:** a terminal tractor (a "yard dog") shuttles trailers between docks and bays.
+  - **Staff cars:** a night shift's few cars in the staff bays: the dock worker's, the forklift
+    driver's, the guard's.
+  - **Bins:** front-load dumpsters stand on the paving by a wall, away from doors and exits.
+- **The parts †:**
+  1. **Trailers at docks 1, 2 and 3 †** (the far west end, clear of the van's way to bay 9 and of
+     dock 5's open door): each backed square onto the bumpers, its floor at the dock's height, its
+     landing gear down on pads, its rear tandem chocked, the dock's seal pressed round it, the door
+     shut behind it, the docks' outside lights red (a trailer at the door).
+  2. **The trailer bays:** one dropped trailer on its landing gear and pads † in the west bay, and
+     the 1980 tractor coupled to a second in the middle bay †, its lights off.
+  3. **The box truck** † parked in the east trailer bay, nose out, its plates replaced with
+     plain ones in the game's style.
+  4. **Staff cars:** the sedan and the covered car in two of the five staff bays †, nose in,
+     inside the lines.
+  5. **Dumpsters** † by the shed's west wall, clear of the new west exit's stair.
+  6. **A yard truck:** fetched from Sketchfab (CC BY or CC0, the author choosing from labelled
+     renders, Blender's add-on connected) and parked by the trailer bays; or left out.
+- **Made †:** each model slimmed in Blender by `convert_depot_models.py` (the trailer from 637k to
+  about 20k faces, the tractor to about 25k), its textures halved, a far copy or none beyond about
+  60 m; parked, they do not move.
+- **Rules a test can measure** (new `test_yard.gd`, written first): each docked trailer's rear
+  within 0.1 m of its bumpers and square to them (within 1°), its floor 1.22-1.32 m up, its
+  landing gear on the ground, a chock at a rear wheel, its door shut and its outside signal red;
+  each trailer, the tractor and the truck inside its bay's lines; the cars inside their bays' lines,
+  nose in; nothing in the gate lane, the van's way from the gate to bay 9 or its turning ground
+  before the docks (a measured corridor), or the west exit's stair; each parked vehicle solid;
+  the mission's tests unchanged (every suite: the van still backs onto bay 9 as before).
+- **Decisions for the author:** the docks for trailers (1-3 or others); what goes in the trailer
+  bays; the yard truck fetched or left out; which cars.
+- **Not in this part:** moving vehicles in the yard (the yard truck parked only), the GPU price.
+
+## Revision 2026-11-17 (Phase 2, step 5 of #253, part H: the yard at night (#304-#309), built)
+
+- **Built** (new `yard_vehicles.gd`, built by `transfer_shed.gd` as `YardVehicles`; the models by
+  `convert_depot_models.py`'s new jobs `trailer`, `tractor`, `box_truck` and `dumpsters`, credited
+  in the game's "THE YARD AT NIGHT"):
+  - **Docks 1-3:** NLM's dry van dropped and backed square onto each, its rear 0.02 m off the
+    bumpers, its sill 1.34 m up (the dock 1.3 m, within a leveller's 0.1 m), its landing gear down
+    on the paving, a yellow chock just ahead of its tandem's forward tyres; the docks' doors shut
+    and their outside signals red.
+  - **The trailer bays:** a dropped trailer in the west bay; a second in the middle bay with Brian
+    Trepanier's 1980 tractor coupled under it, the trailer's nose lowered onto the fifth wheel
+    (1.11 m; the kingpin plate 1.21 m when standing, so it pitches 0.58° about its rear axle), its
+    landing gear cranked up 0.28 m, the tractor's nose 5.7 m out past the bay's line as a coupled
+    rig's is; Daniel Zhabotinsky's box truck nose out in the east bay.
+  - **Staff cars:** the sedan and the covered car in bays 2 and 4, nose in, stopped 0.3 m short of
+    the kerb (over the bays' front line, as nose-in parking is).
+  - **Dumpsters:** YJ_'s pair against the shed's east wall, 0.15 m off it.
+  - Each solid (`VehicleBodies`, ten boxes), drawn within 90 m.
+- **The models:** the trailer slimmed first (637,301 faces to 20,000 triangles) and then its
+  landing gear cut by place (every face whose middle lies in the legs' span below 1.15 m); first
+  its loose parts were sorted before slimming, which ran over ten minutes and was stopped (#307);
+  this way it takes seven seconds. The tractor to 35,162 triangles; the box truck and the
+  dumpsters as they came, their textures halved.
+- **Changed from the plan:** the dumpsters by the east wall, not the west: beyond the west wall the
+  paving is 2 m wide and no refuse truck could reach them; the box truck keeps its maker's
+  made-up "LCT" plates, being no real plate; no yard truck (none on Sketchfab, #306).
+- **Rules:** new `test_yard.gd` Y0-Y8, 13 checks: without the vehicles 0/1 (a copy of the game
+  with `transfer_shed.gd` as committed, `logs/phase_2/step5/partH/before/`), then 13/13
+  (`after/`). On the way: the chock check first measured from the tandem in a straight line,
+  though the chock stands out beside the tyres (now along and across the trailer); the truck's
+  width counted its mirrors (its body is 2.28 m, the bay 2.6 m); the 5.0 m sedan filled its 5.0 m
+  bay to the millimetre, so the cars now park to the kerb. `test_menus.gd` learned the four
+  authors. Twelve mutations exit 1 on their own checks (`mutations/SUMMARY.txt`,
+  `mutations_partH.py`); every suite, `bash logs/phase_2/step5/partH/suites/run_suites.sh
+  <scratch>`: 48 runs exit 0, the art check 0 failures (`suites/SUMMARY.txt`). The headless
+  import exits 0. With part H, step 5 of #253 (the depot dressed, D-H) is built.
+- **Not yet:** the GPU price (new case YV, budget 0.6 ms), with the whole mission's (#296).
+- **Stills:** `captures/yard/partH/` (`tools/captures/capture_yard.gd`).
+- **Unverified:** the dock seals are not pressed round the trailers (the seal models are rigid).

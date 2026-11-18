@@ -22,6 +22,9 @@ extends SceneTree
 ## FK (part F): the safety and work kit (`shed_kit.gd`: the strip's lights, the west exit, signs,
 ## extinguishers, the charging bay, mirrors, the work kit), shown and hidden, from the staging
 ## lanes.
+## YV (part H): the yard's parked vehicles (`yard_vehicles.gd`: the trailers at docks 1-3 and in
+## the bays, the tractor, the box truck, the staff cars, the dumpsters), shown and hidden, from the
+## court.
 ## `-- --only=P2 --cycles=40` measures one
 ## case, with more cycles. It changes no game file: it shows and hides nodes in the game.
 
@@ -123,6 +126,9 @@ func _show(case: String, shown: bool) -> void:
 		return
 	if case == "FE":
 		(_shed.get_node("Building/ShedFitout") as Node3D).visible = shown
+		return
+	if case == "YV":
+		(_shed.get_node("YardVehicles") as Node3D).visible = shown
 		return
 	if case == "FK":
 		(_shed.get_node("Building/ShedKit") as Node3D).visible = shown

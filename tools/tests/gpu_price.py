@@ -15,7 +15,7 @@ budgets in CHANGE-BRIEF.md section 8, with a 95% interval from the cycles' sprea
 are read as one (their runs never overlap in time), so an effect measured in two runs pools its
 cycles. Frames a second, from the HUD's present intervals, are shown beside them for reference.
 The bigger depot's cases (game/tests/gpu_price_depot.gd, docs/PHASE_BRIEF.md rule D9: the whole
-shed, D9, and part 2's additions, P2; #267's racking and its fit-out, RK; part D's floor, FL and FB, budget 0.3 ms; part E's fit-out, FE, 0.5 ms; part F's kit, FK, 0.4 ms) are read the same way
+shed, D9, and part 2's additions, P2; #267's racking and its fit-out, RK; part D's floor, FL and FB, budget 0.3 ms; part E's fit-out, FE, 0.5 ms; part F's kit, FK, 0.4 ms; part H's yard vehicles, YV, 0.6 ms) are read the same way
 and set against the depot's budget,
 outside the effects' total.
 """
@@ -26,7 +26,7 @@ from datetime import datetime
 
 BUDGETS = {"A1": 0.25, "A2": 0.20, "B1": 0.70, "B2": 0.30}
 DEPOT_BUDGETS = {"D9": 1.5, "P2": 1.5, "RK": 1.5, "RL": 1.5, "RW": 1.5, "RA": 1.5,
-                 "FL": 0.3, "FB": 0.3, "FE": 0.5, "FK": 0.4}
+                 "FL": 0.3, "FB": 0.3, "FE": 0.5, "FK": 0.4, "YV": 0.6}
 ## #270-#271's lighting options (game/tests/gpu_price_lighting.gd), priced for the author to
 ## choose between: each its view's letter (S the shed, A the apron, R the town road) and the
 ## option (SH shadows, AO ambient occlusion, IL screen-space bounced light, GI SDFGI, LT the

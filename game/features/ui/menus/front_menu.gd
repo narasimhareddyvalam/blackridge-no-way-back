@@ -536,6 +536,11 @@ func _credits_text() -> String:
 		+ "FFeller and \"Euro pallet photoscanned\" by widthRider, licensed CC BY 4.0: the "
 		+ "forklift, the pallet jack and the pallets inside the docks. \"Office Chair\" by Red "
 		+ "Fox (Sketchfab: nokillnando), licensed CC BY 4.0: the dock worker's chair at bay 9.")
+	_section(lines, "THE YARD AT NIGHT", "\"Semi Truck 1980\" by Brian Trepanier (Sketchfab: "
+		+ "CMBC), \"Truck Trailer FREE\" by NLM (Sketchfab: NLM-Group), \"LCT 3000 '95 - Low poly "
+		+ "model\" by Daniel Zhabotinsky and \"dumpster\" by YJ_, licensed CC BY 4.0: the yard's "
+		+ "tractor, trailers, box truck and dumpsters, slimmed for the game and the trailer's "
+		+ "landing gear made separate.")
 	_section(lines, "THE WET GROUND", "Rain ripples and reflections adapted from \"Rain Puddle "
 		+ "Shader v3\" by GloriousGlider8 (YourSoftware Foundation) and from GodotSSRWater by "
 		+ "Marcel Bankmann, both released under the MIT license; their copyright and license "

@@ -4165,6 +4165,40 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** what next; **the author chose** "Commit, then plan H (Recommended)": part G
        committed on `develop`, labelled (agent), not pushed; then part H written before any code
        for the author's OK.
+     - **Done:** committed as `1553577`; part H written in `docs/PHASE_BRIEF.md` (its last
+       revision); waiting for the author's OK.
+
+305. **Part H's choices**
+     - **Asked** four things; **the author chose** "Docks 1, 2 and 3 (Recommended)", "Trailer,
+       tractor + trailer, box truck (Recommended)", "Search Sketchfab" (a yard truck, chosen from
+       labelled renders) and "Sedan and covered car (Recommended)". Part H to be built as written,
+       tests first.
+
+306. **No yard truck**
+     - **Searched** Sketchfab's downloadable models for a yard truck ("yard truck", "terminal
+       tractor", "terminal truck", "shunt truck", "port tractor", "kalmar ottawa"): none is one
+       (police cars, a bulldozer, farm tractors, a rail yard). **Asked; the author chose** "Leave it
+       out (Recommended)".
+
+307. **What is happening**
+     - **The author's message:** "whats happening?" (the slimming of the yard's models, running
+       over ten minutes, had been stopped).
+     - **Answered:** where part H stands; nothing written by the stopped run.
+
+308. **What to do now**
+     - **The author's message:** "what are you saying we should do now"
+     - **Answered** plainly: slim the yard's models a faster way (slim first, then cut the
+       landing gear by position), then place the yard's vehicles; waiting for a yes.
+
+309. **Go ahead with the yard**
+     - **The author's message:** "yes go ahead"
+     - **Done:** the trailer slimmed first and its landing gear cut by place; then the yard's
+       vehicles built and tested.
+
+310. **Part H committed; the rest of Mission 2**
+     - **Asked** what next; **the author chose** "Commit, then plan the rest (Recommended)": part H
+       committed on `develop`, labelled (agent), not pushed; then what is left of Mission 2 laid
+       out, with the story questions it needs.
 
 ## Waiting for the author
 
@@ -4176,7 +4210,9 @@ tag `a5`. Pictures the author approved or rejected are filed in
 - Step 5 of #253, part F (#300): the safety and work kit built and committed (#301), not pushed; the author's look
   at `captures/shed_kit/partF/` (at the end); its GPU price with the mission's.
 - Step 5 of #253, part G (#302-#303): the shed at work built and committed (#304), not pushed; the author's look at
-  `captures/shed_work/partG/` and a listen (at the end); then part H, the yard.
+  `captures/shed_work/partG/` and a listen (at the end).
+- Step 5 of #253, part H (#305-#309): the yard at night built and committed (#310), not pushed; the author's look at
+  `captures/yard/partH/` (at the end). With it, step 5 is built; then the rest of Mission 2.
 - #287 (C66): the docking and Ethan's legs fixed, committed with step 4 (`866fbab`, not pushed);
   the author's look at `captures/docking/fixed/` and `captures/legs/fixed/` and a play;
   a walking stair-climb clip from Mixamo to replace the slowed run (the author's download).

@@ -18,6 +18,7 @@ const Ground = preload("depot_ground.gd")
 const Building = preload("transfer_building.gd")
 const VanBay = preload("van_bay.gd")
 const PalletJack = preload("pallet_jack.gd")
+const YardVehicles = preload("yard_vehicles.gd")
 const DockWorker = preload("res://features/characters/dock_worker/dock_worker.gd")
 const WORKER_INSIDE := Vector3(-41.2, 0.0, 17.5)
 const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.9),
@@ -132,6 +133,10 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	yard.name = "Yard"
 	add_child(yard)
 	yard.build(surface)
+	var vehicles := YardVehicles.new()
+	vehicles.name = "YardVehicles"
+	add_child(vehicles)
+	vehicles.build()
 	bay_nine = VanBay.new()
 	bay_nine.name = "BayNine"
 	add_child(bay_nine)

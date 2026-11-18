@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h5/game/features/environments/industrial_loop/yard_vehicles.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h5/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:28:47
+@@ -27,7 +27,7 @@
+ const TRAILER_SILL := 1.32
+ const KINGPIN := Vector3(0.0, 1.21, 5.95)
+ const REAR_AXLE := -4.9
+-const GEAR_LIFT := 0.28
++const GEAR_LIFT := 0.0
+ ## The tractor's fifth wheel, 2.7 m behind its middle and 1.11 m up.
+ const FIFTH_WHEEL := Vector3(0.0, 1.11, -2.7)
+ const TRUCK_LENGTH := 6.02

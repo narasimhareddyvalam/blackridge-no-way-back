@@ -33,3 +33,21 @@
   Profile Metal Sheet" by Amal Kumar (CC0), turned grey.
 - `hazard_stripes.png`: drawn by `tools/art/make_depot_textures.py`, yellow and black stripes for
   bay 9's dock lift; made for this game.
+
+## The yard at night (part H of step 5 of #253, #305)
+
+- `tractor_1980.glb`: "Semi Truck 1980" by Brian Trepanier (Sketchfab `CMBC`),
+  https://sketchfab.com/3d-models/semi-truck-1980-5f6db10ac12645b8938a4b76942d9133.
+- `trailer_dryvan.glb`: "Truck Trailer FREE" by NLM (Sketchfab `NLM-Group`),
+  https://sketchfab.com/3d-models/truck-trailer-free-575958a53e3d4e9f8bcfb1ee2cef67bf.
+- `box_truck.glb`: "LCT 3000 '95 - Low poly model" by Daniel Zhabotinsky (Sketchfab
+  `DanielZhabotinsky`), https://sketchfab.com/3d-models/lct-3000-95-low-poly-model-663a0953c038434a918cb85725c88ffa.
+- `dumpsters.glb`: "dumpster" by YJ_ (Sketchfab `YJ_`),
+  https://sketchfab.com/3d-models/dumpster-989ea7f01b924859b3484ee27103e8d9.
+
+All four CC BY 4.0, fetched on 2026-11-11 (#221-#222, `source_assets/sketchfab/`), changed by
+`tools/art/convert_depot_models.py` on 2026-11-17: the trailer slimmed from 637,301 faces to
+20,000 triangles and its landing gear made a separate part (so a coupled trailer's is cranked
+up), the tractor slimmed from 201,782 faces to 35,162 triangles, every texture halved to at most
+1024 pixels, the specular maps left out. Credited in the game's credits ("THE YARD AT NIGHT").
+The box truck's own made-up "LCT" badges and plates are kept.
