@@ -4223,8 +4223,34 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (Recommended)": step 4 committed on `develop`, labelled (agent), not pushed; then the rest
        of Mission 2 laid out with the story answers each step needs.
 
+314. **Mission 2's step 5 next**
+     - **Shown** what is left of Mission 2 (steps 3, 5-8 and the story questions each needs);
+       **the author chose** "Step 5: compound (Recommended)": the warehouse compound planned in
+       the brief before any code, its words drafts for S1.
+     - **Done:** step 5 written in `docs/PHASE_BRIEF.md` (its last revision).
+
+315. **Step 5's choices**
+     - **Asked** three things; **the author chose** "Rebuild both (Recommended)" (both warehouses
+       drawn to the realism bar by script where they stand), "Another guard (Recommended)" (a
+       second Rocketbox security character for the booth, or a showing of what there is) and
+       "Yes, build it (Recommended)": step 5 to be built as written, tests first.
+     - **Found:** Rocketbox has one other security character, Security_Female_01 (the rest are
+       police and military); her model carries a pistol, left out as Mission 2 has no guns (C51).
+     - **Done (part A, not committed):** the compound's fence, gate, booth and guard, and the
+       mission to the gate; `test_compound.gd` 0/1 then 10/10, sixteen mutations exit 1, 50 suite
+       runs (T8's baseline lowered for the compound's trees, then 8/8), `test_menus.gd` 20/20
+       with her credit; stills `captures/compound/partA/`. Waiting for the author's OK to commit.
+
+316. **Part A committed; part B**
+     - **Asked** whether to commit part A; **the author chose** "Commit, then part B
+       (Recommended)": part A committed on `develop`, labelled (agent), not pushed; then part B,
+       both warehouses rebuilt where they stand, tests first.
+
 ## Waiting for the author
 
+- Mission 2's step 5 (#314-#316): part A committed, not pushed; parts B (the
+  warehouses) and C (the loading bay, the yard dressed, stage 3) next. Whether the compound's
+  guards are armed (her pistol is left out for now).
 - Mission 2's step 4 (#312-#313): committed, not pushed; the author's look at
   `captures/container_yard/step4/` (at the end), the code's and the objectives' words (S3), and
   whether the far fence reading as a pale wall wants the shared fence shader changed.

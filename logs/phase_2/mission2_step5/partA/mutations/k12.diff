@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5a/k12/game/features/environments/industrial_loop/compound.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:18:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5a/k12/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:20:26
+@@ -251,7 +251,7 @@
+ 	var collision := CollisionShape3D.new()
+ 	collision.shape = shape
+ 	collision.position = Vector3(GATE_WIDE / 2.0, Fence.HEIGHT / 2.0, 0.0)
+-	_gate.add_child(collision)
++	pass
+ 	_place_gate()
+ 	for x: float in [GATE_X - GATE_WIDE / 2.0 - 2.0, GATE_X - GATE_WIDE / 2.0 - 7.0]:
+ 		Build.box(self, Vector3(x, 0.4, GATE_Z - 0.2), Vector3(0.15, 0.8, 0.15),

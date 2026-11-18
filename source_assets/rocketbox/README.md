@@ -5,7 +5,9 @@ from the Microsoft Rocketbox avatar library, https://github.com/microsoft/Micros
 released by Microsoft under the MIT licence (`LICENSE.md` beside this file). Claude Code
 downloaded these files from the library's `master` branch on 2026-11-11, after the author chose
 each from a render (the guard #197–#198, the dock worker #232–#235, the forklift driver
-#303, fetched 2026-11-16), and converts them into the
+#303, fetched 2026-11-16; the warehouse compound's guard, fetched 2026-11-18 after the author
+asked for another guard than the shed's, #315, without a render: she is the only other security
+character the library has), and converts them into the
 game.
 
 ## Files
@@ -27,6 +29,9 @@ game.
 | `Animations/m_sit_table_idle_neutral_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 7,189,408 |
 | `Animations/m_documents_check.max.fbx` | `Animations/all_animations_max_motextr_static/` | 3,057,824 |
 | `Animations/m_documents_note.max.fbx` | `Animations/all_animations_max_motextr_static/` | 2,221,712 |
+| `Security_Female_01/Export/Security_Female_01.fbx` | `Avatars/Professions/Security_Female_01/Export/` | 626,544 |
+| `Security_Female_01/Textures/f170_{head,body,hat}_{color,normal}.tga` | `Avatars/Professions/Security_Female_01/Textures/` | 63 MB in all |
+| `Animations/f_sit_chair_breathe_01.max.fbx` | `Animations/all_animations_max_motextr_static/` | 3,445,856 |
 
 Each file is fetched from `https://raw.githubusercontent.com/microsoft/Microsoft-Rocketbox/master/Assets/`
 followed by its path in the library. The character has 9,515 triangles and an 80-bone 3ds Max

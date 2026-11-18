@@ -42,6 +42,8 @@ var active: bool = false
 var shed: Node3D
 ## The container yard (step 4): its gate, its bay and the dark van; the app gives it.
 var yard: Node3D
+## The warehouse compound (step 5): its booth, gate and doors; the app gives it.
+var compound: Node3D
 ## Ethan on foot, who works the van's rear doors by hand (part B); the app gives him.
 var driver: Node3D
 
@@ -74,6 +76,9 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	if yard != null:
 		yard.call("reset")
 		yard.call("watch", vehicle)
+	if compound != null:
+		compound.call("reset")
+		compound.call("watch", vehicle)
 	if shed != null:
 		shed.reset()
 		shed.watch(vehicle)
@@ -87,6 +92,9 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 
 
 func wants_interact() -> bool:
+	if active and stage == 2 and compound != null:
+		return bool(compound.call("vehicle_at_booth")) and bool(compound.call("gate_shut")) \
+			and not bool(compound.call("checking"))
 	if active and stage == 1 and yard != null:
 		return bool(yard.call("vehicle_at_stop")) and bool(yard.call("gate_shut")) \
 			and not bool(yard.call("keying"))
@@ -101,6 +109,10 @@ func interact() -> String:
 		yard.call("key_in")
 		_update_objective()
 		return "You key in the gate code from the run sheet."
+	if stage == 2:
+		compound.call("hand_run_sheet")
+		_update_objective()
+		return "You hand the guard the run sheet."
 	shed.hand_run_sheet()
 	_update_objective()
 	return "You hand the guard the run sheet."
@@ -305,6 +317,24 @@ func _to_the_yard() -> Array[String]:
 		"Back down the spur, then east on the valley road; the yard's gate is on the left."]
 
 
+## The objective from the swap to the loading bay (step 5; its words drafts for the author, S3).
+func _to_the_compound() -> Array[String]:
+	if bool(compound.call("vehicle_through")):
+		return ["BACK ONTO DOOR %d" % compound.DOOR,
+			"The east warehouse's open door: Q for reverse, then back in slowly."]
+	if bool(compound.call("checking")):
+		return ["WAIT AT THE GATE", "The guard is checking the run sheet."]
+	if bool(compound.call("gate_open")):
+		return ["DRIVE IN", "The guard says door %d, the east warehouse." % compound.DOOR]
+	if not bool(compound.call("gate_shut")):
+		return ["WAIT FOR THE GATE", "The gate is sliding open."]
+	if bool(compound.call("vehicle_near")):
+		return ["STOP AT THE BOOTH",
+			"Stop at the line, then press E to hand the guard the run sheet."]
+	return ["DRIVE TO THE WAREHOUSE COMPOUND",
+		"Out of the yard and east on the valley road; the compound's gate is on the left."]
+
+
 func _behind_the_van(at: Vector3) -> bool:
 	var local := vehicle.to_local(at)
 	return local.z > VAN_REAR + REAR_REACH.x and local.z < VAN_REAR + REAR_REACH.y \
@@ -328,7 +358,7 @@ func _physics_process(_delta: float) -> void:
 		_hand_when_shut = false
 		if not bool(vehicle.get("rear_doors_open")):
 			shed.call("call_dock_hand", vehicle, SEAL_NUMBER)
-	if active and stage <= 1:
+	if active and stage <= 2:
 		_update_objective()
 
 
@@ -337,6 +367,10 @@ func _update_objective() -> void:
 	var detail := "Next: %s." % NEXT[stage].to_lower()
 	if stage == 1 and yard != null:
 		var words := _to_the_yard()
+		title = words[0]
+		detail = words[1]
+	if stage == 2 and compound != null:
+		var words := _to_the_compound()
 		title = words[0]
 		detail = words[1]
 	if stage == 0 and shed != null:

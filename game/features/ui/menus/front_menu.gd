@@ -523,10 +523,12 @@ func _credits_text() -> String:
 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
 		+ "characters, with Mixamo animations.")
-	_section(lines, "THE GATE GUARD, THE DOCK WORKER AND THE FORKLIFT DRIVER", "The guard at the "
-		+ "transfer shed is Security_Male_01, the dock worker at bay 9 is Construction_Male_08 and "
-		+ "the forklift's driver is Construction_Male_07, all from the Microsoft Rocketbox avatar "
-		+ "library, with its seated and standing idles, its walk and its reach to a door. "
+	_section(lines, "THE GATE GUARDS, THE DOCK WORKER AND THE FORKLIFT DRIVER", "The guard at "
+		+ "the transfer shed is Security_Male_01, the guard at the warehouse compound is "
+		+ "Security_Female_01 (her pistol left out), the dock worker at bay 9 is "
+		+ "Construction_Male_08 and the forklift's driver is Construction_Male_07, all from the "
+		+ "Microsoft Rocketbox avatar library, with its seated and standing idles, its walk and "
+		+ "its reach to a door. "
 		+ "Copyright (c) 2020 Microsoft, released under the MIT license:")
 	lines.append(_plain_text(ROCKETBOX_LICENSE))
 	_section(lines, "THE DEPOT", "\"Industrial Overhead Door\", \"Foam Pad Dock Seal\" and "

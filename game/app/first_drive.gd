@@ -116,6 +116,7 @@ func _ready() -> void:
 	cargo.checkpoint_reached.connect(route.save_progress)
 	cargo.shed = world.transfer_shed
 	cargo.yard = world.container_yard
+	cargo.compound = world.compound
 	cargo.driver = driver
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
@@ -123,6 +124,7 @@ func _ready() -> void:
 	var stairs: Array[Dictionary] = [(world.transfer_shed.get("side_door") as Node).call("stair")]
 	driver.set("stairs", stairs)
 	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
+	world.compound.set("driver_eye", van.get_node("VanPresentation").driving_camera)
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()

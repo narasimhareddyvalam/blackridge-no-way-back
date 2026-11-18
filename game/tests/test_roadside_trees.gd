@@ -17,7 +17,9 @@ extends SceneTree
 ##    every other collider kept its x, z and radius, 14 beside the plot raised or lowered up to
 ##    0.36 m by its levelling; and less the 81 trees and 28 saplings on Mission 2's container
 ##    yard, left out the same way: every other collider kept its x, z and radius, 22 within 4.7 m
-##    of the yard raised or lowered up to 0.62 m), with the colliders' centroid where it is.
+##    of the yard raised or lowered up to 0.62 m; and less the 95 trees and 79 saplings on its
+##    warehouse compound, the same way: 55 within 4.4 m of it raised or lowered up to 0.53 m),
+##    with the colliders' centroid where it is.
 
 const KINDS: Array[String] = ["red_alder", "young_fir", "mountain_hemlock", "western_red_cedar"]
 const HEIGHTS := {"red_alder": Vector2(10.0, 25.0), "young_fir": Vector2(3.0, 12.0),
@@ -27,8 +29,8 @@ const BAND := 8.0
 const LEAST := 20
 const NEEDLES := "res://features/environments/industrial_loop/conifer_needles.gdshader"
 const MOST_TRIANGLES := 30000
-const BASELINE := {"trees": 11678, "saplings": 6575, "colliders": 9687}
-const CENTROID := Vector3(246.4673, 32.82821, -26.99913)
+const BASELINE := {"trees": 11583, "saplings": 6496, "colliders": 9592}
+const CENTROID := Vector3(246.8351, 33.12458, -28.50164)
 const TRUNK_MATCH := 0.15
 
 var _checks: int = 0

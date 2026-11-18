@@ -19,6 +19,7 @@ const GhatRoad = preload("ghat_road.gd")
 const TransferShed = preload("transfer_shed.gd")
 const TownStation = preload("town_station.gd")
 const ContainerYard = preload("container_yard.gd")
+const Compound = preload("compound.gd")
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -36,6 +37,9 @@ const WAREHOUSES: Array[Vector3] = [Vector3(60, 0, 115), Vector3(150, 0, 112),
 const CONTAINER_ROW := Vector3(100, 0, 145)
 ## The container yard (Mission 2's step 4, `container_yard.gd`), its driveway to the road.
 const CONTAINER_YARD_PLOT := Rect2(62.0, 130.0, 76.0, 41.0)
+## The warehouse compound (Mission 2's step 5, `compound.gd`) and its driveway to the road.
+const COMPOUND_PLOT := Rect2(126.0, 90.0, 150.0, 58.0)
+const COMPOUND_DRIVE_PLOT := Rect2(193.5, 146.0, 10.5, 24.0)
 const SILOS: Array[float] = [466.0, 482.0]
 const SILO_Z := 62.0
 const DEPOT_PLOT := Rect2(-62, 72, 68, 58)
@@ -126,6 +130,7 @@ var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
 var container_yard: Node3D
+var compound: Node3D
 var grass: Node3D
 var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
@@ -157,6 +162,7 @@ func _ready() -> void:
 	_boundary()
 	_transfer_shed()
 	_container_yard()
+	_compound()
 	_town()
 	_reflections()
 	_forest()
@@ -263,6 +269,8 @@ func _flat_plots() -> Array[Rect2]:
 	plots.append_array(TransferShed.flat_plots())
 	plots.append(TownStation.PLOT)
 	plots.append(CONTAINER_YARD_PLOT)
+	plots.append(COMPOUND_PLOT)
+	plots.append(COMPOUND_DRIVE_PLOT)
 	return plots
 
 
@@ -928,6 +936,13 @@ func _container_yard() -> void:
 	container_yard.build(_yard_surface)
 
 
+func _compound() -> void:
+	compound = Compound.new()
+	compound.name = "WarehouseCompound"
+	add_child(compound)
+	compound.build(_yard_surface, _concrete, _metal, _wall_material(Color("aeb1ad")))
+
+
 func _town() -> void:
 	var town := TownStation.new()
 	town.name = "TownStation"
@@ -959,7 +974,8 @@ func _forest() -> void:
 	forest.name = "RoadsideForest"
 	add_child(forest)
 	forest.build(road_points, FOREST_CLEARANCE, clearings, TERRAIN_AREA.grow(-4.0),
-		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT, CONTAINER_YARD_PLOT] as Array[Rect2])
+		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
+		COMPOUND_DRIVE_PLOT] as Array[Rect2])
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
@@ -968,7 +984,8 @@ func _forest() -> void:
 		mowed.append(RoadsideGrass.MOWED if road.sections[index] == GhatRoad.Section.VALLEY
 			else 0.0)
 	forest_floor.build(road_points, clearings, 42020, terrain, mowed,
-		[TownStation.PLOT, CONTAINER_YARD_PLOT] as Array[Rect2])
+		[TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
+		COMPOUND_DRIVE_PLOT] as Array[Rect2])
 	grass = RoadsideGrass.new()
 	grass.name = "RoadsideGrass"
 	add_child(grass)

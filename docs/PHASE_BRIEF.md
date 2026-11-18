@@ -7505,3 +7505,104 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Unverified:** the look in motion; from 20 m and more the lit chain-link reads as an almost
   solid pale wall (the shed's fence shader, unchanged); whether 11 s at the gate feels long in
   play; the keypad's and the gate's borrowed sounds.
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5: the warehouse compound, written before any code)
+
+- **Status:** written before any code, at the author's word (#314). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. The GPU price comes with the whole mission's
+  (#296); Q6 (60 FPS with the compound's lights and guards) is measured then.
+- **What exists** (mapped 2026-11-18): two Phase 1 warehouses, plain boxes 23 m deep with three
+  roll-up doors and a strip of windows on their north faces: at (150, 112), 33.4 m wide, and at
+  (250, 120), 35.4 m wide; forest between and round them; the valley road along z 171-172, 25-30
+  m north; the container yard's east fence at x 136, z 132-158, 2 m from the west warehouse's
+  corner. After the swap (step 4) Ethan drives the dark van and the objective names the
+  warehouse compound.
+- **Research** (sources go in the prompt log with the build):
+  - **A guarded warehouse at night:** a 2.4 m chain-link fence with barbed wire; one vehicle gate
+    shut at night beside a guard booth (a prefabricated steel booth with windows all round, a
+    counter, a light, the guard seated or at the window); the driver stops at the booth, shows
+    the paperwork, is told which door; a barrier arm or the gate opens; the yard lit by LED
+    floodlights on poles and wall packs over the doors; trailers dropped at doors, pallet stacks
+    and empty pallets against walls, dumpsters, a parked forklift.
+  - **The warehouses:** tilt-up concrete panels 9-12 m high, dock doors 2.7 x 3.0 m at 1.2 m
+    with levellers, bumpers and seals, a canopy or none, man doors with steps, a few roll-up
+    drive-in doors; inside a dock, the same as the transfer shed's (racks beyond).
+- **The parts †:**
+  1. **The boundary:** a 2.4 m chain-link fence with barbed wire (`chain_link_fence.gd`) round
+     both warehouses: x 128-274, z 92-146, stepped in to z 130 west of x 138 so it keeps clear of
+     the container yard; its trees left out without moving any other (`cleared_after`), its plot
+     level. The fence is drawn whole; step 6 cuts its gap.
+  2. **The gate and booth:** a driveway from the valley road at x 200 † south to a cantilever
+     gate (as the yard's) in the north fence; a steel guard booth on the driver's side before it,
+     lit, with a guard (a stand-in, labelled so, D6) seated at its window. Stop at the booth's
+     line; E hands the run sheet over as at the shed; he reads it, says which door (words drafted
+     for the author, S1/S3), and the gate slides open; it shuts behind the van.
+  3. **The warehouses:** both rebuilt to the realism bar in place of the Phase 1 boxes, drawn by
+     script as the shed's kit was: tilt-up panels with their joints, the roof's edge and
+     downpipes, dock doors with levellers, bumpers, seals, lights and signals on the north faces,
+     man doors with steps, wall packs; their places and sizes as today.
+  4. **The loading bay:** one dock door of the east warehouse open and lit, its inside one bay
+     deep (the dock floor, a leveller, a pallet or two, the racks' ends beyond in the dark), as
+     the shed's bay 9 is; the van backs onto it with the reverse camera, checked as at bay 9.
+  5. **The yard dressed:** pole floodlights and wall packs (shadows only on the nearest, failure
+     case 4), the part H trailers dropped at two other doors, pallet stacks, empty pallets, a
+     parked forklift, dumpsters; nothing in the van's way from the gate to the bay.
+  6. **The mission:** stage 2 leads to "DRIVE TO THE WAREHOUSE COMPOUND", then the booth, the
+     gate and the bay; docked, the guards' recognition is the escape's start (step 6), so for now
+     stage 3 is saved there ("The warehouse compound"), and the objective names the hill road.
+     Why the guards turn stays open (S1): this step shows nothing of it.
+- **Rules a test can measure** (written first, a new `test_compound.gd`, by real key presses
+  where the player acts):
+  - the fence closed round both warehouses but at its gate, 2.4 m with its barbed wire, clear of
+    the container yard's fence;
+  - the gate shut until E at the booth from its line, then open; shut behind the van;
+  - the warehouses where they stand today (each within 0.1 m), solid, their dock doors at 1.2 m;
+  - nothing in the van's way from the gate to the bay; the bay's dock check as bay 9's;
+  - stage 3 saved docked and reloaded there; the objective names the next place;
+  - every suite unchanged, Mission 1's fall and the oncoming van keeping their outcomes.
+- **Decisions for the author:** the layout (the fence, the gate at x 200, the bay in the east
+  warehouse); both warehouses rebuilt or the Phase 1 boxes dressed; the booth's guard (the shed's
+  model again or another); the words (S1/S3, drafts).
+- **Not in this step:** the patrols, the warning and the gap (step 6), the getaway (step 7).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part A: the compound's boundary, gate and booth (#315), built)
+
+- **Built** (new `compound.gd`, built by `industrial_loop.gd` as `WarehouseCompound`; new
+  `guard_booth.gd`, the shed's booth as a helper, the shed keeping its own copy; the guard by
+  `convert_rocketbox.py`'s new job `compound_guard` into
+  `game/features/characters/compound_guard/compound_guard.glb`; the mission's stage 2 to the
+  gate in `the_wrong_cargo.gd`; `app/first_drive.gd` gives the mission the compound and the
+  guard Ethan's eye):
+  - **The boundary:** 2.4 m chain-link with barbed wire along the outline (138, 146), (274, 146),
+    (274, 92), (128, 92), (128, 130), (138, 130), 394 m but for the 6 m gate at x 197-203; 2.0 m
+    from the container yard's fence at the nearest; paved inside; its plot and the driveway's
+    level, their trees left out without moving any other (`cleared_after`).
+  - **The gate and booth:** the driveway from the valley road (x 194.5-203) to a cantilever gate
+    as the yard's; the stop line 2.5 m before it; the booth's service window 2 m from the lane's
+    middle on the driver's side, on a kerbed island 0.15 m high with two yellow bollards (1.07
+    m) on the lane; the booth as the shed's, lit, its sign ALL VEHICLES STOP.
+  - **The guard:** Rocketbox's Security_Female_01 (MIT; the library's only other security
+    character, the shed's being Security_Male_01), seated with `f_sit_chair_breathe_01`, a
+    stand-in (D6), her head turning to the logbook while she checks, to Ethan's eye while he
+    waits at the line and to her screen otherwise. **Her pistol is left out** (its 547 faces cut
+    in the converter), as Mission 2 has no guns (C51); whether the compound's guards are armed is
+    a story question for the author.
+  - **The hand-over (E, no new control):** at the line, stopped, E: his window down, "You hand
+    the guard the run sheet."; she checks it for 3 s; the objective reads "DRIVE IN / The guard
+    says door 3, the east warehouse." (a draft, S1/S3), and the gate slides open (about 13 s from
+    E); it shuts once the van is 2 m inside, and the window goes up once it is open.
+  - **The objective at stage 2:** DRIVE TO THE WAREHOUSE COMPOUND, STOP AT THE BOOTH, WAIT AT THE
+    GATE, WAIT FOR THE GATE, DRIVE IN, then BACK ONTO DOOR 3 (part C makes it work).
+- **Rules:** new `test_compound.gd` K0-K5, 10 checks: without the compound 0/1
+  (`logs/phase_2/mission2_step5/partA/before/`), then 10/10 (`after/`); on the way the test read
+  the objective from the HUD, as `test_sealing.gd` does, because the mission sends it once at
+  load. Sixteen mutations exit 1 (`partA/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partA/suites/run_suites.sh <scratch>`: 50 runs, 49 exit 0 and
+  `test_roadside_trees.gd` T8 7/8, its baseline then lowered for the compound's 95 trees and 79
+  saplings (every other collider unchanged in x, z and radius, 55 within 4.4 m of the plots
+  raised or lowered up to 0.53 m; `partA/trees/`) → 8/8; `test_collision.gd` 44/44 and
+  `test_hit_speeds.gd` 12/12, so Mission 1's fall keeps its outcome; the art check 0 failures;
+  `test_menus.gd` 19/20 then 20/20 with her credit. The headless import exits 0.
+- **Stills:** `captures/compound/partA/` (`tools/captures/capture_compound.gd`); the first showed
+  the booth's sign wider than the booth and mirrored from behind, now shorter and one-sided.
+- **Unverified:** the look in motion; her head's turn in play; the 13 s at the gate in play.

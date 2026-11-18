@@ -3,11 +3,14 @@ Security_Male_01 with a seated idle, and bay 9's dock worker (C58), Construction
 standing idle, a walk, the reach to the van doors' hasp, and at his desk (step 3 of #253): sitting
 down to it and standing up from it, a seated idle at it, checking a document and noting in it;
 and the shed's forklift driver (part G of step 5 of #253, #303), Construction_Male_07, seated at
-the wheel in the seated idle at a table, his arms forward.
+the wheel in the seated idle at a table, his arms forward; and the warehouse compound's booth
+guard (Mission 2's step 5, #315), Security_Female_01 seated in a chair, her pistol left out (no
+gun in Mission 2, C51).
 
 Run from the repository root (a job's name after "--" converts that one alone):
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python-exit-code 1 \\
-        --python tools/art/convert_rocketbox.py [-- guard | dock_worker | forklift_driver]
+        --python tools/art/convert_rocketbox.py [-- guard | dock_worker | forklift_driver |
+        compound_guard]
 
 It reads source_assets/rocketbox/ (its README.md lists the files) and writes
 game/features/characters/guard/guard.glb and game/features/characters/dock_worker/dock_worker.glb.
@@ -20,6 +23,7 @@ What it changes:
 - the seated guard is turned to face Blender's -Y, a glTF model's front (the dock worker
   already faces it), and each character is moved so that his shoes stand at the origin, under
   his hips;
+- a job's `drop` parts (the compound guard's pistol) are deleted with their faces;
 - one roughness per part replaces Rocketbox's specular maps, and the colour and normal maps are
   halved to 1024 pixels and stored as WebP;
 - the clips are named as Godot imports them: SitIdle-loop, Idle-loop and Walk-loop loop; Seal,
@@ -78,6 +82,18 @@ JOBS = {
         "names": ("ForkliftDriver", "ForkliftDriverBody"),
         "target": pathlib.Path(
             "game/features/characters/forklift_driver/forklift_driver.glb"),
+    },
+    "compound_guard": {
+        "character": SOURCE / "Security_Female_01",
+        "fbx": "Security_Female_01.fbx",
+        "prefix": "f170",
+        "clips": [("SitIdle-loop", CLIPS / "f_sit_chair_breathe_01.max.fbx")],
+        "roughness": {"head": 0.56, "body": 0.72, "hat": 0.6},
+        "drop": ("pistol",),
+        "turn": True,
+        "names": ("CompoundGuard", "CompoundGuardBody"),
+        "target": pathlib.Path(
+            "game/features/characters/compound_guard/compound_guard.glb"),
     },
 }
 
@@ -172,6 +188,26 @@ def stand(character, meshes, frame, turn_to_front):
     print(f"  hips {hips.z:.3f} m above his shoes")
 
 
+def drop_parts(meshes, job):
+    import bmesh
+    for item in meshes:
+        names = [slot.material.name.split("_", 1)[1] for slot in item.material_slots]
+        doomed = {index for index, part in enumerate(names) if part in job.get("drop", ())}
+        if not doomed:
+            continue
+        mesh = bmesh.new()
+        mesh.from_mesh(item.data)
+        bmesh.ops.delete(mesh, geom=[f for f in mesh.faces if f.material_index in doomed],
+                         context="FACES")
+        bmesh.ops.delete(mesh, geom=[v for v in mesh.verts if not v.link_faces], context="VERTS")
+        mesh.to_mesh(item.data)
+        mesh.free()
+        for index in sorted(doomed, reverse=True):
+            item.active_material_index = index
+            bpy.context.view_layer.objects.active = item
+            bpy.ops.object.material_slot_remove()
+
+
 def clean_materials(meshes, job):
     for item in meshes:
         for slot in item.material_slots:
@@ -239,6 +275,7 @@ def convert(job):
         for item in clip_objects:
             bpy.data.objects.remove(item, do_unlink=True)
         bpy.data.actions.remove(source_action)
+    drop_parts(meshes, job)
     character.animation_data.action = baked[0]
     stand(character, meshes, int(baked[0].frame_start), job["turn"])
     clean_materials(meshes, job)

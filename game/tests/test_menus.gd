@@ -8,6 +8,7 @@ const OLD_WORDS: Array[String] = ["PROTOTYPE", "prototype", "freight loop", "ind
 const KEYS: Array[String] = ["W / S", "A / D", "SPACE", "Z / C", "J / K", "MOUSE", "SHIFT", "ESC"]
 const CREDITED: Array[String] = ["NRVALAM WORKS", "Max", "CC BY 4.0", "Mixamo", "Poly Haven",
 	"Alex Murias", "Microsoft Rocketbox", "Construction_Male_08", "Construction_Male_07",
+	"Security_Female_01",
 	"Brian Trepanier", "NLM (Sketchfab: NLM-Group)", "YJ_", "Maxwell autodoors",
 	"Kamran Mughal", "FFeller", "widthRider", "Red Fox (Sketchfab: nokillnando)", "GloriousGlider8",
 	"Marcel Bankmann", "PlantCatalog", "lolipop_1707", "SirSonat", "SavinienBerault", "evan4129",

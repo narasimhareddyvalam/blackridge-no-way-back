@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5a/k7/game/features/environments/industrial_loop/compound.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:18:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5a/k7/game/features/environments/industrial_loop/compound.gd	2026-11-18 12:20:17
+@@ -153,7 +153,7 @@
+ func hand_run_sheet() -> bool:
+ 	if checking() or _gate_target > 0.0:
+ 		return false
+-	_check_left = CHECK_SECONDS
++	_gate_target = GATE_WIDE
+ 	if is_instance_valid(vehicle) and float(vehicle.get("left_window_target")) < 0.5:
+ 		vehicle.set("left_window_target", 1.0)
+ 		_window_down = true
