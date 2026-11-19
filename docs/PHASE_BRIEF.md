@@ -7690,3 +7690,93 @@ and no gas station: the town is backdrop blocks from z 207.
   beside the container yard's masts (energy 6 at 18 m, likely dim for the same reason).
 - **With part C, step 5 is built.** Next: step 6 (the escape: the guards as stand-ins or
   Assignment 9's technique, being caught and the retry, the anonymous warning, S3, the gap).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 6: the escape, written before any code)
+
+- **Status:** written before any code, at the author's word (#318). **Waiting for the author's
+  choices.** Values marked † are Claude Code's proposals. Why the guards turn on Ethan stays open
+  (S1, C51): this step shows nothing of it; the anonymous warning's words are drafts (S3).
+- **What exists** (2026-11-18): stage 3 is saved with the dark van docked at the compound's door
+  3; the gate is shut behind it; Ethan's own van stands in the container yard's bay with the
+  sealed load, the yard's gate shut (its code, 4719, on his run sheet); the compound's fence is
+  2 m from the yard's along the alley at x 136-138, z 130-146.
+- **The escape (the design: "on foot: move past the patrols, helped by an anonymous warning,
+  through the gap in the fence and back to your van; if a guard catches Ethan, back to the
+  start of the escape")** †:
+  1. **The turn (no words, S1 open):** docked, the dock's light goes off inside; two guards
+     walk out of the bay toward the van's rear, a third out of the booth to the gate. The
+     objective: GET OUT AND RUN. In the van he is caught.
+  2. **The patrols:** two guards walking fixed rounds between the warehouses and along the
+     north fence with torches, a third standing at the gate. Each sees ahead in a cone (15 m,
+     50° to either side) where nothing solid stands between, lit or close: in sight for 1.0 s,
+     or within 1.5 m, Ethan is caught. **Stand-ins (D6),** labelled so in the code, the tests
+     and the docs; Assignment 9's technique (patrol, alert, search, chase) replaces their
+     behaviour, not their places.
+  3. **Caught:** the screen fades; everything returns to the escape's start (Q4): Ethan by the
+     docked van, the guards at their starts, the gate shut, the warning unsent.
+  4. **The warning (S3, secretly Maya):** his phone buzzes once he is out: an unknown number's
+     text on the dash's phone line, e.g. "Don't go for the gate. The fence by the containers is
+     cut. Wait for the torch to turn." (a draft); no sender is shown.
+  5. **The gap:** a cut in the compound's fence where it steps round the container yard (x 138,
+     z about 140), the chain-link peeled back from a post, 0.6 m wide at the ground: wide enough
+     for him, never for a van. Through it, the 2 m alley, then the yard.
+  6. **Back to his van:** into the yard by its gate on foot (the code from his run sheet at
+     the keypad) or a second cut in its fence (the author's choice, below); at his van, E: the
+     swap undone: his van drivable again in the bay with its load and seal, the dark van left
+     docked at door 3 as a parked copy; the objective: DRIVE OUT (step 7, the getaway).
+- **Rules a test can measure** (written first, a new `test_escape.gd`, by real key presses):
+  - docked, the guards come; staying in the van is caught; out of it the escape starts;
+  - a guard sees Ethan in its cone in the open within 15 m and catches him in 1.0 s; not behind
+    a trailer, a stack or a wall; caught within 1.5 m from any side;
+  - caught, everything is as at the escape's start (Ethan, each guard, the gate, the warning);
+  - the warning arrives once, after he is out, and names the cut;
+  - the cut lets Ethan through and stops the van; the rest of the fence stays closed;
+  - back at his van, one drivable van (his, white, loaded and sealed), the dark van parked at
+    door 3; every suite unchanged.
+- **Decisions for the author:** the guards as labelled stand-ins now, or wait for Assignment 9's
+  brief; the turn as above; the way into the yard (its gate by the code, or a second cut); the
+  patrol guards' models (the two Rocketbox security characters again, as the gate guards, or
+  other Rocketbox people in dark work clothes).
+- **Not in this step:** the getaway and the ending (step 7); any gun (C51).
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 1 of the audit: free exit from the shed and the container yard, written before any code)
+
+- **Status:** the author's "FIX ALL ONE BY ONE" (#322) covers the audit's list in order; this
+  is its first item, written before any code.
+- **Found (confirmed in the code, #321):** the transfer shed's barrier rises only after the run
+  sheet's check on the way in (`transfer_shed.gd:305-318`), and the container yard's gate opens
+  only by `key_in()` from its outside stop line (`container_yard.gd:201, :286`); neither has a
+  way out, so the van is shut in the shed after loading and in the yard after the swap. No test
+  drove out (each moved the van past the gate).
+- **Real practice:** an inductive free-exit loop in the paving a few metres inside a vehicle
+  gate opens it for a vehicle leaving; the gate or arm closes once the vehicle is clear beyond
+  it; a vehicle coming in still needs its credential (the guard, the code).
+- **The fix †:** a free-exit loop 6 m wide and 3.5 m deep, 1.5 m inside each gate's line, in
+  the lane: a vehicle over it facing out (within 45 degrees) raises the shed's barrier or opens
+  the yard's gate; the barrier comes down, or the gate slides shut, once the whole vehicle is
+  2 m beyond the gate's line (1 m at the shed, its `CLEAR_BEHIND`); facing in, the loop does
+  nothing. The objective, while the yard's gate opens for him, says WAIT FOR THE GATE.
+- **Rules a test can measure** (a new `test_free_exit.gd`, by real key presses): from inside, the
+  van driven out of the shed meets a raised arm, never the arm, and the arm comes down behind
+  it; from inside the yard the gate opens for the van once it stands on the loop and shuts
+  behind it once clear; a van over a loop facing in opens neither; every suite unchanged.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 1 of the audit: free exit from the shed and the container yard (#322), built)
+
+- **Built:** a free-exit loop in each lane, 1.5 m inside the gate's line, 3.5 m deep and as wide
+  as the lane (`transfer_shed.gd`'s `EXIT_LOOP`, `container_yard.gd`'s `EXIT_LOOP`); as a real
+  inductive loop it senses any of the van over it (nine points from its front to its rear),
+  and only facing out within 45 degrees. On it the shed's barrier rises and comes down once the
+  whole van is 1 m beyond its line; the yard's gate slides open and shuts once the van is 2 m
+  beyond, or once the van has backed 2 m off the loop into the yard again. While the yard's gate
+  opens for him the objective says WAIT FOR THE GATE (`the_wrong_cargo.gd`).
+- **Rules:** new `test_free_exit.gd` X1-X6, 6 checks, by real key presses: before the fix 2/6
+  (the two facing-in checks pass, the four driving out fail, the van shut in at both;
+  `logs/phase_2/realism/fix01_free_exit/before/`), then 6/6 (`after/`). On the way: the test's
+  driver first braked once the gate began to close behind it, and first read the arm before
+  it had come down; and two mutations survived (the facing rule flipped) because the facing-in
+  checks did not stand the van on the loop, so the loop now senses the whole van, as a real one
+  does, and the checks park the van squarely over it. Seven mutations exit 1
+  (`mutations/`); every suite, `bash logs/phase_2/realism/fix01_free_exit/suites/run_suites.sh
+  <scratch>`: 53 runs exit 0, the art check 0 failures.
+- **Unverified:** the look; the guard in the shed's booth does not watch a van leaving.

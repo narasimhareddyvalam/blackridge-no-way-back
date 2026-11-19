@@ -327,6 +327,8 @@ func _to_the_yard() -> Array[String]:
 
 ## The objective from the swap to the loading bay (step 5; its words drafts for the author, S3).
 func _to_the_compound() -> Array[String]:
+	if yard != null and bool(yard.call("exiting")) and not bool(yard.call("gate_open")):
+		return ["WAIT FOR THE GATE", "The yard's gate is sliding open."]
 	if bool(compound.call("vehicle_through")):
 		var judge := compound.get("judge") as Node
 		var verdict := String(judge.get("verdict"))

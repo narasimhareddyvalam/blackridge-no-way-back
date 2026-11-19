@@ -4269,9 +4269,60 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** whether to commit part C; **the author chose** "Commit, then plan step 6
        (Recommended)": part C committed on `develop`, labelled (agent), not pushed; then step 6,
        the escape, laid out before any code.
+     - **Done:** step 6 written in `docs/PHASE_BRIEF.md` (its last revision); waiting for the
+       author's choices.
+
+319. **Step 6's choices**
+     - **Asked** four things; **the author chose** "Stand-ins now (Recommended)" (the guards as
+       labelled stand-ins, Assignment 9 replacing their behaviour later), "The gate by the code
+       (Recommended)" (into the container yard on foot by its keypad and the run sheet's code),
+       "Other Rocketbox people (Recommended)" (the patrols in dark work clothes, chosen from the
+       library's previews) and "Yes, build it (Recommended)": step 6 to be built as written,
+       tests first, in parts.
+
+320. **The patrols' candidates**
+     - **Claude Code's question:** which three of Rocketbox's men (the library's own previews of
+       its 21 adult men, the delivery man, the gardener and the woodsman, put on one numbered
+       sheet in a scratch folder) are the compound's patrol guards; picks 4, 7, 20 (and 18).
+     - **The author's answer:** "open and show me first".
+     - **Done:** the sheet opened in Preview again; the question asked again.
+
+321. **Realistic as in real life; none of the patrols**
+     - **The author's message:** "make everything realistic as of real life. mission 2 isnt that
+       realistic, the worker driving the forklift etc. research real life physics and tell me
+       what all should change? i need a sliding window at security booth like minute minor
+       details like that are very important for me. when the worker js driving forklift and is
+       turning the vehicle the sterring wheel isnt turning. also are we doing mission 3 now?
+       remember where we are now. i dont like anyone from the picture. no one looks like patrol
+       guards"
+     - **Decision:** none of the 24 Rocketbox men are the patrols; step 6's guards wait for
+       another source.
+     - **Done:** answered where Mission 2 stands (steps 1, 2, 4 and 5 built; 3, 6, 7 and 8 to
+       come; Mission 3 after); a realism audit of Mission 2 by two read-only reviews of the code
+       and web research (forklift steering, guard booths' sliding windows, UL 325 gate safety,
+       vans at 1.2 m docks); found and confirmed a bug: nothing opens the container yard's gate
+       from inside, so the dark van is shut in after the swap (step 4's tests moved the van past
+       it). The list shown; waiting for the author's choice of what to fix first.
+
+322. **Fix all, one by one**
+     - **Asked** which to plan first (the yard's exit bug, the forklift, booths and gates, the
+       worker, jack and docks); **the author's answer:** "FIX ALL ONE BY ONE".
+     - **Decision:** every item of the audit is fixed, one at a time in the list's order (the
+       exit bug first), each tests first, with a commit check after each.
+     - **Found:** the transfer shed's barrier had no way out either (since step 2): neither
+       gate opened for a van leaving.
+     - **Done (fix 1, not committed):** a free-exit loop inside the shed's barrier and the
+       container yard's gate; `test_free_exit.gd` 2/6 then 6/6, seven mutations exit 1, 53
+       suite runs exit 0. Waiting for the author's OK to commit; then fix 2, the forklift.
+
+323. **Fix 1 committed; the forklift next**
+     - **Asked** whether to commit fix 1; **the author chose** "Commit, then the forklift
+       (Recommended)": fix 1 committed on `develop`, labelled (agent), not pushed; then fix 2.
 
 ## Waiting for the author
 
+- Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen
+  from Rocketbox's previews.
 - Mission 2's step 5 (#314-#316): part A committed, not pushed; part B (the warehouses)
   committed (#317), not pushed; part C (the loading bay, the yard dressed, stage 3)
   committed (#318), not pushed: step 5 built; the author's look at `captures/compound/` (at the

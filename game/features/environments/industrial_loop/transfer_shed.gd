@@ -62,6 +62,11 @@ const BOLLARD_RADIUS := 0.075
 const BOLLARD_HEIGHT := 1.07
 const STOPPED_SPEED := 0.5
 const CLEAR_BEHIND := 1.0
+## The free-exit loop in the lane 1.5 m inside the barrier's line (the audit's first fix, #322):
+## a vehicle over it (any part) facing out within 45 degrees raises the arm, which comes down once the whole
+## vehicle is 1 m beyond the line.
+const EXIT_LOOP := Rect2(LANE_X - LANE_WIDTH / 2.0, GATE_Z - 5.0, LANE_WIDTH, 3.5)
+const FACING_OUT := 0.7071
 const SWEEP_HALF_DEPTH := 0.3
 const SPUR_PLOT := Rect2(LANE_X - LANE_WIDTH / 2.0 - CORNER_RADIUS - 1.0, GATE_Z,
 	LANE_WIDTH + CORNER_RADIUS * 2.0 + 2.0, 20.0)
@@ -86,6 +91,7 @@ var _angle: float = 0.0
 var _target: float = 0.0
 var _check_left: float = -1.0
 var _lowered_window := false
+var _exiting := false
 var _arm: AnimatableBody3D
 var _vehicle_front := Vector3.ZERO
 var _vehicle_rear := Vector3.ZERO
@@ -296,6 +302,7 @@ func reset() -> void:
 	_target = 0.0
 	_angle = 0.0
 	_lowered_window = false
+	_exiting = false
 	if _arm != null:
 		_arm.rotation.z = 0.0
 
@@ -314,9 +321,17 @@ func _physics_process(delta: float) -> void:
 		var in_lane := absf(vehicle.global_position.x - LANE_X) < ARM_LENGTH
 		var under := in_lane and minf(front.z, rear.z) < GATE_Z + SWEEP_HALF_DEPTH \
 			and maxf(front.z, rear.z) > GATE_Z - SWEEP_HALF_DEPTH
+		if _target == 0.0 and _on_exit_loop(front):
+			_target = 90.0
+			_exiting = true
 		if under and _target == 0.0 and _angle > 0.0:
 			_target = 90.0
-		elif _target == 90.0 and _angle >= 90.0 and not under \
+		elif _exiting and _target == 90.0 and _angle >= 90.0 and not under \
+				and (minf(front.z, rear.z) > GATE_Z + CLEAR_BEHIND
+				or maxf(front.z, rear.z) < EXIT_LOOP.position.y - 2.0):
+			_target = 0.0
+			_exiting = false
+		elif not _exiting and _target == 90.0 and _angle >= 90.0 and not under \
 				and maxf(front.z, rear.z) < GATE_Z - CLEAR_BEHIND:
 			_target = 0.0
 	_angle = move_toward(_angle, _target, 90.0 / RAISE_SECONDS * delta)
@@ -328,6 +343,17 @@ func _physics_process(delta: float) -> void:
 			vehicle.set("left_window_target", 0.0)
 	if _look_target != null:
 		_look_target.global_position = _gaze()
+
+
+## Whether any of the van stands over the free-exit loop (a loop senses the metal over it, along
+## the van from its front to its rear), facing out of the yard.
+func _on_exit_loop(front: Vector3) -> bool:
+	var rear := vehicle.to_global(_vehicle_rear)
+	var over := false
+	for step in range(9):
+		var at := front.lerp(rear, step / 8.0)
+		over = over or EXIT_LOOP.has_point(Vector2(at.x, at.z))
+	return over and (-vehicle.global_basis.z.normalized()).z > FACING_OUT
 
 
 func _gaze() -> Vector3:

@@ -41,6 +41,11 @@ const PASSABLE := 3.0
 ## The leaf's counterweight tail, which runs behind the fence to the west, the way it opens.
 const TAIL := 3.0
 const CLEAR_BEHIND := 2.0
+## The free-exit loop in the lane 1.5 m inside the gate's line (the audit's first fix, #322): a
+## vehicle over it (any part) facing out within 45 degrees opens the gate, which shuts once the whole vehicle
+## is 2 m beyond the line, or once it has backed 2 m off the loop into the yard again.
+const EXIT_LOOP := Rect2(GATE_X - GATE_WIDE / 2.0, YARD.end.y - 5.0, GATE_WIDE, 3.5)
+const FACING_OUT := 0.7071
 const LANE := Rect2(92.0, 132.5, 16.0, 25.5)
 const BAY := Rect2(93.6, 134.6, 2.8, 6.8)
 const BAY_POSE := Transform3D(Basis.IDENTITY, Vector3(95.0, 0.1, 138.0))
@@ -85,6 +90,7 @@ var _gate_target := 0.0
 var _keys_left := 0
 var _key_timer := 0.0
 var _window_down := false
+var _exiting := false
 var _beep: AudioStreamPlayer3D
 var _motor: AudioStreamPlayer3D
 var _dark_van: Node3D
@@ -130,6 +136,7 @@ func reset() -> void:
 	_gate_target = 0.0
 	_keys_left = 0
 	_window_down = false
+	_exiting = false
 	_place_gate()
 	if _left != null:
 		_left.queue_free()
@@ -284,8 +291,12 @@ func _physics_process(delta: float) -> void:
 			key_beeped.emit()
 			if _keys_left == 0:
 				_gate_target = GATE_WIDE
+	elif _gate_target == 0.0 and _on_exit_loop():
+		_gate_target = GATE_WIDE
+		_exiting = true
 	elif _gate_target > 0.0 and gate_open() and _behind_the_gate():
 		_gate_target = 0.0
+		_exiting = false
 	var moving := not is_equal_approx(_gate_open, _gate_target)
 	_gate_open = move_toward(_gate_open, _gate_target, GATE_SPEED * delta)
 	_place_gate()
@@ -298,11 +309,31 @@ func _physics_process(delta: float) -> void:
 		vehicle.set("left_window_target", 0.0)
 
 
+## Whether a vehicle leaving opens the gate from inside: its front on the free-exit loop, facing
+## out.
+func exiting() -> bool:
+	return _exiting
+
+
+func _on_exit_loop() -> bool:
+	if not is_instance_valid(vehicle):
+		return false
+	var front := vehicle.to_global(_front)
+	var rear := vehicle.to_global(_rear)
+	var over := false
+	for step in range(9):
+		var at := front.lerp(rear, step / 8.0)
+		over = over or EXIT_LOOP.has_point(Vector2(at.x, at.z))
+	return over and (-vehicle.global_basis.z.normalized()).z > FACING_OUT
+
+
 func _behind_the_gate() -> bool:
 	if not is_instance_valid(vehicle):
 		return true
 	var nearest := maxf(vehicle.to_global(_front).z, vehicle.to_global(_rear).z)
 	var outside := minf(vehicle.to_global(_front).z, vehicle.to_global(_rear).z)
+	if _exiting:
+		return outside > YARD.end.y + CLEAR_BEHIND or nearest < EXIT_LOOP.position.y - 2.0
 	return nearest < YARD.end.y - CLEAR_BEHIND or outside > STOP_Z + 6.0
 
 
