@@ -1,0 +1,34 @@
+m1  the steering wheel fixed       test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F5: its steering wheel at the steer's share of 2.25 turns to lock (off 2.108 turns), never faster than 1.5 tur
+m2  the steer wheels straight      test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F2: no wheel scrubs sideways (the worst 75.29°) and its heading turns at v·tan(δ)/L (within 0.3%)
+m3  both steer wheels alike        test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F2: no wheel scrubs sideways (the worst 29.56°) and its heading turns at v·tan(δ)/L (within 0.3%)
+m4  the wheels not rolling         test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F4: every wheel rolls its distance over its radius (within 100.0%)
+m5  the steer shown short          test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F2: no wheel scrubs sideways (the worst 16.44°) and its heading turns at v·tan(δ)/L (within 52.1%)
+m6  the wheel spun twice as fast   test_forklift.gd exit 1, 11/13 passed; 2 failed
+      FAIL: F2: no wheel scrubs sideways (the worst 1.89°) and its heading turns at v·tan(δ)/L (within 2.0%)
+      FAIL: F5: its steering wheel at the steer's share of 2.25 turns to lock (off 0.000 turns), never faster than 1.5 tur
+m7  no tilt back                   test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F6: its mast tilted back 3-5° with a load on the move (3454 frames out), level at take and leave (0.00°)
+m8  the old slow lift              test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F7: its forks rise at 0.15 m/s and lower at 0.50 m/s
+m9  lowering as slow as lifting    test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F7: its forks rise at 0.35 m/s and lower at 0.35 m/s
+m10  the spot dark in turns         test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F8: its blue spot lit whenever it moves (4424 frames dark, last in to_home at 0.30 m/s, moved 0.0033 m)
+m11  turns too tight                test_forklift.gd exit 1, 11/13 passed; 2 failed
+      FAIL: F2: no wheel scrubs sideways (the worst 8.76°) and its heading turns at v·tan(δ)/L (within 4.1%)
+      FAIL: F3: its inner steer wheel never past 80° (90.0°)
+m12  the bay by the dock edge       test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F9: it and its load never pass through anything solid (DockRails at (-46.5, 12.3) in turn, DockRails at (-46.5
+m13  the left hand off the knob     test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F10: his left hand on the spinner knob, each hand within 8 cm of what it holds through both trips (the farthes
+m14  the right hand never on the post test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F10: his right hand on the lever when he stands, on the guard's post as he backs (0.602 m, turn, backing, 0.80
+m15  the chest not turned           test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F10: his right hand on the lever when he stands, on the guard's post as he backs (0.000 m, turn, backing, 0.80
+m16  the mast not driven            test_forklift.gd exit 1, 12/13 passed; 1 failed
+      FAIL: F6: its mast tilted back 3-5° with a load on the move (0 frames out), level at take and leave (0.00°)

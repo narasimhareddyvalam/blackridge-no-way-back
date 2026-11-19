@@ -2,10 +2,11 @@ extends SceneTree
 ## Part G of step 5 of #253 (docs/PHASE_BRIEF.md, "the shed at work"; the author's choices,
 ## #302-#303): the transfer shed's forklift at work, read from the shed as the running game
 ## builds it on Mission 2's start save. Parked while no one is near; once the camera comes within
-## reach, its driver takes a pallet of its own from dock 6's staging lane to an empty floor place
-## in aisle 03 and comes back, as OSHA 1910.178(n) has it: the load carried low, never over 5 mph
-## (2.2 m/s) and slower in the aisle, its blue spot ahead of it in its direction of travel, its
-## alarm only while it backs, its horn at the aisle's mouth, stopping short of Ethan and going on
+## reach, its driver takes a pallet of its own from dock 6's staging lane to the floor stacking
+## bay FS-01 (#324) and comes back, as OSHA 1910.178(n) has it: the load carried low, never over
+## 5 mph (2.2 m/s) and slower in an aisle, its blue spot ahead of it in its direction of travel,
+## its alarm only while it backs, its horn where it crosses aisle 05's mouth, stopping short of
+## Ethan and going on
 ## when he has left its way. Its driver sits at the wheel, his hands on it, his feet on the plate,
 ## his head turned the way he backs. A headless run draws nothing, so the look is not checked.
 
@@ -14,7 +15,9 @@ const FLOOR := 1.3
 const NEAR := Vector3(-55.0, 4.0, 13.0)
 const TRIP_LIMIT := 400.0
 const STAGE := Vector2(-60.0, 16.3)
-const SLOT := Vector2(-63.79, 7.56)
+## The load's middle in the floor stacking bay FS-01 (#324; until then aisle 03's floor place at
+## (-63.79, 7.56), which the truck, turning as a four-wheel truck does, cannot reach).
+const SLOT := Vector2(-48.0, 9.1)
 const SLOT_WITHIN := 0.05
 const HOME_WITHIN := 0.05
 const TOP_SPEED := 2.2
@@ -23,12 +26,16 @@ const SPEED_SLACK := 0.03
 const AISLE := Rect2(-68.21, -9.4, 3.81, 17.64)
 const TRAVEL_LIFT := Vector2(0.10, 0.15)
 const SPOT_AHEAD := Vector2(3.0, 5.0)
-const MOUTH := Vector2(-66.3, 8.24)
+## Aisle 05's mouth, which its way along the cross-aisle crosses (#324; it was aisle 03's).
+const MOUTH := Vector2(-53.81, 8.24)
 ## Where the second trip's loaded run along the cross-aisle ends, before dock 6's lane.
 const RUN_END := Vector2(-60.0, 12.0)
 const ETHAN_AHEAD := 3.2
 const ETHAN_HOLD := 4.0
 const HORN_NEAR := 4.5
+## W10 steps Ethan into its way on the cross-aisle's straight, over 0.7 m/s and more than 3 m
+## from dock 6's lane: since the audit's second fix (#323) the truck's turns at either end of it
+## are real arcs, leaving a straight of about 3.7 m (it was 6.1, the trigger 1.0 m/s and 4.5 m).
 const KEEP_CLEAR := 2.0
 const RESUME_WITHIN := 2.0
 const GRIP_WITHIN := 0.08
@@ -166,8 +173,8 @@ func _check_trip(home: Transform3D) -> void:
 			else:
 				since_reverse = 0
 		var run_left := Vector2(at.x, at.z).distance_to(RUN_END)
-		if ethan != null and ethan_state == 0 and phase == "to_lane" and speed > 1.0 \
-				and run_left > 4.5 and bool(_truck.call("carrying")):
+		if ethan != null and ethan_state == 0 and phase == "to_lane" and speed > 0.7 \
+				and run_left > 3.0 and bool(_truck.call("carrying")):
 			travel_then = _truck.global_basis.z
 			ethan_at = at + travel_then * (float(_truck.call("reach_ahead")) + ETHAN_AHEAD)
 			ethan_state = 1
@@ -203,7 +210,7 @@ func _check_trip(home: Transform3D) -> void:
 	var returned := load != null and Vector2(load.global_position.x, load.global_position.z) \
 		.distance_to(STAGE) <= SLOT_WITHIN and absf(load.global_position.y - FLOOR) < 0.01 \
 		and _truck.global_position.distance_to(home.origin) <= HOME_WITHIN
-	_check(started and placed and back, "W2: the putaway: the load on aisle 03's floor place "
+	_check(started and placed and back, "W2: the putaway: the load in floor bay FS-01 "
 		+ "within 5 cm (%s), the truck parked again (%.1f s)"
 		% [str(first_at.snapped(Vector3.ONE * 0.01)), first_time])
 	_check(returned, "W2: and the pick: the load back in dock 6's lane within 5 cm, the truck "
@@ -219,7 +226,8 @@ func _check_trip(home: Transform3D) -> void:
 		% alarm_bad + "wrong, %d backing)" % reversed_frames)
 	var at_mouth := _horns.filter(func(point: Vector3) -> bool:
 		return Vector2(point.x, point.z).distance_to(MOUTH) <= HORN_NEAR)
-	_check(at_mouth.size() >= 2, "W7: its horn at aisle 03's mouth going in and coming out (%d "
+	_check(at_mouth.size() >= 2, "W7: its horn where it crosses aisle 05's mouth, going and "
+		+ "coming (%d "
 		% at_mouth.size() + "of %d horns)" % _horns.size())
 	_check(looked_back, "W8: the driver looks the way he backs (his head turned at least 45°)")
 	_check(gave_way and least_gap >= KEEP_CLEAR, "W10: with Ethan in its way on the cross-aisle "

@@ -21,6 +21,10 @@ const FORKLIFT_SIZE := Vector3(1.12, 2.21, 3.3)
 ## lane, which it carries to aisle 03 and back; drawn with its own seed so that the staged loads
 ## and the empties stay as they were.
 const PUTAWAY := Vector2(-60.0, 16.3)
+## The floor stacking bay the forklift puts its load away in (#324): marked out round a pallet
+## with its clearance in 50 mm yellow floor tape, its location FS-01 stencilled at its mouth.
+const BAY_SIZE := Vector2(1.4, 1.55)
+const TAPE := 0.05
 const PUTAWAY_LAYERS := 3
 const PUTAWAY_SEED := 302
 const JACK := Vector2(-47.2, 16.35)
@@ -54,6 +58,7 @@ static func build(shed: Node3D, floor_y: float) -> void:
 			Vector3.UP * FORK_GAP)
 	var putaway := _putaway(shed, pallet, carton, film, floor_y)
 	source.free()
+	_floor_bay(shed, floor_y)
 	for layer in range(EMPTY_COUNT):
 		var at := Vector3(EMPTIES.x + random.randf_range(-0.02, 0.02),
 			floor_y + layer * (PALLET.y - 0.002), EMPTIES.y + random.randf_range(-0.02, 0.02))
@@ -85,6 +90,28 @@ static func _putaway(shed: Node3D, pallet: PackedScene, carton: MeshInstance3D,
 	_solid(stack, "LoadBody", Vector3(COLUMNS * CARTON.x + 0.03, top - FORK_GAP, PALLET.z),
 		Vector3.UP * FORK_GAP)
 	return stack
+
+
+static func _floor_bay(shed: Node3D, floor_y: float) -> void:
+	var middle: Vector2 = ForkliftTruck.FLOOR_BAY
+	var yellow := Build.material(Color(0.86, 0.66, 0.08), 0.6)
+	var half := BAY_SIZE / 2.0
+	for edge: Array in [[Vector2(middle.x, middle.y - half.y), Vector2(BAY_SIZE.x + TAPE, TAPE)],
+			[Vector2(middle.x, middle.y + half.y), Vector2(BAY_SIZE.x + TAPE, TAPE)],
+			[Vector2(middle.x - half.x, middle.y), Vector2(TAPE, BAY_SIZE.y)],
+			[Vector2(middle.x + half.x, middle.y), Vector2(TAPE, BAY_SIZE.y)]]:
+		var at: Vector2 = edge[0]
+		var size: Vector2 = edge[1]
+		var tape := Build.box(shed, Vector3(at.x, floor_y + 0.0015, at.y), Vector3(size.x, 0.003,
+			size.y), yellow)
+		tape.name = "FloorBayTape"
+		tape.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var label := Build.text(shed, "FS-01", Vector3(middle.x, floor_y + 0.004, middle.y + half.y
+		+ 0.25), 72, yellow.albedo_color)
+	label.name = "FloorBayLabel"
+	label.rotation.x = -PI / 2.0
+	label.shaded = true
+	label.double_sided = false
 
 
 static func _pallet(shed: Node3D, scene: PackedScene, label: String, at: Vector3,

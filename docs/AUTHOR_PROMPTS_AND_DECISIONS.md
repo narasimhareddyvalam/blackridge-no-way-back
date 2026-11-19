@@ -4319,6 +4319,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** whether to commit fix 1; **the author chose** "Commit, then the forklift
        (Recommended)": fix 1 committed on `develop`, labelled (agent), not pushed; then fix 2.
 
+324. **The forklift's putaway: a floor stacking bay**
+     - **Found** (fix 2 in progress): the forklift, turning now as the four-wheel truck it is
+       (an outer turning radius of about 2.4 m, measured from the model), cannot put its pallet
+       into aisle 03's floor place at right angles: that needs an aisle about 4.2 m wide, and
+       aisle 03 is 3.81 m, so its rear or its load hits the racks, about 0.35 m short.
+     - **Asked** how to make the shed real; **the author chose** "Floor stacking bay
+       (Recommended)": the racking stays; the putaway goes to a marked floor block-stacking bay
+       off the cross-aisle, which the truck drives squarely into.
+     - **Done (fix 2, not committed):** the forklift cut into its moving parts and driven as
+       the four-wheel rear-steer truck it is: turns planned from v·tan(δ)/L, the steering wheel
+       turning with the steer (2.25 turns to lock, 1.5 a second at most), Ackermann steer wheels,
+       every wheel rolling, the mast tilted back 4 degrees loaded, the driver's hand on the
+       spinner knob, his chest turned backing; the putaway into floor bay FS-01. New
+       `test_forklift.gd` 0/2 then 13/13, sixteen mutations exit 1, 54 suite runs exit 0, the
+       art check 0 failures. Waiting for the author's OK to commit; then fix 3, the pallet jack.
+
+325. **Fix 2 committed; the pallet jack next**
+     - **Asked** whether to commit fix 2; **the author chose** "Commit, then pallet jack
+       (Recommended)": fix 2 committed on `develop`, labelled (agent), not pushed; then fix 3
+       planned before any code.
+
 ## Waiting for the author
 
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen

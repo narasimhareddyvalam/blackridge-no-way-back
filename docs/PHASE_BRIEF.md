@@ -7780,3 +7780,103 @@ and no gas station: the town is backdrop blocks from z 207.
   (`mutations/`); every suite, `bash logs/phase_2/realism/fix01_free_exit/suites/run_suites.sh
   <scratch>`: 53 runs exit 0, the art check 0 failures.
 - **Unverified:** the look; the guard in the shed's booth does not watch a van leaving.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 2 of the audit: the forklift, written before any code)
+
+- **Status:** the audit's second item (#321-#323), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (measured from `source_assets/sketchfab/09_forklift`, 2026-11-19):** Kamran Mughal's
+  truck is a four-wheel counterbalance truck, not a three-wheeler: two drive wheels 0.64 m
+  across at the front (hubs at x ±0.515, z 0.195), two steer wheels 0.55 m at the back (z
+  -1.265), a 1.46 m wheelbase; its steering wheel is its own ring of parts, 0.26 m across, at
+  (0, 1.415, -0.405) on a column tilted 45 degrees (its axis along (0, -0.71, 0.71)), its
+  spinner knob on its left (+x); its mast's channels stand at z 0.37-0.53. Today the glb holds
+  only `Truck` and `Carriage`, so nothing rolls or steers, the steering wheel never turns, the
+  mast never tilts, and `forklift_truck.gd` turns the truck on the spot about its front axle,
+  which a four-wheel truck cannot do.
+- **Real practice:** a counterbalance truck steers with its rear wheels by a hydrostatic
+  steering unit; its heading turns at v·tan(δ)/L about a point on the front axle's line, the
+  two steer wheels set by Ackermann geometry, the inner one up to about 80 degrees † at full
+  lock; the driver slows to a crawl, spins the wheel by its knob with his left hand (about 2
+  turns to full lock, looked up: MIL-T-52843C) and keeps his right on the lift and tilt levers;
+  loads travel tilted back about 4 degrees †, levelled to set down; a 2.5 t electric truck lifts
+  at about 0.35 m/s loaded † and lowers at about 0.5 m/s †; reversing he twists in his seat, a
+  hand on the overhead guard's post; the blue spot is lit whenever a direction is selected.
+- **The parts †:**
+  - **2a, the model cut:** `convert_depot_models.py`'s `forklift` job cuts six parts more, each
+    with its origin at its own pivot: `SteeringWheel` (rim, spokes, hub and knob), `DriveWheelL`
+    and `DriveWheelR`, `SteerWheelL` and `SteerWheelR`, `Mast` (channels, crossheads, chains);
+    the `Carriage` rides the mast and tilts with it.
+  - **2b, the motion:** each turn of its rounds becomes an arc about a point on the front axle's
+    line 0.9 m from its middle (inner wheel 75 degrees, outer 46), filleted into the straight
+    legs; where it changes from backing to driving forward it stops, the arc taken backing; it
+    steers in before each arc and out after, the steering wheel at 2.25 turns from straight to
+    full lock, never faster than 1.5 turns a second; the steer wheels at their Ackermann angles,
+    every wheel rolling with the ground it covers; from a parked heading it sets off along an
+    arc toward its first leg, as a four-wheel truck must.
+  - **2c, the mast:** tilted back 4 degrees while it travels loaded, level to take or leave a
+    load; lifts at 0.35 m/s, lowers at 0.5 m/s.
+  - **2d, the driver:** his left hand on the knob, going round with the wheel; his right on the
+    levers while the forks move, on the wheel's rim otherwise; backing, his chest turned 30
+    degrees with his head; the blue spot lit whenever it drives or steers.
+- **Rules a test can measure** (a new `test_forklift.gd`, and `test_shed_work.gd` as it is):
+  the six parts exist, each turning about its own pivot; the heading turns at v·tan(δ)/L
+  within 5 percent and the front axle never slides sideways; each steer wheel within 1 degree
+  of its Ackermann angle, the inner never past 80; the steering wheel at δ's share of 2.25
+  turns, never faster than 1.5 turns a second; each wheel's turn its distance over its radius
+  within 3 percent; tilted back 3-5 degrees loaded on the move, level within half a degree at
+  take and leave; the lift's speeds; the left hand within 4 cm of the knob through a turn; the
+  spot lit whenever it drives or steers; the trips as before (W2's loads within 5 cm). W9's
+  hands move from ten and two to the knob and the rim or levers, a change written down here.
+
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 2 of the audit: the forklift (#323-#324), built)
+
+- **Built:**
+  - **2a, the model** (`convert_depot_models.py`'s `forklift` job): six parts cut free of the
+    body, each with its origin at its own pivot: `SteeringWheel` (123 loose parts; its centre at
+    (0.005, 1.415, -0.405) and its axis along (0, -0.7071, 0.7071), found from the rim itself),
+    `DriveWheelL` and `R` (on their axle at y 0.318, z 0.195, each in its tyre's middle plane),
+    `SteerWheelL` and `R` (y 0.277, z -1.266), `Mast` (its foot at (0, 0.32, 0.45)); the
+    `Carriage` rides the mast.
+  - **2b, the motion** (`forklift_truck.gd`): a four-wheel rear-steer truck: its heading turns
+    at v·tan(δ)/L (L 1.461 m) about a point on its front axle's line; every heading change of its
+    rounds is a turn planned from those kinematics, the steer wound in at the driver's pace (2.25
+    turns of the wheel to full lock, 1.5 turns a second at most), held and wound out, filleted so
+    it lands on the next leg's line; at a cusp (backing, then on) it swings round backing and
+    stops; from its parking place it backs out to a line along the cross-aisle and parks nose in
+    from it; its steering wheel turns with the steer, its steer wheels at their Ackermann
+    angles (the inner 75 degrees in its turns, 0.9 m about the front axle's middle), each wheel
+    rolling with the ground its hub covers; its blue spot lit whenever it moves.
+  - **2c, the mast:** tilted back 4 degrees with a load on the move, level to take or leave one;
+    lifting at 0.35 m/s, lowering at 0.5 m/s.
+  - **2d, the driver:** a spinner knob on the rim (the model had none), his left hand round it as
+    the wheel turns; his right on the control lever beside the seat, or backing on the overhead
+    guard's right rear post, his chest turned 30 degrees with his head (`look_travel.gd`, now
+    run before his arms' IK so his hands keep their holds).
+  - **The putaway (#324):** turning as a real four-wheel truck, it could not reach aisle 03's
+    floor place at right angles (a 3.81 m aisle against about 4.2 m needed for its turning
+    radius and a 1.2 m pallet); the author chose a floor stacking bay: FS-01, marked out in 50 mm
+    yellow tape at the north end of the clear strip east of the racking (its pallet's middle at
+    (-48.0, 9.1), `dock_staging.gd`), 3.24 m from the dock's edge, which the truck's rear sweeps
+    within 0.38 m of as it backs out. Its rounds now run along the cross-aisle, sounding its horn
+    where they cross aisle 05's mouth.
+- **Rules:** new `test_forklift.gd` F1-F10, 13 checks: before the cut 0/2
+  (`logs/phase_2/realism/fix02_forklift/a_before/`), then 13/13 (`d_after/`): no wheel scrubs
+  sideways (the worst 1.15 degrees) and the heading turns at v·tan(δ)/L within 0.3%; the inner
+  steer wheel 75 degrees at most; each wheel rolls its distance within 0.1%; the steering wheel
+  at the steer's share of its turns, 1.50 turns a second at most; the tilt and the lift's speeds;
+  the spot; nothing solid met; his hands within 8 cm of their holds. On the way it found: the
+  rack clip that moved the putaway, the dock's edge (the bay moved twice, x -46.5 to -48.0), a
+  step's speed reset that blinked the spot, turns sampled off their spacing (the wheel spun
+  1.73 turns a second), and the hands frozen while parked. `test_shed_work.gd` 25/25, changed
+  where the fix changed what it checks (each written in it): its floor place to FS-01, its
+  horn to aisle 05's mouth, W10's trigger to the cross-aisle's 3.7 m straight. Sixteen mutations
+  exit 1, each on its own check (`mutations/`); every suite, `bash
+  logs/phase_2/realism/fix02_forklift/suites/run_suites.sh <scratch>`: 54 runs exit 0
+  (`test_forklift.gd` 13/13, `test_shed_work.gd` 25/25, `test_shed_floor.gd` 18/18,
+  `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0 failures; the headless
+  import exits 0 (`import.log`).
+- **Stills:** `captures/forklift/fix02/` (`tools/captures/capture_forklift.gd`).
+- **Unverified:** the look in motion; the right hand's lever and post points by eye only; the
+  pallet jack and the dock worker are the audit's next items.

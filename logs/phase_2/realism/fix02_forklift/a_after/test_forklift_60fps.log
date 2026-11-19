@@ -1,0 +1,5 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: F1: its steering wheel, drive wheels, steer wheels and mast cut free, each about its own pivot (missing: ; off: )
+PASS: F1: the carriage rides the mast, and the body no longer holds the wheels (its lowest 0.18 m)
+FORKLIFT RESULT: 2/2 passed; 0 failed

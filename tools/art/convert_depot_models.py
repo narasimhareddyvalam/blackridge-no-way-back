@@ -8,7 +8,10 @@ dock_seal: Maxwell autodoors' Foam Pad Dock Seal, its gap widened to 2.80 m and 
 dock_leveller: Maxwell autodoors' DLHH Electrohydraulic Dock Leveler, its deck 2.13 x 2.44 m
     (7 x 8 ft) with the top of the deck at the origin and its lip facing out.
 forklift: Kamran Mughal's Warehouse Forklift, its forks toward +Z, its specular map left out, its
-carriage (forks, plate and load backrest) cut from the truck to ride up its mast (#302).
+carriage (forks, plate and load backrest) cut from the truck to ride up its mast (#302); and
+(the audit's second fix, #323) its steering wheel with its knob, its two drive wheels, its two
+steer wheels and its mast cut free, each with its origin at its own pivot, the carriage riding
+the mast.
 pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z, cut in three as
     a real one moves (step 2f, #243): its frame (Chassis); its steering unit, the pump and its
     twin wheels, turning on the pump's vertical axis 0.689 m behind the middle (Steering); and
@@ -37,6 +40,7 @@ import sys
 
 import bmesh
 import bpy
+from mathutils import Matrix, Vector
 
 ROOT = pathlib.Path.cwd()
 SOURCE = ROOT / "source_assets/sketchfab"
@@ -269,6 +273,71 @@ CARRIAGE_FRONT = 0.55
 CARRIAGE_TOP = 1.47
 
 
+## Its wheels (#323), as Godot boxes (x, y, z ranges) round each: every loose part wholly inside
+## one is that wheel's (its tyre, rim, hub and nuts).
+WHEELS = {"DriveWheelL": ((0.28, 0.56), (0.0, 0.65), (-0.13, 0.52)),
+          "DriveWheelR": ((-0.56, -0.28), (0.0, 0.65), (-0.13, 0.52)),
+          "SteerWheelL": ((0.28, 0.56), (0.0, 0.56), (-1.55, -0.98)),
+          "SteerWheelR": ((-0.56, -0.28), (0.0, 0.56), (-1.55, -0.98))}
+## Its steering wheel about where its rim's ring of parts stands, the centre and axis found from
+## the rim itself; every loose part within RIM_REACH of the axis and RIM_DEPTH along it is the
+## wheel's (rim, spokes, hub and knob).
+WHEEL_NEAR = (0.0, 1.415, -0.405)
+RIM_REACH = 0.16
+RIM_DEPTH = 0.07
+## The mast: every loose part from its tilt cylinders' line forward (z 0.30) within its channels'
+## width, not the carriage nor a wheel; it tilts about its foot on the drive axle.
+MAST_FROM = 0.30
+MAST_HALF = 0.30
+MAST_FOOT = (0.0, 0.32, 0.45)
+
+
+def godot(point) -> Vector:
+    return Vector((point[0], point[2], -point[1]))
+
+
+def blender(point) -> Vector:
+    return Vector((point[0], -point[2], point[1]))
+
+
+def _ring(objects: list) -> tuple:
+    points = [godot(vertex.co) for obj in objects for vertex in obj.data.vertices]
+    centre = sum(points, Vector()) / len(points)
+    low = Vector(tuple(min(point[axis] for point in points) for axis in range(3)))
+    high = Vector(tuple(max(point[axis] for point in points) for axis in range(3)))
+    spread = Matrix(((0.0,) * 3,) * 3)
+    for point in points:
+        d = point - centre
+        for row in range(3):
+            for column in range(3):
+                spread[row][column] += d[row] * d[column]
+    axis = Vector((0.0, -0.7071, 0.7071))
+    for _ in range(40):
+        inverse = spread.inverted_safe()
+        axis = (inverse @ axis).normalized()
+    if axis.y > 0.0:
+        axis = -axis
+    return (low + high) / 2.0, axis
+
+
+def _inside(obj, box) -> bool:
+    low, high = bounds([obj])
+    g_low, g_high = godot(low), godot(high)
+    xs = sorted((g_low.x, g_high.x))
+    ys = sorted((g_low.y, g_high.y))
+    zs = sorted((g_low.z, g_high.z))
+    return all(box[axis][0] <= span[0] and span[1] <= box[axis][1]
+               for axis, span in enumerate((xs, ys, zs)))
+
+
+def _origin_at(part, point) -> None:
+    bpy.ops.object.select_all(action="DESELECT")
+    part.select_set(True)
+    bpy.context.view_layer.objects.active = part
+    bpy.context.scene.cursor.location = blender(point)
+    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+
+
 def forklift() -> None:
     meshes = load("09_forklift")
     plain(meshes)
@@ -281,13 +350,46 @@ def forklift() -> None:
     bpy.ops.mesh.select_all(action="SELECT")
     bpy.ops.mesh.separate(type="LOOSE")
     bpy.ops.object.mode_set(mode="OBJECT")
-    groups = {"Truck": [], "Carriage": []}
-    for obj in [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]:
+    loose = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
+    groups = {"Truck": [], "Carriage": [], "Mast": [], "SteeringWheel": []}
+    groups.update({name: [] for name in WHEELS})
+    near = Vector(WHEEL_NEAR)
+    rim = [obj for obj in loose if all((godot(v.co) - near).length < 0.15
+                                       for v in obj.data.vertices)
+           and len(obj.data.polygons) >= 16]
+    centre, axis = _ring(rim)
+    for obj in loose:
         low, high = bounds([obj])
         front = -high[1]
-        carriage = front >= CARRIAGE_FRONT - 0.001 and high[2] <= CARRIAGE_TOP
-        groups["Carriage" if carriage else "Truck"].append(obj)
-    parts = []
+        g_low, g_high = godot(low), godot(high)
+        z_from = min(g_low.z, g_high.z)
+        if front >= CARRIAGE_FRONT - 0.001 and high[2] <= CARRIAGE_TOP:
+            groups["Carriage"].append(obj)
+            continue
+        wheel = next((name for name, box in WHEELS.items() if _inside(obj, box)), None)
+        if wheel is not None:
+            groups[wheel].append(obj)
+            continue
+        offsets = [godot(v.co) - centre for v in obj.data.vertices]
+        if all(abs(d.dot(axis)) <= RIM_DEPTH and (d - axis * d.dot(axis)).length <= RIM_REACH
+               for d in offsets):
+            groups["SteeringWheel"].append(obj)
+            continue
+        if z_from >= MAST_FROM and max(abs(g_low.x), abs(g_high.x)) <= MAST_HALF:
+            groups["Mast"].append(obj)
+            continue
+        groups["Truck"].append(obj)
+    pivots = {"SteeringWheel": centre, "Mast": Vector(MAST_FOOT)}
+    for name in WHEELS:
+        low, high = bounds(groups[name])
+        tyre = max(groups[name], key=lambda obj: len(obj.data.polygons))
+        t_low, t_high = bounds([tyre])
+        middle = (godot(low) + godot(high)) / 2.0
+        middle.x = (godot(t_low).x + godot(t_high).x) / 2.0
+        pivots[name] = middle
+    print("FORKLIFT WHEEL: centre %s axis %s" % (tuple(round(c, 4) for c in centre),
+                                                 tuple(round(c, 4) for c in axis)))
+    parts = {}
     for name, objects in groups.items():
         bpy.ops.object.select_all(action="DESELECT")
         for obj in objects:
@@ -297,10 +399,17 @@ def forklift() -> None:
         part = bpy.context.view_layer.objects.active
         part.name = name
         part.data.name = name
-        parts.append(part)
-    print("FORKLIFT PARTS: %s" % ", ".join("%s %d parts" % (name, len(objects))
-                                           for name, objects in groups.items()))
-    finish_parts(parts, "forklift", "JPEG")
+        if name in pivots:
+            _origin_at(part, pivots[name])
+        parts[name] = part
+    carriage = parts["Carriage"]
+    keep = carriage.matrix_world.copy()
+    carriage.parent = parts["Mast"]
+    carriage.matrix_world = keep
+    print("FORKLIFT PARTS: %s" % ", ".join("%s %d parts at %s" % (
+        name, len(objects), tuple(round(c, 3) for c in pivots[name]) if name in pivots else "-")
+        for name, objects in groups.items()))
+    finish_parts(list(parts.values()), "forklift", "JPEG")
 
 
 def pallet_jack() -> None:
