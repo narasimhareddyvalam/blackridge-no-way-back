@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m14/game/features/environments/industrial_loop/pallet_jack.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:50:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m14/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:52:21
+@@ -725,7 +725,7 @@
+ 	var riding := atan2(BOGIE_PIN.x - ROLLER_RADIUS + rise, BOGIE_PIN.y - ROLLERS_MIDDLE)
+ 	for bogie in _bogies:
+ 		bogie.position.y = ROLLER_RADIUS - rise
+-		bogie.rotation.x = drawn - riding
++		bogie.rotation.x = 0.0
+ 
+ 
+ ## How far the load is off what it rests on: nothing until the forks meet its deck.

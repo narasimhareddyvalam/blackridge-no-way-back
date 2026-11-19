@@ -4340,6 +4340,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (Recommended)": fix 2 committed on `develop`, labelled (agent), not pushed; then fix 3
        planned before any code.
 
+326. **Fix 3, the pallet jack: planned and chosen**
+     - **Asked** what the jack's handle does when A or D is let go; **the author chose** "Eases
+       back straight (Recommended)", as the van steers by keys.
+     - **Asked** whether to build fix 3 as written in the brief; **the author chose** "Yes, build
+       it (Recommended)".
+
+327. **Fix 3: how Ethan follows a swinging handle**
+     - **Found** (fix 3 in progress): with the handle swinging up to 105 degrees Ethan is carried
+       sideways round its pivot, and with no sidestep clip his planted feet slide (`test_loading.gd`
+       H2: 1.0 m/s against 0.05).
+     - **Asked** how he should follow it; **the author chose** "Walk-limited now, sidesteps later
+       (Recommended)": he walks toward the handle no faster than his feet go, turned a little to
+       face where he walks, and the handle swings only as far as he can follow (about 10 degrees
+       standing, wider as he walks it, to 105 at a creep); Mixamo's Left and Right Strafe Walking,
+       if the author downloads them later, would let him side-step round it.
+     - **Done (fix 3, not committed):** the jack cut into its steer wheels, rollers and bogies;
+       its forks rise with the strokes, the load once they meet it, its wheels staying down; its
+       handle swings to 105 degrees within his walk and it turns about its rollers; every wheel
+       rolls. Found on the way: Ethan stuck backing over the bridge plate's edge (`driver.gd`)
+       and walking on the spot against a wall. New `test_pallet_jack.gd` 0/9 then 11/11,
+       `test_loading.gd` 35/35, seventeen mutations exit 1, 55 suite runs exit 0, the art check
+       0 failures once taught the new parts. Waiting for the author's OK to commit; then fix 4,
+       the dock worker.
+
+328. **Fix 3 committed; the dock worker next**
+     - **Asked** whether to commit fix 3; **the author chose** "Commit, then dock worker
+       (Recommended)": fix 3 committed on `develop`, labelled (agent), not pushed; then fix 4
+       planned before any code.
+
 ## Waiting for the author
 
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen

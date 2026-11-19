@@ -7880,3 +7880,121 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Stills:** `captures/forklift/fix02/` (`tools/captures/capture_forklift.gd`).
 - **Unverified:** the look in motion; the right hand's lever and post points by eye only; the
   pallet jack and the dock worker are the audit's next items.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 3 of the audit: the pallet jack, written before any code)
+
+- **Status:** the audit's third item (#321-#325), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (measured from `source_assets/sketchfab/10_pallet_jack`, 2026-11-19):** FFeller's jack
+  has twin steer wheels 0.211 m across on the steering unit's axis (z 0.689 behind the middle),
+  two tandem load rollers 98 mm across and 127 mm wide under each fork (centres at z -0.572 and
+  -0.455, so the fixed axle's line at z -0.513, 1.202 m from the steer axis), each pair in a
+  bogie on a pin at (y 0.053, z -0.326), and a push rod in each fork from the frame to its bogie.
+  Its forks are drawn 35-115 mm off the floor and its load rollers 24 mm above it, while its
+  steer wheels touch it. Today the glb holds only `Chassis`, `Steering` and `Tiller`: the load
+  rises 40 mm while the forks stay put, the steering unit swings no more than 25 degrees and
+  the jack turns about its middle at 1.33 radians a metre, and no wheel turns.
+- **Real practice (spec sheets: Uline H-1043, Wesco CP3, Global Industrial's narrow-aisle jack,
+  RS's 2500 kg truck):** forks lowered at about 3 in (76 mm) and raised to 7-7.5 in (178-191 mm);
+  a 200-210 degree steering arc (about ±100-105 degrees); steer wheels about 200 mm, tandem load
+  rollers about 82 mm. Pumping raises the frame and forks; the steer wheels stay on the floor
+  under the pump and the load rollers stay on it under the fork tips, their bogies swung down by
+  the push rods. The rollers are its fixed axle: the jack turns about a point on their line, its
+  heading at v·sin(δ)/L, v the steer wheels' speed and δ the steering unit's angle, and with the
+  handle swung right round it pivots about the rollers' middle. The operator walks where the
+  handle points, so with it swung far he stands to the jack's side.
+- **The parts †:**
+  - **3a, the model cut:** `convert_depot_models.py`'s `pallet_jack` job cuts the frame's
+    moving parts free, each with its origin at its pivot: `SteerWheels` (in `Steering`, on its
+    axle at y 0.106), `BogieL` and `BogieR` (each fork's plates and its two rollers, on the
+    bogie pin), `RollerL1`, `RollerL2`, `RollerR1`, `RollerR2` (in their bogies, on their
+    axles), `PushRodL` and `PushRodR` (in `Chassis`).
+  - **3b, the lift:** lowered, the frame sits 24 mm lower than drawn, its rollers on the floor
+    and its forks' tops at 91 mm; each stroke raises the frame (the forks, the push rods, the
+    frame's back) toward its top, 76 mm up, the steering unit and steer wheels staying on the
+    floor and each bogie swinging about its pin so its rollers stay on it; the load starts
+    rising only when the forks reach its deck's underside (37 mm up, about two strokes) and is
+    40 mm clear at the fourth, as now; lowering, the forks come down to their lowered height
+    over the same 1.2 s, the load landing on the way.
+  - **3c, the steering:** A and D swing the steering unit and its handle about the pump's axis
+    up to ±105 degrees, at about 120 degrees a second †; the steer wheels roll along the
+    direction the unit faces; the jack's heading turns at v·sin(δ)/L about the rollers' line
+    (L 1.202 m), so with the handle swung right round it pivots about the rollers' middle;
+    Ethan walks along the handle's direction behind its end, his hands on its loop, standing to
+    the jack's side when it is swung far.
+  - **3d, the wheels:** the steer wheels roll the distance their axle covers along their
+    direction over their 0.106 m radius; each load roller rolls the distance its own centre
+    covers along the jack's heading over its 0.049 m radius (inner and outer apart in a turn).
+  - **The static jacks** (the yard's and the compound's dressing, if any use `pallet_jack.glb`)
+    stand lowered, rollers on the floor.
+- **Rules a test can measure** (a new `test_pallet_jack.gd`, and `test_loading.gd`,
+  `test_docking.gd`, `test_mission_two.gd` as they are): the new parts exist, each about its
+  own pivot; lowered, every roller and steer wheel within 5 mm of the floor and the forks'
+  tops at 91 mm; through a lift the forks rise with each stroke and the load only once they
+  meet it, 40 mm clear at the fourth, every roller and steer wheel staying within 5 mm of the
+  floor; lowered again, the forks back at 91 mm; the steering unit reaches 100-105 degrees and
+  no further, never faster than 120 degrees a second †; the heading turns at v·sin(δ)/L within 5
+  percent and the rollers' line never slides sideways; each wheel turns its distance over its
+  radius within 3 percent; Ethan's hands within 4 cm of the loop through a turn; loading into
+  the van as before (`test_loading.gd`'s rules unchanged; its driver's steering may change to
+  steer the new way, a change written into it).
+- **Not changed:** the four strokes, the 1.2 s lowering, the jack's speeds, its collision, the
+  hold, the lift's deck and every rule of H2 and H9.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 3 of the audit: the pallet jack (#326-#327), built)
+
+- **Built:**
+  - **3a, the model** (`convert_depot_models.py`'s `pallet_jack` job): seven parts more, each with
+    its origin on its own axle: `SteerWheels` (the twin wheels, hub and caps, in `Steering`, on
+    their axle at y 0.106), `RollerL1`, `RollerL2`, `RollerR1`, `RollerR2` (each roller and its
+    end caps, in `Chassis`) and `BogieL`, `BogieR` (each fork's bogie plates, axles and pin).
+    Changed from the plan: each bogie turns about its two rollers' middle, not about its pin. A
+    rigid tandem bogie turned about its pin lifts one roller off the floor while the other digs
+    in; turned about their middle, its pin rides up in the fork (within 7 mm) while both rollers
+    stay down. The push rods ride with the frame.
+  - **3b, the lift** (`pallet_jack.gd`'s `_frame()`, `_load_lift()`): lowered, the frame sits
+    24 mm under where it is drawn, its rollers on the floor and its forks' tops at 91 mm. Each
+    stroke raises the frame 19 mm, to 76 mm at the fourth. The load rises only once the forks
+    meet its deck (36 mm up) and is 40 mm clear at the fourth, as before. The steering unit,
+    steer wheels and rollers stay on the floor throughout, and lowering brings the forks back
+    down over the same 1.2 s.
+  - **3c, the steering** (`_steer()`, `_rolled()`): A and D swing the steering unit toward 105
+    degrees, at most 120 degrees a second, and let go it eases back straight (#326). The jack
+    turns about its load rollers' line at v·sin(δ)/L (L 1.202 m), taken at each step's middle
+    so the rollers never slide sideways; swung right round, it pivots about them.
+  - **3d, Ethan behind it (#327):** he keeps behind the handle, facing the way the steering unit
+    faces. With no sidestep in his clips, the handle swings only as fast as his walk can carry
+    him round: half his pace over his distance from the unit's axis. Standing, he shuffles round
+    no more than 10 degrees. When he himself is stopped for 0.15 s (backing into a wall), his
+    walk stops too, as it does when the jack is stopped, so he never walks on the spot. In
+    `driver.gd`'s `push_step()` he is no longer pressed down at 0.5 m/s while on the floor,
+    which had held him at the bridge plate's 25 mm edge as he backed out of the hold slowly.
+  - **3e, the wheels** (`_roll()`): the steer wheels roll the floor their axle covers along the
+    unit's facing over 0.106 m; each roller rolls its own centre's travel along the jack's
+    heading over 0.049 m.
+- **Rules:** new `test_pallet_jack.gd`, P1-P9, 11 checks: 0/9 before
+  (`logs/phase_2/realism/fix03_pallet_jack/a_before/`), then 11/11 (`d_after/`). Lowered, the
+  wheels and rollers are on the floor and the forks' tops at 91 mm. Pumped, the forks rise
+  [0.019, 0.038, 0.057, 0.076] m and the load [0, 0.002, 0.021, 0.040] m, the wheels staying
+  down and the bogies' pins in their forks. Standing, the swing reaches 10 degrees. Walking it,
+  the swing reaches 100-105 degrees, at most 120 degrees a second and within his walk round it
+  (0.98 of the limit). The heading turns at v·sin(δ)/L within 1.8% and the rollers' line slides
+  0.1% of the pivot's travel. Swung round, it pivots (60 degrees turned, the rollers' middle
+  moving 0.32 m against the handle's foot's 1.25 m). Every wheel rolls within 0.1%, and his
+  hands stay within 4 cm of the loop as it swings.
+  `test_loading.gd` 35/35, changed where the fix changed what it checks (each written in it):
+  - H18 reads the forks' steps, the load rising once they meet it;
+  - its driver swings the handle toward the heading it wants, in proportion to the error and
+    easing off as it closes (it used to hold a key for any error, which swung the new handle
+    to 105 degrees);
+  - its pull out of the hold steers the jack straight back, as a driver does.
+  Seventeen mutations exit 1, each on its own check (`mutations/`, `mutations_fix03.py`). Every suite, `bash
+  logs/phase_2/realism/fix03_pallet_jack/suites/run_suites.sh <scratch>`: 55 runs
+  exit 0 (`test_pallet_jack.gd` 11/11, `test_loading.gd` 35/35, `test_docking.gd` 5/5,
+  `test_mission_two.gd` 55/55, `test_bay_nine.gd` 20/20, `test_on_foot.gd` 50/50, `test_stair.gd`
+  33/33); the art check 1 failure (it expected the jack's old three parts), then 0 once taught
+  the new ones (`check_first_drive_art.py`); the headless import exits 0 (`import.log`).
+- **Stills:** `captures/pallet_jack/fix03/` (`tools/captures/capture_pallet_jack.gd`).
+- **Unverified:** the look in motion. Standing, he slides round the 10-degree shuffle with no
+  step until sidestep clips come (#327: Mixamo's Left and Right Strafe Walking, if the author
+  downloads them). The dock worker is the audit's next item.

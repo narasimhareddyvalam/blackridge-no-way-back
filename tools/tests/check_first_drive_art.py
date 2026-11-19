@@ -487,12 +487,19 @@ if (DEPOT / 'pallet_jack.glb').exists():
     foot = tiller[1].get('translation', [0.0, 0.0, 0.0])
     hinged = tiller[0] is not None and tiller[0] in steering[1].get('children', [])
     meshes = [name for name, (_, node) in nodes.items() if 'mesh' in node]
-    check(sorted(meshes) == ['Chassis', 'Steering', 'Tiller'] and hinged
+    chassis = nodes.get('Chassis', (None, {}))[1].get('children', [])
+    rolling = all(nodes.get(name, (None, {}))[0] in chassis for name in
+                  ['BogieL', 'BogieR', 'RollerL1', 'RollerL2', 'RollerR1', 'RollerR2'])
+    wheels = nodes.get('SteerWheels', (None, {}))[0] in steering[1].get('children', [])
+    check(sorted(meshes) == ['BogieL', 'BogieR', 'Chassis', 'RollerL1', 'RollerL2', 'RollerR1',
+                             'RollerR2', 'SteerWheels', 'Steering', 'Tiller']
+          and hinged and rolling and wheels
           and abs(at[0]) < 0.01 and abs(at[1]) < 0.01 and abs(at[2] - 0.689) < 0.01
           and abs(foot[0]) < 0.01 and abs(foot[1] - 0.30) < 0.01 and abs(foot[2] - 0.071) < 0.01,
           'depot/pallet_jack.glb turns and tilts as a real one: its frame, its steering unit '
           'turning on the pump\'s axis 0.689 m behind its middle, and its handle hinged inside it '
-          f'at the shaft\'s foot, 0.30 m up (meshes {meshes}; steering at {at}, handle at {foot})')
+          f'at the shaft\'s foot, 0.30 m up, its steer wheels in the steering unit and its load '
+          f'rollers and bogies in the frame (meshes {meshes}; steering at {at}, handle at {foot})')
 
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)

@@ -88,6 +88,10 @@ const SLIP := 0.05
 const SETTLED := 24
 const SETTLED_CLIP := 0.3
 const STEER_SETTLED := 12
+const STEER_GAIN := 3.0
+const STEER_EASE := 1.5
+const STEER_MOST := deg_to_rad(35.0)
+const STEER_HOLD := deg_to_rad(2.0)
 const HANDS_LET_GO := 56.0
 const STOP_PLANTED := 61.0
 const ROD := 0.017
@@ -815,7 +819,12 @@ func _jack_held() -> bool:
 
 ## Pushes the held jack with W, steering it with A and D as it rolls, until its load's centre is
 ## at `goal` or past it along z, heading for a point `lead` metres ahead on the line to it, as a
-## driver lines a pallet up with a doorway.
+## driver lines a pallet up with a doorway. Since the audit's third fix (#326) A and D swing the
+## jack's steering unit up to 105 degrees and let go it eases back straight, so, as a driver
+## does, it swings the handle a little toward the heading it wants, in proportion to how far
+## off it is (STEER_GAIN, at most STEER_MOST) and easing off as that closes (STEER_EASE, for the
+## handle's way back), tapping A or D to hold it there; before, any error held a key, which
+## turned the old jack only as it rolled.
 func _push_to(goal: Vector2, limit: float, lead := INF) -> void:
 	var rig: Node = _shed.get("pallet_jack")
 	var time := 0.0
@@ -823,6 +832,7 @@ func _push_to(goal: Vector2, limit: float, lead := INF) -> void:
 	var last := Vector2.INF
 	var from := _jack.global_position if _jack != null else Vector3.ZERO
 	var frames := 0
+	var last_turn := INF
 	_trail.clear()
 	while time < limit and still < 1.0 and rig != null:
 		var centre: Vector2 = rig.call("load_centre")
@@ -831,8 +841,13 @@ func _push_to(goal: Vector2, limit: float, lead := INF) -> void:
 			break
 		var to := Vector2(goal.x, minf(centre.y + lead, goal.y)) - centre
 		var turn := ahead.angle_to(to)
-		_press("steer_left", turn < -0.03)
-		_press("steer_right", turn > 0.03)
+		var closing := (turn - last_turn) * 60.0 if last_turn != INF else 0.0
+		last_turn = turn
+		var want := clampf(turn * STEER_GAIN + closing * STEER_EASE, -STEER_MOST, STEER_MOST) \
+			if absf(turn) > 0.03 else 0.0
+		var swung := (_jack.get_node("Steering") as Node3D).rotation.y if _jack != null else 0.0
+		_press("steer_left", swung > want + STEER_HOLD)
+		_press("steer_right", want != 0.0 and swung < want - STEER_HOLD)
 		_since_steer = 0 if absf(turn) > 0.03 else _since_steer + 1
 		Input.action_press("accelerate")
 		await physics_frame
@@ -909,16 +924,35 @@ func _plate_underside_at(lift: Node3D, z: float) -> float:
 	return plate.global_position.y + along.y * t - LIP_THICK
 
 
+## Pulls the held jack back with S for `metres` of Ethan's walk. Since the audit's third fix
+## (#326) a jack set down a little askew in the narrow hold cannot straighten there, so, as a
+## driver does, he steers it straight back along the van as he pulls: the same steering as
+## `_push_to`, turned the other way, since backing turns the jack the other way.
 func _pull_back(metres: float) -> void:
 	var start := _driver.global_position
 	var time := 0.0
+	var last_turn := INF
 	_trail.clear()
 	Input.action_press("brake")
 	while _flat(_driver.global_position - start).length() < metres and time < PULL_LIMIT:
+		var rig: Node = _shed.get("pallet_jack")
+		var ahead: Vector2 = rig.call("heading")
+		var axis := _van.global_basis * Vector3.FORWARD
+		var turn := ahead.angle_to(Vector2(axis.x, axis.z))
+		var closing := (turn - last_turn) * 60.0 if last_turn != INF else 0.0
+		last_turn = turn
+		var want := -clampf(turn * STEER_GAIN + closing * STEER_EASE, -STEER_MOST, STEER_MOST) \
+			if absf(turn) > 0.03 else 0.0
+		var swung := (_jack.get_node("Steering") as Node3D).rotation.y if _jack != null else 0.0
+		_press("steer_left", swung > want + STEER_HOLD)
+		_press("steer_right", want != 0.0 and swung < want - STEER_HOLD)
+		_since_steer = 0 if absf(turn) > 0.03 else _since_steer + 1
 		await physics_frame
 		_observe()
 		time += 1.0 / 60.0
-	Input.action_release("brake")
+	for action: String in ["brake", "steer_left", "steer_right"]:
+		Input.action_release(action)
+	_since_steer = STEER_SETTLED + 1
 	await _seconds(0.3)
 
 
@@ -1066,7 +1100,9 @@ func _check_hold_to_run() -> void:
 ## A hand pallet jack lifts only as its handle is pumped (Dayton's, Strongway's and U-Line's
 ## pallet truck manuals: the lever at raise, the handle pumped up and down): taken, the pallet
 ## stays on the floor and W cannot roll it; each E is one stroke, the handle rocked down and back
-## and the forks raised a step with the pump's knock; 3 to 7 strokes lift it clear (H18).
+## and the forks raised a step with the pump's knock; 3 to 7 strokes lift it clear (H18). Since
+## the audit's third fix (#326) the forks rise 36 mm before they meet the pallet's deck, so the
+## steps are the forks' and the pallet only rises with them once they meet it.
 func _check_pumping(load: Node3D, floor_y: float) -> void:
 	var tiller := _shed.find_child("Tiller", true, false) as Node3D
 	var taken := load.global_position.y - floor_y
@@ -1080,6 +1116,7 @@ func _check_pumping(load: Node3D, floor_y: float) -> void:
 	await _seconds(0.4)
 	var dragged := _flat(load.global_position).distance_to(start)
 	var steps: Array[float] = []
+	var forks: Array[float] = []
 	var arc := 0.0
 	var knocked := 0
 	var strokes := 0
@@ -1098,10 +1135,13 @@ func _check_pumping(load: Node3D, floor_y: float) -> void:
 			time += 1.0 / 60.0
 		knocked += 1 if played else 0
 		steps.append(load.global_position.y - floor_y)
+		var chassis := jack.get_node_or_null("Chassis") as Node3D
+		forks.append(chassis.position.y if chassis != null else 0.0)
 		await _seconds(HINT_REFRESH)
 	var rising := true
 	for index in range(1, steps.size()):
-		rising = rising and steps[index] > steps[index - 1] + 0.002
+		rising = rising and forks[index] > forks[index - 1] + 0.002 \
+			and steps[index] >= steps[index - 1] - 0.001
 	await _seconds(STEPPED_IN)
 	var after := _hint()
 	var close := _flat(jack.global_position - _driver.global_position).length()
@@ -1112,7 +1152,8 @@ func _check_pumping(load: Node3D, floor_y: float) -> void:
 		("H18: taken, the jack leaves the pallet on the floor (%.3f m) and the hint offers to "
 		+ "pump it (%s), W not rolling it (%.3f m); standing back at arm's length (%.2f m behind "
 		+ "its middle), %d strokes of E (3 to 7), each rocking the handle %.0f° and knocking "
-		+ "(%d), raise it step by step %s; then, the lever back at neutral, the hint offers to set "
+		+ "(%d), raise its forks step by step, the pallet with them once they meet it %s;"
+		+ " then, the lever back at neutral, the hint offers to set "
 		+ "it down (%s) and he steps in to the handle (%.2f m)") % [taken, offer, dragged, stood,
 		strokes, arc, knocked, str(steps), after, close])
 

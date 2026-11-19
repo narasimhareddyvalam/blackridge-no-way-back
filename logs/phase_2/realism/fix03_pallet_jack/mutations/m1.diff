@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m1/game/features/environments/industrial_loop/pallet_jack.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:50:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m1/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:51:29
+@@ -718,7 +718,7 @@
+ 	if _chassis == null:
+ 		return
+ 	var rise := _forks * FORKS_RAISED - FRAME_DROP
+-	_chassis.position.y = rise
++	_chassis.position.y = -FRAME_DROP
+ 	for roller in _rollers:
+ 		roller.position.y = ROLLER_RADIUS - rise
+ 	var drawn := atan2(BOGIE_PIN.x - ROLLER_HUB, BOGIE_PIN.y - ROLLERS_MIDDLE)

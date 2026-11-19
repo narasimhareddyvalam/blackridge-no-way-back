@@ -12,11 +12,14 @@ carriage (forks, plate and load backrest) cut from the truck to ride up its mast
 (the audit's second fix, #323) its steering wheel with its knob, its two drive wheels, its two
 steer wheels and its mast cut free, each with its origin at its own pivot, the carriage riding
 the mast.
-pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z, cut in three as
-    a real one moves (step 2f, #243): its frame (Chassis); its steering unit, the pump and its
-    twin wheels, turning on the pump's vertical axis 0.689 m behind the middle (Steering); and
-    its handle, the shaft, loop and lever, hinged inside the steering unit at the shaft's foot,
-    0.30 m up, tilting toward whoever holds it (Tiller).
+pallet_jack: FFeller's Pallet Jack, its handle toward +Z and its forks toward -Z, cut as a real
+    one moves (step 2f, #243): its frame (Chassis); its steering unit, the pump, turning on the
+    pump's vertical axis 0.689 m behind the middle (Steering); and its handle, the shaft, loop
+    and lever, hinged inside the steering unit at the shaft's foot, 0.30 m up, tilting toward
+    whoever holds it (Tiller); and (the audit's third fix, #326) its twin steer wheels on their
+    axle in the steering unit (SteerWheels), and in the frame each fork's two load rollers on
+    their axles (RollerL1, RollerL2, RollerR1, RollerR2) and the bogie that holds them, turning
+    about their middle (BogieL, BogieR).
 pallet: widthRider's photoscanned Euro pallet sized as the American 48 x 40 in pallet (1.219 m
     along Z, 1.016 m across, 0.15 m tall), reduced to about 3,000 triangles, its dry wood matte
     (its roughness came from its specular map).
@@ -68,6 +71,14 @@ TILLER_FOOT = (0.30, 0.76)
 TILLER_FROM = 0.32
 TILLER_BACK = 0.739
 TILLER_HALF = 0.2
+STEER_HUB = (0.1055, 0.6885)
+ROLLER_HUBS = {"1": (0.073, -0.5715), "2": (0.073, -0.455)}
+ROLLERS_MIDDLE = (0.073, -0.5135)
+FORK_MIDDLE = 0.2575
+ON_HUB = 0.006
+BOGIE_ACROSS = (0.15, 0.37)
+BOGIE_ALONG = (-0.63, -0.285)
+BOGIE_TOP = 0.105
 
 
 def load(name: str, path: pathlib.Path | None = None) -> list:
@@ -431,19 +442,34 @@ def jack_parts(meshes: list) -> list:
     bpy.ops.mesh.select_all(action="SELECT")
     bpy.ops.mesh.separate(type="LOOSE")
     bpy.ops.object.mode_set(mode="OBJECT")
-    groups = {"Chassis": [], "Steering": [], "Tiller": []}
+    groups = {"Chassis": [], "Steering": [], "Tiller": [], "SteerWheels": [], "BogieL": [],
+              "BogieR": [], "RollerL1": [], "RollerL2": [], "RollerR1": [], "RollerR2": []}
     for obj in [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]:
         low, high = bounds([obj])
         back = -high[1]
         across = max(abs(low[0]), abs(high[0]))
+        g_low, g_high = godot(low), godot(high)
+        side = "L" if low[0] + high[0] < 0.0 else "R"
         if low[2] >= TILLER_FROM - 0.001 and back >= TILLER_BACK and across <= TILLER_HALF:
             groups["Tiller"].append(obj)
         elif back >= STEER_FROM and across <= STEER_HALF:
-            groups["Steering"].append(obj)
+            groups["SteerWheels" if _round_on(obj, STEER_HUB) else "Steering"].append(obj)
+        elif (hub := next((name for name, at in ROLLER_HUBS.items()
+                           if _round_on(obj, at)), None)) is not None:
+            groups["Roller" + side + hub].append(obj)
+        elif (BOGIE_ACROSS[0] <= min(abs(low[0]), abs(high[0])) and across <= BOGIE_ACROSS[1]
+              and BOGIE_ALONG[0] <= min(g_low.z, g_high.z)
+              and max(g_low.z, g_high.z) <= BOGIE_ALONG[1] and high[2] <= BOGIE_TOP):
+            groups["Bogie" + side].append(obj)
         else:
             groups["Chassis"].append(obj)
     pivots = {"Chassis": (0.0, 0.0, 0.0), "Steering": (0.0, -STEER_AXIS, 0.0),
-              "Tiller": (0.0, -TILLER_FOOT[1], TILLER_FOOT[0])}
+              "Tiller": (0.0, -TILLER_FOOT[1], TILLER_FOOT[0]),
+              "SteerWheels": blender((0.0, STEER_HUB[0], STEER_HUB[1]))}
+    for side, sign in (("L", -1.0), ("R", 1.0)):
+        pivots["Bogie" + side] = blender((sign * FORK_MIDDLE,) + ROLLERS_MIDDLE)
+        for hub, at in ROLLER_HUBS.items():
+            pivots["Roller" + side + hub] = blender((sign * FORK_MIDDLE,) + at)
     parts = {}
     for name, objects in groups.items():
         bpy.ops.object.select_all(action="DESELECT")
@@ -457,11 +483,26 @@ def jack_parts(meshes: list) -> list:
         bpy.context.scene.cursor.location = pivots[name]
         bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
         parts[name] = part
-    parts["Tiller"].parent = parts["Steering"]
-    parts["Tiller"].matrix_parent_inverse = parts["Steering"].matrix_world.inverted()
+    riders = {"Tiller": "Steering", "SteerWheels": "Steering", "BogieL": "Chassis",
+              "BogieR": "Chassis", "RollerL1": "Chassis", "RollerL2": "Chassis",
+              "RollerR1": "Chassis", "RollerR2": "Chassis"}
+    for name, carrier in riders.items():
+        parts[name].parent = parts[carrier]
+        parts[name].matrix_parent_inverse = parts[carrier].matrix_world.inverted()
     print("JACK PARTS: %s" % ", ".join("%s %d parts" % (name, len(objects))
                                        for name, objects in groups.items()))
     return list(parts.values())
+
+
+def _round_on(obj, hub: tuple) -> bool:
+    """Whether a loose part is round about an axle across the jack at `hub` (Godot's y, z): its
+    middle on the axle and as tall as it is long, as a wheel, a roller, a hub or a cap is."""
+    low, high = bounds([obj])
+    g_low, g_high = godot(low), godot(high)
+    middle = (g_low + g_high) / 2.0
+    tall, long = abs(g_high.y - g_low.y), abs(g_high.z - g_low.z)
+    return (abs(middle.y - hub[0]) <= ON_HUB and abs(middle.z - hub[1]) <= ON_HUB
+            and abs(tall - long) <= ON_HUB and tall >= 0.03)
 
 
 def finish_parts(parts: list, name: str, images: str = "AUTO") -> None:

@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _build (res://tests/test_pallet_jack.gd:454)
+       [7] _run (res://tests/test_pallet_jack.gd:89)
+PASS: P1: its steer wheels, both bogies and four load rollers cut free, each about its own axle, a bogie about its rollers' middle (missing: ; off their axles: ; the bogie's at z -0.514)
+PASS: P2: standing lowered, its steer wheels and load rollers on the floor (the farthest 0.0000 m off) and its forks' tops 0.091 m up (91 mm)
+PASS: P3: each stroke raises the forks [0.019, 0.038, 0.057, 0.076] m, the load [0.000, 0.002, 0.021, 0.040] m only once they meet its deck (0.036 m up), 0.040 m clear at the last; its wheels and rollers on the floor (0.0000 m off, E  Pump the handle, swung 0°)
+PASS: P4: A held swings the steering unit to 105.0° (100-105°), at most 120° a second (120), and let go it comes back straight (0.0°)
+PASS: P5: its heading turns at v·sin(δ)/L about its rollers' line (161.5° in all against 160.9°, within 1.3%), the line sliding sideways 0.5% of the pivot's travel
+PASS: P6: every wheel and roller rolls its distance over its radius (within 0.5%: SteerWheels 0.002 m off in 4.09 m, RollerL1 0.007 m off in 2.10 m, RollerL2 0.007 m off in 2.11 m, RollerR1 0.007 m off in 1.33 m, RollerR2 0.007 m off in 1.34 m)
+FAIL: P7: his hands on the handle's loop through the turns, as it swings (the farthest 0.114 m off)
+PASS: P8: swung 105° and pushed, it pivots about its rollers' middle: turned 40°, the middle moving 0.22 m while the handle's foot moved 0.85 m
+PASS: P9: set down, the load rests on the floor (0.000 m) and the wheels stayed on it (0.0000 m off)
+PASS: P2: set down, lowered, its steer wheels and load rollers on the floor (the farthest 0.0000 m off) and its forks' tops 0.091 m up (91 mm)
+PALLET JACK RESULT: 9/10 passed; 1 failed
+WARNING: 35 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 7 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

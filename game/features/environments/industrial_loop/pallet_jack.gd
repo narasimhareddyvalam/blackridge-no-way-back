@@ -3,9 +3,11 @@ extends Node
 ## author's L1 c, #230): E at its handle takes it; under a load, its lever at raise, each E is a
 ## stroke of the handle, rocked down and back with the pump's knock, and four strokes lift the load
 ## clear (3 to 7 in Dayton's, Strongway's and U-Line's manuals, #286); W and S
-## push and pull it, going where his feet take it (his push gait, #239-#240), and A and D steer
-## it as it rolls, turning it about its middle; E sets the load down, the lever at lower letting
-## it sink over 1.2 s as the oil hisses back, and E again lets go. He
+## push and pull it, going where his feet take it (his push gait, #239-#240), and A and D swing
+## its steering unit, so that it turns about its load rollers as a real one does (the audit's
+## third fix, #326-#327); E sets the load down, the lever at lower letting it sink over 1.2 s as
+## the oil hisses back, and E again lets go. Pumped, its frame and forks rise while its wheels
+## and rollers stay on the floor; every wheel rolls with the floor it covers. He
 ## takes it close to its handle, and as he gets going it runs out to his arm's length, both his
 ## hands on its handle's loop. Its handle tilts down to his hands as a real one does, and springs
 ## back upright when he lets go; its steering unit turns as he steers (step 2f, #244). It is
@@ -31,8 +33,40 @@ const LOOP: Array[Vector3] = [Vector3(0.0, 0.05, 0.0), Vector3(0.0, 0.65, 0.0),
 	Vector3(0.0, 0.65, 0.0)]
 const TILT_MOST := deg_to_rad(80.0)
 const TILT_RATE := 1.5
-const STEER_SWING := deg_to_rad(25.0)
-const STEER_RATE := 2.0
+## Its steering unit swings 105 degrees each way (spec sheets' 200-210 degree steering arc: Uline
+## H-1043, Wesco CP3), as fast as he swings a handle, and eases back straight when A or D is let
+## go (the author's choice, #326); the jack turns about its load rollers' line, its fixed axle,
+## at v·sin(δ)/L, L from the rollers' line to the steering unit's axis (fix 3 of the audit).
+const STEER_SWING := deg_to_rad(105.0)
+const STEER_RATE := deg_to_rad(120.0)
+const STEER_AXIS := 0.689
+const ROLLERS_LINE := -0.513
+const WHEELBASE := STEER_AXIS - ROLLERS_LINE
+## Its wheels as the model draws them: the twin steer wheels' radius, the load rollers' radius
+## and their axles' height, and each bogie's pin, which rides in its fork.
+const STEER_RADIUS := 0.1055
+const ROLLER_RADIUS := 0.049
+const ROLLER_HUB := 0.073
+const BOGIE_PIN := Vector2(0.0525, -0.3255)
+const ROLLERS_MIDDLE := -0.5135
+## Its frame drawn 24 mm above its lowered place (its rollers off the floor), its forks' tops
+## then at 91 mm (spec sheets: about 76 mm); pumped, the forks rise 36 mm to meet a pallet's
+## deck (its underside 0.127 m up) and 40 mm more to lift it clear.
+const FRAME_DROP := 0.024
+const FORKS_MEET := 0.036
+const FORKS_RAISED := 0.076
+## With no sidestep in his clips (#327) he keeps behind the handle as he walks, so the handle
+## swings only as fast as his walk can carry him round to one side, SIDE_SHARE of his pace;
+## standing, he shuffles round no more than STAND_SWING.
+const SIDE_SHARE := 0.5
+## Ethan himself stopped by something behind or beside him (a wall he backs into) for
+## STOPPED_FOR stops his walk as the jack being stopped does, so he does not walk on the spot.
+const STOPPED_STEP := 0.002
+const STOPPED_SHARE := 0.3
+const STOPPED_FOR := 0.15
+const STAND_SWING := deg_to_rad(10.0)
+const ROLLERS: Array[String] = ["RollerL1", "RollerL2", "RollerR1", "RollerR2"]
+const BOGIES: Array[String] = ["BogieL", "BogieR"]
 const GRIP_BACK := 1.17
 const PUSH_REACH := 1.45
 const VAN_REACH := 1.65
@@ -43,8 +77,6 @@ const LEAD_MOST := 2.0
 const LAG_MOST := 0.5
 const LOAD_AHEAD := 0.25
 const FORKS_AHEAD := 0.2
-const TURN_PER_METRE := 1.333
-const LIFT := 0.04
 const REACH := 0.9
 const FORKS := [Vector3(0.7, 0.07, 1.2), Vector3(0.0, 0.045, -0.2)]
 const BODY := [Vector3(0.62, 1.1, 0.42), Vector3(0.0, 0.6, 0.6)]
@@ -117,6 +149,14 @@ var _lift: Node3D
 var _reach := GRIP_BACK
 var _steering: Node3D
 var _tiller: Node3D
+var _chassis: Node3D
+var _steer_wheels: Node3D
+var _rollers: Array[Node3D] = []
+var _bogies: Array[Node3D] = []
+var _swing := 0.0
+var _rolled_from: Array[Vector3] = []
+var _pace := 0.0
+var _stopped_for := 0.0
 var _query := PhysicsShapeQueryParameters3D.new()
 var _box := BoxShape3D.new()
 var _stand := PhysicsShapeQueryParameters3D.new()
@@ -144,6 +184,17 @@ func setup(jack_node: Node3D, loads: Array[Node3D], building: Node3D, lift: Node
 	jack = jack_node
 	_steering = jack.get_node_or_null("Steering") as Node3D
 	_tiller = jack.get_node_or_null("Steering/Tiller") as Node3D
+	_chassis = jack.get_node_or_null("Chassis") as Node3D
+	_steer_wheels = jack.get_node_or_null("Steering/SteerWheels") as Node3D
+	for label in ROLLERS:
+		var roller := jack.get_node_or_null("Chassis/" + label) as Node3D
+		if roller != null:
+			_rollers.append(roller)
+	for label in BOGIES:
+		var bogie := jack.get_node_or_null("Chassis/" + label) as Node3D
+		if bogie != null:
+			_bogies.append(bogie)
+	_frame()
 	_loads = loads
 	_building = building
 	_lift = lift
@@ -192,6 +243,8 @@ func reset(start: Transform3D) -> void:
 	_lowering = -1.0
 	_neutral = 0.0
 	_forks = 0.0
+	_swing = 0.0
+	_frame()
 	_strap_index = 0
 	_strap_stage = 0
 	_clicks = 0
@@ -431,6 +484,7 @@ func take() -> void:
 	if not _room_behind():
 		return
 	held = true
+	_rolled_from.clear()
 	_reach = _take_reach()
 	driver.set("pushing", true)
 	var at := _grip_spot(jack.global_transform, _reach)
@@ -463,7 +517,8 @@ func _stroked(delta: float) -> void:
 	_forks = minf(_forks + _pump_depth / (PUMPS * FULL_STROKE), 1.0)
 	if _strokes >= PUMPS_MOST:
 		_forks = 1.0
-	_under.global_transform = _under_rest.translated(Vector3.UP * LIFT * _forks)
+	_frame()
+	_under.global_transform = _under_rest.translated(Vector3.UP * _load_lift())
 	if _forks < 0.999:
 		return
 	carried = _under
@@ -490,6 +545,7 @@ func set_down() -> void:
 func _lowered(delta: float) -> void:
 	_lowering += delta
 	_forks = clampf(1.0 - _lowering / LOWER_SECONDS, 0.0, 1.0)
+	_frame()
 	carried.global_transform = _load_pose(jack.global_transform)
 	if _lowering < LOWER_SECONDS:
 		return
@@ -514,13 +570,16 @@ func let_go() -> void:
 		if is_instance_valid(van):
 			driver.call("pass_through", van, false)
 	_reparent(jack, _on_what(jack.global_position))
+	_swing = 0.0
 	_rest_handle()
 	changed.emit()
 
 
-## Each physics frame his push gait says how far his feet carry him and how far the jack goes with
-## him; the jack goes there if it can, turned about its middle by A and D as it rolls, he keeping
-## behind its handle, or else stays against what stopped it while he finishes his steps.
+## Each physics frame A and D swing its steering unit, he walking round with its handle, and his
+## push gait says how far his feet carry him and how far its steering unit goes with him, along
+## the way the unit faces; the jack goes there if it can, turning about its load rollers' line,
+## he keeping behind its handle, or else stays against what stopped it while he finishes his
+## steps; every wheel rolls with the floor it covers.
 func _physics_process(delta: float) -> void:
 	if not held or not is_instance_valid(driver):
 		return
@@ -534,8 +593,8 @@ func _physics_process(delta: float) -> void:
 	if _under != null or _lowering >= 0.0:
 		steer = 0.0
 		drive = 0.0
+	_steer(steer, delta)
 	var pose := jack.global_transform
-	var ahead := _ahead(pose)
 	var arms := VAN_REACH if bool(driver.get("stooping")) else (PULL_REACH if drive < 0.0
 		else PUSH_REACH)
 	var lead := clampf((arms - _reach) * LEAD_GAIN, -LAG_MOST, LEAD_MOST)
@@ -545,32 +604,38 @@ func _physics_process(delta: float) -> void:
 	var carry := moved.y
 	var chosen := pose
 	if not is_zero_approx(carry):
-		var free := false
-		for turn: float in [steer * TURN_PER_METRE * absf(carry), 0.0]:
-			var candidate := Transform3D(Basis(Vector3.UP, turn) * pose.basis,
-				pose.origin + ahead * carry)
-			if not _blocked(candidate):
-				chosen = candidate
-				free = true
-				break
-		if not free:
+		var candidate := _rolled(pose, carry)
+		if _blocked(candidate):
 			carry = 0.0
 			driver.call("push_blocked")
+		else:
+			chosen = candidate
 	var after := clampf(_reach + carry - feet, GRIP_BACK - REACH_SPARE / 5.0,
 		VAN_REACH + REACH_SPARE)
-	var heading := _ahead(chosen)
-	var spot := chosen.origin - heading * after
+	var along := _along(chosen)
+	var spot := _grip_spot(chosen, after)
 	_enter(chosen, drive)
-	driver.call("push_step", spot - driver.global_position, heading, delta)
+	var asked := spot - driver.global_position
+	asked.y = 0.0
+	var stepped: Vector3 = driver.call("push_step", asked, along, delta)
+	var stopped := asked.length() > STOPPED_STEP \
+		and Vector2(stepped.x, stepped.z).length() < asked.length() * STOPPED_SHARE
+	_stopped_for = _stopped_for + delta if stopped else 0.0
+	if _stopped_for >= STOPPED_FOR:
+		driver.call("push_blocked")
+	_pace = absf(feet) / maxf(delta, 0.0001)
 	if not is_zero_approx(carry):
-		var follows := driver.global_position + heading * after
-		follows.y = pose.origin.y
-		jack.global_transform = Transform3D(chosen.basis, follows)
-	var apart := jack.global_position - driver.global_position
-	_reach = Vector2(apart.x, apart.z).dot(Vector2(heading.x, heading.z))
+		var short := stepped - asked
+		short.y = 0.0
+		var followed := _rolled(pose, carry + short.dot(along))
+		if not _blocked(followed):
+			jack.global_transform = followed
+	var apart := _pivot(jack.global_transform) - driver.global_position
+	_reach = Vector2(apart.x, apart.z).dot(Vector2(along.x, along.z)) + STEER_AXIS
+	_roll()
 	if carried != null:
 		carried.global_transform = _load_pose(jack.global_transform)
-	_turn_handle(steer, delta)
+	_turn_handle(delta)
 	var hand: Node3D = _tiller if _tiller != null else jack
 	var bars: Array[Vector3] = [hand.global_basis * (LOOP[3] - LOOP[2]),
 		hand.global_basis * (LOOP[6] - LOOP[7])]
@@ -581,6 +646,91 @@ func _physics_process(delta: float) -> void:
 			"door": REAR_DOOR.x + REAR_DOOR.y - HEAD_ROOM, "rear": VAN_REAR, "side": VAN_SIDE,
 			"by_door": BY_THE_DOOR}
 	driver.call("keep_clear_of", _handle_pieces(hand), ROD, roof)
+
+
+## The jack at `pose` once its steering unit has gone `carry` along the way it faces: its
+## heading turned by -carry·sin(δ)/L about its load rollers' line, taken at the step's middle
+## so the rollers' line does not slide sideways.
+func _rolled(pose: Transform3D, carry: float) -> Transform3D:
+	var turn := -carry * sin(_swing) / WHEELBASE
+	var middle := Basis(Vector3.UP, turn / 2.0) * pose.basis
+	var pivot := _pivot(pose) + _along(Transform3D(middle, pose.origin)) * carry
+	var basis := Basis(Vector3.UP, turn) * pose.basis
+	return Transform3D(basis, pivot - basis * Vector3(0.0, 0.0, STEER_AXIS))
+
+
+## The steering unit's axis at `pose`, on the floor.
+func _pivot(pose: Transform3D) -> Vector3:
+	return pose * Vector3(0.0, 0.0, STEER_AXIS)
+
+
+## The way the steering unit faces at `pose`, swung by `swing` from the jack's heading.
+func _along(pose: Transform3D, swing: float = _swing) -> Vector3:
+	return Basis(Vector3.UP, swing) * _ahead(pose)
+
+
+## A or D swings the steering unit toward 105 degrees, and let go it eases back straight: no
+## faster than he swings a handle, nor than his walk carries him round behind it (SIDE_SHARE
+## of his pace over his distance from its axis); standing, no farther than STAND_SWING. It
+## does not swing where he would have no room to stand behind it.
+func _steer(steer: float, delta: float) -> void:
+	var arm := maxf(_reach - STEER_AXIS, 0.3)
+	var rate := minf(STEER_RATE, SIDE_SHARE * _pace / arm)
+	var target := -steer * STEER_SWING
+	if _pace < 0.05:
+		rate = STEER_RATE
+		target = clampf(target, -STAND_SWING, STAND_SWING) if absf(_swing) <= STAND_SWING \
+			else _swing
+	var swing := move_toward(_swing, target, rate * delta)
+	if is_equal_approx(swing, _swing):
+		return
+	if absf(swing) > absf(_swing) and not _room_at(_reach, swing):
+		return
+	_swing = swing
+
+
+## Every wheel turned by the floor it covered since the last frame along the way it rolls: the
+## steer wheels along the steering unit's facing, each load roller along the jack's heading.
+func _roll() -> void:
+	var wheels: Array[Node3D] = []
+	if _steer_wheels != null:
+		wheels.append(_steer_wheels)
+	wheels.append_array(_rollers)
+	if _rolled_from.size() != wheels.size():
+		_rolled_from.clear()
+		for wheel in wheels:
+			_rolled_from.append(wheel.global_position)
+		return
+	for index in range(wheels.size()):
+		var wheel := wheels[index]
+		var moved := wheel.global_position - _rolled_from[index]
+		moved.y = 0.0
+		var axis := wheel.get_parent_node_3d().global_basis.z
+		var radius := STEER_RADIUS if wheel == _steer_wheels else ROLLER_RADIUS
+		wheel.rotation.x = wrapf(wheel.rotation.x + moved.dot(axis) / radius, -PI, PI)
+		_rolled_from[index] = wheel.global_position
+
+
+## The frame at the forks' height: lowered 24 mm under where it is drawn, raised as it is pumped;
+## the steering unit and its wheels stay on the floor, and so do the load rollers, each bogie
+## turning about its rollers' middle as its pin rides up in the fork.
+func _frame() -> void:
+	if _chassis == null:
+		return
+	var rise := _forks * FORKS_RAISED - FRAME_DROP
+	_chassis.position.y = rise
+	for roller in _rollers:
+		roller.position.y = ROLLER_RADIUS - rise
+	var drawn := atan2(BOGIE_PIN.x - ROLLER_HUB, BOGIE_PIN.y - ROLLERS_MIDDLE)
+	var riding := atan2(BOGIE_PIN.x - ROLLER_RADIUS + rise, BOGIE_PIN.y - ROLLERS_MIDDLE)
+	for bogie in _bogies:
+		bogie.position.y = ROLLER_RADIUS - rise
+		bogie.rotation.x = drawn - riding
+
+
+## How far the load is off what it rests on: nothing until the forks meet its deck.
+func _load_lift() -> float:
+	return maxf(_forks * FORKS_RAISED - FORKS_MEET, 0.0)
 
 
 ## The handle's rod and loop as straight pieces in the world, in pairs of ends: its rod from
@@ -596,7 +746,7 @@ func _handle_pieces(hand: Node3D) -> PackedVector3Array:
 ## The handle tilted down toward where Ethan's hands are in the clip he plays, about its foot, as
 ## far as a real one goes, or upright when his hands are off it; the steering unit under it
 ## turned with A and D.
-func _turn_handle(steer: float, delta: float) -> void:
+func _turn_handle(delta: float) -> void:
 	if _tiller == null or _steering == null:
 		return
 	var tilt := 0.0
@@ -608,8 +758,7 @@ func _turn_handle(steer: float, delta: float) -> void:
 		_tiller.rotation.x = maxf(tilt - _pump_depth * sin(PI * _stroke / STROKE), 0.0)
 	else:
 		_tiller.rotation.x = move_toward(_tiller.rotation.x, tilt, TILT_RATE * delta)
-	_steering.rotation.y = move_toward(_steering.rotation.y, -steer * STEER_SWING,
-		STEER_RATE * delta)
+	_steering.rotation.y = _swing
 
 
 ## Let go of, the handle springs back upright and the steering unit straightens.
@@ -721,8 +870,8 @@ func _in_van() -> bool:
 		or (absf(standing.x) < VAN_SIDE and standing.z < VAN_REAR + CLEAR)
 
 
-func _grip_spot(pose: Transform3D, reach: float = GRIP_BACK) -> Vector3:
-	return pose.origin - _ahead(pose) * reach
+func _grip_spot(pose: Transform3D, reach: float = GRIP_BACK, swing: float = _swing) -> Vector3:
+	return _pivot(pose) - _along(pose, swing) * (reach - STEER_AXIS)
 
 
 ## How far behind the jack taking it puts him: to pump a load up, as far back as there is room up
@@ -745,10 +894,10 @@ func _room_behind() -> bool:
 	return _room_at(GRIP_BACK)
 
 
-func _room_at(reach: float) -> bool:
+func _room_at(reach: float, swing: float = _swing) -> bool:
 	if not is_instance_valid(driver):
 		return false
-	var spot := _grip_spot(jack.global_transform, reach)
+	var spot := _grip_spot(jack.global_transform, reach, swing)
 	spot.y = driver.global_position.y
 	var exclude: Array[RID] = [driver.get_rid()]
 	for holder: Node3D in [jack] + _loads:
@@ -803,7 +952,7 @@ func _load_on_forks() -> Node3D:
 func _load_pose(pose: Transform3D) -> Transform3D:
 	var ahead := _ahead(pose)
 	return Transform3D(Basis(Vector3.UP, atan2(ahead.x, ahead.z)),
-		pose.origin + ahead * LOAD_AHEAD + Vector3.UP * LIFT * _forks)
+		pose.origin + ahead * LOAD_AHEAD + Vector3.UP * _load_lift())
 
 
 func _load_size(stack: Node3D) -> Vector3:

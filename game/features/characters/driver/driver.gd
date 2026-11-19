@@ -541,7 +541,7 @@ func push_step(motion: Vector3, facing: Vector3, delta: float) -> Vector3:
 	if _step_top < INF:
 		velocity.y = 0.0
 	else:
-		velocity.y = -0.5 if is_on_floor() else fall - 18 * delta
+		velocity.y = 0.0 if is_on_floor() else fall - 18 * delta
 		_step_up(Vector3(velocity.x, 0.0, velocity.z))
 	move_and_slide()
 	var went := Vector2(global_position.x - before.x, global_position.z - before.z)
