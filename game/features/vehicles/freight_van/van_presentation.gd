@@ -105,6 +105,11 @@ const DROP_MARGIN := 0.02
 const DUMP_SECONDS := 0.7
 const MOON_ROOF := Rect2(-0.52, -0.8, 1.04, 0.44)
 const MOON_ROOF_HEIGHT := 2.226
+## The lamps' rain lands on the moon roof's glass (#330): a collider under it, its top face just
+## over the glass and deep enough that no drop passes it in a tick, as the windshield's are.
+const MOON_ROOF_SKIN := 0.003
+const MOON_ROOF_STOP_DEPTH := 0.3
+const MOON_ROOF_STOP_MARGIN := 0.02
 const ROOF_TOP := 2.231
 const ROOF_FRAME := Vector3(0.05, 2.18, 2.228)
 const ROOF_SEAL := 0.02
@@ -1210,6 +1215,14 @@ func _moon_roof() -> void:
 	glass.name = "MoonRoofGlass"
 	glass.rotation.x = -PI / 2
 	glass.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var stop := GPUParticlesCollisionBox3D.new()
+	stop.name = "MoonRoofCollider"
+	stop.size = Vector3(MOON_ROOF.size.x + MOON_ROOF_STOP_MARGIN, MOON_ROOF_STOP_DEPTH,
+		MOON_ROOF.size.y + MOON_ROOF_STOP_MARGIN)
+	stop.position = Vector3(centre.x, MOON_ROOF_HEIGHT + MOON_ROOF_SKIN
+		- MOON_ROOF_STOP_DEPTH * 0.5, centre.y)
+	stop.cull_mask = 0xFFFFFFFF ^ VanParticles.PASSENGER_LAYER
+	_cabin.add_child(stop)
 	var rain := ShaderMaterial.new()
 	rain.shader = SIDE_RAIN
 	rain.set_shader_parameter("seed", 29.0)

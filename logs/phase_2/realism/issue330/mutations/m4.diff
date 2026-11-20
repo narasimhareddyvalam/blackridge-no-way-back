@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut330/m4/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 16:28:51
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut330/m4/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 16:34:45
+@@ -107,7 +107,7 @@
+ const MOON_ROOF_HEIGHT := 2.226
+ ## The lamps' rain lands on the moon roof's glass (#330): a collider under it, its top face just
+ ## over the glass and deep enough that no drop passes it in a tick, as the windshield's are.
+-const MOON_ROOF_SKIN := 0.003
++const MOON_ROOF_SKIN := -0.05
+ const MOON_ROOF_STOP_DEPTH := 0.3
+ const MOON_ROOF_STOP_MARGIN := 0.02
+ const ROOF_TOP := 2.231

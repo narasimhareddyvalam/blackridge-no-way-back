@@ -4546,6 +4546,53 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the red lens's glow inside the housing, so it reads as part of the lamp.
      - **Asked** whether it is right now; **the author chose** "Right, run suites + commit".
 
+345. **#330: rain inside, and the passenger wiper's water**
+     - **Asked** where the rain inside was seen; **the author answered** "in the yard in front of
+       the loading deck, i looked up ."
+     - **Asked** whether to run one short window run (about 40 s) to film the passenger wiper's
+       water close up at its top turn and the yard in front of bay 9 looking up; **the author
+       chose** "Yes, run it".
+     - **Found:** the cab sits under the dock front's rain when the van is docked at bay 9, and
+       the moon roof's glass is see-through and casts no shadow, so the rain's collider likely
+       misses it; the wipers were already on slow, so the capture switched them off.
+     - **Asked** for a second window run (the van docked, looking up from the seat, then the glass
+       made visible to the collider in the capture only; the passenger wiper close up); **the
+       author chose** "Yes, run it (Recommended)".
+     - **Found in its stills (`captures/issue330/`):** rain falling in the cab before the middle
+       seat: the converter cuts the moon roof's opening, its glass is see-through, and the rain's
+       height-field collider takes no see-through surface, so the opening is a hole (the
+       windshield has its own colliders); the passenger blade's line of water drawn as a column
+       of pale flat tiles (24 pieces 6-8 cm long, 1-1.3 cm wide, sliding sideways); and rain seen
+       straight up from the yard pointing every way.
+     - **Asked** how to fix it (A: a thin collider over the moon roof's glass, as the
+       windshield's; B: the line as a thin clear continuous ridge, about 60 short overlapping
+       pieces 2-3 mm wide, staying where the blade turned, dimmer; or A only; or A, B and the
+       look-up rain); **the author chose** "A and B (Recommended)".
+     - **Built:** A, `MoonRoofCollider` under the moon roof's glass (`van_presentation.gd`),
+       `test_moon_roof_rain.gd` 0/4 then 4/4; B, the line's ten settings
+       (`wiper_flick.tscn`), `test_wiper_flick_config.gd` 441/451 then 451/451. **Asked** for a
+       stills run; **the author chose** "Yes, run it (Recommended)". Stills in
+       `captures/issue330/fixed/`: no rain in the cab in six looks, the rain landing on the glass,
+       the line thin and clear.
+
+346. **The windshield's water as a real one**
+     - **Prompt** (verbatim): "[Image #4] [Image #5] - this is real life wipers, i want this kind
+       of effect and physics."
+     - The images (context only, not filed): at night through an unwiped windshield, a heavy film
+       of large merged drops, each bending the lights behind it into blobs; and a pair of blades
+       mid-sweep, the glass ahead of the blade thick with water that smears the lamps into
+       streaks, a bright ridge of water along the blade's edge, the swept glass clear but wet,
+       fresh drops and the rain's streaks landing on it at once.
+     - **Asked** whether to commit #330's fixes first (mutations and every suite, then one
+       commit); **the author chose** "Run suites + commit (Recommended)".
+     - **Asked** how to start the windshield's water (four steps: the heavy film that breaks the
+       lights into blobs; the lamps smeared ahead of the blade; the bright ridge on the blade's
+       edge; the wiped glass clear but wet, refilling); **the author chose** "Plan it in 4 steps
+       (Recommended)". The plan: `docs/PHASE_BRIEF.md`, "Brief 2026-11-20 (Phase 2, the
+       windshield's water as a real one (#346), planned, not built)".
+     - **Prompts** (verbatim): "ok"; "show me the windshield plan" (shown: steps 0-4 as in the
+       brief); "okay go ahead" (step 0 after #330's commit).
+
 ## Waiting for the author
 
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen

@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: F1: its steering wheel, drive wheels, steer wheels and mast cut free, each about its own pivot (missing: ; off: )
+PASS: F1: the carriage rides the mast, and the body no longer holds the wheels (its lowest 0.18 m)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _check_work (res://tests/test_forklift.gd:86)
+       [7] _run (res://tests/test_forklift.gd:74)
+PASS: F2: it works its two trips (179 s)
+PASS: F2: no wheel scrubs sideways (the worst 1.15°) and its heading turns at v·tan(δ)/L (within 0.3%)
+PASS: F3: its inner steer wheel never past 80° (75.0°)
+PASS: F4: every wheel rolls its distance over its radius (within 0.0%)
+PASS: F5: its steering wheel at the steer's share of 2.25 turns to lock (off 0.000 turns), never faster than 1.5 turns a second (1.50, in turn at 0.30 m/s)
+PASS: F6: its mast tilted back 3-5° with a load on the move (0 frames out), level at take and leave (0.00°)
+PASS: F7: its forks rise at 0.35 m/s and lower at 0.50 m/s
+PASS: F8: its blue spot lit whenever it moves (0 frames dark)
+PASS: F10: his left hand on the spinner knob, each hand within 8 cm of what it holds through both trips (the farthest 0.070 m)
+PASS: F10: his right hand on the lever when he stands, on the guard's post as he backs (0.000 m, turn, backing, 0.80 m/s, still 0), his chest turned 30° backing
+PASS: F9: it and its load never pass through anything solid ()
+FORKLIFT RESULT: 13/13 passed; 0 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

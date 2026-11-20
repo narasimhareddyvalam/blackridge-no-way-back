@@ -494,3 +494,18 @@ Claude Code wrote these revisions from that list.
 - **Also decided (#167):** B2 stays as tuned although it is over its GPU budget, 1.11 ms of GPU
   time against §8's 0.30 ms, and is reported so (`TEST-REPORT.md`, "GPU price"). §8's
   predictions stay as written.
+
+### 2026-11-20, revision 12 (Phase 2, #330): the passenger blade's line of water (Claude Code, at the author's request)
+
+- **Found:** in a close window still, `PassengerLine` (revision 7, #160) drew as a column of pale
+  flat tiles: 24 pieces 6-8 cm long and 1-1.3 cm wide, scattered over 48 cm, sliding sideways.
+- **Changed (the author's choice, #345):** `amount` 24 → 60; `emission_box_extents`
+  (0.004, 0.24, 0.001) → (0.001, 0.24, 0.0005); `initial_velocity` 0.2-0.6 → 0.02-0.08 m/s;
+  `scale` 1.0-1.3 → 0.2-0.3 (pieces 2-3 mm wide, 1.2-1.8 cm long, overlapping); alpha keys
+  `0:0.95, 0.8:0.8, 1:0` → `0:0.55, 0.8:0.45, 1:0`; the material's `sky` 2 → 0.8, `scatter`
+  10 → 4, `min_pixels` 2 → 1. A thin clear ridge where the blade turned. §8's A1 peak becomes
+  2 × (24 + 120 + 14 + 120 + 24 + 100 + 60) + 200 = 1,124 particles.
+- **Evidence:** `game/tests/test_wiper_flick_config.gd` 451/451; stills
+  `captures/issue330/8_passenger_close_02.png` (before) and
+  `captures/issue330/fixed/8_passenger_close_02.png` (after);
+  mutations `logs/phase_2/realism/issue330/mutations/`.

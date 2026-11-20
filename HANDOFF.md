@@ -1,5 +1,32 @@
 # HANDOFF.md
 
+**This run (2026-11-20, #330: rain in the cab and the passenger wiper's water, #345; the
+windshield's water planned, #346):**
+- **Found** (two window runs at the author's OK, `tools/captures/capture_330.gd`, stills in
+  `captures/issue330/`): docked at bay 9 the cab stands under the dock front's rain; the moon
+  roof's opening (cut by `convert_iveco.py`) has see-through glass, which a lamp rain's height-field
+  collider never takes, so rain fell onto the seats. The passenger blade's line of water drew as
+  pale flat tiles. Seen, not fixed: rain seen straight up points every way.
+- **Built:** `MoonRoofCollider` under the glass (`van_presentation.gd`, `_moon_roof()`); the
+  `PassengerLine` as a thin clear ridge (`game/effects/wiper_flick.tscn`, ten settings,
+  `CHANGE-BRIEF.md` revision 12); new `game/tests/test_moon_roof_rain.gd`; new values in
+  `game/tests/test_wiper_flick_config.gd`. Records: `docs/PHASE_BRIEF.md` (the #330 revision and
+  the windshield's brief), the prompt log #345-#346.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/issue330/red scripts/run-test.sh
+  test_moon_roof_rain.gd 60` exit 1, 0/4 (before the fix); `.../green` exit 0, 4/4.
+  `test_wiper_flick_config.gd` 441/451 (red), 451/451 (green); `test_wiper_flick_state.gd` 27/27,
+  `test_lamp_rain_state.gd` 16/16. Mutations (`python3 -I
+  logs/phase_2/realism/issue330/mutations/mutations_330.py <scratch> <out>`): six, all exit 1.
+  Suites: `bash logs/phase_2/realism/issue330/suites/run_suites.sh <scratch>`: 57 runs exit 0,
+  no script or shader errors, art check 0 failures (`suites/SUMMARY.txt`); the logs' missing
+  `weathered_plank_siding_diff_2k.jpg` error was in the tail lamps' run too. Stills committed: the
+  ones the records cite; the rest of `captures/issue330/` (222 MB) stays local, untracked.
+- **Committed:** #330 on `develop` (not pushed). Step 0's capture (`capture_windshield.gd`) is
+  written, not committed, not yet run.
+- **Next:** the windshield's water in four steps (`docs/PHASE_BRIEF.md`, planned, #346): the
+  author approves the plan, then step 0's stills (a window run, ask first), then step 1 only.
+- **Unverified:** the stills are single frames; the author's own look comes last.
+
 **This run (2026-11-19/20, fix 4 of the Mission 2 audit, the dock worker, #333-#343; not committed):**
 - **Built:** the seal cutscene (`seal_cutscene.gd`); the seal log at its true size in his hands
   (it had been 1/100: the skeleton's scale, #337), its page and this van's row (BR 048, the seal's

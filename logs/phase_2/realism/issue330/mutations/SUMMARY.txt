@@ -1,0 +1,22 @@
+m1  no collider under the moon roof test_moon_roof_rain.gd exit 1, 0/4 passed; 4 failed
+      FAIL: R1: a collider in the van covers the whole moon roof opening, its top face no more than 10 mm over the glass a
+      FAIL: R2: it stops every lamp's rain and splashes (20 rain volumes)
+      FAIL: R3: it leaves the passenger blade's water alone, as the windshield's colliders do
+      FAIL: R4: it rides with the van: still over the opening after the van is moved and turned
+m2  it takes only the passenger water test_moon_roof_rain.gd exit 1, 2/4 passed; 2 failed
+      FAIL: R2: it stops every lamp's rain and splashes (20 rain volumes)
+      FAIL: R3: it leaves the passenger blade's water alone, as the windshield's colliders do
+m3  too thin: drops pass it in a tick test_moon_roof_rain.gd exit 1, 0/4 passed; 4 failed
+      FAIL: R1: a collider in the van covers the whole moon roof opening, its top face no more than 10 mm over the glass a
+      FAIL: R2: it stops every lamp's rain and splashes (20 rain volumes)
+      FAIL: R3: it leaves the passenger blade's water alone, as the windshield's colliders do
+      FAIL: R4: it rides with the van: still over the opening after the van is moved and turned
+m4  below the glass                test_moon_roof_rain.gd exit 1, 0/4 passed; 4 failed
+      FAIL: R1: a collider in the van covers the whole moon roof opening, its top face no more than 10 mm over the glass a
+      FAIL: R2: it stops every lamp's rain and splashes (20 rain volumes)
+      FAIL: R3: it leaves the passenger blade's water alone, as the windshield's colliders do
+      FAIL: R4: it rides with the van: still over the opening after the van is moved and turned
+m5  the line back to 24 pieces     test_wiper_flick_config.gd exit 1, 450/451 passed; 1 failed
+      FAIL: PassengerLine.amount = 60 (found 24)
+m6  the line wide again            test_wiper_flick_config.gd exit 1, 450/451 passed; 1 failed
+      FAIL: PassengerLine process.scale_min = 0.2 (found 0.30000001192093)

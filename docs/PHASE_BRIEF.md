@@ -8256,3 +8256,63 @@ and no gas station: the town is backdrop blocks from z 207.
   only; reverse white in the clear sections; unlit with the engine off. `test_dash_screen.gd` 16/16
   (its reversing check reads the lamps' reverse). Five mutations exit 1. Stills shown and kept
   (`captures/tail_lamps/`).
+
+## Revision 2026-11-20 (Phase 2, #330: rain in the cab and the passenger wiper's water, built)
+
+- **Found (two window runs at the author's OK, stills in `captures/issue330/`):** docked at bay 9
+  the van's cab stands under the dock front's rain (z 20.5-24 m), and rain fell in the cab before
+  the middle seat. The converter cuts the moon roof's opening through the roof (`convert_iveco.py`)
+  and its glass is see-through, which a lamp rain's height-field collider never takes, so the
+  opening was a hole; the windshield had its own colliders (`van_particles.gd`), the moon roof
+  none. The passenger blade's line of water at its top turn drew as a column of pale flat tiles: 24
+  pieces 6-8 cm long and 1-1.3 cm wide, scattered over 48 cm and sliding sideways at 0.2-0.6 m/s.
+- **Built (the author's "A and B", #345):** A, `MoonRoofCollider` under the moon roof's glass
+  (`van_presentation.gd`), its top 3 mm over the glass, 0.3 m deep so no drop passes it in a tick,
+  taking every particle but the passenger blade's water, as the windshield's do: the rain lands and
+  splashes on the glass. B, the line a thin clear ridge where the blade turned
+  (`wiper_flick.tscn`, `PassengerLine`): 60 pieces (24), 2-3 mm wide and 1.2-1.8 cm long,
+  overlapping (scale 0.2-0.3, was 1-1.3), within 1 mm of the line (box x 0.001, was 0.004),
+  hardly moving (0.02-0.08 m/s, was 0.2-0.6), dimmer (alpha 0.55 → 0.45, was 0.95 → 0.8; `sky`
+  0.8, was 2; `scatter` 4, was 10; `min_pixels` 1, was 2). A1's peak becomes 1,124 particles
+  (1,052). Recorded in `CHANGE-BRIEF.md` revision 12.
+- **Tested:** `test_moon_roof_rain.gd` (new) 0/4 then 4/4: over the whole opening, its top within
+  10 mm of the glass and at least 0.2 m deep; it stops all 20 lamp volumes' rain and splashes;
+  not the passenger water; still over the opening with the van moved and turned.
+  `test_wiper_flick_config.gd` 441/451 then 451/451 (the ten new values). Six mutations exit 1.
+  Stills (`captures/issue330/fixed/`): no rain in the cab in six looks at the seats, the rain
+  landing on the moon roof's glass from above, the line thin and clear.
+- **Seen, not fixed:** rain seen straight up from the yard points every way (each streak faces
+  the camera's plane, so a drop falling at the eye takes its slant's noise for its direction).
+
+## Brief 2026-11-20 (Phase 2, the windshield's water as a real one (#346), planned, not built)
+
+The author's two photographs (context only, not filed): at night through unwiped glass, a heavy
+film of large merged drops, each bending the lights behind it into blobs; and blades mid-sweep,
+the glass ahead of the blade thick with water that smears the lamps into wavy streaks, a bright
+ridge of water along the blade's edge, the swept glass clear but wet, fresh drops landing on it at
+once. The glass is `windshield.gdshader` with `rain_drops.gdshaderinc` (the van's folder, not
+`game/shaders/`); it has drop layers, runners, a ridge at the blade, its dump at the turn, a wipe
+mask and the lamps' glare already. Values marked † are Claude Code's proposals.
+
+- **Step 0, the look now:** stills from the driver's eye on the street-lamp road at night, the
+  wipers off after 30 s of rain, and on fast mid-sweep (a new `tools/captures/capture_windshield.gd`,
+  one window run at the author's OK), kept as each step's "before".
+- **Step 1, the heavy film:** on unwiped glass the drops grow and merge into irregular blobs up to
+  the size at which `rain_physics.gd` starts a drop sliding at the glass's rake (then they run, as
+  the runners do now), covering most of the glass within about 20 s at rest in heavy rain†. Each
+  drop is a real lens: it shows a small inverted image of a wide patch of the scene behind it
+  (about 8°†), so a lamp behind the glass appears in every drop near it, the lights broken into
+  blobs; small drops show small images.
+- **Step 2, the lamps smeared ahead of the blade:** where the film is thick, the scene behind is
+  read along a short wavy vertical streak (five taps over 1-3% of the screen's height†), so lamps
+  become wavy columns, as in the second photograph; none on freshly wiped glass.
+- **Step 3, the ridge on the blade's edge:** the bow wave 6-12 mm wide† (14 mm now), lumpy, its
+  crest catching the lamps ahead (the glare points) as a bright wavy line, carried with the blade
+  and thrown at the turn, where A1's flick already fires.
+- **Step 4, the wiped glass clear but wet:** behind the blade a thin film that never dries in this
+  rain (the lights a little wavy, a shift of 0.3-0.5% of the screen†) and new drops landing at once
+  at the rain's rate, about 5-10% of the glass covered again within a fast stroke (0.91 s)†.
+- **Each step:** tests first (the shader's uniforms read back headless, and the glass's water state
+  from `van_presentation.gd`: coverage rising with time unwiped, falling at each sweep, the ridge
+  carried and dumped), then labelled stills beside step 0's, then the author's OK before the next.
+  The windshield's GPU price is measured with the mission's (#296).
