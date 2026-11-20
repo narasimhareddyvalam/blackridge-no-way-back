@@ -23,8 +23,19 @@ windshield's water planned, #346):**
   ones the records cite; the rest of `captures/issue330/` (222 MB) stays local, untracked.
 - **Committed:** #330 on `develop` (not pushed). Step 0's capture (`capture_windshield.gd`) is
   written, not committed, not yet run.
-- **Next:** the windshield's water in four steps (`docs/PHASE_BRIEF.md`, planned, #346): the
-  author approves the plan, then step 0's stills (a window run, ask first), then step 1 only.
+- **Then the windshield's water, step 1 (#346):** step 0's stills (`captures/windshield/step0/`);
+  the soak (a second wipe map, 8 s), blobs to the slide radius, merged patches, the world's lamps
+  handed to the van by the app and the brightest eight caught in the water near them
+  (`windshield.gdshader`, `van_presentation.gd`, `rain_physics.gd`, `windshield_wipe_map.gd`,
+  `game/app/first_drive.gd`); `LOG_DIR=logs/phase_2/realism/windshield/step1e scripts/run-test.sh
+  test_windshield_water.gd 60` exit 0, 11/11; nine mutations exit 1
+  (`logs/phase_2/realism/windshield/mutations/`); suites
+  (`bash logs/phase_2/realism/windshield/suites/run_suites.sh <scratch>`): 58 runs exit 0, no
+  script or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop`
+  (not pushed), with `1_unwiped_ahead.png` and `2_sweep_04.png` of each stills pass; the other
+  frames stay local, untracked.
+- **Next:** step 2 (the lamps smeared ahead of the blade), planned in `docs/PHASE_BRIEF.md`:
+  the author's OK first, tests first, stills beside step 0's.
 - **Unverified:** the stills are single frames; the author's own look comes last.
 
 **This run (2026-11-19/20, fix 4 of the Mission 2 audit, the dock worker, #333-#343; not committed):**

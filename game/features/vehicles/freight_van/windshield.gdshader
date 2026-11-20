@@ -3,6 +3,14 @@ render_mode unshaded, cull_disabled, depth_draw_never, shadows_disabled;
 
 uniform sampler2D scene_color : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D wipe_mask : hint_default_white, filter_linear;
+uniform sampler2D soak_mask : hint_default_black, filter_linear;
+uniform float blob_most = 0.004;
+uniform float blob_lens = 0.046;
+uniform vec2 patch_width = vec2(0.015, 0.035);
+uniform float patch_height = 0.0058;
+uniform vec4 catch_points[8];
+uniform vec4 catch_colours[8];
+uniform float catch_reach = 0.056;
 uniform bool wipers_on = true;
 uniform float sweep_angle = -0.9;
 uniform float wetness : hint_range(0.0, 1.0) = 0.2;
@@ -56,6 +64,16 @@ const float CRACK_WIDTH = 0.0008;
 const float CRACK_RAYS = 14.0;
 const vec4 CRACK_RINGS = vec4(0.12, 0.24, 0.4, 0.58);
 const vec3 CRACK_TINT = vec3(0.62, 0.65, 0.68);
+const float BLOB_CELLS = 4.5;
+const int BLOB_LOBES = 3;
+const int CATCH_MOST = 8;
+const float CATCH_GAIN = 0.12;
+const float CATCH_FALL = 2.5;
+const float CATCH_GRAIN = 220.0;
+const float CATCH_RAGGED = 40.0;
+const float RUN_WANDER = 0.05;
+const float RUN_WOBBLE = 0.012;
+const float PATCH_WOBBLE = 0.35;
 
 #include "rain_drops.gdshaderinc"
 
@@ -134,6 +152,74 @@ vec4 blade_water(vec2 metres, float age) {
 	return best;
 }
 
+// The heavy film (#346): on glass the blades have not wiped for a while (soak), drops merge into
+// blobs of up to three lobes, growing with the soak to the largest that holds still (blob_most),
+// each a lens showing an inverted image of the scene behind it (blob_lens either side).
+vec4 blob_layer(vec2 metres, float soak, float salt) {
+	float cell = blob_most * BLOB_CELLS;
+	vec2 grid = metres / cell;
+	vec2 id = floor(grid);
+	if (hash(id + salt) > soak * rain) {
+		return vec4(0.0);
+	}
+	float grow = mix(0.45, 1.0, smoothstep(0.0, 1.0, soak));
+	float size = mix(0.6, 1.0, hash(id + salt + 2.3)) * grow / BLOB_CELLS;
+	vec2 centre = vec2(0.5) + (vec2(hash(id + salt + 3.1), hash(id + salt + 5.7)) - 0.5) * 0.2;
+	vec2 local = fract(grid);
+	vec4 best = vec4(0.0);
+	for (int lobe = 0; lobe < BLOB_LOBES; lobe++) {
+		float index = float(lobe);
+		float turn = hash(id + salt + 7.0 + index) * TAU;
+		float radius = lobe == 0 ? size : size * mix(0.45, 0.75, hash(id + salt + 11.0 + index));
+		vec2 at = lobe == 0 ? centre : centre + vec2(cos(turn), sin(turn)) * size * 0.75;
+		vec2 rel = (local - at) * vec2(1.0, 1.12);
+		float body = 1.0 - smoothstep(radius * 0.82, radius, length(rel));
+		best = strongest(best, vec4(rel / radius, body, blob_lens));
+	}
+	return best;
+}
+
+// Merged patches (#346): wide across the glass but no taller down it than a still drop is across,
+// since their hold and their weight both grow with their width; edges wavy; later than the drops.
+vec4 patch_layer(vec2 metres, float soak, float salt) {
+	vec2 cell = vec2(patch_width.y * 1.3, patch_height * 2.4);
+	vec2 grid = metres / cell;
+	vec2 id = floor(grid);
+	if (hash(id + salt) > soak * soak * rain * 0.6) {
+		return vec4(0.0);
+	}
+	vec2 half_size = vec2(mix(patch_width.x, patch_width.y, hash(id + salt + 1.9)) * 0.5,
+		patch_height * 0.5 * mix(0.7, 1.0, hash(id + salt + 4.3)));
+	vec2 centre = (id + 0.5 + (vec2(hash(id + salt + 6.1), hash(id + salt + 8.9)) - 0.5)
+		* vec2(0.15, 0.2)) * cell;
+	vec2 rel = metres - centre;
+	rel.y += (noise(vec2(rel.x * 160.0, salt + id.x)) - 0.5) * half_size.y * PATCH_WOBBLE * 2.0;
+	vec2 shape = rel / half_size;
+	float body = 1.0 - smoothstep(0.85, 1.0, length(shape));
+	return vec4(shape, body, blob_lens);
+}
+
+// The catch light (#346): water near a bright lamp seen through the glass takes its light, so the
+// lamps break up into the drops around them.
+vec3 catch_light(vec2 metres, vec4 drop) {
+	vec3 lit = vec3(0.0);
+	if (drop.z <= 0.0) {
+		return lit;
+	}
+	float rim = smoothstep(0.3, 1.0, length(drop.xy));
+	float own = smoothstep(0.3, 0.75, noise(metres * CATCH_GRAIN));
+	for (int index = 0; index < CATCH_MOST; index++) {
+		vec4 lamp = catch_points[index];
+		if (lamp.z <= 0.0) {
+			continue;
+		}
+		float ragged = mix(0.7, 1.35, noise(metres * CATCH_RAGGED + float(index) * 7.3));
+		float off = length(metres - lamp.xy) / catch_reach * ragged;
+		lit += catch_colours[index].rgb * lamp.z * exp(-off * off * CATCH_FALL);
+	}
+	return lit * CATCH_GAIN * drop.z * (0.3 + 0.7 * rim) * mix(0.15, 1.6, own);
+}
+
 float blade_blur(vec2 metres) {
 	float blade = -sweep_angle;
 	float trail = blade + blade_speed * SHUTTER;
@@ -175,8 +261,9 @@ vec4 runner(vec2 metres, float odometer, float direction, float phase, float sho
 	float length_run = mix(0.08, 0.45, hash(vec2(id, 6.3)));
 	float moved = min(slip(progress * RUN_EPOCH, id * 40.0), length_run);
 	float fade = (1.0 - smoothstep(0.85, 1.0, progress)) * shown;
-	float lane = (column + 0.5 + (hash(vec2(id, 7.7)) - 0.5) * 0.4) * RUN_LANE;
-	float path = lane + (noise(vec2(metres.y * 9.0, id * 50.0)) - 0.5) * 0.02;
+	float lane = (column + 0.5 + (hash(vec2(id, 7.7)) - 0.5) * 0.8) * RUN_LANE;
+	float path = lane + (noise(vec2(metres.y * 6.0, id * 50.0)) - 0.5) * RUN_WANDER
+		+ (noise(vec2(metres.y * 23.0, id * 13.0)) - 0.5) * RUN_WOBBLE;
 	float radius = runner_radius * mix(0.85, 1.35, hash(vec2(id, 9.9)));
 	float sliding = step(moved, length_run - 0.002);
 	float stretch = 1.0 + min(abs(runner_speed) * pace * 6.0, 1.5) * sliding;
@@ -299,6 +386,15 @@ void fragment() {
 		drop_travel, drop_speed, 0.016, 23.9);
 	vec4 drop_mix = strongest(strongest(drop, fine), strongest(settled, strongest(medium, large)));
 	drop_mix = strongest(drop_mix, runners);
+	float soak = texture(soak_mask, UV).r * kept;
+	vec2 blob_step = vec2(blob_most * BLOB_CELLS);
+	vec4 blobs = strongest(blob_layer(metres, soak, 3.7),
+		strongest(blob_layer(metres + blob_step * vec2(0.37, 0.61), soak, 17.1),
+			blob_layer(metres + blob_step * vec2(0.71, 0.23), soak, 29.3)));
+	drop_mix = strongest(drop_mix, blobs);
+	vec4 patches = strongest(patch_layer(metres, soak, 41.3),
+		patch_layer(metres + vec2(patch_width.y * 0.61, patch_height * 1.3), soak, 53.9));
+	drop_mix = strongest(drop_mix, patches);
 	vec4 water = blade_water(metres, age);
 	drop_mix = strongest(drop_mix, water);
 	float film = clamp(mix(0.08, 1.0, age) * wetness, 0.0, 1.0);
@@ -316,6 +412,7 @@ void fragment() {
 		+ glare_power.y * exp(-length(metres - glare_points.zw) / GLINT_REACH);
 	colour += glare_colour * near * GLARE_GLINT * drop_mix.z
 		* (0.3 + 0.7 * smoothstep(0.5, 1.0, length(drop_mix.xy)));
+	colour += catch_light(metres, drop_mix);
 	vec2 crack = crack_lines(metres);
 	vec3 shatter = CRACK_TINT * (0.22 + 1.4 * dot(around, vec3(0.333))) + glare_colour * near * 3.0;
 	colour = mix(colour, shatter, max(crack.x, crack.y));

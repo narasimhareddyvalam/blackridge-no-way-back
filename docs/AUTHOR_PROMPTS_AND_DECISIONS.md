@@ -4592,6 +4592,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
        windshield's water as a real one (#346), planned, not built)".
      - **Prompts** (verbatim): "ok"; "show me the windshield plan" (shown: steps 0-4 as in the
        brief); "okay go ahead" (step 0 after #330's commit).
+     - **Done:** #330 committed (`624a8b3`); step 0's stills (`captures/windshield/step0/`,
+       `tools/captures/capture_windshield.gd`): after 30 s unwiped, an even layer of small dark-
+       rimmed drops like fine specks, the lamps whole and sharp through it, no blobs or streaks; a
+       fast sweep changes little and its ridge hardly shows.
+     - **Asked** whether to build step 1 (the heavy film); **the author chose** "Build step 1
+       (Recommended)".
+     - **Built, not committed:** a second, slower wipe map (the soak, 8 s), blobs of up to three
+       lobes growing with it to the largest drop that holds still on the glass's rake (2.92 mm,
+       `RainPhysics.slide_radius`, less as the air pushes at speed), each a lens of 8 degrees;
+       `test_windshield_water.gd` 0/5 then 5/5. **Its stills (`captures/windshield/step1/`) barely
+       differ from step 0's:** at 1280 x 800 a 6 mm drop 0.9 m from the eye is 3-4 pixels, too
+       small for its image to show, and the lamps still do not break up.
+     - **Asked** how to go on (merged patches and the lamps' catch light; only the catch light;
+       bigger drops anyway); **the author chose** "Patches + catch light (Recommended)".
+     - **Built, not committed:** patches 1.5-3.5 cm wide, no taller down the glass than a still
+       drop is across (5.85 mm); the world's lamps handed to the van once by the app (107), the
+       brightest eight on the glass and not hidden lit into the water within the lens's 4 degrees
+       (5.6 cm); `test_windshield_water.gd` 5/10 then 10/10. Stills `captures/windshield/step1b/`
+       (the glow far too strong: frosted disks) and, at a fifth of the gain and a steeper fall,
+       `step1c/`: each lamp breaks into a cluster of lit drops, dark between; but each cluster is
+       a round disk, and the runners' cleared tracks show as straight slanted lines.
+     - **Asked** how it looks; **the author chose** "Fix both flaws (Recommended)".
+     - **Done:** each drop catches the light by its own grain and each cluster's edge is ragged;
+       the runners' lanes jittered more and their paths wander (5 cm and 1.2 cm, two scales). Look
+       changes only, checked by stills (`captures/windshield/step1d/`), not by a headless test;
+       `test_windshield_water.gd` still 10/10.
+     - **Asked** whether step 1 is right; **the author chose** "Right: suites + commit
+       (Recommended)". W11 added first (none of the lamps caught is hidden: facing the shed, 27
+       lamps on the glass behind its walls), 11/11; nine mutations exit 1.
 
 ## Waiting for the author
 

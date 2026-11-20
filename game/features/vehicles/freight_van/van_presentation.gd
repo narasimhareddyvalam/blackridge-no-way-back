@@ -143,6 +143,19 @@ const WipeMap = preload("windshield_wipe_map.gd")
 const Wiper = preload("wiper.gd")
 const VanParticles = preload("van_particles.gd")
 const WIPE_MAP_SIZE := Vector2i(512, 256)
+## The heavy film (#346): unwiped glass soaks over tens of seconds (a second wipe map), its drops
+## merging into blobs up to the largest that holds still; each blob a lens showing an inverted
+## image of BLOB_PATCH_HALF either side of the driver's line of sight.
+const SOAK_SECONDS := 8.0
+const BLOB_PATCH_HALF := 4.0
+## Merged patches, wide but no taller down the glass than a still drop is across; and the catch
+## light: the brightest CATCH_MOST of the world's lamps seen through the glass, not hidden (at most
+## CATCH_RAYS rays a frame), lit into the water near each.
+const PATCH_WIDTH := Vector2(0.015, 0.035)
+const CATCH_MOST := 8
+const CATCH_RAYS := 16
+const CATCH_FALLOFF := 15.0
+const CATCH_SEEN_NEAR := 0.6
 const DOOR_SWING := 0.541
 const REAR_SWING := PI * 1.5
 const REAR_DOOR_SECONDS := 2.4
@@ -227,6 +240,8 @@ var _reverse_lights: Array[SpotLight3D] = []
 var _indicators: Array[MeshInstance3D] = []
 var _tires: Array[Node3D] = []
 var _glass: ShaderMaterial
+var lamps: Array[Light3D] = []
+var _lamp_ray := PhysicsRayQueryParameters3D.new()
 var _high_beams_shown: bool = false
 var _rain_layers: Array[MeshInstance3D] = []
 var _beam_rain_material: ShaderMaterial
@@ -283,6 +298,7 @@ func configure(van: CharacterBody3D) -> void:
 	_ground_ray.exclude = [van.get_rid()]
 	_ground_ray.collision_mask = van.collision_mask
 	_glare_ray.collision_mask = 1
+	_lamp_ray.collision_mask = 1
 	add_child(_body)
 	add_child(_cabin)
 	_exterior()
@@ -680,6 +696,11 @@ func _windows_and_wipers() -> void:
 	_glass.shader = GLASS
 	_glass.set_shader_parameter("glass_size", WipeMap.GLASS_SIZE)
 	_glass.set_shader_parameter("wipe_mask", _wipe_map())
+	_glass.set_shader_parameter("soak_mask", _wipe_map(SOAK_SECONDS, "WindshieldSoakMap"))
+	_glass.set_shader_parameter("blob_most", _blob_most(0.0))
+	_glass.set_shader_parameter("blob_lens", tan(deg_to_rad(BLOB_PATCH_HALF))
+		/ (2.0 * tan(deg_to_rad(driving_camera.fov * 0.5))))
+	_glass.set_shader_parameter("patch_width", PATCH_WIDTH)
 	_glass.set_shader_parameter("drop_radii", RainPhysics.RADII)
 	_glass.set_shader_parameter("crack_point", NO_CRACK)
 	_glass.set_shader_parameter("crack_seed", 0.0)
@@ -898,6 +919,53 @@ func _update_glare(delta: float) -> void:
 	driving_camera.attributes.exposure_multiplier = 1.0 / (1.0 + DAZZLE * _adapt)
 	_glass.set_shader_parameter("glare_points", points)
 	_glass.set_shader_parameter("glare_power", _glare)
+
+
+func _catch_lamps() -> void:
+	var eye := driving_camera.global_position
+	var seen: Array[Array] = []
+	for lamp in lamps:
+		if not is_instance_valid(lamp) or not lamp.is_visible_in_tree() \
+				or lamp.light_energy <= 0.0:
+			continue
+		var at := _on_windshield(eye, lamp.global_position)
+		if at == OFF_GLASS:
+			continue
+		var to_eye := eye - lamp.global_position
+		var facing := 1.0
+		if lamp is SpotLight3D:
+			facing = 0.25 + 0.75 * maxf(0.0, (-lamp.global_basis.z).dot(to_eye.normalized()))
+		seen.append([lamp.light_energy * facing / (1.0 + pow(to_eye.length() / CATCH_FALLOFF,
+			2.0)), at, lamp])
+	seen.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+	var points := PackedVector4Array()
+	var colours := PackedVector4Array()
+	var rays := 0
+	for entry in seen:
+		if points.size() >= CATCH_MOST or rays >= CATCH_RAYS:
+			break
+		rays += 1
+		var lamp := entry[2] as Light3D
+		if _blocked(eye, lamp.global_position):
+			continue
+		var at: Vector2 = entry[1]
+		points.append(Vector4(at.x, at.y, entry[0], 0.0))
+		colours.append(Vector4(lamp.light_color.r, lamp.light_color.g, lamp.light_color.b, 1.0))
+	while points.size() < CATCH_MOST:
+		points.append(Vector4(OFF_GLASS.x, OFF_GLASS.y, 0.0, 0.0))
+		colours.append(Vector4.ZERO)
+	_glass.set_shader_parameter("catch_points", points)
+	_glass.set_shader_parameter("catch_colours", colours)
+	_glass.set_shader_parameter("catch_reach", tan(deg_to_rad(BLOB_PATCH_HALF))
+		* eye.distance_to(_windshield.global_position))
+
+
+func _blocked(eye: Vector3, target: Vector3) -> bool:
+	_lamp_ray.from = eye
+	_lamp_ray.to = target
+	_lamp_ray.exclude = [vehicle.get_rid()]
+	var hit := get_world_3d().direct_space_state.intersect_ray(_lamp_ray)
+	return not hit.is_empty() and (hit.position as Vector3).distance_to(target) > CATCH_SEEN_NEAR
 
 
 func _on_windshield(eye: Vector3, target: Vector3) -> Vector2:
@@ -1276,9 +1344,15 @@ func _blade_water(swing: float, delta: float) -> void:
 	_glass.set_shader_parameter("wiper_cycles", vehicle.wiper_cycles())
 
 
-func _wipe_map() -> Texture2D:
+func _blob_most(moving: float) -> float:
+	return RainPhysics.slide_radius(Vector2(0.0, -cos(WINDSHIELD_RAKE)),
+		Vector2(0.0, WINDSHIELD_AIR * moving))
+
+
+func _wipe_map(seconds: float = WipeMap.REWET_SECONDS,
+		label: String = "WindshieldWipeMap") -> Texture2D:
 	var viewport := SubViewport.new()
-	viewport.name = "WindshieldWipeMap"
+	viewport.name = label
 	viewport.size = WIPE_MAP_SIZE
 	viewport.disable_3d = true
 	viewport.use_hdr_2d = true
@@ -1287,6 +1361,7 @@ func _wipe_map() -> Texture2D:
 	add_child(viewport)
 	var painter := WipeMap.new()
 	painter.vehicle = vehicle
+	painter.rewet_seconds = seconds
 	painter.map_size = Vector2(WIPE_MAP_SIZE)
 	viewport.add_child(painter)
 	return viewport.get_texture()
@@ -1637,6 +1712,10 @@ func update_vehicle(delta: float) -> void:
 		Vector2.ZERO)
 	_roof_water.step(delta, ROOF_SLOPE, Vector2(0.0, -ROOF_AIR * moving), Vector2.ZERO)
 	_glass.set_shader_parameter("speed", moving)
+	var most := _blob_most(moving)
+	_glass.set_shader_parameter("blob_most", most)
+	_glass.set_shader_parameter("patch_height", most * 2.0)
+	_catch_lamps()
 	_glass.set_shader_parameter("drop_travel", _windshield_water.travel)
 	_glass.set_shader_parameter("drop_speed", _windshield_water.speed)
 	_glass.set_shader_parameter("runner_speed", _windshield_water.runner_speed)

@@ -128,6 +128,11 @@ func _ready() -> void:
 	driver.set("stairs", stairs)
 	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
 	world.compound.set("driver_eye", van.get_node("VanPresentation").driving_camera)
+	var lamps: Array[Light3D] = []
+	for light in world.find_children("*", "Light3D", true, false):
+		if light is SpotLight3D or light is OmniLight3D:
+			lamps.append(light)
+	van.get_node("VanPresentation").set("lamps", lamps)
 	seal_cutscene = SealCutscene.new()
 	seal_cutscene.name = "SealCutscene"
 	add_child(seal_cutscene)

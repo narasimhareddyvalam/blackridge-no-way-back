@@ -8316,3 +8316,30 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   from `van_presentation.gd`: coverage rising with time unwiped, falling at each sweep, the ridge
   carried and dumped), then labelled stills beside step 0's, then the author's OK before the next.
   The windshield's GPU price is measured with the mission's (#296).
+
+## Revision 2026-11-20 (Phase 2, the windshield's water, step 1 (#346), built)
+
+- **Step 0's stills (`captures/windshield/step0/`):** after 30 s unwiped, an even layer of small
+  dark-rimmed drops like fine specks, the lamps whole and sharp through it; the wiped glass's
+  wetness came back within about 2 s (`REWET_SECONDS`), so 30 s looked as 6 s.
+- **First built (the author's "Build step 1"):** a second, slower wipe map, the soak (8 s: 92% by
+  20 s, 53% by 6 s), wiped by the blades as the first is; blobs of up to three lobes growing with
+  it to the largest drop that holds still on the glass's rake (`RainPhysics.slide_radius`, 2.92 mm
+  at rest, less as the air pushes at speed); each a lens of 8 degrees from the driver's eye. Its
+  stills barely differed: a 6 mm drop 0.9 m from the eye is 3-4 pixels at 1280 x 800.
+- **Then (the author's "Patches + catch light"):** merged patches 1.5-3.5 cm wide but no taller
+  down the glass than a still drop is across (5.85 mm), since a patch's hold and its weight both
+  grow with its width; the world's lamps (107, spot and omni lights) handed to the van once by
+  `game/app/first_drive.gd`, and each frame the brightest eight seen through the glass and not
+  hidden (at most 16 rays) lit into the water within the lens's 4 degrees (5.6 cm on the glass);
+  at a fifth of the first gain, each drop catching by its own grain and each cluster's edge
+  ragged; the runners' lanes jittered more and their paths wander (the author's "Fix both flaws").
+- **Tested:** `test_windshield_water.gd` (new) 0/5, then 5/10, then 11/11: the shader's
+  uniforms; the slide radius holding below and sliding above; the blobs to it; the lens's 8
+  degrees; the soak a second wiped map filling over 8 s; the lamps handed over, none of the van's;
+  the brightest eight on the glass where each is seen, brightest first; none hidden (facing the
+  shed, 27 behind its walls); the catch's 5.6 cm; the patches' width and height. Nine mutations
+  exit 1. The grain, raggedness and wander are looks, checked by stills only
+  (`captures/windshield/step1/`, `step1b/` (too strong), `step1c/`, `step1d/`).
+- **Files:** `windshield.gdshader`, `van_presentation.gd`, `rain_physics.gd`,
+  `windshield_wipe_map.gd`, `game/app/first_drive.gd`, `tools/captures/capture_windshield.gd`.
