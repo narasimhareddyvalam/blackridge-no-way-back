@@ -11,6 +11,10 @@ uniform float patch_height = 0.0058;
 uniform vec4 catch_points[8];
 uniform vec4 catch_colours[8];
 uniform float catch_reach = 0.056;
+uniform float smear_reach = 0.02;
+uniform float ridge_width = 0.009;
+uniform float ridge_catch = 2.5;
+uniform float wiped_ripple = 0.004;
 uniform bool wipers_on = true;
 uniform float sweep_angle = -0.9;
 uniform float wetness : hint_range(0.0, 1.0) = 0.2;
@@ -45,7 +49,6 @@ const float RUN_LANE = 0.06;
 const float RUN_EPOCH = 0.5;
 const float BEAD_STEP = 0.011;
 const float BLADE_HALF = 0.0105;
-const float RIDGE_WIDTH = 0.014;
 const float STREAK_BAND = 0.006;
 const float ARM_HALF = 0.007;
 const float SHUTTER = 0.02;
@@ -126,14 +129,14 @@ vec4 blade_water(vec2 metres, float age) {
 		vec2 across = vec2(cos(angle), -sin(angle));
 		float lumps = mix(0.45, 1.35, noise(vec2(reach * 38.0,
 			side * 9.0 + floor(wiper_cycles * 2.0))));
-		float width = RIDGE_WIDTH * mix(0.35, 1.0, stroke_progress) * lumps * moving;
+		float width = ridge_width * mix(0.35, 1.0, stroke_progress) * lumps * moving;
 		float ahead = (angle - blade) * reach * lead - BLADE_HALF;
 		if (width > 0.0005 && ahead > 0.0 && ahead < width) {
 			float u = ahead / width * 2.0 - 1.0;
 			best = strongest(best, vec4(across * u * lead,
 				(1.0 - smoothstep(0.7, 1.0, abs(u))) * 0.95, 0.014));
 		}
-		float pile = RIDGE_WIDTH * lumps;
+		float pile = ridge_width * lumps;
 		float beyond = (top - angle) * reach - BLADE_HALF;
 		if (dump > 0.02 && beyond > 0.0 && beyond < pile) {
 			float u = beyond / pile * 2.0 - 1.0;
@@ -402,8 +405,10 @@ void fragment() {
 	float shift = -film_travel * 14.0;
 	vec2 ripple = vec2(noise(metres * 14.0 + vec2(0.0, shift)),
 		noise(metres * 14.0 + vec2(5.2, shift + 1.3))) - 0.5;
-	vec4 glass = wet_glass(drop_mix, film, smear, ripple * film * 0.012, SCREEN_UV,
-		vec3(-0.35, 0.55, 0.75));
+	float thick = smoothstep(0.35, 1.0, soak) * wetness;
+	vec2 sheet = ripple * (film * 0.012 + wiped_ripple * (1.0 - wet));
+	vec4 glass = wet_glass_streaked(drop_mix, film, smear, sheet, SCREEN_UV,
+		vec3(-0.35, 0.55, 0.75), smear_reach * thick);
 	float crest = water.z * pow(1.0 - min(length(water.xy), 1.0), 2.0);
 	vec3 around = textureLod(scene_color, SCREEN_UV, 3.5).rgb;
 	vec3 colour = glass.rgb + sky_glow.rgb * sky_view(drop_mix)
@@ -412,7 +417,7 @@ void fragment() {
 		+ glare_power.y * exp(-length(metres - glare_points.zw) / GLINT_REACH);
 	colour += glare_colour * near * GLARE_GLINT * drop_mix.z
 		* (0.3 + 0.7 * smoothstep(0.5, 1.0, length(drop_mix.xy)));
-	colour += catch_light(metres, drop_mix);
+	colour += catch_light(metres, drop_mix) + catch_light(metres, water) * (ridge_catch - 1.0);
 	vec2 crack = crack_lines(metres);
 	vec3 shatter = CRACK_TINT * (0.22 + 1.4 * dot(around, vec3(0.333))) + glare_colour * near * 3.0;
 	colour = mix(colour, shatter, max(crack.x, crack.y));

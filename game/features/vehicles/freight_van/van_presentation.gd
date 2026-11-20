@@ -156,6 +156,13 @@ const CATCH_MOST := 8
 const CATCH_RAYS := 16
 const CATCH_FALLOFF := 15.0
 const CATCH_SEEN_NEAR := 0.6
+## Steps 2-4 (#346): a thick film smears the lamps down it (of the screen's height); the ridge the
+## blade pushes, catching the lamps more brightly than a drop; the thin film behind the blade
+## bending the view (of the screen).
+const SMEAR_REACH := 0.02
+const RIDGE_WIDTH := 0.009
+const RIDGE_CATCH := 2.5
+const WIPED_RIPPLE := 0.004
 const DOOR_SWING := 0.541
 const REAR_SWING := PI * 1.5
 const REAR_DOOR_SECONDS := 2.4
@@ -701,6 +708,10 @@ func _windows_and_wipers() -> void:
 	_glass.set_shader_parameter("blob_lens", tan(deg_to_rad(BLOB_PATCH_HALF))
 		/ (2.0 * tan(deg_to_rad(driving_camera.fov * 0.5))))
 	_glass.set_shader_parameter("patch_width", PATCH_WIDTH)
+	_glass.set_shader_parameter("smear_reach", SMEAR_REACH)
+	_glass.set_shader_parameter("ridge_width", RIDGE_WIDTH)
+	_glass.set_shader_parameter("ridge_catch", RIDGE_CATCH)
+	_glass.set_shader_parameter("wiped_ripple", WIPED_RIPPLE)
 	_glass.set_shader_parameter("drop_radii", RainPhysics.RADII)
 	_glass.set_shader_parameter("crack_point", NO_CRACK)
 	_glass.set_shader_parameter("crack_seed", 0.0)

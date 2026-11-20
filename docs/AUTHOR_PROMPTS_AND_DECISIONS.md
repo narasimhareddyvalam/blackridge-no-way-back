@@ -4621,6 +4621,21 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** whether step 1 is right; **the author chose** "Right: suites + commit
        (Recommended)". W11 added first (none of the lamps caught is hidden: facing the shed, 27
        lamps on the glass behind its walls), 11/11; nine mutations exit 1.
+     - **Done:** suites 58 runs exit 0, art 0 failures; step 1 committed (`8d0f104`).
+
+347. **The windshield's water, steps 2-4**
+     - **Prompt** (verbatim): "yes finish all the steps and show me"
+     - **Built, not committed:** step 2, a thick film (the soak) smears the scene down it 2% of the
+       screen's height, each point of the streak seeing the light through differently tilted water
+       (`wet_glass_streaked` in `rain_drops.gdshaderinc`; the side windows' `wet_glass` unchanged);
+       step 3, the ridge 9 mm wide (14), catching the lamps 2.5 times as brightly as a drop; step
+       4, a thin film behind the blade bending the view 0.4% of the screen.
+       `test_windshield_water.gd` 11/14 then 14/14 (uniforms and values only; the looks are
+       checked by stills, `captures/windshield/step2/`); five mutations exit 1.
+     - **Shown** (a labelled sheet: before and now, unwiped, a fast sweep and the lamps close up);
+       **prompts** (verbatim): "open it for me"; "commit it once suites pass, i like them. thats
+       the detail i want for everything in my game, please remember to see pictures on internet
+       to get better point of view and this is basic level i want when you do any work."
 
 ## Waiting for the author
 

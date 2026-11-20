@@ -34,8 +34,18 @@ windshield's water planned, #346):**
   script or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop`
   (not pushed), with `1_unwiped_ahead.png` and `2_sweep_04.png` of each stills pass; the other
   frames stay local, untracked.
-- **Next:** step 2 (the lamps smeared ahead of the blade), planned in `docs/PHASE_BRIEF.md`:
-  the author's OK first, tests first, stills beside step 0's.
+- **Then steps 2-4 (#347, "yes finish all the steps and show me"):** the thick film smears the
+  lamps down it (`wet_glass_streaked`, `rain_drops.gdshaderinc`), the ridge 9 mm and brighter, a
+  thin film behind the blade; `test_windshield_water.gd` 14/14; five mutations exit 1
+  (`windshield/mutations_step2/`); suites
+  (`bash logs/phase_2/realism/windshield/suites_step2/run_suites.sh <scratch>`): 58 runs exit 0,
+  no script or shader errors, art check 0 failures. The author liked the stills and asked to
+  commit; committed on `develop` (not pushed).
+- **New standing rule (#347):** before any work, look up real photos on the internet and compare
+  my stills with them side by side; this windshield's depth is the baseline.
+- **Next:** the rest of Mission 2's audit (booths, gates, container yard, docks, others), then
+  step 6 (patrol guards, renders first). Seen, not fixed: rain seen straight up points every way.
+- **Unverified:** the windshield's water in motion (stills only).
 - **Unverified:** the stills are single frames; the author's own look comes last.
 
 **This run (2026-11-19/20, fix 4 of the Mission 2 audit, the dock worker, #333-#343; not committed):**

@@ -1,0 +1,10 @@
+t1  no smear                       test_windshield_water.gd exit 1, 13/14 passed; 1 failed
+      FAIL: W12: where the film is thick the lamps smear down it 0.0% of the screen's height (missing [])
+t2  the ridge as wide as before    test_windshield_water.gd exit 1, 13/14 passed; 1 failed
+      FAIL: W13: the ridge the blade pushes is 14.0 mm wide and catches the lamps 2.5 times as brightly as a drop
+t3  the ridge no brighter than a drop test_windshield_water.gd exit 1, 13/14 passed; 1 failed
+      FAIL: W13: the ridge the blade pushes is 9.0 mm wide and catches the lamps 1.0 times as brightly as a drop
+t4  no film behind the blade       test_windshield_water.gd exit 1, 13/14 passed; 1 failed
+      FAIL: W14: behind the blade a thin film bends the view 0.00% of the screen
+t5  a smear of 6%                  test_windshield_water.gd exit 1, 13/14 passed; 1 failed
+      FAIL: W12: where the film is thick the lamps smear down it 6.0% of the screen's height (missing [])

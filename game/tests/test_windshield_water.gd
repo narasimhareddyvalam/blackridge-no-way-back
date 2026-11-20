@@ -7,7 +7,10 @@ extends SceneTree
 ## taller down the glass than a drop that holds still (its weight and its hold both grow with its
 ## width), and every drop and patch near a bright lamp catches its light (#346, the author's
 ## "Patches + catch light"): the world's lamps are handed to the van once, and the brightest eight
-## on the glass, not hidden, are drawn into the water near them.
+## on the glass, not hidden, are drawn into the water near them. Step 2: where the film is thick,
+## the lamps smear down it into wavy columns, 1-3% of the screen's height. Step 3: the ridge the
+## blade pushes 6-12 mm wide, catching the lamps more brightly than a drop. Step 4: behind the
+## blade a thin film that bends the view 0.3-0.5% of the screen.
 
 const RainPhysics = preload("res://features/vehicles/freight_van/rain_physics.gd")
 const WipeMap = preload("res://features/vehicles/freight_van/windshield_wipe_map.gd")
@@ -21,6 +24,10 @@ const PATCH_MOST := 0.035
 const FACING_LAMPS := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14))
 const FACING_SHED := Transform3D(Basis.IDENTITY, Vector3(-60.0, 0.1, 34.0))
 const SEEN_NEAR := 0.6
+const LATER_UNIFORMS: Array[String] = ["smear_reach", "ridge_width", "ridge_catch", "wiped_ripple"]
+const SMEAR := Vector2(0.01, 0.03)
+const RIDGE := Vector2(0.006, 0.012)
+const RIPPLE := Vector2(0.003, 0.005)
 const PATCH_HALF := 4.0
 const SLIDE_LEAST := 0.002
 const SLIDE_MOST := 0.008
@@ -102,6 +109,19 @@ func _run() -> void:
 		% [seconds, SOAKED_BY.y * 100.0, SOAKED_BY.x, STILL_GROWING_AT.y * 100.0,
 		STILL_GROWING_AT.x])
 	await _catches(van, presentation, glass, names)
+	var later := LATER_UNIFORMS.filter(func(name: String) -> bool: return not names.has(name))
+	var smear := _float(glass, "smear_reach")
+	_check(later.is_empty() and smear >= SMEAR.x and smear <= SMEAR.y, ("W12: where the film is "
+		+ "thick the lamps smear down it %.1f%% of the screen's height (missing %s)")
+		% [smear * 100.0, later])
+	var ridge := _float(glass, "ridge_width")
+	var bright := _float(glass, "ridge_catch")
+	_check(ridge >= RIDGE.x and ridge <= RIDGE.y and bright > 1.0, ("W13: the ridge the blade "
+		+ "pushes is %.1f mm wide and catches the lamps %.1f times as brightly as a drop")
+		% [ridge * 1000.0, bright])
+	var ripple := _float(glass, "wiped_ripple")
+	_check(ripple >= RIPPLE.x and ripple <= RIPPLE.y, ("W14: behind the blade a thin film bends "
+		+ "the view %.2f%% of the screen") % [ripple * 100.0])
 	_finish()
 
 

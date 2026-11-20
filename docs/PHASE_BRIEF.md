@@ -8343,3 +8343,18 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   (`captures/windshield/step1/`, `step1b/` (too strong), `step1c/`, `step1d/`).
 - **Files:** `windshield.gdshader`, `van_presentation.gd`, `rain_physics.gd`,
   `windshield_wipe_map.gd`, `game/app/first_drive.gd`, `tools/captures/capture_windshield.gd`.
+
+## Revision 2026-11-20 (Phase 2, the windshield's water, steps 2-4 (#346), built)
+
+- **Built (the author's "yes finish all the steps and show me"):** step 2, where the film is
+  thick (the soak) the scene behind is read along a short wavy streak down it, 2% of the screen's
+  height, each point seeing the light through a differently tilted piece of water (a mix of the
+  streak's mean and its brightest, `wet_glass_streaked` in `rain_drops.gdshaderinc`; the side
+  windows' `wet_glass` is unchanged), so lamps smear into wavy columns; none on wiped glass. Step
+  3, the ridge the blade pushes 9 mm wide (14 mm), lumpy as before, catching the lamps behind it
+  2.5 times as brightly as a drop; it shows only where a lamp is behind it. Step 4, behind the
+  blade a thin film bending the view 0.4% of the screen; fresh drops land on the swept glass at
+  once (the wet map's 2 s, unchanged).
+- **Tested:** `test_windshield_water.gd` 11/14 then 14/14: the four uniforms and their values
+  (smear 1-3%, ridge 6-12 mm and brighter than a drop, ripple 0.3-0.5%); five mutations exit 1.
+  The looks are checked by stills (`captures/windshield/step2/`), not by a headless test.
