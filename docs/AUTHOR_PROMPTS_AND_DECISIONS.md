@@ -4510,6 +4510,41 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked** whether to commit fix 4 to `develop`, not pushed, the films and stills (made before
        the walkway) and the tail lamp's mask script left out; **the author chose** "Commit it
        (Recommended)".
+     - **Done:** fix 4 committed as `eda1036`; the tail lamps built (only the lens's red sections
+       lit, the brake five times the tail), `test_tail_lamps.gd` 5/5, four mutations exit 1, 56
+       suite runs exit 0.
+     - **Asked** whether to commit the tail lamps; **the author answered** "show me before
+       commiting in a picture"; stills taken (before, tail, braking), the lit lens made solid red
+       plastic (the model's lens is see-through metal, which glowed pink), the comparison opened.
+     - **Prompt** (verbatim, on the comparison): "thats not how real van lights look in real life,
+       its disgusting. it has gaps so stupid. go look at the pciture yourself"
+     - **Found:** the gaps are the converter's (`convert_iveco.py`, 2026-11-01): it cut the rear
+       "indicators" off the top of the red lens by height, leaving spikes; under the lamp's clear
+       cover the model has a whole red prism lens, a clear middle section with a chrome reflector
+       and a red strip below; the lit lens made solid hid the prisms, and the cover's material is
+       milky metal (metallic 1.0), which glowed pink.
+
+344. **The tail lamps like a real one**
+     - **Prompts** (verbatim): "can you open it again"; "[Image #2] - is that an indicator?";
+       "[Image #3] - i want something like this with the diamonds texture you added"
+     - The image: a rear lamp from another make of van and its van from behind: a glossy red lens
+       with a fine prism texture, a clear section on its inner side with a chrome reflector.
+     - **Asked** whether to build it on the Daily's lamp (a glossy red lens with its prisms showing,
+       lit or not; the clear section with its reflector, the indicator amber and the reverse white
+       there; no gaps; a small lamp shader in the van's folder; tests first, then pictures before
+       any commit); **the author chose** "Yes, build it (Recommended)".
+     - **Built:** `tail_lamp.gdshader` and its masks (red lens; chrome reflector), the two cut
+       pieces wearing the same lamp, the reversing band mesh dropped; `test_tail_lamps.gd` 6/6,
+       `test_dash_screen.gd` 16/16. Stills shown.
+     - **Asked** whether it is right; **the author answered** "i liked what you gave before this";
+       **asked** which, **the author chose** "The Blender picture" (the lamp with its cover off):
+       the lens now glows in its own colours, its prisms showing, the cover nearly clear.
+     - **Asked** again; **the author answered** "i think it kind of looks like gap but i know its
+       not, add little bit of more details for indicator section maybe? do you get what i am
+       saying"
+     - **Done:** the clear section's chrome reflector shows its own facets and catches a little of
+       the red lens's glow inside the housing, so it reads as part of the lamp.
+     - **Asked** whether it is right now; **the author chose** "Right, run suites + commit".
 
 ## Waiting for the author
 

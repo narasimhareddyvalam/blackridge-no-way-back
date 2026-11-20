@@ -1,0 +1,10 @@
+t1  the brake no brighter than the tail test_tail_lamps.gd exit 1, 5/6 passed; 1 failed
+      FAIL: T4: the engine on, the red lens glows (0.35), and braking (the brake key held) at least five times as bright (
+t2  lit with the engine off        test_tail_lamps.gd exit 1, 5/6 passed; 1 failed
+      FAIL: T1: with the engine off the tail lamps are unlit, the lens still there to see
+t3  the gaps back: the cut pieces in their own dark lens test_tail_lamps.gd exit 1, 5/6 passed; 1 failed
+      FAIL: T2: the tail lamps' lens and the two pieces the converter cut from its red lens wear one lamp, drawn by the la
+t4  the indicator on the other side's lamp test_tail_lamps.gd exit 1, 5/6 passed; 1 failed
+      FAIL: T5: the left indicator (its key) flashes the left lamp's clear section amber (0.00 at its brightest) and leave
+t5  no reversing light in the lamps test_tail_lamps.gd exit 1, 5/6 passed; 1 failed
+      FAIL: T6: in reverse the clear sections shine white (0.00), and not in drive

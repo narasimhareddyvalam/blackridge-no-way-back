@@ -29,9 +29,20 @@
   from a metre up) survives: his way now passes 0.47 m clear of the staged load it guarded.
 - **Unverified:** the look of the final round has not been filmed (the author: "Later"); the
   film in `captures/seal_cutscene/` predates the walkway. The author's own look comes last.
-- **Next:** commit fix 4 (asked), then the tail lamps (approved, #343: only the lens's red
-  sections lit, by the mask; brake at least 5 times the tail; tests first), then #330 (cabin rain,
-  passenger wiper), the rest of the audit, step 6.
+- **Committed:** fix 4 as `eda1036` on `develop` (not pushed).
+- **Then the tail lamps (#343, #344, built, not committed):** `tail_lamp.gdshader` (van's folder)
+  with the lens's own texture and its masks (`tools/art/make_tail_lamp_mask.py` →
+  `freight_van/art/iveco/tail_lamp_masks.png`): the red prism lens glowing in its own colours (stop
+  5x tail, UN R7), the clear section's chrome reflector catching the red, amber for its own side's
+  indicator, white in reverse; the converter's two cut pieces wear the same lamp (no gaps); the
+  reversing band mesh dropped (`van_presentation.gd`); `test_dash_screen.gd`'s reversing check reads
+  the lamps. `LOG_DIR=logs/phase_2/realism/tail_lamps/after4 scripts/run-test.sh test_tail_lamps.gd
+  60 300` exit 0, 6/6; five mutations exit 1 (`tail_lamps/mutations/`); stills
+  `captures/tail_lamps/` (the author: "Right, run suites + commit"); every suite rerun (see
+  `tail_lamps/suites/SUMMARY.txt`).
+- **Next:** #330, the rain the author saw "inside the cabin" and the passenger wiper's water
+  (being found: so far no lamp rain volume reaches over the van's cab or the shed's floor; the
+  author's image came from a stills camera at bay 9), then the rest of the audit, step 6.
 
 
 **Last run:** Phase 2, step 2f part 1 (#243–#246), 2026-11-12, on the author's second Claude account:

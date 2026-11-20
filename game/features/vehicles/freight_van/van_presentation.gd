@@ -55,7 +55,6 @@ const TYRE_RADIUS := 0.359
 const WHEEL_SPOTS: Array[Vector3] = [Vector3(-0.872, 0, -1.507), Vector3(0.872, 0, -1.507),
 	Vector3(-0.872, 0, 1.997), Vector3(0.872, 0, 1.997)]
 const HEADLIGHT := Vector3(0.64, 1.15, -2.31)
-const REVERSE_LENS := Vector2(0.92, 1.08)
 const REVERSE_LAMP := Vector3(0.86, 1.0, 2.84)
 const REVERSE_ENERGY := 6.0
 const REVERSE_RANGE := 14.0
@@ -65,10 +64,22 @@ const REVERSE_GAIN := 3.0
 const REVERSE_CAMERA := Vector3(0, 2.22, 2.84)
 const REVERSE_TURN := Vector3(-PI / 4.0, PI, 0)
 const REVERSE_FIELD := 85.0
-const TAIL_GLOW := Vector2(0.25, 1.0)
+## The tail lamps (#343, #344), drawn as a real van's by `tail_lamp.gdshader` with the lens's own
+## texture and its masks (`tools/art/make_tail_lamp_mask.py`): a clear glossy cover over a red
+## prism lens and a clear section with a chrome reflector; the red lens glowing a lamp's deep red
+## (near 630 nm) through its prisms, the stop five times the tail, as UN Regulation 7 asks of a
+## stop lamp over a rear position lamp (at least 5:1), and the red they throw on the road behind in
+## the same ratio; the indicator amber and the reversing lamp white in the clear section. The two
+## pieces the converter once cut from the top of the red lens by height (`RearIndicatorLeft`,
+## `...Right`) wear the same lamp, so it is whole.
+const TAIL_LAMP := preload("res://features/vehicles/freight_van/tail_lamp.gdshader")
+const TAIL_MASKS := preload("res://features/vehicles/freight_van/art/iveco/tail_lamp_masks.png")
+const TAIL_LENS := 0.35
+const STOP_LENS := 1.75
+const REAR_INDICATORS: Array[String] = ["RearIndicatorLeft", "RearIndicatorRight"]
+const TAIL_GLOW := Vector2(0.2, 1.0)
 const TAIL_GLOW_RANGE := 5.0
-const INDICATORS: Array[String] = ["FrontIndicatorLeft", "RearIndicatorLeft",
-	"FrontIndicatorRight", "RearIndicatorRight"]
+const INDICATORS: Array[String] = ["FrontIndicatorLeft", "FrontIndicatorRight"]
 const TILT_RATE := 10.0
 const SETTLE := 60.0
 const BLADE_FLIP := 0.14
@@ -207,8 +218,6 @@ var _window_glass: Array[ShaderMaterial] = []
 var _window_lowered: Array[float] = [0.0, 0.0]
 var _headlights: Array[SpotLight3D] = []
 var _front_lenses: Array[MeshInstance3D] = []
-var _rear_lamps: Array[MeshInstance3D] = []
-var _reverse_lenses: MeshInstance3D
 var _reverse_lights: Array[SpotLight3D] = []
 var _indicators: Array[MeshInstance3D] = []
 var _tires: Array[Node3D] = []
@@ -257,10 +266,8 @@ var _glare_ray := PhysicsRayQueryParameters3D.new()
 var _trim := Build.material(Color("141c22"), 0.86)
 var _seal := Build.material(Color("0b0d0f"), 0.55)
 var _amber := Build.luminous(Color("ff9e30"), 1.2)
-var _red := Build.luminous(Color("e1442e"))
-var _tail := Build.luminous(Color("68251e"))
+var _lamp: ShaderMaterial
 var _lens_on := ShaderMaterial.new()
-var _lens_reversing := Build.luminous(Color("f4f1e6"), 2.5)
 
 
 func configure(van: CharacterBody3D) -> void:
@@ -352,7 +359,12 @@ func _exterior() -> void:
 	var headlights := outside.get_node("Headlights") as MeshInstance3D
 	var tail_lamps := outside.get_node("TailLamps") as MeshInstance3D
 	_front_lenses.append(headlights)
-	_rear_lamps.append(tail_lamps)
+	_lamp = _tail_lamp(tail_lamps)
+	tail_lamps.material_override = _lamp
+	for label in REAR_INDICATORS:
+		var piece := outside.get_node(label) as MeshInstance3D
+		piece.material_override = _lamp
+		piece.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	for label in INDICATORS:
 		_indicators.append(outside.get_node(label) as MeshInstance3D)
 	for lens: MeshInstance3D in _indicators + [headlights, tail_lamps,
@@ -371,7 +383,7 @@ func _exterior() -> void:
 		headlight.light_cull_mask = 1
 		_body.add_child(headlight)
 		_headlights.append(headlight)
-	_reversing_lamps(tail_lamps)
+	_reversing_lamps()
 	_tail_glow_lights()
 	for label in TYRES:
 		_tires.append(outside.get_node(label) as Node3D)
@@ -907,33 +919,18 @@ func _hidden(eye: Vector3, target: Vector3) -> bool:
 	return not get_world_3d().direct_space_state.intersect_ray(_glare_ray).is_empty()
 
 
-func _reversing_lamps(tail: MeshInstance3D) -> void:
-	var arrays := tail.mesh.surface_get_arrays(0)
-	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
-	var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
-	var order: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
-	if order.is_empty():
-		order = PackedInt32Array(range(vertices.size()))
-	var frame := (tail.get_parent() as Node3D).transform * tail.transform
-	var tool := SurfaceTool.new()
-	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for corner in range(0, order.size(), 3):
-		var middle := (vertices[order[corner]] + vertices[order[corner + 1]]
-			+ vertices[order[corner + 2]]) / 3.0
-		var height := (frame * middle).y
-		if height < REVERSE_LENS.x or height > REVERSE_LENS.y:
-			continue
-		for point in range(corner, corner + 3):
-			tool.set_normal(normals[order[point]])
-			tool.add_vertex(vertices[order[point]] + normals[order[point]] * 0.0015)
-	_reverse_lenses = MeshInstance3D.new()
-	_reverse_lenses.name = "ReversingLenses"
-	_reverse_lenses.mesh = tool.commit()
-	_reverse_lenses.material_override = _lens_reversing
-	_reverse_lenses.transform = frame
-	_reverse_lenses.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_reverse_lenses.visible = false
-	_body.add_child(_reverse_lenses)
+## The tail lamps' lamp: the lens's own texture and its masks, drawn by `tail_lamp.gdshader`.
+func _tail_lamp(lamps: MeshInstance3D) -> ShaderMaterial:
+	var lamp := ShaderMaterial.new()
+	lamp.shader = TAIL_LAMP
+	lamp.set_shader_parameter("lens",
+		(lamps.mesh.surface_get_material(0) as BaseMaterial3D).albedo_texture)
+	lamp.set_shader_parameter("masks", TAIL_MASKS)
+	return lamp
+
+
+## The reversing lamps' light on the ground behind; they shine in the tail lamps' clear sections.
+func _reversing_lamps() -> void:
 	for side in [-1, 1]:
 		var lamp := SpotLight3D.new()
 		lamp.position = Vector3(side * REVERSE_LAMP.x, REVERSE_LAMP.y, REVERSE_LAMP.z)
@@ -1590,19 +1587,20 @@ func update_vehicle(delta: float) -> void:
 	for lens in _front_lenses:
 		_light_lens(lens, vehicle.headlights_on, vehicle.headlights_on and vehicle.high_beams)
 	var reversing: bool = vehicle.gear < 0 and vehicle.engine_on
-	_reverse_lenses.visible = reversing
+	_lamp.set_shader_parameter("reverse", 1.0 if reversing else 0.0)
 	for lamp in _reverse_lights:
 		lamp.visible = reversing
-	for lamp in _rear_lamps:
-		lamp.material_override = (_red if vehicle.braking else _tail) if vehicle.engine_on else null
+	_lamp.set_shader_parameter("red", (STOP_LENS if vehicle.braking else TAIL_LENS)
+		if vehicle.engine_on else 0.0)
 	for glow in _tail_glow:
 		glow.visible = vehicle.engine_on
 		glow.light_energy = TAIL_GLOW.y if vehicle.braking else TAIL_GLOW.x
 	for index in range(_indicators.size()):
-		var side := -1 if index < 2 else 1
+		var side := -1 if index == 0 else 1
 		var lit: bool = vehicle.indicator_lit and (
 			vehicle.hazards_on or vehicle.indicator == side)
 		_indicators[index].material_override = _amber if lit else null
+		_lamp.set_shader_parameter("amber_left" if side < 0 else "amber_right", 1.0 if lit else 0.0)
 	for index in range(_tires.size()):
 		_tires[index].rotation.y = vehicle.steering * 0.4 if index % 2 == 0 else 0.0
 		_tires[index].rotation.x -= vehicle.actual_speed * delta / TYRE_RADIUS

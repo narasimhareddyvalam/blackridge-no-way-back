@@ -250,8 +250,9 @@ func _check_reversing_lamps() -> void:
 	for lamp in lamps:
 		var aim := _van.global_basis.inverse() * -lamp.global_basis.z
 		lit = lit and lamp.light_energy > 0.0 and lamp.light_cull_mask & 1 != 0 and aim.y < -0.05
-	var lens := _van.find_child("ReversingLenses", true, false) as GeometryInstance3D
-	var glowing := lens != null and lens.visible
+	var tail_lamps := _van.find_child("TailLamps", true, false) as MeshInstance3D
+	var lamp := tail_lamps.material_override as ShaderMaterial if tail_lamps != null else null
+	var glowing := lamp != null and float(lamp.get_shader_parameter("reverse")) > 0.0
 	var gain := 1.0
 	var view: SubViewport = _presentation.get("reverse_view")
 	for child in view.get_children():

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t2/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:48:04
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t2/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:57:23
+@@ -1591,7 +1591,7 @@
+ 	for lamp in _reverse_lights:
+ 		lamp.visible = reversing
+ 	_lamp.set_shader_parameter("red", (STOP_LENS if vehicle.braking else TAIL_LENS)
+-		if vehicle.engine_on else 0.0)
++		if true else 0.0)
+ 	for glow in _tail_glow:
+ 		glow.visible = vehicle.engine_on
+ 		glow.light_energy = TAIL_GLOW.y if vehicle.braking else TAIL_GLOW.x

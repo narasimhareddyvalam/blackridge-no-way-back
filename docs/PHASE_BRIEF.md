@@ -8232,3 +8232,27 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Tested:** `test_dock_worker.gd` 32/32 and `test_sealing.gd` 15/15; every suite (55 runs and the
   art check) exit 0 with no script or shader errors; 46 of 47 mutations exit 1, m29 surviving (his
   way now passes 0.47 m clear of the staged load that the floor's ray height guarded against).
+
+## Revision 2026-11-20 (Phase 2, the van's tail lamps (#338, #343, #344), built)
+
+- **Found:** the tail lamps' lens (`TailLamps`, its texture shared with the windows) is a clear
+  cover over a red prism lens and, in each lamp's middle, a clear section with a chrome reflector.
+  With the engine on, one unshaded dull red covered the whole of it. Its spikes and gaps were our
+  converter's (`convert_iveco.py`, 2026-11-01): it cut the rear "indicators" off the top of the red
+  lens by height; the reversing lamp was a band of the lens cut by height too, lit flat white.
+- **Built (the author's "Yes, build it", #343, #344, after a reference picture of a real van's
+  lamp):** `tail_lamp.gdshader` (in the van's folder) with the lens's own texture and its masks
+  (`tools/art/make_tail_lamp_mask.py` → `art/iveco/tail_lamp_masks.png`: red lens; chrome
+  reflector). The red lens glows in its own colours, its prisms showing as with its cover off (the
+  author's choice of the Blender picture), the stop five times the tail (UN Regulation 7) and the
+  road glow in the same ratio; the clear section's reflector shows its facets and catches a little
+  of the red inside the housing, so it reads as part of the lamp (#344), flashes amber for its own
+  side's indicator and shines white in reverse; the cover nearly clear and glossy. The two cut
+  pieces wear the same lamp, so each is whole; the reversing band mesh is gone (the lamps' light on
+  the ground behind stays).
+- **Tested:** `test_tail_lamps.gd` (new) 6/6: the lamp and its two pieces one lamp material; the
+  masks on the lens's red faces and its reflector, not on the cover; the brake key held, the stop
+  at least five times the tail; the left indicator's key flashing the left lamp's clear section
+  only; reverse white in the clear sections; unlit with the engine off. `test_dash_screen.gd` 16/16
+  (its reversing check reads the lamps' reverse). Five mutations exit 1. Stills shown and kept
+  (`captures/tail_lamps/`).
