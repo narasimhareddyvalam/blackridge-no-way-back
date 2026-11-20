@@ -36,6 +36,13 @@ const ROWS := 3
 const WRAP := Color(0.9, 0.93, 0.95, 0.22)
 const SEED := 225
 const FORK_GAP := 0.1
+## Each load's 4 x 6 in shipping labels (the audit's fourth fix, #329), on two adjacent faces, the
+## one toward the dock and the one on its right, 600 mm up near each face's right edge, as GS1's
+## pallet labels are placed (two adjacent sides, 400-800 mm up, at least 50 mm in from an edge).
+const LABEL := Vector2(0.102, 0.152)
+const LABEL_UP := 0.6
+const LABEL_IN := 0.1
+const LABEL_IMAGE := "res://features/environments/industrial_loop/art/fitout/shipping_label.png"
 
 
 static func build(shed: Node3D, floor_y: float) -> void:
@@ -56,7 +63,9 @@ static func build(shed: Node3D, floor_y: float) -> void:
 			top - bottom, ROWS * CARTON.z + 0.04), film).name = "StretchWrap"
 		_solid(stack, "LoadBody", Vector3(COLUMNS * CARTON.x + 0.03, top - FORK_GAP, PALLET.z),
 			Vector3.UP * FORK_GAP)
+		_label(stack)
 	var putaway := _putaway(shed, pallet, carton, film, floor_y)
+	_label(putaway)
 	source.free()
 	_floor_bay(shed, floor_y)
 	for layer in range(EMPTY_COUNT):
@@ -122,6 +131,28 @@ static func _pallet(shed: Node3D, scene: PackedScene, label: String, at: Vector3
 	pallet.rotation.y = yaw
 	shed.add_child(pallet)
 	return pallet
+
+
+## `stack`'s shipping labels on its stretch wrap, on the face toward the dock (+z) and on its
+## right (+x).
+static func _label(stack: Node3D) -> void:
+	var paper := StandardMaterial3D.new()
+	paper.albedo_texture = load(LABEL_IMAGE) as Texture2D
+	paper.roughness = 0.7
+	var quad := QuadMesh.new()
+	quad.size = LABEL
+	var half := Vector2(COLUMNS * CARTON.x + 0.03, ROWS * CARTON.z + 0.04) / 2.0
+	var faces := [["ShippingLabel", Vector3(half.x - LABEL_IN - LABEL.x / 2.0, LABEL_UP,
+		half.y + 0.003), 0.0], ["ShippingLabelSide", Vector3(half.x + 0.003, LABEL_UP,
+		-half.y + LABEL_IN + LABEL.x / 2.0), PI / 2.0]]
+	for face: Array in faces:
+		var label := MeshInstance3D.new()
+		label.name = face[0]
+		label.mesh = quad
+		label.material_override = paper
+		label.position = face[1]
+		label.rotation.y = face[2]
+		stack.add_child(label)
 
 
 static func _place(shed: Node3D, file: String, label: String, at: Vector3,

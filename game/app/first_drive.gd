@@ -5,6 +5,7 @@ const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
 const ShedSounds = preload("res://features/environments/industrial_loop/shed_sounds.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
+const SealCutscene = preload("res://features/missions/the_wrong_cargo/seal_cutscene.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -54,6 +55,8 @@ const MONTHS: Array[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
 var driver: CharacterBody3D
 var cargo: Node
 var title_camera: Camera3D
+## The dock hand's round to seal the van, shown as a cutscene (#333).
+var seal_cutscene: Node
 var _audio: Node
 var _on_title: bool = false
 var _changing: bool = false
@@ -125,6 +128,10 @@ func _ready() -> void:
 	driver.set("stairs", stairs)
 	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
 	world.compound.set("driver_eye", van.get_node("VanPresentation").driving_camera)
+	seal_cutscene = SealCutscene.new()
+	seal_cutscene.name = "SealCutscene"
+	add_child(seal_cutscene)
+	seal_cutscene.call("setup", hud, driver, van, world.transfer_shed)
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()
@@ -526,6 +533,11 @@ func _toggle_vsync() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or _ending or _ended:
+		return
+	if seal_cutscene != null and bool(seal_cutscene.get("playing")):
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			seal_cutscene.call("skip")
+			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("recover"):
 		_recover()

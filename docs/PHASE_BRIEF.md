@@ -7998,3 +7998,237 @@ and no gas station: the town is backdrop blocks from z 207.
 - **Unverified:** the look in motion. Standing, he slides round the 10-degree shuffle with no
   step until sidestep clips come (#327: Mixamo's Left and Right Strafe Walking, if the author
   downloads them). The dock worker is the audit's next item.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit: the dock worker, written before any code)
+
+- **Status:** the audit's fourth item (#321-#328), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (`dock_worker.gd`):**
+  - He walks every leg at a flat 1.4 m/s in his one walk clip, the dock stair's six 0.217 m
+    risers included, his hands at his sides, the rail (1.07 m) untouched.
+  - He sets off and stops at full pace, and at each stop he snaps round to face the doors,
+    the load or his chair in one frame.
+  - His scanner's red window glows the whole time he carries it. He never points it at
+    anything: no pallet has a label, and the beep comes at 1.0 s with no light.
+  - The seal appears on the van's hasp at 3.1 s without passing through his hand, and he
+    "notes" in the log with no pen. He has eight clips: idle, walk, seal, sit down, sit,
+    stand up, check, note.
+- **Real practice:**
+  - On stairs people slow to a step a tread (Di Giulio et al. 2019, as for Ethan: about 76 steps
+    a minute up and 117 down), a hand on the rail going down (OSHA 1910.25 rails are for
+    holding).
+  - Walking starts and stops over a step or two, and a person turns on the spot in a step or
+    two before setting off.
+  - A handheld scanner's aiming light shows only while its trigger is held, a fraction of a
+    second, and is pointed at the label. A good read gives a beep and a green flash (Zebra's
+    and Honeywell's handheld guides †). Shipping labels are 4 x 6 in, on the pallet's face
+    toward the dock.
+  - A bolt seal is taken from a pouch, pushed through the hasp and snapped shut, and its number
+    is written in the seal log with a pen.
+- **The parts †:**
+  - **4a, the stair:** on the flight he takes one tread a step, at Di Giulio's pace, each foot
+    set on its tread by leg IK as Ethan's are (`stair_steps.gd`'s method, ported to his
+    Biped legs), his walk clip slowed to match. His hand on the rail's side holds the rail by
+    arm IK, sliding along it; off the flight it lets go.
+  - **4b, starting, stopping and turning:** he gets up to pace over about 0.6 s and slows to a
+    stop on the last metre. Where he must face a new way standing, he turns on the spot over
+    0.5-1 s, with Rocketbox's turn clips if fetched (4e), or else his idle with his feet
+    stepping round.
+  - **4c, the scanner:** dark until he aims. Facing the load, he raises it toward a 4 x 6 in
+    shipping label on the load's face toward the lift (one is added to each staged load, its
+    printing drawn by script). Then the red aiming line runs from the scanner's window to the
+    label for 0.4 s, and the beep comes with a green flash of 0.2 s.
+  - **4d, the seal and the pen:** at the van he takes the bolt seal (bolt and cap) from his vest
+    into his right hand and holds it until it goes through the hasp (3.1 s), so it is in his
+    hand, then on the van. For the note a pen is in his right hand, taken from his vest, while
+    the log is in his left.
+  - **4e, more clips (optional):** from the same Rocketbox library (MIT, as his others):
+    `m_walk_start`, `m_walk_stop`, `m_turn_left_90`/`_180`, `m_turn_right_90`/`_180` and
+    `m_documents_take`.
+- **Rules a test can measure** (`test_dock_worker.gd` extended, `test_sealing.gd` as it is):
+  - on the flight a step takes 0.5-0.8 s, one tread a step, each planted foot within 3 cm of
+    its tread's top;
+  - his rail-side hand within 5 cm of the rail all the way down;
+  - his pace rising from 0 to 1.4 m/s over no less than 0.4 s, and falling to 0 over the last
+    metre;
+  - no turn standing faster than 360 degrees a second;
+  - the scanner's window dark except for 0.3-0.5 s of aiming, its line ending within 5 cm of
+    the label, then a green flash with the beep;
+  - the seal in his hand until it is on the hasp;
+  - a pen in his hand whenever he notes.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit: the dock worker (#329), built)
+
+- **Built:**
+  - **4e, his clips:** seven more from Microsoft Rocketbox (MIT, `convert_rocketbox.py`'s
+    `dock_worker` job, listed in `source_assets/rocketbox/README.md`): `WalkStart`, `WalkStop`,
+    `TurnLeft90`, `TurnLeft180`, `TurnRight90`, `TurnRight180` and `TakeDocuments`. The turns are
+    baked in place and his body is turned over each clip's first two thirds.
+  - **4a, the stair** (new `worker_stair.gd`): on the flight he takes a tread a step at Di
+    Giulio's cadence, 117 steps a minute down and 76 up (0.49 and 0.32 m/s across the floor).
+    His walk runs at that rate, each foot is set on a tread of its own by two-bone leg IK, and
+    his body stays 3 cm under his lower foot's tread. His hand on the rail's side holds the rail's
+    top by arm IK, sliding along it: left going down, beside his shoulder; right going up, a
+    little ahead. It lets go at the rail's ends. The seal log is in his other hand: his right
+    going out, his left coming back. His way down the flight is moved 0.2 m toward the rail
+    (`transfer_shed.gd`'s `WORKER_STAIR_WAY`), and `dock_access.gd` gives the rail's top line
+    (`rail_top()`).
+  - **4b, getting going, stopping, turning** (`dock_worker.gd`): up to 1.4 m/s at 2.8 m/s² in
+    his walk start, and down to a stop over his last metre at 0.98 m/s² in his walk stop. He
+    rounds corners on a curve, aiming 0.4 m ahead along his way, and slows before a corner
+    (to half his pace at a right angle, a fifth doubling back). He turns on the spot to face the
+    doors, the load or his desk, and before setting off on a way more than 45 degrees off.
+    Under 40 degrees he turns in his idle over 0.35 s, more in the turn clips; never over
+    360 degrees a second, never a snap. Found and fixed on the way: a one-frame stop at every
+    waypoint, and his way at bay 9 cutting the wheel guides' ends (moved to the middle of the
+    0.5 m between the dock face and the guides).
+  - **4c, the scanner:** its window dark until he aims. Aiming, a red line runs 0.4 s from the
+    window to the shipping label facing him, then the beep comes with a green light's 0.2 s
+    flash (the beep now 1.2 s into the look). Every staged load has two 4 x 6 in labels
+    (`dock_staging.gd`'s `_label()`, `shipping_label.png` drawn by `make_shed_signs.py`, every
+    name and number invented): on its dock-side face and on its right, 600 mm up, as GS1
+    places them.
+  - **4d, the seal and the pen:** the bolt seal (bolt and yellow cap) is in his right hand from
+    his turn to the doors until it is on the hasp; a ballpoint is in his right hand as he notes.
+- **Rules:** `test_dock_worker.gd` W12-W18, 8 checks more: 12/18 before
+  (`logs/phase_2/realism/fix04_dock_worker/a_before/`), then 19/19 (`d_after/`).
+  - W12: a tread a step, his feet taking turns, each step 0.45-0.85 s, each planted foot on its
+    tread.
+  - W13: his rail hand on the rail (0.028 m and 0.000 m off down and up), the log in his other
+    hand.
+  - W14: his pace never changing faster than 3.85 m/s² (2.8).
+  - W15: no snap, at most 360 degrees a second standing.
+  - W16: the seal in his hand until it is on the hasp; the pen in his hand all the time he
+    notes.
+  - W17: the scanner dark until he aims; the line on the label (0.000 m) for 0.40 s; a 0.22 s
+    green flash with the beep.
+  - W18: off the stair, walking, his toes never more than 3 cm under the floor (0.016).
+  - His round now takes 69.7 s, so its time limit in `test_dock_worker.gd` (ROUND) and
+    `test_sealing.gd` (SEAL_ROUND) rises from 60 s to 90 s; each change is written in.
+  - Seventeen mutations exit 1 (`mutations/`, `mutations_fix04.py`). A stop-and-turn rule at
+    doubling-back corners was removed when its mutation survived: rounding corners already
+    covers it.
+  - Every suite, `bash logs/phase_2/realism/fix04_dock_worker/suites/run_suites.sh <scratch>`:
+    55 runs exit 0 (`test_dock_worker.gd` 19/19, `test_sealing.gd` 13/13,
+    `test_shed_work.gd` 25/25).
+  - The art check: 1 failure (it expected his eight old clips), then 0 once taught his
+    fifteen. The headless import exits 0 (`import.log`).
+- **Stills:** `captures/dock_worker/fix04/` (`tools/captures/capture_dock_worker_fix04.gd`):
+  down the stair with his hand on the rail, the seal in his hand at the hasp, noting (the pen
+  is out of frame), and aiming at a label.
+- **Found, not fixed:** in Rocketbox's stand-up clip his left toe dips 0.16 m under the dock
+  floor as he rises from the chair.
+- **Unverified:**
+  - The look in motion.
+  - The scanner is not raised toward the label: the line runs from it where his clip holds his
+    hand.
+  - The turns' feet slide a little as the body turns over the clip.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: seeing the dock hand seal (#333), written before any code)
+
+- **Found:**
+  - In play the van is already moved forward: the rear doors close only once its rear is 2.5 m
+    from the bumpers (`the_wrong_cargo.gd`'s `CLEAR_OF_DOCK`), and only then is the dock hand
+    called; the reload puts it 2.98 m out (`LOADED_AT`).
+  - But `test_dock_worker.gd` and the stills set the van against the bumpers, so he sealed in
+    a 0.15 m gap.
+  - Nothing keeps him from going out if the van backs onto the dock again before he seals.
+  - Ethan, who has just shut the doors, stands where the hand seals.
+  - From the cab or behind the van, the player sees none of his round.
+- **The parts †:**
+  - **4f, room behind the van:** the hand goes out to the doors only while the van's rear is at
+    least 2.5 m from the bumpers. If it is backed nearer before he seals, he waits at the side
+    door until it is clear again. The test and the stills set the van as play leaves it, 2.98 m
+    out (`LOADED_AT`).
+  - **4g, the cutscene:** when the doors shut and the hand is called, the player's control is
+    held, the HUD hidden (`set_cinematic`), and Ethan steps 1.2 m aside to the van's side to
+    stand clear. Fixed cameras cut as the hand reaches each part of his round:
+    1. at his desk, standing up and taking the log;
+    2. coming down the dock stair, his hand on the rail;
+    3. out of the side door;
+    4. behind the van, sealing the doors, close on the hasp, held through his check and note.
+
+    Then it cuts back to the player's own camera as he turns to walk back. E, Enter or Space
+    skips to the end; the hand carries on as he is. Its length is the author's choice: edited
+    (he is moved on along his own way while no camera sees him) or in real time.
+- **Rules a test can measure** (`test_dock_worker.gd`, `test_sealing.gd`):
+  - he never goes out while the van's rear is nearer than 2.5 m to the bumpers, and he stands
+    behind it with at least 0.5 m to spare;
+  - the cutscene starts when the hand is called and ends when he has noted, the player's
+    control held all the while;
+  - each camera sees him: he is in its view and nothing solid lies between;
+  - a skip ends it at once;
+  - Ethan stands clear of where the hand seals.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: the seal log as a scene (#337) and what the film showed (#338), written before the #338 code)
+
+- **Built for #337 (not committed):**
+  - The log he carries was drawn at 1/100 of its size (2 by 3 mm): the model's skeleton is
+    scaled 0.01, and the log, unlike the pen and seal, was not scaled back. It is now its true
+    size in either hand (W26).
+  - As he notes he turns from the doors (he wrote 0.02 m from them), raises the log before his
+    chest on his left palm, and ticks this van's row under the pen's tip, the row filled in the
+    page's own hand and ink with his initials (W25).
+  - The cutscene shows the page as he sees it, beside his eye, until his pen is off it and he has
+    looked the row over; the seal shot starts once he is past its lens (W19).
+- **Found in the film (#338):**
+  - His way out runs 0.25 m off bay 9's dock face: his body passes through its dock seal, a
+    bumper, the wheel guide stops and its camera wall (a probe of his whole round).
+  - At the hasp the log is still in his left hand, against his right; the pen stands 8 cm out
+    of the back of his hand, so his hand goes through the board to put its tip on the page; his
+    wrists are placed by IK but turned as the clip has them, so his forearms twist.
+  - Walking, the log hangs edge-on to the cameras, so his hands look empty.
+- **The parts (the author's "Yes, build it", #338):**
+  - **4h, his way:** kept 0.3 m clear of the dock face's seal, bumpers and wheel stops.
+  - **4i, the log on the rear step:** at the doors he crouches (Rocketbox `m_crouch_in`,
+    `m_crouch_idle`, `m_crouch_out`, MIT) and lays the log flat on the van's rear step (its top
+    0.538 m up in the van's frame, 18 cm deep), seals with both hands, checks the seal ("view,
+    verify, tug, twist", as the log's own header says) with his right hand on it, crouches to
+    take the log up, turns from the doors and ticks it.
+  - **4j, his hands:** turned at the hasp as hands holding a hasp and a bolt seal are, and the
+    pen held between thumb and fingers at their tips, his hand turned to write; wrists within a
+    human range; no hand inside the board.
+  - **4k, the log seen walking:** carried on his level walks before him at his waist, its face
+    up, as a checker walks to a job; in his right hand by its edge on the stair, his left on the
+    rail.
+- **Rules a test can measure** (`test_dock_worker.gd`): on his walks his body (0.25 m round)
+  meets nothing solid but floors and stairs, nor the dock seal (W27); while he seals the log lies
+  on the step, level, within 1 cm of its top, no hand within 2 cm of it, his hips 0.3 m lower as
+  he sets it down and takes it up (W28); checking, his right hand on the seal, tugging it out
+  and twisting (W29); his wrists within 60 degrees of his forearms at the hasp and writing, the
+  pen's tip at his fingertips and its shaft between his thumb and index finger (W30); walking on
+  the level, the log before him at his waist, never edge-on to the camera that shows him (W31).
+- **After:** the van's tail lamps as their own step (#338).
+
+## Revision 2026-11-20 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: #338-#342 built)
+
+- **His way (4h):** bay 9's wheel guides now start 1 m out from the dock face instead of 0.5 m
+  (the author's "Walkway, no step", #342), and he walks the walkway between them and the dock
+  face, his body clear of the dock seals' pads, the bollards and the chock, round the east guide's
+  end and in to the van. A high step over the guide (#340) was built and dropped: posed by leg IK
+  over a standing clip, it read wrong however short its steps (#341), and Rocketbox has no
+  step-over motion.
+- **At the van, all from one place (4i), 0.78 m out from the doors:** he crouches (Rocketbox's
+  crouch, his left foot a step ahead) and lays the log flat on the rear step, the whole of it on
+  the step's top (from under the doors to its rounded edge 0.25 m out; centred 0.13 m out past
+  it at first, it had seemed to lie on nothing, #341), its long side across it, 0.18 m right of
+  the hasp; rises half way (the rise held where his hips are 0.68 m up) and seals, his hands on
+  the hasp, both elbows bent; checks it (view, verify, tug, twist), his right hand on it; goes
+  back down (the rise run backwards), takes the log up, rises, brings it up before him and hands
+  it to his left hand, and ticks it where he stands, 0.48 m clear of the doors, turning to his
+  way back after. The converter bakes the crouch and the rise with their own motion, the rise
+  starting where the crouch ends.
+- **His hands (4j):** one IK and one hand turn an arm (`hand_turn.gd`), each hand turned as it
+  holds what it holds; the pen and the bolt seal placed in his fingers from his finger bones.
+- **Carried (4k, #341):** walking, the log hangs at his side from his hand by its edge, clear of
+  his leg, as a clipboard is carried; held up before him only to hand it across and to write. A
+  carry before him on his palm (#338) was dropped as unnatural.
+- **Found on the way:** at the hasp his arms had been locked straight (the hasp is 0.9 m over his
+  feet and the door clip leant him back); W26 had measured the log's size only at the end, W29's
+  tug and twist had counted his hand coming to the seal, and the test's floor ray had taken the
+  chair's seat for his floor; a stoop was tried and left out (nothing needed it); the tick's
+  hidden strokes and their one-axis scale had made a mesh distance read near zero (the test now
+  measures in the world and skips hidden meshes).
+- **Tested:** `test_dock_worker.gd` 32/32 and `test_sealing.gd` 15/15; every suite (55 runs and the
+  art check) exit 0 with no script or shader errors; 46 of 47 mutations exit 1, m29 surviving (his
+  way now passes 0.47 m clear of the staged load that the floor's ray height guarded against).

@@ -59,6 +59,19 @@ func stair() -> Dictionary:
 		"risers": RISERS, "width": STAIR.size.x, "landing": LANDING}
 
 
+## The top of the stair's rail on its open side, in the world: at the flight's foot and at its
+## top, where it turns along the landing (`_rails()`).
+func rail_top() -> Array[Vector3]:
+	var side_x := STAIR.end.x + 0.05
+	return [to_global(Vector3(side_x, RAIL, STAIR.end.y - 0.1)),
+		to_global(Vector3(side_x, DOCK_FLOOR + RAIL, STAIR.position.y + LANDING))]
+
+
+## How far the door has swung open, 0 shut to 1 open.
+func swung() -> float:
+	return _swing
+
+
 func near_door(at: Vector3) -> bool:
 	return Vector2(at.x - WALL_X, at.z - DOOR.get_center().x).length() < REACH
 

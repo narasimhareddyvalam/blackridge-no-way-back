@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m38/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m38/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:22:48
+@@ -157,7 +157,7 @@
+ ## Each foot raised to its full lift by a fifth of the way and held there to four fifths, so its
+ ## toes are clear of the kerb as they pass over it, not only its ankle at the top of an arc.
+ const LIFT_HELD := 1.6
+-const ANKLE_CLEAR := 0.2
++const ANKLE_CLEAR := -0.5
+ const LEG_BONES := ["Bip01 %s Thigh", "Bip01 %s Calf", "Bip01 %s Foot"]
+ const KNEE_POLES := {"L": Vector3(0.1, 0.5, 1.0), "R": Vector3(-0.1, 0.5, 1.0)}
+ const ARM_BONES := ["Bip01 %s UpperArm", "Bip01 %s Forearm", "Bip01 %s Hand"]

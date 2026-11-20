@@ -15,7 +15,14 @@
   `eyewash_sign.png`, `first_aid_sign.png`, `no_smoking.png` (at the battery charger),
   `speed_limit.png` (5 MPH), `forklift_sign.png` (CAUTION, FORKLIFT TRAFFIC) and, for the container
   yard's gate (Mission 2's step 4), `no_entry.png` (NO UNAUTHORIZED ENTRY), in the ANSI Z535
-  colours: red for fire, green for first aid and eyewash, yellow for caution.
+  colours: red for fire, green for first aid and eyewash, yellow for caution;
+- `shipping_label.png` (the audit's fourth fix, #329): a 4 x 6 in pallet shipping label, as GS1's
+  logistic label lays one out: ship from and ship to, the carrier and its PRO number, the SSCC's
+  human-readable line and its barcode, its bars set from the SSCC's digits (a stand-in, not a
+  scannable GS1-128); every name and number on it is invented;
+- `seal_log_page.png` (#337): bay 9's seal log on the dock worker's clipboard, 0.20 x 0.26 m:
+  its heading, the columns VAN, SEAL NO., BY and a tick column, five earlier rows filled in by
+  hand and ticked, and the current row left empty for the game to fill (invented, as above).
 
 The same every run (no randomness). Usage, from the repository root:
     python3 -I tools/art/make_shed_signs.py
@@ -177,6 +184,76 @@ def safety_signs():
         image.save(OUT / f"{name}.png")
 
 
+def shipping_label():
+    width, height = 400, 600
+    image = Image.new("RGB", (width, height), (250, 250, 247))
+    draw = ImageDraw.Draw(image)
+    black = (20, 20, 20)
+    draw.rectangle((6, 6, width - 7, height - 7), outline=black, width=4)
+    for y in (150, 270, 360):
+        draw.line((6, y, width - 7, y), fill=black, width=3)
+    draw.line((200, 6, 200, 150), fill=black, width=3)
+    small = font(15, False)
+    bold = font(17)
+    draw.text((16, 14), "SHIP FROM:", font=small, fill=black)
+    for index, line in enumerate(["TRANSFER SHED", "DOCK 9", "VALLEY RD"]):
+        draw.text((16, 40 + index * 24), line, font=bold, fill=black)
+    draw.text((210, 14), "SHIP TO:", font=small, fill=black)
+    for index, line in enumerate(["DC 4417", "RIVER RD", "RECEIVING"]):
+        draw.text((210, 40 + index * 24), line, font=bold, fill=black)
+    draw.text((16, 162), "CARRIER: VALLEY FREIGHT", font=bold, fill=black)
+    draw.text((16, 194), "PRO: 0731 4820 66", font=bold, fill=black)
+    draw.text((16, 226), "PO: 88214   CTNS: 18", font=bold, fill=black)
+    draw.text((16, 290), "SSCC", font=small, fill=black)
+    centred(draw, (6, 306, width - 7, 352), "(00) 0 0614141 000418529 7", 22, black)
+    digits = "000614141000418529"
+    x = 40
+    pattern = []
+    for digit in digits:
+        value = int(digit)
+        pattern += [2 + value % 3, 1 + (value * 7) % 3, 1 + (value * 3) % 4, 1 + value % 2]
+    unit = (width - 80) / sum(pattern)
+    for index, run in enumerate(pattern):
+        if index % 2 == 0:
+            draw.rectangle((round(x), 380, round(x + run * unit) - 1, 540), fill=black)
+        x += run * unit
+    centred(draw, (6, 548, width - 7, 588), "0 0614141 000418529 7", 18, black, False)
+    image.save(OUT / "shipping_label.png")
+
+
+def seal_log_page():
+    width, height = 400, 520
+    image = Image.new("RGB", (width, height), (246, 244, 236))
+    draw = ImageDraw.Draw(image)
+    black = (25, 25, 30)
+    ink = (28, 40, 110)
+    centred(draw, (0, 8, width, 44), "BAY 9  SEAL LOG", 24, black)
+    centred(draw, (0, 42, width, 66), "Seal checked: view, verify, tug, twist", 13, black, False)
+    columns = [10, 110, 250, 320, 390]
+    for index, title in enumerate(["VAN", "SEAL NO.", "BY", "OK"]):
+        centred(draw, (columns[index], 72, columns[index + 1], 98), title, 14, black)
+    for y in range(70, height - 10, 50):
+        draw.line((columns[0], y if y == 70 else y + 30, columns[-1], y if y == 70 else y + 30),
+                  fill=(120, 120, 130), width=1)
+    draw.line((columns[0], 100, columns[-1], 100), fill=black, width=2)
+    for x in columns:
+        draw.line((x, 70, x, height - 20), fill=(120, 120, 130), width=1)
+    rows = [("BR 031", "4182231", "R.M."), ("BR 017", "4182237", "R.M."),
+            ("BR 044", "4182242", "R.M."), ("BR 009", "4182249", "R.M."),
+            ("BR 026", "4182253", "R.M.")]
+    hand = font(19, False)
+    for index, (van, number, by) in enumerate(rows):
+        top = 100 + index * 50
+        for column, text in enumerate([van, number, by]):
+            box = (columns[column], top, columns[column + 1], top + 50)
+            left, upper, right, lower = draw.textbbox((0, 0), text, font=hand)
+            x = box[0] + (box[2] - box[0] - (right - left)) / 2 - left
+            draw.text((x, top + 14), text, font=hand, fill=ink)
+        draw.line((335, top + 25, 350, top + 40), fill=ink, width=3)
+        draw.line((350, top + 40, 378, top + 8), fill=ink, width=3)
+    image.save(OUT / "seal_log_page.png")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     numbers()
@@ -186,6 +263,8 @@ def main():
     time_cards()
     exit_signs()
     safety_signs()
+    shipping_label()
+    seal_log_page()
     for name in sorted(OUT.glob("*.png")):
         print(f"Wrote {name.relative_to(ROOT)}")
 

@@ -59,6 +59,9 @@ var active: bool = false
 ## The stairs he walks by his stair steps (`stair_steps.gd`), each as `dock_access.gd`'s
 ## `stair()` describes it; the app gives them.
 var stairs: Array[Dictionary] = []
+## Held through a cutscene (#333): the player's keys do not move him; a way he is sent along
+## (`walk_to()`) he still walks.
+var held := false
 ## Behind something he pushes and pulls, such as the depot's pallet jack (step 2e), Ethan walks
 ## by his push gait (`push_gait.gd`), his hands held to its handle, at the same pace up and down a
 ## slope, such as the lift's bridge plate.
@@ -580,7 +583,8 @@ func _physics_process(delta: float) -> void:
 	if not _route.is_empty():
 		direction = _route_direction(delta)
 	else:
-		var movement := Input.get_vector("steer_left", "steer_right", "accelerate", "brake")
+		var movement := Vector2.ZERO if held else Input.get_vector("steer_left", "steer_right",
+			"accelerate", "brake")
 		direction = _pivot.global_basis * Vector3(movement.x, 0, movement.y)
 		direction.y = 0
 		direction = direction.normalized()

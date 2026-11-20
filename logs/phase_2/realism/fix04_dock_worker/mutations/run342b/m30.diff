@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342b/m30/game/features/missions/the_wrong_cargo/seal_cutscene.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-20 12:57:12
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342b/m30/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-20 12:57:41
+@@ -38,7 +38,7 @@
+ const AFTER := 3.0
+ ## The seal shot waits until he has walked this far from the hasp: turning to go back from where
+ ## he noted, 0.78 m out, his body is 0.5 m from its lens and in its picture.
+-const CLEAR_OF_SEAL := 1.0
++const CLEAR_OF_SEAL := 0.0
+ const DOOR_OPEN := 0.95
+ const FOV := 50.0
+ 

@@ -7,6 +7,8 @@ extends Node3D
 ## its safety loop, never comes down while a vehicle is under its arm.
 
 signal run_sheet_checked
+## The dock worker sent out to seal `van` (the app shows his round, #333).
+signal dock_hand_called(van: Node3D)
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const ChainLink = preload("chain_link.gdshader")
@@ -20,15 +22,26 @@ const VanBay = preload("van_bay.gd")
 const PalletJack = preload("pallet_jack.gd")
 const YardVehicles = preload("yard_vehicles.gd")
 const DockWorker = preload("res://features/characters/dock_worker/dock_worker.gd")
-const WORKER_INSIDE := Vector3(-41.2, 0.0, 17.5)
-const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.9),
-	Vector3(-45.9, 0.0, 20.9), Vector3(-46.2, 0.0, 20.35), Vector3(-47.3, 0.0, 20.35)]
+## Just inside the side door, where the dock worker stops to push it open (#333).
+const WORKER_INSIDE := Vector3(-40.5, 0.0, 17.5)
+## Round the shed's east end to bay 9's van along the walkway between the dock face and the wheel
+## guides' ends (z 20.0 and 21.0, #342): his body clear of the dock seals' pads (0.46 m out from
+## the dock face, from 1.15 m up) and 0.6 m clear of the bollards, past the chock, and in to the
+## van west of the east guide's end, turning 1.4 m short of it and coming square into the
+## walkway from the van, held to the walkway's line past the guide's end (he rounds corners on
+## their inside); not through the 0.5 m that had been there, where his body
+## went into bay 9's seal and bumpers (#338).
+const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.95),
+	Vector3(-41.5, 0.0, 20.95), Vector3(-46.0, 0.0, 20.75), Vector3(-47.9, 0.0, 20.75),
+	Vector3(-47.9, 0.0, 21.4)]
 ## From beside his chair round behind it, between bay 9's staged load and the edge rail, to the
 ## dock stair's landing (step 3 of #253); and from the landing down the stair to the side door.
+## Past bay 9's staged load 0.47 m clear of it, wide of it as he rounds the corner (#333).
 const WORKER_DESK_WAY: Array[Vector3] = [Vector3(-46.75, 1.3, 19.25), Vector3(-46.75, 1.3, 17.9),
-	Vector3(-46.35, 1.3, 17.3), Vector3(-46.35, 1.3, 15.6), Vector3(-45.3, 1.3, 12.4)]
-const WORKER_STAIR_WAY: Array[Vector3] = [Vector3(-44.2, 1.3, 12.4), Vector3(-44.2, 1.3, 12.92),
-	Vector3(-44.2, 0.0, 15.4), Vector3(-44.0, 0.0, 16.4)]
+	Vector3(-46.2, 1.3, 17.3), Vector3(-46.2, 1.3, 15.6), Vector3(-45.3, 1.3, 12.4)]
+## Down the flight 0.35 m from its rail, within his reach of it (the audit's fourth fix, #329).
+const WORKER_STAIR_WAY: Array[Vector3] = [Vector3(-44.0, 1.3, 12.4), Vector3(-44.0, 1.3, 12.92),
+	Vector3(-44.0, 0.0, 15.4), Vector3(-44.0, 0.0, 16.4)]
 const LANE_X := -71.0
 const LANE_WIDTH := 6.0
 const GATE_Z := 55.0
@@ -164,6 +177,9 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	dock_worker.set("lift", building.get_node("DockLift9"))
 	dock_worker.call("setup", WORKER_INSIDE, WORKER_WAY, building.get_node("DockStation"),
 		WORKER_DESK_WAY, WORKER_STAIR_WAY)
+	dock_worker.call("use_stair", side_door.call("stair"), side_door.call("rail_top"))
+	dock_worker.set("room_behind", Callable(bay_nine, "clearance"))
+	dock_worker.set("side_door", side_door)
 	_markings()
 	_fence_body = StaticBody3D.new()
 	_fence_body.name = "Fence"
@@ -229,7 +245,10 @@ func restore_loaded(van: Node3D, seal_number: String) -> void:
 
 ## Sends the dock worker out to seal `van`'s shut rear doors with the seal numbered `number`.
 func call_dock_hand(van: Node3D, number: String) -> void:
+	if String(dock_worker.get("state")) != "seated":
+		return
 	dock_worker.call("go_seal", van, number)
+	dock_hand_called.emit(van)
 
 
 func barrier_open() -> bool:
@@ -298,6 +317,7 @@ func reset() -> void:
 		pallet_jack.call("reset", _jack_start)
 	if dock_worker != null:
 		dock_worker.call("reset")
+		dock_worker.call("forget_log")
 	_check_left = -1.0
 	_target = 0.0
 	_angle = 0.0

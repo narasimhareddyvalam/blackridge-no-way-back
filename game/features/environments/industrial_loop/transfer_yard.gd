@@ -46,8 +46,11 @@ const LAMPS: Array[Vector3] = [Vector3(-79.0, 0.0, 53.8), Vector3(-58.0, 0.0, 53
 const LAMP_HEADINGS: Array[float] = [-PI / 2.0, -PI / 2.0, -PI / 2.0, PI, 0.0]
 const SAFETY := Color(0.86, 0.66, 0.08)
 const GUIDES := Vector2(-47.75, 1.25)
-const GUIDE := Vector3(0.15, 0.2, 3.5)
-const GUIDE_FROM := 20.5
+## Bay 9's wheel guides start 1 m out from the dock face, leaving a walkway behind a van at the
+## dock for the dock hand going round to its doors (#342; they had started at 0.5 m, too little
+## to pass the dock seal's pads), and end where they did, at z 24 before their flares.
+const GUIDE := Vector3(0.15, 0.2, 3.0)
+const GUIDE_FROM := 21.0
 const GUIDE_FLARE := Vector2(0.3, 1.0)
 const GUIDE_STOP := 0.2
 const CHOCK_HOLDER := Vector3(-45.8, 0.6, 20.0)

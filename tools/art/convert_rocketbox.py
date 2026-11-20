@@ -27,7 +27,13 @@ What it changes:
 - one roughness per part replaces Rocketbox's specular maps, and the colour and normal maps are
   halved to 1024 pixels and stored as WebP;
 - the clips are named as Godot imports them: SitIdle-loop, Idle-loop and Walk-loop loop; Seal,
-  SitDown, StandUp, Check and Note play once.
+  SitDown, StandUp, Check and Note play once;
+- the dock worker's walk start and stop, his turns on the spot (90 and 180 degrees each way)
+  and his taking a document (the audit's fourth fix, #329) play once, baked in place: the
+  turns' own turning is left out, and `dock_worker.gd` turns him over each clip's length.
+- his crouching down and rising (CrouchIn, CrouchOut, once), to set the seal log on the van's
+  rear step and take it up again (#338), keep the clips' own motion: his left foot a step ahead
+  and his hips lowered, and back.
 """
 
 import math
@@ -42,7 +48,11 @@ CLIPS = SOURCE / "Animations"
 MAX_TEXTURE = 1024
 ## Clips whose root motion is kept: Rocketbox's "xyz" clips carry it on the armature object (its
 ## Bip01 node), not a bone, so it is taken from the object relative to the character's own.
-MOVING = {"SitDown", "SitIdle-loop", "StandUp"}
+MOVING = {"SitDown", "SitIdle-loop", "StandUp", "CrouchIn", "CrouchOut"}
+## A moving clip that carries on from another's last frame: Rocketbox starts each clip's motion
+## at its own zero, so the rise from a crouch is moved across to where the crouch ended (his
+## hips 0.19 m on, his left foot a step ahead), and his hips run on without a jump.
+FOLLOWS = {"CrouchOut": "CrouchIn"}
 QUALITY = 90
 JOBS = {
     "guard": {
@@ -66,7 +76,16 @@ JOBS = {
                   ("SitIdle-loop", CLIPS / "m_sit_table_idle_neutral_01.max.fbx"),
                   ("StandUp", CLIPS / "m_sit_stand_up_table_right.max.fbx"),
                   ("Check", CLIPS / "m_documents_check.max.fbx"),
-                  ("Note", CLIPS / "m_documents_note.max.fbx")],
+                  ("Note", CLIPS / "m_documents_note.max.fbx"),
+                  ("WalkStart", CLIPS / "m_walk_start.max.fbx"),
+                  ("WalkStop", CLIPS / "m_walk_stop.max.fbx"),
+                  ("TurnLeft90", CLIPS / "m_turn_left_90.max.fbx"),
+                  ("TurnLeft180", CLIPS / "m_turn_left_180.max.fbx"),
+                  ("TurnRight90", CLIPS / "m_turn_right_90.max.fbx"),
+                  ("TurnRight180", CLIPS / "m_turn_right_180.max.fbx"),
+                  ("TakeDocuments", CLIPS / "m_documents_take.max.fbx"),
+                  ("CrouchIn", CLIPS / "m_crouch_in.max.fbx"),
+                  ("CrouchOut", CLIPS / "m_crouch_out.max.fbx")],
         "roughness": {"head": 0.56, "body": 0.72, "helmet": 0.35},
         "turn": False,
         "names": ("DockWorker", "DockWorkerBody"),
@@ -107,9 +126,15 @@ def import_fbx(path):
     return next(o for o in new if o.type == "ARMATURE"), new
 
 
-def bake(character, clip, name, moving=False):
+def bake(character, clip, name, moving=False, ends=None):
     source_action = clip.animation_data.action
     start, end = (int(round(value)) for value in source_action.frame_range)
+    shift = Matrix.Identity(4)
+    if moving and ends is not None and name in FOLLOWS:
+        bpy.context.scene.frame_set(start)
+        first = character.matrix_world.inverted() @ clip.matrix_world
+        across = ends[FOLLOWS[name]].translation - first.translation
+        shift = Matrix.Translation(Vector((across.x, across.y, 0.0)))
     if character.animation_data is not None:
         character.animation_data.action = None
     bones = sorted(character.pose.bones, key=lambda bone: len(bone.parent_recursive))
@@ -131,7 +156,7 @@ def bake(character, clip, name, moving=False):
                 continue
             posing = source.matrix
             if moving and bone.parent is None:
-                posing = character.matrix_world.inverted() @ clip.matrix_world @ posing
+                posing = shift @ character.matrix_world.inverted() @ clip.matrix_world @ posing
             turn = posing.to_3x3().normalized().to_4x4()
             at = posing.translation if bone.parent is None else base.translation
             wanted = Matrix.Translation(at) @ turn
@@ -146,6 +171,9 @@ def bake(character, clip, name, moving=False):
             if bone.parent is None:
                 bone.location = location
                 bone.keyframe_insert("location", frame=frame, group=bone.name)
+    if moving and ends is not None:
+        bpy.context.scene.frame_set(end)
+        ends[name] = shift @ character.matrix_world.inverted() @ clip.matrix_world
     action = character.animation_data.action
     action.name = name
     action.use_fake_user = True
@@ -265,13 +293,14 @@ def convert(job):
     character, objects = import_fbx(job["character"] / "Export" / job["fbx"])
     meshes = [o for o in objects if o.type == "MESH"]
     baked = []
+    ends = {}
     for name, path in job["clips"]:
         clip, clip_objects = import_fbx(path)
         moving = name in MOVING
         source_action = clip.animation_data.action
         for action in [a for a in bpy.data.actions if a is not source_action and a not in baked]:
             bpy.data.actions.remove(action)
-        baked.append(bake(character, clip, name, moving))
+        baked.append(bake(character, clip, name, moving, ends))
         for item in clip_objects:
             bpy.data.objects.remove(item, do_unlink=True)
         bpy.data.actions.remove(source_action)

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m45/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m45/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:23:32
+@@ -122,7 +122,7 @@
+ ## out over TUG and twisting it 25 degrees each way over TWIST, then off by SEAL_LET_GO.
+ const REACH_SEAL := Vector2(0.0, 0.3)
+ const TUG := Vector2(1.0, 1.6)
+-const TUG_BY := 0.012
++const TUG_BY := 0.0
+ const TWIST := Vector2(1.8, 2.6)
+ const TWIST_BY := deg_to_rad(25.0)
+ const SEAL_LET_GO := Vector2(2.7, 3.0)

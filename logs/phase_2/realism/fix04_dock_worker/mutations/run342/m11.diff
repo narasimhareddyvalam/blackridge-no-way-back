@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m11/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:56:42
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m11/game/features/characters/dock_worker/dock_worker.gd	2026-11-20 12:49:03
+@@ -713,7 +713,7 @@
+ 			_player.speed_scale = 0.0
+ 			state = "sealing"
+ 			_timer = 0.0
+-			_show_seal(true)
++			_show_seal(false)
+ 		return
+ 	if before < half and _timer >= half:
+ 		_player.speed_scale = 0.0

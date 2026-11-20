@@ -4369,6 +4369,148 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (Recommended)": fix 3 committed on `develop`, labelled (agent), not pushed; then fix 4
        planned before any code.
 
+329. **Fix 4, the dock worker: planned and chosen**
+     - **Asked** whether to fetch six more Rocketbox clips for him; **the author chose** "Fetch
+       the six (Recommended)": `m_walk_start`, `m_walk_stop`, `m_turn_left_90`, `m_turn_left_180`,
+       `m_turn_right_90`, `m_turn_right_180` and `m_documents_take` from Microsoft Rocketbox (MIT).
+     - **Asked** how he takes the stair; **the author chose** "Feet on each tread (Recommended)":
+       his walk slowed to a step a tread, each foot on its tread by leg IK, his hand on the rail.
+     - **Asked** whether to build fix 4 as written; **the author chose** "Yes, build it
+       (Recommended)".
+
+330. **The passenger wiper's water and rain in the cabin**
+     - **Prompt** (verbatim): "also i dont like the particle effect of right side wiper that is
+       passenger wiper, its not realistic. [Image #1] - when i look up the rain is falling inside
+       the cabin, fix it. make sure everything is realistic and uses real life physics."
+     - The image: the game's window during Claude Code's stills run for fix 4 (4:36 PM), its
+       camera placed by script, looking up at bay 9, rain streaks drawn where they look wrong.
+     - **Done first (fix 4, not committed):** the dock worker: a tread a step on the stair with his
+       hand on the rail, getting going and stopping, turns on the spot, the seal and pen in his
+       hand, the scanner aimed at a shipping label; `test_dock_worker.gd` 12/18 then 19/19,
+       seventeen mutations exit 1, 55 suite runs exit 0. Waiting for the author's OK to commit;
+       the cabin's rain and the passenger wiper's water are to be found and planned next.
+
+331. **Fix 4's stills first; the cabin's rain and the passenger wiper next**
+     - **Asked** whether to commit fix 4; **the author chose** "Show me the stills first": the
+       four stills in `captures/dock_worker/fix04/` opened for the author's look.
+     - **Asked** whether the two new items come next; **the author chose** "Yes, these two next
+       (Recommended)": reproduce and measure both, then a plan before any code.
+
+332. **Fix 4: something to change first**
+     - **Asked** whether to commit fix 4 after the stills; **the author chose** "Change something
+       first", without saying what yet; fix 4 stays uncommitted until the author says.
+
+333. **Fix 4: see the dock hand, and room behind the van**
+     - **Prompt** (verbatim): "i just see the van front view. add cut scene type of thing when the
+       worker is walking or coming. and make sure the van is moved forward enough so that worker
+       fits behind the van for stamp"
+     - **Found:** in play the doors close only 2.5 m clear of the bumpers and only then is the hand
+       called; the stills and `test_dock_worker.gd` had set the van against the bumpers.
+     - **Asked** how long the dock hand's cutscene runs; **the author chose** "Real time, about
+       45 s": every step of his round, the cameras cutting as he reaches each part.
+     - **Asked** whether to build 4f (room behind the van, Ethan standing clear) and 4g (the
+       cutscene) into fix 4; **the author chose** "Yes, build it (Recommended)".
+
+334. **Fix 4: the film, and what it showed**
+     - **Prompts** (verbatim): "shwo me small video of how it is"; then, watching the window,
+       "check it yourself, he was floating in sky for a second and also the seal should be visible
+       after hes done."; "he walked into the chair."; "fix all the issues first before the video"
+     - **Found and fixed:** his ground check from a metre up took bay 9's staged load's top for his
+       floor as he rounded its corner (now from a step up, his way 0.47 m clear of the load); his
+       way behind his rolled-back chair (he now pushes it in before setting off and draws it out to
+       sit); a last shot on the sealed hasp; the door shot's camera stood inside the trailer parked
+       by the side door (moved).
+     - **Found, the author's call:** the opened side door leaves about 0.45 m to that trailer,
+       against the 0.9 m an exit path needs.
+
+335. **The trailer by the side door left as it is**
+     - **Prompt** (verbatim): "ok, leave the trailer as it is for now,"
+
+336. **Fix 4: his hands at the hasp**
+     - **Prompt** (verbatim, after the film): "the hands of worker arent exactly where wes putting
+       the seal on truck."
+
+337. **Fix 4: the paper and the tick mark as a scene**
+     - **Prompt** (verbatim): "its not clear when he takes out paper to write down or mark
+       something in it. make sure the tick mark hes putting in the paper is in the cut scene, i
+       want to focus on the paper as a scene and show him putting tick mark with pen"
+     - **Found:** the log he carries had always been drawn at 1/100 of its size (2 by 3 mm), as
+       the model's skeleton is scaled 0.01 and the log, unlike the pen and seal, was not scaled
+       back; and he wrote with the log inside the van's doors, 0.3 m before him at 0.32 m from
+       them. Built since (not committed): the log at its true size in either hand, raised before
+       his chest as he notes, turned from the doors, his left palm under it; the tick drawn under
+       the pen's tip; the row filled in his hand and ink; a shot on the page as he sees it.
+
+338. **Fix 4: what the film still shows wrong**
+     - **Prompt** (verbatim, stopping the film): "the hand is going out of shape and proposition
+       when hes sealing, also he went kind of inside the wall behind the van. theres nothing in his
+       hands. also the tail lights dont look realistic on the van, the hands are coming inside the
+       board, place the board on van bumper when sealing etc. make it realistic. also the guard is
+       walking into the door of the shed behind the van i mean hes walking inside to it, its like a
+       glitch.`"
+     - **Found:** his way out ran 0.25 m off bay 9's dock face, his body through its dock seal, a
+       bumper, the wheel guide stops and the camera wall (no shape of the side door was hit); the
+       log stayed in his hand at the hasp; the pen stood 8 cm out of the back of his hand, so his
+       hand went through the board to bring its tip to the page; his wrists were left turned as the
+       clip had them; one dull red covered the whole tail lamp, its amber and clear parts too.
+     - **Asked** whether to build the plan (his way 0.3 m clear of the dock face; crouching to set
+       the log on the rear bumper step, sealing with both hands, tugging and twisting the seal to
+       check it, crouching to take the log up, then ticking it; his hands turned as a real hand
+       holds a seal and a pen, no hand inside the board; tests first); **the author chose** "Yes,
+       build it (Recommended)".
+     - **Asked** when he had nothing in his hands; **the author chose** "While walking".
+     - **Asked** about the tail lamps (only the red tail section lit, amber and clear unlit unless
+       used); **the author chose** "After the dock hand (Recommended)", as its own step.
+
+339. **No windows while the author uses the laptop**
+     - **Prompt** (verbatim, stopping a windowed run of stills): "continue without opening, i am
+       using laptop"
+     - **Done:** the work goes on headless (tests, probes, the films already made); a windowed
+       run is asked for first.
+
+340. **Fix 4: over the wheel guide to the van's back**
+     - **Found:** no way behind the van stays clear of the wheel stops: the east wheel guide (a
+       20 cm curb) runs from 0.5 m off the dock face to 5 m out, the van between the guides with
+       0.3 m to spare each side, and the 0.5 m at the dock face is where bay 9's seal pads (from
+       1.15 m up, 0.46 m out) and its bumpers are.
+     - **Asked** how he should get behind the van; **the author chose** "Step over it
+       (Recommended)": out along the yard clear of the seal, a high step over the guide, each
+       foot lifted over it; the yard unchanged.
+
+341. **Fix 4: the film of #338-#340, and what it showed**
+     - **Prompts** (verbatim): "ahow me"; then, watching it, "its bad, the leg propositions are bad
+       when hes stepping over that ledge near van before stamping, check. the way hes holding the
+       paper is weird and unrealistic. and also, hes placing the paper board on invisible block
+       and not on bumper. unrealistic as fuck. fix all of these issues."
+     - **Found:** the log was centred 0.13 m out past the step's top (which runs from under the
+       doors to 0.25 m out), so it hung over its edge beside the bumper's ribbed back; the front
+       carry on his palm; the step over the guide straddled a metre at first, then, in short steps,
+       still read wrong: his legs posed by IK over a standing clip (no stretch; the bones keep
+       their lengths), a knee folded and a thigh rolled with nothing else of him moving.
+     - **Fixed:** the whole log on the step; the log hung at his side by its edge walking.
+     - **Prompt** (verbatim, after the next film): "bro check the video yourself and tell me the
+       legs are out of proposition, when hes stepping over that yellow ledge where van is parked"
+     - **Asked** how to fix the step (Rocketbox has no step-over motion); **the author chose**
+       "Walkway, no step": both wheel guides start 1 m out from the dock face instead of 0.5 m,
+       and he walks round the guide's end clear of the dock seal.
+     - **Asked** whether to film the walkway now; **the author chose** "Later".
+
+343. **What comes next, and the tail lamps**
+     - **Prompts** (verbatim): "what three things did you finish"; "whats next for us. i will ask
+       you when to show me the video"; "okay proceed"
+     - **Done:** the order given: fix 4's records and its commit question, the tail lamps, the
+       cabin rain and the passenger wiper (#330), the rest of the audit, step 6.
+     - **Found:** the tail lamp lens is one textured mesh (red sections, a clear honeycomb
+       section, dark trim), lit with one dull red over the whole of it.
+     - **Asked** whether to build the plan (only the red sections lit, by a mask made from the
+       lens's own texture; the clear section unlit unless reversing or indicating; the brake at
+       least 5 times the tail, as ECE R7 asks; tests first); **the author chose** "Yes, build it
+       (Recommended)", once the dock hand's tests finish.
+     - **Prompt** (verbatim): "okay proceed"
+     - **Asked** whether to commit fix 4 to `develop`, not pushed, the films and stills (made before
+       the walkway) and the tail lamp's mask script left out; **the author chose** "Commit it
+       (Recommended)".
+
 ## Waiting for the author
 
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen

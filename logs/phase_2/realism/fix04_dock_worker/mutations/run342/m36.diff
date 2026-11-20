@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_shed.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m36/game/features/environments/industrial_loop/transfer_shed.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_shed.gd	2026-11-20 12:14:09
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m36/game/features/environments/industrial_loop/transfer_shed.gd	2026-11-20 12:51:29
+@@ -33,7 +33,7 @@
+ ## went into bay 9's seal and bumpers (#338).
+ const WORKER_WAY: Array[Vector3] = [Vector3(-39.1, 0.0, 17.5), Vector3(-39.1, 0.0, 20.95),
+ 	Vector3(-41.5, 0.0, 20.95), Vector3(-46.0, 0.0, 20.75), Vector3(-47.9, 0.0, 20.75),
+-	Vector3(-47.9, 0.0, 21.4)]
++	Vector3(-46.0, 0.0, 20.25), Vector3(-47.3, 0.0, 20.25)]
+ ## From beside his chair round behind it, between bay 9's staged load and the edge rail, to the
+ ## dock stair's landing (step 3 of #253); and from the landing down the stair to the side door.
+ ## Past bay 9's staged load 0.47 m clear of it, wide of it as he rounds the corner (#333).

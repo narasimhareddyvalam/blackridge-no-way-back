@@ -1,0 +1,13 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/worker_stair.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m18/game/features/characters/dock_worker/worker_stair.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/worker_stair.gd	2026-11-19 16:21:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m18/game/features/characters/dock_worker/worker_stair.gd	2026-11-20 12:49:37
+@@ -84,8 +84,7 @@
+ 	var across := _stair["across"] as Vector3
+ 	var foot := _stair["foot"] as Vector3
+ 	var aside := absf(Vector2(at.x - foot.x, at.z - foot.z).dot(Vector2(across.x, across.z)))
+-	return a > -float(_stair["tread"]) and a < flight() + float(_stair["tread"]) \
+-		and aside < float(_stair["width"]) / 2.0 + WIDE
++	return a > -float(_stair["tread"]) and a < flight() + float(_stair["tread"])
+ 
+ 
+ ## His pace across the floor on the flight: a tread a step at the stair's cadence.

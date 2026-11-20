@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m4/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:56:42
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m4/game/features/characters/dock_worker/dock_worker.gd	2026-11-20 12:48:30
+@@ -447,7 +447,7 @@
+ 		_carry_scanner(true)
+ 		_set_off("to_scan", [SCAN_AT] as Array[Vector3])
+ 		return
+-	_carry(true, true)
++	_carry(true)
+ 	var route := _desk_way.duplicate()
+ 	route.append_array(_stair_way)
+ 	route.append(_inside)

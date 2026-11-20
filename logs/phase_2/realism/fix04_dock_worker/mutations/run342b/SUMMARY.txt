@@ -1,0 +1,6 @@
+m30  the seal shot as he turns to go test_dock_worker.gd exit 1, 31/32 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m45  no tug                         test_dock_worker.gd exit 1, 31/32 passed; 1 failed
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 147 of 182 frames, tugging it 0.000 m 
+m46  no twist                       test_dock_worker.gd exit 1, 31/32 passed; 1 failed
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 158 of 182 frames, tugging it 0.012 m 

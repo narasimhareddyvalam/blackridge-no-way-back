@@ -5,6 +5,8 @@ extends SceneTree
 ## (`test_bay_nine.gd` and `test_loading.gd` reach that by real keys); from there everything
 ## Ethan does uses the real keys. A headless run draws nothing, so the look is not checked here.
 
+## He seals the doors half crouched from 0.78 m out, his hands on the hasp (#338).
+const AT_THE_DOORS := 0.9
 const START_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\n"
 const DOCKED := Vector3(-47.75, 0.1, 23.16)
 const BAY := -47.75
@@ -19,7 +21,8 @@ const TO_THE_REAR: Array[Vector3] = [Vector3(-1.7, 0.0, 1.5), Vector3(-1.5, 0.0,
 	Vector3(0.0, 0.0, 4.2)]
 const TO_THE_REAR_NEAR: Array[Vector3] = [Vector3(-1.7, 0.0, 1.5), Vector3(-1.5, 0.0, 3.9),
 	Vector3(0.0, 0.0, 4.0)]
-const ASIDE: Array[Vector3] = [Vector3(-1.6, 0.0, 4.4), Vector3(-2.2, 0.0, 3.4)]
+## Where the seal's cutscene steps Ethan clear, in the van's frame (`seal_cutscene.gd`, #333).
+const CLEAR_SPOT := Vector3(1.5, 0.0, 2.4)
 const BACK_TO_THE_DOORS: Array[Vector3] = [Vector3(-1.6, 0.0, 4.4), Vector3(0.0, 0.0, 4.2)]
 const SHORT_PULL := 1.9
 const FULL_PULL := 3.0
@@ -29,6 +32,10 @@ const WALL := Vector3(-44.0, 0.0, 19.9)
 const DOORS_BY_HAND := 26.0
 const CAMERA_SKIN := 0.15
 const DOCK_FACE_Z := 20.0
+## How long the dock worker's round may take, out to the doors and back in: 60 s until the audit's
+## fourth fix (#329), 90 s since he gets going and stops, turns on the spot and takes the stair
+## at a stair's pace (`test_dock_worker.gd`'s ROUND).
+const SEAL_ROUND := 90.0
 
 var _checks: int = 0
 var _failures: int = 0
@@ -176,14 +183,14 @@ func _check_doors() -> void:
 
 func _check_seal() -> void:
 	var asked := _objective()
-	await _walk_by_van(ASIDE)
+	await _check_cutscene_starts()
 	var worker := _shed.find_child("DockWorker", true, false) as Node3D
 	var hasp: Vector3 = _van.call("seal_point")
 	var closest := INF
 	var entered := false
 	var time := 0.0
 	var sealed_at := -1.0
-	while time < 60.0 and worker != null:
+	while time < SEAL_ROUND and worker != null:
 		if worker.visible:
 			closest = minf(closest, _flat(worker.global_position - hasp).length())
 			var inside := _van.to_local(worker.global_position + Vector3.UP * 0.9)
@@ -196,13 +203,20 @@ func _check_seal() -> void:
 		time += 1.0 / 60.0
 	var seal := _van.find_child("BoltSeal", true, false) as Node3D
 	var home := worker != null and bool(worker.get("home"))
-	_check(asked == "WAIT FOR THE SEAL" and worker != null and closest < 0.7 and not entered
+	_check(asked == "WAIT FOR THE SEAL" and worker != null and closest < AT_THE_DOORS \
+		and not entered
 		and sealed_at > 0.0 and seal != null and seal.is_visible_in_tree() and home,
 		("H5: the doors shut, the objective says to wait for the seal (%s); the dock worker walks "
 		+ "out to the doors (%.2f m from the hasp at the closest, never through the van: %s), "
 		+ "puts the bolt seal on (after %.1f s; seal shown: %s) and walks back in (%s)")
 		% [asked, closest, not entered, sealed_at, seal != null and seal.is_visible_in_tree(),
 		home])
+	var cutscene := _app.get("seal_cutscene") as Node
+	var given_back: bool = cutscene != null and not bool(cutscene.get("playing")) \
+		and _driver.get_viewport().get_camera_3d() == _driver.call("get_camera") \
+		and not bool(_driver.get("held"))
+	_check(given_back, ("H5b: with the dock hand on his way back the cutscene ends: Ethan's own "
+		+ "camera and his control back (%s)") % given_back)
 	await _walk_by_van(BACK_TO_THE_DOORS)
 	var offered := _hint()
 	await _key(KEY_E)
@@ -324,6 +338,29 @@ func _door_angles() -> Vector2:
 	if left == null or right == null:
 		return Vector2(-1.0, -1.0)
 	return Vector2(absf(rad_to_deg(left.rotation.y)), absf(rad_to_deg(right.rotation.y)))
+
+
+## H5b (#333): the doors shut and the dock hand sent out, his round is shown: the cutscene's
+## camera current, Ethan stepping clear to the van's far side, the keys not moving him.
+func _check_cutscene_starts() -> void:
+	var cutscene := _app.get("seal_cutscene") as Node
+	await _seconds(3.0)
+	var playing := cutscene != null and bool(cutscene.get("playing"))
+	var current: bool = playing and _driver.get_viewport().get_camera_3d() == cutscene.get("camera")
+	var spot := _van.to_global(CLEAR_SPOT)
+	var stood := _flat(_driver.global_position - spot).length()
+	var from := _driver.global_position
+	Input.action_press("accelerate")
+	await _seconds(1.0)
+	Input.action_release("accelerate")
+	var drifted := _flat(_driver.global_position - from).length()
+	var hasp: Vector3 = _van.call("seal_point")
+	var clear := _flat(_driver.global_position - hasp).length()
+	_check(playing and current and stood < 0.4 and drifted < 0.05 and clear > 1.2,
+		("H5b: the doors shut and the dock hand sent out, his round is shown (%s, its camera "
+		+ "current: %s); Ethan steps clear to the van's far side (%.2f m from his spot, %.2f m "
+		+ "from the hasp) and W does not move him (%.3f m)") % [playing, current, stood, clear,
+		drifted])
 
 
 func _walk_by_van(points: Array[Vector3]) -> void:

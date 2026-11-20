@@ -284,6 +284,7 @@ func _refresh_overlays() -> void:
 	_heading.visible = shown
 	_hint.visible = shown
 	_notice.visible = shown
+	van_guide.visible = not _cinematic
 
 
 func set_objective(title: String, detail: String) -> void:

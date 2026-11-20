@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m20/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m20/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:20:53
+@@ -558,7 +558,7 @@
+ 	if left < ARRIVE_LAST:
+ 		_route.clear()
+ 		return
+-	var door_shut := side_door != null and float(side_door.call("swung")) < 1.0
++	var door_shut := false
+ 	var waiting := state == "out" and (not _room() or door_shut) and (_past_door
+ 		or _route[0].is_equal_approx(_inside))
+ 	if waiting:
