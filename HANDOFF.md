@@ -1,5 +1,21 @@
 # HANDOFF.md
 
+**This run (2026-11-21, Mission 1's opening cutscene, #357; overnight run #358 begun):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 1's opening
+  cutscene (#357), built)". Files: `game/features/cinematics/` (new: `cutscene_director.gd`,
+  `film_look.gd`, `film_grade.gdshader`), `game/features/missions/night_freight/opening_cutscene.gd`
+  (new), `game/app/first_drive.gd`, `driver.gd` (`RAIN_SHIELD`), `game/tests/test_opening.gd`
+  (new), `test_on_foot.gd`, `test_exhaust_vapour_state.gd` (one E press to skip the opening),
+  `tools/captures/capture_opening_board.gd`, `capture_opening_film.gd` (new).
+- **Results (exact):** `test_opening.gd` 6/6; mutations (`python3 -I
+  logs/phase_2/opening/mutations/mutations_opening.py <scratch> <out>`): seven exit 1. Suites
+  (`bash logs/phase_2/opening/suites/run_suites.sh <scratch>`): 65 of 66 runs exit 0, art check 0
+  failures; `test_exhaust_vapour_state.gd` 4/10 there (its E presses went to the opening), then
+  `LOG_DIR=logs/phase_2/opening/fix scripts/run-test.sh test_exhaust_vapour_state.gd 60` exit 0,
+  10/10. Committed on `develop` (not pushed).
+- **Next:** guidance step 2 (the target's marker, map pin, distance and key prompt; `G10`, `G11`
+  in `test_guidance.gd` written first, red), then the rest of Mission 2 overnight (#358).
+
 **This run (2026-11-21, mission guidance, step 1, #356; cutscenes looked at, #357):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance as a
   professional game's (#356), step 1 built)". Files: `game/features/ui/driving_hud/`

@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/cinematics/cutscene_director.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p2/game/features/cinematics/cutscene_director.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/cinematics/cutscene_director.gd	2026-11-21 17:23:08
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p2/game/features/cinematics/cutscene_director.gd	2026-11-21 17:30:36
+@@ -60,7 +60,6 @@
+ 	shot = -1
+ 	_t = 0.0
+ 	hud.call("set_cinematic", true)
+-	driver.set("held", true)
+ 	film.show_film(true)
+ 	camera.make_current()
+ 	set_process(true)

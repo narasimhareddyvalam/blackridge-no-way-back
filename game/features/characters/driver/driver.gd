@@ -54,6 +54,10 @@ const DOOR_ELBOW_BACK := 0.15
 const REACH_EASY := 0.45
 const LEAN_MOST := 0.22
 const LEAN_RATE := 0.6
+## The rain stops on him (#357, the author: "the rain is falling into the ethan"): a particle
+## collider round his body, on the rain's layer only (1; not the van's glass water, 2), so drops
+## land on his head and shoulders and splash there instead of falling through him.
+const RAIN_SHIELD := Vector3(0.5, 1.82, 0.36)
 
 var active: bool = false
 ## The stairs he walks by his stair steps (`stair_steps.gd`), each as `dock_access.gd`'s
@@ -166,6 +170,12 @@ func _ready() -> void:
 	add_child(collision)
 	collision_layer = 4
 	collision_mask = 3
+	var shield := GPUParticlesCollisionBox3D.new()
+	shield.name = "RainOnEthan"
+	shield.size = RAIN_SHIELD
+	shield.position.y = RAIN_SHIELD.y / 2.0
+	shield.cull_mask = 1
+	add_child(shield)
 	floor_snap_length = STEP_HEIGHT
 	_model = ETHAN.instantiate() as Node3D
 	_model.name = "Ethan"

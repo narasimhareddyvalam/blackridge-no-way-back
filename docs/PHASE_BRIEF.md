@@ -8592,3 +8592,30 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   (`logs/phase_2/guidance/mutations/`). Stills `captures/audit/guidance/step1/`.
 - **To come:** step 2, the target's pin, world marker and distance, and the key prompt; step 3,
   the route along the roads. Unpriced on the GPU (a second, small render) until the mission's end.
+
+## Revision 2026-11-21 (Phase 2, Mission 1's opening cutscene (#357), built)
+
+- **Asked:** "i dont think we have professional style gta 6 level cutscenes"; three looks shown
+  on real frames, the author chose "C Neo-noir"; storyboard take 1 ("make it more intereesting
+  and cinematic"), take 2 ("much better, i like it"); then "the scene to scene transition isnt
+  smooth, and the rain is falling into the ethan ... the game name should be full screen", and
+  "i dont want the game name in the opening" (C04: the game's title only after the final cut to
+  black; NIGHT FREIGHT is the mission's name, C35).
+- **Built:** `game/features/cinematics/` (new): `cutscene_director.gd` (shots eased from one
+  view to the next, field of view, per-shot lights, focus, exposure and gamma, a dip through
+  black at each cut, a shot ending on the player's own camera so the hand-off has no cut; the
+  HUD hidden and Ethan held while it plays; E, Enter or Space skips after 1 s), `film_look.gd`
+  (2.39 bars, cards, caption, the full-screen title, the skip hint), `film_grade.gdshader` (an
+  overlay grade: anamorphic streak, bloom, saturation 0.7, contrast 1.3, cool shadows; the
+  world's AgX 1.3 untouched). `game/features/missions/night_freight/opening_cutscene.gd`: eight
+  shots, 49 s (studio card; the lamp in the wet road; the hill road's hairpin from above,
+  BLACKRIDGE 23:41; the empty crossing; the empty shelter; Ethan's face; from the dark cab; NIGHT
+  FREIGHT full screen, then down to the player's camera), every place worked out from the world.
+  Played once on a new game (`first_drive.gd`'s `_play_opening`), music after it. The rain stops
+  on Ethan (`driver.gd`'s `RAIN_SHIELD`, a particle collider on the rain's layer), in play too.
+- **Tested:** `test_opening.gd` (new) 6/6; `test_on_foot.gd` 52/52 (skips the opening, a rain
+  check); `test_exhaust_vapour_state.gd` presses E once to skip the opening (4/10 then 10/10, its
+  checks unchanged). Seven mutations exit 1 (`logs/phase_2/opening/mutations/`). Filmed in the
+  game: `captures/audit/opening/film/`.
+- **Claude Code's calls:** the studio card's name (NRVALAM WORKS) and 23:41 are drafts for the
+  author's review.

@@ -6,6 +6,8 @@ const ShedSounds = preload("res://features/environments/industrial_loop/shed_sou
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
 const SealCutscene = preload("res://features/missions/the_wrong_cargo/seal_cutscene.gd")
+const CutsceneDirector = preload("res://features/cinematics/cutscene_director.gd")
+const Opening = preload("res://features/missions/night_freight/opening_cutscene.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -57,6 +59,8 @@ var cargo: Node
 var title_camera: Camera3D
 ## The dock hand's round to seal the van, shown as a cutscene (#333).
 var seal_cutscene: Node
+## Plays the story's cutscenes in the film look (#357): Mission 1's opening on a fresh start.
+var cutscene: Node
 var _audio: Node
 var _on_title: bool = false
 var _changing: bool = false
@@ -137,6 +141,10 @@ func _ready() -> void:
 	seal_cutscene.name = "SealCutscene"
 	add_child(seal_cutscene)
 	seal_cutscene.call("setup", hud, driver, van, world.transfer_shed)
+	cutscene = CutsceneDirector.new()
+	cutscene.name = "CutsceneDirector"
+	add_child(cutscene)
+	cutscene.connect("finished", _opening_done)
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()
@@ -265,7 +273,22 @@ func _begin() -> void:
 			_continue_in_van()
 		else:
 			_begin_on_foot()
+			_play_opening.call_deferred()
 	_resume()
+
+
+## Mission 1's opening cutscene, on a fresh start of Night Freight (#357): only rain under it,
+## the music coming in once play is given back.
+func _play_opening() -> void:
+	if _mission != route or _has_progress() or cutscene == null:
+		return
+	_audio.silence_music()
+	cutscene.call("play", Opening.shots(world, van, driver), hud, driver, driver.get_camera())
+
+
+func _opening_done(_skipped: bool) -> void:
+	if _mission == route and not van.occupied:
+		_audio.play_music()
 
 
 func _continue_in_van() -> void:
@@ -293,6 +316,7 @@ func _new_drive() -> void:
 	_restart()
 	_audio.play_music()
 	_begin_on_foot()
+	_play_opening()
 
 
 func _struck(speed: float) -> void:

@@ -56,6 +56,7 @@ func _run() -> void:
 	await process_frame
 	_hud.resume_requested.emit()
 	await _seconds(0.5)
+	await _skip_opening()
 	_check_start()
 	_check_office()
 	await _check_unsigned_van()
@@ -73,6 +74,23 @@ func _run() -> void:
 	_finish()
 
 
+## A fresh start plays Mission 1's opening cutscene (#357); the player skips it with E, as he may.
+func _skip_opening() -> void:
+	var director := _app.get("cutscene") as Node
+	_check(director != null and bool(director.get("playing")), "A fresh start plays the opening "
+		+ "cutscene")
+	var event := InputEventAction.new()
+	event.action = "interact"
+	event.pressed = true
+	Input.parse_input_event(event)
+	await process_frame
+	event = InputEventAction.new()
+	event.action = "interact"
+	event.pressed = false
+	Input.parse_input_event(event)
+	await _seconds(0.3)
+
+
 func _check_start() -> void:
 	_check(not _van.occupied and not _van.engine_on and not _van.headlights_on
 		and _van.wiper_setting == 0,
@@ -80,6 +98,12 @@ func _check_start() -> void:
 	_office = _app.get_node("IndustrialLoop").get("run_sheet_spot")
 	var gap := _flat(_driver.global_position - _office).length()
 	_check(gap < 0.3, "Ethan starts at the site office door, by the clipboard (%.2f m from it)" % gap)
+	var shield := _driver.find_child("RainOnEthan", true, false) as GPUParticlesCollisionBox3D
+	var covers := shield != null and shield.size.y >= 1.75 and shield.size.x >= 0.45 \
+		and absf(shield.global_position.x - _driver.global_position.x) < 0.05 \
+		and shield.cull_mask & 1 != 0 and shield.cull_mask & 2 == 0
+	_check(covers, "Rain stops on Ethan instead of falling through him: a particle collider round "
+		+ "his body for the rain's layer, not the van's glass water")
 	_check(root.get_viewport().get_camera_3d() == _driver.call("get_camera"),
 		"The player sees Ethan through his own camera")
 	var player := _ethan_player()

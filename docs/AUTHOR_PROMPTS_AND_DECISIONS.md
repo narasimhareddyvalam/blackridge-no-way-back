@@ -5069,6 +5069,68 @@ tag `a5`. Pictures the author approved or rejected are filed in
        anamorphic flares, red accents); with the mission title card, a subtitle from Maya's call
        and a location caption.
      - **The author chose** "C Neo-noir".
+     - **Prompt** (verbatim): "make sure you check gdd to understand story" (before the opening's
+       storyboard).
+     - **Read** GAME_STORY, GAME_DESIGN and DESIGN_DECISIONS in full: the prologue's opening image
+       (the long lonely drive in cold rain, Ethan finishing a late shift, the short familiar call),
+       C35 (studio intro, opening cutscene, title screen, film look; no slow motion; title cards
+       use the mission name), C42 (NRVALAM WORKS; the game's title only after the final cut to
+       black), GAME_DESIGN §10 (20-90 s scenes, subtitles, staging and silhouettes, no facial
+       animation). The studio's brand colours are still undecided (C35).
+     - **Shown:** the opening cutscene's storyboard in the neo-noir look, from real frames at the
+       game's start (`tools/captures/capture_opening_board.gd`, `scratchpad/opening_board.py`),
+       about 46 s, skippable: 0 the NRVALAM WORKS card (a neutral placeholder: brand colours not
+       chosen), 1 the valley's lights from the hill road's lay-by with BLACKRIDGE and the time,
+       2 the empty hill road in the rain, 3 the van waiting on the forecourt, 4 the site office's
+       lit door with Ethan stepping out, 5 the run sheet under its lamp, 6 Ethan lit by a warm key
+       and a cool rim light, 7 NIGHT FREIGHT over the van, the camera easing down behind Ethan at
+       the clipboard where play begins. Maya's call stays in the drive (C34, C40).
+     - **Prompt** (verbatim): "i dont like it, make it more intereesting and cinematic"
+     - **Shown, take 2** (the capture script's second pass): 0 the studio card; 1 a street lamp's
+       amber smeared in the wet road from the asphalt's level, racking up to the lamp; 2 straight
+       down on the hill road's sharpest hairpin coiling through the firs, BLACKRIDGE 23:41; 3 low at
+       the kerb of the empty zebra crossing; 4 from inside the empty shelter, held a beat too long
+       (foreshadowing, nobody there, canon kept); 5 a smash cut to Ethan's face under the office
+       lamp; 6 Ethan a blur beyond the beaded windshield from inside the dark cab; 7 a crane up and
+       away from him small in the floodlight beside the van, NIGHT FREIGHT, sweeping down into play.
+     - **Prompt** (verbatim): "much better, i like it". Next: the cutscene system and this opening.
+     - **Built, not committed:** `game/features/cinematics/` (`cutscene_director.gd`: its own
+       camera eased through each shot's `from`, `via` and `to`, a `to` of "player" ending on the
+       player's camera, the HUD hidden, Ethan's keys held, E, Enter or Space skipping, play given
+       back as it was; `film_look.gd`: the grade, 2.39 bars, cards, captions, the skip hint;
+       `film_grade.gdshader`: the neo-noir grade over the 3D view only, the world's exposure
+       untouched), `night_freight/opening_cutscene.gd` (the storyboard's eight shots, 48 s, placed
+       from the world), played on a fresh start of Night Freight, the music after it. Tests first:
+       `test_opening.gd` 0/1, then 5/5; `test_on_foot.gd` now skips the opening as a player may
+       (51/51). Filmed once in a window (the shots too dark; a per-shot exposure added).
+     - **Prompt** (verbatim, the author stopping a second window run): "the scene to scene
+       transition isnt smooth, and the rain is falling into the ethan, fix small issues like that,
+       the game name should be full screen"
+     - **Fixed, not committed (headless only):** every cut dips through black (0.45 s down, 0.45 s
+       up), so a change of place, lens or grade never jumps; NIGHT FREIGHT fills the screen on black
+       (150 px letters, held 3.6 s), then the camera high over Ethan sweeps down to the player's;
+       per-shot exposure lifts the dark shots; the face shot a little wider; the rain stops on
+       Ethan (a particle collider round his body on the rain's layer, `driver.gd`'s
+       `RAIN_SHIELD`), so drops land on him and splash instead of falling through him, in play as
+       well. Tests: `test_opening.gd` 6/6 (dips and the title added), `test_on_foot.gd` 52/52 (the
+       rain check, 51/52 first). Not filmed: the author stopped the window run.
+     - **Prompt** (verbatim): "also after this cut scene, we will work on other cut scenes later.
+       tell me whats next to finish mission 2 or any issues etc? ohhh i forgot the mission name
+       comes later, stick with gdd. i dont want the game name in the opening" (so NIGHT FREIGHT,
+       the mission's name, stays; the game's title stays after the final cut to black, C04).
+
+358. **Overnight: finish Mission 2**
+     - **Prompt** (verbatim): "yes film it, then start the guidance markers. continue with same
+       rules and the details i want, make sure everything is realistic as real life. turn on
+       caffeine mode and keep doing it. find the best real life patrol guard. take all decisions
+       for me and finish off mission 2 over night. open the windows for me to ocme and see them
+       tomorrow morning. turn on caffeine more for 6 hours for now. switch off caffeine mode after
+       you are done with mission 2 and show me everything you did in mission 2 open pictures for
+       me"
+     - **Decision:** Claude Code takes the open choices, each recorded here as Claude Code's call
+       for the author's review in the morning (story words as drafts, C03); same rules: real
+       references first, tests first, a commit per part once every suite passes, no push, no
+       edits to `game/shaders/`; `caffeinate` for 6 hours, stopped when Mission 2 is done.
 
 ## Waiting for the author
 
