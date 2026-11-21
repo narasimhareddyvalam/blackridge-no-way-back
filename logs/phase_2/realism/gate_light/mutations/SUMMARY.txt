@@ -1,0 +1,20 @@
+l1  no gate flood                  test_gate_light.gd exit 1, 1/5 passed; 4 failed
+      FAIL: G1: a white flood by the gate, 5-10 m up, lights the approach, the stop line, the booth's service window and t
+      FAIL: G2: the gate's pole carries the chosen LED floods (The Street Light Man's model), their LEDs lit, each with it
+      FAIL: G3: the pole solid, off the driveway and clear of the leaf's run (clear false, solid false)
+      FAIL: G4: rain in the gate's light, over the stop line and the opening, raining with the camera at the stop line (vo
+l2  heads aimed off the lane       test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G1: a white flood by the gate, 5-10 m up, lights the approach, the stop line, the booth's service window and t
+l3  the model as imported: glass opaque, LEDs unlit test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G2: the gate's pole carries the chosen LED floods (The Street Light Man's model), their LEDs lit, each with it
+l4  the pole on the driveway       test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G3: the pole solid, off the driveway and clear of the leaf's run (clear false, solid true)
+l5  the pole not solid             test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G3: the pole solid, off the driveway and clear of the leaf's run (clear true, solid false)
+l6  no rain at the gate            test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G4: rain in the gate's light, over the stop line and the opening, raining with the camera at the stop line (vo
+l7  no rain under the yard floods  test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G5: rain in the light of each of the compound's yard floods (["Flood1", "Flood2", "Flood3"]; dry: ["Flood1", "
+l8  an amber gate flood            test_gate_light.gd exit 1, 4/5 passed; 1 failed
+      FAIL: G1: a white flood by the gate, 5-10 m up, lights the approach, the stop line, the booth's service window and t
+l9  the model's author not credited test_menus.gd (run through scripts/run-test.sh in a clone, as the menus test needs its scratch home) exit 1, 19/20 passed; 1 failed

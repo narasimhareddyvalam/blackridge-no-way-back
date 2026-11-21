@@ -550,6 +550,9 @@ func _credits_text() -> String:
 		+ "Residential\" by Maxwell autodoors (Sketchfab: maihupronoob) and \"Abandoned Factory "
 		+ "Warning Light\" by x4vier28, licensed CC BY 4.0: the transfer shed's barrier cabinet "
 		+ "(its own arm removed), the sliding gates' motors and the gates' warning lamps.")
+	_section(lines, "THE COMPOUND GATE'S LIGHT", "\"LED Floodlight\" by The Street Light Man "
+		+ "(Sketchfab: thestreetlightman), licensed CC BY 4.0: the floods on the compound gate's "
+		+ "pole, stood on their yokes.")
 	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "
 		+ "thejinjinjin), licensed CC BY 4.0: the yard's top-loader, its spreader drawn in. The "
 		+ "boxes' markings are set in Barlow Condensed by The Barlow Project Authors, released "

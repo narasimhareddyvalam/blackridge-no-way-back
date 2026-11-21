@@ -8468,3 +8468,27 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   lights, signs, seals). Ten mutations exit 1 (`logs/phase_2/realism/docks/mutations/`). Stills
   `captures/audit/docks/after/`; the author: "looks right".
 - **Not done:** vehicle restraints or chocks, and the lip's chequer plate (not chosen).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the compound gate's light (#353), built)
+
+- **Found (Commons photos of gates at night beside our stills, `captures/audit/gate_light/before/`):**
+  no lamp at the compound's gate, only the booth's windows and small door lamp; the lane, stop
+  line and leaf dark, and no rain seen there (rain shows only in a lamp's light); the yard's three
+  floods 28 m and more away, facing in, with no rain in their light either.
+- **Built (the author's "LED flood pole", "Yes, same step" for the yard floods' rain, then, after
+  "the light isnt realistic. use already available asset for that light", "H2 finned LED
+  flood"):**
+  - a 7 m galvanised pole on its footing on the verge east of the driveway, outside the fence,
+    clear of the lane and the leaf's run, solid; a crossarm on top and on it two of The Street
+    Light Man's "LED Floodlight" (CC BY, `art/gates/led_flood/`, its yoke turned in Blender to
+    stand under the head), each turned and tilted on its yoke, one on the approach, the stop line
+    and the booth's window, one on the leaf; their LEDs lit behind clear glass; white as the
+    compound's floods, energy 4 (at 10 the chain-link glared white);
+  - floodlight rain (`lamp_rain_floodlight.tscn`) over the stop line and the opening, and 7.4 m
+    in front of each yard flood.
+- **Tested:** `test_gate_light.gd` (new) 0/5 then 5/5; `test_menus.gd` the credit 19/20 then
+  20/20; `test_lamp_rain_state.gd`'s count of volumes 20 to 24, its words naming the compound's
+  four (an existing expectation changed, as when the shed's lamps were added). Nine mutations exit 1
+  (`logs/phase_2/realism/gate_light/mutations/`). Stills `captures/audit/gate_light/after/`.
+- **Limits:** the chain-link reads a little milky under the flood (the fence shader, the author's
+  open question); in the floodlights the rain starts 4 m up, as at the site office.

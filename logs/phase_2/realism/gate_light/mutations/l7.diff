@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutgl/l7/game/features/environments/industrial_loop/compound.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/compound.gd	2026-11-21 10:41:17
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutgl/l7/game/features/environments/industrial_loop/compound.gd	2026-11-21 10:42:55
+@@ -437,8 +437,6 @@
+ 		light.spot_angle = 60.0
+ 		light.spot_range = 45.0
+ 		light.shadow_enabled = index == 1
+-		rain_places.append(Transform3D(Basis.IDENTITY, Vector3(at.x, GROUND, at.z
+-			- YARD_RAIN_OUT)))
+ 	var bumper_face := west.end.y + 0.13
+ 	var docks: Array = DOCK_XS[0]
+ 	for slot in range(TRAILER_DOCKS.size()):

@@ -955,6 +955,9 @@ func _compound() -> void:
 			warehouse_widths[index], 23.0))
 		heights.append(warehouse_heights[index])
 	compound.build_warehouses(houses, heights, _metal)
+	for place: Transform3D in compound.get("rain_places"):
+		lamp_rain.add_volume(LampRain.FLOODLIGHT, place.translated(Vector3.UP
+			* LampRain.FLOOD_HEIGHT))
 
 
 func _town() -> void:

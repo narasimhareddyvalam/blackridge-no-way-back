@@ -4854,6 +4854,39 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Prompts** (verbatim): "show me open ppicture" (the sheet opened in Preview), then "looks
        right"; Claude Code ran the ten mutations (all exit 1) and every suite, then committed.
 
+353. **The audit goes on: the light over the compound gate at night**
+     - **Prompt** (verbatim): "okay proceed"
+     - **Real gates at night** (Commons, scratchpad only): a lamp on a pole beside the gate
+       lighting the approach and the gate; a guardhouse's canopy downlights over the stop point
+       and its window; lamps along a factory's approach and over its gate; pole lamps where
+       vehicles stop at a port gate.
+     - **Ours** (`captures/audit/gates/after/2_compound_gate_approach.png`): no lamp at the
+       compound's gate; only the booth's windows and its small door lamp; the lane, stop line and
+       gate leaf dark, and no rain seen there (rain shows only in a lamp's light). The yard's three
+       floods stand 28 m and more from the gate, facing in. The shed's gate has two street lamps.
+     - **Asked** what to build; **the author chose** "LED flood pole (Recommended)" and, for the
+       yard's three floods (no rain in their light either), "Yes, same step (Recommended)".
+     - **Built, not committed:** `flood_head.gd` (the yard's LED flood head, now shared); a 7 m
+       galvanised pole on the verge east of the driveway, outside the fence, an arm over the lane
+       and two heads, one on the approach, stop line and booth window, one on the leaf, white as
+       the compound's floods (energy 4: at 10 the chain-link glared white); solid; floodlight rain
+       over the stop line and the opening, and in front of each yard flood. Tests first
+       (`test_gate_light.gd` 0/5, then 5/5); `test_lamp_rain_state.gd`'s count of volumes 20 to
+       24, its words naming the compound's four; stills `captures/audit/gate_light/`.
+     - **Prompts** (verbatim): "commit it once suites pass", then, while the mutations ran, "the
+       light isnt realistic. use already available asset for that light". The commit run was
+       stopped; ready-made models searched (Sketchfab, Poly Haven) and shown on a labelled sheet.
+     - **The author chose** "H2 finned LED flood" (The Street Light Man's "LED Floodlight", CC BY).
+       **Rebuilt, not committed:** the model exported from Blender (its yoke turned to stand under
+       the head, `Head` and `Yoke` turning at the pivot) to `art/gates/led_flood/`, two floods on a
+       crossarm atop the 7 m pole, each turned and tilted at its target, their LEDs lit behind
+       clear glass (the model's glass imported opaque); the built heads and the shared builder
+       dropped (the yard's own heads unchanged); credited ("THE COMPOUND GATE'S LIGHT"). Tests:
+       `test_gate_light.gd` G2 now asks for the model (5/5), `test_menus.gd` the credit (19/20,
+       then 20/20).
+     - **Prompt** (verbatim): "commit it once suites pass"; nine mutations exit 1, every suite run,
+       then committed.
+
 ## Waiting for the author
 
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen

@@ -1,5 +1,25 @@
 # HANDOFF.md
 
+**This run (2026-11-21, Mission 2's audit, the compound gate's light, #353):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  compound gate's light (#353), built)". Files: `compound.gd`, `industrial_loop.gd`,
+  `art/gates/led_flood/` (new), `art/gates/ATTRIBUTION.md`,
+  `source_assets/sketchfab/28_led_flood/README.md`, `front_menu.gd` (credits),
+  `game/tests/test_gate_light.gd` (new), `test_menus.gd`, `test_lamp_rain_state.gd`,
+  `tools/captures/capture_gate_light.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/gate_light/g3 scripts/run-test.sh
+  test_gate_light.gd 60` exit 0, 5/5; `test_menus.gd` 20/20; `test_lamp_rain_state.gd` 16/16;
+  `test_compound.gd` 10/10. Mutations (`python3 -I
+  logs/phase_2/realism/gate_light/mutations/mutations_gate_light.py <scratch> <out>`): nine exit 1
+  (l9 through `scripts/run-test.sh` in a clone). Suites: `bash
+  logs/phase_2/realism/gate_light/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Blender:** the export is in the default scene's collection `LEDFloodExport`; earlier imports
+  are still in that scene.
+- **Next:** the rain seen looking straight up, the run sheet handover; then steps 6 and 7, then a
+  Mission 3 brief.
+- **Unverified:** the floods have not been seen in motion from the van at the gate.
+
 **This run (2026-11-21, Mission 2's audit, the docks, #352):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
   docks (#352), built)". Files: `dock_dressing.gd` (new), `transfer_building.gd`, `warehouse.gd`,

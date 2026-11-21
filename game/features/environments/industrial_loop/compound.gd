@@ -14,6 +14,7 @@ signal run_sheet_checked
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Fence = preload("chain_link_fence.gd")
 const SlidingGate = preload("sliding_gate.gd")
+const LED_FLOOD := preload("res://features/environments/industrial_loop/art/gates/led_flood/led_flood.glb")
 const Booth = preload("guard_booth.gd")
 const Warehouse = preload("warehouse.gd")
 const DockJudge = preload("dock_judge.gd")
@@ -73,6 +74,27 @@ const POLES: Array[Vector3] = [Vector3(172.0, 0.0, 145.4), Vector3(222.0, 0.0, 1
 	Vector3(268.0, 0.0, 145.4)]
 const POLE_TALL := 9.0
 const FLOOD := Color(0.96, 0.97, 1.0)
+## The gate's flood pole (the audit, #353, after Commons photos of gates at night; the author's
+## choice of The Street Light Man's LED flood, `art/gates/led_flood/`): on the verge east of the
+## driveway, outside the fence, a crossarm on its top and two floods standing on it on their
+## yokes, one on the approach, the stop line and the booth's window, one on the gate's leaf;
+## white as the yard's. The model's yoke base is YOKE_DROP below its pivot, its head turning
+## there, its lens facing -z, its LEDs' middle LENS_AT from the pivot.
+const GATE_POLE := Vector3(204.6, 0.0, 147.4)
+const GATE_POLE_TALL := 7.0
+const CROSSARM := Vector3(0.08, 0.08, 1.1)
+const FLOOD_APART := 0.38
+const YOKE_DROP := 0.291
+const LENS_AT := Vector3(0.0, 0.13, -0.06)
+const GATE_AIMS: Array[Vector3] = [Vector3(199.0, 0.0, 151.5), Vector3(200.0, 0.0, 144.5)]
+const GATE_FLOOD_ENERGY := 4.0
+const GATE_FLOOD_ANGLE := 50.0
+const GATE_FLOOD_RANGE := 20.0
+## Where rain shows in the compound's lights, on the ground (the world raises each to its
+## floodlight rain's height): over the gate's stop line and opening, and 7.4 m out in front of each
+## yard flood, between the fence and the warehouses.
+const GATE_RAIN := Vector3(200.0, 0.0, 148.0)
+const YARD_RAIN_OUT := 7.4
 const PALLET_STACKS: Array[Vector3] = [Vector3(168.2, 0.0, 110.0), Vector3(168.2, 0.0, 113.0)]
 const PALLET_HIGH := 14
 const PALLET_SIZE := Vector3(1.0, 0.144, 1.2)
@@ -88,6 +110,10 @@ var _window_open := false
 var judge: Node
 
 var _fence_runs: Array = []
+## Each place rain shows in the compound's lights (see GATE_RAIN), for the world's lamp rain.
+var rain_places: Array[Transform3D] = []
+var _flood_glass: StandardMaterial3D
+var _flood_board: StandardMaterial3D
 var _footprints: Array[Rect2] = []
 var _body: StaticBody3D
 var _gate: AnimatableBody3D
@@ -119,6 +145,71 @@ func build(surface: Material, concrete: Material, metal: Material, wall: Materia
 	var white := Build.material(Color(0.92, 0.92, 0.9), 0.6)
 	Build.box(self, Vector3(GATE_X, PAVING_TOP + 0.003, GATE_Z + STOP_LINE_OUT),
 		Vector3(GATE_WIDE - 0.4, 0.004, 0.3), white).name = "StopLine"
+	_gate_flood(metal)
+
+
+## The gate's flood pole: a galvanised pole on its footing and its cap, the crossarm on top and
+## the two floods on it; solid; its rain over the stop line and the opening.
+func _gate_flood(metal: Material) -> void:
+	var steel := metal.duplicate() as Material
+	var at := GATE_POLE
+	var pole := Build.cylinder(self, at + Vector3.UP * GATE_POLE_TALL / 2.0, 0.085, GATE_POLE_TALL,
+		steel, 0.06)
+	pole.name = "GateFloodPole"
+	Build.cylinder(pole, Vector3.DOWN * (GATE_POLE_TALL / 2.0 - 0.1), 0.2, 0.2,
+		Build.material(Color(0.5, 0.5, 0.48), 0.9)).name = "Footing"
+	Build.box(pole, Vector3(0.0, GATE_POLE_TALL / 2.0 + CROSSARM.y / 2.0, 0.0), CROSSARM, steel) \
+		.name = "Crossarm"
+	_solid_box(at + Vector3.UP * 1.0, Vector3(0.3, 2.0, 0.3))
+	_footprints.append(Rect2(at.x - 0.2, at.z - 0.2, 0.4, 0.4))
+	for index in range(GATE_AIMS.size()):
+		var pivot := at + Vector3(0.0, GATE_POLE_TALL + CROSSARM.y + YOKE_DROP, (index - 0.5) * 2.0
+			* FLOOD_APART)
+		_led_flood("GateFloodHead%d" % (index + 1), pivot, GATE_AIMS[index])
+	rain_places.append(Transform3D(Basis.IDENTITY, GATE_RAIN))
+
+
+## One LED flood, `label`, its pivot at `pivot`: its yoke turned toward `target` and its head
+## tilted on the yoke to aim at it; its LEDs lit and its light at them.
+func _led_flood(label: String, pivot: Vector3, target: Vector3) -> void:
+	if _flood_glass == null:
+		_flood_glass = StandardMaterial3D.new()
+		_flood_glass.albedo_color = Color(0.9, 0.95, 1.0, 0.12)
+		_flood_glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		_flood_glass.roughness = 0.05
+		_flood_board = Build.material(Color(0.8, 0.8, 0.8), 0.5)
+		_flood_board.emission_enabled = true
+		_flood_board.emission = FLOOD
+		_flood_board.emission_energy_multiplier = 0.15
+	var holder := Node3D.new()
+	holder.name = label
+	add_child(holder)
+	holder.global_position = pivot
+	holder.look_at(Vector3(target.x, pivot.y, target.z), Vector3.UP)
+	var model := LED_FLOOD.instantiate() as Node3D
+	model.name = "LedFlood"
+	holder.add_child(model)
+	var head := model.find_child("Head", true, false) as Node3D
+	head.look_at(target, Vector3.UP)
+	var face := head as MeshInstance3D if head is MeshInstance3D else head.find_child("*", true,
+		false) as MeshInstance3D
+	for surface in range(face.mesh.get_surface_count()):
+		var named := face.mesh.surface_get_material(surface).resource_name
+		if named.begins_with("phosphorus"):
+			face.set_surface_override_material(surface, Build.luminous(FLOOD, 6.0))
+		elif named == "tempered_glass":
+			face.set_surface_override_material(surface, _flood_glass)
+		elif named == "led_base":
+			face.set_surface_override_material(surface, _flood_board)
+	var light := SpotLight3D.new()
+	light.name = "FloodLight"
+	head.add_child(light)
+	light.position = LENS_AT
+	light.light_color = FLOOD
+	light.light_energy = GATE_FLOOD_ENERGY
+	light.spot_angle = GATE_FLOOD_ANGLE
+	light.spot_range = GATE_FLOOD_RANGE
+	light.spot_attenuation = 0.8
 
 
 ## The two warehouses on `footprints` (x, z), `heights` high (part B), west then east.
@@ -346,6 +437,8 @@ func _dress(west: Rect2) -> void:
 		light.spot_angle = 60.0
 		light.spot_range = 45.0
 		light.shadow_enabled = index == 1
+		rain_places.append(Transform3D(Basis.IDENTITY, Vector3(at.x, GROUND, at.z
+			- YARD_RAIN_OUT)))
 	var bumper_face := west.end.y + 0.13
 	var docks: Array = DOCK_XS[0]
 	for slot in range(TRAILER_DOCKS.size()):
