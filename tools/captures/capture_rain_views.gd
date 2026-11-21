@@ -2,7 +2,7 @@ extends SceneTree
 ## The rain at night from where the player sees it (the audit, #354), each view beside a real
 ## photo of the same: the van's own headlights from the driver's seat; a street lamp from the road
 ## and from under it looking up at it; the compound gate's flood from the driveway; a yard flood
-## across the compound; the shed's dock front. Run windowed, from the repository root:
+## across the compound; the shed's dock front; the van's headlights from in front. Run windowed, from the repository root:
 ##   HOME="$PWD/.scratch-home" Godot --path game --resolution 1280x800 \
 ##     --script ../tools/captures/capture_rain_views.gd -- <absolute stills folder>
 
@@ -11,6 +11,7 @@ const FIXED := {
 	"3_gate_drive": [Vector3(199.3, 2.0, 163.0), Vector3(201.0, 4.0, 146.0)],
 	"4_yard_flood": [Vector3(205.0, 1.7, 124.0), Vector3(222.0, 6.0, 140.0)],
 	"5_dock_front": [Vector3(-44.0, 1.7, 33.0), Vector3(-47.75, 3.5, 20.0)],
+	"6_headlights_outside": [Vector3(-25.5, 1.6, 76.0), Vector3(-28.0, 1.0, 90.0)],
 }
 
 var _out := ""

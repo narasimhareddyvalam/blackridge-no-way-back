@@ -566,3 +566,16 @@ Claude Code wrote these revisions from that list.
   `test_gate_light.gd` G6 (5/6 then 6/6); eight mutations exit 1
   (`logs/phase_2/realism/rain/step3/mutations/`); stills `captures/audit/rain/step3/`,
   `captures/audit/lookup/step3/`.
+
+### 2026-11-21, revision 16 (Phase 2, #354): rain thrown back toward its light (Claude Code, at the author's request)
+
+- **Found:** from the driver's seat, the rain in the van's own headlights barely showed: the
+  shared shader's single forward lobe (`forward_scatter` 0.7) throws almost nothing back toward
+  a light behind the eye, while real drops throw a strong share back (internal reflection),
+  which is why rain shows so in a car's headlights.
+- **Changed:** `scatter_particle.gdshader` gains `back_scatter`, a second lobe of asymmetry
+  −0.6 added to the forward one: 0.3 in every lamp-rain scene, 1.0 in the van's new headlight
+  rain (`game/effects/headlight_rain.tscn`, Phase 2; `docs/PHASE_BRIEF.md`). The A effects and B2
+  leave it at 0, unchanged.
+- **Evidence:** `test_lamp_rain_config.gd` 588/588, `test_headlights.gd` 32/32; mutations h6, h7
+  exit 1 (`logs/phase_2/realism/rain/step4/mutations/`); stills `captures/audit/rain/step4/`.

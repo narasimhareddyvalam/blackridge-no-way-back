@@ -58,7 +58,8 @@ const MIN_PIXELS := 1.6
 ## last 5% of its life); the counts grown with the life so the rain is as dense; the compound's
 ## floods' rain from just under their heads (`lamp_rain_flood_high.tscn`), slanting as all rain;
 ## far drops whose streak is under 6 pixels fade to a sheen of 0.15 (specks are not what the eye
-## sees of far rain).
+## sees of far rain); and a backward lobe of 0.3, as water throws light back toward its source
+## (step 4).
 const SLOWEST := 4.0
 const SCATTER := "res://effects/scatter_particle.gdshader"
 const FLAT: Array[Vector2] = [Vector2(0.0, 1.0), Vector2(1.0, 1.0)]
@@ -144,7 +145,7 @@ func _rain(variant: Dictionary) -> Dictionary:
 		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": MIN_PIXELS,
 			"forward_scatter": 0.7, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
 			"sky": 0.0, "still_fade": 1.0, "camera_streak": true, "exposure": EXPOSURE,
-			"near_fade": 2.0, "far_pixels": 6.0, "far_sheen": 0.15,
+			"near_fade": 2.0, "far_pixels": 6.0, "far_sheen": 0.15, "back_scatter": 0.3,
 			"fall": SLANT.normalized()}},
 		"mesh": {"size": Vector2(0.01, 0.01)},
 		"texture": "res://effects/textures/rain_streak.png",

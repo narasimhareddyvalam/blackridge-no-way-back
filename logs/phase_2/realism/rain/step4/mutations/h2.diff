@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/effects/headlight_rain.tscn /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr4/h2/game/effects/headlight_rain.tscn
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/effects/headlight_rain.tscn	2026-11-21 11:40:17
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr4/h2/game/effects/headlight_rain.tscn	2026-11-21 11:41:49
+@@ -34,7 +34,7 @@
+ [sub_resource type="ParticleProcessMaterial" id="Process_rain"]
+ emission_shape_offset = Vector3(0, 1.75, -13)
+ emission_shape = 3
+-emission_box_extents = Vector3(4.5, 1.75, 12)
++emission_box_extents = Vector3(4.5, 1.75, 6)
+ direction = Vector3(0.08, -0.997, 0)
+ spread = 4.0
+ initial_velocity_min = 4.0

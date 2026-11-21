@@ -39,6 +39,10 @@ uniform float near_fade : hint_range(0.0, 10.0) = 0.0;
 // strength: far off, the eye sees rain as a faint sheen, not as separate specks.
 uniform float far_pixels : hint_range(0.0, 20.0) = 0.0;
 uniform float far_sheen : hint_range(0.0, 1.0) = 1.0;
+// Water drops throw light back toward its source too (internal reflection), which is why rain
+// shows so clearly in a car's own headlights: a second, backward lobe, `back_scatter` times the
+// strength of a lobe of asymmetry -0.6.
+uniform float back_scatter : hint_range(0.0, 4.0) = 0.0;
 
 varying float coverage;
 varying float aspect;
@@ -224,6 +228,11 @@ void light() {
 	float facing = dot(-LIGHT, VIEW);
 	float g = forward_scatter;
 	float phase = (1.0 - g * g) / (4.0 * PI * pow(1.0 + g * g - 2.0 * g * facing, 1.5));
+	if (back_scatter > 0.0) {
+		float gb = -0.6;
+		phase += back_scatter * (1.0 - gb * gb) / (4.0 * PI * pow(1.0 + gb * gb - 2.0 * gb * facing,
+			1.5));
+	}
 	float lambert = max(dot(NORMAL, LIGHT), 0.0) / PI;
 	DIFFUSE_LIGHT += LIGHT_COLOR * ATTENUATION * (diffuse * lambert + scatter * 4.0 * phase);
 	if (glint > 0.0) {

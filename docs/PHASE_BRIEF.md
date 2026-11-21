@@ -8521,3 +8521,17 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   6/6; eight mutations exit 1. Left for the author's look: the floodlights' rain from 20 m and
   more still reads somewhat speckled; some near streaks look dotted (possibly MetalFX's 75%
   upscaling of thin moving lines, §7's predicted failure 5; not yet checked at full scale).
+- **Step 4 built:** the rain in the van's headlights, which had been streaks painted on eight
+  planes riding with the van (`beam_rain.gdshader`, now deleted), little seen from the seat:
+  `game/effects/headlight_rain.tscn`, 22,000 real drops filling the air from 1 to 25 m ahead of
+  the van and 9 m across, falling in the world as the van drives through them along the wind's
+  slant (set each tick from the van's turn), drawn as a camera sees them, lit only by the lights
+  that reach them (on the world's layer, which the headlights light), so the low and the high
+  beams and an oncoming van's each light their own; they fall while any of those lamps is on
+  (`rain_backlit` for the oncoming van's); the van's body (`RainStop`, on the rain's own layer
+  64) and glass stop them. The shared shader gains a backward lobe (`back_scatter`: 1.0 in the
+  beams, 0.3 in the lamps' rain), as water throws light back toward its source, which is why
+  rain shows in a car's own headlights. Tests: `test_headlights.gd` (the beams' rain rewritten
+  for the drops: 29/32 then 32/32), `test_oncoming_van.gd` (reads `rain_backlit`: 20/21 then
+  21/21), `test_lamp_rain_config.gd` 588/588; eight mutations exit 1. Stills
+  `captures/audit/rain/step4/` (the seat, and the van's lamps from in front beside the photo).

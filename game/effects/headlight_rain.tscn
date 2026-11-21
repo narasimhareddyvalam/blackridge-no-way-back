@@ -1,0 +1,95 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://effects/textures/rain_streak.png" id="1_streak"]
+[ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
+
+[sub_resource type="Curve" id="Curve_rain_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.06, 0.8), 0.0, 0.0, 0, 0, Vector2(0.94, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
+curve = SubResource("Curve_rain_alpha")
+
+[sub_resource type="Curve" id="Curve_rain_scale"]
+_data = [Vector2(0, 0.9), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.9), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rain_scale"]
+curve = SubResource("Curve_rain_scale")
+
+[sub_resource type="Curve" id="Curve_rain_flat"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rain_blur_along"]
+max_value = 210.0
+_data = [Vector2(0, 1), 0.0, 200.0, 0, 1, Vector2(1, 201), 200.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="Curve_rain_blur"]
+curve_x = SubResource("Curve_rain_flat")
+curve_y = SubResource("Curve_rain_blur_along")
+curve_z = SubResource("Curve_rain_flat")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_rain"]
+emission_shape_offset = Vector3(0, 1.75, -13)
+emission_shape = 3
+emission_box_extents = Vector3(4.5, 1.75, 12)
+direction = Vector3(0.08, -0.997, 0)
+spread = 4.0
+initial_velocity_min = 4.0
+initial_velocity_max = 8.5
+gravity = Vector3(0, -0.5, 0)
+damping_min = 0.0
+damping_max = 0.15
+scale_min = 0.1
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_rain_scale")
+scale_over_velocity_min = 0.0
+scale_over_velocity_max = 9.0
+scale_over_velocity_curve = SubResource("Curve_rain_blur")
+color = Color(0.88, 0.89, 0.9, 1)
+alpha_curve = SubResource("CurveTexture_rain_alpha")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+
+[sub_resource type="ShaderMaterial" id="Draw_streak"]
+render_priority = 0
+shader = ExtResource("9_scatter")
+shader_parameter/albedo_texture = ExtResource("1_streak")
+shader_parameter/face_camera = false
+shader_parameter/min_pixels = 1.6
+shader_parameter/forward_scatter = 0.7
+shader_parameter/scatter = 10.0
+shader_parameter/diffuse = 0.3
+shader_parameter/glint = 0.0
+shader_parameter/sky = 0.0
+shader_parameter/still_fade = 1.0
+shader_parameter/camera_streak = true
+shader_parameter/exposure = 0.03
+shader_parameter/near_fade = 2.0
+shader_parameter/far_pixels = 6.0
+shader_parameter/far_sheen = 0.15
+shader_parameter/back_scatter = 1.0
+shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
+
+[sub_resource type="QuadMesh" id="Quad_streak"]
+material = SubResource("Draw_streak")
+size = Vector2(0.01, 0.01)
+
+[node name="HeadlightRain" type="GPUParticles3D"]
+layers = 65
+emitting = false
+amount = 22000
+lifetime = 0.9
+fixed_fps = 60
+one_shot = false
+preprocess = 0.9
+explosiveness = 0.0
+collision_base_size = 0.01
+visibility_aabb = AABB(-6, -2, -30, 12, 7, 52)
+local_coords = false
+transform_align = 3
+process_material = SubResource("Process_rain")
+draw_pass_1 = SubResource("Quad_streak")

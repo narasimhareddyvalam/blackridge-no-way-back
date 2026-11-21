@@ -116,14 +116,17 @@ const ROOF_SEAL := 0.02
 const ROOF_SLOPE := Vector2(0.0, -0.05)
 const ROOF_AIR := 0.8
 const LOOK_UP := 1.05
-const BEAM_RAIN = preload("beam_rain.gdshader")
+const HEADLIGHT_RAIN = preload("res://effects/headlight_rain.tscn")
 const BEAM_MIST = preload("beam_mist.gdshader")
 const HEADLAMP_LENS = preload("headlamp_lens.gdshader")
-const RAIN_LAYERS: Array[float] = [3.0, 4.5, 6.5, 9.0, 12.5, 17.0, 23.0, 31.0]
 const LAMP_FRONT := -2.31
 const RAIN_SLANT := 0.08
-const LOW_BEAM_RAIN := Vector2(5.0, 0.65)
-const HIGH_BEAM_RAIN := Vector2(16.0, 0.9)
+## The wind's slant the rain falls along, in the world, as the lamps' rain does.
+const RAIN_FALL := Vector3(RAIN_SLANT, -0.997, 0.0)
+## The beams' rain draws on the world's layer, where the headlights light it, and on a layer of
+## its own (value 64, used by nothing else) that only the van's `RainStop` collides with, so the
+## wiper's and the spill's water on the glass, on the world's layer, are not stopped by it.
+const RAIN_STOP_LAYER := 64
 const WINDSHIELD_AIR := 0.85
 const SIDE_AIR := 0.9
 const SIDE_AIR_DIRECTION := Vector2(-0.989, 0.148)
@@ -250,8 +253,11 @@ var _glass: ShaderMaterial
 var lamps: Array[Light3D] = []
 var _lamp_ray := PhysicsRayQueryParameters3D.new()
 var _high_beams_shown: bool = false
-var _rain_layers: Array[MeshInstance3D] = []
-var _beam_rain_material: ShaderMaterial
+## The rain in the beams (the rain, step 4, #354): drops in the air ahead of the van, falling in
+## the world, lit by whatever light reaches them (`game/effects/headlight_rain.tscn`).
+var headlight_rain: GPUParticles3D
+## How strongly an oncoming van's beams light the rain in front of this one (0 when none do).
+var rain_backlit: float = 0.0
 var _water: float = 0.6
 var _windshield_water := RainPhysics.new()
 var _side_water := RainPhysics.new()
@@ -309,7 +315,7 @@ func configure(van: CharacterBody3D) -> void:
 	add_child(_body)
 	add_child(_cabin)
 	_exterior()
-	_beam_rain()
+	_headlight_rain()
 	_interior()
 	_camera()
 	_displays()
@@ -846,54 +852,35 @@ func _local(node: Node3D) -> Transform3D:
 	return global_transform.affine_inverse() * node.global_transform
 
 
-func _beam_rain() -> void:
-	_beam_rain_material = ShaderMaterial.new()
-	_beam_rain_material.shader = BEAM_RAIN
-	_beam_rain_material.set_shader_parameter("slant", RAIN_SLANT)
-	var holder := Node3D.new()
-	holder.name = "BeamRain"
-	add_child(holder)
-	var spread := tan(deg_to_rad(_headlights[0].spot_angle))
-	for index in range(RAIN_LAYERS.size()):
-		var ahead: float = RAIN_LAYERS[index]
-		var quad := QuadMesh.new()
-		quad.size = Vector2(2.0 * (ahead + 0.5) * spread + 1.8, minf(2.6 + ahead * 0.3, 9.0))
-		var layer := Build.instance(holder, Vector3(0.0, quad.size.y * 0.5 - 0.2,
-			LAMP_FRONT - ahead), quad, _beam_rain_material)
-		layer.layers = 4
-		layer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		layer.set_instance_shader_parameter("seed", 11.0 * index + 3.0)
-		_rain_layers.append(layer)
+## The rain in the beams: its drops fill the air from just ahead of the van to 25 m out and fall in
+## the world as the van drives through them; the van's body and glass stop them (`RainStop`, on
+## the rain's own layer only, RAIN_STOP_LAYER). Lit by the lights themselves, so the low and the high beams each
+## light their own, and so does an oncoming van's.
+func _headlight_rain() -> void:
+	headlight_rain = HEADLIGHT_RAIN.instantiate() as GPUParticles3D
+	headlight_rain.process_material = headlight_rain.process_material.duplicate()
+	headlight_rain.position = Vector3(0.0, 0.0, LAMP_FRONT)
+	add_child(headlight_rain)
+	var shape := vehicle.get_node("CollisionShape3D") as CollisionShape3D
+	var stop := GPUParticlesCollisionBox3D.new()
+	stop.name = "RainStop"
+	stop.size = (shape.shape as BoxShape3D).size
+	stop.position = shape.position
+	stop.cull_mask = RAIN_STOP_LAYER
+	add_child(stop)
 
 
+## The beams' rain falls while the lamps, or an oncoming van's, are on, along the wind's slant in
+## the world however the van is turned.
 func _light_the_rain() -> void:
 	var lit: bool = vehicle.headlights_on
-	var backlit := _oncoming_rain()
-	for layer in _rain_layers:
-		layer.visible = lit or backlit > 0.0
-	if not lit and backlit <= 0.0:
-		return
-	_beam_rain_material.set_shader_parameter("beams", 1.0 if lit else 0.0)
-	_beam_rain_material.set_shader_parameter("oncoming", backlit)
-	if backlit > 0.0:
-		var lamps: Array = oncoming.get("lamps")
-		_beam_rain_material.set_shader_parameter("oncoming_pattern", lamps[0].light_projector)
-		_beam_rain_material.set_shader_parameter("oncoming_reach", lamps[0].spot_range)
-		_beam_rain_material.set_shader_parameter("oncoming_left",
-			Projection(lamps[0].global_transform.affine_inverse()))
-		_beam_rain_material.set_shader_parameter("oncoming_right",
-			Projection(lamps[1].global_transform.affine_inverse()))
-	var lamp := _headlights[0]
-	var strength := HIGH_BEAM_RAIN if vehicle.high_beams else LOW_BEAM_RAIN
-	_beam_rain_material.set_shader_parameter("glow", strength.x)
-	_beam_rain_material.set_shader_parameter("density", strength.y)
-	_beam_rain_material.set_shader_parameter("pattern", lamp.light_projector)
-	_beam_rain_material.set_shader_parameter("reach", lamp.spot_range)
-	_beam_rain_material.set_shader_parameter("tan_half", tan(deg_to_rad(lamp.spot_angle)))
-	_beam_rain_material.set_shader_parameter("lamp_left",
-		Projection(_headlights[0].global_transform.affine_inverse()))
-	_beam_rain_material.set_shader_parameter("lamp_right",
-		Projection(_headlights[1].global_transform.affine_inverse()))
+	rain_backlit = _oncoming_rain()
+	var falling := lit or rain_backlit > 0.0
+	if headlight_rain.emitting != falling:
+		headlight_rain.emitting = falling
+	if falling:
+		(headlight_rain.process_material as ParticleProcessMaterial).direction = \
+			headlight_rain.global_basis.inverse() * RAIN_FALL.normalized()
 
 
 func _oncoming_rain() -> float:

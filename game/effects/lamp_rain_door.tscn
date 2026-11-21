@@ -73,6 +73,7 @@ shader_parameter/exposure = 0.03
 shader_parameter/near_fade = 2.0
 shader_parameter/far_pixels = 6.0
 shader_parameter/far_sheen = 0.15
+shader_parameter/back_scatter = 0.3
 shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
 
 [sub_resource type="QuadMesh" id="Quad_streak"]

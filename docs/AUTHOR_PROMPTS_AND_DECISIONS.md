@@ -4929,6 +4929,10 @@ tag `a5`. Pictures the author approved or rejected are filed in
        slow drops reaching the ground, the compound's rain leaning with the wind; probes found
        the gate's "snow" was far volumes' 1-2 pixel drops, so far drops now fade to a sheen;
        eight mutations exit 1, every suite run, committed.
+     - **Step 4:** the headlights' rain, painted streaks on planes riding with the van, replaced by
+       real drops ahead of it, lit by the lamps that reach them; from the seat they still barely
+       showed, so the shared shader gained a backward lobe (water throws light back toward its
+       source); eight mutations exit 1, every suite run, committed.
 
 ## Waiting for the author
 

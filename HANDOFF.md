@@ -1,5 +1,22 @@
 # HANDOFF.md
 
+**This run (2026-11-21, the rain as real rain at night, step 4, #354):**
+- **Built:** see `docs/PHASE_BRIEF.md`'s step 4 line under "Revision 2026-11-21 (Phase 2, the
+  rain as real rain at night (#354), step 1 built)" and `CHANGE-BRIEF.md` revision 16. Files:
+  `game/effects/headlight_rain.tscn` (new), `scatter_particle.gdshader` (`back_scatter`), the six
+  lamp-rain scenes, `van_presentation.gd` (`_headlight_rain`, `RainStop`, `rain_backlit`),
+  `beam_rain.gdshader` deleted, `game/tests/test_headlights.gd`, `test_oncoming_van.gd`,
+  `test_lamp_rain_config.gd`, `tools/captures/capture_rain_views.gd` (a view from in front).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step4/g5 scripts/run-test.sh` on
+  `test_headlights.gd` 32/32, `test_oncoming_van.gd` 21/21, `test_lamp_rain_config.gd` 588/588,
+  `test_gate_light.gd` 6/6, all exit 0. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step4/mutations/mutations_rain_step4.py <scratch> <out>`): eight exit
+  1 (see its SUMMARY's note). Suites: `bash logs/phase_2/realism/rain/step4/suites/run_suites.sh
+  <scratch>`: 63 runs exit 0, no script or shader errors, art check 0 failures
+  (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 5, splashes. The author looks at the end; the GPU price at the mission's end
+  (22,000 more drops while the lamps are on).
+
 **This run (2026-11-21, the rain as real rain at night, step 3, #354):**
 - **Built:** `CHANGE-BRIEF.md` revision 15. Files: `game/effects/scatter_particle.gdshader`
   (`far_pixels`, `far_sheen`), the five `lamp_rain_*.tscn`, `lamp_rain_flood_high.tscn` (new),

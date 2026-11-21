@@ -2,6 +2,9 @@ extends SceneTree
 
 const PROJECTOR_PATH := "res://features/vehicles/freight_van/art/low_beam_pattern.png"
 const HIGH_PATH := "res://features/vehicles/freight_van/art/high_beam_pattern.png"
+const SCATTER := "res://effects/scatter_particle.gdshader"
+const RAIN_REACH := 20.0
+const LAMP_FRONT_Z := -2.31
 const MEASURED_PATH := "../tools/data/umtri_2004_23_low_beam_medians.csv"
 const HIGH_MEASURED_PATH := "../tools/data/umtri_2001_19_us_high_beam_medians.csv"
 const LENS_SHADER := "res://features/vehicles/freight_van/headlamp_lens.gdshader"
@@ -326,41 +329,48 @@ func _table_at(table: Dictionary, side: float, up: float) -> float:
 	return (table["values"][row] as PackedFloat64Array)[column]
 
 
+## The rain in the beams (the rain, step 4, #354): real drops in the air ahead of the van, falling
+## in the world as it drives through them, drawn as a camera sees them and lit only by the lights
+## that reach them, so the low and the high beam each light their own, and throwing light back
+## toward the lamps behind the driver's eye, as water does; they fall while the lamps are on and
+## stop in the dark; the van's body and glass stop them.
 func _check_beam_rain() -> void:
 	var presentation := _van.get_node("VanPresentation")
-	var layers: Array = presentation.get("_rain_layers")
-	var rain: ShaderMaterial = presentation.get("_beam_rain_material")
-	var low_lit := _rain_shows(layers, true) and _rain_pattern(rain) == PROJECTOR_PATH
-	var low_glow := float(rain.get_shader_parameter("glow"))
+	var rain := presentation.get("headlight_rain") as GPUParticles3D
+	var lights: Array = presentation.get("_headlights")
+	var built := rain != null and not rain.local_coords
+	var covers := false
+	var lit_by_lamps := false
+	if built:
+		var process := rain.process_material as ParticleProcessMaterial
+		var box := process.emission_box_extents
+		var middle := rain.position + process.emission_shape_offset
+		covers = box.x >= 4.0 and box.z * 2.0 >= RAIN_REACH \
+			and middle.z - box.z <= LAMP_FRONT_Z - RAIN_REACH \
+			and middle.z + box.z > LAMP_FRONT_Z - 2.0
+		var draw := (rain.draw_pass_1 as PrimitiveMesh).material as ShaderMaterial
+		lit_by_lamps = draw != null and draw.shader.resource_path == SCATTER \
+			and bool(draw.get_shader_parameter("camera_streak")) \
+			and float(draw.get_shader_parameter("back_scatter")) >= 0.5
+		for light: SpotLight3D in lights:
+			lit_by_lamps = lit_by_lamps and light.light_cull_mask & rain.layers != 0
+	var low_on := built and rain.emitting and rain.visible
 	await _press("headlights")
 	await _wait_physics(3)
-	var high_lit := _rain_shows(layers, true) and _rain_pattern(rain) == HIGH_PATH \
-		and float(rain.get_shader_parameter("reach")) > 200.0
-	var high_glow := float(rain.get_shader_parameter("glow"))
+	var high_on := built and rain.emitting and rain.visible
 	await _press("headlights")
 	await _wait_physics(3)
-	var dark := _rain_shows(layers, false)
+	var dark := built and not rain.emitting
 	await _press("headlights")
 	await _wait_physics(3)
-	_check(layers.size() >= 6 and low_lit and high_lit,
-		"Rain falls through the beams, lit by the low and then the high pattern (%d layers)"
-		% layers.size())
-	_check(dark and _rain_shows(layers, true), "No rain shows in the dark with the lights off")
-	_check(high_glow >= low_glow * 3.0 and low_glow > 0.0,
-		"High beams show at least 3x as much rain as low beams (%.1f against %.1f)" % [
-		high_glow, low_glow])
-
-
-func _rain_shows(layers: Array, expected: bool) -> bool:
-	for layer: MeshInstance3D in layers:
-		if layer.visible != expected:
-			return false
-	return not layers.is_empty()
-
-
-func _rain_pattern(rain: ShaderMaterial) -> String:
-	var pattern: Texture2D = rain.get_shader_parameter("pattern")
-	return pattern.resource_path if pattern != null else ""
+	var body := presentation.find_child("RainStop", true, false) as GPUParticlesCollisionBox3D
+	_check(built and covers and lit_by_lamps and low_on and high_on, ("Rain falls through the "
+		+ "beams: world-space drops %.0f m and more ahead of the van, drawn as a camera sees them "
+		+ "and lit by the low and the high beams themselves (built %s, covers %s, lit %s, on %s %s)")
+		% [RAIN_REACH, built, covers, lit_by_lamps, low_on, high_on])
+	_check(dark and rain.emitting, "No rain falls in the dark with the lights off")
+	_check(body != null and body.cull_mask & rain.layers != 0 and body.size.x > 1.5,
+		"The van's body and glass stop the rain it drives into")
 
 
 func _check_patterns(lights: Array[SpotLight3D]) -> void:
