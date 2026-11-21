@@ -8515,3 +8515,9 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   from behind, a slightly longer exposure, and drops within 2 m of the eye faded. Tests:
   `test_lamp_rain_config.gd` 475/475; five mutations exit 1. Still to come: the floodlights' rain
   is a low band near the ground (step 3).
+- **Step 3 built:** CHANGE-BRIEF revision 15: rain from the light (the compound's floods' rain
+  from under their heads in a new high-floodlight scene, leaning with the wind; slow drops reaching
+  the ground; far drops a sheen). Tests: `test_lamp_rain_config.gd` 582/582, `test_gate_light.gd`
+  6/6; eight mutations exit 1. Left for the author's look: the floodlights' rain from 20 m and
+  more still reads somewhat speckled; some near streaks look dotted (possibly MetalFX's 75%
+  upscaling of thin moving lines, §7's predicted failure 5; not yet checked at full scale).

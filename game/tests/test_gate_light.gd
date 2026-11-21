@@ -15,6 +15,7 @@ const STOP_LINE := Vector3(200.0, 0.02, 148.5)
 const LEAF := Vector3(200.0, 1.2, 145.75)
 const DRIVEWAY := Rect2(194.5, 146.0, 8.5, 23.5)
 const LEAF_RUN := Rect2(190.5, 145.4, 13.0, 1.6)
+const SLANT := Vector3(0.08, -0.997, 0.0)
 
 var _checks := 0
 var _failures := 0
@@ -52,6 +53,7 @@ func _run() -> void:
 	_clear(compound)
 	await _gate_rain(rain)
 	_yard_rain(compound, rain)
+	_from_the_light(compound, rain)
 	_finish()
 
 
@@ -177,6 +179,38 @@ func _yard_rain(compound: Node3D, rain: Node3D) -> void:
 			dry.append(String(light.name))
 	_check(floods.size() == 3 and dry.is_empty(), ("G5: rain in the light of each of the "
 		+ "compound's yard floods (%s; dry: %s)") % [floods, dry])
+
+
+## The compound's rain falls from just under its lights' heads, leaning with the wind as all the
+## world's rain does (the rain, step 3, #354).
+func _from_the_light(compound: Node3D, rain: Node3D) -> void:
+	var volumes: Array = rain.get("volumes")
+	var heads: Array[Vector3] = []
+	for light: SpotLight3D in compound.find_children("*", "SpotLight3D", true, false):
+		if light.name.begins_with("Flood") and light.global_position.y > 5.0:
+			heads.append(light.global_position)
+	var wrong: Array[String] = []
+	var found := 0
+	for index in range(volumes.size()):
+		var volume := volumes[index] as Node3D
+		if not String(volume.name).begins_with("LampRainFloodHigh"):
+			continue
+		found += 1
+		var at := volume.global_position
+		var head := Vector3.ZERO
+		for candidate in heads:
+			if head == Vector3.ZERO or Vector2(candidate.x - at.x, candidate.z - at.z).length() \
+					< Vector2(head.x - at.x, head.z - at.z).length():
+				head = candidate
+		var emitter := rain.call("rain", index) as GPUParticles3D
+		var fall := volume.global_basis * (emitter.process_material as ParticleProcessMaterial) \
+			.direction
+		var under := head.y - at.y
+		if under < 0.0 or under > 1.2 or fall.normalized().angle_to(SLANT) > deg_to_rad(1.0):
+			wrong.append("%s (%.1f m under, leaning %s)" % [volume.name, under, fall.normalized()])
+	_check(found == 4 and wrong.is_empty(), ("G6: the compound's four rains fall from just under "
+		+ "their lights, leaning with the wind as all rain does (%d found; wrong: %s)")
+		% [found, wrong])
 
 
 func _finish() -> void:

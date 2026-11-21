@@ -35,6 +35,10 @@ uniform float stretch_per_speed = 22.222;
 // Drops nearer the eye than `near_fade` metres fade out: the eye focuses past them, so they blur
 // to nothing rather than streak across the view.
 uniform float near_fade : hint_range(0.0, 10.0) = 0.0;
+// Far drops whose streak is shorter than `far_pixels` on screen fade to `far_sheen` of their
+// strength: far off, the eye sees rain as a faint sheen, not as separate specks.
+uniform float far_pixels : hint_range(0.0, 20.0) = 0.0;
+uniform float far_sheen : hint_range(0.0, 1.0) = 1.0;
 
 varying float coverage;
 varying float aspect;
@@ -82,6 +86,8 @@ void vertex() {
 		aspect = drawn_span / drawn_width;
 		coverage = width / drawn_width * max(span, width) / drawn_span;
 		coverage *= near_fade > 0.0 ? smoothstep(near_fade * 0.3, near_fade, depth) : 1.0;
+		coverage *= far_pixels > 0.0
+			? mix(far_sheen, 1.0, smoothstep(far_pixels * 0.35, far_pixels, span / pixel)) : 1.0;
 	} else {
 	if (face_camera) {
 		mat4 world = mat4(normalize(MAIN_CAM_INV_VIEW_MATRIX[0]),

@@ -540,3 +540,29 @@ Claude Code wrote these revisions from that list.
 - **Evidence:** `test_lamp_rain_config.gd` 475/475; five mutations exit 1
   (`logs/phase_2/realism/rain/step2/mutations/`); stills `captures/audit/rain/step2/`,
   `captures/audit/lookup/step2/`.
+
+### 2026-11-21, revision 15 (Phase 2, #354): B1's rain from the light (Claude Code, at the author's request)
+
+- **Found:** in the floodlights the rain started 4 m up whatever the lamp's height (the compound's
+  gate flood stands at 7.4 m, its yard floods at 9 m); drops slower than about 5.5 m/s faded 2-4 m
+  above the ground (revision 9's known gap); the compound's four floodlight-rain volumes (#353)
+  used the floodlight scene's direction unturned, so their rain leaned toward +z where all other
+  rain leans toward +x; far off, the drops were 1-2 pixel specks, a glitter.
+- **Changed:**
+  - `initial_velocity_min` 3.5 → 4.0 m/s (a 1 mm drop's fall speed), in every lamp-rain scene;
+  - each scene's drops live long enough for that slowest drop to fall from its lamp to the ground
+    before it fades, and fade only over their last 5% (alpha keys `0:0.1, 0.1:0.8, 0.95:0.8,
+    1:0`, from `0:0.1, 0.15:0.8, 0.75:0.8, 1:0`): `lifetime` and `preprocess` 1.7 s under the
+    street lamps and posts, 1.25 s at the dock, 1.1 s at the floodlight and door (unchanged); the
+    counts grown with the life, so as dense (street 19,300, post 7,700, dock 13,350);
+  - a new scene, `lamp_rain_flood_high.tscn` (`LampRainFloodHigh`, `LampRain.FLOOD_HIGH`): the
+    floodlight's rain falling from just under a high head, its direction the world's slant, life
+    2.25 s, 16,400 drops, its bounds and collider 10 m tall; the compound's four volumes use it,
+    0.5 m under each light;
+  - far drops whose streak is under 6 pixels fade to 0.15 of their strength (`far_pixels`,
+    `far_sheen`), a sheen rather than specks.
+  §8's B1 peaks rise with the counts; unpriced until the mission's end.
+- **Evidence:** `test_lamp_rain_config.gd` 582/582 (456/476 before, the new scene included);
+  `test_gate_light.gd` G6 (5/6 then 6/6); eight mutations exit 1
+  (`logs/phase_2/realism/rain/step3/mutations/`); stills `captures/audit/rain/step3/`,
+  `captures/audit/lookup/step3/`.

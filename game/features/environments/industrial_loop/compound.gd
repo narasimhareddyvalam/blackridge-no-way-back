@@ -90,10 +90,11 @@ const GATE_AIMS: Array[Vector3] = [Vector3(199.0, 0.0, 151.5), Vector3(200.0, 0.
 const GATE_FLOOD_ENERGY := 4.0
 const GATE_FLOOD_ANGLE := 50.0
 const GATE_FLOOD_RANGE := 20.0
-## Where rain shows in the compound's lights, on the ground (the world raises each to its
-## floodlight rain's height): over the gate's stop line and opening, and 7.4 m out in front of each
-## yard flood, between the fence and the warehouses.
-const GATE_RAIN := Vector3(200.0, 0.0, 148.0)
+## Where rain shows in the compound's lights (`lamp_rain_flood_high.tscn`), from just under each
+## light's head (the rain, step 3, #354): over the gate's stop line and opening, and 7.4 m out in
+## front of each yard flood, between the fence and the warehouses.
+const GATE_RAIN := Vector3(200.0, 7.0, 148.0)
+const UNDER_HEAD := 0.5
 const YARD_RAIN_OUT := 7.4
 const PALLET_STACKS: Array[Vector3] = [Vector3(168.2, 0.0, 110.0), Vector3(168.2, 0.0, 113.0)]
 const PALLET_HIGH := 14
@@ -437,8 +438,8 @@ func _dress(west: Rect2) -> void:
 		light.spot_angle = 60.0
 		light.spot_range = 45.0
 		light.shadow_enabled = index == 1
-		rain_places.append(Transform3D(Basis.IDENTITY, Vector3(at.x, GROUND, at.z
-			- YARD_RAIN_OUT)))
+		rain_places.append(Transform3D(Basis.IDENTITY, Vector3(at.x, light.position.y
+			- UNDER_HEAD, at.z - YARD_RAIN_OUT)))
 	var bumper_face := west.end.y + 0.13
 	var docks: Array = DOCK_XS[0]
 	for slot in range(TRAILER_DOCKS.size()):

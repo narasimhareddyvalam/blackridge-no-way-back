@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/effects/lamp_rain_floodlight.tscn /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr3/r7/game/effects/lamp_rain_floodlight.tscn
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/effects/lamp_rain_floodlight.tscn	2026-11-21 11:28:38
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr3/r7/game/effects/lamp_rain_floodlight.tscn	2026-11-21 11:29:41
+@@ -71,7 +71,7 @@
+ shader_parameter/camera_streak = true
+ shader_parameter/exposure = 0.03
+ shader_parameter/near_fade = 2.0
+-shader_parameter/far_pixels = 6.0
++shader_parameter/far_pixels = 0.0
+ shader_parameter/far_sheen = 0.15
+ shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
+ 

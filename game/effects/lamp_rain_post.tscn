@@ -5,7 +5,7 @@
 [ext_resource type="Shader" path="res://effects/scatter_particle.gdshader" id="9_scatter"]
 
 [sub_resource type="Curve" id="Curve_rain_alpha"]
-_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.15, 0.8), 0.0, 0.0, 0, 0, Vector2(0.75, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.1, 0.8), 0.0, 0.0, 0, 0, Vector2(0.95, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_rain_alpha"]
@@ -37,7 +37,7 @@ emission_shape = 3
 emission_box_extents = Vector3(3, 0.2, 3)
 direction = Vector3(0.08, -0.997, 0)
 spread = 4.0
-initial_velocity_min = 3.5
+initial_velocity_min = 4.0
 initial_velocity_max = 8.5
 gravity = Vector3(0, -0.5, 0)
 damping_min = 0.0
@@ -71,6 +71,8 @@ shader_parameter/still_fade = 1.0
 shader_parameter/camera_streak = true
 shader_parameter/exposure = 0.03
 shader_parameter/near_fade = 2.0
+shader_parameter/far_pixels = 6.0
+shader_parameter/far_sheen = 0.15
 shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
 
 [sub_resource type="QuadMesh" id="Quad_streak"]
@@ -117,12 +119,12 @@ size = Vector2(0.01, 0.01)
 
 [node name="LampRain" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 5000
+amount = 7700
 sub_emitter = NodePath("../LampSplash")
-lifetime = 1.1
+lifetime = 1.7
 fixed_fps = 60
 one_shot = false
-preprocess = 1.1
+preprocess = 1.7
 explosiveness = 0.0
 collision_base_size = 0.01
 visibility_aabb = AABB(-4, -8.5, -4, 8, 10, 8)

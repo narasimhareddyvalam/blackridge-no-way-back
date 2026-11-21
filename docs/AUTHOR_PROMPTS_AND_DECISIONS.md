@@ -4924,6 +4924,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
        times the drops, brighter; v2 a 0.04 s exposure, a starfield looking up; v3 0.03 s and drops
        faded within 2 m of the eye), v3 kept; pinned in the test, five mutations exit 1, every
        suite run, committed.
+     - **Prompts** (verbatim): "whats happening?" (answered: the suites running), "okay proceed".
+       Step 2 committed; **step 3:** the floodlights' rain from under their heads in a new scene,
+       slow drops reaching the ground, the compound's rain leaning with the wind; probes found
+       the gate's "snow" was far volumes' 1-2 pixel drops, so far drops now fade to a sheen;
+       eight mutations exit 1, every suite run, committed.
 
 ## Waiting for the author
 

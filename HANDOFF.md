@@ -1,5 +1,20 @@
 # HANDOFF.md
 
+**This run (2026-11-21, the rain as real rain at night, step 3, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 15. Files: `game/effects/scatter_particle.gdshader`
+  (`far_pixels`, `far_sheen`), the five `lamp_rain_*.tscn`, `lamp_rain_flood_high.tscn` (new),
+  `lamp_rain.gd` (`FLOOD_HIGH`), `compound.gd` (rain heights), `industrial_loop.gd`,
+  `game/tests/test_lamp_rain_config.gd`, `test_gate_light.gd` (G6).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step3/g2 scripts/run-test.sh` on
+  `test_lamp_rain_config.gd` 582/582, `test_gate_light.gd` 6/6, `test_lamp_rain_state.gd` 16/16,
+  all exit 0. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step3/mutations/mutations_rain_step3.py <scratch> <out>`): eight exit
+  1. Suites: `bash logs/phase_2/realism/rain/step3/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 4, rain in the van's headlights; 5, splashes. The author looks at the end; the
+  GPU price at the mission's end.
+- **Unverified:** the speckle of far floodlight rain and dotted near streaks (see the brief).
+
 **This run (2026-11-21, the rain as real rain at night, step 2, #354):**
 - **Built:** `CHANGE-BRIEF.md` revision 14. Files: `game/effects/scatter_particle.gdshader`
   (`near_fade`), the five `game/effects/lamp_rain_*.tscn`, `game/tests/test_lamp_rain_config.gd`.
