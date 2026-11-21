@@ -328,7 +328,9 @@ func _to_the_yard() -> Array[String]:
 
 ## At a gate, how to bring Ethan's window level with the guard's (#348): `gap` his eye's distance
 ## to the booth's opening along the lane, positive before it, negative past it.
-func _to_window(gap: float) -> String:
+func _to_window(gap: float, in_reach: bool = true) -> String:
+	if absf(gap) <= WINDOW_REACH and not in_reach:
+		return "Pull in closer to the booth: the guard can't reach your window from there."
 	if absf(gap) <= WINDOW_REACH:
 		return "Stop here, level with the guard's window, then press E to hand the guard the run sheet."
 	if gap > 0.0:
@@ -361,7 +363,8 @@ func _to_the_compound() -> Array[String]:
 	if not bool(compound.call("gate_shut")):
 		return ["WAIT FOR THE GATE", "The gate is sliding open."]
 	if bool(compound.call("vehicle_near")):
-		return ["STOP AT THE BOOTH", _to_window(float(compound.call("window_gap")))]
+		return ["STOP AT THE BOOTH", _to_window(float(compound.call("window_gap")),
+			bool(compound.call("window_in_reach")))]
 	return ["DRIVE TO THE WAREHOUSE COMPOUND",
 		"Out of the yard and east on the valley road; the compound's gate is on the left."]
 
@@ -464,7 +467,7 @@ func _update_objective() -> void:
 			detail = "The barrier is up."
 		elif shed.vehicle_near():
 			title = "STOP AT THE GATE"
-			detail = _to_window(shed.window_gap())
+			detail = _to_window(shed.window_gap(), shed.window_in_reach())
 		else:
 			title = "DRIVE TO THE TRANSFER SHED"
 			detail = "Take the spur north off the valley road, just west of the depot."

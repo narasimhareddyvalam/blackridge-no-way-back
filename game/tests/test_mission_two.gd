@@ -25,6 +25,12 @@ const VAN_PASSAGE := AABB(Vector3(-48.6, 0.45, 19.8), Vector3(1.7, 0.8, 0.15))
 const LANE := Rect2(-44.65, -9.7, 4.35, 29.7)
 const APRON_TOP := 0.02
 
+## The van tucked in toward the booth by this much from the lane's middle, as a driver pulls in for
+## the guard to reach his window (#355).
+const TUCK_IN := 0.6
+## The run sheet's handover, from E to the sheet back in the van (#355), at most.
+const HANDOVER_MOST := 20.0
+
 var _checks: int = 0
 var _failures: int = 0
 var _scratch: String
@@ -192,7 +198,8 @@ func _check_gate() -> void:
 			mission = node
 	_check(mission != null and not bool(mission.call("wants_interact")),
 		"There, E offers the guard nothing: she cannot reach a window 2.6 m past hers")
-	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x, 0.1, line_z - VAN_FRONT.z)))
+	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x - TUCK_IN, 0.1,
+		line_z - VAN_FRONT.z)))
 	await _seconds(0.5)
 	var window := shed.get_node_or_null("GuardBooth/ServiceWindow") as Node3D
 	var along := INF
@@ -251,6 +258,10 @@ func _check_gate() -> void:
 		+ "window's glass, his eye within it (%.2f to %.2f, his eye %.2f)") % [overlap, opening.x,
 		opening.y, eye_z])
 	var rising_said := ""
+	var handing := 0.0
+	while bool(shed.call("checking")) and handing < HANDOVER_MOST:
+		await process_frame
+		handing += 1.0 / 60.0
 	for frame in range(int(6.5 * 60.0)):
 		await process_frame
 		if shed.has_method("barrier_rising") and bool(shed.call("barrier_rising")):

@@ -21,6 +21,9 @@ const CLOCK_START: float = 23.0 * 3600.0 + 42.0 * 60.0
 const VanHold = preload("res://features/vehicles/freight_van/van_hold.gd")
 const RearDoorHands = preload("res://features/vehicles/freight_van/rear_door_hands.gd")
 const SEAL_POINT := Vector3(0.0, 1.05, 2.88)
+## Where a sheet held out of the driver's window leaves it: the window's outer face at its sill, by
+## the driver's eye (the glass at x -0.90, its sill 1.34 m up, #355).
+const WINDOW_HOLD := Vector3(-0.95, 1.4, -0.78)
 
 @export var maximum_speed: float = 19.0
 @export var reverse_speed: float = 5.0
@@ -84,6 +87,11 @@ var _visual: Node3D
 var _door_hands: RearDoorHands
 var _turn_query := PhysicsShapeQueryParameters3D.new()
 var _turn_shape_pose: Transform3D
+
+
+## The point at the driver's window a sheet is held out from, in the world (#355).
+func window_hold() -> Vector3:
+	return to_global(WINDOW_HOLD)
 
 
 func _ready() -> void:

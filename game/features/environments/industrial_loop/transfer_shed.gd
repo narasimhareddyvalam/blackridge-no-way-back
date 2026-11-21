@@ -71,7 +71,6 @@ const BarrierModel = preload("res://features/environments/industrial_loop/art/ga
 const WarningLight = preload("res://features/environments/industrial_loop/art/gates/warning_light/warning_light.glb")
 const ARM_PIVOT_HEIGHT := 0.9
 const RAISE_SECONDS := 4.0
-const CHECK_SECONDS := 3.0
 const BOOTH := Booth.SIZE
 const BOOTH_FACE_X := LANE_X - 2.0
 const BOOTH_Z := GATE_Z + STOP_LINE_OUT + 1.9
@@ -298,7 +297,14 @@ func barrier_rising() -> bool:
 ## Whether the van's driver is level with the booth's service opening, within WINDOW_REACH along
 ## the lane: only then can the guard take the run sheet from his hand (#348).
 func vehicle_at_window() -> bool:
-	return vehicle_at_stop() and absf(window_gap()) <= WINDOW_REACH
+	return vehicle_at_stop() and absf(window_gap()) <= WINDOW_REACH and window_in_reach()
+
+
+## Whether the guard can reach the van's driver's window from her chair (#355).
+func window_in_reach() -> bool:
+	return _booth_node != null and is_instance_valid(vehicle) \
+		and vehicle.has_method("window_hold") \
+		and bool(_booth_node.call("can_reach_van", vehicle))
 
 
 ## How far the driver's eye is from the booth's opening along the lane (positive: he has yet to
@@ -327,7 +333,8 @@ func vehicle_through() -> bool:
 func hand_run_sheet() -> bool:
 	if checking() or _target > 0.0:
 		return false
-	_check_left = CHECK_SECONDS
+	_check_left = 0.0
+	_booth_node.call("start_handover", vehicle)
 	if is_instance_valid(vehicle) and float(vehicle.get("left_window_target")) < 0.5:
 		vehicle.set("left_window_target", 1.0)
 		_lowered_window = true
@@ -367,8 +374,8 @@ func reset() -> void:
 func _physics_process(delta: float) -> void:
 	_send_to_scan()
 	if _check_left >= 0.0:
-		_check_left -= delta
-		if _check_left < 0.0:
+		_check_left += delta
+		if bool(_booth_node.call("sheet_back")):
 			_check_left = -1.0
 			_target = 90.0
 			run_sheet_checked.emit()

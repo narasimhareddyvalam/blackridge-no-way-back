@@ -42,7 +42,6 @@ const DRIVEWAY := Rect2(194.5, 146.0, 8.5, 23.5)
 const STOP_LINE_OUT := 2.5
 const WINDOW_REACH := 0.4
 const SWEEP_HALF_DEPTH := 0.3
-const CHECK_SECONDS := 3.0
 const STOPPED_SPEED := 0.5
 const ISLAND := Rect2(195.05, 149.05, 3.4, 2.7)
 const ISLAND_HEIGHT := 0.15
@@ -300,7 +299,13 @@ func vehicle_near() -> bool:
 ## Whether the van's driver is level with the booth's service opening, within WINDOW_REACH along
 ## the lane (#348).
 func vehicle_at_window() -> bool:
-	return vehicle_at_booth() and absf(window_gap()) <= WINDOW_REACH
+	return vehicle_at_booth() and absf(window_gap()) <= WINDOW_REACH and window_in_reach()
+
+
+## Whether the guard can reach the van's driver's window from her chair (#355).
+func window_in_reach() -> bool:
+	return booth != null and is_instance_valid(vehicle) and vehicle.has_method("window_hold") \
+		and bool(booth.call("can_reach_van", vehicle))
 
 
 ## How far the driver's eye is from the booth's opening along the lane (positive: he has yet to
@@ -332,7 +337,8 @@ func vehicle_through() -> bool:
 func hand_run_sheet() -> bool:
 	if checking() or _gate_target > 0.0:
 		return false
-	_check_left = CHECK_SECONDS
+	_check_left = 0.0
+	booth.call("start_handover", vehicle)
 	if is_instance_valid(vehicle) and float(vehicle.get("left_window_target")) < 0.5:
 		vehicle.set("left_window_target", 1.0)
 		_window_down = true
@@ -341,8 +347,8 @@ func hand_run_sheet() -> bool:
 
 func _physics_process(delta: float) -> void:
 	if _check_left >= 0.0:
-		_check_left -= delta
-		if _check_left < 0.0:
+		_check_left += delta
+		if bool(booth.call("sheet_back")):
 			_check_left = -1.0
 			_gate_target = GATE_WIDE
 			run_sheet_checked.emit()

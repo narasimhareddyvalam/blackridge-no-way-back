@@ -4938,6 +4938,60 @@ tag `a5`. Pictures the author approved or rejected are filed in
        suite run, committed.
      - **Prompt** (verbatim): "my laptop went to sleep sorry" (the suites ran on through it, all
        passing).
+     - **Prompt** (verbatim): "okay, whats next after the rain" (answered: the run sheet handover
+       at the booths, then Mission 2's steps 6 and 7, then a Mission 3 brief).
+
+355. **The run sheet handover at the booths**
+     - **Prompt** (verbatim): "ok"
+     - **Real** (Flickr via Openverse, scratchpad only; Commons and stock sites had little): at a
+       booth the attendant leans out and the driver reaches up and out from his seat, his body in
+       the seat, his arm through the window.
+     - **Ours** (`captures/audit/booths/kit/*_driver_at_window.png`): from Ethan's seat the window
+       is down and the guard is at hers, but there is no Ethan in the cab at all (no hands on the
+       wheel, no arm), no paper, and nothing passes: E, then 3 s, then the gate.
+     - **Asked** how much to build and what the guard does with the sheet; **the author chose**
+       "Seated Ethan + handover (Recommended)" and "Hands it back (Recommended)", then: "sorry,
+       maybe add hands to make it more realistic? idk? can we use already available assets"
+     - **Asked** which hands; **the author chose** "Ethan's own model (Recommended)".
+     - **Part A built, not committed:** `seated_driver.gd`: Ethan's model in the driver's seat
+       (ExitVan at 0.25 s, square in the seat before he turns for the door; placed by his eyes at
+       the driving camera), both hands on the rim by two-bone IK with his fingers round it
+       (`hand_grip.gd`), turning with the wheel to 45 degrees and the rim sliding through them past
+       it (push-pull); his head scaled away only while the driving camera draws; shown only while
+       he is in the van. Tests first (`test_seated_driver.gd` 0/1, then 8/8); cockpit 25/25,
+       on foot 50/50, mirrors 13/13. Stills `captures/audit/handover/seated/`. His left fingers
+       wrap the rim less neatly than his right (a flip of their grip made it worse, reverted).
+     - **Prompt** (verbatim): "no lets skip hands i dont like it." **Part A taken out:** the
+       seated Ethan, its test and its capture script removed, `van_presentation.gd` restored; the
+       stills stay in `captures/audit/handover/seated/` as a record. No hands or body in the cab.
+     - **Asked** how the handover works without his hands; **the author chose** "Guard reaches for it
+       (Recommended)". Found: from her chair (0.7 m behind her window) she cannot reach a van
+       window 0.5-0.7 m out, and her model has only a sitting idle clip; **asked** how she gets
+       it; **the author chose** "Rolls chair to window (Recommended)": she rolls her chair to the
+       window, leans out, takes the sheet from his window, reads it, hands it back and rolls back;
+       E only when the van is close enough for her to reach, else the objective says to pull in.
+     - **Found while building:** her chair cannot roll nearer (her knees are already under the
+       counter at the front wall), so she leans over her counter instead (up to 57 degrees); her
+       hand reaches about 0.3 m past her window, so the van must pull in to about 0.4 m of the
+       booth (its mirror still clear of the bollards), as drivers do.
+     - **Built, not committed:** the booth's handover (`guard_booth.gd`: the sheet held out at the
+       van's window, `window_hold` on the van; she takes its end, her hand on it first; reads it at
+       her chest for 3 s watching it; hands it back; it goes in); both gates wait for it and E only
+       works within her reach, the objective saying to pull in closer otherwise. Tests first
+       (`test_handover.gd` 0/2, then 10/10); `test_mission_two.gd` and `test_compound.gd` now park
+       tucked in by the booth and wait for the handover (61/61, 10/10); booths 31/31, gates 18/18.
+       Stills `captures/audit/handover/film/`.
+     - **Prompt** (verbatim): "okay looks good". Mutations, every suite, committed.
+
+356. **Mission guidance as a professional game's**
+     - **Prompt** (verbatim): "also, the mission play (what the user needs to do isnt marked with
+       dots or instructions clearly.) i mean adding text on top left isnt professional. make it
+       look professional with nice instructions like professional game"
+     - **Shown:** three mockups drawn on clean views of ours (`tools/captures/capture_guidance.gd`,
+       scratchpad): A an objective card at the top right with a world marker, B a banner and a
+       compass strip, C a round map with the route, the objective beside it; each with a marker
+       over the target with its distance and a key prompt only when a key does something.
+       **The author chose** "C Map with route".
 
 ## Waiting for the author
 

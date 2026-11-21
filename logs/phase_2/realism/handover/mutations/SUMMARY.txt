@@ -1,0 +1,25 @@
+o1  handed to from any distance    test_handover.gd exit 1, 8/10 passed; 2 failed
+      FAIL: H1 (shed): out of her reach E does nothing; tucked in by the booth it hands the sheet over (far level true ref
+      FAIL: H1 (compound): out of her reach E does nothing; tucked in by the booth it hands the sheet over (far level true
+o2  the compound's gate opening before the sheet is back test_handover.gd exit 1, 6/10 passed; 4 failed
+      FAIL: H2 (compound): the sheet held out at the driver's window, her hand on it before it moves (held out false, took
+      FAIL: H3 (compound): she reads it in front of her for 0.0 s, watching it (watched true)
+      FAIL: H4 (compound): she hands it back to the window and it goes back in (back at the window false, in false)
+      FAIL: H5 (compound): the gate's check ends only once the sheet is back (ended true, early true)
+o3  no sheet held out              test_handover.gd exit 1, 6/10 passed; 4 failed
+      FAIL: H2 (shed): the sheet held out at the driver's window, her hand on it before it moves (held out false, took tru
+      FAIL: H3 (shed): she reads it in front of her for 3.0 s, watching it (watched false)
+      FAIL: H2 (compound): the sheet held out at the driver's window, her hand on it before it moves (held out false, took
+      FAIL: H3 (compound): she reads it in front of her for 3.0 s, watching it (watched false)
+o4  the sheet going to her hand before she has it test_handover.gd exit 1, 8/10 passed; 2 failed
+      FAIL: H2 (shed): the sheet held out at the driver's window, her hand on it before it moves (held out true, took true
+      FAIL: H2 (compound): the sheet held out at the driver's window, her hand on it before it moves (held out true, took 
+o5  a glance, not a read           test_handover.gd exit 1, 8/10 passed; 2 failed
+      FAIL: H3 (shed): she reads it in front of her for 1.0 s, watching it (watched true)
+      FAIL: H3 (compound): she reads it in front of her for 1.0 s, watching it (watched true)
+o6  reading without looking at it  test_handover.gd exit 1, 8/10 passed; 2 failed
+      FAIL: H3 (shed): she reads it in front of her for 3.0 s, watching it (watched false)
+      FAIL: H3 (compound): she reads it in front of her for 3.0 s, watching it (watched false)
+o7  the sheet never going back in  test_handover.gd exit 1, 8/10 passed; 2 failed
+      FAIL: H4 (shed): she hands it back to the window and it goes back in (back at the window true, in false)
+      FAIL: H4 (compound): she hands it back to the window and it goes back in (back at the window true, in false)

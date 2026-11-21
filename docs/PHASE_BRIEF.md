@@ -8543,3 +8543,27 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   1-5 beside `before/` and the photos): the far floodlight rain's speckle; some near streaks look
   dotted (possibly MetalFX's 75% upscaling); the dock apron's missing rain; the splashes; and the
   GPU price of all of it (the counts rose about four times since step 1).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the run sheet handover (#355), built)
+
+- **Found (Flickr photos of booth handovers, scratchpad; our stills, `captures/audit/booths/kit/`):**
+  at a real booth the driver reaches out and the attendant leans out to take the paper; ours
+  had no Ethan in the cab, no paper, and nothing passed: E, then 3 s, then the gate.
+- **Tried and taken out:** Ethan seated in the cab with his hands on the wheel (his own model,
+  two-bone IK, his head hidden from the cab camera); the author: "no lets skip hands i dont like
+  it." No hands or body in the cab.
+- **Built (the author's "Guard reaches for it", "Hands it back", "Rolls chair to window"):**
+  `guard_booth.gd`'s handover: once her window is open the sheet is held out of the driver's
+  window (the van's `window_hold`, its end 0.24 m past the glass); she leans over her counter (her
+  chair cannot roll nearer: her knees are already under it at the front wall), up to 57 degrees,
+  and takes its end in her left hand, her hand on it before it moves; reads it at her chest for
+  3 s, watching it; hands it back to the window and lets go; it goes back in (`sheet_back`). Both
+  gates (`transfer_shed.gd`, `compound.gd`) now end their check when the sheet is back, not after
+  a fixed 3 s, and offer E only when she can reach the van's window (`window_in_reach`, the van
+  within about 0.4 m of the booth); otherwise the objective says "Pull in closer to the booth: the
+  guard can't reach your window from there."
+- **Tested:** `test_handover.gd` (new) 0/2 then 10/10 at both gates; `test_mission_two.gd` and
+  `test_compound.gd` park tucked in by the booth and wait for the handover (61/61, 10/10, their
+  checks otherwise unchanged); booths 31/31, gates 18/18. Seven mutations exit 1
+  (`logs/phase_2/realism/handover/mutations/`). Stills `captures/audit/handover/film/` (from
+  Ethan's seat at the shed, from behind the van at the compound).

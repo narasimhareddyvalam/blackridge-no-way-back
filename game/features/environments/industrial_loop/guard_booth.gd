@@ -101,8 +101,36 @@ const STICKY_ON_PAD := Vector3(0.05, 0.01, 0.09)
 const IN_CUP: Array[String] = ["stationery_supplies_pen_blue", "stationery_supplies_pen_red",
 	"stationery_supplies_pencil_used"]
 const GuardLean = preload("guard_lean.gd")
+## The run sheet handed over (#355; the author's choices: she reaches for it from her chair and
+## hands it back): once her window is open the sheet is held out of the driver's window, its outer
+## end SHEET_OUT past the glass (`start_handover`, from the van's `window_hold`); she leans over
+## her counter (HAND_LEAN_MOST from her hips at most) and takes that end in her left hand, her hand
+## on it before it moves; brings it in to READ_AT before her and reads it for READ_SECONDS,
+## watching it; hands it back to the window and lets go; it goes back in (`sheet_back`). A van
+## too far off for her reach (`can_reach`) is not handed to.
+const SHEET := Vector2(0.21, 0.297)
+const SHEET_OUT := 0.24
+const HAND_LEAN_MOST := 1.0
+const HAND_REACH_SHARE := 1.0
+const LEAN_REACH_SHARE := 0.82
+const OFFER_SECONDS := 0.6
+const TAKE_SECONDS := 1.0
+const BRING_SECONDS := 0.9
+const READ_SECONDS := 3.0
+const LET_GO_SECONDS := 0.8
+const IN_SECONDS := 0.5
+const READ_AT := Vector3(0.98, PLINTH + 1.04, -0.08)
+const READ_TILT := 0.75
 
 var guard: Node3D
+## The run sheet as it passes through her window, and where its handover is ("" none, "waiting",
+## "offered", "taking", "bringing", "reading", "returning", "letting_go", "in", "back").
+var sheet: MeshInstance3D
+var handover := ""
+var _hand_t := 0.0
+var _van: Node3D
+var _hand_lean := 0.0
+var _grip_world := Vector3.ZERO
 var driver: Node3D
 var screen: Node3D
 var logbook: Node3D
@@ -160,6 +188,7 @@ func build(concrete: Material, metal: Material, wall: Material, guard_scene: Pac
 	var dark := Build.material(Color(0.03, 0.03, 0.035), 0.4)
 	_seat(guard_scene, guard_name, dark)
 	_outside(wall, aluminium, dark)
+	_make_sheet()
 	var sign := Build.text(self, sign_text, Vector3(SIZE.x / 2.0 + 0.06, SIZE.y - 0.22, 0), 28,
 		Color("e3d5af"))
 	sign.rotation.y = PI / 2.0
@@ -189,6 +218,8 @@ func _process(delta: float) -> void:
 		_grip_local = Vector3.ZERO
 	if _state == "opening" or _state == "closing":
 		_work_window(delta)
+	elif handover != "" and handover != "back":
+		_work_handover(delta)
 	_aim_head(delta)
 
 
@@ -201,6 +232,8 @@ func _aim_head(delta: float) -> void:
 	var sliding := _state == "opening" or _state == "closing"
 	if sliding and _t >= LOOK_AT_HAND:
 		at = _sash[2].global_position
+	elif sheet != null and sheet.visible and handover != "" and handover != "in":
+		at = sheet.global_position
 	elif not sliding and _since < GREET_SECONDS and is_instance_valid(driver):
 		at = driver.global_position
 	if at == Vector3.ZERO:
@@ -241,14 +274,18 @@ func _work_window(delta: float) -> void:
 ## middle finger's first two joints) is on it, her fingers on from her forearm (from her elbow to
 ## the pull) and her thumb up.
 func _hold_pull(on: float) -> void:
+	if _grip_local == Vector3.ZERO and on > 0.0:
+		_grip_frame()
+	_hand_on(_sash[2].global_position, on)
+
+
+## Her left hand `on` of the way to `pull` (its grip there), as for the sash's pull.
+func _hand_on(pull: Vector3, on: float) -> void:
 	for modifier: SkeletonModifier3D in [_arm, _turn, _lean]:
 		modifier.influence = on
 		modifier.active = on > 0.0
 	if on <= 0.0:
 		return
-	if _grip_local == Vector3.ZERO:
-		_grip_frame()
-	var pull := _sash[2].global_position
 	var elbow := _skeleton.global_transform * _skeleton.get_bone_global_pose(
 		_skeleton.find_bone(ARM_BONES[1])).origin
 	var fingers := (pull - elbow).normalized()
@@ -289,6 +326,190 @@ func _grip_frame() -> void:
 		0.3)
 	var shift := clampf((farthest - REACH_SHARE * reach) / (spine * ahead), 0.0, 0.9)
 	_lean.set("angle", clampf(asin(shift), LEAN_LEAST, LEAN_MOST))
+
+
+## The van `van` holds the run sheet out at its driver's window; she takes it once her window is
+## open (`handover` runs on from "waiting").
+func start_handover(van: Node3D) -> void:
+	_van = van
+	handover = "waiting"
+	_hand_t = 0.0
+
+
+## Whether her run sheet has been handed back and gone in through the van's window.
+func sheet_back() -> bool:
+	return handover == "back"
+
+
+## Whether she can reach `point` from her chair, leaning over her counter as far as she would.
+func can_reach(point: Vector3) -> bool:
+	if _skeleton == null:
+		return false
+	if _grip_local == Vector3.ZERO:
+		_grip_frame()
+	var bone := func(name: String) -> Vector3:
+		return _skeleton.global_transform * _skeleton.get_bone_global_pose(
+			_skeleton.find_bone(name)).origin
+	var shoulder: Vector3 = bone.call(ARM_BONES[0])
+	var elbow: Vector3 = bone.call(ARM_BONES[1])
+	var reach := shoulder.distance_to(elbow) + elbow.distance_to(bone.call(ARM_BONES[2])) \
+		+ _grip_local.length()
+	var pelvis: Vector3 = bone.call("Bip01 Pelvis")
+	var spine := pelvis.distance_to(shoulder)
+	var front := guard.global_basis.z
+	front.y = 0.0
+	var leaned := pelvis + (shoulder - pelvis).normalized().rotated(front.normalized().cross(
+		Vector3.UP).normalized(), -HAND_LEAN_MOST) * spine
+	return leaned.distance_to(point) <= reach * HAND_REACH_SHARE
+
+
+## Whether she can take the sheet held out of `van`'s driver's window (its end SHEET_OUT out).
+func can_reach_van(van: Node3D) -> bool:
+	var out := -van.global_basis.x
+	out.y = 0.0
+	return can_reach((van.call("window_hold") as Vector3) + out.normalized() * SHEET_OUT)
+
+
+## Where her left hand's grip is, in the world, as her skeleton last drew it (her arm's IK in).
+func grip_point() -> Vector3:
+	return _grip_world
+
+
+func _remember_grip() -> void:
+	var hand := _skeleton.global_transform * _skeleton.get_bone_global_pose(
+		_skeleton.find_bone(ARM_BONES[2]))
+	_grip_world = hand.origin + hand.basis.orthonormalized() * _grip_local
+
+
+## The sheet's end she takes (its outer end past the van's glass), in the world.
+func sheet_grip() -> Vector3:
+	if not is_instance_valid(_van):
+		return Vector3.ZERO
+	return (_van.call("window_hold") as Vector3) + _outward() * SHEET_OUT
+
+
+## The van's outward way at its driver's window (its own -x, level).
+func _outward() -> Vector3:
+	var out := -_van.global_basis.x
+	out.y = 0.0
+	return out.normalized()
+
+
+func _make_sheet() -> void:
+	var paper := StandardMaterial3D.new()
+	paper.albedo_texture = _ruled_pages()
+	paper.albedo_color = Color(0.95, 0.95, 0.93)
+	paper.roughness = 0.85
+	paper.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var quad := QuadMesh.new()
+	quad.size = SHEET
+	sheet = MeshInstance3D.new()
+	sheet.name = "RunSheet"
+	sheet.mesh = quad
+	sheet.material_override = paper
+	sheet.top_level = true
+	sheet.visible = false
+	add_child(sheet)
+
+
+## The sheet face up, its taken end at `end` and the rest of it along `along` (level); or, as she
+## reads it, its far end turned up by `tilt` about its width, so its face turns toward her.
+func _lay_sheet(end: Vector3, along: Vector3, tilt: float) -> void:
+	var side := along.cross(Vector3.UP).normalized()
+	var length := along.rotated(side, tilt).normalized()
+	sheet.global_transform = Transform3D(Basis(side, length, side.cross(length).normalized()),
+		end + length * SHEET.y * 0.5)
+
+
+## How far she leans to bring `point` within her reach: the least lean from her hips, in steps,
+## that puts her shoulder within LEAN_REACH_SHARE of her arm's reach of it (as `can_reach` leans).
+func _lean_for(point: Vector3) -> float:
+	var bone := func(name: String) -> Vector3:
+		return _skeleton.global_transform * _skeleton.get_bone_global_pose(
+			_skeleton.find_bone(name)).origin
+	var shoulder: Vector3 = bone.call(ARM_BONES[0])
+	var elbow: Vector3 = bone.call(ARM_BONES[1])
+	var reach := shoulder.distance_to(elbow) + elbow.distance_to(bone.call(ARM_BONES[2])) \
+		+ _grip_local.length()
+	var pelvis: Vector3 = bone.call("Bip01 Pelvis")
+	var spine := pelvis.distance_to(shoulder)
+	var front := guard.global_basis.z
+	front.y = 0.0
+	var side := front.normalized().cross(Vector3.UP).normalized()
+	var lean := LEAN_LEAST
+	while lean < HAND_LEAN_MOST:
+		var leaned := pelvis + (shoulder - pelvis).normalized().rotated(side, -lean) * spine
+		if leaned.distance_to(point) <= reach * LEAN_REACH_SHARE:
+			break
+		lean += 0.05
+	return minf(lean, HAND_LEAN_MOST)
+
+
+## One tick of the handover.
+func _work_handover(delta: float) -> void:
+	if not is_instance_valid(_van) or sheet == null:
+		handover = ""
+		return
+	if handover == "waiting":
+		if _state != "open":
+			return
+		handover = "offered"
+		_hand_t = 0.0
+		if _grip_local == Vector3.ZERO:
+			_grip_frame()
+	_hand_t += delta
+	var out := _outward()
+	var at_van := sheet_grip()
+	var toward_van := -out
+	var read := global_transform * READ_AT
+	match handover:
+		"offered":
+			var held := smoothstep(0.0, OFFER_SECONDS, _hand_t)
+			sheet.visible = true
+			_lay_sheet((_van.call("window_hold") as Vector3) + out * SHEET_OUT * held, toward_van,
+				0.0)
+			if _hand_t >= OFFER_SECONDS:
+				_next("taking")
+				_hand_lean = _lean_for(at_van)
+		"taking":
+			_lean.set("angle", _hand_lean)
+			_hand_on(at_van, smoothstep(0.0, TAKE_SECONDS, _hand_t))
+			_lay_sheet(at_van, toward_van, 0.0)
+			if _hand_t >= TAKE_SECONDS:
+				_next("bringing")
+		"bringing", "returning":
+			var share := smoothstep(0.0, BRING_SECONDS, _hand_t)
+			if handover == "returning":
+				share = 1.0 - share
+			_lean.set("angle", lerpf(_hand_lean, LEAN_LEAST, share))
+			_hand_on(at_van.lerp(read, share), 1.0)
+			_lay_sheet(grip_point(), toward_van, READ_TILT * share)
+			if _hand_t >= BRING_SECONDS:
+				_next("reading" if handover == "bringing" else "letting_go")
+		"reading":
+			_lean.set("angle", LEAN_LEAST)
+			_hand_on(read, 1.0)
+			_lay_sheet(grip_point(), toward_van, READ_TILT)
+			if _hand_t >= READ_SECONDS:
+				_next("returning")
+		"letting_go":
+			_lay_sheet(at_van, toward_van, 0.0)
+			_hand_on(at_van, 1.0 - smoothstep(0.0, LET_GO_SECONDS, _hand_t))
+			if _hand_t >= LET_GO_SECONDS:
+				_hand_on(at_van, 0.0)
+				_next("in")
+		"in":
+			var gone := smoothstep(0.0, IN_SECONDS, _hand_t)
+			_lay_sheet((_van.call("window_hold") as Vector3) + out * SHEET_OUT * (1.0 - gone)
+				- out * SHEET.y * gone, toward_van, 0.0)
+			if _hand_t >= IN_SECONDS:
+				sheet.visible = false
+				_next("back")
+
+
+func _next(phase: String) -> void:
+	handover = phase
+	_hand_t = 0.0
 
 
 ## One wall: its solid panels below the sill and above the head, the lining inside with its panel
@@ -844,6 +1065,7 @@ func _make_reach(skeleton: Skeleton3D) -> void:
 	guard.add_child(pole)
 	_arm.set_target_node(0, _arm.get_path_to(_arm_target))
 	_arm.set_pole_node(0, _arm.get_path_to(pole))
+	skeleton.skeleton_updated.connect(_remember_grip)
 	_turn = HandTurn.new()
 	_turn.name = "GuardHandLTurn"
 	_turn.set("bone_name", ARM_BONES[2])

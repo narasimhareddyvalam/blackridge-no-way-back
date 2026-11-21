@@ -17,7 +17,8 @@ const FENCE_HEIGHT := 2.4
 const YARD_CLEAR := 1.5
 const WAREHOUSES: Array[Vector2] = [Vector2(150.0, 112.0), Vector2(250.0, 120.0)]
 const SHED_GUARD := "res://features/characters/guard/guard.glb"
-const AT_THE_LINE := Transform3D(Basis.IDENTITY, Vector3(200.0, 0.1, 151.3))
+## At the line, tucked in toward the booth for the guard to reach his window (#355).
+const AT_THE_LINE := Transform3D(Basis.IDENTITY, Vector3(199.4, 0.1, 151.3))
 const ON_THE_DRIVE := Transform3D(Basis.IDENTITY, Vector3(200.0, 0.1, 166.0))
 const INSIDE := Transform3D(Basis.IDENTITY, Vector3(200.0, 0.1, 138.0))
 const FURTHER_IN := Transform3D(Basis.IDENTITY, Vector3(220.0, 0.1, 136.0))
@@ -176,7 +177,7 @@ func _check_gate() -> void:
 	var window_down := float(_van.get("left_window_target")) > 0.5
 	var waiting := _objective()
 	var waited := 0.0
-	while not bool(_compound.call("gate_open")) and waited < 20.0:
+	while not bool(_compound.call("gate_open")) and waited < 35.0:
 		await physics_frame
 		waited += 1.0 / 60.0
 	_check(window_down and waiting.begins_with("WAIT AT THE GATE")

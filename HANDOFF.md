@@ -1,5 +1,23 @@
 # HANDOFF.md
 
+**This run (2026-11-21, Mission 2's audit, the run sheet handover, #355):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  run sheet handover (#355), built)". Files: `guard_booth.gd`, `transfer_shed.gd`, `compound.gd`,
+  `the_wrong_cargo.gd` (the pull-in hint), `freight_van.gd` (`window_hold`),
+  `game/tests/test_handover.gd` (new), `test_mission_two.gd`, `test_compound.gd`,
+  `tools/captures/capture_handover.gd` (new). The seated Ethan tried first was removed (the
+  author did not like hands in the cab).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/handover/h11 scripts/run-test.sh
+  test_handover.gd 60 300` exit 0, 10/10; `test_mission_two.gd` 61/61 and `test_compound.gd`
+  10/10 (`handover/g10`). Mutations (`python3 -I
+  logs/phase_2/realism/handover/mutations/mutations_handover.py <scratch> <out>`): seven exit 1.
+  Suites: `bash logs/phase_2/realism/handover/suites/run_suites.sh <scratch>`: 64 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** Mission 2's step 6 (the escape: the patrol guards' looks still to choose, walking
+  clips needed); then step 7; then a Mission 3 brief.
+- **Unverified:** whether her 57-degree lean reads as natural in play (the author: "okay looks
+  good" on the stills).
+
 **This run (2026-11-21, the rain as real rain at night, step 5, #354):**
 - **Built:** `CHANGE-BRIEF.md` revision 17. Files: the six `game/effects/lamp_rain_*.tscn`,
   `game/tests/test_lamp_rain_config.gd`, `tools/captures/capture_rain_views.gd` (two close views
