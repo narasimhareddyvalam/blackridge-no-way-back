@@ -1,5 +1,25 @@
 # HANDOFF.md
 
+**This run (2026-11-21, mission guidance, step 1, #356; cutscenes looked at, #357):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance as a
+  professional game's (#356), step 1 built)". Files: `game/features/ui/driving_hud/`
+  (`mission_map.gd` new, `map_fade.gdshader` new, `art/mission_map_ground.png` and `.json` new,
+  `fonts/` new, `driving_hud.gd`, `van_guide.gd`), `game/app/first_drive.gd`,
+  `industrial_loop.gd` (`map_roads`, `map_places`, `map_fences`, `map_blocks`),
+  `driver.gd` (`facing_yaw`), `tools/art/bake_mission_map.py` (new),
+  `tools/captures/capture_map_base.gd`, `capture_guidance.gd`, `capture_storyboard.gd` (new),
+  `game/tests/test_guidance.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/guidance/g13 scripts/run-test.sh test_guidance.gd
+  60 300` exit 0, 9/9; `test_mirrors.gd` 13/13 (`g12`). Mutations (`python3 -I
+  logs/phase_2/guidance/mutations/mutations_guidance.py <scratch> <out>`): six exit 1. Suites:
+  `bash logs/phase_2/guidance/suites/run_suites.sh <scratch>`: 65 runs exit 0, no script or
+  shader errors, art check 0 failures. Committed on `develop` (not pushed).
+- **Cutscenes (#357):** a survey found one real cutscene (the seal round) and no film look, no
+  camera paths and no cutscene framework; three looks shown on real frames; the author chose
+  "C Neo-noir". Nothing built yet.
+- **Next:** a cutscene plan in the neo-noir look (which scenes, shot lists, the tooling), shown
+  to the author first; guidance steps 2-3 after.
+
 **This run (2026-11-21, Mission 2's audit, the run sheet handover, #355):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
   run sheet handover (#355), built)". Files: `guard_booth.gd`, `transfer_shed.gd`, `compound.gd`,

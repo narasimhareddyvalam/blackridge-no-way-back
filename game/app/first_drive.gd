@@ -144,6 +144,7 @@ func _ready() -> void:
 	_navigation().follow(world.road, Mission.TARGETS[Mission.TARGETS.size() - 1],
 		Mission.START.origin)
 	hud.van_guide.road = world.road_points
+	hud.mission_map.set_world(world.map_roads(), world.map_blocks())
 	hud.van_guide.office = world.office_transform
 	hud.resume_requested.connect(_begin)
 	hud.pause_requested.connect(_toggle_pause)
@@ -712,6 +713,7 @@ func _on_ground(point: Vector3) -> Vector3:
 
 func _process(delta: float) -> void:
 	_guide_to_van()
+	_follow_on_map(delta)
 	if route.phone_call.talking:
 		_navigation().call_seconds = route.phone_call.elapsed
 	_hint_time += delta
@@ -725,6 +727,20 @@ func _process(delta: float) -> void:
 			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission == cargo):
 		_close_run_sheet()
 	hud.set_hint(_hint(0.2))
+
+
+## The mission map follows the player: the van while he drives, Ethan on foot (#356).
+func _follow_on_map(delta: float) -> void:
+	var on_foot: bool = not van.occupied and driver.active
+	if on_foot:
+		var camera := get_viewport().get_camera_3d()
+		var view := -camera.global_basis.z if camera != null else Vector3.FORWARD
+		hud.mission_map.follow(driver.global_position, atan2(view.x, view.z),
+			driver.facing_yaw(), true, delta)
+		return
+	var forward := -van.global_basis.z
+	var yaw := atan2(forward.x, forward.z)
+	hud.mission_map.follow(van.global_position, yaw, yaw, false, delta)
 
 
 func _guide_to_van() -> void:

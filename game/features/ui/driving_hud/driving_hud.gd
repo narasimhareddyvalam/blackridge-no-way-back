@@ -9,10 +9,23 @@ const SaveFile = preload("res://shared/save/save_file.gd")
 const SETTINGS_VERSION := 1
 const VanGuide = preload("van_guide.gd")
 const FrontMenu = preload("res://features/ui/menus/front_menu.gd")
+const MissionMap = preload("mission_map.gd")
+## The HUD's lettering, Barlow Condensed SemiBold (SIL Open Font License 1.1, `fonts/OFL.txt`).
+const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
+## The objective beside the mission map (#356): its left edge clear of the map, its foot level
+## with the map's.
+const OBJECTIVE_LEFT := 392.0
+const OBJECTIVE_FOOT := 30.0
+const HINT_MARGIN := 28.0
+## A soft dark fade behind the map and the objective, round from the screen's bottom-left corner,
+## so they read over a bright dashboard.
+const BACKING := Vector2(900.0, 240.0)
 
 var menu_visible: bool = true
 var settings_path: String = ""
 var van_guide := VanGuide.new()
+var mission_map := MissionMap.new()
+var _backing: TextureRect
 var menu: Control
 var _heading: VBoxContainer
 var _eyebrow: Label
@@ -43,22 +56,65 @@ func _ready() -> void:
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
+	_backing = TextureRect.new()
+	_backing.name = "ObjectiveBacking"
+	var fade := GradientTexture2D.new()
+	fade.gradient = Gradient.new()
+	fade.gradient.set_color(0, Color(0.0, 0.0, 0.0, 0.62))
+	fade.gradient.set_color(1, Color(0.0, 0.0, 0.0, 0.0))
+	fade.gradient.set_offset(1, 0.72)
+	fade.fill = GradientTexture2D.FILL_RADIAL
+	fade.fill_from = Vector2(0.0, 1.0)
+	fade.fill_to = Vector2(0.75, 0.0)
+	fade.width = 128
+	fade.height = 64
+	_backing.texture = fade
+	_backing.stretch_mode = TextureRect.STRETCH_SCALE
+	_backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_backing.anchor_top = 1.0
+	_backing.anchor_bottom = 1.0
+	_backing.offset_left = 0.0
+	_backing.offset_right = BACKING.x
+	_backing.offset_top = -BACKING.y
+	_backing.offset_bottom = 0.0
+	root.add_child(_backing)
+	mission_map.name = "MissionMap"
+	mission_map.set_font(LETTERING)
+	root.add_child(mission_map)
 	_heading = VBoxContainer.new()
-	_heading.position = Vector2(32, 28)
 	_heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_heading.add_theme_constant_override("separation", 0)
+	_heading.anchor_top = 1.0
+	_heading.anchor_bottom = 1.0
+	_heading.offset_left = OBJECTIVE_LEFT
+	_heading.offset_bottom = -OBJECTIVE_FOOT
+	_heading.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	root.add_child(_heading)
-	_eyebrow = _label("NIGHT FREIGHT", 14, Color("bcad89"))
+	_eyebrow = _lettered(_label("NIGHT FREIGHT", 17, Color("d9b97a")))
 	_heading.add_child(_eyebrow)
-	_objective = _label("RETURN TO THE DEPOT", 25)
+	_objective = _lettered(_label("RETURN TO THE DEPOT", 32))
 	_heading.add_child(_objective)
-	_detail = _label("", 16, Color("c0c9cc"))
+	_detail = _lettered(_label("", 19, Color("b9c2c4")))
+	_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_detail.custom_minimum_size.x = 520.0
 	_heading.add_child(_detail)
-	_hint = _label("", 15)
-	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	_hint.position = Vector2(32, -45)
+	_hint = _lettered(_label("", 17, Color("cfd4d0")))
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hint.anchor_left = 1.0
+	_hint.anchor_right = 1.0
+	_hint.anchor_top = 1.0
+	_hint.anchor_bottom = 1.0
+	_hint.offset_right = -HINT_MARGIN
+	_hint.offset_bottom = -HINT_MARGIN
+	_hint.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	root.add_child(_hint)
-	_notice = _label("", 18, Color("e3c799"))
-	_notice.position = Vector2(32, 127)
+	_notice = _lettered(_label("", 22, Color("e3c799")))
+	_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_notice.anchor_left = 0.5
+	_notice.anchor_right = 0.5
+	_notice.offset_top = 70.0
+	_notice.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.add_child(_notice)
 	van_guide.name = "VanGuide"
 	root.add_child(van_guide)
@@ -77,6 +133,11 @@ func _ready() -> void:
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(_fade)
+
+
+func _lettered(label: Label) -> Label:
+	label.add_theme_font_override("font", LETTERING)
+	return label
 
 
 func _label(words: String, size: int, color: Color = Color("e2e5df")) -> Label:
@@ -284,6 +345,8 @@ func _refresh_overlays() -> void:
 	_heading.visible = shown
 	_hint.visible = shown
 	_notice.visible = shown
+	mission_map.visible = shown
+	_backing.visible = shown
 	van_guide.visible = not _cinematic
 
 

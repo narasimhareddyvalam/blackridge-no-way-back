@@ -488,6 +488,11 @@ func walking() -> bool:
 	return not _route.is_empty()
 
 
+## The way Ethan faces, as a yaw (atan2 of his facing's x and z), for the mission map.
+func facing_yaw() -> float:
+	return _model.global_rotation.y
+
+
 func play_clip(clip: String, facing: Vector3, from: float = 0.0,
 		shift := Vector3.ZERO) -> void:
 	_scripted = true

@@ -1,0 +1,2788 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "at" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://features/environments/industrial_loop/industrial_loop.gd:971)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_guidance.gd:39)
+ERROR: Failed to load script "res://features/environments/industrial_loop/industrial_loop.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/test_guidance.gd:39)
+SCRIPT ERROR: Invalid access to property or key 'road' on a base object of type 'Node3D'.
+          at: _ready (res://app/first_drive.gd:111)
+          GDScript backtrace (most recent call first):
+              [0] _ready (res://app/first_drive.gd:111)
+              [1] _run (res://tests/test_guidance.gd:41)
+FAIL: G1: a mission map while playing, none on the title screen
+SCRIPT ERROR: Invalid call. Nonexistent function 'map_rect (via call)' in base 'Control (mission_map.gd)'.
+          at: _run (res://tests/test_guidance.gd:55)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_guidance.gd:55)
+SCRIPT ERROR: Invalid access to property or key 'playable_area' on a base object of type 'Node3D'.
+          at: _process (res://app/first_drive.gd:724)
+          GDScript backtrace (most recent call first):
+              [0] _process (res://app/first_drive.gd:724)
+SCRIPT ERROR: Invalid access to property or key 'playable_area' on a base object of type 'Node3D'.
+          at: _process (res://app/first_drive.gd:724)
+          GDScript backtrace (most recent call first):
+              [0] _process (res://app/first_drive.gd:724)
+SCRIPT ERROR: Invalid access to property or key 'playable_area' on a base object of type 'Node3D'.
+          at: _process (res://app/first_drive.gd:724)
+          GDScript backtrace (most recent call first):
+              [0] _process (res://app/first_drive.gd:724)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+SCRIPT ERROR: Invalid call. Nonexistent function 'recover' in base 'Nil'.
+          at: _recover (res://app/first_drive.gd:528)
+          GDScript backtrace (most recent call first):
+              [0] _recover (res://app/first_drive.gd:528)
+              [1] _process (res://app/first_drive.gd:725)
+FAIL: The guidance checks finish within 120 s
+WARNING: 24 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 5 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

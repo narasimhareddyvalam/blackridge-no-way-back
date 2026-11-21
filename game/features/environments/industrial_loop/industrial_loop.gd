@@ -20,6 +20,9 @@ const TransferShed = preload("transfer_shed.gd")
 const TownStation = preload("town_station.gd")
 const ContainerYard = preload("container_yard.gd")
 const Compound = preload("compound.gd")
+const TransferBuilding = preload("transfer_building.gd")
+## The site office's height, for the mission map's block (#356).
+const OFFICE_HEIGHT := 3.6
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -920,6 +923,66 @@ func _reflections() -> void:
 	probe.intensity = 0.8
 	probe.update_mode = ReflectionProbe.UPDATE_ONCE
 	add_child(probe)
+
+
+## The mission map's roads (#356): the loop road, and the drives to the transfer shed's gate, the
+## container yard's and the compound's, each from its gate to the loop road's nearest point.
+func map_roads() -> Array[PackedVector3Array]:
+	var roads: Array[PackedVector3Array] = [road_points]
+	for gate: Vector3 in [Vector3(TransferShed.LANE_X, 0.0, TransferShed.GATE_Z),
+			Vector3(100.0, 0.0, 158.0), Vector3(200.0, 0.0, 146.0)]:
+		roads.append(PackedVector3Array([gate, road_points[_nearest_road(Vector2(gate.x,
+			gate.z))]]))
+	return roads
+
+
+## The mission map's buildings (x, z): the warehouses and the site office.
+func map_places() -> Array[PackedVector2Array]:
+	var places: Array[PackedVector2Array] = []
+	for index in range(mini(WAREHOUSES.size(), warehouse_widths.size())):
+		var item := WAREHOUSES[index]
+		var half := Vector2(warehouse_widths[index] / 2.0, 11.5)
+		places.append(PackedVector2Array([Vector2(item.x - half.x, item.z - half.y),
+			Vector2(item.x + half.x, item.z - half.y), Vector2(item.x + half.x, item.z + half.y),
+			Vector2(item.x - half.x, item.z + half.y)]))
+	var office := PackedVector2Array()
+	for corner: Vector2 in [Vector2(-3.0, -1.8), Vector2(3.0, -1.8), Vector2(3.0, 1.8),
+			Vector2(-3.0, 1.8)]:
+		var at := office_transform * Vector3(corner.x, 0.0, corner.y)
+		office.append(Vector2(at.x, at.z))
+	places.append(office)
+	return places
+
+
+## The mission map's buildings as blocks (#356): each one's corners (x, z) and its height: the
+## warehouses, the site office and the transfer shed.
+func map_blocks() -> Array:
+	var blocks: Array = []
+	var places := map_places()
+	for index in range(places.size()):
+		var height := OFFICE_HEIGHT
+		if index < warehouse_heights.size():
+			height = warehouse_heights[index]
+		blocks.append({"corners": places[index], "height": height})
+	var shed := TransferBuilding.BUILDING
+	var corners := PackedVector2Array()
+	for corner: Vector2 in [shed.position, Vector2(shed.end.x, shed.position.y), shed.end,
+			Vector2(shed.position.x, shed.end.y)]:
+		var at := Vector3(corner.x, 0.0, corner.y)
+		if transfer_shed != null:
+			at = (transfer_shed.get_node("Building") as Node3D).global_transform * at
+		corners.append(Vector2(at.x, at.z))
+	blocks.append({"corners": corners, "height": TransferBuilding.EAVES})
+	return blocks
+
+
+## The mission map's fences (x, z): the compound's, and the container yard's bounds.
+func map_fences() -> Array[PackedVector2Array]:
+	var compound_fence := PackedVector2Array(Compound.OUTLINE)
+	compound_fence.append(Compound.OUTLINE[0])
+	var yard := ContainerYard.YARD
+	return [compound_fence, PackedVector2Array([yard.position, Vector2(yard.end.x, yard.position.y),
+		yard.end, Vector2(yard.position.x, yard.end.y), yard.position])]
 
 
 func _transfer_shed() -> void:

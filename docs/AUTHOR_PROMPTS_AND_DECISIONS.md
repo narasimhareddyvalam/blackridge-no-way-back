@@ -4992,6 +4992,83 @@ tag `a5`. Pictures the author approved or rejected are filed in
        compass strip, C a round map with the route, the objective beside it; each with a marker
        over the target with its distance and a key prompt only when a key does something.
        **The author chose** "C Map with route".
+     - **Prompt** (verbatim): "okay proceed" (step 1, the layout). **Built, not committed:**
+       `mission_map.gd`, a round map at the bottom left, heading-up, centred on the van at the
+       wheel and on Ethan on foot (closer in), drawing the loop road and the drives to the shed,
+       the container yard and the compound, the warehouses, the site office and the fences, north
+       on its rim; the objective beside it in Barlow Condensed (OFL, `fonts/`), over a soft round
+       fade; the control hints at the bottom right; the notices at the top centre; Mission 1's
+       van guide keeps its marker, its own small map folded into this one. Tests first
+       (`test_guidance.gd` 0/1, then 7/7). Stills `captures/audit/guidance/step1/`.
+     - **Prompt** (verbatim): "make sure the map is smooth and its accurate to where the
+       gamer(ethan) stands moves etc all those things. and also one gap i found, will tell you
+       after you work on the map. also i dont like the look and colors of the game. maybe use
+       something visually appealing for map and instructions but it should match look and feel of
+       the game"
+     - **The map made exact and smooth:** it now turns with the van at the wheel (not the
+       driver's head) and with the camera on foot, easing at most 0.8 degrees a frame; centred each
+       frame exactly where the van or Ethan is (0.000 m off when it updates); Ethan's arrow the way
+       he faces (0.0 degrees off); buildings at its rim clipped properly. `test_guidance.gd` G3
+       and G8 (8/8).
+     - **Shown:** three looks for the map and the objective, in the game's mood: 1 Sodium night
+       (dark glass, amber street-lamp roads glowing), 2 Rain glass (frosted, blurred, cool
+       headlight blue), 3 Dispatch sheet (a printed dispatch map, typed like the run sheet).
+     - **Asked** which; **the author answered** "give more options". **Shown:** 4 Road paint
+       (asphalt, white lane dashes, a yellow road-paint route, a bezel ringed in yellow ticks),
+       5 CCTV monitor (green-grey like the booths' camera screens, scan lines, a camera stamp),
+       6 Van dashboard (the cab's orange backlit glow), 7 Noir red (thin white lines, one red
+       route).
+     - **Asked** which; **the author answered** "its not gta 6 level style, worth, professional".
+       Next: the map made from the world itself (a top-down render of the district, styled),
+       not drawn shapes.
+     - **Shown:** the district rendered straight down, unshaded (`tools/captures/capture_map_base.gd`),
+       its roads, paving and buildings told apart and restyled (casing on the roads, an edge and a
+       soft shadow on the buildings), cut into the round map with a bezel and ticks, a glowing route
+       and a pulsing target blip; the objective with a rule and a distance chip; the key prompt as a
+       keycap card at the bottom right: A Night slate (cool slate, amber route), B Warm night (warm
+       dark, gold route).
+     - **Asked** if this is the level and which colouring; **the author answered** "Still not
+       there".
+     - **Prompt** (verbatim): "check yourself in internet how gta 6 map looks like and give me
+       designs". Found (press coverage of the trailers and leaks, not Rockstar's word): a rounded
+       rectangle at the bottom left; roads with width; buildings rising in 3D near you; the route
+       along the roads with a live distance; coloured pins; light and dark by time of day; shown
+       while driving or with a waypoint, or swapped for a compass; prompts only when relevant.
+       Designs drawn after those qualities, in our own style (not a copy of its look).
+     - **Shown** (`scratchpad/gta_designs.py`, from the real top-down render and the game's own
+       building footprints): 1 a satnav card, the map tilted in 3D with the buildings standing, a
+       bar with the live distance, the next step and the time; 2 the same map frameless, fading
+       into the screen; 3 the card flat and warmer; 4 compass mode, no map, a compass strip
+       carrying the target and a marker in the world. Each with the objective beside it and a
+       keycap prompt.
+     - **The author chose** "2 Frameless 3D".
+     - **Built, not committed:** the map as its own small 3D world (`mission_map.gd`, a SubViewport
+       with its own World3D, so the game's cameras never see it): the ground baked from four
+       straight-down captures of the district (`tools/captures/capture_map_base.gd`,
+       `tools/art/bake_mission_map.py` with numpy and scipy, 0.4 m a pixel, 800 x 500 m,
+       `art/mission_map_ground.png` and its bounds), every building a block at its height
+       (`industrial_loop.gd`'s `map_blocks`: warehouses, site office, transfer shed), a camera
+       52 degrees down behind the player, the edges faded (`map_fade.gdshader`, game/features);
+       the objective moved beside it. `test_guidance.gd` G9 added (9/9). Stills
+       `captures/audit/guidance/step1/` beside the mockup.
+     - **Prompt** (verbatim): "alright maps looks good for now, the gap is i dont think we have
+       professional style gta 6 level cutscenes that make our game interesting". The map's step 1
+       committed once every suite passed; the cutscenes looked at next.
+     - **Found** (a survey of the code): one real cutscene (Mission 2's seal round, hard cuts between
+       fixed shots); otherwise a still title camera, fades, the Maya call as subtitles only, the
+       hit in first person, a 9 s hold at the end; no letterbox, no camera paths, no cutscene
+       framework (`CutsceneDirector` planned in GAME_DESIGN §11, `features/cinematics/` empty),
+       one looping music track; the film look agreed in C35 not built.
+     - **Prompt** (verbatim): "show me cutscene designs first"
+     - **Shown:** four raw in-game frames (`tools/captures/capture_storyboard.gd`: a low wide shot
+       of the van under the depot's lamps, Ethan close beside it lit by a warm key and a cool rim
+       light as a cutscene lights him, the compound's booth low in the rain, a high shot over the
+       valley road), each treated three ways (`scratchpad/cutscene_designs.py`): A prestige drama
+       (2.39 frame, teal-amber grade, shallow focus, quiet serif titles), B found-footage thriller
+       (handheld tilt, cold, grainy, timestamp captions), C neo-noir (crushed blacks, blue
+       anamorphic flares, red accents); with the mission title card, a subtitle from Maya's call
+       and a location caption.
+     - **The author chose** "C Neo-noir".
 
 ## Waiting for the author
 

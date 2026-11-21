@@ -1,0 +1,13 @@
+m1  the map a metre off the player test_guidance.gd exit 1, 7/9 passed; 2 failed
+      FAIL: G3: driving and turning, it is centred on the van every frame (worst 1.000 m) and turned with the van (worst 2
+      FAIL: G8: on foot, it is centred on Ethan every frame as he walks (worst 1.000 m), his arrow the way he faces (worst
+m2  turned with the driver's head at the wheel test_guidance.gd exit 0, 9/9 passed; 0 failed
+m3  no buildings standing          test_guidance.gd exit 1, 7/9 passed; 2 failed
+      FAIL: G9: the map is the district in 3D: its own world (true), the baked ground at the world's bounds (true), 0 buil
+      FAIL: G4: its roads and buildings drawn (4 roads, 0 places)
+m4  a flat camera, straight down   test_guidance.gd exit 1, 8/9 passed; 1 failed
+      FAIL: G9: the map is the district in 3D: its own world (true), the baked ground at the world's bounds (true), 6 buil
+m5  a hard frame, no fade          test_guidance.gd exit 1, 8/9 passed; 1 failed
+      FAIL: G9: the map is the district in 3D: its own world (true), the baked ground at the world's bounds (true), 6 buil
+m6  the objective back in the corner test_guidance.gd exit 1, 8/9 passed; 1 failed
+      FAIL: G5: the objective beside the map, not in the top-left corner (title at (32.0, 708.0))

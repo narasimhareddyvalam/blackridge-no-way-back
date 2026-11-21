@@ -8567,3 +8567,28 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   checks otherwise unchanged); booths 31/31, gates 18/18. Seven mutations exit 1
   (`logs/phase_2/realism/handover/mutations/`). Stills `captures/audit/handover/film/` (from
   Ethan's seat at the shed, from behind the van at the compound).
+
+## Revision 2026-11-21 (Phase 2, mission guidance as a professional game's (#356), step 1 built)
+
+- **Asked:** "the mission play (what the user needs to do isnt marked with dots or instructions
+  clearly.) i mean adding text on top left isnt professional"; then the map smooth and exact,
+  and "visually appealing ... it should match look and feel of the game"; after seven drawn
+  looks, "its not gta 6 level"; GTA VI's map looked up (press coverage: a rounded map at the
+  bottom left, roads with width, buildings in 3D, the route along the roads with a live
+  distance); the author chose "C Map with route", then "2 Frameless 3D".
+- **Built (step 1, the map and the layout):** `mission_map.gd`: its own small 3D world (a
+  SubViewport with its own World3D): the ground baked from four straight-down unshaded captures
+  of the district (`tools/captures/capture_map_base.gd`; `tools/art/bake_mission_map.py`, numpy
+  and scipy: 0.4 m a pixel over x -170..630, z -262.5..237.5, roads, yards and buildings told
+  apart and repainted dark slate, lighter yards, light roads with casing), every building a block
+  at its height (`industrial_loop.gd`'s `map_blocks`), lit by one far omni light; a camera 52
+  degrees down behind the player, the player 0.68 down the picture, 120 m back at the wheel and
+  60 m on foot; centred every frame exactly on the van or Ethan, turned smoothly with the van at
+  the wheel (not the driver's look) and with the camera on foot, Ethan's arrow the way he faces;
+  its edges faded into the screen (`map_fade.gdshader`, game/features). The objective beside it
+  in Barlow Condensed (OFL, copied to `driving_hud/fonts/`) over a soft round fade; the hints at
+  the bottom right; notices at the top centre. Mission 1's van guide keeps its marker.
+- **Tested:** `test_guidance.gd` (new) 0/1 then 9/9; six mutations exit 1
+  (`logs/phase_2/guidance/mutations/`). Stills `captures/audit/guidance/step1/`.
+- **To come:** step 2, the target's pin, world marker and distance, and the key prompt; step 3,
+  the route along the roads. Unpriced on the GPU (a second, small render) until the mission's end.
