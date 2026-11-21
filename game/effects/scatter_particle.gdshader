@@ -26,12 +26,15 @@ uniform float still_fade : hint_range(0.0, 1.0) = 0.0;
 // A falling drop drawn as a camera sees it (lamp rain, the audit, #354): the streak its fall
 // leaves in an exposure of `exposure` seconds, along `fall` (world), in perspective, so a drop
 // falling at the eye is a dot and streaks meet at the point they fall from; at least
-// `min_pixels` wide. Its speed is read back from its stretch: the scale_over_velocity curve
+// `min_pixels` wide; drops nearer than `near_fade` fade. Its speed is read back from its stretch: the scale_over_velocity curve
 // lengthens its quad by `stretch_per_speed` times its speed (m/s) on top of its width.
 uniform bool camera_streak = false;
 uniform float exposure : hint_range(0.0, 0.2) = 0.025;
 uniform vec3 fall = vec3(0.0, -1.0, 0.0);
 uniform float stretch_per_speed = 22.222;
+// Drops nearer the eye than `near_fade` metres fade out: the eye focuses past them, so they blur
+// to nothing rather than streak across the view.
+uniform float near_fade : hint_range(0.0, 10.0) = 0.0;
 
 varying float coverage;
 varying float aspect;
@@ -78,6 +81,7 @@ void vertex() {
 		shape_ratio = smeared / max(width, 0.000001);
 		aspect = drawn_span / drawn_width;
 		coverage = width / drawn_width * max(span, width) / drawn_span;
+		coverage *= near_fade > 0.0 ? smoothstep(near_fade * 0.3, near_fade, depth) : 1.0;
 	} else {
 	if (face_camera) {
 		mat4 world = mat4(normalize(MAIN_CAM_INV_VIEW_MATRIX[0]),

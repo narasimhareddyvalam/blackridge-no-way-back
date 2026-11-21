@@ -8511,3 +8511,7 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   skip gpu cost for now, remember to do that tho").
 - **Known, for step 3:** the compound's four floodlight-rain volumes (#353) use the floodlight
   scene's direction unturned, so their drops lean toward +z where all other rain leans toward +x.
+- **Step 2 built:** CHANGE-BRIEF revision 14: two and a half times the drops, lit more strongly
+  from behind, a slightly longer exposure, and drops within 2 m of the eye faded. Tests:
+  `test_lamp_rain_config.gd` 475/475; five mutations exit 1. Still to come: the floodlights' rain
+  is a low band near the ground (step 3).

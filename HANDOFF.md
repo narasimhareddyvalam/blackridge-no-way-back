@@ -1,5 +1,17 @@
 # HANDOFF.md
 
+**This run (2026-11-21, the rain as real rain at night, step 2, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 14. Files: `game/effects/scatter_particle.gdshader`
+  (`near_fade`), the five `game/effects/lamp_rain_*.tscn`, `game/tests/test_lamp_rain_config.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step2/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 475/475. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step2/mutations/mutations_rain_step2.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step2/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 3, rain from the light (the floodlight volumes at their heads, slow drops
+  reaching the ground, the compound's four volumes slanting with the rest); 4 headlights;
+  5 splashes. The author looks at the end; the GPU price at the mission's end.
+
 **This run (2026-11-21, the rain as real rain at night, step 1, #354):**
 - **Built:** see `CHANGE-BRIEF.md` revision 13 and `docs/PHASE_BRIEF.md`, "Revision 2026-11-21
   (Phase 2, the rain as real rain at night (#354), step 1 built)". Files:

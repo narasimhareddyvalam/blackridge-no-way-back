@@ -4920,6 +4920,10 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (the rain's GPU price waits for the end with the rest; recorded under "Waiting").
      - **Prompt** (verbatim): "yes commit and then start on brightness". Step 1: five mutations
        exit 1, every suite run, committed; then step 2 begun.
+     - **Prompt** (verbatim): "okay proceed". **Step 2:** three tunings filmed (v1 two and a half
+       times the drops, brighter; v2 a 0.04 s exposure, a starfield looking up; v3 0.03 s and drops
+       faded within 2 m of the eye), v3 kept; pinned in the test, five mutations exit 1, every
+       suite run, committed.
 
 ## Waiting for the author
 

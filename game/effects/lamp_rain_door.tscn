@@ -62,14 +62,15 @@ shader = ExtResource("9_scatter")
 shader_parameter/albedo_texture = ExtResource("1_streak")
 shader_parameter/face_camera = false
 shader_parameter/min_pixels = 1.6
-shader_parameter/forward_scatter = 0.5
-shader_parameter/scatter = 60.0
+shader_parameter/forward_scatter = 0.7
+shader_parameter/scatter = 100.0
 shader_parameter/diffuse = 0.3
 shader_parameter/glint = 0.0
 shader_parameter/sky = 0.0
 shader_parameter/still_fade = 1.0
 shader_parameter/camera_streak = true
-shader_parameter/exposure = 0.025
+shader_parameter/exposure = 0.03
+shader_parameter/near_fade = 2.0
 shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
 
 [sub_resource type="QuadMesh" id="Quad_streak"]
@@ -116,7 +117,7 @@ size = Vector2(0.01, 0.01)
 
 [node name="LampRain" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 300
+amount = 750
 sub_emitter = NodePath("../LampSplash")
 lifetime = 1.1
 fixed_fps = 60
@@ -132,7 +133,7 @@ draw_pass_1 = SubResource("Quad_streak")
 
 [node name="LampSplash" type="GPUParticles3D" parent="."]
 emitting = true
-amount = 170
+amount = 425
 lifetime = 0.2
 one_shot = false
 preprocess = 0.0

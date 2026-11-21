@@ -525,3 +525,18 @@ Claude Code wrote these revisions from that list.
 - **Evidence:** `test_lamp_rain_config.gd` 470/470 (450/470 before); five mutations exit 1
   (`logs/phase_2/realism/rain/step1/mutations/`); stills `captures/audit/lookup/step1/`,
   `captures/audit/rain/step1/` beside `before/`. Unpriced on the GPU until the mission's end.
+
+### 2026-11-21, revision 14 (Phase 2, #354): B1 brighter and denser in the light (Claude Code, at the author's request)
+
+- **Found:** beside the photos, each lamp's rain was a few white specks; real lamp light shows a
+  dense cone of streaks, brightest where the lamp is behind them.
+- **Changed:** every lamp-rain scene's drops and splash droplets two and a half times as many
+  (street 12,500 and 6,875, post 5,000 and 2,750, floodlight 8,000 and 4,500, door 750 and 425,
+  dock 11,750 and 6,750); the drops' `forward_scatter` 0.5 → 0.7 (water throws light forward),
+  `scatter` 5 → 10 (street lamps, posts) and 60 → 100 (floodlight, door, dock); `exposure`
+  0.025 → 0.03; and a new `near_fade` 2.0 m: drops nearer the eye than that fade out, as the
+  eye focuses past them (looking up, they had streaked across the view like a starfield).
+  §8's B1 peaks rise two and a half times with them; unpriced until the mission's end.
+- **Evidence:** `test_lamp_rain_config.gd` 475/475; five mutations exit 1
+  (`logs/phase_2/realism/rain/step2/mutations/`); stills `captures/audit/rain/step2/`,
+  `captures/audit/lookup/step2/`.
