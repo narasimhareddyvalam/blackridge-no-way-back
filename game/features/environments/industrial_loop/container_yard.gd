@@ -68,11 +68,40 @@ const EAST_CELLS: Array[Array] = [["Container40", 115.7], ["Container20", 125.2]
 	["Container20", 131.6]]
 const MOST_HIGH := 3
 const SEED := 312
-const COLOURS: Array[Color] = [Color(0.5, 0.17, 0.12), Color(0.16, 0.3, 0.48),
-	Color(0.2, 0.36, 0.25), Color(0.48, 0.48, 0.46), Color(0.78, 0.78, 0.74),
-	Color(0.4, 0.13, 0.16), Color(0.56, 0.33, 0.14), Color(0.15, 0.37, 0.38)]
+## The boxes' markings (the audit, #351): `tools/art/make_container_markings.py`'s code strips,
+## size-type panels and line names, drawn on by `container_paint.gdshader`.
+const PAINT = preload("res://features/environments/industrial_loop/art/container_yard/container_paint.gdshader")
+const CODES = preload("res://features/environments/industrial_loop/art/container_yard/container_codes.png")
+const PANELS = preload("res://features/environments/industrial_loop/art/container_yard/container_panels.png")
+const LINE_NAMES = preload("res://features/environments/industrial_loop/art/container_yard/container_lines.png")
+const MARKS := "res://features/environments/industrial_loop/art/container_yard/container_marks.json"
+const SIZE_TYPES := {"Container20": "22G1", "Container40": "42G1", "Container40HC": "45G1"}
+const PANEL_OF := {"Container20": 0, "Container40": 1, "Container40HC": 2}
+const LIVERY_JITTER := 0.06
+## A container top-loader (jinjinjin's "CONTAINER LOADER", CC BY 4.0, its spreader drawn in to
+## 20 ft as one is parked) at the east block's gate-side corner, facing the stacks; the last row
+## of that corner's two 20 ft stacks left out to make it room.
+const TOP_LOADER = preload("res://features/environments/industrial_loop/art/container_yard/top_loader/top_loader.glb")
+const TOP_LOADER_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(128.6, 0.0, 154.2))
+const TOP_LOADER_CLEARS: Array[float] = [125.2, 131.6]
+const TOP_LOADER_BODY := Vector3(11.4, 3.0, 4.8)
+const TOP_LOADER_MAST := Vector3(0.9, 12.0, 2.0)
 const MASTS: Array[Vector3] = [Vector3(91.3, GROUND, 156.8), Vector3(108.7, GROUND, 133.4)]
 const MAST_TALL := 18.0
+## Each mast's four floods aimed at parts of the lane and the stacks' faces either side of it; an
+## LED flood 0.55 x 0.42 x 0.1 m (a 400 W yard flood's), 4,000 K.
+const FLOOD_AIMS: Array = [
+	[Vector3(95.0, 0.0, 151.0), Vector3(99.0, 0.0, 147.0), Vector3(103.0, 0.0, 150.0),
+		Vector3(97.0, 0.0, 141.0)],
+	[Vector3(106.0, 0.0, 140.0), Vector3(101.0, 0.0, 137.0), Vector3(96.0, 0.0, 136.0),
+		Vector3(104.0, 0.0, 146.0)],
+]
+const FLOOD := Vector3(0.55, 0.42, 0.1)
+const FRAME_WIDE := 2.6
+const FLOOD_COLOUR := Color(1.0, 0.88, 0.76)
+const FLOOD_ENERGY := 8.0
+const FLOOD_ANGLE := 46.0
+const FLOOD_RANGE := 50.0
 const CAMERA_POLE := Vector3(104.3, GROUND, 157.4)
 
 signal key_beeped
@@ -111,6 +140,7 @@ func build(surface: Material) -> void:
 	_boundary()
 	_gate_and_keypad()
 	_containers()
+	_top_loader()
 	_lights()
 	_bay_lines()
 	_dark_van = _parked_iveco("DarkVan", DARK_VAN_POSE, DARK)
@@ -443,10 +473,18 @@ func _containers() -> void:
 	parts.free()
 	var placed := {}
 	var all: Array[Transform3D] = []
+	var marks: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MARKS))
+	var strips: Array = marks["strips"]
+	var lines: Array = marks["lines"]
+	var markings: Array = []
+	var wear := RandomNumberGenerator.new()
+	wear.seed = SEED + 39
 	for block: Array in [[WEST_CELLS, 0.0], [EAST_CELLS, PI]]:
 		for row in range(ROWS):
 			var z := FIRST_ROW + row * ROW_PITCH
 			for cell: Array in block[0]:
+				if row == ROWS - 1 and TOP_LOADER_CLEARS.has(float(cell[1])):
+					continue
 				var kind := String(cell[0])
 				if kind == "Container40" and draw.randf() < 0.3:
 					kind = "Container40HC"
@@ -458,7 +496,18 @@ func _containers() -> void:
 						y, z))
 					if not placed.has(kind):
 						placed[kind] = []
-					(placed[kind] as Array).append([at, COLOURS[draw.randi() % COLOURS.size()]])
+					draw.randi()
+					var strip: Dictionary = strips[markings.size()]
+					var line: Dictionary = lines[int(strip["line"])]
+					var livery: Array = line["livery"]
+					var shade := 1.0 + wear.randf_range(-LIVERY_JITTER, LIVERY_JITTER)
+					var colour := Color(float(livery[0]) * shade, float(livery[1]) * shade,
+						float(livery[2]) * shade)
+					var custom := Color(float(markings.size()), float(strip["line"]), wear.randf(),
+						0.0)
+					(placed[kind] as Array).append([at, colour, custom])
+					markings.append({"code": strip["code"], "size_type": SIZE_TYPES[kind],
+						"line": line["name"], "wear": custom.b})
 					all.append(at)
 					_kinds.append(kind)
 					y += size.y
@@ -467,60 +516,124 @@ func _containers() -> void:
 				_solid_box(Vector3(float(cell[1]), (GROUND + PAVING_TOP + y) / 2.0, z),
 					Vector3(size.x, y - GROUND - PAVING_TOP, size.z))
 	_placed["Containers"] = all
+	_placed["Markings"] = markings
 	for kind: String in placed:
 		var multi := MultiMesh.new()
 		multi.transform_format = MultiMesh.TRANSFORM_3D
 		multi.use_colors = true
-		multi.mesh = _tinted(meshes[kind] as Mesh)
+		multi.use_custom_data = true
+		multi.mesh = _painted(meshes[kind] as Mesh, kind)
 		multi.instance_count = (placed[kind] as Array).size()
 		for index in range(multi.instance_count):
 			var entry: Array = placed[kind][index]
 			multi.set_instance_transform(index, entry[0])
 			multi.set_instance_color(index, entry[1])
+			multi.set_instance_custom_data(index, entry[2])
 		var many := MultiMeshInstance3D.new()
 		many.name = kind + "s"
 		many.multimesh = multi
 		add_child(many)
 
 
-## The containers' mesh with its paint taking each one's colour from its instance.
-func _tinted(mesh: Mesh) -> Mesh:
+func _top_loader() -> void:
+	var loader := Node3D.new()
+	loader.name = "TopLoader"
+	loader.transform = TOP_LOADER_AT
+	loader.position.y = GROUND + PAVING_TOP
+	add_child(loader)
+	loader.add_child(TOP_LOADER.instantiate())
+	var body := StaticBody3D.new()
+	body.name = "TopLoaderBody"
+	loader.add_child(body)
+	var mast_x := 5.7 - 1.43 - TOP_LOADER_MAST.x / 2.0 - 1.4
+	for part: Array in [[TOP_LOADER_BODY, Vector3(-0.5, TOP_LOADER_BODY.y / 2.0, 0.0)],
+			[TOP_LOADER_MAST, Vector3(mast_x, TOP_LOADER_MAST.y / 2.0, 0.0)]]:
+		var shape := BoxShape3D.new()
+		shape.size = part[0]
+		var collision := CollisionShape3D.new()
+		collision.shape = shape
+		collision.position = part[1]
+		body.add_child(collision)
+	var half := Vector2(5.7, 3.03)
+	_footprints.append(Rect2(TOP_LOADER_AT.origin.x - half.x, TOP_LOADER_AT.origin.z - half.y,
+		half.x * 2.0, half.y * 2.0))
+
+
+## The containers' mesh with its paint drawn by `container_paint.gdshader`: each box's livery,
+## markings and wear from its instance.
+func _painted(mesh: Mesh, kind: String) -> Mesh:
 	var copy := mesh.duplicate() as Mesh
+	var size: Vector3 = SIZES[kind]
 	for index in range(copy.get_surface_count()):
 		var made := copy.surface_get_material(index) as BaseMaterial3D
 		if made != null and made.resource_name == "paint":
-			var paint := made.duplicate() as BaseMaterial3D
-			paint.vertex_color_use_as_albedo = true
+			var paint := ShaderMaterial.new()
+			paint.shader = PAINT
+			paint.resource_name = "paint"
+			paint.set_shader_parameter("codes", CODES)
+			paint.set_shader_parameter("door_marks", PANELS)
+			paint.set_shader_parameter("line_names", LINE_NAMES)
+			paint.set_shader_parameter("panel_index", float(PANEL_OF[kind]))
+			paint.set_shader_parameter("half_length", size.x / 2.0)
+			paint.set_shader_parameter("tall", size.y)
+			paint.set_shader_parameter("half_width", size.z / 2.0)
 			copy.surface_set_material(index, paint)
 	return copy
 
 
+## The high masts as real yard masts are: a galvanised pole and at its top a head frame carrying
+## four LED floods (`_flood`), each turned on its yoke toward a part of the lane.
 func _lights() -> void:
 	var steel := Build.material(Color(0.55, 0.56, 0.56), 0.5)
 	steel.metallic = 0.6
 	for index in range(MASTS.size()):
 		var at := MASTS[index]
-		Build.cylinder(self, at + Vector3.UP * MAST_TALL / 2.0, 0.16, MAST_TALL, steel).name = \
-			"HighMast"
+		Build.cylinder(self, at + Vector3.UP * MAST_TALL / 2.0, 0.16, MAST_TALL, steel, 0.11) \
+			.name = "HighMast"
 		_solid_box(at + Vector3.UP * 1.0, Vector3(0.4, 2.0, 0.4))
 		_footprints.append(Rect2(at.x - 0.2, at.z - 0.2, 0.4, 0.4))
-		var aim := Vector3(GATE_X, 0.0, YARD.get_center().y) - at
-		var heading := atan2(aim.x, aim.z)
-		for side: float in [-0.5, 0.5]:
-			var light := SpotLight3D.new()
-			light.name = "MastLight%d" % (index * 2 + (0 if side < 0.0 else 1))
-			add_child(light)
-			var head := at + Vector3.UP * MAST_TALL + Basis(Vector3.UP, heading + side) \
-				* Vector3(0.0, 0.0, 0.6)
-			light.global_position = head
-			light.look_at(head + Basis(Vector3.UP, heading + side) * Vector3(0.0, -MAST_TALL
-				* 0.9, 16.0), Vector3.UP)
-			light.light_color = Color(1.0, 0.86, 0.66)
-			light.light_energy = 6.0
-			light.spot_angle = 50.0
-			light.spot_range = 45.0
-			light.shadow_enabled = false
-			Build.box(self, head, Vector3(0.6, 0.25, 0.5), steel).name = "MastLamp"
+		var top := at + Vector3.UP * MAST_TALL
+		var targets: Array = FLOOD_AIMS[index]
+		var toward := (Vector3(targets[0].x, 0.0, targets[0].z) - at).normalized()
+		var across := toward.cross(Vector3.UP).normalized()
+		var frame := Build.box(self, top + Vector3.UP * 0.1, Vector3(0.1, 0.1, FRAME_WIDE), steel)
+		frame.basis = Basis.looking_at(across, Vector3.UP)
+		frame.name = "FloodFrame"
+		for flood in range(targets.size()):
+			var offset := (flood - (targets.size() - 1) / 2.0) / (targets.size() - 1) * (FRAME_WIDE
+				- 0.5)
+			_flood(top + across * offset, targets[flood], steel, index * 4 + flood)
+
+
+## One LED flood head: its finned die-cast housing on a yoke, its glass lit, and its light.
+func _flood(at: Vector3, target: Vector3, steel: Material, number: int) -> void:
+	var head := Node3D.new()
+	head.name = "FloodHead%d" % number
+	add_child(head)
+	head.global_position = at
+	head.look_at(target, Vector3.UP)
+	var housing := Build.material(Color(0.22, 0.23, 0.24), 0.45)
+	housing.metallic = 0.4
+	Build.box(head, Vector3(0.0, 0.0, 0.03), Vector3(FLOOD.x, FLOOD.y, FLOOD.z), housing) \
+		.name = "FloodHousing"
+	for fin in range(7):
+		Build.box(head, Vector3((fin - 3) * FLOOD.x / 7.0, 0.0, 0.03 + FLOOD.z / 2.0 + 0.02),
+			Vector3(0.012, FLOOD.y * 0.9, 0.04), housing).name = "FloodFin"
+	Build.box(head, Vector3(0.0, 0.0, 0.03 - FLOOD.z / 2.0 - 0.002), Vector3(FLOOD.x * 0.9,
+		FLOOD.y * 0.88, 0.004), Build.luminous(FLOOD_COLOUR, 4.0)).name = "FloodGlass"
+	for side in [-1.0, 1.0]:
+		Build.box(head, Vector3(side * (FLOOD.x / 2.0 + 0.02), 0.0, 0.03), Vector3(0.015, 0.06,
+			0.06), steel).name = "FloodYoke"
+	var light := SpotLight3D.new()
+	light.name = "FloodLight"
+	head.add_child(light)
+	light.position = Vector3(0.0, 0.0, -FLOOD.z / 2.0 - 0.05)
+	light.light_color = FLOOD_COLOUR
+	light.light_energy = FLOOD_ENERGY
+	light.spot_angle = FLOOD_ANGLE
+	light.spot_range = FLOOD_RANGE
+	light.spot_attenuation = 0.8
+	light.shadow_enabled = false
 
 
 func _bay_lines() -> void:

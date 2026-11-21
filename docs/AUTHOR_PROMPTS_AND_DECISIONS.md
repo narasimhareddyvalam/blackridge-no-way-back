@@ -4758,7 +4758,74 @@ tag `a5`. Pictures the author approved or rejected are filed in
        offered). Then "ok"; "whats next after the gates?" (answered: the container yard, the
        docks, the rest of the audit, then step 6).
      - **Done:** ten mutations exit 1 (v8 after B2 also checks the fork past the lane); suites 60
-       runs exit 0, art 0 failures; committed.
+       runs exit 0, art 0 failures; committed (`fdde449`).
+
+350. **Overnight: the rest of the audit**
+     - **Prompt** (verbatim): "okay proceed, fix everything. i am going to sleep, but give me list
+       of things you will do, switch on caffine mode till morning and do all of those things and
+       finish the list till i wake up. give me list first."
+     - **Decision:** the author approves the overnight list as a whole (given in the reply); for
+       each item Claude Code makes the recommended choice itself, records it as its own call, and
+       commits each item separately on `develop` so any can be reverted; windowed runs are allowed
+       while the author sleeps; nothing is pushed.
+     - **Prompt** (verbatim), straight after: "hold all these till morning, what can you keep
+       building without my decisions? check my gdd on desktop and continue. do you think you will
+       do that for mission 3?" The overnight list is held.
+     - **Read** `~/Desktop/Blackridge_No_Way_Back_GDD.pdf` (39 pages, 2026-10-19; the course GDD,
+       from GAME_STORY.md and GAME_DESIGN.md). **Answered:** buildable tonight without new
+       decisions: Mission 2's step 6, the escape (chosen in #319; only the patrols' looks wait, so
+       they go in as labelled temporary stand-ins), and step 7, the getaway west past the depot
+       and up the hill road (C51); not step 3 (S4) or step 8 (S2, S5). Mission 3 only in part: its
+       places (the docks, the freight roads, the airfield and hangar) and the combat groundwork,
+       written as briefs for the author's morning choices; not its scenes (words, N03), the
+       convoy and rescue staging (N04), Adrian's confrontation, the handgun's timing or hitscan
+       against projectile, or Maya, Lily and Adrian's models.
+     - **Prompt** (verbatim), as step 6's reading began: "alright never mind, lets do everything
+       with our approvals, lets not do it overnight its okay." **Decision:** no overnight work;
+       back to the author approving each step. The keep-awake was switched off; no code had
+       changed.
+
+351. **The audit goes on: the container yard**
+     - **Prompt** (verbatim): "start with the container yard"
+     - **Real depots** (Wikimedia Commons, scratchpad only): every box painted with its owner's
+       code and number, size-type code and weights on its doors, shipping-line names and logos on
+       its sides; weathered, rusted at the seams, mixed liveries; stacks four to six high in long
+       rows; cobbled or concrete paving; a reach stacker or top-loader parked by the stacks; high
+       masts lighting the lanes.
+     - **Ours** (`captures/audit/yard/before/`, `tools/captures/capture_yard.gd`): the boxes are
+       well-shaped (corrugation, doors, locking bars, corner castings) but plain flat colour with
+       no markings at all, no numbers, no weathering; the high masts' lamps are boxes and light
+       little (a single pool on the lane); stacks two or three high; no handling machine (a real
+       yard cannot stack without one); no chassis or empties.
+     - **Asked** which to fix; **the author chose** "Markings and wear (Recommended)", "A reach
+       stacker (Recommended)" and "Real mast lights (Recommended)" (not taller stacks).
+     - **Shown** a labelled sheet (R1-R3 machines, L1-L3 lights); **the author chose** "R1 Kalmar
+       (Recommended)" (shown whole before it goes in, its badge removed) and "Build real flood
+       heads (Recommended)".
+     - **Found on import:** R1 ("KALMAR DRU450") is only the spreader and the boom's end, with no
+       truck (no chassis, wheels, cab or counterweight); removed from Blender, nothing exported.
+       **Asked** what instead; **the author chose** "R3 top-loader (Recommended)".
+     - **Built, not committed:** ISO 6346 markings painted on every box by a new
+       `container_paint.gdshader` (yard's art folder) from `tools/art/make_container_markings.py`
+       (Barlow Condensed, OFL): a unique owner code, serial and check digit per box, its size-type
+       (22G1, 42G1, 45G1) and ratings between the right door's bars, its line's name along each
+       side and its code at the sides' top right, eight fictional lines with their liveries;
+       wear its own per box (streaks from the roof rail, rust along the bottom rail and at the
+       corner castings, a grimy roof); jinjinjin's top-loader, its spreader drawn in to 20 ft,
+       parked at the east block's gate-side corner (the last row of two 20 ft stacks left out to
+       make it room, Claude Code's call); each high mast a head frame and four LED floods, 4,000 K,
+       lighting the lane. `test_yard_realism.gd` (new) 0/5 then 5/5; `test_container_yard.gd`
+       17/17. Stills `captures/audit/yard/after/` shown beside Commons photos.
+     - **Prompts** (verbatim): "[Image #7] - we dont have this right?" (a reach stacker; told the
+       top-loader is a different machine and why); "its okay for now i guess, whats our plan what
+       all are we building" (the plan given); "darken and grime it first".
+     - **Done:** found the pastel's cause: the liveries are sRGB colours and the shader took them
+       as linear light; converted, a little deeper and more saturated, a film of road dirt over
+       each box heavier toward the bottom, and more rain streaks. Stills shown.
+     - **Prompt** (verbatim): "looks good, right" (taken as: mutations, every suite, credits,
+       commit). Then "whats next after the yard" (answered: the docks, the compound gate's light,
+       the look-up rain, the handover, steps 6 and 7).
+     - **Done:** eight mutations exit 1; suites 61 runs exit 0, art 0 failures; committed.
 
 ## Waiting for the author
 

@@ -1,5 +1,22 @@
 # HANDOFF.md
 
+**This run (2026-11-20, Mission 2's audit, the container yard, #351):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  container yard (#351), built)". Files: `container_yard.gd`, `art/container_yard/`
+  (`container_paint.gdshader`, `container_codes.png`, `container_panels.png`,
+  `container_lines.png`, `container_marks.json`, `top_loader/` with its `ATTRIBUTION.md`),
+  `tools/art/make_container_markings.py`, `source_assets/fonts/barlow_condensed/` (font and
+  OFL), `source_assets/sketchfab/27_container_loader/README.md`, `front_menu.gd` (credits),
+  `game/tests/test_yard_realism.gd` (new), `test_menus.gd`, `tools/captures/capture_yard.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/yard/g5 scripts/run-test.sh
+  test_yard_realism.gd 60` exit 0, 5/5; mutations (`python3 -I
+  logs/phase_2/realism/yard/mutations/mutations_yard.py <scratch> <out>`): eight exit 1. Suites:
+  `bash logs/phase_2/realism/yard/suites/run_suites.sh <scratch>`: 61 runs exit 0, no script or
+  shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Also:** the overnight run (#350) was called off by the author before any code changed.
+- **Next:** the docks; then the compound gate's light, the look-up rain, the handover; then
+  steps 6 and 7.
+
 **This run (2026-11-20, Mission 2's audit, the gates, #349):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
   gates (#349), built)". Files: `sliding_gate.gd` (new), `container_yard.gd`, `compound.gd`,

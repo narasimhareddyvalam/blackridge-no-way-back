@@ -8417,3 +8417,30 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   Stills `captures/audit/gates/after/`.
 - **Not done:** a film of the gates moving; the compound's gate is still dark at night but for
   its lamp.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the container yard (#351), built)
+
+- **Found (Commons photos beside our stills, `captures/audit/yard/before/`):** the boxes
+  well-shaped but plain flat colour with no markings or wear; the masts' lamps boxes lighting one
+  pool; no handling machine.
+- **Built (the author's "Markings and wear", "A reach stacker" (in the event a top-loader, as the
+  chosen Kalmar model proved only a spreader: "R3 top-loader"), "Real mast lights", "Build real
+  flood heads", "darken and grime it first"):**
+  - `container_paint.gdshader` (new, the yard's art folder) paints each box from its instance
+    data: its livery (sRGB colours made linear, a little deeper and more saturated), its ISO 6346
+    markings from `tools/art/make_container_markings.py` (a unique owner code, serial and check
+    digit per box; its size-type, 22G1, 42G1 or 45G1, and its ratings between the right door's
+    bars; its line's name along each side and its code at each side's top right; eight fictional
+    lines with their liveries, in Barlow Condensed, OFL), and its own wear (rain streaks from the
+    roof rail, a film of road dirt heavier toward the bottom, rust along the bottom rail and at
+    the corner castings, a grimy roof);
+  - jinjinjin's container top-loader (CC BY), its spreader drawn in to 20 ft, parked at the east
+    block's gate-side corner facing the stacks, solid; to make it room the last row of that
+    corner's two 20 ft stacks is left out (Claude Code's call);
+  - each high mast a head frame with four LED floods (0.55 x 0.42 m housings with fins, lit glass,
+    yokes), 4,000 K, aimed down the lane.
+- **Tested:** `test_yard_realism.gd` (new) 0/5 then 5/5 (the markings valid and unique, painted
+  from instance data, each box's own wear, the top-loader, the floods lighting the lane);
+  `test_container_yard.gd` 17/17; `test_menus.gd` 20/20 (jinjinjin and Barlow credited). Eight
+  mutations exit 1 (`logs/phase_2/realism/yard/mutations/`). Stills `captures/audit/yard/after/`.
+- **Not done:** a reach stacker (the author: "its okay for now"); taller stacks (not chosen).
