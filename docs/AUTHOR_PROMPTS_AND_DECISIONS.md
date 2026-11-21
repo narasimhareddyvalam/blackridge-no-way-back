@@ -4825,7 +4825,34 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Prompt** (verbatim): "looks good, right" (taken as: mutations, every suite, credits,
        commit). Then "whats next after the yard" (answered: the docks, the compound gate's light,
        the look-up rain, the handover, steps 6 and 7).
-     - **Done:** eight mutations exit 1; suites 61 runs exit 0, art 0 failures; committed.
+     - **Done:** eight mutations exit 1; suites 61 runs exit 0, art 0 failures; committed
+       (`f611b6e`).
+
+352. **The audit goes on: the docks**
+     - **Prompt** (verbatim): "proceed"
+     - **Real docks** (Commons, scratchpad only): every door numbered outside, on a plate above it
+       and painted big on the door, a red and a green traffic light beside it with signs "back in
+       or pull out on green only", a hi-vis striped band along the door's bottom, the leveller's
+       lip a chequer plate with yellow-black edges, rubber bumpers, the seal's pads scuffed black
+       with yellow guide stripes, a vehicle restraint or chocks, wall floods over each door.
+     - **Ours** (`captures/audit/docks/before/`, `tools/captures/capture_docks.gd`): seals, bumpers,
+       guides, wall lights, a leveller with its stripe and a control box inside are there; but no
+       door number outside (only inside, over bay 8 and 9), one traffic light at bay 9 only (green,
+       no red; none at the compound), no signs, plain doors (no number, no hi-vis band), the seals
+       flat grey-white blocks, the lip plain, and the compound's docks the same.
+     - **Asked** which to add; **the author chose** "Traffic lights + signs (Recommended)", "Door
+       numbers outside (Recommended)" and "Door and lip details (Recommended)" (built, not
+       ready-made).
+     - **Built, not committed:** `dock_dressing.gd` shared by the shed and both warehouses: a
+       number plate 1 m over each opening and the number painted on each door; a hi-vis band of
+       orange and white stripes along each door's bottom; a hooded red-over-green light (170 mm
+       lenses) on a wall bracket clear of the seals, its caution sign under it; the seals' pads
+       black rubber with yellow guide stripes; the compound's lights red at shut docks, green at
+       the open one. The lip kept as it was (it already had its yellow-black edge). Tests first
+       (`test_docks.gd` 0/15, then 15/15); stills in `captures/audit/docks/after/`, shown beside
+       the Commons photos.
+     - **Prompts** (verbatim): "show me open ppicture" (the sheet opened in Preview), then "looks
+       right"; Claude Code ran the ten mutations (all exit 1) and every suite, then committed.
 
 ## Waiting for the author
 

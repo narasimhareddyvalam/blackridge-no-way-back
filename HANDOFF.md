@@ -1,5 +1,19 @@
 # HANDOFF.md
 
+**This run (2026-11-21, Mission 2's audit, the docks, #352):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  docks (#352), built)". Files: `dock_dressing.gd` (new), `transfer_building.gd`, `warehouse.gd`,
+  `game/tests/test_docks.gd` (new), `tools/captures/capture_docks.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/docks/g2 scripts/run-test.sh test_docks.gd
+  60` exit 0, 15/15; mutations (`python3 -I
+  logs/phase_2/realism/docks/mutations/mutations_docks.py <scratch> <out>`): ten exit 1. Suites:
+  `bash logs/phase_2/realism/docks/suites/run_suites.sh <scratch>`: 62 runs exit 0, no script
+  or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** the compound gate's light at night, the look-up rain, the run sheet handover; then
+  steps 6 and 7, then a Mission 3 brief.
+- **Unverified:** the number plates are too small to read from the far end of the shed's row
+  (clear in the close stills).
+
 **This run (2026-11-20, Mission 2's audit, the container yard, #351):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
   container yard (#351), built)". Files: `container_yard.gd`, `art/container_yard/`

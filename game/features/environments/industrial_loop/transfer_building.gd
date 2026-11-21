@@ -21,6 +21,7 @@ const ShedFloor = preload("shed_floor.gd")
 const ShedFitout = preload("shed_fitout.gd")
 const ShedKit = preload("shed_kit.gd")
 const ShedSounds = preload("shed_sounds.gd")
+const Dressing = preload("dock_dressing.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const SHUTTERS := "res://features/environments/depot_yard/polyhaven/models/rollershutter_door/"
 const BUILDING := Rect2(-90.0, -10.0, 50.0, 30.0)
@@ -395,6 +396,7 @@ func _fittings() -> void:
 		pads.name = "DockSeal%d" % (index + 1)
 		pads.position = Vector3(x, SEAL_BASE, BUILDING.end.y)
 		add_child(pads)
+		Dressing.seal(pads)
 		var size := VAN_BUMPER if van_bay else BUMPER
 		var off := VAN_BUMPER_OFF if van_bay else BUMPER_OFF
 		var top := VAN_SILL if van_bay else DOCK_FLOOR
@@ -448,9 +450,11 @@ func _lights() -> void:
 func _signals() -> void:
 	var body := Build.material(Color(0.08, 0.08, 0.08), 0.6)
 	for index in range(DOCKS.size() + 1):
-		var housing := _signal("DockSignal%d" % (index + 1), Vector3(_dock_x(index) + SIGNAL_OFF,
-			SIGNAL_HEIGHT, BUILDING.end.y + 0.05), body)
+		var at := Vector3(_dock_x(index) + SIGNAL_OFF, SIGNAL_HEIGHT, BUILDING.end.y + 0.07)
+		var housing := Dressing.traffic_light(self, "DockSignal%d" % (index + 1), at, _red_off,
+			_green_off)
 		_show(housing, OPEN_DOCKS.has(index))
+		Dressing.caution_sign(self, index + 1, at)
 	for index in range(DOCKS.size()):
 		var shut := _signal("DockSignalInside%d" % (index + 1), Vector3(DOCKS[index]
 			+ INSIDE_PIER, DOCK_FLOOR + INSIDE_SIGNAL.y, BUILDING.end.y - WALL - 0.05), body)
@@ -553,6 +557,8 @@ func _doors() -> void:
 		var open := OPEN_DOCKS.has(index)
 		var door := _door("DockDoor%d" % (index + 1), DockDoor.instantiate() as Node3D,
 			Vector3(_dock_x(index), DOCK_FLOOR, face), DOCK_OPENING, not open)
+		Dressing.door(door, index + 1)
+		Dressing.plate(self, index + 1, _dock_x(index), DOCK_FLOOR, BUILDING.end.y)
 		if open:
 			_raise(door, DOCK_OPENING.y)
 			_camera_wall(index)

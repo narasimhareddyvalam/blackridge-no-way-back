@@ -1,0 +1,36 @@
+d1  no plates over the shed's doors test_docks.gd exit 1, 14/15 passed; 1 failed
+      FAIL: D1 (shed): each of 9 doors numbered on a plate above it and painted on its door (wrong: ["1", "2", "3", "4", "
+d2  no number painted on the doors test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D1 (shed): each of 9 doors numbered on a plate above it and painted on its door (wrong: ["1", "2", "3", "4", "
+      FAIL: D1 (WarehouseWest): each of 6 doors numbered on a plate above it and painted on its door (wrong: ["1", "2", "3
+      FAIL: D1 (WarehouseEast): each of 7 doors numbered on a plate above it and painted on its door (wrong: ["1", "2", "3
+d3  a band half the door wide      test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D2 (shed): a hi-vis band along each door's bottom (wrong: ["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+      FAIL: D2 (WarehouseWest): a hi-vis band along each door's bottom (wrong: ["1", "2", "3", "4", "5", "6"])
+      FAIL: D2 (WarehouseEast): a hi-vis band along each door's bottom (wrong: ["1", "2", "3", "4", "5", "6", "7"])
+d4  the old small lenses           test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D3 (shed): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.7 m up (w
+      FAIL: D3 (WarehouseWest): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+      FAIL: D3 (WarehouseEast): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+d5  green over red                 test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D3 (shed): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.7 m up (w
+      FAIL: D3 (WarehouseWest): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+      FAIL: D3 (WarehouseEast): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+d6  no visors                      test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D3 (shed): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.7 m up (w
+      FAIL: D3 (WarehouseWest): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+      FAIL: D3 (WarehouseEast): a hooded red-over-green traffic light beside each door, its lenses 0.15 m at least, 1.8-2.
+d7  no signs at the compound       test_docks.gd exit 1, 13/15 passed; 2 failed
+      FAIL: D4 (WarehouseWest): its caution sign by each light, "BACK IN OR PULL OUT ON GREEN LIGHT ONLY" (wrong: ["1", "2
+      FAIL: D4 (WarehouseEast): its caution sign by each light, "BACK IN OR PULL OUT ON GREEN LIGHT ONLY" (wrong: ["1", "2
+d8  the sign's words wrong         test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D4 (shed): its caution sign by each light, "BACK IN OR PULL OUT ON GREEN LIGHT ONLY" (wrong: ["1", "2", "3", "
+      FAIL: D4 (WarehouseWest): its caution sign by each light, "BACK IN OR PULL OUT ON GREEN LIGHT ONLY" (wrong: ["1", "2
+      FAIL: D4 (WarehouseEast): its caution sign by each light, "BACK IN OR PULL OUT ON GREEN LIGHT ONLY" (wrong: ["1", "2
+d9  the compound's seals left grey test_docks.gd exit 1, 13/15 passed; 2 failed
+      FAIL: D5 (WarehouseWest): its seals' pads black rubber with yellow guide stripes (6 seals)
+      FAIL: D5 (WarehouseEast): its seals' pads black rubber with yellow guide stripes (7 seals)
+d10  the guide stripes black        test_docks.gd exit 1, 12/15 passed; 3 failed
+      FAIL: D5 (shed): its seals' pads black rubber with yellow guide stripes (9 seals)
+      FAIL: D5 (WarehouseWest): its seals' pads black rubber with yellow guide stripes (6 seals)
+      FAIL: D5 (WarehouseEast): its seals' pads black rubber with yellow guide stripes (7 seals)

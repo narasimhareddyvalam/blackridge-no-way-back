@@ -8444,3 +8444,27 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   `test_container_yard.gd` 17/17; `test_menus.gd` 20/20 (jinjinjin and Barlow credited). Eight
   mutations exit 1 (`logs/phase_2/realism/yard/mutations/`). Stills `captures/audit/yard/after/`.
 - **Not done:** a reach stacker (the author: "its okay for now"); taller stacks (not chosen).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the docks (#352), built)
+
+- **Found (Commons photos beside our stills, `captures/audit/docks/before/`):** seals, bumpers,
+  guides, wall lights and a striped leveller were there; but no door number outside (only inside,
+  over bays 8 and 9), one traffic light at bay 9 only (green, no red; none at the compound), no
+  signs, plain doors (no number, no hi-vis band), the seals flat grey-white blocks.
+- **Built (the author's "Traffic lights + signs", "Door numbers outside", "Door and lip
+  details", built rather than ready-made):** `dock_dressing.gd` (new), shared by the transfer
+  shed's 9 docks and the compound's 13 (`transfer_building.gd`, `warehouse.gd`):
+  - each door's number on a white plate 1 m over its opening, and painted 0.95 m up its panel,
+    under its windows; a hi-vis band of orange and white diagonal stripes (the retroreflector
+    shader) along its bottom; both on the door's model, so they rise with an open door;
+  - a hooded red-over-green traffic light (170 mm lenses under visors) beside each door, 2.4 m up,
+    with its yellow caution sign under it ("CAUTION BACK IN OR PULL OUT ON GREEN LIGHT ONLY"),
+    both on wall brackets standing them clear of the seals' pads (the wall between neighbouring
+    seals is 0.19 m); the shed's lit as before (green at a free open dock); the compound's red at
+    its shut docks and green at its open one, red once a van docks there;
+  - the seals' pads black matt rubber, their guide stripes yellow.
+  - The leveller's lip kept as it was: it already had its yellow-black edge.
+- **Tested:** `test_docks.gd` (new) 0/15 then 15/15 (per house: plates and painted numbers, bands,
+  lights, signs, seals). Ten mutations exit 1 (`logs/phase_2/realism/docks/mutations/`). Stills
+  `captures/audit/docks/after/`; the author: "looks right".
+- **Not done:** vehicle restraints or chocks, and the lip's chequer plate (not chosen).

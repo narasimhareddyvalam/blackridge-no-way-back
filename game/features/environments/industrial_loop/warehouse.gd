@@ -17,6 +17,7 @@ extends Node3D
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Staging = preload("dock_staging.gd")
+const Dressing = preload("dock_dressing.gd")
 const DockDoor = preload("res://features/environments/industrial_loop/art/depot/dock_door.glb")
 const ART := "res://features/environments/industrial_loop/art/depot/"
 const TEXTURES := "res://features/environments/depot_yard/polyhaven/textures/"
@@ -34,7 +35,6 @@ const BUMPER := Vector3(0.25, 0.45, 0.13)
 const BUMPER_OFF := 1.1
 const SIGNAL_OFF := 2.0
 const SIGNAL_HEIGHT := 2.4
-const NUMBER_ABOVE := 0.35
 const PACK_HEIGHT := 6.5
 const PACK_LIGHT := Color(0.95, 0.97, 1.0)
 ## Each dock's light over its door, as the shed's (`transfer_building.gd`'s `_lights`).
@@ -285,6 +285,7 @@ func _docks() -> void:
 		holder.position = Vector3(x, DOCK_FLOOR, face)
 		add_child(holder)
 		holder.add_child(DockDoor.instantiate())
+		Dressing.door(holder, index + 1)
 		if index == _open:
 			_raise(holder)
 		var shape := BoxShape3D.new()
@@ -304,25 +305,18 @@ func _docks() -> void:
 		pads.name = "DockSeal%d" % (index + 1)
 		pads.position = Vector3(x, SEAL_BASE, rect.end.y)
 		add_child(pads)
+		Dressing.seal(pads)
 		for side: float in [-1.0, 1.0]:
 			var at := Vector3(x + side * BUMPER_OFF, DOCK_FLOOR - BUMPER.y / 2.0,
 				rect.end.y + BUMPER.z / 2.0)
 			Build.box(self, at, BUMPER, rubber).name = "DockBumper"
 			_solid(at, BUMPER)
-		var lamp := Node3D.new()
-		lamp.name = "DockSignal%d" % (index + 1)
-		lamp.position = Vector3(x + SIGNAL_OFF, SIGNAL_HEIGHT, rect.end.y + 0.05)
-		add_child(lamp)
-		Build.box(lamp, Vector3.ZERO, Vector3(0.16, 0.4, 0.1), housing).name = "Housing"
-		Build.box(lamp, Vector3(0.0, 0.09, 0.055), Vector3(0.1, 0.1, 0.02), _red_off).name = \
-			"Red"
-		Build.box(lamp, Vector3(0.0, -0.09, 0.055), Vector3(0.1, 0.1, 0.02), _green_on).name = \
-			"Green"
-		var number := Build.text(self, "%d" % (index + 1), Vector3(x, DOCK_FLOOR
-			+ DOCK_OPENING.y + NUMBER_ABOVE, rect.end.y + 0.02), 64, Color(0.93, 0.93, 0.9))
-		number.name = "DoorNumber"
-		number.shaded = true
-		number.double_sided = false
+		var at := Vector3(x + SIGNAL_OFF, SIGNAL_HEIGHT, rect.end.y + 0.07)
+		var open := index == _open
+		Dressing.traffic_light(self, "DockSignal%d" % (index + 1), at,
+			_red_off if open else _red_on, _green_on if open else _green_off)
+		Dressing.caution_sign(self, index + 1, at)
+		Dressing.plate(self, index + 1, x, DOCK_FLOOR, rect.end.y)
 		_dock_light(index, x, housing)
 
 

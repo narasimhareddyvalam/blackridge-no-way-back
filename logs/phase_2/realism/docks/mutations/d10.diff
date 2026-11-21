@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/dock_dressing.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutd/d10/game/features/environments/industrial_loop/dock_dressing.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/dock_dressing.gd	2026-11-21 09:56:40
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutd/d10/game/features/environments/industrial_loop/dock_dressing.gd	2026-11-21 10:05:42
+@@ -119,7 +119,7 @@
+ ## The seal's pads black rubber, scuffed matt, and their guide stripes yellow.
+ static func seal(pads: Node3D) -> void:
+ 	var rubber := Build.material(Color(0.035, 0.035, 0.035), 0.88)
+-	var stripe := Build.material(Color(0.95, 0.72, 0.06), 0.6)
++	var stripe := Build.material(Color(0.035, 0.035, 0.035), 0.88)
+ 	for mesh: MeshInstance3D in pads.find_children("*", "MeshInstance3D", true, false):
+ 		for surface in range(mesh.mesh.get_surface_count()):
+ 			mesh.set_surface_override_material(surface, stripe if surface == SEAL_STRIPE_SURFACE
