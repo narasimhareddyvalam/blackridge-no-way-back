@@ -4636,6 +4636,87 @@ tag `a5`. Pictures the author approved or rejected are filed in
        **prompts** (verbatim): "open it for me"; "commit it once suites pass, i like them. thats
        the detail i want for everything in my game, please remember to see pictures on internet
        to get better point of view and this is basic level i want when you do any work."
+     - **Done:** suites 58 runs exit 0; steps 2-4 committed (`5f25701`).
+
+348. **The audit goes on: the guard booths**
+     - **Asked** whether to start the rest of the audit with the guard booths (real photos first,
+       then stills of ours, findings before any build); **the author answered** "okay proceed".
+     - **Real booths** (supplier photos, scratchpad only, not filed: Delta Scientific, Panel
+       Built; the UK suppliers' pages refuse scripted fetches): a door, half glazed; framed
+       windows, the service window a framed sliding pane; a wall air conditioner; a lamp over the
+       door; a fascia with a drip edge; cameras by the booth; on a kerbed island with bollards.
+     - **Ours** (`captures/audit/booths/before/`, `tools/captures/capture_booths.gd`): no door on
+       any side; the glazing frameless but for corner posts, the service window no sliding pane;
+       bare inside (flat walls, no light fitting, no heater), the counter's phone a box; outside
+       no air conditioner, door lamp, camera, gutter or cable; the shed and the compound keep two
+       copies of the booth (`transfer_shed.gd`'s own and `guard_booth.gd`).
+     - **Asked** how to fix them (all five on one shared booth; the door and windows first; or
+       something else); **the author chose** "All five, one shared booth (Recommended)".
+     - **Built, not committed:** the shed uses `guard_booth.gd` (its copy dropped); a half-glazed
+       steel door 0.86 x 2.03 m on the west face, its frame, hinges, lever handles, kick plate and a
+       bulkhead lamp over it; every pane in an aluminium frame; the service window a fixed pane and
+       a sash on the gate side that slides 0.5 m open in its outer track while the guard checks the
+       sheet (both gates), and shut after; inside the LED panel's frame, a heater, a phone with its
+       handset and cord, a logbook open on ruled pages with a pen, a radio on its charger, a seam in
+       the lining; outside a through-wall air conditioner, a camera on a mast at the roof's corner
+       watching the lane, a fascia with a drip edge, a gutter and a downpipe to the plinth.
+       `test_booths.gd` (new) 0/6 then 11/11; `test_mission_two.gd` 57/57 (two new checks: the
+       window slid open during the check, shut after); `test_compound.gd` 10/10. Stills
+       `captures/audit/booths/after/`, beside the suppliers' photos.
+     - **Prompt** (verbatim): "also, the window is slidiing without the guard reaching the window
+       like bro?? you dumb? i told you how realistic i cwanted it to be?"
+     - **Asked** whether to build it so (she leans in, takes the sash's pull with her left hand
+       and slides it open, shut after her check, the sash moving only under her hand; her chair in
+       to the counter, the pull lowered; arm IK as the dock worker's; tests first; a film checked
+       frame by frame); **the author chose** "Yes, build it (Recommended)".
+     - **Built, not committed:** her chair pulled in to her own reach (each guard's shoulder 0.65 m
+       in), her lean as far as she needs (8 and 15 degrees), her left hand on the sash's pull by
+       a two-bone IK and `hand_turn.gd` (moved to `game/shared/components/`), the sash moving only
+       while her hand is on it; `test_booths.gd` 21/21 (B7-B11: her grip within 3 cm all the slide,
+       her elbow 81-117 degrees and below her reach, her wrist under 60, her hand at a person's pace,
+       she stays seated, her toes clear); five of six reach mutations exit 1 (no lean survives: her
+       chair in, she reaches without it). Film `captures/audit/booths/film/`.
+     - **Prompt** (verbatim), mid-run: "why is he looking at the same location, make the moment
+       look realisitc, maybe look at window when hes sliding and then he turns to look at the car
+       maybe something like that maybe. change the keyboard monitor with some already avilable
+       assets and make them more realistic. use mroe available assets inside the cabin."
+     - **Shown** a labelled sheet of ready-made models (Sketchfab CC-BY; Poly Haven CC0), each with
+       what it replaces and its faces. **Asked** the gaze (the driver as the van stops, his hand
+       while sliding, the driver as the sheet comes through, the logbook while checking, the pull
+       while shutting, a glance at the van leaving, his monitor); **the author chose** "Yes, that
+       (Recommended)". **Asked** which models; **the author chose** M1 + M3's keyboard, P1 + R1,
+       C1 + A1, and W, N, S, T, F. **Asked** to open Blender with the updated add-on for the
+       Sketchfab ones; **the author answered** "I'll open it now".
+     - **Built, not committed:** his gaze (his hand on the pull while sliding; the driver 1.5 s as
+       it opens and as it shuts; then where his gate has him look); Poly Haven's outdoor aircon
+       unit, box camera, wall clock, notepads, thermos and first-aid case (CC0,
+       `tools/assets/guard_booth_assets.json` → `art/booth/`) and the dock desk's pencil cup, each
+       set against its surface by its own size; `test_booths.gd` 25/25 (B12 gaze, B13 kit).
+     - **Prompts** (verbatim): "ok"; then, asked whether to run the add-on's update myself, "Yes,
+       run it (Recommended)": `uvx mcp-for-blender install-addon` installed it in Blender's
+       add-ons folder.
+     - **Done:** the Sketchfab kit imported in Blender (Dell P2314H monitor; the PC setup's keyboard
+       and mouse, sized by a 441 mm keyboard; a corded desk phone; a walkie-talkie; an indoor split
+       aircon head), each baked to its real size and exported to `art/booth/models/`; the dock
+       desk's task chair raised on a draughtsman's tall gas lift with a chrome foot ring (seat
+       0.64 m); the notepads as a tidy pad; B13 checks every counter item on the counter without
+       overlap; `test_booths.gd` 25/25, the gate 57/57; six mutations exit 1. Sheet and film shown.
+     - **Prompt** (verbatim): "the movement is not natural when hes looking at the van. make sure
+       the window slides where the van stops, the van window should match to cabin window."
+     - **Found:** the handover is allowed from 8.5 m before the arm to the arm itself, so the van
+       stops anywhere; the test hands it over against the arm, Ethan's window 2.6 m past the
+       booth's. **Asked** how to line them up; **the author chose** "Stop at the window
+       (Recommended)".
+     - **Built, not committed:** the service window a three-pane slider, its sash leaving 0.47 m
+       clear where the stop line puts Ethan's eye; E at each gate only with his eye within 0.4 m
+       of it, the objective saying to pull up or back up level with the guard's window; the guard
+       seated facing the opening; his hand aimed from his forearm; his shoulders turning a third of
+       the way, his head held to a neck's 70 degrees; the counter before the opening kept clear;
+       "WAIT FOR THE BARRIER" while the arm rises. `test_booths.gd` 31/31 (B14-B16),
+       `test_mission_two.gd` 61/61, `test_compound.gd` 10/10. Film from Ethan's seat
+       (`captures/audit/booths/film/gate_handover_from_seat.mp4`) shown.
+     - **Prompt** (verbatim): "looks good." **Asked** whether to finish (mutations, every suite,
+       the credits and records, one commit); **the author chose** "Suites + commit (Recommended)".
 
 ## Waiting for the author
 

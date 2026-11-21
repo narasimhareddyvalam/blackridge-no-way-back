@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: B1: the shed's and the compound's booths are one booth (guard_booth.gd)
+PASS: B2 (shed): a half-glazed door 0.86 x 2.03 m on the face away from the lane (-1.00), its handle 1.00 m up
+PASS: B3 (shed): every pane in an aluminium frame of head, sill and jambs 35-75 mm across (6 of 6)
+PASS: B4 (shed): the service window slides 0.50 m along its track, staying in it, and shuts again
+PASS: B7 (shed): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pull (0.0 cm at most), her hand on it before it starts
+PASS: B8 (shed): sliding it her elbow bends 81-109 degrees, hangs below her reach (-0.02 m at most above it) and her wrist turns 53 degrees at most
+FAIL: B11 (shed): her hand moves at a person's pace, 9.5 m/s at most
+PASS: B10 (shed): her chair in as a person pulls hers in, so she leans only 8 degrees to reach, her toes 0.32 m clear of the front wall
+PASS: B9 (shed): she stays seated and lets go after (her grip 0.66 m from the pull at the end)
+PASS: B5 (shed): inside, the LED panel's frame, a heater, a phone and its handset, a logbook with ruled pages and a radio (missing [])
+PASS: B6 (shed): outside, an air conditioner 0.30 m out of the wall, a lamp over the door (true), a camera on the roof's corner watching the lane (true), a downpipe from the roof (true) and a fascia (true)
+PASS: B2 (compound): a half-glazed door 0.86 x 2.03 m on the face away from the lane (-1.00), its handle 1.00 m up
+PASS: B3 (compound): every pane in an aluminium frame of head, sill and jambs 35-75 mm across (6 of 6)
+PASS: B4 (compound): the service window slides 0.50 m along its track, staying in it, and shuts again
+PASS: B7 (compound): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pull (0.0 cm at most), her hand on it before it starts
+PASS: B8 (compound): sliding it her elbow bends 87-116 degrees, hangs below her reach (-0.01 m at most above it) and her wrist turns 50 degrees at most
+FAIL: B11 (compound): her hand moves at a person's pace, 10.4 m/s at most
+PASS: B10 (compound): her chair in as a person pulls hers in, so she leans only 15 degrees to reach, her toes 0.11 m clear of the front wall
+PASS: B9 (compound): she stays seated and lets go after (her grip 0.69 m from the pull at the end)
+PASS: B5 (compound): inside, the LED panel's frame, a heater, a phone and its handset, a logbook with ruled pages and a radio (missing [])
+PASS: B6 (compound): outside, an air conditioner 0.30 m out of the wall, a lamp over the door (true), a camera on the roof's corner watching the lane (true), a downpipe from the roof (true) and a fascia (true)
+BOOTHS RESULT: 19/21 passed; 2 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_booths.gd:58)
+WARNING: 32 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

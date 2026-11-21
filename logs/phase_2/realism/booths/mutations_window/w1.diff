@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb5/w1/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 20:09:52
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb5/w1/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 20:13:30
+@@ -39,7 +39,7 @@
+ ## centred OPENING_AT along the booth, where the gates' stop line puts a van driver's eye (the
+ ## booth 1.9 m behind the line, the driver's eye 1.8 m behind his front).
+ const OPENING := 0.52
+-const OPENING_AT := -0.1
++const OPENING_AT := 0.35
+ const SASH_SLIDE := OPENING
+ const SASH_SPEED := 0.4
+ const SASH_OUT := 0.035

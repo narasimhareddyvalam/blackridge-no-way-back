@@ -538,6 +538,14 @@ func _credits_text() -> String:
 		+ "FFeller and \"Euro pallet photoscanned\" by widthRider, licensed CC BY 4.0: the "
 		+ "forklift, the pallet jack and the pallets inside the docks. \"Office Chair\" by Red "
 		+ "Fox (Sketchfab: nokillnando), licensed CC BY 4.0: the dock worker's chair at bay 9.")
+	_section(lines, "THE GATEHOUSES", "\"Monitor Dell P2314H\" by GregorJan (Sketchfab: "
+		+ "login166), the keyboard and mouse of \"PC Setup - Game Ready\" by Melon Polygons, "
+		+ "\"Corded Phone With Buttons\" by dudecon, \"Walkie Talkie\" by barism09 and \"Indoor "
+		+ "air conditioner unit\" by Rylae Shylna (Sketchfab: risteralline), licensed CC BY 4.0: "
+		+ "the guards' monitors, keyboards, phones, radios and air conditioners, each sized as the "
+		+ "real thing. The guards' chairs are Red Fox's \"Office Chair\" on a draughtsman's tall "
+		+ "gas lift and foot ring, added for this game. Blackridge is not affiliated with Dell or "
+		+ "Kenwood.")
 	_section(lines, "THE YARD AT NIGHT", "\"Semi Truck 1980\" by Brian Trepanier (Sketchfab: "
 		+ "CMBC), \"Truck Trailer FREE\" by NLM (Sketchfab: NLM-Group), \"LCT 3000 '95 - Low poly "
 		+ "model\" by Daniel Zhabotinsky and \"dumpster\" by YJ_, licensed CC BY 4.0: the yard's "

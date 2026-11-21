@@ -1,5 +1,25 @@
 # HANDOFF.md
 
+**This run (2026-11-20, Mission 2's audit, the guard booths, #348):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  guard booths (#348), built)". Files: `guard_booth.gd`, `guard_lean.gd` (new),
+  `game/shared/components/hand_turn.gd` (moved from the dock worker's folder),
+  `transfer_shed.gd`, `compound.gd`, `the_wrong_cargo.gd`, `front_menu.gd` (credits),
+  `art/booth/` (new: Poly Haven and Sketchfab models, `POLYHAVEN.md`, `ATTRIBUTION.md`),
+  `tools/assets/guard_booth_assets.json`, `source_assets/sketchfab/19_..23_` READMEs,
+  `game/tests/test_booths.gd` (new), `test_mission_two.gd`, `test_menus.gd`,
+  `tools/captures/capture_booths.gd`, `film_booth_window.gd`, `film_gate_handover.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/booths/green14 scripts/run-test.sh
+  test_booths.gd 60` exit 0, 31/31; `test_mission_two.gd` 61/61; `test_compound.gd` 10/10;
+  `test_menus.gd` 20/20 (`booths/green15`). Mutations: `booths/mutations*/` all exit 1 but r4.
+  Suites: `bash logs/phase_2/realism/booths/suites/run_suites.sh <scratch>`: 59 runs exit 0, no
+  script or shader errors, art check 0 failures (`suites/SUMMARY.txt`; the gate test's logs carry
+  the known missing plank texture). Committed on `develop` (not pushed).
+- **Blender:** the MCP add-on updated to 2.0 (`uvx mcp-for-blender install-addon`, the author's
+  OK); libraries are switched per scene, so imports go in Blender's default scene.
+- **Next:** the audit's gates, then the container yard, the docks, the rest; then step 6.
+- **Unverified:** the run sheet does not visibly pass between them (not built).
+
 **This run (2026-11-20, #330: rain in the cab and the passenger wiper's water, #345; the
 windshield's water planned, #346):**
 - **Found** (two window runs at the author's OK, `tools/captures/capture_330.gd`, stills in

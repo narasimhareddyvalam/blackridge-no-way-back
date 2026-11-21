@@ -8358,3 +8358,36 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
 - **Tested:** `test_windshield_water.gd` 11/14 then 14/14: the four uniforms and their values
   (smear 1-3%, ridge 6-12 mm and brighter than a drop, ripple 0.3-0.5%); five mutations exit 1.
   The looks are checked by stills (`captures/windshield/step2/`), not by a headless test.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the guard booths (#348), built)
+
+- **Found (suppliers' photos beside our stills, `captures/audit/booths/before/`):** no door on any
+  side; frameless glass; a bare inside and outside; two copies of the booth (the shed's own and
+  `guard_booth.gd`). Then, from the author's looks: the window sliding with no hand on it; his head
+  fixed on one place; box props; and the handover allowed from 8.5 m before the arm to the arm
+  itself, Ethan's window 2.6 m past the guard's.
+- **Built (the author's "All five, one shared booth", "Yes, build it", "Yes, that", the props
+  chosen from a labelled sheet, "Stop at the window"):**
+  - one booth for both gates (`guard_booth.gd`; the shed's copy dropped);
+  - a half-glazed steel door (0.86 x 2.03 m) with frame, hinges, lever handles, kick plate and a
+    lamp; every pane in an aluminium frame; a fascia with a drip edge, gutter and downpipe;
+  - the service window a three-pane slider whose sash leaves 0.47 m clear where the stop line
+    puts Ethan's eye; the guard, seated facing it, leans in only as far as he needs, takes its
+    pull with his left hand (two-bone IK, `hand_turn.gd` now in `game/shared/components/`) and
+    slides it, the sash moving only under his hand, while he checks the sheet, and shut after;
+  - his gaze: his hand while sliding, the driver as it opens and as it shuts, else where his gate
+    has him look; his shoulders taking a third of a turn, his head held to a neck's 70 degrees;
+  - real models (Poly Haven CC0: outdoor aircon unit, box camera, wall clock, notepads, thermos,
+    first-aid case, the dock desk's pencil cup; Sketchfab CC BY: Dell P2314H monitor showing the
+    cameras, a keyboard and mouse, a corded phone, a walkie-talkie in its charger, a split aircon
+    head; the dock desk's task chair on a draughtsman's lift and foot ring), each sized as the
+    real thing and set by its own size; the counter before the open window kept clear;
+  - E at each gate only with Ethan's eye within 0.4 m of the opening, the objective saying to
+    pull up or back up level with the guard's window; "WAIT FOR THE BARRIER" while the arm rises.
+- **Tested:** `test_booths.gd` (new) 31/31 (B1-B16); `test_mission_two.gd` 61/61 (the window
+  open during the check and shut after, E refused at the arm, the windows level, the barrier's
+  wait); `test_compound.gd` 10/10; `test_menus.gd` 20/20 (the five new authors credited). Mutations
+  (`logs/phase_2/realism/booths/mutations*/`): all exit 1 but "no lean" (the chair in, he reaches
+  without it). Films and stills in `captures/audit/booths/`; the window line-up and the guard's
+  reach filmed from Ethan's seat (`film/gate_handover_from_seat.mp4`).
+- **Not built:** the run sheet itself passing from Ethan's hand to the guard's.

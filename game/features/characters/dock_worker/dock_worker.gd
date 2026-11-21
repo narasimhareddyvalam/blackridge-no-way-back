@@ -223,7 +223,7 @@ const RIGHT_GRIP := Transform3D(Basis(Vector3(-1, 0, 0), Vector3(0, 1, 0), Vecto
 const EDGE_GRIP := Transform3D(Basis(Vector3(-1, 0, 0), Vector3(0, -1, 0), Vector3(0, 0, 1)),
 	Vector3(0.174, 0.035, 0.0))
 const POLES := {"L": Vector3(0.5, 0.6, -0.4), "R": Vector3(-0.5, 0.6, -0.4)}
-const HAND_TURN := preload("res://features/characters/dock_worker/hand_turn.gd")
+const HAND_TURN := preload("res://shared/components/hand_turn.gd")
 
 var home := true
 ## How far the van's rear is from the dock's bumpers (bay 9's `clearance()`): he goes out to seal

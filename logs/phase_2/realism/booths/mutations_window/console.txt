@@ -1,0 +1,31 @@
+w1  the opening away from the driver's window test_booths.gd exit 1, 23/31 passed; 8 failed
+      FAIL: B7 (shed): the sash moves only under her left hand: over 156 moving ticks her grip never 3 cm from its pull (2
+      FAIL: B8 (shed): sliding it her elbow bends 80-180 degrees, hangs below her reach (0.00 m at most above it) and her 
+      FAIL: B10 (shed): her chair in as a person pulls hers in, so she leans only 34 degrees to reach, her toes 0.32 m cle
+      FAIL: B16 (shed): the counter before the open window is kept clear, where the sheet passes (in the way: ["Thermos", 
+      FAIL: B7 (compound): the sash moves only under her left hand: over 156 moving ticks her grip never 3 cm from its pul
+      FAIL: B8 (compound): sliding it her elbow bends 94-180 degrees, hangs below her reach (0.00 m at most above it) and 
+      FAIL: B10 (compound): her chair in as a person pulls hers in, so she leans only 34 degrees to reach, her toes 0.11 m
+      FAIL: B16 (compound): the counter before the open window is kept clear, where the sheet passes (in the way: ["Thermo
+    test_mission_two.gd exit 1, 53/61 passed; 8 failed
+      FAIL: E at the gate hands the guard the run sheet instead of leaving the van; the barrier waits for the guard's chec
+      FAIL: E lowers the driver's window, because the sheet goes through it (0.00 open)
+      FAIL: While she checks the sheet the guard has slid her window open (0.00 m), as a gatehouse's sash is
+      FAIL: Stopped at the line, the booth's open window is level with Ethan's: 0.15 m of the opening beside his window's 
+      FAIL: While the arm rises after her check the objective says to wait for it, not to stop and press E again ()
+      FAIL: After the check the barrier is up within 8 s
+      FAIL: The van drives through the gate: its rear -8.03 m past the arm
+      FAIL: Once the barrier is up, the window that went down goes back up (0.00 open)
+w2  the sheet taken from anywhere at the gate test_mission_two.gd exit 1, 60/61 passed; 1 failed
+      FAIL: There, E offers the guard nothing: she cannot reach a window 2.6 m past hers
+w3  his shoulders never turning    test_booths.gd exit 1, 29/31 passed; 2 failed
+      FAIL: B15 (shed): turning to the driver beside him his body turns too (0 degrees), his head no further than a neck t
+      FAIL: B15 (compound): turning to the driver beside him his body turns too (0 degrees), his head no further than a ne
+w4  his head turning further than a neck test_booths.gd exit 1, 29/31 passed; 2 failed
+      FAIL: B15 (shed): turning to the driver beside him his body turns too (31 degrees), his head no further than a neck 
+      FAIL: B15 (compound): turning to the driver beside him his body turns too (31 degrees), his head no further than a n
+w5  the thermos before the open window test_booths.gd exit 1, 29/31 passed; 2 failed
+      FAIL: B16 (shed): the counter before the open window is kept clear, where the sheet passes (in the way: ["Thermos"])
+      FAIL: B16 (compound): the counter before the open window is kept clear, where the sheet passes (in the way: ["Thermo
+w6  no wait while the arm rises    test_mission_two.gd exit 1, 60/61 passed; 1 failed
+      FAIL: While the arm rises after her check the objective says to wait for it, not to stop and press E again (STOP AT 

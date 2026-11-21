@@ -38,6 +38,7 @@ const GATE_SPEED := 0.6
 const CLEAR_BEHIND := 2.0
 const DRIVEWAY := Rect2(194.5, 146.0, 8.5, 23.5)
 const STOP_LINE_OUT := 2.5
+const WINDOW_REACH := 0.4
 const SWEEP_HALF_DEPTH := 0.3
 const CHECK_SECONDS := 3.0
 const STOPPED_SPEED := 0.5
@@ -82,6 +83,7 @@ const DUMPSTER_BOX := Vector3(1.75, 1.54, 4.36)
 var vehicle: CharacterBody3D
 var driver_eye: Node3D
 var booth: Node3D
+var _window_open := false
 var judge: Node
 
 var _fence_runs: Array = []
@@ -201,6 +203,20 @@ func vehicle_near() -> bool:
 
 
 ## Whether the van's front is at the booth's line, in the lane.
+## Whether the van's driver is level with the booth's service opening, within WINDOW_REACH along
+## the lane (#348).
+func vehicle_at_window() -> bool:
+	return vehicle_at_booth() and absf(window_gap()) <= WINDOW_REACH
+
+
+## How far the driver's eye is from the booth's opening along the lane (positive: he has yet to
+## reach it; negative: he is past it).
+func window_gap() -> float:
+	if not is_instance_valid(driver_eye) or booth == null:
+		return INF
+	return driver_eye.global_position.z - (booth.call("opening_centre") as Vector3).z
+
+
 func vehicle_at_booth() -> bool:
 	if not is_instance_valid(vehicle):
 		return false
@@ -249,7 +265,11 @@ func _physics_process(delta: float) -> void:
 		_window_down = false
 		vehicle.set("left_window_target", 0.0)
 	if booth != null:
+		booth.set("driver", driver_eye)
 		booth.call("look_at_point", _gaze())
+		if checking() != _window_open:
+			_window_open = checking()
+			booth.call("open_window", _window_open)
 
 
 func _gaze() -> Vector3:

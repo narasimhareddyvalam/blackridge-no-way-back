@@ -26,6 +26,7 @@ const MISSES := {
 }
 const MEASURES := {"fast": "arrived", "far": "gap", "crooked": "angle", "off_centre": "offset"}
 const CLEAR_OF_DOCK := 2.5
+const WINDOW_REACH := 0.4
 const SEAL_NUMBER := "4182260"
 const LOADED_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14))
 ## Where the dark van waits in the container yard, nose to the gate (`container_yard.gd`).
@@ -101,12 +102,12 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 
 func wants_interact() -> bool:
 	if active and stage == 2 and compound != null:
-		return bool(compound.call("vehicle_at_booth")) and bool(compound.call("gate_shut")) \
+		return bool(compound.call("vehicle_at_window")) and bool(compound.call("gate_shut")) \
 			and not bool(compound.call("checking"))
 	if active and stage == 1 and yard != null:
 		return bool(yard.call("vehicle_at_stop")) and bool(yard.call("gate_shut")) \
 			and not bool(yard.call("keying"))
-	return active and stage == 0 and shed != null and shed.vehicle_at_stop() \
+	return active and stage == 0 and shed != null and shed.vehicle_at_window() \
 		and not shed.barrier_open() and not shed.checking()
 
 
@@ -325,6 +326,16 @@ func _to_the_yard() -> Array[String]:
 		"Back down the spur, then east on the valley road; the yard's gate is on the left."]
 
 
+## At a gate, how to bring Ethan's window level with the guard's (#348): `gap` his eye's distance
+## to the booth's opening along the lane, positive before it, negative past it.
+func _to_window(gap: float) -> String:
+	if absf(gap) <= WINDOW_REACH:
+		return "Stop here, level with the guard's window, then press E to hand the guard the run sheet."
+	if gap > 0.0:
+		return "Pull up level with the guard's window, then press E to hand the guard the run sheet."
+	return "Back up level with the guard's window, then press E to hand the guard the run sheet."
+
+
 ## The objective from the swap to the loading bay (step 5; its words drafts for the author, S3).
 func _to_the_compound() -> Array[String]:
 	if yard != null and bool(yard.call("exiting")) and not bool(yard.call("gate_open")):
@@ -350,8 +361,7 @@ func _to_the_compound() -> Array[String]:
 	if not bool(compound.call("gate_shut")):
 		return ["WAIT FOR THE GATE", "The gate is sliding open."]
 	if bool(compound.call("vehicle_near")):
-		return ["STOP AT THE BOOTH",
-			"Stop at the line, then press E to hand the guard the run sheet."]
+		return ["STOP AT THE BOOTH", _to_window(float(compound.call("window_gap")))]
 	return ["DRIVE TO THE WAREHOUSE COMPOUND",
 		"Out of the yard and east on the valley road; the compound's gate is on the left."]
 
@@ -446,12 +456,15 @@ func _update_objective() -> void:
 		elif shed.checking():
 			title = "WAIT AT THE GATE"
 			detail = "The guard is checking the run sheet."
+		elif shed.barrier_rising():
+			title = "WAIT FOR THE BARRIER"
+			detail = "The barrier is rising."
 		elif shed.barrier_open():
 			title = "DRIVE THROUGH THE GATE"
 			detail = "The barrier is up."
 		elif shed.vehicle_near():
 			title = "STOP AT THE GATE"
-			detail = "Stop at the line, then press E to hand the guard the run sheet."
+			detail = _to_window(shed.window_gap())
 		else:
 			title = "DRIVE TO THE TRANSFER SHED"
 			detail = "Take the spur north off the valley road, just west of the depot."

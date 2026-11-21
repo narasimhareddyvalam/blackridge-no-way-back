@@ -181,8 +181,20 @@ func _check_gate() -> void:
 	_check(_objective() == "STOP AT THE GATE" and _detail().contains("E"),
 		"At the gate the objective asks for a stop and names E (%s: %s)" % [_objective(),
 		_detail()])
-	var window := shed.get_node_or_null("GuardBooth/ServiceWindow") as Node3D
 	var line_z: float = gate_z + float(shed.get("STOP_LINE_OUT"))
+	_check(_detail().to_lower().contains("back up") and _detail().to_lower().contains("window"),
+		("Against the arm, Ethan's window is past the booth's, and the objective says to back up "
+		+ "level with it (%s)") % _detail())
+	var mission: Node = null
+	for node in _app.find_children("*", "Node", true, false):
+		var script := node.get_script() as Script
+		if script != null and script.resource_path == CARGO:
+			mission = node
+	_check(mission != null and not bool(mission.call("wants_interact")),
+		"There, E offers the guard nothing: she cannot reach a window 2.6 m past hers")
+	_van.call("recover", Transform3D(Basis.IDENTITY, Vector3(lane_x, 0.1, line_z - VAN_FRONT.z)))
+	await _seconds(0.5)
+	var window := shed.get_node_or_null("GuardBooth/ServiceWindow") as Node3D
 	var along := INF
 	var gap := INF
 	if window != null and eye != null:
@@ -214,6 +226,7 @@ func _check_gate() -> void:
 		look = rad_to_deg(forward.angle_to(eye.global_position - _head_pose.origin))
 	_check(look < 25.0, "Within a second of the stop the guard looks at Ethan (%.0f° off his eye)"
 		% look)
+	var shut_z := window.position.z if window != null else 0.0
 	await _key(KEY_E)
 	await _seconds(1.0)
 	_check(bool(_van.get("occupied")) and not bool(shed.call("barrier_open")),
@@ -223,9 +236,31 @@ func _check_gate() -> void:
 	var lowered := float(_van.get("left_window"))
 	_check(lowered > 0.9, "E lowers the driver's window, because the sheet goes through it "
 		+ "(%.2f open)" % lowered)
-	await _seconds(6.5)
+	var slid := absf(window.position.z - shut_z) if window != null else 0.0
+	_check(slid >= 0.4, ("While she checks the sheet the guard has slid her window open (%.2f m), "
+		+ "as a gatehouse's sash is") % slid)
+	var booth_node := shed.get_node_or_null("GuardBooth")
+	var opening: Vector2 = booth_node.call("opening_span") if booth_node != null \
+		and booth_node.has_method("opening_span") else Vector2.ZERO
+	var glass := _van.find_child("DriverWindow", true, false) as MeshInstance3D
+	var pane := glass.global_transform * glass.get_aabb() if glass != null else AABB()
+	var overlap := minf(opening.y, pane.end.z) - maxf(opening.x, pane.position.z)
+	var eye_z := eye.global_position.z if eye != null else INF
+	_check(overlap >= 0.4 and eye_z >= opening.x and eye_z <= opening.y, ("Stopped at the line, "
+		+ "the booth's open window is level with Ethan's: %.2f m of the opening beside his "
+		+ "window's glass, his eye within it (%.2f to %.2f, his eye %.2f)") % [overlap, opening.x,
+		opening.y, eye_z])
+	var rising_said := ""
+	for frame in range(int(6.5 * 60.0)):
+		await process_frame
+		if shed.has_method("barrier_rising") and bool(shed.call("barrier_rising")):
+			rising_said = _objective()
+	_check(rising_said == "WAIT FOR THE BARRIER", ("While the arm rises after her check the "
+		+ "objective says to wait for it, not to stop and press E again (%s)") % rising_said)
 	_check(bool(shed.call("barrier_open")),
 		"After the check the barrier is up within 8 s")
+	var closed := absf(window.position.z - shut_z) if window != null else INF
+	_check(closed < 0.01, "Her check done, the window slides shut again (%.3f m open)" % closed)
 	await _hold(KEY_W, 4.0)
 	var rear := _van.to_global(VAN_REAR).z
 	_check(rear < gate_z - 1.0, "The van drives through the gate: its rear %.2f m past the arm"
@@ -311,9 +346,9 @@ func _check_booth(shed: Node3D) -> Dictionary:
 	var sign := 1.0
 	if skeleton != null and chair != null:
 		var hips := _bone_at(skeleton, "Bip01 Pelvis")
-		var seat := chair.get_node_or_null("Seat") as MeshInstance3D
-		if seat != null and seat.mesh is BoxMesh:
-			above = hips.y - seat.global_position.y - (seat.mesh as BoxMesh).size.y / 2.0
+		var seat_top := chair.get_node_or_null("SeatTop") as Node3D
+		if seat_top != null:
+			above = hips.y - seat_top.global_position.y
 		var knees := (_bone_at(skeleton, "Bip01 L Calf") + _bone_at(skeleton, "Bip01 R Calf")) / 2.0
 		var facing := Vector3(knees.x - hips.x, 0.0, knees.z - hips.z)
 		if facing.length() > 0.01:

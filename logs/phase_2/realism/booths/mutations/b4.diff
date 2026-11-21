@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b4/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 18:58:54
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b4/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 19:01:01
+@@ -25,7 +25,7 @@
+ const POST := 0.08
+ ## An aluminium frame's face and depth; the door's leaf (UK 838 x 1981 mm, here 0.86 x 2.03 m) along
+ ## the west face, its vision panel and handle; the sash's slide and speed.
+-const FRAME := Vector2(0.05, 0.07)
++const FRAME := Vector2(0.02, 0.07)
+ const DOOR := Vector2(0.86, 2.03)
+ const DOOR_ALONG := 0.4
+ const VISION := Vector2(0.5, 0.7)

@@ -1,0 +1,11 @@
+{
+	"destination": "game/features/environments/industrial_loop/art/booth",
+	"models": {
+		"security_camera_01": "1k",
+		"exterior_aircon_unit": "1k",
+		"wall_clock": "1k",
+		"office_notepads": "1k",
+		"modified_thermos": "1k",
+		"medical_box": "1k"
+	}
+}

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b2/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 18:58:54
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b2/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 19:00:52
+@@ -120,7 +120,7 @@
+ 	var open_to := half - POST
+ 	var door_from := DOOR_ALONG - DOOR.x / 2.0 - FRAME.x
+ 	var door_to := DOOR_ALONG + DOOR.x / 2.0 + FRAME.x
+-	var west := normal.x < 0.0
++	var west := normal.x > 2.0
+ 	var lower_to := door_from if west else half
+ 	_panel(face, basis, -half, lower_to, PLINTH, SILL, wall, 0.0, WALL)
+ 	_panel(face, basis, -half, half, HEAD, SIZE.y, wall, 0.0, WALL)
