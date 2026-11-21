@@ -509,3 +509,19 @@ Claude Code wrote these revisions from that list.
   `captures/issue330/8_passenger_close_02.png` (before) and
   `captures/issue330/fixed/8_passenger_close_02.png` (after);
   mutations `logs/phase_2/realism/issue330/mutations/`.
+
+### 2026-11-21, revision 13 (Phase 2, #354): B1's drops drawn as a camera sees them (Claude Code, at the author's request)
+
+- **Found:** looking up into a lamp's rain, the streaks were long and pointed every way, and many
+  broke into dashes. `transform_align` turns each quad to the camera with its long side along
+  the drop's velocity projected flat onto the screen, at full length, so a drop falling at the eye
+  took its drift's noise for its direction; 1 pixel wide, a streak missed pixels.
+- **Changed:** the shared shader (`game/effects/scatter_particle.gdshader`) gains `camera_streak`,
+  `exposure`, `fall` and `stretch_per_speed`: each drop is drawn as the streak its fall leaves in
+  `exposure` s (0.025) along `fall` (the wind's slant), both ends seen in perspective, so a drop
+  falling at the eye is a dot and streaks meet at the point they fall from; `min_pixels` 1.0 →
+  1.6, its alpha thinned to match. Set in all five lamp-rain scenes; the A effects and B2 are
+  unchanged. `transform_align` stays 3 (the shader reads each drop's width and stretch from it).
+- **Evidence:** `test_lamp_rain_config.gd` 470/470 (450/470 before); five mutations exit 1
+  (`logs/phase_2/realism/rain/step1/mutations/`); stills `captures/audit/lookup/step1/`,
+  `captures/audit/rain/step1/` beside `before/`. Unpriced on the GPU until the mission's end.

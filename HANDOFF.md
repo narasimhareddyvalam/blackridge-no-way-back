@@ -1,5 +1,20 @@
 # HANDOFF.md
 
+**This run (2026-11-21, the rain as real rain at night, step 1, #354):**
+- **Built:** see `CHANGE-BRIEF.md` revision 13 and `docs/PHASE_BRIEF.md`, "Revision 2026-11-21
+  (Phase 2, the rain as real rain at night (#354), step 1 built)". Files:
+  `game/effects/scatter_particle.gdshader`, the five `game/effects/lamp_rain_*.tscn`,
+  `game/tests/test_lamp_rain_config.gd`, `tools/captures/capture_lookup.gd` and
+  `capture_rain_views.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 470/470. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step1/mutations/mutations_rain_step1.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step1/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 2, brightness and density in the light; then 3 (rain from the light, and the
+  compound's four volumes' slant), 4 (headlights), 5 (splashes). The author looks at the end.
+- **Unverified:** the GPU price (deferred to the mission's end at the author's word).
+
 **This run (2026-11-21, Mission 2's audit, the compound gate's light, #353):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
   compound gate's light (#353), built)". Files: `compound.gd`, `industrial_loop.gd`,

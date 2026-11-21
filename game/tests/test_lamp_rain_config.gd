@@ -42,6 +42,11 @@ const VARIANTS := {
 		"collider": Vector3(43.0, 5.6, 5.3), "collider_at": Vector3(0.0, -2.3, 0.0)},
 }
 const WATER := Color(0.88, 0.89, 0.9, 1.0)
+## Each drop drawn as a camera sees it (the audit, #354): the streak its fall leaves in an exposure
+## of EXPOSURE s, in perspective (a dot when it falls at the eye), at least MIN_PIXELS wide so it
+## does not break into dashes.
+const EXPOSURE := 0.025
+const MIN_PIXELS := 1.6
 const SCATTER := "res://effects/scatter_particle.gdshader"
 const FLAT: Array[Vector2] = [Vector2(0.0, 1.0), Vector2(1.0, 1.0)]
 
@@ -122,9 +127,10 @@ func _rain(variant: Dictionary) -> Dictionary:
 		"scale_curve": [Vector2(0.0, 0.9), Vector2(0.5, 1.0), Vector2(1.0, 0.9)],
 		"scale_over_velocity_curve": {"x": FLAT, "y": [Vector2(0.0, 1.0), Vector2(1.0, 201.0)],
 			"z": FLAT},
-		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": 1.0,
+		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": MIN_PIXELS,
 			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
-			"sky": 0.0, "still_fade": 1.0}},
+			"sky": 0.0, "still_fade": 1.0, "camera_streak": true, "exposure": EXPOSURE,
+			"fall": SLANT.normalized()}},
 		"mesh": {"size": Vector2(0.01, 0.01)},
 		"texture": "res://effects/textures/rain_streak.png",
 	}

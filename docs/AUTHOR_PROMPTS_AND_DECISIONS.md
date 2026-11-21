@@ -4887,8 +4887,44 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Prompt** (verbatim): "commit it once suites pass"; nine mutations exit 1, every suite run,
        then committed.
 
+354. **The audit goes on: the rain seen looking up**
+     - **Prompt** (verbatim): "okay proceed"
+     - **Real rain at night** (Commons, scratchpad only): looking up at a street lamp in rain, the
+       drops are dots and short streaks coming at the eye; seen from the side, long continuous
+       streaks all leaning one way.
+     - **Ours** (`captures/audit/lookup/before/`, `tools/captures/capture_lookup.gd`): straight up
+       under a street lamp and the gate's flood, long streaks pointing every way (each is laid
+       full length across the screen along its sideways drift, not foreshortened toward the eye);
+       half up, the streaks parallel instead of meeting at the point above; many streaks broken
+       into dashes (1 pixel wide, they miss pixels); in the floodlights the rain starts 4 m up
+       (the gate's heads are at 7.4 m), and slow drops fade 2-4 m above the ground (known since
+       revision 9).
+     - **Asked** which of three fixes to make; the author declined the question to clarify, then:
+       "none of what you showed me looks realistic and the level i want?"
+     - **Answered:** the references were weak and ours is short of them everywhere, not only looking
+       up; proposed better references per view, a comparison, then a plan for the whole rain.
+     - **Prompt** (verbatim): "shsow me pictures of what you will do first". Shown: sixteen sharper
+       Commons photos of rain at night (scratchpad), six of them each beside the same kind of view
+       of ours (`captures/audit/rain/before/`, `tools/captures/capture_rain_views.gd`: the seat with
+       the headlights, a street lamp from the road and from under it looking up, the compound gate,
+       a yard flood, the dock front), and four close-ups of real drops at full size.
+     - **Prompt** (verbatim): "yeah lets do it for now, we will look at it later"
+     - **Step 1 built, not committed:** `scatter_particle.gdshader` (game/effects, Claude Code's)
+       draws each lamp-rain drop as a camera sees it (`camera_streak`): the streak its fall leaves
+       in 0.025 s along the wind's slant, in perspective (a dot when it falls at the eye, streaks
+       meeting at the point above), at least 1.6 pixels wide (was 1, so they broke into dashes);
+       set in all five lamp-rain scenes. `test_lamp_rain_config.gd` pins it (450/470, then
+       470/470). Stills `captures/audit/rain/step1/`, `captures/audit/lookup/step1/`: looking up the
+       streaks now radiate and shorten; the rain is still sparse and faint beside the photos.
+     - **Prompt** (verbatim): "rlets skip gpu cost for now, remember to do that tho, whats next"
+       (the rain's GPU price waits for the end with the rest; recorded under "Waiting").
+     - **Prompt** (verbatim): "yes commit and then start on brightness". Step 1: five mutations
+       exit 1, every suite run, committed; then step 2 begun.
+
 ## Waiting for the author
 
+- The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
+  with the mission's final GPU price on power.
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen
   from Rocketbox's previews.
 - Mission 2's step 5 (#314-#316): part A committed, not pushed; part B (the warehouses)

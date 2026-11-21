@@ -23,6 +23,15 @@ uniform float ripple : hint_range(0.0, 0.1) = 0.0;
 uniform float lens_blur : hint_range(0.0, 5.0) = 1.0;
 uniform float rim_dark : hint_range(0.0, 1.0) = 0.4;
 uniform float still_fade : hint_range(0.0, 1.0) = 0.0;
+// A falling drop drawn as a camera sees it (lamp rain, the audit, #354): the streak its fall
+// leaves in an exposure of `exposure` seconds, along `fall` (world), in perspective, so a drop
+// falling at the eye is a dot and streaks meet at the point they fall from; at least
+// `min_pixels` wide. Its speed is read back from its stretch: the scale_over_velocity curve
+// lengthens its quad by `stretch_per_speed` times its speed (m/s) on top of its width.
+uniform bool camera_streak = false;
+uniform float exposure : hint_range(0.0, 0.2) = 0.025;
+uniform vec3 fall = vec3(0.0, -1.0, 0.0);
+uniform float stretch_per_speed = 22.222;
 
 varying float coverage;
 varying float aspect;
@@ -35,6 +44,41 @@ varying vec3 up_axis;
 varying vec3 out_axis;
 
 void vertex() {
+	if (camera_streak) {
+		vec3 centre = (MODELVIEW_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+		float width = 0.01 * length(MODELVIEW_MATRIX[0].xyz);
+		float smeared = 0.01 * length(MODELVIEW_MATRIX[1].xyz);
+		float speed = max(smeared / max(width, 0.000001) - 1.0, 0.0) / stretch_per_speed;
+		float reach = width + speed * exposure;
+		vec3 down = normalize(mat3(VIEW_MATRIX) * fall);
+		vec3 tail_end = centre - down * reach * 0.5;
+		vec3 head_end = centre + down * reach * 0.5;
+		float depth = max(-centre.z, 0.01);
+		vec2 p0 = tail_end.xy * (depth / max(-tail_end.z, 0.01));
+		vec2 p1 = head_end.xy * (depth / max(-head_end.z, 0.01));
+		vec2 seen = p1 - p0;
+		float span = length(seen);
+		vec2 axis = span > 0.000001 ? seen / span : vec2(0.0, -1.0);
+		vec2 side2 = vec2(-axis.y, axis.x);
+		float pixel = 2.0 * depth / (PROJECTION_MATRIX[1][1] * VIEWPORT_SIZE.y);
+		float drawn_width = max(width, min_pixels * pixel);
+		float drawn_span = max(span, drawn_width);
+		vec2 corner = sign(VERTEX.xy) * 0.5;
+		vec2 at = (p0 + p1) * 0.5 + axis * corner.y * drawn_span + side2 * corner.x * drawn_width;
+		VERTEX = vec3(at, -depth);
+		NORMAL = vec3(0.0, 0.0, 1.0);
+		MODELVIEW_MATRIX = mat4(1.0);
+		MODELVIEW_NORMAL_MATRIX = mat3(1.0);
+		across = normalize(vec2(side2.x, -side2.y));
+		along = normalize(vec2(axis.x, -axis.y));
+		side_axis = vec3(side2, 0.0);
+		up_axis = vec3(axis, 0.0);
+		out_axis = vec3(0.0, 0.0, 1.0);
+		life = INSTANCE_CUSTOM.y;
+		shape_ratio = smeared / max(width, 0.000001);
+		aspect = drawn_span / drawn_width;
+		coverage = width / drawn_width * max(span, width) / drawn_span;
+	} else {
 	if (face_camera) {
 		mat4 world = mat4(normalize(MAIN_CAM_INV_VIEW_MATRIX[0]),
 			normalize(MAIN_CAM_INV_VIEW_MATRIX[1]), normalize(MAIN_CAM_INV_VIEW_MATRIX[2]),
@@ -77,6 +121,7 @@ void vertex() {
 	VERTEX.y *= stretch;
 	if (comet) {
 		VERTEX.y -= abs(VERTEX.y);
+	}
 	}
 }
 

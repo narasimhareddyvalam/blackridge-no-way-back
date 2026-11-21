@@ -61,13 +61,16 @@ render_priority = 0
 shader = ExtResource("9_scatter")
 shader_parameter/albedo_texture = ExtResource("1_streak")
 shader_parameter/face_camera = false
-shader_parameter/min_pixels = 1.0
+shader_parameter/min_pixels = 1.6
 shader_parameter/forward_scatter = 0.5
 shader_parameter/scatter = 60.0
 shader_parameter/diffuse = 0.3
 shader_parameter/glint = 0.0
 shader_parameter/sky = 0.0
 shader_parameter/still_fade = 1.0
+shader_parameter/camera_streak = true
+shader_parameter/exposure = 0.025
+shader_parameter/fall = Vector3(0.079984, -0.996796, 0)
 
 [sub_resource type="QuadMesh" id="Quad_streak"]
 material = SubResource("Draw_streak")

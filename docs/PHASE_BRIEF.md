@@ -8492,3 +8492,22 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   (`logs/phase_2/realism/gate_light/mutations/`). Stills `captures/audit/gate_light/after/`.
 - **Limits:** the chain-link reads a little milky under the flood (the fence shader, the author's
   open question); in the floodlights the rain starts 4 m up, as at the site office.
+
+## Revision 2026-11-21 (Phase 2, the rain as real rain at night (#354), step 1 built)
+
+- **Found (sixteen sharper Commons photos of rain at night, six beside the same kind of view of
+  ours, `captures/audit/rain/before/` and `captures/audit/lookup/before/`):** short of the photos
+  everywhere: a few white specks under each lamp where the photos show dense lit cones of fine
+  streaks in a glow; little rain in the van's own beams; looking up, long streaks pointing every
+  way where real drops are dots and short dashes; many streaks broken into dashes; in the
+  floodlights the rain starting 4 m up, slow drops fading above the ground; splashes hard to see.
+  The author: "none of what you showed me looks realistic and the level i want?", then, shown
+  the target, "yeah lets do it for now, we will look at it later".
+- **Planned steps:** 1, each drop drawn as a camera sees it; 2, brightness and density in the
+  light; 3, rain from the light (floodlight volumes at the head, slow drops reaching the ground,
+  the compound's four volumes slanting with the rest); 4, rain in the headlights; 5, splashes.
+- **Step 1 built:** CHANGE-BRIEF revision 13. Tests: `test_lamp_rain_config.gd` 450/470 then
+  470/470; five mutations exit 1. The GPU price waits for the mission's end (the author: "lets
+  skip gpu cost for now, remember to do that tho").
+- **Known, for step 3:** the compound's four floodlight-rain volumes (#353) use the floodlight
+  scene's direction unturned, so their drops lean toward +z where all other rain leans toward +x.
