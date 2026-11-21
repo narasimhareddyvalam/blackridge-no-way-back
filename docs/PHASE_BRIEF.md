@@ -8391,3 +8391,29 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   without it). Films and stills in `captures/audit/booths/`; the window line-up and the guard's
   reach filmed from Ethan's seat (`film/gate_handover_from_seat.mp4`).
 - **Not built:** the run sheet itself passing from Ethan's hand to the guard's.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the gates (#349), built)
+
+- **Found (Wikimedia Commons photos beside our stills, `captures/audit/gates/before/`):** the
+  shed's barrier a plain box with a striped arm that stopped short of its rest post, no lamps; the
+  yard's and the compound's sliding gates one copied chain-link panel with no motor (only its
+  sound), no rack, rollers, guide, photocells or warning lamp.
+- **Built (the author's "ok", the models chosen from a labelled sheet: B1, S1, L1; F1, a fence
+  kit, has no sliding gate, so "Rebuild ours as a real one"):**
+  - `sliding_gate.gd` (new), shared by both sliding gates: a braced leaf with a counterweight
+    tail on two roller carriages on a footing (both under its rail shut and open), a toothed rack
+    on the bottom rail meeting the pinion of Maxwell autodoors' sliding gate motor on a plinth
+    inside the fence, guide rollers and a receiver post, photocells facing across the opening,
+    x4vier28's caged lamp on the inner guide post, clear of the leaf, flashing amber only while
+    it moves; its motor sound now at the motor;
+  - the shed's barrier on Maxwell autodoors' boom barrier cabinet (its own arm removed, sized so
+    its hub is at the arm's 0.9 m pivot), the arm turning at the hub and 6.8 m long (6.4) to a fork
+    post past the lane's far edge, red lamps along it (steady down, flashing moving, out up) and
+    the caged lamp on the cabinet flashing while it moves.
+- **Tested:** `test_gates.gd` (new) 0/6 then 18/18; `test_mission_two.gd` 61/61 (its cabinet-to-
+  fence check now measures the cabinet's own mesh), `test_container_yard.gd` 17/17,
+  `test_compound.gd` 10/10, `test_free_exit.gd` 6/6, `test_booths.gd` 31/31, `test_menus.gd`
+  20/20 (x4vier28 credited). Ten mutations exit 1 (`logs/phase_2/realism/gates/mutations*/`).
+  Stills `captures/audit/gates/after/`.
+- **Not done:** a film of the gates moving; the compound's gate is still dark at night but for
+  its lamp.

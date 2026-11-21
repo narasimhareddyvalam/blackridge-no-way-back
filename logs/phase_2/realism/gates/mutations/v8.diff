@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_shed.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v8/game/features/environments/industrial_loop/transfer_shed.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/transfer_shed.gd	2026-11-20 20:38:14
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v8/game/features/environments/industrial_loop/transfer_shed.gd	2026-11-20 20:49:27
+@@ -56,7 +56,7 @@
+ const BARB_ARM := 0.45
+ ## The arm reaches from the cabinet's hub across the lane to its fork post 0.3 m past the lane's
+ ## far edge, resting in it 0.18 m from its tip (#349).
+-const ARM_LENGTH := 6.8
++const ARM_LENGTH := 6.4
+ const ARM_REST_IN := 0.18
+ ## The cabinet (Maxwell autodoors' Automatic Boom Barrier, CC BY 4.0, its own arm removed, sized
+ ## so its hub is at the arm's pivot): its half-width along the line, its middle just short of the

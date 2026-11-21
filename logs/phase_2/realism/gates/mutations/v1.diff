@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/sliding_gate.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v1/game/features/environments/industrial_loop/sliding_gate.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/sliding_gate.gd	2026-11-20 20:45:51
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v1/game/features/environments/industrial_loop/sliding_gate.gd	2026-11-20 20:48:46
+@@ -24,7 +24,7 @@
+ const PINION_ALONG := 0.0377
+ const PINION_OUT := 0.131
+ ## Behind the opening's edge: the carriages, near and far (both within the tail), and the motor.
+-const CARRIAGES: Array[float] = [0.35, 2.55]
++const CARRIAGES: Array[float] = [0.35, 3.4]
+ const MOTOR_BEHIND := 1.35
+ const CELL_UP := 0.5
+ const CELL_OUT := 0.3

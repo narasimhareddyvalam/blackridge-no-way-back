@@ -1,0 +1,25 @@
+v1  the far carriage outside the tail test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: G2 (yard): two roller carriages on a footing stay under the leaf's bottom rail both shut and open
+      FAIL: G2 (compound): two roller carriages on a footing stay under the leaf's bottom rail both shut and open
+v2  the motor's pinion below the rack test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: G3 (yard): the motor (a real model) drives a toothed rack along the bottom rail, its pinion meeting the rack s
+      FAIL: G3 (compound): the motor (a real model) drives a toothed rack along the bottom rail, its pinion meeting the ra
+v3  a short rack                   test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: G3 (yard): the motor (a real model) drives a toothed rack along the bottom rail, its pinion meeting the rack s
+      FAIL: G3 (compound): the motor (a real model) drives a toothed rack along the bottom rail, its pinion meeting the ra
+v4  no braces                      test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: G4 (yard): the motor on its plinth, the leaf framed with diagonal braces (0), a receiver post catching it shut
+      FAIL: G4 (compound): the motor on its plinth, the leaf framed with diagonal braces (0), a receiver post catching it 
+v5  the lamp lit while still       test_gates.gd exit 1, 17/18 passed; 1 failed
+      FAIL: G6 (compound): a warning lamp flashes 1.5 times a second while it moves, and is out when still
+v6  photocells facing away         test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: G5 (yard): a pair of photocells on posts face each other across the opening
+      FAIL: G5 (compound): a pair of photocells on posts face each other across the opening
+v7  the arm off the hub            test_gates.gd exit 1, 16/18 passed; 2 failed
+      FAIL: B1: the barrier's cabinet is a real model, its hub carrying the arm (0.158 m from the arm's pivot)
+      FAIL: B2: shut, the arm's tip lies in the fork of its rest post
+v8  the arm short of its fork      test_gates.gd exit 0, 18/18 passed; 0 failed
+v9  no lamps on the arm            test_gates.gd exit 1, 17/18 passed; 1 failed
+      FAIL: B3: red lamps along the arm (0)
+v10  the barrier's beacon never flashing test_gates.gd exit 1, 17/18 passed; 1 failed
+      FAIL: B4: a warning lamp flashes 0.0 times a second while it moves, and is out when still

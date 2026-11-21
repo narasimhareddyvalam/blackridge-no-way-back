@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/sliding_gate.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v2/game/features/environments/industrial_loop/sliding_gate.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/sliding_gate.gd	2026-11-20 20:45:51
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/v2/game/features/environments/industrial_loop/sliding_gate.gd	2026-11-20 20:48:46
+@@ -154,7 +154,7 @@
+ ## The motor on its plinth inside the fence, its pinion under the rack.
+ func _drive(concrete: Material) -> void:
+ 	var rack_low := RAIL_LOW + RAIL.x
+-	var plinth_top := rack_low - PINION_TOP
++	var plinth_top := rack_low - PINION_TOP - 0.05
+ 	var at := Vector3(-_wide / 2.0 - MOTOR_BEHIND, 0.0,
+ 		-LEAF_IN - RAIL.y / 2.0 - RACK.x / 2.0 - PINION_OUT)
+ 	Build.box(self, Vector3(at.x, plinth_top / 2.0, at.z), Vector3(0.4, plinth_top, 0.4),

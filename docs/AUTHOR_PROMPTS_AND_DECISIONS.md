@@ -4717,6 +4717,48 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (`captures/audit/booths/film/gate_handover_from_seat.mp4`) shown.
      - **Prompt** (verbatim): "looks good." **Asked** whether to finish (mutations, every suite,
        the credits and records, one commit); **the author chose** "Suites + commit (Recommended)".
+     - **Done:** six more mutations exit 1; suites 59 runs exit 0, art 0 failures; committed
+       (`7c0ba0b`).
+
+349. **The audit goes on: the gates**
+     - **Asked** whether to start on the gates (the shed's barrier, the container yard's and the
+       compound's sliding gates; real photos first, then stills of ours, findings before any
+       build); **the author answered** "ok".
+     - **Prompt** (verbatim): "whats happening?" (answered with the gates' findings).
+     - **Real gates** (Wikimedia Commons photos, scratchpad only, not filed): a barrier's arm
+       pivots on a steel cabinet with its motor, the arm resting on a fork post at the far side,
+       often red lamps along it; a sliding gate's motor sits in a box on a concrete plinth by the
+       post, driving a toothed rack along the gate's bottom rail, on rollers and a guide post at
+       the top, with a flashing lamp and photocells across the opening.
+     - **Ours** (`captures/audit/gates/before/`, `tools/captures/capture_gates.gd`): the barrier's
+       cabinet a plain box, no lamps on the arm, nothing showing it is powered; both sliding gates
+       one copy of a chain-link panel with no motor, rack, rollers or guide, two bare posts beside
+       it and a motor only heard; no flashing lamp, no photocells; the compound's gate nearly
+       invisible at night.
+     - **Asked** whether to make a labelled sheet of ready-made models for the gates (one shared
+       sliding gate; motor units, rack and rollers, fork post, photocells, a flashing lamp while
+       moving); **the author answered** "ok".
+     - **Shown** a labelled sheet (B1-B3 barriers, S1 gate motor, L1 warning light, F1 chain-link
+       kit); **the author chose** B1, S1, L1 and F1.
+     - **Done:** B1 (its own arm removed, sized so its hub is at our arm's 0.9 m pivot: 1.15 m
+       tall), S1 (0.40 m, its pinion for a rack) and L1 (the intact lamp, 0.6 m) exported to
+       `art/gates/`. F1 has no sliding gate (only 1 m swing doors and fence lengths): asked what the
+       6 m leaf should be; **the author asked** "whats f1?"; told; **the author chose** "Rebuild ours
+       as a real one (Recommended)": our chain-link in a real cantilever gate's frame, F1 unused.
+     - **Built, not committed:** `sliding_gate.gd` (new) shared by the yard and the compound: a
+       braced leaf with a counterweight tail on two roller carriages on a footing (both under its
+       rail shut and open), a toothed rack meeting the S1 motor's pinion (on a plinth inside), guide
+       and receiver posts, photocells facing across the opening, L1 on the inner guide post clear of
+       the leaf's path, flashing amber only while it moves; the shed's barrier on the B1 cabinet,
+       the arm turning at its hub, 6.8 m to a fork post past the lane, red lamps along it (steady
+       down, flashing moving, out up), L1 on the cabinet flashing while it moves.
+       `test_gates.gd` (new) 0/6 then 18/18; gate 61/61, yard 17/17, compound 10/10, free exit 6/6,
+       booths 31/31. Stills `captures/audit/gates/after/` shown beside Commons photos.
+     - **Prompt** (verbatim): "looks good" (taken as: mutations, every suite, credits, commit, as
+       offered). Then "ok"; "whats next after the gates?" (answered: the container yard, the
+       docks, the rest of the audit, then step 6).
+     - **Done:** ten mutations exit 1 (v8 after B2 also checks the fork past the lane); suites 60
+       runs exit 0, art 0 failures; committed.
 
 ## Waiting for the author
 

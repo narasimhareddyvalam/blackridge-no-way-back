@@ -546,6 +546,10 @@ func _credits_text() -> String:
 		+ "real thing. The guards' chairs are Red Fox's \"Office Chair\" on a draughtsman's tall "
 		+ "gas lift and foot ring, added for this game. Blackridge is not affiliated with Dell or "
 		+ "Kenwood.")
+	_section(lines, "THE GATES", "\"Automatic Boom Barriers\" and \"Sliding Gate Motors - "
+		+ "Residential\" by Maxwell autodoors (Sketchfab: maihupronoob) and \"Abandoned Factory "
+		+ "Warning Light\" by x4vier28, licensed CC BY 4.0: the transfer shed's barrier cabinet "
+		+ "(its own arm removed), the sliding gates' motors and the gates' warning lamps.")
 	_section(lines, "THE YARD AT NIGHT", "\"Semi Truck 1980\" by Brian Trepanier (Sketchfab: "
 		+ "CMBC), \"Truck Trailer FREE\" by NLM (Sketchfab: NLM-Group), \"LCT 3000 '95 - Low poly "
 		+ "model\" by Daniel Zhabotinsky and \"dumpster\" by YJ_, licensed CC BY 4.0: the yard's "

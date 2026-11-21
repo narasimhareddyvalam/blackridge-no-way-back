@@ -1,5 +1,19 @@
 # HANDOFF.md
 
+**This run (2026-11-20, Mission 2's audit, the gates, #349):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  gates (#349), built)". Files: `sliding_gate.gd` (new), `container_yard.gd`, `compound.gd`,
+  `transfer_shed.gd`, `front_menu.gd` (credits), `art/gates/` (new: three Sketchfab models,
+  `ATTRIBUTION.md`), `source_assets/sketchfab/24_..26_` READMEs, `game/tests/test_gates.gd`
+  (new), `test_mission_two.gd`, `test_menus.gd`, `tools/captures/capture_gates.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/gates/g4 scripts/run-test.sh test_gates.gd
+  60` exit 0, 18/18; the rest as in the brief. Mutations (`python3 -I
+  logs/phase_2/realism/gates/mutations/mutations_gates.py <scratch> <out>`): ten exit 1. Suites:
+  `bash logs/phase_2/realism/gates/suites/run_suites.sh <scratch>`: 60 runs exit 0, no script or
+  shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** the audit's container yard, then the docks, the rest; then step 6.
+- **Unverified:** the gates moving have not been filmed.
+
 **This run (2026-11-20, Mission 2's audit, the guard booths, #348):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
   guard booths (#348), built)". Files: `guard_booth.gd`, `guard_lean.gd` (new),

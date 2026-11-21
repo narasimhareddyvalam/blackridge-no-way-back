@@ -54,7 +54,21 @@ const SURFACE_HEIGHT := 0.02
 const FENCE_HEIGHT := 2.4
 const POST_SPACING := 3.0
 const BARB_ARM := 0.45
-const ARM_LENGTH := 6.4
+## The arm reaches from the cabinet's hub across the lane to its fork post 0.3 m past the lane's
+## far edge, resting in it 0.18 m from its tip (#349).
+const ARM_LENGTH := 6.8
+const ARM_REST_IN := 0.18
+## The cabinet (Maxwell autodoors' Automatic Boom Barrier, CC BY 4.0, its own arm removed, sized
+## so its hub is at the arm's pivot): its half-width along the line, its middle just short of the
+## lane's edge, and how far behind the line its middle stands so the arm turns just outside the hub.
+const CABINET_HALF := 0.24
+const CABINET_IN := 0.02
+const CABINET_BEHIND := 0.27
+const ARM_LAMP_EVERY := 1.4
+const BARRIER_FLASH_HZ := 1.0
+const AMBER := Color(1.0, 0.55, 0.08)
+const BarrierModel = preload("res://features/environments/industrial_loop/art/gates/barrier_cabinet/barrier_cabinet.glb")
+const WarningLight = preload("res://features/environments/industrial_loop/art/gates/warning_light/warning_light.glb")
 const ARM_PIVOT_HEIGHT := 0.9
 const RAISE_SECONDS := 4.0
 const CHECK_SECONDS := 3.0
@@ -104,6 +118,15 @@ var _vehicle_front := Vector3.ZERO
 var _vehicle_rear := Vector3.ZERO
 var _fence_body: StaticBody3D
 var _booth_node: Node3D
+var _arm_lamps: Array[MeshInstance3D] = []
+var _arm_lit: StandardMaterial3D
+var _arm_dark: StandardMaterial3D
+var _beacon: OmniLight3D
+var _beacon_glass: MeshInstance3D
+var _beacon_lit: StandardMaterial3D
+var _beacon_dark: StandardMaterial3D
+var _barrier_forced := false
+var _barrier_clock := 0.0
 var _window_open := false
 var _screen: Node3D
 var _logbook: Node3D
@@ -181,8 +204,8 @@ func build(road: RefCounted, _building_width: float, surface: Material, concrete
 	add_child(_fence_body)
 	var west := Ground.PLATFORM.position.x
 	var east := Ground.PLATFORM.end.x
-	var cabinet_west := LANE_X - LANE_WIDTH / 2.0 - 0.3 - 0.16
-	var rest_x := LANE_X - LANE_WIDTH / 2.0 - 0.3 + ARM_LENGTH + 0.3
+	var cabinet_west := _pivot_x() - CABINET_HALF
+	var rest_x := _pivot_x() + ARM_LENGTH - ARM_REST_IN
 	_fence(Vector3(west, 0.0, GATE_Z), Vector3(cabinet_west, 0.0, GATE_Z), Vector3.BACK)
 	_fence(Vector3(rest_x + 0.3, 0.0, GATE_Z), Vector3(east, 0.0, GATE_Z), Vector3.BACK)
 	var reach := Vector2(Ground.PLATFORM.position.y, Ground.PLATFORM.position.y)
@@ -368,9 +391,11 @@ func _physics_process(delta: float) -> void:
 		elif not _exiting and _target == 90.0 and _angle >= 90.0 and not under \
 				and maxf(front.z, rear.z) < GATE_Z - CLEAR_BEHIND:
 			_target = 0.0
+	var swinging := not is_equal_approx(_angle, _target)
 	_angle = move_toward(_angle, _target, 90.0 / RAISE_SECONDS * delta)
 	if _arm != null:
 		_arm.rotation.z = deg_to_rad(_angle)
+		_barrier_lamps(delta, swinging)
 	if _lowered_window and _angle >= 89.0:
 		_lowered_window = false
 		if is_instance_valid(vehicle):
@@ -570,16 +595,81 @@ func _booth(concrete: Material, metal: Material, wall: Material) -> void:
 	_logbook = _booth_node.get("logbook") as Node3D
 
 
+## Where the arm turns: the cabinet's hub, just short of the lane's edge.
+func _pivot_x() -> float:
+	return LANE_X - LANE_WIDTH / 2.0 - 0.3 - CABINET_IN
+
+
+## The arm's rest: a post past the lane's far edge with a fork the shut arm drops into.
+func _rest(metal: Material, rest_x: float) -> void:
+	var rest := Node3D.new()
+	rest.name = "ArmRest"
+	rest.position = Vector3(rest_x, 0.0, GATE_Z)
+	add_child(rest)
+	var low := ARM_PIVOT_HEIGHT - 0.05
+	Build.cylinder(rest, Vector3(0, low / 2.0, 0), 0.04, low, metal).name = "RestPost"
+	Build.box(rest, Vector3(0, low, 0), Vector3(0.2, 0.02, 0.12), metal).name = "ForkSaddle"
+	for side in [-1.0, 1.0]:
+		Build.box(rest, Vector3(0, low + 0.07, side * 0.055), Vector3(0.2, 0.14, 0.012), metal) \
+			.name = "Fork"
+
+
+## Whether the arm is moving (for a test: forced on); its red lamps steady while it is down,
+## flashing while it moves, out while it is up, and the cabinet's amber lamp flashing while it moves.
+func set_barrier_moving(on: bool) -> void:
+	_barrier_forced = on
+
+
+func _barrier_lamps(delta: float, moving: bool) -> void:
+	var on := moving or _barrier_forced
+	_barrier_clock = _barrier_clock + delta if on else 0.0
+	var flash := fmod(_barrier_clock * BARRIER_FLASH_HZ, 1.0) < 0.5
+	var red := flash if on else _angle < 1.0
+	for lamp in _arm_lamps:
+		lamp.material_override = _arm_lit if red else _arm_dark
+	if _beacon != null:
+		_beacon.visible = on and flash
+		_beacon_glass.material_override = _beacon_lit if _beacon.visible else _beacon_dark
+
+
 func _barrier(metal: Material, rest_x: float) -> void:
-	var post_x := LANE_X - LANE_WIDTH / 2.0 - 0.3
-	var cabinet := Build.material(Color("d6d3ca"), 0.45)
-	Build.box(self, Vector3(post_x, 0.5, GATE_Z), Vector3(0.32, 1.0, 0.32), cabinet, true) \
-		.name = "BarrierCabinet"
-	Build.cylinder(self, Vector3(rest_x, 0.42, GATE_Z), 0.04, 0.84, metal).name = "ArmRest"
+	var post_x := _pivot_x()
+	var cabinet := Node3D.new()
+	cabinet.name = "BarrierCabinet"
+	cabinet.position = Vector3(post_x, 0.0, GATE_Z - CABINET_BEHIND)
+	add_child(cabinet)
+	cabinet.add_child(BarrierModel.instantiate())
+	var cabinet_body := StaticBody3D.new()
+	cabinet.add_child(cabinet_body)
+	var cabinet_shape := CollisionShape3D.new()
+	var cabinet_box := BoxShape3D.new()
+	cabinet_box.size = Vector3(CABINET_HALF * 2.0, 1.15, 0.39)
+	cabinet_shape.shape = cabinet_box
+	cabinet_shape.position = Vector3.UP * 0.575
+	cabinet_body.add_child(cabinet_shape)
+	_rest(metal, rest_x)
+	var light := WarningLight.instantiate() as Node3D
+	light.name = "WarningLight"
+	light.position = Vector3(post_x - CABINET_HALF, 0.62, GATE_Z - CABINET_BEHIND)
+	light.rotation.y = PI
+	add_child(light)
+	_beacon_glass = light.find_child("glasse_old_0", true, false) as MeshInstance3D
+	_beacon_dark = Build.material(Color(0.75, 0.45, 0.15, 0.6), 0.2)
+	_beacon_dark.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_beacon_lit = Build.luminous(AMBER, 3.0)
+	_beacon = OmniLight3D.new()
+	_beacon.name = "WarningLamp"
+	_beacon.light_color = AMBER
+	_beacon.light_energy = 1.2
+	_beacon.omni_range = 6.0
+	_beacon.shadow_enabled = false
+	_beacon.visible = false
+	add_child(_beacon)
+	_beacon.global_position = _beacon_glass.global_transform * _beacon_glass.get_aabb().get_center()
 	_arm = AnimatableBody3D.new()
 	_arm.name = "BarrierArm"
 	_arm.sync_to_physics = true
-	_arm.position = Vector3(post_x + 0.16, ARM_PIVOT_HEIGHT, GATE_Z)
+	_arm.position = Vector3(post_x, ARM_PIVOT_HEIGHT, GATE_Z)
 	add_child(_arm)
 	var bands := ShaderMaterial.new()
 	bands.shader = Retroreflector
@@ -589,6 +679,15 @@ func _barrier(metal: Material, rest_x: float) -> void:
 	bands.set_shader_parameter("stripe_width", 0.8 * 100.0 / (2.0 * sqrt(2.0)))
 	var size := Vector3(ARM_LENGTH, 0.1, 0.06)
 	Build.box(_arm, Vector3(ARM_LENGTH / 2.0, 0, 0), size, bands)
+	_arm_lit = Build.luminous(Color(1.0, 0.08, 0.04), 2.5)
+	_arm_dark = Build.material(Color(0.35, 0.04, 0.03), 0.3)
+	var count := int(ARM_LENGTH / ARM_LAMP_EVERY)
+	for index in range(count):
+		for side in [-1.0, 1.0]:
+			var lamp := Build.box(_arm, Vector3((index + 0.7) * ARM_LAMP_EVERY, 0.0,
+				side * (size.z / 2.0 + 0.004)), Vector3(0.05, 0.03, 0.008), _arm_dark)
+			lamp.name = "ArmLamp%d%s" % [index, "L" if side < 0.0 else "R"]
+			_arm_lamps.append(lamp)
 	var shape := BoxShape3D.new()
 	shape.size = size
 	var collision := CollisionShape3D.new()

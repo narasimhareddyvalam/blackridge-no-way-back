@@ -383,7 +383,9 @@ func _check_booth(shed: Node3D) -> Dictionary:
 	var fence := shed.get_node_or_null("Fence")
 	var to_cabinet := INF
 	if cabinet != null and fence != null:
-		var cabinet_west := cabinet.global_position.x - 0.16
+		var cabinet_west := INF
+		for mesh: MeshInstance3D in cabinet.find_children("*", "MeshInstance3D", true, false):
+			cabinet_west = minf(cabinet_west, (mesh.global_transform * mesh.get_aabb()).position.x)
 		for child in fence.get_children():
 			var shape := child as CollisionShape3D
 			if shape == null or not shape.shape is BoxShape3D:

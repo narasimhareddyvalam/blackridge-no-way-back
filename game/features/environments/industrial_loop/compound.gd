@@ -13,6 +13,7 @@ signal run_sheet_checked
 
 const Build = preload("res://shared/components/mesh_builder.gd")
 const Fence = preload("chain_link_fence.gd")
+const SlidingGate = preload("sliding_gate.gd")
 const Booth = preload("guard_booth.gd")
 const Warehouse = preload("warehouse.gd")
 const DockJudge = preload("dock_judge.gd")
@@ -90,6 +91,7 @@ var _fence_runs: Array = []
 var _footprints: Array[Rect2] = []
 var _body: StaticBody3D
 var _gate: AnimatableBody3D
+var _sliding: Node3D
 var _motor: AudioStreamPlayer3D
 var _gate_open := 0.0
 var _gate_target := 0.0
@@ -257,6 +259,8 @@ func _physics_process(delta: float) -> void:
 	var moving := not is_equal_approx(_gate_open, _gate_target)
 	_gate_open = move_toward(_gate_open, _gate_target, GATE_SPEED * delta)
 	_place_gate()
+	if _sliding != null:
+		_sliding.call("moving_now", moving)
 	if moving and not _motor.playing:
 		_motor.play()
 	elif not moving and _motor.playing:
@@ -416,33 +420,14 @@ func _lowest(node: Node3D) -> float:
 
 
 func _gate_leaf() -> void:
-	var fence := Fence.new()
-	_gate = AnimatableBody3D.new()
+	_sliding = SlidingGate.new()
+	_sliding.name = "SlidingGate"
+	add_child(_sliding)
+	_sliding.global_position = Vector3(GATE_X, GROUND, GATE_Z)
+	_sliding.call("build", GATE_WIDE, TAIL, Build.material(Color(0.6, 0.6, 0.58), 0.85))
+	_gate = _sliding.get("leaf") as AnimatableBody3D
 	_gate.name = "Gate"
-	add_child(_gate)
-	var leaf := GATE_WIDE + TAIL
-	var middle := (GATE_WIDE - TAIL) / 2.0
-	Build.box(_gate, Vector3(middle, 0.15, 0.0), Vector3(leaf, 0.12, 0.08),
-		fence.galvanised).name = "GateBottom"
-	Build.box(_gate, Vector3(middle, Fence.HEIGHT, 0.0), Vector3(leaf, 0.08, 0.08),
-		fence.galvanised).name = "GateTop"
-	for x: float in [-TAIL, 0.0, GATE_WIDE]:
-		Build.box(_gate, Vector3(x, Fence.HEIGHT / 2.0, 0.0), Vector3(0.08, Fence.HEIGHT, 0.08),
-			fence.galvanised).name = "GateStile"
-	var quad := QuadMesh.new()
-	quad.size = Vector2(leaf, Fence.HEIGHT - 0.2)
-	Build.instance(_gate, Vector3(middle, Fence.HEIGHT / 2.0 + 0.1, 0.0), quad,
-		fence.link).name = "GateMesh"
-	var shape := BoxShape3D.new()
-	shape.size = Vector3(GATE_WIDE, Fence.HEIGHT, 0.12)
-	var collision := CollisionShape3D.new()
-	collision.shape = shape
-	collision.position = Vector3(GATE_WIDE / 2.0, Fence.HEIGHT / 2.0, 0.0)
-	_gate.add_child(collision)
 	_place_gate()
-	for x: float in [GATE_X - GATE_WIDE / 2.0 - 2.0, GATE_X - GATE_WIDE / 2.0 - 7.0]:
-		Build.box(self, Vector3(x, 0.4, GATE_Z - 0.2), Vector3(0.15, 0.8, 0.15),
-			fence.galvanised).name = "GateRollerPost"
 	_motor = AudioStreamPlayer3D.new()
 	_motor.name = "GateMotor"
 	_motor.stream = MOTOR
@@ -450,13 +435,13 @@ func _gate_leaf() -> void:
 	_motor.bus = "Ambience"
 	_motor.volume_db = -14.0
 	add_child(_motor)
-	_motor.global_position = Vector3(GATE_X - GATE_WIDE / 2.0 - 1.0, 0.5, GATE_Z - 0.4)
+	_motor.global_position = (_sliding.find_child("Motor", true, false) as Node3D).global_position \
+		+ Vector3.UP * 0.25
 
 
 func _place_gate() -> void:
-	if _gate != null:
-		_gate.global_position = Vector3(GATE_X - GATE_WIDE / 2.0 - _gate_open, GROUND,
-			GATE_Z - 0.25)
+	if _sliding != null:
+		_sliding.call("set_open", _gate_open)
 
 
 ## The booth's kerbed island, with a bollard at each of its corners on the lane.
