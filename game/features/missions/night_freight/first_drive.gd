@@ -361,7 +361,9 @@ func save_progress(config: ConfigFile) -> Error:
 
 
 func _save_finished() -> void:
-	_write_progress(WrongCargo.start_progress(), false)
+	var config := WrongCargo.start_progress()
+	config.set_value("cargo", "opening", true)
+	_write_progress(config, false)
 
 
 func _progress_at(at_stage: int) -> ConfigFile:

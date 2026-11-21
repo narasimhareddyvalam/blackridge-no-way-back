@@ -8,6 +8,8 @@ const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_ca
 const SealCutscene = preload("res://features/missions/the_wrong_cargo/seal_cutscene.gd")
 const CutsceneDirector = preload("res://features/cinematics/cutscene_director.gd")
 const Opening = preload("res://features/missions/night_freight/opening_cutscene.gd")
+const Escape = preload("res://features/missions/the_wrong_cargo/escape.gd")
+const CargoOpening = preload("res://features/missions/the_wrong_cargo/opening_cutscene.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -30,6 +32,7 @@ const GRIP_ELBOW := Vector3(-1.85, 0.85, -0.95)
 const DOOR_OPENED := 1.6
 const CUT := 1.75
 const FADE_OUT := 0.25
+const CAUGHT_FADE := 0.5
 const FADE_IN := 0.5
 const IGNITION_DELAY := 0.6
 const EXIT_FROM := 2.6
@@ -120,7 +123,12 @@ func _ready() -> void:
 	add_child(cargo)
 	cargo.objective_changed.connect(_route_objective)
 	cargo.seal_checked.connect(_show_seal_check)
+	cargo.paper_shown.connect(_show_seal_check)
 	cargo.checkpoint_reached.connect(route.save_progress)
+	cargo.escape_caught.connect(_caught_escaping)
+	cargo.drive_completed.connect(_drive_completed)
+	cargo.road_end = world.road_points[WrongCargo.END_SAMPLE]
+	cargo.text_received.connect(hud.show_text_message)
 	cargo.shed = world.transfer_shed
 	cargo.yard = world.container_yard
 	cargo.compound = world.compound
@@ -271,6 +279,8 @@ func _begin() -> void:
 		van.foot_on_brake = _mission.fleeing
 		if _has_progress():
 			_continue_in_van()
+			if _mission == cargo and cargo.opening_pending:
+				_play_cargo_opening.call_deferred()
 		else:
 			_begin_on_foot()
 			_play_opening.call_deferred()
@@ -287,8 +297,19 @@ func _play_opening() -> void:
 
 
 func _opening_done(_skipped: bool) -> void:
+	if _mission == cargo and cargo.opening_pending:
+		cargo.opening_played()
+		hud.show_text_message(WrongCargo.DISPATCHER, WrongCargo.DISPATCH)
+		return
 	if _mission == route and not van.occupied:
 		_audio.play_music()
+
+
+## Mission 2's opening (step 8), once, when its start is continued from Mission 1's end.
+func _play_cargo_opening() -> void:
+	if cutscene == null or bool(cutscene.get("playing")):
+		return
+	cutscene.call("play", CargoOpening.shots(van), hud, driver, van.get_camera())
 
 
 func _continue_in_van() -> void:
@@ -558,6 +579,19 @@ func _recover() -> void:
 	hud.notify("Van recovered to the last safe checkpoint")
 
 
+## Caught in the escape (Mission 2's step 6): the screen fades and all is as at its start, Ethan
+## in the van at door 3, the guards where they came from, the warning unsent.
+func _caught_escaping() -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	hud.clear_text_message()
+	_enter_van()
+	van.start_engine()
+	cargo.recover()
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("Caught. The guards walked you back to the van.")
+
+
 func _toggle_vsync() -> void:
 	var off := DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_DISABLED
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if off
@@ -581,6 +615,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied and route.phone_call.can_answer():
 			route.phone_call.answer()
 	elif event.is_action_pressed("interact") and not _boarding:
+		if van.occupied and hud.document_visible() and _mission == cargo:
+			_close_run_sheet()
+			return
 		if van.occupied and _mission == cargo and cargo.wants_interact():
 			var note: String = cargo.interact()
 			if not note.is_empty():
@@ -743,6 +780,9 @@ func _process(delta: float) -> void:
 	_guide_to_van()
 	_follow_on_map(delta)
 	_aim_marker()
+	_mark_watchers()
+	if _mission == cargo and cargo.call_due() and not route.phone_call.active:
+		route.phone_call.start("MAYA", WrongCargo.MAYA_CHECK_IN)
 	if route.phone_call.talking:
 		_navigation().call_seconds = route.phone_call.elapsed
 	_hint_time += delta
@@ -778,6 +818,18 @@ func _aim_marker() -> void:
 	var on_foot: bool = not van.occupied and driver.active
 	var from: Vector3 = driver.global_position if on_foot else van.global_position
 	hud.set_target(_objective_point(on_foot), from, get_viewport().get_camera_3d(), on_foot)
+
+
+## Over each guard seeing Ethan in the escape, how near he is to being caught (#358).
+func _mark_watchers() -> void:
+	var escape := cargo.get("escape") as Node if _mission == cargo else null
+	if escape == null:
+		hud.seen_marks.show_marks([], null)
+		return
+	var marks := []
+	for guard: Node3D in escape.get("guards"):
+		marks.append([guard.global_position, float(guard.get("sight")) / Escape.CATCH_AFTER])
+	hud.seen_marks.show_marks(marks, get_viewport().get_camera_3d())
 
 
 func _objective_point(on_foot: bool) -> Vector3:

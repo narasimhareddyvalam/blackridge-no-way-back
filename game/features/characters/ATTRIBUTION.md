@@ -123,3 +123,23 @@ job) on 2026-11-16, at the author's request:
 - **In the game:** seated on the shed's forklift, his hands set on its wheel and his feet on its
   plate by two-bone IK and his head turned the way he backs (`forklift_truck.gd`,
   `look_travel.gd`).
+
+## The compound's patrol guards (Mission 2's step 6, #358)
+
+- **Model:** "Security Guard - Rigged 3D Model" by qsardor57913,
+  https://sketchfab.com/3d-models/1e3307732bbf4453b30f021bfec5bcaf (fetched 2026-11-21 through
+  the Blender MCP add-on's Sketchfab import, `source_assets/sketchfab/29_security_guard/`).
+- **Licence:** CC BY 4.0 (Sketchfab's "CC Attribution"); the in-game credits name the author
+  ("THE COMPOUND'S PATROLS").
+
+### Changes
+
+Claude Code converted it with `tools/art/convert_patrol_guard.py` on 2026-11-21, at the author's
+word to choose the best real-life patrol guard (#358):
+
+- **The rig:** the Sketchfab suffixes dropped from the bone names; scaled to 1.80 m and stood with
+  his shoes at the origin.
+- **The clips:** Ethan's own Mixamo idle, walk and run (`source_assets/mixamo/`) baked onto him
+  as turns from the T-pose, the walk and run in place (`Idle`, `Walk`, `Run`).
+- **Materials:** one roughness (0.78), nothing metallic, textures halved to 1024 pixels as WebP.
+- **In the game:** `patrol_guard.gd`, a stand-in (D6) with a torch on his left epaulette.

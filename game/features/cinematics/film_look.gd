@@ -12,6 +12,10 @@ const RED := Color(0.78, 0.12, 0.12)
 const INK := Color(0.96, 0.96, 0.96)
 const DIM := Color(0.66, 0.66, 0.66)
 const CARD_FADE := 0.6
+## The full-screen title's letters, as big as fit FULL_SHARE of the screen's width.
+const FULL_SIZE := 150
+const FULL_SPACING := 34.0
+const FULL_SHARE := 0.9
 
 var _grade: ColorRect
 var _black: ColorRect
@@ -115,7 +119,7 @@ func _ready() -> void:
 	red.custom_minimum_size = Vector2(120.0, 6.0)
 	full_rule.add_child(red)
 	_full.add_child(full_rule)
-	_full_title = _label(150, INK, 34.0)
+	_full_title = _label(FULL_SIZE, INK, FULL_SPACING)
 	_full_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_full.add_child(_full_title)
 	_full_sub = _label(28, RED, 16.0)
@@ -189,10 +193,17 @@ func dip() -> float:
 
 
 ## The title filling the screen on black (the author: "the game name should be full screen"):
-## `title` in letters 150 px high across the frame, `sub` under it, a red rule over it.
+## `title` in letters up to 150 px high across the frame, smaller if it would not fit, `sub` under it, a red rule over it.
 func show_full_title(title: String, sub: String) -> void:
 	_full_title.text = title
 	_full_sub.text = sub
+	var screen := get_viewport().get_visible_rect().size.x if is_inside_tree() else 1280.0
+	var size := FULL_SIZE
+	var font := _full_title.get_theme_font("font")
+	while size > 48 and font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x \
+			+ FULL_SPACING * title.length() > screen * FULL_SHARE:
+		size -= 4
+	_full_title.add_theme_font_size_override("font_size", size)
 	_full.visible = true
 	_full.modulate.a = 0.0
 	create_tween().tween_property(_full, "modulate:a", 1.0, CARD_FADE * 1.5)

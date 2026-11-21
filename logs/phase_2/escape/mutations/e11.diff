@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e11/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-21 18:04:26
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e11/game/features/environments/industrial_loop/container_yard.gd	2026-11-21 18:09:59
+@@ -354,7 +354,6 @@
+ 		_left.remove_child(solid)
+ 		solid.free()
+ 	van.call("recover", _left.global_transform)
+-	_dark_left = _parked_iveco("DarkVanLeft", dark_at, DARK)
+ 	presentation.call("set_paint", Color.WHITE)
+ 	var holder := van.call("body") as Node3D
+ 	for child in _left.get_children():

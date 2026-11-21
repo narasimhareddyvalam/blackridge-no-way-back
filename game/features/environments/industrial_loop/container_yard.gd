@@ -32,6 +32,8 @@ const DRIVEWAY := Rect2(97.0, 158.0, 6.0, 11.5)
 ## The keypad on the driver's (west) side of a van coming in, 4 m before the gate, and its line.
 const KEYPAD := Vector3(98.0, GROUND, 162.0)
 const KEYPAD_UP := 1.1
+const KEYPAD_REACH := 1.2
+const HOLD_OPEN := 20.0
 const STOP_Z := 162.5
 const STOP_WITHIN := 2.5
 const CODE := "4719"
@@ -125,6 +127,8 @@ var _exiting := false
 var _beep: AudioStreamPlayer3D
 var _motor: AudioStreamPlayer3D
 var _dark_van: Node3D
+var _dark_left: Node3D
+var _hold_for := 0.0
 var _left: Node3D
 var _van_box := Vector3(2.0, 2.5, 6.0)
 var _van_box_at := Vector3(0.0, 1.25, 0.0)
@@ -170,9 +174,13 @@ func reset() -> void:
 	_window_down = false
 	_exiting = false
 	_place_gate()
+	_hold_for = 0.0
 	if _left != null:
 		_left.queue_free()
 		_left = null
+	if _dark_left != null:
+		_dark_left.queue_free()
+		_dark_left = null
 	_dark_van.visible = true
 	_dark_body(true)
 
@@ -236,13 +244,17 @@ func vehicle_through() -> bool:
 		and YARD.has_point(Vector2(vehicle.global_position.x, vehicle.global_position.z))
 
 
-## Ethan keys the code in from the driver's seat: his window down, a beep a key, then the gate.
-func key_in() -> bool:
+## Ethan keys the code in, from the driver's seat (his window down) or on foot (`on_foot`): a
+## beep a key, then the gate; opened for a man on foot it holds open HOLD_OPEN seconds, as a
+## sliding gate's timer does, then shuts.
+func key_in(on_foot: bool = false) -> bool:
 	if keying() or _gate_target > 0.0:
 		return false
 	_keys_left = CODE.length()
 	_key_timer = KEY_SECONDS
-	if is_instance_valid(vehicle) and float(vehicle.get("left_window_target")) < 0.5:
+	_hold_for = HOLD_OPEN if on_foot else 0.0
+	if not on_foot and is_instance_valid(vehicle) \
+			and float(vehicle.get("left_window_target")) < 0.5:
 		vehicle.set("left_window_target", 1.0)
 		_window_down = true
 	return true
@@ -313,6 +325,59 @@ func left_van() -> Node3D:
 	return _left
 
 
+## The dark van left docked at the compound's door 3 once Ethan has taken his own back (step 6),
+## or null.
+func dark_left() -> Node3D:
+	return _dark_left
+
+
+## Whether `at` (Ethan on foot) stands at the keypad, within reach of its buttons.
+func at_keypad(at: Vector3) -> bool:
+	return _flat(at).distance_to(_flat(KEYPAD)) <= KEYPAD_REACH
+
+
+## Whether `at` (Ethan on foot) is at the driver's door of his own van, left in the bay.
+func at_left_door(at: Vector3) -> bool:
+	return _left != null and _flat(at).distance_to(_flat(_left.global_transform * DRIVER_DOOR)) \
+		<= AT_DOOR
+
+
+## The swap undone (Mission 2's step 6): the van he drives taken from `dark_at` (the compound's
+## door 3, where a parked copy of the dark van is left) to his own van's place in the bay, in its
+## paint, with its load and seal; the copy he left there gone. Returns the dark van's copy.
+func unswap(van: CharacterBody3D, dark_at: Transform3D) -> Node3D:
+	if _left == null:
+		return null
+	var presentation := van.get_node("VanPresentation")
+	var solid := _left.get_node_or_null("LeftVanBody")
+	if solid != null:
+		_left.remove_child(solid)
+		solid.free()
+	van.call("recover", _left.global_transform)
+	_dark_left = _parked_iveco("DarkVanLeft", dark_at, DARK)
+	presentation.call("set_paint", Color.WHITE)
+	var holder := van.call("body") as Node3D
+	for child in _left.get_children():
+		if child.has_meta("strapped") or String(child.name).begins_with("Pallet"):
+			(child as Node3D).reparent(holder, true)
+	van.set("seal_number", str(_left.get_meta("seal_number", "")))
+	van.set("sealed", bool(_left.get_meta("sealed", false)))
+	_left.queue_free()
+	_left = null
+	return _dark_left
+
+
+## As a reload at Mission 2's stage 4 finds it: his van in the bay with its load (`load_van`),
+## the dark van parked at `dark_at`.
+func restore_unswapped(van: CharacterBody3D, load_van: Callable, dark_at: Transform3D) -> void:
+	van.call("recover", BAY_POSE)
+	(van.get_node("VanPresentation") as Node).call("set_paint", Color.WHITE)
+	load_van.call()
+	_dark_van.visible = false
+	_dark_body(false)
+	_dark_left = _parked_iveco("DarkVanLeft", dark_at, DARK)
+
+
 func _physics_process(delta: float) -> void:
 	if _keys_left > 0:
 		_key_timer -= delta
@@ -326,7 +391,11 @@ func _physics_process(delta: float) -> void:
 	elif _gate_target == 0.0 and _on_exit_loop():
 		_gate_target = GATE_WIDE
 		_exiting = true
-	elif _gate_target > 0.0 and gate_open() and _behind_the_gate():
+	elif _hold_for > 0.0 and gate_open():
+		_hold_for -= delta
+		if _hold_for <= 0.0:
+			_gate_target = 0.0
+	elif _gate_target > 0.0 and gate_open() and _hold_for <= 0.0 and _behind_the_gate():
 		_gate_target = 0.0
 		_exiting = false
 	var moving := not is_equal_approx(_gate_open, _gate_target)

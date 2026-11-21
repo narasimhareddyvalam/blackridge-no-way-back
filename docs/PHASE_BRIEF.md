@@ -8649,3 +8649,74 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
 - **Claude Code's calls:** the prompt at the bottom centre over a dark pill (where a game shows
   what a key does); the marker's fade distances; the map pin held at the visible oval.
 - **To come:** step 3, the route along the roads.
+
+## Revision 2026-11-21 (the save rules, version 2: Mission 2's fifth checkpoint and its opening, #358)
+
+- **Changed, at the author's word to finish Mission 2 overnight and take its decisions (#358):**
+  The Wrong Cargo's `[cargo] stage` runs from 0 to **4** (was 0 to 3): 4 is his own van taken
+  back in the container yard's bay after the escape (step 6), where the getaway (step 7) resumes.
+  A file at stage 5 or more is kept aside as before. `[cargo]` may also hold `opening=true`, written
+  only by Mission 1's end with Mission 2's start, so that continuing plays Mission 2's opening, its
+  dispatcher's text and Maya's call (step 8) once; the opening played, the start is saved again
+  without it. Mission 2's end (step 7) saves Mission 2's start again until Mission 3 exists.
+- **Tests:** `test_save_rules.gd` keeps a stage 5 file aside (its old stage 4 case, which the
+  fifth checkpoint makes valid); `test_cargo_opening.gd` MO3, MO6, MO7; `test_getaway.gd` G4.
+
+## Revision 2026-11-21 (Phase 2, Mission 2's steps 3, 6, 7 and 8 built: Mission 2 playable to its end, #358)
+
+- **Asked (#358):** "find the best real life patrol guard. take all decisions for me and finish
+  off mission 2 over night". Every choice below is **Claude Code's call**, for the author's review;
+  every story word is a draft (C03 stays the author's to settle).
+- **The patrol guard:** "Security Guard - Rigged 3D Model" by qsardor57913 on Sketchfab (CC BY
+  4.0; 13,315 triangles, a Mixamo rig): a contract security officer's grey long-sleeved uniform
+  shirt with epaulettes and shoulder patches, tie, black trousers and a duty belt (handcuffs,
+  radio, torch holder), chosen over a bald man in black with a pistol (no gun, C51) and over
+  low-poly, cartoon and game-fan models. Ethan's own Mixamo clips (idle, walk 1.58 m/s, run
+  4.20 m/s) are baked onto it as turns from the T-pose (`tools/art/convert_patrol_guard.py`;
+  raw file and README in `source_assets/sketchfab/29_security_guard/`). A torch on his left
+  epaulette, as patrol officers clip them, lit lens and beam.
+- **Step 6, the escape (`escape.gd`, `patrol_guard.gd`, the stand-ins D6):** docked at door 3, two
+  guards walk out of the east warehouse's man door to the van, a third stands inside the gate
+  looking side to side; GET OUT AND RUN; staying in, he is caught when the first reaches the cab.
+  A guard sees 15 m, 50 degrees either side, where nothing solid (the world, or a van) stands
+  between; in sight 1.0 s without a break, or within 1.5 m, Ethan is caught: the screen fades and
+  all is as at the escape's start (in the van, the guards home, the warning unsent). Over a guard
+  who sees him, a mark fills white to red (`seen_marks.gd`). Out of the van 4 s, a text from an
+  unknown number: "Don't go for the gate. The fence by the containers is cut. Wait for the torch to
+  turn." (S3, secretly Maya; a draft); REACH THE CUT IN THE FENCE. The cut (`compound.gd`'s `_cut`):
+  0.8 m wide, 2 m high, at x 138, z 140, the chain-link peeled out into the alley, the rail and
+  barbed wire above it whole. Out through it, GET BACK TO YOUR VAN; on foot at the yard's keypad
+  E keys the code, the gate holds open 20 s (a sliding gate's timer) then shuts; TAKE YOUR VAN BACK;
+  E at its door undoes the swap: his van, white, loaded and sealed, drivable in the bay, the dark
+  van parked at door 3; stage 4 saved. A test bot wins it by keys (round the back of the east
+  warehouse, cover by the west one's trailer, through when the cut's guard walks away east).
+- **Step 7, the getaway and the ending:** DRIVE OUT, marked at road sample 990 where the hill road
+  begins; within 60 m PULL OVER; stopped within 12 m, Mission 1's own ending (the cab quiet, the
+  engine off, black, back to the title, no title card, C04); the save holds Mission 2's start.
+  "MISSION 2 IS BEING BUILT" is gone.
+- **Step 3, the inspection (S4):** after the seal check, READ THE BILL OF LADING; in the cab
+  "E  Read the bill of lading" shows it: 1 pallet of machine parts, 410 kg declared, the dock 9 scale
+  ticket stapled to it at 1,180 kg, a correction label over the shipper with VALE FREIGHT LT showing
+  at its edge, "DO NOT OPEN. DO NOT INSPECT CONTENTS."; Ethan notes the weight and that the van sits
+  low on its springs; the seal stays whole; the load is never seen. E in the cab now puts a paper
+  away before it would leave the van.
+- **Step 8, the opening, the job and Maya's call (S2, S3, S5):** continuing from Mission 1's end:
+  DAYS LATER, the depot in the rain, the new windshield (S5: replaced), THE WRONG CARGO full screen
+  (titles now shrink to fit the frame), down to the cab; then a text from NORTHLINE DISPATCH, K.
+  MARSH (S2: the job reaches him by text from a new dispatcher): the transfer at bay 9, sealed, "do
+  not open, do not inspect"; 80 m from the depot Maya calls: "Good. That's good, Ethan. Keep at it."
+  ... "Just take the work. Don't think about it too much." (S3; GAME_STORY's "subtly encourages him
+  to keep working").
+- **Tests changed, with their reasons:** `test_sealing.gd` H6 (the objective after the seal check is
+  now the inspection's); `test_compound.gd` K1 (the fence's length less the 0.8 m cut);
+  `test_loading_bay.gd` L4, L5 (docked, the objective is the escape's, no longer the placeholder's
+  "the hill road"); `test_save_rules.gd` (stage 5 the bad checkpoint); `test_exhaust_vapour_state.gd`
+  (skips Mission 1's opening).
+- **New tests:** `test_escape.gd` (13), `test_escape_route.gd` (1), `test_getaway.gd` (5),
+  `test_inspection.gd` (5), `test_cargo_opening.gd` (7), each red first. Mutations: escape 14,
+  getaway 5, inspection 4, opening 6, all exit 1 (`logs/phase_2/{escape,getaway,inspection,
+  cargo_opening}/mutations/`). Stills: `captures/audit/escape/a2/`,
+  `captures/audit/mission_two_end/`.
+- **Unverified:** how the guards' rounds feel in play (timing, fairness) and the look of their walk
+  at a distance; the cut's flap in the dark; the guards are stand-ins (Assignment 9 replaces their
+  behaviour); the GPU price waits for the mission's end on power (now).

@@ -2,14 +2,24 @@ extends Node
 
 signal objective_changed(title: String, detail: String)
 signal seal_checked(words: String)
+## A paper Ethan reads (the inspection's bill of lading, step 3), shown as the seal check is.
+signal paper_shown(words: String)
 signal checkpoint_reached(config: ConfigFile)
+## The escape (step 6): a guard caught Ethan; the app puts all back as at its start.
+signal escape_caught
+## A text on Ethan's phone (the escape's anonymous warning, S3).
+signal text_received(sender: String, words: String)
+## The mission's end (step 7): stopped where the hill road begins.
+signal drive_completed
+
+const Escape = preload("escape.gd")
 
 const MISSION := "the_wrong_cargo"
 const NAME := "The Wrong Cargo"
 const PLACES: Array[String] = ["The freight depot", "The transfer shed", "The container yard",
-	"The warehouse compound"]
+	"The warehouse compound", "Your van, taken back"]
 const NEXT: Array[String] = ["The transfer shed", "The container yard", "The warehouse compound",
-	"The hill road"]
+	"The hill road", "The hill road"]
 const START := Transform3D(Basis(Vector3.UP, PI), Vector3(-28.0, 0.1, 93.0))
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
 const TITLE_LOOK := Vector3(1.3, 1.3, 0.7)
@@ -33,6 +43,45 @@ const LOADED_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(-47.75, 0.1, 26.14
 const DARK_VAN := Transform3D(Basis(Vector3.UP, PI), Vector3(104.5, 0.1, 140.0))
 ## The dark van docked at the compound's door 3 (step 5): its rear 0.03 m off the bumpers.
 const AT_DOOR_THREE := Transform3D(Basis(Vector3.UP, PI), Vector3(248.0, 0.1, 134.67))
+## The opening's words (step 8; S2 and S3 decided by Claude Code at the author's word, #358,
+## drafts): the new dispatcher's text bringing the job, and Maya's call once he drives off.
+const DISPATCHER := "NORTHLINE DISPATCH · K. MARSH"
+const DISPATCH := "BR 048: transfer tonight. Load at the transfer shed, bay 9; your run sheet " \
+	+ "is in the cab. Sealed consignment: do not open, do not inspect. Rate as agreed."
+const MAYA_CHECK_IN: Array = [
+	["MAYA", "Hey. You're out again?"],
+	["ETHAN", "New dispatcher. Better money."],
+	["MAYA", "Good. That's good, Ethan. Keep at it."],
+	["ETHAN", "You sound tired."],
+	["MAYA", "I'm fine. Just take the work. Don't think about it too much."],
+	["ETHAN", "Sunday still on?"],
+	["MAYA", "We'll see. Drive safe."],
+]
+const CALL_AFTER := 80.0
+## The getaway's end (step 7): within END_NEAR of the hill road's start PULL OVER, and stopped
+## within END_STOP of it the mission ends.
+const END_SAMPLE := 990
+const END_NEAR := 60.0
+const END_STOP := 12.0
+const STOPPED := 0.5
+## His van taken back in the container yard's bay (step 6), where stage 4 resumes.
+const IN_THE_BAY := Transform3D(Basis.IDENTITY, Vector3(95.0, 0.1, 138.0))
+## The inspection (step 3; S4 decided by Claude Code at the author's word, #358; its words a draft):
+## the bill of lading that came with the load, the dock's scale ticket stapled to it.
+const BILL := "BILL OF LADING - STRAIGHT, NOT NEGOTIABLE\nNo. 7731-046\n\n" \
+	+ "SHIPPER ......... HALVERN MACHINE WORKS\n" \
+	+ "                  (a correction label; at its edge,\n" \
+	+ "                   the print beneath: VALE FREIGHT LT)\n" \
+	+ "CONSIGNEE ....... EAST WAREHOUSE, DOOR 3\n" \
+	+ "CARRIER ......... BLACKRIDGE FREIGHT, VAN BR 048\n\n" \
+	+ "1 PALLET, SHRINK-WRAPPED: MACHINE PARTS\n" \
+	+ "DECLARED WEIGHT . 410 KG\nSEAL ............ %s\n\n" \
+	+ "DO NOT OPEN. DO NOT INSPECT CONTENTS.\n\n" \
+	+ "STAPLED: DOCK 9 SCALE TICKET\nGROSS ON FORKS .. 1,180 KG"
+const BILL_NOTE := "410 kg on the bill. The dock's scale said 1,180. And the van sits low on " \
+	+ "its springs."
+## The cut in the compound's fence (step 6), where it steps round the container yard.
+const CUT := Vector3(138.0, 1.0, 140.0)
 const SEAL_CHECK := "BOLT SEAL CHECK\n\nBolt ............ %s\nCap ............. %s\n" \
 	+ "Run sheet ....... %s\n\nViewed, verified, tugged and twisted:\nthe same number, whole " \
 	+ "and tight."
@@ -49,10 +98,21 @@ var yard: Node3D
 var compound: Node3D
 ## Ethan on foot, who works the van's rear doors by hand (part B); the app gives him.
 var driver: Node3D
+## The escape from the compound (step 6), once docked at door 3; null before.
+var escape: Node
+## Where the getaway ends (step 7): road sample 990, where the hill road begins; the app gives it.
+var road_end := Vector3.INF
+## Mission 2's opening still to play (step 8): set only in the save Mission 1's end leaves.
+var opening_pending := false
+## Maya's call still to come once he drives off, after the opening.
+var call_pending := false
+var _completed := false
 
 var _shown := ""
 var _title := ""
 var _seal_checked := false
+## Whether the bill of lading has been read (step 3); false only once the seal is checked live.
+var _bill_read := true
 var _hand_when_shut := false
 
 
@@ -72,11 +132,15 @@ static func start_progress() -> ConfigFile:
 func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	vehicle = van
 	stage = config.get_value("cargo", "stage")
-	recovery_pose = [START, LOADED_AT, DARK_VAN, AT_DOOR_THREE][stage]
+	recovery_pose = [START, LOADED_AT, DARK_VAN, AT_DOOR_THREE, IN_THE_BAY][stage]
 	vehicle.recover(recovery_pose)
 	vehicle.call("unload")
 	(vehicle.get_node("VanPresentation") as Node).call("set_paint", Color.WHITE)
 	_seal_checked = stage >= 1
+	_bill_read = true
+	opening_pending = stage == 0 and bool(config.get_value("cargo", "opening", false))
+	call_pending = false
+	_completed = false
 	if yard != null:
 		yard.call("reset")
 		yard.call("watch", vehicle)
@@ -91,12 +155,19 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 		shed.watch(vehicle)
 		if stage == 1:
 			shed.call("restore_loaded", vehicle, SEAL_NUMBER)
+		elif stage == 4 and yard != null:
+			yard.call("restore_unswapped", vehicle, func() -> void:
+				shed.call("restore_loaded", vehicle, SEAL_NUMBER), AT_DOOR_THREE)
 		elif stage >= 2 and yard != null:
 			yard.call("restore_swapped", vehicle, func() -> void:
 				shed.call("restore_loaded", vehicle, SEAL_NUMBER))
 	if stage == 3:
 		vehicle.recover(recovery_pose)
 		restore_place()
+		_begin_escape()
+	elif escape != null:
+		escape.queue_free()
+		escape = null
 	_shown = ""
 	_update_objective()
 
@@ -106,8 +177,10 @@ func wants_interact() -> bool:
 		return bool(compound.call("vehicle_at_window")) and bool(compound.call("gate_shut")) \
 			and not bool(compound.call("checking"))
 	if active and stage == 1 and yard != null:
-		return bool(yard.call("vehicle_at_stop")) and bool(yard.call("gate_shut")) \
-			and not bool(yard.call("keying"))
+		if bool(yard.call("vehicle_at_stop")) and bool(yard.call("gate_shut")) \
+				and not bool(yard.call("keying")):
+			return true
+		return not _bill_read and bool(vehicle.get("occupied"))
 	return active and stage == 0 and shed != null and shed.vehicle_at_window() \
 		and not shed.barrier_open() and not shed.checking()
 
@@ -115,6 +188,11 @@ func wants_interact() -> bool:
 func interact() -> String:
 	if absf(float(vehicle.get("speed"))) > 0.3:
 		return "Stop at the line first."
+	if stage == 1 and not _bill_read and not bool(yard.call("vehicle_at_stop")):
+		_bill_read = true
+		paper_shown.emit(BILL % str(vehicle.get("seal_number")))
+		_update_objective()
+		return BILL_NOTE
 	if stage == 1:
 		yard.call("key_in")
 		_update_objective()
@@ -130,6 +208,8 @@ func interact() -> String:
 
 ## What E does at a gate from the driver's seat, for the key prompt (#358).
 func interact_label() -> String:
+	if stage == 1 and not _bill_read and yard != null and not bool(yard.call("vehicle_at_stop")):
+		return "Read the bill of lading"
 	return "Key in the gate code" if stage == 1 else "Hand over the run sheet"
 
 
@@ -165,6 +245,17 @@ func objective_target() -> Vector3:
 			return Vector3(95.0, 0.6, 138.0)
 		"TAKE THE DARK VAN":
 			return DARK_VAN * Vector3(-1.1, 1.2, -1.3)
+		"REACH THE CUT IN THE FENCE":
+			return CUT
+		"DRIVE OUT", "PULL OVER":
+			return road_end + Vector3.UP * 1.5
+		"GET BACK TO YOUR VAN":
+			var pad := yard.find_child("Keypad", true, false) as Node3D
+			return pad.global_position if pad != null else Vector3.INF
+		"TAKE YOUR VAN BACK":
+			var left := yard.call("left_van") as Node3D
+			return left.global_transform * Vector3(-1.1, 1.2, -1.3) if left != null \
+				else Vector3.INF
 		"DRIVE TO THE WAREHOUSE COMPOUND", "STOP AT THE BOOTH":
 			return (compound.get("booth") as Node3D).call("opening_centre")
 	if _title == "DRIVE IN" and stage == 1:
@@ -179,6 +270,13 @@ func objective_target() -> Vector3:
 ## from behind it, while it stands still.
 func foot_action(at: Vector3) -> String:
 	if not active or vehicle == null or bool(vehicle.get("occupied")):
+		return ""
+	if stage == 3 and yard != null and escape != null and bool(escape.get("outside")):
+		if bool(yard.call("at_left_door", at)):
+			return "Take your van back"
+		if bool(yard.call("at_keypad", at)) and bool(yard.call("gate_shut")) \
+				and not bool(yard.call("keying")):
+			return "Key in the gate code"
 		return ""
 	if stage == 1 and yard != null and bool(yard.call("at_dark_door", at)):
 		return "Take the dark van" if bool(yard.call("in_bay")) \
@@ -263,6 +361,12 @@ func do_foot_action(at: Vector3) -> String:
 		"Take the dark van":
 			_take_dark_van()
 			return "The dark van is open, its key on the visor."
+		"Key in the gate code":
+			yard.call("key_in", true)
+			return "You key in the gate code from the run sheet."
+		"Take your van back":
+			_take_van_back()
+			return "Your van, the load still sealed in it. Its key is where you left it."
 	return ""
 
 
@@ -280,6 +384,7 @@ func _take_dark_van() -> void:
 ## Ethan's check of the seal (H5): the numbers side by side, then "loaded" saves stage 1 (H6).
 func _check_seal() -> void:
 	_seal_checked = true
+	_bill_read = false
 	var number := str(vehicle.get("seal_number"))
 	seal_checked.emit(SEAL_CHECK % [number, number, SEAL_NUMBER])
 	stage = 1
@@ -429,7 +534,100 @@ func _judged() -> void:
 	var config := start_progress()
 	config.set_value("cargo", "stage", stage)
 	checkpoint_reached.emit(config)
+	_begin_escape()
 	_update_objective()
+
+
+## The escape begins (step 6), or begins again: the guards at their starts, the warning unsent.
+func _begin_escape() -> void:
+	if escape == null:
+		escape = Escape.new()
+		escape.name = "Escape"
+		add_child(escape)
+		escape.connect("caught", func() -> void: escape_caught.emit())
+		escape.connect("warning", func(sender: String, words: String) -> void:
+			text_received.emit(sender, words))
+	escape.set("vehicle", vehicle)
+	escape.set("driver", driver)
+	escape.set("area", PackedVector2Array(compound.OUTLINE))
+	escape.call("reset")
+
+
+## The opening played (step 8): the save no longer asks for it, and Maya's call is to come.
+func opening_played() -> void:
+	opening_pending = false
+	call_pending = true
+	checkpoint_reached.emit(start_progress())
+
+
+## Whether Maya should call now: the opening played and the van CALL_AFTER from the depot.
+func call_due() -> bool:
+	if not call_pending or vehicle == null or not bool(vehicle.get("occupied")):
+		return false
+	var away := Vector2(vehicle.global_position.x - START.origin.x,
+		vehicle.global_position.z - START.origin.z).length()
+	if away < CALL_AFTER:
+		return false
+	call_pending = false
+	return true
+
+
+func _to_the_end() -> float:
+	if road_end == Vector3.INF or vehicle == null:
+		return INF
+	return Vector2(vehicle.global_position.x - road_end.x,
+		vehicle.global_position.z - road_end.z).length()
+
+
+## Stopped where the hill road begins (step 7): Mission 2's start saved again, since there is no
+## Mission 3 yet, and the end as Mission 1's, a quiet beat in the cab with no title (C04).
+func _check_end() -> void:
+	if _completed or not bool(vehicle.get("occupied")) or _to_the_end() > END_STOP \
+			or absf(float(vehicle.get("speed"))) > STOPPED:
+		return
+	_completed = true
+	checkpoint_reached.emit(start_progress())
+	drive_completed.emit()
+
+
+func _in_yard(at: Vector3) -> bool:
+	return Rect2(64.0, 132.0, 72.0, 26.0).has_point(Vector2(at.x, at.z))
+
+
+## His van taken back (step 6): the swap undone in the yard, the dark van left at door 3, the
+## escape over, stage 4 saved.
+func _take_van_back() -> void:
+	yard.call("unswap", vehicle, AT_DOOR_THREE)
+	if escape != null:
+		escape.queue_free()
+		escape = null
+	stage = 4
+	recovery_pose = IN_THE_BAY
+	var config := start_progress()
+	config.set_value("cargo", "stage", stage)
+	checkpoint_reached.emit(config)
+	_update_objective()
+
+
+## The escape's objective (step 6; its words drafts for the author, S3).
+func _escaping() -> Array[String]:
+	if bool(escape.get("outside")):
+		if bool(yard.call("keying")) or (not bool(yard.call("gate_open"))
+				and not bool(yard.call("gate_shut"))):
+			return ["WAIT FOR THE GATE", "The gate is sliding open."]
+		if bool(yard.call("gate_open")) or _in_yard(driver.global_position):
+			return ["TAKE YOUR VAN BACK", "Your van is in the marked bay, the load still sealed "
+				+ "in it: E at its driver's door."]
+		return ["GET BACK TO YOUR VAN", "Round to the container yard's gate by the valley road: "
+			+ "key in the code from the run sheet."]
+	if bool(vehicle.get("occupied")):
+		return ["GET OUT AND RUN",
+			"They have come for the van. Get out before they reach the cab."]
+	if bool(escape.get("warned")):
+		return ["REACH THE CUT IN THE FENCE", "West, where the fence steps round the container "
+			+ "yard. Keep something solid between you and the torches."]
+	return ["GET PAST THE PATROLS",
+		"Stay out of the guards' sight: keep trailers, stacks and walls between you and them."]
 
 
 ## What a reload puts back that recovering the van does not: docked at door 3, its rear doors
@@ -448,6 +646,8 @@ func _behind_the_van(at: Vector3) -> bool:
 func recover() -> void:
 	vehicle.recover(recovery_pose)
 	restore_place()
+	if stage == 3 and escape != null:
+		escape.call("reset")
 
 
 func place_reached() -> String:
@@ -463,21 +663,37 @@ func _physics_process(_delta: float) -> void:
 		_hand_when_shut = false
 		if not bool(vehicle.get("rear_doors_open")):
 			shed.call("call_dock_hand", vehicle, SEAL_NUMBER)
-	if active and stage <= 2:
+	if active and stage <= 4:
 		_update_objective()
+	if active and stage == 4:
+		_check_end()
 
 
 func _update_objective() -> void:
-	var title := "MISSION 2 IS BEING BUILT"
+	var title := ""
 	var detail := "Next: %s." % NEXT[stage].to_lower()
 	if stage == 1 and yard != null:
 		var words := _to_the_yard()
 		title = words[0]
 		detail = words[1]
+		if not _bill_read:
+			title = "READ THE BILL OF LADING"
+			detail = "In the cab: the paperwork that came with the load."
 	if stage == 2 and compound != null:
 		var words := _to_the_compound()
 		title = words[0]
 		detail = words[1]
+	if stage == 3 and escape != null:
+		var words := _escaping()
+		title = words[0]
+		detail = words[1]
+	if stage == 4:
+		title = "DRIVE OUT"
+		detail = "Out of the yard and west on the valley road, past the depot, then up the " \
+			+ "hill road."
+		if _to_the_end() < END_NEAR:
+			title = "PULL OVER"
+			detail = "Pull onto the verge here and stop."
 	if stage == 0 and shed != null:
 		if shed.vehicle_through():
 			var bay := _bay()

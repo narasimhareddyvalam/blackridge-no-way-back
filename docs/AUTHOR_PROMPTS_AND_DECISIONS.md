@@ -5131,6 +5131,14 @@ tag `a5`. Pictures the author approved or rejected are filed in
        for the author's review in the morning (story words as drafts, C03); same rules: real
        references first, tests first, a commit per part once every suite passes, no push, no
        edits to `game/shaders/`; `caffeinate` for 6 hours, stopped when Mission 2 is done.
+     - **Claude Code's calls (for the author's review):** the opening restarts no more on New
+       drive (a fix); the patrol guard, qsardor57913's "Security Guard - Rigged 3D Model" (CC BY);
+       the escape as briefed, its guards stand-ins (D6); S2 the job by text from NORTHLINE
+       DISPATCH, K. MARSH; S3 the warning ("Don't go for the gate. The fence by the containers is
+       cut. Wait for the torch to turn.") and Maya's check-in ("Keep at it"); S4 the bill of lading
+       (410 kg declared, 1,180 kg weighed, VALE FREIGHT under a correction label, the load never
+       seen); S5 the windshield replaced; the ending at road sample 990 as Mission 1's; all words
+       drafts (`docs/PHASE_BRIEF.md`, 2026-11-21).
 
 ## Waiting for the author
 

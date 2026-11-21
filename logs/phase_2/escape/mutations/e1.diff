@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/patrol_guard/patrol_guard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e1/game/features/characters/patrol_guard/patrol_guard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/patrol_guard/patrol_guard.gd	2026-11-21 18:06:53
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e1/game/features/characters/patrol_guard/patrol_guard.gd	2026-11-21 18:09:25
+@@ -16,7 +16,7 @@
+ ## The walk clip's own ground speed (convert_patrol_guard.py), so his feet do not slide.
+ const CLIP_SPEED := 1.578
+ const EYE := 1.62
+-const SIGHT := 15.0
++const SIGHT := 25.0
+ const HALF_ANGLE := deg_to_rad(50.0)
+ const SOLID := 1 | 2
+ const TURN_RATE := deg_to_rad(120.0)

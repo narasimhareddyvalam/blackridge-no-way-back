@@ -14,6 +14,8 @@ const OUTLINE: Array[Vector2] = [Vector2(138.0, 146.0), Vector2(274.0, 146.0),
 	Vector2(274.0, 92.0), Vector2(128.0, 92.0), Vector2(128.0, 130.0), Vector2(138.0, 130.0)]
 const GATE := Vector2(197.0, 203.0)
 const FENCE_HEIGHT := 2.4
+## The cut in the fence by the container yard (step 6, the escape), at ground level.
+const CUT_WIDE := 0.8
 const YARD_CLEAR := 1.5
 const WAREHOUSES: Array[Vector2] = [Vector2(150.0, 112.0), Vector2(250.0, 120.0)]
 const SHED_GUARD := "res://features/characters/guard/guard.glb"
@@ -97,10 +99,10 @@ func _check_fence() -> void:
 	var on_outline := not runs.is_empty()
 	for run: Dictionary in runs:
 		on_outline = on_outline and _on_outline(run["from"]) and _on_outline(run["to"])
-	_check(absf(length + (GATE.y - GATE.x) - perimeter) < 0.01 and tall and on_outline
+	_check(absf(length + (GATE.y - GATE.x) + CUT_WIDE - perimeter) < 0.01 and tall and on_outline
 		and barbs == runs.size() * 3, "K1: the compound fenced round in 2.4 m chain-link with "
-		+ "barbed wire but for its 6 m gate (%.1f m of %.1f m, %d strands)" % [length, perimeter,
-		barbs])
+		+ "barbed wire but for its 6 m gate and the escape's 0.8 m cut (%.1f m of %.1f m, %d "
+		+ "strands)" % [length, perimeter, barbs])
 	var inside := true
 	for at in WAREHOUSES:
 		inside = inside and Geometry2D.is_point_in_polygon(at, PackedVector2Array(OUTLINE))

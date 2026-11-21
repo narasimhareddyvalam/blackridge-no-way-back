@@ -1,5 +1,31 @@
 # HANDOFF.md
 
+**This run (2026-11-21 into the night, #358: Mission 2 finished, steps 3, 6, 7 and 8):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's steps 3, 6, 7
+  and 8 built: Mission 2 playable to its end, #358)" and the save rules' revision before it. Files:
+  `game/features/characters/patrol_guard/` (new: the model, `patrol_guard.gd`),
+  `game/features/missions/the_wrong_cargo/` (`escape.gd`, `opening_cutscene.gd` new;
+  `the_wrong_cargo.gd`), `compound.gd` (the cut), `container_yard.gd` (`at_keypad`,
+  `at_left_door`, `key_in(on_foot)`, `unswap`, `restore_unswapped`), `driving_hud.gd` (text card,
+  seen marks), `seen_marks.gd` (new), `film_look.gd` (titles fit), `game/app/first_drive.gd`,
+  `night_freight/first_drive.gd` (the opening flag), `front_menu.gd` and `ATTRIBUTION.md` (the
+  guard's credit), `tools/art/convert_patrol_guard.py`, `tools/captures/capture_escape.gd`,
+  `capture_mission_two_end.gd` (new); tests below.
+- **Results (exact):** `test_escape.gd` 13/13, `test_escape_route.gd` 1/1, `test_getaway.gd` 5/5,
+  `test_inspection.gd` 5/5, `test_cargo_opening.gd` 7/7 (each red first). Mutations (`python3 -I
+  logs/phase_2/<escape|getaway|inspection|cargo_opening>/mutations/mutations_*.py <scratch> <out>`):
+  29, all exit 1. Suites: `bash logs/phase_2/mission_two_end/suites/run_suites.sh <scratch>`: 71
+  runs exit 0, art check 0 failures; after it the full title's fit: `test_opening.gd` 7/7,
+  `test_cargo_opening.gd` 7/7, `test_menus.gd` 20/20 (`logs/phase_2/mission_two_end/after_title/`).
+  Committed on `develop` (not pushed).
+- **Claude Code's calls for the author's review (#358):** the guard model; the guards' rounds,
+  sight (15 m, 50 degrees, 1.0 s, 1.5 m) and the seen mark; the cut's place and size; the yard's
+  gate held 20 s on foot; S2 (NORTHLINE DISPATCH, K. MARSH, by text), S3 (the warning's and Maya's
+  words), S4 (410 kg against 1,180 kg, VALE FREIGHT under a label, the load never seen), S5 (the
+  windshield replaced); the ending at sample 990 as Mission 1's.
+- **Next:** the author's morning look (stills open); guidance step 3 (the route line); the GPU
+  price on power now the mission is whole; Mission 3's brief.
+
 **This run (2026-11-21, guidance step 2, #358; the opening's restart fixed):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance (#356),
   step 2 built; the opening on a restart, fixed)". Files: `objective_marker.gd` (new),

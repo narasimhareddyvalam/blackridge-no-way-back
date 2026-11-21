@@ -31,6 +31,13 @@ const OUTLINE: Array[Vector2] = [Vector2(138.0, 146.0), Vector2(274.0, 146.0),
 	Vector2(274.0, 92.0), Vector2(128.0, 92.0), Vector2(128.0, 130.0), Vector2(138.0, 130.0)]
 const OUTWARD: Array[Vector3] = [Vector3.BACK, Vector3.RIGHT, Vector3.FORWARD, Vector3.LEFT,
 	Vector3.BACK, Vector3.LEFT]
+## The cut (Mission 2's step 6, the escape, #358): where the fence steps round the container
+## yard, its chain-link cut along a post and peeled back into the alley, CUT_WIDE at the ground and
+## CUT_HIGH up; the top rail and the barbed wire above it whole. Wide enough for a man, never a van.
+const CUT := Vector2(138.0, 140.0)
+const CUT_WIDE := 0.8
+const CUT_HIGH := 2.0
+const CUT_PEEL := deg_to_rad(65.0)
 const PAVED: Array[Rect2] = [Rect2(138.0, 92.0, 136.0, 54.0), Rect2(128.0, 92.0, 10.0, 38.0)]
 const GATE_X := 200.0
 const GATE_WIDE := 6.0
@@ -411,12 +418,49 @@ func _boundary() -> void:
 		var pieces: Array[Array] = [[from, to]]
 		if index == 0:
 			pieces = [[from, Vector2(west, GATE_Z)], [Vector2(east, GATE_Z), to]]
+		if index == OUTLINE.size() - 1:
+			pieces = [[from, CUT - Vector2(0.0, CUT_WIDE / 2.0)],
+				[CUT + Vector2(0.0, CUT_WIDE / 2.0), to]]
 		for piece in pieces:
 			var a: Vector2 = piece[0]
 			var b: Vector2 = piece[1]
 			fence.run(self, _body, Vector3(a.x, GROUND, a.y), Vector3(b.x, GROUND, b.y),
 				OUTWARD[index])
 			_fence_runs.append({"from": a, "to": b})
+	_cut(fence)
+
+
+## Over the cut, the top rail, the strip of mesh above it and the barbed wire run on whole; the
+## cut mesh hangs from the south post, peeled out into the alley.
+func _cut(fence: Fence) -> void:
+	var south := Vector3(CUT.x, GROUND, CUT.y - CUT_WIDE / 2.0)
+	var middle := Vector3(CUT.x, GROUND, CUT.y)
+	var across := Basis(Vector3.BACK, Vector3.UP, Vector3.BACK.cross(Vector3.UP))
+	var rail := Build.box(self, middle + Vector3.UP * Fence.HEIGHT, Vector3(CUT_WIDE, 0.042,
+		0.042), fence.galvanised)
+	rail.basis = across
+	var strip := QuadMesh.new()
+	strip.size = Vector2(CUT_WIDE, Fence.HEIGHT - CUT_HIGH)
+	var above := Build.instance(self, middle + Vector3.UP * (CUT_HIGH + Fence.HEIGHT) / 2.0,
+		strip, fence.link)
+	above.basis = across
+	above.name = "CutAbove"
+	for strand in range(1, 4):
+		var lift := Fence.BARB_ARM * strand / 3.0 * 0.7071
+		var barb := Build.box(self, middle + Vector3.UP * (Fence.HEIGHT + lift) + Vector3.LEFT
+			* lift, Vector3(CUT_WIDE, 0.006, 0.006), fence.wire)
+		barb.basis = across
+	var hinge := Node3D.new()
+	hinge.name = "CutFlap"
+	add_child(hinge)
+	hinge.position = south
+	hinge.rotation.y = -CUT_PEEL
+	var flap := QuadMesh.new()
+	flap.size = Vector2(CUT_WIDE * 0.92, CUT_HIGH - 0.1)
+	var peeled := Build.instance(hinge, Vector3(0.0, CUT_HIGH / 2.0 + 0.04, CUT_WIDE * 0.46),
+		flap, fence.link)
+	peeled.basis = Basis(Vector3.UP, PI / 2.0)
+	peeled.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 ## The yard at night (part C): floodlights on poles along the north fence; trailers dropped

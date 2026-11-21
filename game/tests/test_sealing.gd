@@ -243,9 +243,9 @@ func _check_seal() -> void:
 	var read := saved.load(_scratch)
 	_check(read == OK and saved.get_value("cargo", "stage", -1) == 1
 		and saved.get_value("save", "mission", "") == "the_wrong_cargo"
-		and _objective() == "DRIVE TO THE CONTAINER YARD",
+		and _objective() == "READ THE BILL OF LADING",
 		("H6: checked, \"loaded\" saves Mission 2's stage 1 (stage %s in the file) and the "
-		+ "objective moves on (%s)") % [saved.get_value("cargo", "stage", -1), _objective()])
+		+ "objective moves on to the inspection's paperwork (%s)") % [saved.get_value("cargo", "stage", -1), _objective()])
 
 
 func _check_reload() -> void:

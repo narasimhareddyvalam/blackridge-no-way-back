@@ -1,0 +1,10 @@
+i1  no paperwork to read           test_inspection.gd exit 1, 2/5 passed; 3 failed
+      FAIL: I2: the seal checked, READ THE BILL OF LADING (DRIVE TO THE CONTAINER YARD), the prompt in the cab (W / S  Acc
+      FAIL: I3: E shows the bill: 410 kg declared, 1,180 kg on the dock's scale, VALE FREIGHT at the label's edge, do not 
+      FAIL: I4: the seal stays whole (true), and Ethan notes the weight (Checkpoint saved)
+i2  no trace of Vale Freight       test_inspection.gd exit 1, 4/5 passed; 1 failed
+      FAIL: I3: E shows the bill: 410 kg declared, 1,180 kg on the dock's scale, VALE FREIGHT at the label's edge, do not 
+i3  E in the cab leaves the van with the paper open test_inspection.gd exit 1, 4/5 passed; 1 failed
+      FAIL: I5: E puts it away; DRIVE TO THE CONTAINER YARD (DRIVE TO THE CONTAINER YARD)
+i4  asked again on every reload    test_inspection.gd exit 1, 4/5 passed; 1 failed
+      FAIL: I1: a reload at stage 1 goes on to the container yard, the bill already read (READ THE BILL OF LADING)

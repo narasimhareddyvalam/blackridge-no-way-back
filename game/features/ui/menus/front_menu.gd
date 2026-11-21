@@ -553,6 +553,9 @@ func _credits_text() -> String:
 	_section(lines, "THE COMPOUND GATE'S LIGHT", "\"LED Floodlight\" by The Street Light Man "
 		+ "(Sketchfab: thestreetlightman), licensed CC BY 4.0: the floods on the compound gate's "
 		+ "pole, stood on their yokes.")
+	_section(lines, "THE COMPOUND'S PATROLS", "\"Security Guard - Rigged 3D Model\" by qsardor57913 "
+		+ "(Sketchfab: qsardor57913), licensed CC BY 4.0: the patrol guards, given the walk and idle "
+		+ "of Ethan's own Mixamo clips.")
 	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "
 		+ "thejinjinjin), licensed CC BY 4.0: the yard's top-loader, its spreader drawn in. The "
 		+ "boxes' markings are set in Barlow Condensed by The Barlow Project Authors, released "

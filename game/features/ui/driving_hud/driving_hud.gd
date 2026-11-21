@@ -11,6 +11,7 @@ const VanGuide = preload("van_guide.gd")
 const FrontMenu = preload("res://features/ui/menus/front_menu.gd")
 const MissionMap = preload("mission_map.gd")
 const ObjectiveMarker = preload("objective_marker.gd")
+const SeenMarks = preload("seen_marks.gd")
 ## The HUD's lettering, Barlow Condensed SemiBold (SIL Open Font License 1.1, `fonts/OFL.txt`).
 const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
 ## The objective beside the mission map (#356): its left edge clear of the map, its foot level
@@ -22,12 +23,16 @@ const HINT_MARGIN := 28.0
 ## so they read over a bright dashboard.
 const BACKING := Vector2(900.0, 240.0)
 const PROMPT_FOOT := 178.0
+const TEXT_WIDTH := 380.0
+const TEXT_SECONDS := 10.0
 
 var menu_visible: bool = true
 var settings_path: String = ""
 var van_guide := VanGuide.new()
 var mission_map := MissionMap.new()
 var objective_marker := ObjectiveMarker.new()
+## Over each guard who sees Ethan, how near he is to being caught (#358).
+var seen_marks := SeenMarks.new()
 ## Where the objective sends the player (#358), or Vector3.INF; `set_target` gives it.
 var target := Vector3.INF
 ## A key that does something here, at the bottom centre (#358): its keycap and what it does.
@@ -35,6 +40,10 @@ var prompt: PanelContainer
 var _prompt_key: Label
 var _prompt_label: Label
 var _distance: Label
+var _text_card: PanelContainer
+var _text_sender: Label
+var _text_words: Label
+var _text_timer := 0.0
 var _backing: TextureRect
 var menu: Control
 var _heading: VBoxContainer
@@ -136,7 +145,10 @@ func _ready() -> void:
 	root.add_child(_notice)
 	objective_marker.name = "ObjectiveMarker"
 	root.add_child(objective_marker)
+	seen_marks.name = "SeenMarks"
+	root.add_child(seen_marks)
 	_build_prompt(root)
+	_build_text_card(root)
 	van_guide.name = "VanGuide"
 	root.add_child(van_guide)
 	_build_subtitles(root)
@@ -203,6 +215,59 @@ func _build_prompt(root: Control) -> void:
 	_prompt_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(_prompt_label)
 	prompt.visible = false
+
+
+## A text on Ethan's phone (#358): a dark card at the right, the sender over the words, shown
+## for TEXT_SECONDS, as a game shows a message arriving.
+func _build_text_card(root: Control) -> void:
+	_text_card = PanelContainer.new()
+	_text_card.name = "TextMessage"
+	_text_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var card := StyleBoxFlat.new()
+	card.bg_color = Color(0.03, 0.035, 0.04, 0.78)
+	card.set_corner_radius_all(10)
+	card.border_width_left = 4
+	card.border_color = ObjectiveMarker.AMBER
+	card.content_margin_left = 18.0
+	card.content_margin_right = 18.0
+	card.content_margin_top = 12.0
+	card.content_margin_bottom = 14.0
+	_text_card.add_theme_stylebox_override("panel", card)
+	_text_card.anchor_left = 1.0
+	_text_card.anchor_right = 1.0
+	_text_card.offset_left = -TEXT_WIDTH - HINT_MARGIN
+	_text_card.offset_right = -HINT_MARGIN
+	_text_card.offset_top = 150.0
+	root.add_child(_text_card)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 4)
+	_text_card.add_child(column)
+	_text_sender = _lettered(_label("", 16, Color("d9b97a")))
+	column.add_child(_text_sender)
+	_text_words = _lettered(_label("", 20, Color("e8e9e4")))
+	_text_words.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_text_words.custom_minimum_size.x = TEXT_WIDTH - 36.0
+	column.add_child(_text_words)
+	_text_card.visible = false
+
+
+func show_text_message(sender: String, words: String) -> void:
+	_text_sender.text = "TEXT  ·  " + sender
+	_text_words.text = words
+	_text_timer = TEXT_SECONDS
+	_refresh_overlays()
+
+
+func clear_text_message() -> void:
+	_text_words.text = ""
+	_text_timer = 0.0
+	_refresh_overlays()
+
+
+## The last text's words while it shows, else "".
+func text_message() -> String:
+	return _text_words.text if _text_timer > 0.0 else ""
 
 
 func _lettered(label: Label) -> Label:
@@ -378,6 +443,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	if _text_timer > 0.0 and not menu_visible:
+		_text_timer -= delta
+		if _text_timer <= 0.0:
+			_refresh_overlays()
 	if _notice_timer > 0 and not menu_visible:
 		_notice_timer -= delta
 		if _notice_timer <= 0:
@@ -417,6 +486,8 @@ func _refresh_overlays() -> void:
 	_hint.visible = shown and keyed.is_empty()
 	prompt.visible = shown and not keyed.is_empty()
 	objective_marker.visible = shown
+	seen_marks.visible = shown
+	_text_card.visible = shown and _text_timer > 0.0
 	_distance.visible = shown and target != Vector3.INF and objective_marker.shown()
 	_notice.visible = shown
 	mission_map.visible = shown

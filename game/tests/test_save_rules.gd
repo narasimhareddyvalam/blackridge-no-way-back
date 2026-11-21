@@ -11,8 +11,8 @@ const NEWER := "[save]\nversion=3\nmission=\"last_run\"\n\n[drive]\nstage=9\n\n"
 const CARGO_SAVE := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=2\n"
 const CARGO_BROKEN := {
 	"an unknown mission": "[save]\nversion=2\nmission=\"harbour_run\"\n\n[cargo]\nstage=1\n",
-	"Mission 2 at checkpoint 4": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
-		+ "[cargo]\nstage=4\n",
+	"Mission 2 at checkpoint 5": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
+		+ "[cargo]\nstage=5\n",
 	"Mission 2 without its section": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"
 		+ "[drive]\nstage=1\n",
 	"Mission 2's checkpoint in words": "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n"

@@ -198,10 +198,10 @@ func _check_docking(house: Node3D) -> void:
 	var saved := not _saved.is_empty() and int(_saved[_saved.size() - 1].get_value("cargo",
 		"stage", -1)) == 3
 	_check(good["gap"] <= DOCKED_WITHIN and good["angle"] <= 3.0 and good["offset"] <= 0.1
-		and red_lit and saved and said.to_lower().contains("the hill road")
+		and red_lit and saved and said.begins_with("GET OUT AND RUN")
 		and String(_cargo.call("place_reached")) == "The warehouse compound", "L4: backed onto door "
 		+ "3 (%.3f m, %.1f°, %.2f m off), its signal red, stage 3 saved, the objective " % [
-		good["gap"], good["angle"], good["offset"]] + "names the hill road (%s)" % said)
+		good["gap"], good["angle"], good["offset"]] + "the escape's GET OUT AND RUN (%s)" % said)
 
 
 func _check_reload() -> void:
@@ -213,7 +213,7 @@ func _check_reload() -> void:
 	_check(rear.z - BUMPERS <= DOCKED_WITHIN + 0.05 and absf(rear.x - DOOR) < 0.1
 		and bool(_van.get("rear_doors_open")) and copy != null
 		and str(copy.get_meta("seal_number", "")) != "" and bool(_compound.call("gate_shut"))
-		and _objective().to_lower().contains("the hill road"), "L5: reloaded at stage 3: the dark "
+		and _objective().begins_with("GET OUT AND RUN"), "L5: reloaded at stage 3: the dark "
 		+ "van docked at door 3 (%.3f m), its doors open, his own van sealed in the " % (rear.z
 		- BUMPERS) + "yard, the gate shut")
 
