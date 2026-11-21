@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:966)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_rear_camera.gd:54)
+PASS: C1 in reverse the game's view is the rear camera (true), on the body's rear: 0.023 m behind its surface at that height (2.817), 2.22 m up
+PASS: C2 the bumper's top edge at the bottom of the picture (game view, dash screen: true at (0.5, 0.944), true at (0.5, 0.944))
+PASS: C3 in the game's view the guides lie on the ground (at most 0.010 m off it), 2.000 m apart and parallel (0.000 m of drift), back to 3.00 m behind the bumper, marked { 0.5: "e0483e", 1.0: "f2c230", 2.0: "4fd18b", 3.0: "4fd18b" }
+PASS: C4 on the game's view each line is drawn where its camera sees its ground point (at most 0.00 px off, 40 pieces)
+PASS: C4 on the dash screen each line is drawn where its camera sees its ground point (at most 0.00 px off, 40 pieces)
+PASS: C5 a 0.8 m board 1.625 m behind the van hides the guides behind it (40 pieces before, 26 with it; 0 seen through it, 0 on top of it)
+PASS: C6 on an 8° slope behind the van the guides follow the ground (at most 0.010 m off it, rising 0.23 m)
+REAR CAMERA RESULT: 7/7 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

@@ -579,3 +579,20 @@ Claude Code wrote these revisions from that list.
   leave it at 0, unchanged.
 - **Evidence:** `test_lamp_rain_config.gd` 588/588, `test_headlights.gd` 32/32; mutations h6, h7
   exit 1 (`logs/phase_2/realism/rain/step4/mutations/`); stills `captures/audit/rain/step4/`.
+
+### 2026-11-21, revision 17 (Phase 2, #354): B1's splashes as the lit ground shows them (Claude Code, at the author's request)
+
+- **Found:** close to the lit ground, no splash could be told apart: three droplets a landing,
+  0.5-1.5 mm (0.3-1 mm under the floodlight, door and dock), lit evenly and fading from the start.
+- **Changed:** `sub_emitter_amount_at_collision` 3 → 5; `LampSplash` droplets 1.2-3 mm under the
+  street lamps and posts, 1-2.5 mm elsewhere (crown-sized); their material's `glint` 0 → 1.5, so
+  they catch the lamp, and `min_pixels` 1.0 → 1.5; alpha keys `0:0.9, 0.3:0.6, 1:0` (from
+  `0:0.6, 1:0`), brightest at the hit; the splash counts grown five-thirds so no landing is
+  dropped (street 11,460, post 4,580, floodlight and high floodlight 7,500, door 710, dock 11,250).
+  Unpriced until the mission's end.
+- **Found, not changed:** the dock's rain is a strip 3.5 m deep along the wall, so the lit apron in
+  front of the doors gets no rain or splashes; covering it would roughly triple that volume's
+  drops, left for the author's look with the GPU price.
+- **Evidence:** `test_lamp_rain_config.gd` 588/588 (546/588 before); five mutations exit 1
+  (`logs/phase_2/realism/rain/step5/mutations/`); stills `captures/audit/rain/step5/` beside
+  `step5_before/`.

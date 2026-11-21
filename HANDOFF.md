@@ -1,5 +1,20 @@
 # HANDOFF.md
 
+**This run (2026-11-21, the rain as real rain at night, step 5, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 17. Files: the six `game/effects/lamp_rain_*.tscn`,
+  `game/tests/test_lamp_rain_config.gd`, `tools/captures/capture_rain_views.gd` (two close views
+  of the lit ground).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step5/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 588/588. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step5/mutations/mutations_rain_step5.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step5/suites/run_suites.sh <scratch>`: 63 runs exit 0 (the laptop slept mid-run; none timed out),
+  no script or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop`
+  (not pushed).
+- **The rain's five steps are done.** For the author's look: see the brief's last line under the
+  #354 revision. The GPU price waits for the mission's end (the author's word).
+- **Next on the list:** the run sheet handover at the booths; then Mission 2's steps 6 and 7; then
+  a Mission 3 brief.
+
 **This run (2026-11-21, the rain as real rain at night, step 4, #354):**
 - **Built:** see `docs/PHASE_BRIEF.md`'s step 4 line under "Revision 2026-11-21 (Phase 2, the
   rain as real rain at night (#354), step 1 built)" and `CHANGE-BRIEF.md` revision 16. Files:

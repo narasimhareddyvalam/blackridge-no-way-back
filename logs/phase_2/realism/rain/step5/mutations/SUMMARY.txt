@@ -1,0 +1,11 @@
+p1  three droplets a landing again test_lamp_rain_config.gd exit 1, 587/588 passed; 1 failed
+      FAIL: LampRainStreet/LampRain process.sub_emitter_amount_at_collision = 5 (found 3)
+p2  the old tiny droplets          test_lamp_rain_config.gd exit 1, 586/588 passed; 2 failed
+      FAIL: LampRainDock/LampSplash process.scale_min = 0.10000000149012 (found 0.02999999932945)
+      FAIL: LampRainDock/LampSplash process.scale_max = 0.25 (found 0.10000000149012)
+p3  splashes catching no light     test_lamp_rain_config.gd exit 1, 587/588 passed; 1 failed
+      FAIL: LampRainFloodHigh/LampSplash material glint = 1.5 (found 0.0)
+p4  no bright instant at the hit   test_lamp_rain_config.gd exit 1, 587/588 passed; 1 failed
+      FAIL: LampRainPost/LampSplash alpha_curve keys [(0.0, 0.9), (0.3, 0.6), (1.0, 0.0)] (found [(0.0, 0.6), (0.3, 0.6), 
+p5  too few splash slots (landings dropped) test_lamp_rain_config.gd exit 1, 587/588 passed; 1 failed
+      FAIL: LampRainFloodlight/LampSplash.amount = 7500 (found 4500)

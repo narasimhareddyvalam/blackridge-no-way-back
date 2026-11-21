@@ -4933,11 +4933,18 @@ tag `a5`. Pictures the author approved or rejected are filed in
        real drops ahead of it, lit by the lamps that reach them; from the seat they still barely
        showed, so the shared shader gained a backward lobe (water throws light back toward its
        source); eight mutations exit 1, every suite run, committed.
+     - **Step 5:** splashes of five crown-sized droplets catching the lamp; found, not changed: the
+       dock's lit apron gets no rain (its volume a 3.5 m strip); five mutations exit 1, every
+       suite run, committed.
+     - **Prompt** (verbatim): "my laptop went to sleep sorry" (the suites ran on through it, all
+       passing).
 
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
   with the mission's final GPU price on power.
+- The author's look at the rain (#354, "we will look at it later"): `captures/audit/rain/`,
+  `captures/audit/lookup/`; open points in `docs/PHASE_BRIEF.md` under the #354 revision.
 - Mission 2's step 6 (#318-#319): planned and chosen; the patrol guards' models to be chosen
   from Rocketbox's previews.
 - Mission 2's step 5 (#314-#316): part A committed, not pushed; part B (the warehouses)

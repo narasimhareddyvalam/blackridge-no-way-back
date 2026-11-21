@@ -8535,3 +8535,11 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   for the drops: 29/32 then 32/32), `test_oncoming_van.gd` (reads `rain_backlit`: 20/21 then
   21/21), `test_lamp_rain_config.gd` 588/588; eight mutations exit 1. Stills
   `captures/audit/rain/step4/` (the seat, and the van's lamps from in front beside the photo).
+- **Step 5 built:** CHANGE-BRIEF revision 17: splashes of five crown-sized droplets catching the
+  lamp, brightest at the hit. Tests: `test_lamp_rain_config.gd` 546/588 then 588/588; five
+  mutations exit 1. The splashes are still modest on screen; the dock's lit apron gets no rain
+  (its volume is a 3.5 m strip along the wall).
+- **For the author's look at the end** (`captures/audit/rain/`, `captures/audit/lookup/`, steps
+  1-5 beside `before/` and the photos): the far floodlight rain's speckle; some near streaks look
+  dotted (possibly MetalFX's 75% upscaling); the dock apron's missing rain; the splashes; and the
+  GPU price of all of it (the counts rose about four times since step 1).
