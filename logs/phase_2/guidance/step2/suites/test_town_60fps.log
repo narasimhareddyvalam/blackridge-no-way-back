@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _run (res://tests/test_town.gd:59)
+PASS: The town is built (TownStation)
+PASS: N1 the plot is level (0.000 m across it), one of the world's flat plots, with no tree on it (0 trunks)
+PASS: N2 nothing built within 1 m of the road's asphalt (nearest PriceSignBody, 2.89 m from it)
+PASS: N3 the van fits: canopy 4.60 m up, the lane between the islands 4.0 m, and its box drives in, between the islands and out touching []
+PASS: N4 the props are there: { "Dispenser": 4, "PriceSign": 1, "IceChest": 1, "PropaneCage": 1, "NewspaperBox": 1, "Payphone": 1, "Bench": 1, "Bin": 1, "AirWater": 1, "Shutter": 3, "ParkedCar": 2 }, 8 cylinders in the cage, every shutter down over its opening, the sign's grades ["REGULAR 3.59 9/10", "PLUS 3.89 9/10", "DIESEL 4.19 9/10"]
+PASS: N5 lit as a station at night: 8 downlights under the canopy (0 out of place, pointing elsewhere or shadowed), 3 of the price sign, fascia and windows glowing
+PASS: N6 no real brand on any sign (GAS, REGULAR, PLUS, DIESEL, GROCERY, ICE, PROPANE EXCHANGE, NEWSPAPERS, HARDWARE, LAUNDROMAT, BARBER, AIR WATER, OPEN 24 HOURS, STOP ENGINE NO SMOKING)
+PASS: N7 everything one could walk or drive into is solid (not: [])
+TOWN RESULT: 8/8 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

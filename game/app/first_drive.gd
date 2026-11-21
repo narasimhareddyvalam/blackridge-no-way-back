@@ -305,7 +305,10 @@ func _resume() -> void:
 	_set_paused(false)
 
 
+## A new drive: from the title a new game, with its opening; in play (the pause menu, or after
+## the ending) a restart, straight back to the office as a game's restart skips its intro.
 func _new_drive() -> void:
+	var new_game := _on_title
 	_begun = true
 	_leave_title()
 	_ending_token += 1
@@ -316,7 +319,8 @@ func _new_drive() -> void:
 	_restart()
 	_audio.play_music()
 	_begin_on_foot()
-	_play_opening()
+	if new_game:
+		_play_opening()
 
 
 func _struck(speed: float) -> void:
@@ -738,6 +742,7 @@ func _on_ground(point: Vector3) -> Vector3:
 func _process(delta: float) -> void:
 	_guide_to_van()
 	_follow_on_map(delta)
+	_aim_marker()
 	if route.phone_call.talking:
 		_navigation().call_seconds = route.phone_call.elapsed
 	_hint_time += delta
@@ -765,6 +770,26 @@ func _follow_on_map(delta: float) -> void:
 	var forward := -van.global_basis.z
 	var yaw := atan2(forward.x, forward.z)
 	hud.mission_map.follow(van.global_position, yaw, yaw, false, delta)
+
+
+## The objective's place (#358): its marker, its pin on the map and its distance, from the van
+## or from Ethan on foot.
+func _aim_marker() -> void:
+	var on_foot: bool = not van.occupied and driver.active
+	var from: Vector3 = driver.global_position if on_foot else van.global_position
+	hud.set_target(_objective_point(on_foot), from, get_viewport().get_camera_3d(), on_foot)
+
+
+func _objective_point(on_foot: bool) -> Vector3:
+	if _boarding or _ending or _ended or hud.document_visible():
+		return Vector3.INF
+	if _mission == cargo:
+		return cargo.objective_target()
+	if _needs_sheet():
+		return world.run_sheet_at
+	if on_foot or route.fleeing or van.scripted or route.stage >= Mission.TARGETS.size():
+		return Vector3.INF
+	return Mission.TARGETS[route.stage] + Vector3.UP * 1.5
 
 
 func _guide_to_van() -> void:
@@ -795,6 +820,8 @@ func _hint(delta: float) -> String:
 		_lessons.offer("walk")
 		return _lessons.tick(delta)
 	_lessons.learn("walk")
+	if _mission == cargo and cargo.wants_interact():
+		return "E  " + cargo.interact_label()
 	if route.phone_call.can_answer() and not route.phone_call.answers_itself():
 		return "T  Answer the call"
 	if not van.engine_on or van.scripted or van.held or route.fleeing:

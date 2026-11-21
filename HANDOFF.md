@@ -1,5 +1,23 @@
 # HANDOFF.md
 
+**This run (2026-11-21, guidance step 2, #358; the opening's restart fixed):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance (#356),
+  step 2 built; the opening on a restart, fixed)". Files: `objective_marker.gd` (new),
+  `mission_map.gd`, `driving_hud.gd`, `the_wrong_cargo.gd` (`objective_target`,
+  `interact_label`), `game/app/first_drive.gd` (`_aim_marker`, `_new_drive`), `test_guidance.gd`,
+  `test_opening.gd`, `tools/captures/capture_markers.gd` (new).
+- **Correction:** the opening's commit (`55e4069`) said every suite passed; `test_collision.gd`
+  had failed 42/44 there. Fixed here; now 44/44.
+- **Results (exact):** `LOG_DIR=logs/phase_2/guidance/step2/precommit scripts/run-test.sh
+  test_guidance.gd 60 300` exit 0, 11/11; `test_opening.gd` 7/7, `test_collision.gd` 44/44,
+  `test_on_foot.gd` 52/52 (`logs/phase_2/opening/restart/green/`). Mutations: `python3 -I
+  logs/phase_2/guidance/step2/mutations/mutations_step2.py <scratch> <out>` seven exit 1; p8 exit
+  1. Suites: `bash logs/phase_2/guidance/step2/suites_rerun/run_suites.sh <scratch>`: 66 runs
+  exit 0, art check 0 failures. Committed on `develop` (not pushed).
+- **In progress (not in this commit):** Mission 2's step 6, the escape: `escape.gd`, the patrol
+  guard (`game/features/characters/patrol_guard/`, `tools/art/convert_patrol_guard.py`), the cut
+  in `compound.gd`, `test_escape.gd` (9/9 so far).
+
 **This run (2026-11-21, Mission 1's opening cutscene, #357; overnight run #358 begun):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 1's opening
   cutscene (#357), built)". Files: `game/features/cinematics/` (new: `cutscene_director.gd`,

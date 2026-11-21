@@ -18,6 +18,7 @@ MUTATIONS = [
     ("p5", "skipping leaves the HUD hidden", DIRECTOR, "\tif is_instance_valid(_hud):\n\t\t_hud.call(\"set_cinematic\", false)\n", ""),
     ("p6", "ending on its own camera, not the player's", OPENING, '"to": "player"}', '"to": _look(crane_high, crane_at)}'),
     ("p7", "rain falling through Ethan", DRIVER, "\tadd_child(shield)\n", ""),
+    ("p8", "the opening on every restart", APP, "\tif new_game:\n\t\t_play_opening()\n", "\t_play_opening()\n"),
 ]
 scratch, out = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 

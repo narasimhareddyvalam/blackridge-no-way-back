@@ -50,6 +50,7 @@ func _run() -> void:
 	await _while_playing(director)
 	await _skips(director)
 	await _plays_through(director)
+	await _not_on_restart(director)
 	await _not_on_resume()
 	_finish()
 
@@ -109,6 +110,7 @@ func _skips(director: Node) -> void:
 func _plays_through(director: Node) -> void:
 	var driver := _app.get("driver") as CharacterBody3D
 	_app.call("_new_drive")
+	_app.call("_play_opening")
 	var film := director.get("film") as CanvasLayer
 	var waited := 0.0
 	var at_cut := {}
@@ -143,6 +145,19 @@ func _plays_through(director: Node) -> void:
 		and root.get_viewport().get_camera_3d() == driver.call("get_camera"), ("O4: played "
 		+ "through (%.1f s), it ends on the player's own camera behind Ethan (%.2f m off) and "
 		+ "gives him back") % [waited, end.origin.distance_to(player.origin)])
+
+
+## A restart in play (New drive from the pause menu, or after the ending) starts the drive at
+## once, as a game's restart skips its intro (#358): the opening belongs to a new game.
+func _not_on_restart(director: Node) -> void:
+	var hud := _app.get("hud") as CanvasLayer
+	hud.emit_signal("restart_requested")
+	for frame in range(10):
+		await process_frame
+	var objective := hud.get("_objective") as Label
+	_check(not bool(director.get("playing")) and objective.is_visible_in_tree(), ("O7: New drive "
+		+ "in play starts at the office at once, no opening (playing %s, objective shown %s)")
+		% [director.get("playing"), objective.is_visible_in_tree()])
 
 
 func _not_on_resume() -> void:

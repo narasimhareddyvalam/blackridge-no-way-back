@@ -12,3 +12,5 @@ p6  ending on its own camera, not the player's test_opening.gd exit 1, 5/6 passe
       FAIL: O4: played through (49.1 s), it ends on the player's own camera behind Ethan (12.86 m off) and gives him back
 p7  rain falling through Ethan     test_on_foot.gd exit 1, 51/52 passed; 1 failed
       FAIL: Rain stops on Ethan instead of falling through him: a particle collider round his body for the rain's layer, n
+p8  the opening on every restart   test_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: O7: New drive in play starts at the office at once, no opening (playing true, objective shown false)

@@ -10,6 +10,7 @@ const SETTINGS_VERSION := 1
 const VanGuide = preload("van_guide.gd")
 const FrontMenu = preload("res://features/ui/menus/front_menu.gd")
 const MissionMap = preload("mission_map.gd")
+const ObjectiveMarker = preload("objective_marker.gd")
 ## The HUD's lettering, Barlow Condensed SemiBold (SIL Open Font License 1.1, `fonts/OFL.txt`).
 const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
 ## The objective beside the mission map (#356): its left edge clear of the map, its foot level
@@ -20,11 +21,20 @@ const HINT_MARGIN := 28.0
 ## A soft dark fade behind the map and the objective, round from the screen's bottom-left corner,
 ## so they read over a bright dashboard.
 const BACKING := Vector2(900.0, 240.0)
+const PROMPT_FOOT := 178.0
 
 var menu_visible: bool = true
 var settings_path: String = ""
 var van_guide := VanGuide.new()
 var mission_map := MissionMap.new()
+var objective_marker := ObjectiveMarker.new()
+## Where the objective sends the player (#358), or Vector3.INF; `set_target` gives it.
+var target := Vector3.INF
+## A key that does something here, at the bottom centre (#358): its keycap and what it does.
+var prompt: PanelContainer
+var _prompt_key: Label
+var _prompt_label: Label
+var _distance: Label
 var _backing: TextureRect
 var menu: Control
 var _heading: VBoxContainer
@@ -92,8 +102,16 @@ func _ready() -> void:
 	root.add_child(_heading)
 	_eyebrow = _lettered(_label("NIGHT FREIGHT", 17, Color("d9b97a")))
 	_heading.add_child(_eyebrow)
+	var title_row := HBoxContainer.new()
+	title_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_row.add_theme_constant_override("separation", 14)
+	_heading.add_child(title_row)
 	_objective = _lettered(_label("RETURN TO THE DEPOT", 32))
-	_heading.add_child(_objective)
+	title_row.add_child(_objective)
+	_distance = _lettered(_label("", 22, ObjectiveMarker.AMBER))
+	_distance.size_flags_vertical = Control.SIZE_SHRINK_END
+	_distance.visible = false
+	title_row.add_child(_distance)
 	_detail = _lettered(_label("", 19, Color("b9c2c4")))
 	_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_detail.custom_minimum_size.x = 520.0
@@ -116,6 +134,9 @@ func _ready() -> void:
 	_notice.offset_top = 70.0
 	_notice.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.add_child(_notice)
+	objective_marker.name = "ObjectiveMarker"
+	root.add_child(objective_marker)
+	_build_prompt(root)
 	van_guide.name = "VanGuide"
 	root.add_child(van_guide)
 	_build_subtitles(root)
@@ -133,6 +154,55 @@ func _ready() -> void:
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(_fade)
+
+
+## The key prompt (#358): a keycap and its action at the bottom centre over a soft dark pill,
+## as a game shows what a key does where the player stands; the other controls stay at the right.
+func _build_prompt(root: Control) -> void:
+	prompt = PanelContainer.new()
+	prompt.name = "KeyPrompt"
+	prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var pill := StyleBoxFlat.new()
+	pill.bg_color = Color(0.03, 0.035, 0.04, 0.62)
+	pill.set_corner_radius_all(22)
+	pill.content_margin_left = 10.0
+	pill.content_margin_right = 22.0
+	pill.content_margin_top = 8.0
+	pill.content_margin_bottom = 8.0
+	prompt.add_theme_stylebox_override("panel", pill)
+	prompt.anchor_left = 0.5
+	prompt.anchor_right = 0.5
+	prompt.anchor_top = 1.0
+	prompt.anchor_bottom = 1.0
+	prompt.offset_bottom = -PROMPT_FOOT
+	prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	root.add_child(prompt)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 12)
+	prompt.add_child(row)
+	var cap := PanelContainer.new()
+	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var keycap := StyleBoxFlat.new()
+	keycap.bg_color = Color(0.91, 0.91, 0.89)
+	keycap.set_corner_radius_all(6)
+	keycap.border_width_bottom = 3
+	keycap.border_color = Color(0.55, 0.56, 0.55)
+	keycap.content_margin_left = 11.0
+	keycap.content_margin_right = 11.0
+	keycap.content_margin_top = 1.0
+	keycap.content_margin_bottom = 1.0
+	cap.add_theme_stylebox_override("panel", keycap)
+	row.add_child(cap)
+	_prompt_key = _lettered(_label("E", 22, Color(0.06, 0.07, 0.08)))
+	_prompt_key.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0))
+	_prompt_key.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cap.add_child(_prompt_key)
+	_prompt_label = _lettered(_label("", 22, Color("e8e9e4")))
+	_prompt_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(_prompt_label)
+	prompt.visible = false
 
 
 func _lettered(label: Label) -> Label:
@@ -343,7 +413,11 @@ func set_menu(value: bool) -> void:
 func _refresh_overlays() -> void:
 	var shown := not _cinematic and not menu_visible
 	_heading.visible = shown
-	_hint.visible = shown
+	var keyed := _keyed(_hint.text)
+	_hint.visible = shown and keyed.is_empty()
+	prompt.visible = shown and not keyed.is_empty()
+	objective_marker.visible = shown
+	_distance.visible = shown and target != Vector3.INF and objective_marker.shown()
 	_notice.visible = shown
 	mission_map.visible = shown
 	_backing.visible = shown
@@ -357,6 +431,37 @@ func set_objective(title: String, detail: String) -> void:
 
 func set_hint(words: String) -> void:
 	_hint.text = words
+	var keyed := _keyed(words)
+	if not keyed.is_empty():
+		_prompt_key.text = keyed[0]
+		_prompt_label.text = keyed[1]
+		var width := prompt.get_combined_minimum_size().x
+		prompt.offset_left = -width / 2.0
+		prompt.offset_right = width / 2.0
+	_refresh_overlays()
+
+
+## One key and what it does ("E  Get in the van"), as [key, action]; [] for anything else, the
+## controls taught at the right ("W / S  Accelerate / brake").
+func _keyed(words: String) -> Array:
+	var parts := words.split("  ", false, 1)
+	if parts.size() != 2 or parts[0].length() != 1 or "\n" in words:
+		return []
+	return [parts[0], parts[1].strip_edges()]
+
+
+## Where the objective sends the player (#358): its marker in the world, its pin on the map and
+## its distance beside the objective, measured from `from` (the van, or Ethan on foot).
+func set_target(point: Vector3, from: Vector3, camera: Camera3D, on_foot: bool) -> void:
+	target = point
+	objective_marker.point_at(point, from, camera, on_foot)
+	mission_map.set_target(point)
+	if point == Vector3.INF:
+		_distance.visible = false
+		return
+	var metres := Vector2(point.x - from.x, point.z - from.z).length()
+	_distance.text = "%d m" % roundi(metres) if metres < 1000.0 else "%.1f km" % (metres / 1000.0)
+	_distance.visible = not _cinematic and not menu_visible and objective_marker.shown()
 
 
 func show_subtitle(speaker: String, words: String) -> void:

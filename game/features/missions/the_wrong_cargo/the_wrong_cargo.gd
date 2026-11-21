@@ -51,6 +51,7 @@ var compound: Node3D
 var driver: Node3D
 
 var _shown := ""
+var _title := ""
 var _seal_checked := false
 var _hand_when_shut := false
 
@@ -125,6 +126,53 @@ func interact() -> String:
 	shed.hand_run_sheet()
 	_update_objective()
 	return "You hand the guard the run sheet."
+
+
+## What E does at a gate from the driver's seat, for the key prompt (#358).
+func interact_label() -> String:
+	return "Key in the gate code" if stage == 1 else "Hand over the run sheet"
+
+
+## Where the objective shown sends him, for its marker and the map's pin (#358): the booth's
+## window, the dock, the van's rear, the chock, the jack, the lift's pendant, the keypad, the
+## marked bay, the dark van's door; Vector3.INF when it sends him nowhere (wait, pull forward,
+## leave the van).
+func objective_target() -> Vector3:
+	if not active or vehicle == null:
+		return Vector3.INF
+	var rear := vehicle.to_global(Vector3(0.0, 1.0, VAN_REAR + 0.6))
+	match _title:
+		"DRIVE TO THE TRANSFER SHED", "STOP AT THE GATE" when stage == 0:
+			return (shed.get("_booth_node") as Node3D).call("opening_centre")
+		"DRIVE THROUGH THE GATE", "BACK ONTO BAY 9":
+			return Vector3(-47.75, 1.2, 20.13)
+		"OPEN THE REAR DOORS", "CLOSE THE REAR DOORS", "CHECK THE SEAL", "STRAP THE LOAD":
+			return rear
+		"CHOCK THE WHEEL", "TAKE THE CHOCK OUT":
+			var chock := _bay().get("_chock") as Node3D
+			return chock.global_position + Vector3.UP * 0.4 if chock != null else Vector3.INF
+		"LOAD THE PALLET", "ROLL THE PALLET IN":
+			var jack := _jack() as Node3D
+			if jack == null or bool(jack.get("held")):
+				return rear
+			return jack.global_position + Vector3.UP * 1.0
+		"RAISE THE LIFT", "LOWER THE LIFT":
+			return shed.get_node("Building/DockLift9").call("pendant")
+		"DRIVE TO THE CONTAINER YARD", "STOP AT THE GATE" when stage == 1:
+			var keypad := yard.find_child("Keypad", true, false) as Node3D
+			return keypad.global_position if keypad != null else Vector3.INF
+		"PARK IN THE MARKED BAY":
+			return Vector3(95.0, 0.6, 138.0)
+		"TAKE THE DARK VAN":
+			return DARK_VAN * Vector3(-1.1, 1.2, -1.3)
+		"DRIVE TO THE WAREHOUSE COMPOUND", "STOP AT THE BOOTH":
+			return (compound.get("booth") as Node3D).call("opening_centre")
+	if _title == "DRIVE IN" and stage == 1:
+		return Vector3(95.0, 0.6, 138.0)
+	if _title.begins_with("BACK ONTO DOOR") or (_title == "DRIVE IN" and stage == 2):
+		var judge := compound.get("judge") as Node
+		return Vector3(float(judge.get("centre_x")), 1.2, float(judge.get("bumpers_z")))
+	return Vector3.INF
 
 
 ## What Ethan, on foot at `at`, can do here with E, or "" when nothing: the van's rear doors
@@ -471,6 +519,7 @@ func _update_objective() -> void:
 		else:
 			title = "DRIVE TO THE TRANSFER SHED"
 			detail = "Take the spur north off the valley road, just west of the depot."
+	_title = title
 	if title + detail != _shown:
 		_shown = title + detail
 		objective_changed.emit(title, detail)

@@ -86,8 +86,63 @@ func _run() -> void:
 	await process_frame
 	_check(cinematic_hidden and menu_hidden and map.is_visible_in_tree(), ("G7: none of it in a "
 		+ "cinematic or the pause menu (cinematic %s, menu %s)") % [cinematic_hidden, menu_hidden])
+	await _targets(hud, map, van)
 	await _walk(van, map)
 	_finish()
+
+
+## Step 2 (#358): the objective has its place in the world: a marker over it with its distance, a
+## pin on the map, the distance beside the objective; and a key prompt at the bottom centre when a
+## key does something there (here E at the shed's booth window), the controls kept at the right.
+func _targets(hud: CanvasLayer, map: Control, van: Node3D) -> void:
+	var world := _app.get_node("IndustrialLoop")
+	var shed := world.get("transfer_shed") as Node3D
+	var booth := shed.get("_booth_node") as Node3D
+	await _settle(30)
+	if hud.get("target") == null:
+		_check(false, "G10: the objective has its place in the world (no target)")
+		return
+	var target: Vector3 = hud.get("target")
+	var window: Vector3 = booth.call("opening_centre")
+	var marker := hud.get("objective_marker") as Control
+	var distance := Vector2(target.x - van.global_position.x, target.z - van.global_position.z) \
+		.length()
+	var chip := hud.get("_distance") as Label
+	var shown := chip != null and chip.is_visible_in_tree() and chip.text == "%d m" % roundi(distance)
+	var pin: Vector2 = map.call("pin_at")
+	var rect: Rect2 = Rect2(Vector2.ZERO, map.get("MAP_SIZE"))
+	var pinned := pin != Vector2.INF and rect.grow(1.0).has_point(pin)
+	_check(target.distance_to(window) < 0.6 and marker != null and bool(marker.call("shown"))
+		and shown and pinned, ("G10: DRIVE TO THE TRANSFER SHED has its place, the booth's window "
+		+ "(%.1f m off): a marker over it, a pin on the map (%s), %s beside the objective")
+		% [target.distance_to(window), pin, chip.text if chip != null else "no distance"])
+	var out := booth.global_basis.x.normalized()
+	out.y = 0.0
+	out = out.normalized()
+	var origin := window + out * 1.4 + out.cross(Vector3.UP) * 0.72
+	origin.y = booth.global_position.y - 0.25
+	van.call("recover", Transform3D(Basis(out, Vector3.UP, out.cross(Vector3.UP)), origin))
+	await _settle(40)
+	var prompt := hud.get("prompt") as Control
+	var key := hud.get("_prompt_key") as Label
+	var label := hud.get("_prompt_label") as Label
+	var screen := root.get_visible_rect().size
+	var centred := prompt != null and prompt.is_visible_in_tree() \
+		and absf(prompt.get_global_rect().get_center().x - screen.x / 2.0) < 40.0 \
+		and prompt.get_global_rect().position.y > screen.y * 0.7
+	var words := key != null and key.text == "E" and label.text == "Hand over the run sheet"
+	var hint := hud.get("_hint") as Label
+	_check(centred and words and not hint.visible, ("G11: at the booth's window "
+		+ "a key prompt at the bottom centre, E  Hand over the run sheet (shown %s, %s %s), not "
+		+ "among the controls") % [centred, key.text if key else "", label.text if label else ""])
+	van.call("recover", Transform3D(Basis.IDENTITY, Vector3(-28.0, 0.1, 93.0)))
+	await _settle(10)
+
+
+func _settle(frames: int) -> void:
+	for frame in range(frames):
+		await physics_frame
+	await process_frame
 
 
 ## Driving: every frame the map is centred exactly where the van is and turned with the van, not

@@ -8619,3 +8619,33 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   game: `captures/audit/opening/film/`.
 - **Claude Code's calls:** the studio card's name (NRVALAM WORKS) and 23:41 are drafts for the
   author's review.
+
+## Revision 2026-11-21 (Phase 2, mission guidance (#356), step 2 built; the opening on a restart, fixed)
+
+- **Asked (#358):** "start the guidance markers ... make sure everything is realistic as real
+  life"; the author handed over the choices (Claude Code's calls below).
+- **Built (step 2):** the objective's place in the world (`the_wrong_cargo.gd`'s
+  `objective_target`, keyed by the objective shown: the booth's window, the dock's bumpers, the
+  van's rear, the chock, the jack, the lift's pendant, the keypad, the marked bay, the dark van's
+  door, door 3; none while waiting; Mission 1's run sheet and route targets in the app):
+  `objective_marker.gd` (new), an amber diamond over the place with its distance, an arrow at the
+  screen's edge when it is off screen or behind, faded out as the player comes close (10-22 m at
+  the wheel, 1.5-4 m on foot); the map's pin (`mission_map.gd`'s `set_target`, `pin_at`), pulsing,
+  held inside the map's visible oval when the place lies beyond; the distance in amber beside the
+  objective (km over 1000 m); the key prompt (`driving_hud.gd`'s `prompt`), a keycap and its action
+  at the bottom centre whenever one key does something there ("E  Hand over the run sheet" at a
+  booth, "E  Key in the gate code" at the yard, every "E  ..." on foot), the other controls left
+  at the right. The hint's text is unchanged, so every test reading it is unchanged.
+- **Fixed:** the opening (#357) played again on every New drive (the pause menu, after the
+  ending), so `test_collision.gd` failed 42/44 in the opening's suite run, missed when it was
+  committed (`55e4069` said every suite passed; it was 65 of 66). Now a new game from the title
+  plays it and a restart goes straight to the office, as a game's restart skips its intro.
+- **Tested:** `test_guidance.gd` G10-G11 (new, 9/10 then 11/11); `test_opening.gd` O7 (new, 6/7
+  then 7/7); `test_collision.gd` 44/44. Mutations: seven for step 2
+  (`logs/phase_2/guidance/step2/mutations/`), p8 for the restart
+  (`logs/phase_2/opening/mutations/`), all exit 1. Every suite:
+  `logs/phase_2/guidance/step2/suites_rerun/` (66 runs exit 0, art check 0 failures). Stills
+  `captures/audit/guidance/step2/` (`tools/captures/capture_markers.gd`).
+- **Claude Code's calls:** the prompt at the bottom centre over a dark pill (where a game shows
+  what a key does); the marker's fade distances; the map pin held at the visible oval.
+- **To come:** step 3, the route along the roads.
