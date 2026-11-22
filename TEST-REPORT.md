@@ -121,7 +121,21 @@ line). Results:
 - after Step 7 r1: 81/81 exit 0, 0 failures, no SCRIPT or SHADER ERROR lines, art check
   0 failures (`logs/animation/final_suites`).
 
-## HUMAN CHECKS (the author) — open
+## HUMAN CHECKS (the author)
+
+**The author's look (2026-11-22, #417, verbatim):** "i checked the video and game, all animations looks goood. i saw when maya is calling the call icon strip animation we did, looks good. the rig ethan entering animation was good as well, can be improved will work on it next. the gun reloading animations looks good after lot of iterations, the placement of hands on gun are better now. the shocked animation is real what i wanted it to be"
+
+What those words cover, and what they do not yet say:
+- **The ring:** seen in play while Maya calls, "looks good". Not said in so many words: five wraps
+  watched for a stutter or jump, the handset not drifting in its cells, the darkest and lightest
+  backgrounds.
+- **EnterVan:** "good as well, can be improved"; the author will work on it next. Not said: that
+  startup, active and recovery read as distinct, or an interrupt tried in each phase in play.
+- **The reload:** "looks good after lot of iterations, the placement of hands on gun are better
+  now."
+- **The shock:** "real what i wanted it to be."
+
+## HUMAN CHECKS (the author) — still to confirm
 
 No headless run can show these, and Claude Code's readings of the strips are claims, not checks.
 They wait for the author:

@@ -717,5 +717,7 @@ ended standing at the open door.
 **Re-pinned after the strip:** PIN2's seat time, 2.017 s → 2.333 s, measured as predicted (the
 pin samples on the physics tick, 1/60 s after 62/30 + 0.25 s, as it did before), its own commit.
 
-**The author's verdict on r1:** _waiting for the author: play the boarding at normal speed and
-at `--time-scale 0.25`; keep, revert or revise._
+**The author's verdict on r1** (2026-11-22, #417, after watching the film and playing, verbatim):
+"the rig ethan entering animation was good as well, can be improved will work on it next."
+r1 stays in the game. The author names further improvement as their next piece of work; what to
+improve, and the observation-driven revision the handout asks for, come from them.

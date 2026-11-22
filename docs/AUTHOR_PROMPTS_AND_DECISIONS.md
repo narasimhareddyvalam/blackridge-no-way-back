@@ -5587,6 +5587,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
        once Assignment 7 is final (the gaps fixed, the author's checks, verdict and film link
        in), then tag `a7` on that commit.
 
+417. **The author's look at the film and the game**
+     - **Prompt** (verbatim, after watching the film and playing): "i checked the video and game, all animations looks goood. i saw when maya is calling the call icon strip animation we did, looks good. the rig ethan entering animation was good as well, can be improved will work on it next. the gun reloading animations looks good after lot of iterations, the placement of hands on gun are better now. the shocked animation is real what i wanted it to be"
+     - **Recorded:** as the author's own observations in play, in `TUNING.md` (r1) and
+       `TEST-REPORT.md` (human checks), quoted, not extended.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
