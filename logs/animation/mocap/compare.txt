@@ -8,5 +8,5 @@ CLIP Run: same (114 tracks, +1 at rest (mixamorig_RightShoulder|1))
 CLIP StairsUp: same (114 tracks, +1 at rest (mixamorig_RightShoulder|1))
 CLIP Walk: same (114 tracks, +1 at rest (mixamorig_RightShoulder|1))
 CLIP WalkBack: same (114 tracks, +1 at rest (mixamorig_RightShoulder|1))
-NEW CLIPS ['PistolIdle', 'PistolReload']
+NEW CLIPS ['PistolAim', 'PistolIdle', 'PistolReload']
 COMPARE RESULT: 10/10 earlier clips unchanged

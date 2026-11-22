@@ -52,7 +52,7 @@ STOPS = {"PushStop"}
 STOP_KNOTS = 6
 REAL_SIZE = {"pedestrian"}
 LOOPING = IN_PLACE | CLIMBS | {"Idle"}
-UPPER_BODY = {"PistolIdle", "PistolReload"}
+UPPER_BODY = {"PistolIdle", "PistolReload", "PistolAim"}
 UPPER_BONES = ("Spine", "Neck", "Head", "Shoulder", "Arm", "Hand")
 FPS = 30.0
 CHARACTERS = {
@@ -61,8 +61,8 @@ CHARACTERS = {
         ("Running.fbx", "Run"), ("Entering Car.fbx", "EnterVan"),
         ("Exiting Car.fbx", "ExitVan"), ("Pushing.fbx", "Push"),
         ("Push Stop.fbx", "PushStop"), ("Running Up Stairs.fbx", "StairsUp"),
-        ("Pull Heavy Object.fbx", "PullBack"), ("Pistol Idle.fbx", "PistolIdle"),
-        ("Reloading.fbx", "PistolReload")]),
+        ("Pull Heavy Object.fbx", "PullBack"), ("Pistol Idle (1).fbx", "PistolIdle"),
+        ("Reloading.fbx", "PistolReload"), ("Pistol aim.fbx", "PistolAim")]),
     "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
                                                     ("Breathing Idle.fbx", "Idle")]),
 }

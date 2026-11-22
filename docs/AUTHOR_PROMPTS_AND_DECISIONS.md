@@ -5344,6 +5344,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
        trigger guard), after two wrong tries (along the forearm, 60 degrees off; straight ahead,
        beside the hand); rendered on his rig (`captures/animation/pistol_mocap/`, fixtures).
 
+391. **A real pistol aim**
+     - **Asked** which pose he holds to aim (Reloading's first frame holds the gun across his chest,
+       69 degrees left); the author answered "i downloaded, checkout pistol idle and pistol aim in
+       downloads": `Pistol aim.fbx` (Ch33, 41 frames, both arms out, both hands on the gun) and
+       `Pistol Idle (1).fbx` (Ch33, 250 frames, the same low ready but looking ahead, not up to the
+       left; a different file from the first). Both used; the first Pistol Idle kept beside them.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

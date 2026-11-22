@@ -8,10 +8,10 @@ extends SceneTree
 const RIG := "res://features/characters/ethan/ethan.glb"
 const POSE := "res://animations/ethan_pistol.tres"
 const PISTOL := preload("res://features/weapons/pistol/pistol.glb")
-const IN_HAND := Transform3D(Vector3(4.613871, -46.33203, 88.49892),
-	Vector3(-8.440907, -88.45727, -45.87011), Vector3(99.53626, -5.35372, -7.992114),
-	Vector3(7.058945, 95.86407, -26.21748))
-const SHOTS := [["PistolAim", 0], ["PistolIdle", 0], ["PistolIdle", 120], ["PistolReload", 15],
+const IN_HAND := Transform3D(Vector3(-0.566986, -10.01996, 99.49512),
+	Vector3(32.87387, -93.98531, -9.277737), Vector3(94.44041, 32.65531, 3.826859),
+	Vector3(-15.74269, 77.44193, -55.1404))
+const SHOTS := [["PistolAim", 0], ["PistolAim", 20], ["PistolIdle", 0], ["PistolReload", 15],
 	["PistolReload", 30], ["PistolReload", 40], ["PistolReload", 47], ["PistolReload", 56],
 	["PistolReload", 62], ["PistolReload", 75], ["PistolReload", 99]]
 const VIEWS := {"side": [Vector3(1.1, 1.45, 1.2), Vector3(0.0, 1.2, 0.3)],
