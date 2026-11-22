@@ -46,6 +46,19 @@ const PASSENGER_EXIT := Vector3(1.85, 0.2, -0.72)
 const EXIT_DOOR := 2.26
 const PUSH := Vector2(3.55, 4.35)
 const SLAM := 0.2
+## The shock's shot (C67): its length (inside the 4 s hold), its camera from and to in the van's
+## space (off the front-left, a little above his eyes so it sees over the dash to his hands on
+## the wheel, pushing in a little), the wheel's rim.
+const SHOCK_SECONDS := 3.5
+const SHOCK_FROM := Vector3(-1.05, 1.72, -3.4)
+const SHOCK_TO := Vector3(-0.95, 1.70, -3.15)
+## The share of the wheel's half-width where the rim's tube is held.
+const SHOCK_RIM_SHARE := 0.9
+## Where the shot looks: this far below his eye, between his face and his hands on the wheel.
+const SHOCK_LOOK_DROP := 0.46
+## The dash's glow on his face and hands in the shot (instrument lights at night, cool and dim),
+## in the van's space, in front of him at the instruments' height.
+const SHOCK_GLOW := Vector3(-0.45, 1.42, -1.25)
 const REACH_DOOR := 0.3
 const IMPACT_SPEED := 9.0
 const ENDING_HOLD := 9.0
@@ -116,6 +129,7 @@ func _ready() -> void:
 	route.checkpoint_save_failed.connect(_checkpoint_save_failed)
 	route.drive_completed.connect(_drive_completed)
 	route.struck.connect(_struck)
+	route.came_to_rest.connect(_shock)
 	route.phone_call.ringing.connect(_call_ringing)
 	route.phone_call.missed.connect(_call_missed)
 	route.phone_call.connected.connect(_call_connected)
@@ -385,6 +399,60 @@ func _struck(speed: float) -> void:
 	presentation.jolt(strength)
 	presentation.watch_head(route.pedestrian.head_body(), strength)
 	presentation.look_target_node = route.pedestrian.hips_body()
+
+
+## Ethan's shock after the hit (C67, Assignment 7's fourth clip): as the van comes to rest, a shot
+## from outside its front-left, at the windshield's height, looking in through the crack at him in
+## the driver's seat (Shock, his hands closing on the wheel), for SHOCK_SECONDS inside the hold;
+## then the cab's view. It plays once: continuing from the hit's checkpoint starts after it.
+func _shock() -> void:
+	var presentation := van.get_node("VanPresentation")
+	var eye := van.to_global(presentation.get("EYE") as Vector3)
+	var rim := _wheel_rim(presentation.get("_wheel") as MeshInstance3D, eye)
+	driver.call("play_seated", van, eye, rim)
+	var at := eye + Vector3.DOWN * SHOCK_LOOK_DROP
+	var shots := [{"name": "shock", "seconds": SHOCK_SECONDS, "fov": Vector2(37.0, 33.0),
+		"from": _shock_view(van.to_global(SHOCK_FROM), at),
+		"to": _shock_view(van.to_global(SHOCK_TO), at),
+		"lights": [{"colour": Color(0.62, 0.74, 1.0), "energy": 1.6, "range": 1.4,
+			"at": van.to_global(SHOCK_GLOW)}]}]
+	cutscene.call("play", shots, hud, driver, van.get_camera())
+	await cutscene.finished
+	driver.call("end_seated")
+
+
+## Where his hands hold the steering wheel (left, right), at ten to two: the wheel's middle, its
+## disc's facing (its mesh's thinnest axis, toward his eye) and its radius from its mesh; each a
+## point on the rim's tube, where his palm closes (driver.gd puts his wrist behind it).
+func _wheel_rim(wheel: MeshInstance3D, eye: Vector3) -> Array[Vector3]:
+	var box := wheel.get_aabb()
+	var centre := wheel.global_transform * box.get_center()
+	var sizes := PackedFloat32Array([box.size.x, box.size.y, box.size.z])
+	var thin := 0
+	var wide := 0
+	for axis in range(3):
+		if sizes[axis] < sizes[thin]:
+			thin = axis
+		if sizes[axis] > sizes[wide]:
+			wide = axis
+	var unit := [Vector3.RIGHT, Vector3.UP, Vector3.BACK]
+	var facing: Vector3 = (wheel.global_basis.orthonormalized() * (unit[thin] as Vector3)).normalized()
+	if facing.dot(eye - centre) < 0.0:
+		facing = -facing
+	var radius: float = 0.5 * sizes[wide] * wheel.global_basis.get_scale()[wide] * SHOCK_RIM_SHARE
+	var across := van.global_basis.x.normalized()
+	across = (across - facing * across.dot(facing)).normalized()
+	var up := facing.cross(across).normalized()
+	if up.y < 0.0:
+		up = -up
+	var rim: Array[Vector3] = []
+	for side: float in [-1.0, 1.0]:
+		rim.append(centre + (up * 0.5 + across * 0.866 * side) * radius)
+	return rim
+
+
+func _shock_view(eye: Vector3, at: Vector3) -> Transform3D:
+	return Transform3D(Basis.looking_at(at - eye, Vector3.UP), eye)
 
 
 func _call_ringing(caller: String) -> void:

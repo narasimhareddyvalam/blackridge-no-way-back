@@ -10,6 +10,20 @@ const Stance = preload("res://features/characters/driver/stance.gd")
 const HandGrip = preload("res://features/characters/driver/hand_grip.gd")
 const AimArms = preload("res://features/weapons/pistol/aim_arms.gd")
 const RifleCarry = preload("res://features/characters/driver/rifle_carry.gd")
+const SHOCK = preload("res://animations/ethan_shock.tres")
+## The shock (C67): the grip phase his hands take to close on the wheel, and how far his wrist sits
+## from where his palm holds the rim.
+const SHOCK_GRIP := 11.0 / 30.0
+const SHOCK_PALM := 0.075
+## How far his shoulders sit from the rim where he holds it: his arm (shoulder to wrist) is about
+## 0.48 m, so his elbows stay bent, as a driver's do; he is moved forward in the seat to it (at most
+## SHOCK_SLIDE), the cab camera's eye being set back from where a driver's shoulders sit.
+const SHOCK_REACH := 0.43
+const SHOCK_SLIDE := 0.25
+## The cab camera's eye (EYE) sits high, about 0.2 m under this van's roof; seated in a real van his
+## eyes are about 0.75 m over a cushion about 1.05 m off the road. His head bone goes this far under
+## the camera's eye, so his head clears the roof (his hips then about 1.1 m up).
+const SEATED_BELOW_EYE := 0.25
 
 ## The rifle is slung again (stow_rifle), for the app to board the van after it.
 signal rifle_stowed
@@ -220,6 +234,7 @@ func _ready() -> void:
 	_legs_on_steps()
 	_gait = PushGait.new(_player)
 	_steps = StairSteps.new()
+	_player.add_animation_library("shock", SHOCK)
 	_rifle = RifleCarry.new()
 	_rifle.name = "RifleCarry"
 	add_child(_rifle)
@@ -989,6 +1004,53 @@ func set_aiming(on: bool, gun: Node = null) -> void:
 ## Where his left palm is, in the world (the hand he leads Lily by).
 func left_hand() -> Vector3:
 	return _grip_seen
+
+
+## Seated in the van's driver's seat for the shock after the hit (C67): his model shown (his body
+## stays as it is in the van, still and without collision), turned so his knees point the way the
+## van faces, his head bone
+## SEATED_BELOW_EYE under the cab camera's `eye`, playing Shock, his hands closing on the wheel's rim at `rim` (left, right) by the two-hand
+## IK over the grip phase. end_seated() hides him again.
+func play_seated(van: Node3D, eye: Vector3, rim: Array[Vector3]) -> void:
+	visible = true
+	global_transform = Transform3D(van.global_basis.orthonormalized()
+		* Basis(Vector3.UP, PI), van.global_position)
+	_model.position = Vector3.ZERO
+	_model.rotation = Vector3.ZERO
+	_player.play("shock/Shock")
+	_player.seek(0.0, true)
+	var knees := (_bone_at("LeftLeg") + _bone_at("RightLeg")) / 2.0 - _bone_at("Hips")
+	var ahead := -van.global_basis.z
+	rotate_y(atan2(ahead.x, ahead.z) - atan2(knees.x, knees.z))
+	global_position += eye - Vector3.UP * SEATED_BELOW_EYE - _bone_at("Head")
+	var level := ahead - Vector3.UP * ahead.dot(Vector3.UP)
+	var reach := (_bone_at("LeftArm") + _bone_at("RightArm") - rim[0] - rim[1]) / 2.0
+	var along := reach.dot(level.normalized())
+	var room := along * along - reach.length_squared() + SHOCK_REACH * SHOCK_REACH
+	global_position += level.normalized() * clampf(-along - sqrt(maxf(room, 0.0)), 0.0,
+		SHOCK_SLIDE)
+	for index in range(2):
+		var side := -1.0 if index == 0 else 1.0
+		var shoulder := _bone_at("%sArm" % ["Left", "Right"][index])
+		_hold_targets[index].global_position = rim[index] + (shoulder - rim[index]).normalized() \
+			* SHOCK_PALM
+		_hold_poles[index].global_position = shoulder + van.global_basis * Vector3(
+			side * 0.35, -0.5, 0.1)
+	_hold.active = true
+	_hold.influence = 0.0
+	create_tween().tween_property(_hold, "influence", 1.0, SHOCK_GRIP)
+
+
+func _bone_at(bone: String) -> Vector3:
+	return (_skeleton.global_transform * _skeleton.get_bone_global_pose(_skeleton.find_bone(
+		"mixamorig_" + bone))).origin
+
+
+func end_seated() -> void:
+	_hold.influence = 0.0
+	_hold.active = false
+	_player.play("Idle")
+	visible = active
 
 
 ## A round has hit him: his flinch, with the rifle out (the hangar's hurt).

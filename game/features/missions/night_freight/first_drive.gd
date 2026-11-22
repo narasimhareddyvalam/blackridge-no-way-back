@@ -5,6 +5,8 @@ signal checkpoint_saved
 signal checkpoint_save_failed(error: int)
 signal drive_completed
 signal struck(speed: float)
+## The van has come to rest after the hit: the hold begins (Assignment 7's shock, C67).
+signal came_to_rest
 
 const SaveFile = preload("res://shared/save/save_file.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
@@ -146,6 +148,8 @@ func _physics_process(delta: float) -> void:
 	if vehicle.locked:
 		_watch_lock()
 	if _held_for >= 0.0 and absf(vehicle.speed) < 0.05:
+		if is_zero_approx(_held_for):
+			came_to_rest.emit()
 		_held_for += delta
 		if _held_for >= HOLD_SECONDS:
 			_held_for = -1.0

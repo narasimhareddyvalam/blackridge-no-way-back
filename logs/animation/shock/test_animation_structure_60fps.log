@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: S1 dash 'ringing' plays 'ring': in phone_ring.tres, LOOP_LINEAR
+PASS: S1 dash 'auto' plays 'ring': in phone_ring.tres, LOOP_LINEAR
+PASS: S2 Ethan 'on foot: idle' plays 'Idle' (loop mode 1)
+PASS: S2 Ethan 'on foot: walking' plays 'Walk' (loop mode 1)
+PASS: S2 Ethan 'on foot: running' plays 'Run' (loop mode 1)
+PASS: S2 Ethan 'boarding' plays 'EnterVan' (loop mode 0)
+PASS: S2 Ethan 'getting out' plays 'ExitVan' (loop mode 0)
+PASS: S3 navigation_display.gd asks RingPlayer for exactly the clips the table names ["ring"]
+PASS: S4 the drawn pulse is gone from the call card (no 'pulse', no sin(_clock))
+PASS: S5 every clip the code asks Ethan's player for exists in ethan.glb (asked ["Idle", "WalkBack", "Walk", "Run", "Idle", "Push", "PushStop", "Walk", "RifleGrab", "RifleAim", "RifleFire", "RifleAimDown", "RifleReload", "RifleHit", "RifleAway", "ExitVan", "EnterVan"]; missing [])
+PASS: S6 one authority over the ring: only navigation_display.gd names its nodes ["res://features/vehicles/freight_van/navigation_display.gd"]
+PASS: S7 nothing outside the driver reaches Ethan's AnimationPlayer by name []
+PASS: S8 the app asks driver.gd for EnterVan and reads clip_time(), never the player
+ANIMATION STRUCTURE RESULT: 13/13 passed; 0 failed

@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: K1 every track of every clip on his player resolves (bones) []
+PASS: K2 the clip shock/Shock exists
+PASS: K3 length 2.9667 s is 90 frames at 30 fps
+PASS: K4 step one frame period (0.03333)
+PASS: K5 it plays once (loop_mode 0)
+PASS: K6 its 116 tracks are all bone tracks
+PASS: K7 every track is keyed on the phase table's frames [0, 11, 24, 35, 47, 59, 74, 89], within half a frame
+PASS: K8 his head: 9 degrees down at rest, -6 in the breath (up), 51 in the drop, 10 in the stare (level again)
+SHOCK READBACK RESULT: 8/8 passed; 0 failed

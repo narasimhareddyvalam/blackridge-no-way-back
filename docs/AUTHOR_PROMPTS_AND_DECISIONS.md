@@ -5491,6 +5491,18 @@ tag `a5`. Pictures the author approved or rejected are filed in
        and gaits on his body; Mission 3's pistol tests updated in their own commits; Adrian's men
        keep their pistols).
 
+404. **The shock: hands on the wheel, and fear that reads**
+     - **Prompt** (verbatim, after the shock shot's capture): "the hands of ethan arent on steering
+       wheel when we are looking from outisde and the shock isnt lookng like hes actually shocked,
+       add head nods etc to make it more visually appealing that he is shocked and scared."
+
+405. **Finish the shock, then Step 7; all four clips in the submission; caffeinate**
+     - **Prompt** (verbatim, after the status of what is left): "yes, finish the shock first then
+       step 7. also i want to submit all 4 animations for the assignment submission. turn on
+       caffeine mode and continue to finish up the work. do you need any guidance from my side?"
+     - **Done:** `caffeinate -dims` started; the four clips (ring, EnterVan, rifle reload, shock) are
+       the submission's.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

@@ -317,3 +317,24 @@ the pistol's. Owners: `driver.gd` alone plays his own player and `UpperBody` (re
 nothing else. Upper-body clips keep only the bones above the waist (`make_rifle_upper_body.gd`);
 the gaits keep the whole body. Every earlier clip in `ethan.glb` stays as it was (sampled before
 and after and compared).
+
+**2026-11-22, the rifle wired in and the shock remade (#397-#405).** *The rifle* hangs at his
+right hip when slung, not across his back: both captured clips put it there (the put-away lets go
+at frame 62, the draw takes it at 37). Every frame the rifle is placed from his right fist's grip,
+upright through the whole reload, with his left hand moved by IK onto the part it handles (the
+handguard, the magazine, the charging handle). The handle and bolt carrier slide 8 cm back at
+frames 62-65. He fires only from the aim (`can_fire`) and reloads only with the rifle drawn
+(`can_reload`); he puts it away before boarding (`stow_rifle`, then EnterVan). *The shock*
+replaces the 90-frame table above. The author's look (#404): his hands must be on the wheel as
+seen from outside, and the fear must read. It is 105 frames (3.5 s, `SHOCK_SECONDS`, inside the
+4.0 s hold). Its base is EnterVan's last frame, seated at the pedals, not the Sit pose (that pose
+raises one leg). Over it he hunches forward over the wheel throughout. Its phases: startle 0-8
+(head jerks back 15°, shoulders up), panic 8-30 (heaving breaths, a glance out), disbelief 30-47
+(the head shakes "no", ±17-21°), drop 47-63 (the head falls 56°), checks 63-83 (left mirror 44°,
+right 27°), stare 83-104 (level). His wrists go by IK to the rim of the cab's own wheel, at ten to
+two, read from the wheel mesh's bounds (its origin lies off the rim's middle). The IK's grip closes
+over frames 0-11. His shoulders are set 0.43 m from the rim, about 90% of his 0.48 m arm, so his
+elbows stay bent. To make that reach he is moved forward in the seat by at most 0.25 m, because
+the cab camera's eye sits behind where a driver's shoulders would be. The shot looks down over the
+dash from a little above his eyes, fov 37° to 33°, so his head and his hands on the wheel both sit
+inside the letterbox.
