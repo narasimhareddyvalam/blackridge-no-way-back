@@ -579,3 +579,86 @@ these changes, first reverse their patch
   `view-reverse_camera` variant
 - **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
   its strips `2b9e327`.
+
+---
+
+# Assignment 7: EnterVan tuning record
+
+The committing action is EnterVan (`CHANGE-BRIEF.md` §4, §9). Each revision follows the
+handout's Step 7 loop:
+
+1. A strip is captured with Movie Maker.
+2. The author plays, at normal speed and at `--time-scale 0.25`, and says what they saw.
+3. Claude Code reads the boundary frames against the per-frame log and proposes one change, to
+   the phase table or one key's transition, with a prediction.
+4. The author approves. Claude Code makes only that change and the read-back's expected values.
+5. The author recaptures into `r<N+1>`, Claude Code compares it with the prediction, and the
+   author gives the verdict in the running game.
+
+At least one revision must come from what the author saw in play, not from the reading below.
+
+**About the strips:**
+- They are fixture captures in the running game: Mission 1's start at the depot at night, the
+  van where it stands, the run sheet treated as signed, and Ethan placed at the driver's door
+  (`BOARD_SPOT`) facing it, seen from his own camera.
+- `E` is pressed by real input (`interact`) after capture frame 10.
+- Script: `tools/captures/capture_enter_van_strip.gd`. Movie Maker, 1280×800, `--fixed-fps 30`.
+- Only the frames read are kept, in `captures/enter_van/r<N>/`.
+- The per-frame log, with the clip's frame, the door and the boarding flag for every capture
+  frame, is `logs/animation/step7/enter_van_r<N>.log`.
+
+## r0: the brief as built (2026-11-22)
+
+**Captured** by Claude Code (#405: "continue to finish up the work").
+
+**Frames kept:**
+- The brief's §9 list: 10, 32, 42, 58, 63, 70.
+- The frames where the clip's own boundaries actually fall: 12, 34, 44, 60, 65, 73.
+
+**Claude Code's first reading.** This is evidence from the capture and the log. Neither is play,
+and none of it is the author's observation.
+
+| Capture | EnterVan frame (log) | Door (log) | What the frame shows |
+| :-- | :-- | :-- | :-- |
+| 10 | (Idle) | 0 | E pressed: Ethan stands at the van's side by the driver's door, his back to the camera |
+| 12 | 0 | 0 | the clip has begun (it holds frame 0 for one frame: the walk to `BOARD_SPOT` takes one physics step) |
+| 34 | 22 | 0 | he has stepped forward to the door, his left hand coming up toward the handle (`REACH_FROM`) |
+| 44 | 32 | 0 | his hand at the handle, the door still shut (`DOOR_GRAB`) |
+| 60 | 48 | 0.99 | the door fully open, his hand on its edge; both feet still on the ground (`DOOR_OPENED`) |
+| 65 | 53 | 1.0 | the cut begins (`CUT`); he still stands outside in the opening, no foot lifted |
+| 70 | 58 | 1.0 | the fade most of the way to black, he is still visible |
+| 73 | (seated) | 0 | the cab view, seated, the fade coming back up |
+
+**Where the motion and the table disagree:**
+1. **§9's frame numbers are two frames early.** §9 assumed EnterVan frame N falls on capture
+   frame 10 + N. In the log it falls on 12 + N:
+   - one frame for the input to reach the app;
+   - one frame for `_board_van`'s walk to `BOARD_SPOT`, which is a single physics step when he
+     already stands there.
+
+   So §9's frames 32, 42, 58, 63 and 70 show clip frames 20, 30, 46, 51 and 58, not 22, 32, 48,
+   53 and 60. The motion itself is on time; only §9's capture numbers are off.
+2. **§1 and §4 say he "climbs in"; the strip never shows it.** §4's recovery row reads "door
+   fully open, his foot lifting". At 48 (capture 60) and at the cut, 53 (capture 65), both feet
+   are on the ground. The cut hides him before his weight moves to the step. The player sees the
+   handle and the door, then black. This is the reading most likely to matter in play.
+3. **The door runs one frame behind his hand.** In the log, the door's value on each frame is
+   the smoothstep of the previous clip frame. For example, capture 46 logs clip 34 but door
+   0.011, which is the value for clip 33. `_board_van` reads `clip_time()` when `process_frame`
+   resumes it, which is before his `AnimationPlayer` advances on that frame. §6's "largest
+   disagreement 0 s" is therefore 1/30 s in fact.
+
+**Candidate changes** (for after the author has played; one only, and the author's observation
+picks it):
+- **For (2):** move `CUT` later in the table, to the frame where his foot reaches the step, so
+  the player sees him start to climb before the fade. The frame needs reading in play; the
+  scratch probe of the clip past 53 did not hold the pose.
+- **For (1):** correct §9's capture frames to 12 + N. This is a documentation fix, not a tuning
+  change.
+- **For (3):** none proposed. One frame at 30 fps is below what the eye separates. It is
+  recorded for the clocks question.
+
+**The author's observation in play:** _waiting for the author (normal speed and 0.25×)._
+
+**The change, Claude Code's prediction, r1 and the verdict:** _to follow the author's
+observation._
