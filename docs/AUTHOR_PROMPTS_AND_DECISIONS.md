@@ -5427,6 +5427,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
        slung angle over 8 frames; proportion: Ethan 1.77 m, the M16 1.00 m (a real M16A3 1.006 m);
        the film checked every half second and at the flagged moments (4 s, 19 s) at full size.
 
+400. **The reload's hands and the put-away**
+     - **Prompt** (verbatim, after the film of `771e321`): "the reloading, when hes reloading the
+       hand isnt going to right places of the gun. i dont like it when hes putting away his gun, its
+       not accurate and correct"
+     - **Found:** the reload's left hand traced through all 100 frames in the rifle's space: right on
+       the handguard and nearly right on the charging handle, but 12-14 cm off the magazine well,
+       and the hold had steered the barrel toward it there; the author's draw and put-away agree on
+       a rifle hanging at his right hip (0.18 m and 24 degrees apart), never over his shoulder.
+     - **Done:** in `rifle_hold.gd` the reload's left hand has a part for each phase (handguard,
+       magazine to drop it, belt, magazine into the well, charging handle, handguard), the rifle
+       turned to meet it and a two-bone IK on his left arm drawing the hand the last centimetres,
+       corrected by where the hand lands after the IK (0-3 cm handguard, 1-6 cm magazine, 0.4-1 cm
+       charging handle); the empty magazine drops, a fresh one rides in his left hand from his belt
+       and is seated at frame 47; slung at his right hip as his own clips leave and take it, the
+       rifle turning gradually into his hands over the draw (frames 15-45) and out to hanging over
+       the put-away (6-62), its grip in his fist throughout; the film checked densely at the draw,
+       the reload and the put-away.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

@@ -1,23 +1,19 @@
 extends SceneTree
-## Places the M16 slung across Ethan's back (Assignment 7, #397: the author chose "Across his
-## back"), where the draw's motion reaches for it: in RifleGrab ("Grab Rifle From Back") his right
-## hand goes behind his right hip and lower back, deepest at frame 25 (GRAB_FRAME), so the rifle lies
-## diagonally across his back with its pistol grip exactly in his fist at that frame (the hole of his
-## closed hand, as rifle_hold.gd finds it), so it comes off his back in his hand, its muzzle up toward
-## his left shoulder, flat against him with its sights out. Prints SLUNG, its transform in his upper back's (Spine2)
-## space, the constant driver.gd uses. Run from the repository root:
+## Places the M16 slung on Ethan (Assignment 7, #400) where his own clips put it: "Rifle Put Away"
+## ends with his right hand letting go of it at his right hip (LET_GO), and "Grab Rifle From Back"
+## starts by taking it from there (TAKE): the two agree within 0.15 m and 20 degrees, and neither
+## reaches over his shoulder. So the slung rifle hangs at his right hip, muzzle down, exactly as
+## his hand leaves it at LET_GO (rifle_hold.gd's one-hand placement for his own downloads),
+## in his upper back's (Spine2) space. Prints SLUNG, the constant the game uses. Run from the
+## repository root:
 ##   HOME=.scratch-home /Applications/Godot.app/Contents/MacOS/Godot --headless --path game \
 ##       --script ../tools/art/measure_rifle_sling.gd
 
+const RifleHold = preload("res://features/weapons/rifle/rifle_hold.gd")
 const RIG := "res://features/characters/ethan/ethan.glb"
 const POSE := "res://animations/ethan_rifle.tres"
-const GRAB_FRAME := 25
-## The pistol grip's middle (rifle_hold.gd's GRIP), in m16.glb's space.
-const GRIP := Vector3(0.0, -0.105, 0.088)
-## In Spine2's space, in metres (x his left, y up, z forward): the rifle's line up toward his left
-## shoulder; its top facing out behind him.
-const ALONG := Vector3(0.55, 0.83, -0.04)
-const TOP := Vector3(0.0, 0.0, -1.0)
+const LET_GO := 62
+const TAKE := 15
 
 
 func _initialize() -> void:
@@ -30,28 +26,30 @@ func _run() -> void:
 	var skeleton := model.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
 	var player := model.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
 	player.add_animation_library("pose", load(POSE))
+	var hold := RifleHold.new(skeleton)
+	var at_let_go := await _rifle(player, skeleton, hold, "pose/RifleAway", LET_GO)
+	var at_take := await _rifle(player, skeleton, hold, "pose/RifleGrab", TAKE)
+	var apart := (at_let_go * RifleHold.GRIP).distance_to(at_take * RifleHold.GRIP)
+	var angle := rad_to_deg(at_let_go.basis.get_rotation_quaternion().angle_to(
+		at_take.basis.get_rotation_quaternion()))
+	print("SLING: let go at frame %d of the put-away, taken at frame %d of the draw: %.2f m and "
+		% [LET_GO, TAKE, apart] + "%.0f degrees apart" % angle)
+	print("SLING: const SLUNG := Transform3D(Vector3%s, Vector3%s, Vector3%s, Vector3%s)" % [
+		at_let_go.basis.x, at_let_go.basis.y, at_let_go.basis.z, at_let_go.origin])
+	quit()
+
+
+## The rifle in his hand at `frame` of `clip`, in Spine2's space (scaled as the bone is).
+func _rifle(player: AnimationPlayer, skeleton: Skeleton3D, hold: RefCounted, clip: String,
+		frame: int) -> Transform3D:
 	player.play("Idle")
 	player.seek(0.0, true)
-	player.play("pose/RifleGrab")
-	player.seek(GRAB_FRAME / 30.0, true)
+	player.play(clip)
+	player.seek(frame / 30.0, true)
 	await process_frame
+	var rifle: Transform3D = hold.call("place", 1.0, clip.trim_prefix("pose/"), frame)
+	for settle in range(10):
+		rifle = hold.call("place", 1.0, clip.trim_prefix("pose/"), frame)
 	var spine := skeleton.global_transform * skeleton.get_bone_global_pose(skeleton.find_bone(
 		"mixamorig_Spine2"))
-	var scale := spine.basis.get_scale()
-	var unscaled := Transform3D(spine.basis.orthonormalized(), spine.origin)
-	var fist := Vector3.ZERO
-	for finger in ["Middle", "Ring", "Pinky"]:
-		for joint in ["1", "3"]:
-			fist += (skeleton.global_transform * skeleton.get_bone_global_pose(skeleton.find_bone(
-				"mixamorig_RightHand" + finger + joint))).origin
-	var grip_on_back := unscaled.affine_inverse() * (fist / 6.0)
-	var muzzle_way := ALONG.normalized()
-	var top := (TOP - muzzle_way * TOP.dot(muzzle_way)).normalized()
-	var basis := Basis(top.cross(-muzzle_way), top, -muzzle_way)
-	assert(basis.determinant() > 0.0, "the sling's basis must be a rotation, not a mirror")
-	var on_back := Transform3D(basis, grip_on_back - basis * GRIP)
-	var slung := spine.affine_inverse() * (unscaled * on_back)
-	print("SLING: Spine2 scale %s; grip on his back at %s" % [scale, fist / 6.0])
-	print("SLING: const SLUNG := Transform3D(Vector3%s, Vector3%s, Vector3%s, Vector3%s)" % [
-		slung.basis.x, slung.basis.y, slung.basis.z, slung.origin])
-	quit()
+	return spine.affine_inverse() * rifle

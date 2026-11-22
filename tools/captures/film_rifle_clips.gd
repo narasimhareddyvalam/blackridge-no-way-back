@@ -1,9 +1,11 @@
 extends SceneTree
-## A film of the rifle clips on Ethan for the author (Assignment 7, #396), built as driver.gd will
+## A film of the rifle clips on Ethan for the author (Assignment 7, #396-#400), built as driver.gd will
 ## build them: his own player (Idle, or the rifle's gaits, whole body), UpperBody with
 ## game/animations/ethan_rifle.tres over it, the M16 slung on his upper back (SLUNG, on Spine2) or in
-## his hands (game/features/weapons/rifle/rifle_hold.gd: the grip in his right fist, the barrel
-## through his left fist while it is under the front), easing from his back to his hand over
+## his hands, and slung at his right hip, by game/features/weapons/rifle/rifle_hold.gd ( the grip in his right fist, the barrel
+## through his left fist while it is under the front, his left hand drawn onto the part it holds by
+## IK; in the reload the magazine dropped, a fresh one in his left hand, seated), slung at his right
+## hip where his own put-away leaves it and his draw takes it, easing from his back to his hand over
 ## frames 22-28 of the draw and back onto his back for 0.35 s after frame 40 of the put-away. Real speed, 0.25 s blends: slung, the draw, the
 ## ready, raised to aim, three shots, the complete reload, a hit, lowered, the second ready, put
 ## away; then the gaits and turns. A Movie Maker run; a plain lit room, not the game's world.
@@ -12,31 +14,19 @@ const RIG := "res://features/characters/ethan/ethan.glb"
 const POSE := "res://animations/ethan_rifle.tres"
 const RIFLE := preload("res://features/weapons/rifle/m16.glb")
 const RifleHold = preload("res://features/weapons/rifle/rifle_hold.gd")
-const IN_HANDS := Transform3D(Vector3(77.3186, 15.674, -61.4504),
-	Vector3(60.9294, 8.51759, 78.8356), Vector3(17.5908, -98.396, -2.96439),
-	Vector3(5.13684, 16.5887, 8.61718))
-const SLUNG := Transform3D(Vector3(-83.35921, 55.23804, -0.000001),
-	Vector3(-2.217297, -3.346099, -99.91941), Vector3(-55.19352, -83.29205, 4.014071),
-	Vector3(0.552367, -36.17239, -22.57224))
-## The draw: the rifle stays on his back until his fist reaches its grip at TAKE_FROM, then rides
-## in his fist, turning from its slung angle to his hold by TAKE_TO; the put-away: he lets go at
-## LET_GO_FRAME and it swings onto his back over SWING seconds.
-const TAKE_FROM := 25
-const TAKE_TO := 33
-const LET_GO_FRAME := 40
-const SWING := 0.35
-const GRIP := Vector3(0.0, -0.105, 0.088)
 const BLEND := 0.25
 
 var _legs: AnimationPlayer
 var _upper: AnimationPlayer
 var _rifle: Node3D
-var _back: BoneAttachment3D
-var _hand: BoneAttachment3D
 ## 0 on his back, 1 in his hand: the rifle follows a blend of the two each frame.
-var _held := 0.0
-var _in_fist := false
 var _hold: RefCounted
+var _magazine: MeshInstance3D
+var _fresh: MeshInstance3D
+var _dropped: MeshInstance3D
+var _fall := Vector3.ZERO
+## The magazine's place in the rifle (relative to the rifle's root, with the model's own scale).
+var _magazine_in_rifle := Transform3D.IDENTITY
 var _label: Label
 
 
@@ -73,16 +63,17 @@ func _run() -> void:
 	_upper.process_priority = 1
 	model.add_child(_upper)
 	_upper.add_animation_library("", load(POSE))
-	_back = BoneAttachment3D.new()
-	_back.bone_name = "mixamorig_Spine2"
-	skeleton.add_child(_back)
-	_hand = BoneAttachment3D.new()
-	_hand.bone_name = "mixamorig_RightHand"
-	skeleton.add_child(_hand)
 	_hold = RifleHold.new(skeleton)
+	_hold.call("setup_left_arm", model)
 	_rifle = RIFLE.instantiate() as Node3D
 	root.add_child(_rifle)
 	_rifle.top_level = true
+	_magazine = _rifle.find_child("MAGAZINE_M16A3_0", true, false) as MeshInstance3D
+	_magazine_in_rifle = _rifle.global_transform.affine_inverse() * _magazine.global_transform
+	_fresh = _magazine.duplicate() as MeshInstance3D
+	root.add_child(_fresh)
+	_fresh.top_level = true
+	_fresh.visible = false
 	var layer := CanvasLayer.new()
 	root.add_child(layer)
 	_label = Label.new()
@@ -120,9 +111,8 @@ func _run() -> void:
 	await _say("Ready (Rifle Idle (1))", 3.0)
 	await _put_away()
 	_upper.stop()
-	await _say("Slung across his back", 1.0)
-	_held = 1.0
-	_in_fist = true
+	await _say("Slung at his right hip", 1.0)
+	_hold.set("slung", false)
 	for gait in [["RifleWalk", "Walk"], ["RifleWalkBack", "Walk backwards"], ["RifleRun", "Run"],
 			["RifleRunBack", "Run backwards"], ["RifleStrafeLeft", "Strafe left"],
 			["RifleStrafeRight", "Strafe right"], ["RifleStrafe", "Strafe"],
@@ -134,43 +124,53 @@ func _run() -> void:
 
 
 func _process(delta: float) -> bool:
-	if _rifle != null and _back != null:
-		var back := _back.global_transform * SLUNG
+	if _rifle != null:
 		var clip := String(_upper.current_animation) if _upper.is_playing() else ""
-		var hand: Transform3D = _hold.call("place", delta, clip)
-		var t := smoothstep(0.0, 1.0, _held)
-		var basis := back.basis.orthonormalized().slerp(hand.basis.orthonormalized(), t)
-		var grip := hand * GRIP if _in_fist else (back * GRIP).lerp(hand * GRIP, t)
-		_rifle.global_transform = Transform3D(basis, grip - basis * GRIP)
+		var frame := _upper.current_animation_position * 30.0 if _upper.is_playing() else 0.0
+		_rifle.global_transform = _hold.call("place", delta, clip, frame)
+		_reload_magazine(clip, frame, delta)
 	return false
+
+
+## The reload's magazines: the empty one drops from the well, a fresh one rides in his left hand from
+## his belt and goes into the well, seated.
+func _reload_magazine(clip: String, frame: float, delta: float) -> void:
+	var where: String = _hold.call("magazine_at", clip, frame)
+	_magazine.visible = where == "gun"
+	if where != "gun" and _dropped == null and frame < 30.0:
+		_dropped = _magazine.duplicate() as MeshInstance3D
+		root.add_child(_dropped)
+		_dropped.top_level = true
+		_dropped.global_transform = _magazine.global_transform
+		_dropped.visible = true
+		_fall = Vector3.ZERO
+	if _dropped != null:
+		if _dropped.global_position.y > 0.03:
+			_fall += Vector3.DOWN * 9.8 * delta
+			_dropped.global_position += _fall * delta
+		if clip != "RifleReload":
+			_dropped.queue_free()
+			_dropped = null
+	_fresh.visible = where == "hand"
+	if where == "hand":
+		_fresh.global_transform = _hold.call("magazine_in_hand", _rifle.global_transform,
+			_magazine_in_rifle)
 
 
 func _draw() -> void:
 	_upper.play("RifleGrab", BLEND)
 	_label.text = "Draw (Grab Rifle From Back)"
 	while _upper.current_animation == "RifleGrab" and _upper.is_playing():
-		var frame := _upper.current_animation_position * 30.0
-		_in_fist = frame >= TAKE_FROM
-		_held = clampf(inverse_lerp(TAKE_FROM, TAKE_TO, frame), 0.0, 1.0)
 		await process_frame
-	_held = 1.0
-	_in_fist = true
+	_hold.set("slung", false)
 
 
 func _put_away() -> void:
 	_upper.play("RifleAway", BLEND)
 	_label.text = "Put away (Rifle Put Away)"
-	while _upper.current_animation_position * 30.0 < LET_GO_FRAME:
+	while _upper.current_animation == "RifleAway" and _upper.is_playing():
 		await process_frame
-	_in_fist = false
-	var clock := 0.0
-	while clock < SWING:
-		await process_frame
-		clock += 1.0 / 30.0
-		_held = 1.0 - clock / SWING
-	_held = 0.0
-	while _upper.is_playing() and _upper.current_animation == "RifleAway":
-		await process_frame
+	_hold.set("slung", true)
 
 
 func _say(words: String, seconds: float) -> void:
