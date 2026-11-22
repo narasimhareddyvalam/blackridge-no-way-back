@@ -5140,6 +5140,16 @@ tag `a5`. Pictures the author approved or rejected are filed in
        seen); S5 the windshield replaced; the ending at road sample 990 as Mission 1's; all words
        drafts (`docs/PHASE_BRIEF.md`, 2026-11-21).
 
+359. **Mission 2 good for now; Mission 3 next, overnight**
+     - **Prompt** (verbatim): "i am still seeing, i came to checkin. its good for now commit and
+       move to mission 3. and finish mission 3 and same rules. turn on caffeine mode. i will check
+       mission 2 and mission 3 together"
+     - **Decision:** Mission 2 stays as built for now (the author's full look comes with Mission
+       3's); Mission 3 is planned in a dated brief first and built in steps under the same rules
+       (real references first, tests first, mutations, every suite, a commit per part, no push, no
+       edits to `game/shaders/`), its open choices Claude Code's calls recorded as drafts (as in
+       #358); `caffeinate` on, off when Mission 3 is done.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
