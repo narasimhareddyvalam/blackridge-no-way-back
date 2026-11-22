@@ -1,598 +1,161 @@
-# CHANGE-BRIEF.md: Particle effects (Assignment 6)
-
-**Date:** 2026-11-07  
-**Status:** Initial author design brief, prepared after Assignment 6 planning conversations and research, but before implementing the particle effects described here. This document does **not** claim that a Git commit, implementation, capture, or measurement has happened. Commit this initial prediction before effect implementation; later changes belong only in dated revisions.
-
-**How it was made:** the author's draft. At the author's request, Claude Code corrected its Godot names, units and flags, and wrote in the decisions the author chose on 2026-11-07: both B effects graded, B1's condition and feature, rain that appears already falling, four realism fixes, A2 simulated with the van and firing at the hit. The textures are drawn by a script: the author first chose AI-generated ones, then asked for everything else to follow best practice, and Claude Code chose the script (#142). Values marked † are Claude Code's proposals from the author's descriptions and `docs/PARTICLE_RESEARCH.md`, for the author to check before committing (`docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #141).
-
-The previous brief (Phase 1, the Phase 2 brief for Mission 2, and both versions of the save rules) moved unchanged to `docs/PHASE_BRIEF.md` on 2026-11-07. Assignment 5's brief is at tag `a5` (`git show a5:CHANGE-BRIEF.md`).
-
-## 1. The effects
-
-| ID | Effect | Job | Event or condition | Graded |
-| --- | --- | --- | --- | --- |
-| A1 | Wiper flick | One-shot | `wiper_swept` in `game/features/vehicles/freight_van/freight_van.gd:5`; emit at the **top turn** of each blade sweep, not at park | Yes |
-| A2 | Roof spill on hard braking | One-shot | Rising edge of `braking` (`freight_van.gd:100`) while `actual_speed >= 8 m/s` and measured deceleration `>= 6 m/s²`, with enough time for roof water to replenish | Yes |
-| B1 | Rain in every lamp's light | Ambience | The active camera within 65 m of a lamp, where the lamp's own light begins to fade (`distance_fade_begin`, `industrial_loop.gd:647`); lamps defined in `game/features/environments/industrial_loop/industrial_loop.gd` | Yes |
-| B2 | Exhaust vapour | Feedback loop | `engine_on` in `freight_van.gd:27`; intensity follows the effective player or scripted throttle (`:89`, `:94`) | Yes |
-
-**Grading decision:** all four are graded: A1 and A2 as Effect A, B1 and B2 as Effect B.
-
-## 2. A1: Wiper flick
-
-### The job
-
-At the upper turning point, the wiper throws a few drops and fine mist off the glass. The player sees that the blades are physically moving water rather than merely wiping a texture. This must still be visible against an unlit road, although it should become faint when no light catches the droplets. The event is `wiper_swept` in `game/features/vehicles/freight_van/freight_van.gd:5` (emitted around lines 279–284). It has no position payload, so the effect finds the current blade-tip transform in the van presentation and emits **only at the top turn**. The park event is ignored for this effect.
-
-### Intent
-
-- **Timing phases:** 0.00–0.07 s: sharp bead release at the blade tip; 0.07–0.25 s: larger beads arc outward and down, with finer spray spreading; 0.25–0.65 s: big drops fall out of view; 0.65–1.20 s: only a few faint mist specks remain before fading.
-- **Contrast:** Darkest: the unlit valley road beneath the night sky, where a few cool or reflected specks show without glowing unnaturally. Brightest: the depot under its amber lamps, where drops gain warm highlights but never become a solid white fan. The effect must work without a lamp.
-- **Scale:** At 1280×800, the largest visible drops should be about 2–5 px, mist 1–2 px, and the whole flick roughly 0.15–0.35 m across near the blade tip. It stays small compared with the 0.65 m driver blade and 1.77 m windshield, and tiny compared with Ethan.
-- **Change over life:** Beads start nearly clear with a bright edge, then become dimmer and more transparent. Mist starts faint and loses alpha steadily. Big beads keep nearly constant physical size before disappearing; mist expands about 1.4× while fading. Alpha keys (normalized life): BigDrops `0:0.75, 0.15:0.90, 0.55:0.40, 1:0`, FineSpray `0:0.35, 0.2:0.45, 0.65:0.15, 1:0`; size keys: BigDrops `0:0.75, 0.2:1.0, 1:1.0`, FineSpray `0:0.7, 0.5:1, 1:1.4`.
-- **Variation:** Randomize velocity by the chosen ranges, direction within the cone, bead size ±25%, mist size ±35%, slight cool/warm tint ±5%, and billboard rotation 0–360°. Each top turn should look related but not identical.
-- **Emitters:** `BigDrops` makes a short, readable arc of individual water beads. `FineSpray` creates a longer-lived, sparse mist at the same blade-tip position. Both belong to one reusable A1 effect root.
-
-### Settings
-
-Directions and boxes are in the van's frame (−x toward the driver's side, +y up, −z forward); each emitter is turned like the van when it fires†.
-
-**BigDrops**
-
-- **Node type:** `GPUParticles3D`; GPU rendering supports the planned particle material and allows future collision if needed. No CPU-only behavior is required.
-- **Emission:** `amount = 22`; `one_shot = true`; `explosiveness = 1.0`; `lifetime = 0.65 s`; `emission_shape = EMISSION_SHAPE_SPHERE`, `emission_sphere_radius = 0.025 m`.
-- **Process:** `ParticleProcessMaterial`; `initial_velocity_min = 1.2 m/s`, `initial_velocity_max = 2.8 m/s`; `direction = (-0.94, 0.09, -0.32)`†: toward the driver's side, a little up and forward, as the water leaves the glass's left edge; `spread = 28°`; `gravity = (0, -9.8, 0) m/s²`; `damping_min = 0.3`, `damping_max = 0.7`; `color = (0.78, 0.86, 0.91, 1)` with `alpha_curve` `0:0.75, 0.15:0.90, 0.55:0.40, 1:0`; `scale_min = 0.3`, `scale_max = 0.7` (multipliers of the 0.01 m quad: 3–7 mm drops), `scale_curve = 0:0.75, 0.2:1, 1:1.0`.
-- **Draw:** Tiny soft water-bead RGBA texture, created for this effect in `game/effects/textures/water_bead.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `shading_mode = SHADING_MODE_PER_PIXEL` so scene lighting affects it, `BILLBOARD_PARTICLES`, `vertex_color_use_as_albedo = true`; `QuadMesh` of size `(0.01, 0.01)` m. Avoid additive glowing drops.
-- **`local_coords = false`:** After emission, droplets stay in world space rather than following the van. `inherit_velocity_ratio = 0`†: each burst root stays where it fired, so at speed the drops start at rest in the world and rush back faster than real drops for the first few tenths of a second (research §3); a strip at speed checks the look.
-- **`visibility_aabb`:** `AABB(position (-2.0, -2.0, -1.5), size (3, 3, 3))`† in the burst root's frame: a 3 m box around the launch point, shifted toward the driver's side and down, where the drops go. Set by hand, then checked in the editor with the wipers running and the van moving.
-- **`preprocess = 0 s`:** Nothing should be visible before the first sweep.
-
-**FineSpray**
-
-- **Node type:** `GPUParticles3D`.
-- **Emission:** `amount = 36`; `one_shot = true`; `explosiveness = 0.9`; `lifetime = 1.20 s`; `emission_shape = EMISSION_SHAPE_SPHERE`, radius `0.035 m`.
-- **Process:** `initial_velocity_min = 0.35 m/s`, `initial_velocity_max = 1.1 m/s`; `direction = (-0.94, 0.09, -0.32)`† (as BigDrops); `spread = 48°`; `gravity = (0, -1.0, 0) m/s²` (stylized effective settling for tiny droplets); `damping_min = 0.8`, `damping_max = 1.6`; `color = (0.82, 0.87, 0.91, 1)`† (pale grey-blue) with `alpha_curve` `0:0.35, 0.2:0.45, 0.65:0.15, 1:0`; `scale_min = 0.15`, `scale_max = 0.3` (multipliers of the 0.01 m quad: 1.5–3 mm); `scale_curve` `0:0.7, 0.5:1, 1:1.4`.
-- **Draw:** Soft circular mist texture `game/effects/textures/fine_spray.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `BILLBOARD_PARTICLES`, `vertex_color_use_as_albedo = true`, `shading_mode = SHADING_MODE_PER_PIXEL` (scene-lit); `QuadMesh` of size `(0.01, 0.01)` m.
-- **`local_coords = false`**, `inherit_velocity_ratio = 0`† (as BigDrops); **`visibility_aabb`** `AABB(position (-2.0, -2.0, -1.5), size (3, 3, 3))`†, checked the same way; **`preprocess = 0 s`**.
-
-### Rules a test can measure
-
-- **Fires:** A burst starts at the current upper blade-tip position when `wiper_swept` reports a top turn and the wipers are running. It does not fire on scene load, when wipers are off, or at the parked end of the stroke. If the event lacks an explicit phase, the presentation checks the current wiper angle to distinguish top from park.
-- **Retrigger rule:** **Overlap**, using a pool of two burst instances. The next top turn arrives about every 0.91 s on fast mode; the 1.20 s spray can still be alive. At most **two** A1 bursts coexist. If a third request ever arrives while both are active, reuse only a completed instance; otherwise log a missed burst instead of silently cutting off a live one.
-- **If the followed node is freed:** Disconnect the signal and stop accepting events. Already emitted world-space particles can finish in a short-lived independent effect root; free that root after the longest lifetime. Never dereference a freed blade or van.
-
-### Evidence
-
-- **Headless test:** With the wipers switched on by the real `wipers` key, never a direct call to the trigger†, count top-turn events, accepted burst spawns, pool size and initial spawn transforms; assert zero spawns at load/off/park and no more than two active bursts. Simulate a freed parent and check for no errors or further spawns.
-- **Frame strip:** Check whether the visible beads start at the blade tip, separate from the glass, and fade in the predicted order.
-- **Eyes in the game:** Compare unlit valley road with the bright depot; check that the flick is visible but not glowing, including through the windshield and while the van moves.
-
-### Frame strip
-
-- **Background:** Actual valley-road stretch of the industrial loop, with a second visual check near the depot lamps; 1280×800, 30 fps. Trigger at frame 10.
-- **Frame 10 (0.00 s):** A compact bead cluster just leaves the blade tip; no earlier spray.
-- **Frame 12 (0.07 s):** Several clear beads move sideways; a small spray halo appears.
-- **Frame 15 (0.17 s):** The arc is widest and easy to read; mist follows behind.
-- **Frame 20 (0.33 s):** Larger beads are falling; the fine spray is thinning.
-- **Frame 30 (0.67 s):** Most large drops are gone; only faint mist remains.
-- **Frame 50 (1.33 s):** Original burst is completely gone. A new burst may be visible if fast wipers have produced another top turn; for this isolated preview, disable the automatic retrigger to inspect only the first burst.
-- **Retrigger (preview's retrigger on):** a second top turn fires at **frame 37** (0.91 s, fast wipers)†. Frames 37–50 show two bursts at once, the new arc beside the fading mist of the first, and neither is cut short (overlap).
-
-## 3. A2: Roof spill on hard braking
-
-### The job
-
-When Ethan brakes sharply, accumulated rainwater surges off the front roof edge and briefly crosses the windshield. This makes the van's mass, rain and braking feel connected, while momentarily affecting visibility without obscuring the whole view. The source is `braking` (`game/features/vehicles/freight_van/freight_van.gd:100`) and the change in `actual_speed` (`:123`). **Hard braking** means a new brake event while speed is at least `8 m/s` (28.8 km/h) and measured deceleration is at least `6 m/s²` for two physics ticks; ignore wheel-locked slowdowns around `1.5 m/s²`. This is a new presentation-only detection rule, not a change to the van's brake physics. Ethan's scripted hard brake straight after the hit counts too, so the spill pours over the glass as the man lands on the bonnet (the author's choice, 2026-11-07).
-
-### Intent
-
-- **Timing phases:** 0.00–0.12 s: water gathers at the roof lip; 0.12–0.35 s: short broken sheet spills forward; 0.35–0.80 s: the sheet separates into narrow streams and beads; 0.80–1.30 s: remaining drops fall and fade.
-- **Contrast:** Darkest: unlit valley road, where water is translucent with occasional dim edges. Brightest: office floodlight/depot lamps, where streams pick up highlights but the windshield and road remain visible.
-- **Scale:** The main spill spans about 0.7–1.0 m across the roof's front edge, less than the 1.77 m windshield width. Individual drops are about 2–6 px at 1280×800. It should feel broad compared with the wiper flick, but not like a waterfall covering Ethan's entire view.
-- **Change over life:** Start as a narrow, mostly transparent sheet; separate into smaller drops, becoming less opaque and slightly thinner. Alpha keys `0:0.1, 0.12:0.6, 0.5:0.4, 1:0`; scale keys `0:1, 0.5:0.8, 1:0.4`.
-- **Variation:** Randomize width/position along the roof lip, launch velocity ±20%, droplet size ±30%, angle ±12°, and small hue/alpha variation. Do not randomize the spill into an implausible sideways jet.
-- **Emitters:** `RoofStreams` produces sparse elongated streaks at the roof lip. `RoofBeads` produces separated droplets that fall ahead of the glass. Both are attached to the front roof-edge spawn transform only at trigger time.
-
-### Settings
-
-**RoofStreams**
-
-- **Node type:** `GPUParticles3D`; suitable for transparent 3D streaks, with independent world-space motion.
-- **Emission:** `amount = 32`; `one_shot = true`; `explosiveness = 0.8`; `lifetime = 0.85 s`; `emission_shape = EMISSION_SHAPE_BOX`; `emission_box_extents = (0.48, 0.015, 0.025) m` along the roof lip.
-- **Process:** `initial_velocity_min = 0.5 m/s`, `initial_velocity_max = 1.4 m/s`; `direction = (0, -0.70, -0.71)`†, down and forward along the windshield; `spread = 12°`; `gravity = (0, -9.30, -9.51) m/s²`† in the van's frame: the 13.3 m/s² of gravity plus the 9 m/s² braking push, laid along the glass so the water slides down it instead of sinking through it (the true sum points 3° into the glass; research §4). Off the bottom of the glass the water passes under the bonnet and is hidden. Step 6's generated shader shows how Godot applies gravity with local coordinates; `damping_min = 0.1`, `damping_max = 0.4`; `color = (0.82, 0.86, 0.88, 1)`† (pale neutral water) with `alpha_curve` `0:0.1, 0.12:0.6, 0.5:0.4, 1:0`; `scale_min = 1.2`, `scale_max = 2.8` (multipliers of the 0.01 m quad: 12–28 mm), `scale_curve` `0:1, 0.5:0.8, 1:0.4`.
-- **Draw:** Elongated semi-transparent streak texture `game/effects/textures/roof_stream.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `billboard_mode = BILLBOARD_DISABLED`, because the node's `transform_align = TRANSFORM_ALIGN_Z_BILLBOARD_Y_TO_VELOCITY`† faces each streak to the camera with its long side along its motion (the build confirms this in 4.7.2), `vertex_color_use_as_albedo = true`, `shading_mode = SHADING_MODE_PER_PIXEL` (scene-lit); `QuadMesh` of size `(0.01, 0.01)` m; no additive blending.
-- **`local_coords = true`** (the author's choice, 2026-11-07): water on the roof and glass moves with the van, so the spill is simulated in the van's frame, with the braking push in its gravity. In world space it would not keep the van's speed and would be left behind at 30–60 km/h.
-- **`visibility_aabb`:** `AABB(position (-2, -3, -3), size (4, 4, 4))`† in the van's frame around the roof lip, reaching down the windshield and over the bonnet; set by hand, then checked against the real trajectory in the editor.
-- **`preprocess = 0 s`.**
-
-**RoofBeads**
-
-- **Node type:** `GPUParticles3D`.
-- **Emission:** `amount = 48`; `one_shot = true`; `explosiveness = 0.65`; `lifetime = 1.30 s`; `emission_shape = EMISSION_SHAPE_BOX`, extents `(0.48, 0.02, 0.03) m`.
-- **Process:** `initial_velocity_min = 0.4 m/s`, `initial_velocity_max = 1.6 m/s`; `direction = (0, -0.70, -0.71)`†; `spread = 24°`; `gravity = (0, -9.30, -9.51) m/s²`† (as RoofStreams); `damping_min = 0.1`, `damping_max = 0.6`; `color = (0.78, 0.86, 0.91, 1)`† (the same water as A1's beads); `alpha_curve` `0:0.5, 0.2:0.8, 0.7:0.3, 1:0`; `scale_min = 0.3`, `scale_max = 0.9` (multipliers of the 0.01 m quad: 3–9 mm); `scale_curve` `0:1, 0.6:0.85, 1:0.5`.
-- **Draw:** Water-bead texture `game/effects/textures/water_bead.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `BILLBOARD_PARTICLES`, `vertex_color_use_as_albedo = true`, `shading_mode = SHADING_MODE_PER_PIXEL` (scene-lit); `QuadMesh` of size `(0.01, 0.01)` m.
-- **`local_coords = true`** (as RoofStreams); **`visibility_aabb`** `AABB(position (-2, -3, -3), size (4, 4, 4))`†, checked the same way; **`preprocess = 0 s`**.
-
-### Rules a test can measure
-
-- **Fires:** One burst on a qualifying **new** hard-brake event, from the front roof lip. Never on load, at rest, on gentle deceleration, or while the brake remains held. Require `roof_water_ready = true` and a 20 s recharge after a spill, approximating the time needed for more rain to accumulate. This flag belongs only to the visual effect.
-- **Retrigger rule:** **Ignore** a second hard-brake event while a burst is alive or while the 20 s recharge is running. At most **one** A2 burst is alive.
-- **If the followed node is freed:** No new spawn. The detached, world-space spill completes its lifetime and is then freed safely; clear references to the van.
-
-### Evidence
-
-- **Headless test:** Drive the real van with real throttle and brake input, never faked speeds or a direct call to the trigger†; assert no burst below either threshold, exactly one qualifying burst, none from a held brake, and no second burst during the recharge. Free the van and verify no errors.
-- **Frame strip:** Confirm that the roof lip is the origin, streams lead the beads, and the whole spill disappears within 1.30 s.
-- **Eyes in the game:** Check under the office floodlight and on the unlit valley road; verify the spill does not turn into a solid opaque curtain or clip implausibly through the windshield.
-
-### Frame strip
-
-- **Background:** Actual approach to the site-office parking area, with the floodlight and wet windshield visible; also compare the valley road at night. Trigger at frame 10.
-- **Frame 10 (0.00 s):** First thin water ridge begins at the front roof lip.
-- **Frame 12 (0.07 s):** Short translucent streams begin to tip over the edge.
-- **Frame 15 (0.17 s):** The broken sheet is most visible, still showing the road through it.
-- **Frame 20 (0.33 s):** Streams separate into droplets and run down/forward.
-- **Frame 30 (0.67 s):** Sheet is gone; scattered falling beads remain.
-- **Frame 50 (1.33 s):** No A2 particles remain; recharge is still active.
-- **Retrigger (preview's retrigger on):** a second hard brake comes at **frame 25** (0.5 s)†, inside the first burst's life: nothing new appears (ignore), and the first spill plays on unchanged.
-
-## 4. B1: Rain in every lamp's light
-
-### The job
-
-- **What it tells the player:** Rain is physically present in the world, not just painted onto the van's windshield. Seeing droplets enter and leave warm pools of light helps the player read distance, weather and road surfaces.
-- **Which job:** **Ambience**, continuously active in lit outdoor areas during rain.
-- **The script and variable:** the lamps are defined in `game/features/environments/industrial_loop/industrial_loop.gd` (posts `:632–653`, site-office lights `:592–619`). The condition is the distance from the active camera to each lamp: its rain runs while that distance is under 65 m, where the lamp's own light begins to fade (`distance_fade_begin = 65.0`, `:647`). It always rains in this game, so there is no weather switch: driving or walking toward a lamp starts its rain, and leaving stops it (the author's choice, 2026-11-07).
-- **Feature neither A effect uses:** **collision with splashes** (the author's choice, 2026-11-07). Drops collide with a `GPUParticlesCollisionHeightField3D` over each lamp's volume, so they stop at the ground and on roofs, and none fall under the office's door hood or eaves; each landing spawns a small splash through a sub-emitter (`sub_emitter_mode = SUB_EMITTER_AT_COLLISION`). Neither A effect uses a collider or a sub-emitter.
-
-### Intent
-
-- **Timing phases:** On condition start the rain is already falling at full density (preprocess; the author's choice, 2026-11-07), so it is steady from the first frame; when the condition ends, emission stops immediately and the last drops land within 1.1 s†.
-- **Contrast:** Darkest: between valley road lamps, where most rain disappears into darkness. Brightest: directly below the depot posts and the office floodlight, where warm backlit streaks are readable without becoming dense white lines. Rain under the office hood/eaves must be absent.
-- **Scale:** At 1280×800, most streaks appear 1–2 px wide and about 10–30 px long depending on distance. Each volume is several metres wide, much larger than Ethan or the van, but individual drops stay small.
-- **Change over life:** Streaks begin faint at the top, brighten when within the light volume, then fade toward the bottom. Alpha keys `0:0.1, 0.15:0.45, 0.75:0.45, 1:0`; size keys `0:0.9, 0.5:1, 1:0.9`. Lighting, rather than a fake glow, determines most visible brightness.
-- **Variation:** Drop speed 6.5–8.5 m/s, width ±25%, streak length ±30%, slight direction variation ±4°, and randomized starting positions in the volume.
-- **Emitters:** One `LampRain` emitter per active post or floodlight volume, sharing a common scene/resource. The post version covers a vertical lit cylinder approximated by a box; the floodlight version uses a narrower box. `LampSplash`† is its sub-emitter: a small crown of droplets where each drop lands. Drops stop on the office's door hood and eaves through the collider instead of falling under them.
-
-### Settings
-
-- **Node type:** `GPUParticles3D`; it supports the GPU collision and sub-emitter this effect uses†, and efficiently draws repeated lit volumes. A single shared material is reused.
-- **Emission:** `amount = 160` **per active lamp volume**; `one_shot = false`; `explosiveness = 0`; `lifetime = 1.1 s`† (long enough to fall from just below a post's lamp head, 6.4 m up, to the ground at 6.5 m/s; collision ends each drop there); `emission_shape = EMISSION_SHAPE_BOX`; post volumes `emission_box_extents = (3.0, 0.2, 3.0) m`, centred 6.4 m up† under the lamp head, which is shielded, so no rain is lit above it. The site-office volumes are fitted to their lights†: the floodlight's box `(3.5, 0.1, 6.5) m` along its beam, 4 m up, turned to the beam's heading with its slant turned back to match; the door lamp's box `(1.0, 0.1, 0.8) m`, 0.8 m in front of the wall, 3 m up.
-- **Process:** `initial_velocity_min = 6.5 m/s`, `initial_velocity_max = 8.5 m/s`; `direction = (0.08, -0.997, 0)`†, the beam rain's 4.6° wind slant (`RAIN_SLANT`), fixed in the world toward +x whichever way the van faces (each emitter is world-aligned, not turned with its post); `spread = 4°`; `gravity = (0, -0.5, 0) m/s²` (terminal-speed approximation); `damping_min = 0`, `damping_max = 0.15`; `color = (0.88, 0.89, 0.90, 1)`† (neutral grey-white), `alpha_curve` `0:0.1, 0.15:0.45, 0.75:0.45, 1:0`; `scale_min = 0.7`, `scale_max = 1.35`† (multipliers of the 0.01 × 0.25 m quad: streaks 17–34 cm long and 7–14 mm wide, as long as the beam rain's, to reach the intended 10–30 px); `scale_curve` `0:0.9, 0.5:1, 1:0.9`; `collision_mode = COLLISION_HIDE_ON_CONTACT`†, with the node's `collision_base_size = 0.01`†; `sub_emitter_mode = SUB_EMITTER_AT_COLLISION`†, `sub_emitter_amount_at_collision = 4`†. The initial downward speed, not gravity, does most of the motion.
-- **Draw:** Thin streak RGBA texture `game/effects/textures/rain_streak.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `vertex_color_use_as_albedo = true`, `shading_mode = SHADING_MODE_PER_PIXEL` (scene-lit), `backlight_enabled = true` and `backlight = (0.8, 0.8, 0.8)`† so a drop is brightest with the lamp behind it, as real rain is; `QuadMesh` of size `(0.01, 0.25)` m†. Streaks turn along their motion†: the node's `transform_align = TRANSFORM_ALIGN_Z_BILLBOARD_Y_TO_VELOCITY` faces each quad to the camera with its long side along the motion, so the material's `billboard_mode = BILLBOARD_DISABLED` (the build confirms this in 4.7.2 and records any change as a dated revision). Do not use an additive beam that looks luminous without a lamp.
-- **`local_coords = false`:** Drops remain at world positions and do not turn or slide with the moving van.
-- **`visibility_aabb`:** posts `AABB(position (-4, -8.5, -4), size (8, 10, 8))`† from the emitter 6.4 m up, covering the whole fall path to the ground; the floodlight `AABB(position (-4.5, -5, -7.5), size (9, 6, 15))`† and the door lamp `AABB(position (-1.5, -3.5, -1.5), size (3, 4, 3))`†, each set by hand and checked in the editor.
-- **`preprocess = 1.1 s`**†, one full lifetime, so the whole fall path is already filled when a lamp's rain starts, at scene load or on activation.
-
-**LampSplash** (sub-emitter of `LampRain`)†
-
-- **Node type:** `GPUParticles3D`, set as `LampRain`'s `sub_emitter`; `emitting = false`, because `LampRain`'s collisions drive it.
-- **Emission:** `amount = 160` (about 145 landings a second per lamp × 4 droplets × 0.25 s); `one_shot = false`; `explosiveness = 0`; `lifetime = 0.25 s`; `emission_shape = EMISSION_SHAPE_POINT`.
-- **Process:** `initial_velocity_min = 0.6 m/s`, `initial_velocity_max = 1.6 m/s` (droplets rise 2–13 cm); `direction = (0, 1, 0)`; `spread = 60°`; `gravity = (0, -9.8, 0) m/s²`; `color = (0.88, 0.89, 0.90, 1)`; `alpha_curve` `0:0.6, 1:0`; `scale_min = 0.1`, `scale_max = 0.3` (1–3 mm on the 0.01 m quad).
-- **Draw:** `water_bead.png`, in the same material as `LampRain` but with `billboard_mode = BILLBOARD_PARTICLES`; `QuadMesh` of size `(0.01, 0.01)` m.
-- **`local_coords = false`**; **`visibility_aabb`** as `LampRain`'s; **`preprocess = 0 s`**.
-
-**The collider**†
-
-- One `GPUParticlesCollisionHeightField3D` per active lamp volume, sized like its `visibility_aabb` (posts `size = (8, 10, 8)` m); `resolution = RESOLUTION_256`; `update_mode = UPDATE_MODE_ALWAYS`, because the van drives under the lamps; `follow_camera_enabled = false`.
-
-### Rules a test can measure
-
-- **Starts/stops:** A lamp's rain starts when the active camera comes within 65 m of the lamp, and stops when it goes beyond; the last drops land within 1.1 s†. Every lamp in the scene is covered: the depot and valley-road posts, the lumber-yard post, and the office floodlight and door lamp.
-- **While the tree is paused:** Use inherited pausable processing. Title screen and pause menu freeze the simulation in place; unpause resumes it without a sudden restart.
-- **While hidden:** Set `emitting = false` and hide the emitter when its lamp volume is culled or the effect is explicitly disabled. Clear stale particles before reactivation, and restart the emitter so its 1.1 s preprocess† fills the volume before it is seen (the build checks how Godot re-runs preprocess). Hiding is an optimization, not a weather-state change.
-
-### Evidence
-
-- **Headless test:** Drive or walk toward a lamp with real input and assert that its rain starts within 65 m and stops beyond†; assert emitter creation for each expected lamp, pause behaviour and the hidden-state policy. The configuration test reads the collision and splash settings†.
-- **Frame strip:** Confirm the volume fills promptly, holds steady, and empties after stop; compare actual post and office floodlight views.
-- **Eyes in the game:** Check darkness between lamps, amber backlighting, consistent world-space slant while the van turns, and no visible drops under the office hood/eaves.
-
-### Frame strip
-
-- **Background:** Valley-road lamp at the actual `(−15, 63.8)` lamp location, with a second check at the site-office door hood. Condition starts at frame 10 and ends at **frame 70** (2.0 s later).
-- **Frame 10:** The camera comes within range; the lamp's rain is already falling at full density, top to ground†.
-- **Frame 12 (0.07 s):** The same density, with splashes on the lit ground†.
-- **Frame 20 (0.33 s):** Steady backlit streaks along their motion, splashes below†.
-- **Frame 30 (0.67 s):** Stable rain density under the lamp.
-- **Frame 50 (1.33 s):** Steady backlit streaks with no repeating pattern.
-- **Frame 70 (2.00 s):** Condition ends; no new drops spawn.
-- **Frame 85 (2.50 s):** Only the last falling streaks remain.
-- **Frame 110 (3.33 s):** Volume is empty and stays empty†.
-
-## 5. B2: Exhaust vapour
-
-### The job
-
-- **What it tells the player:** The diesel engine is running and responding to throttle in cold rain. At idle the vapour is gentle; when the player accelerates, the plume grows and is carried into the van's wake. It is visible in tail glow, reversing lights and depot/office lighting.
-- **Which job:** **Feedback loop** linked to engine state and throttle.
-- **The script and variable:** `engine_on` in `game/features/vehicles/freight_van/freight_van.gd:27`, `engine_started` at `:8`, and the effective strength of `accelerate` (`:89`) or `scripted_throttle` (`:94`). The presentation reads the effective throttle without changing the engine model.
-- **Feature neither A effect uses:** **Value-driven `amount_ratio`**, with optional `ParticleProcessMaterial.turbulence_enabled` to curl the plume. `CPUParticles3D` does not have `amount_ratio`, so this is a GPU effect.
-
-### Intent
-
-- **Timing phases:** After ignition, wait 0.4 s and ramp the plume up over 0.6 s; steady idle produces a small translucent trail. On throttle increase, density responds smoothly over 0.5–0.8 s. After engine off, emission stops immediately; existing vapour drifts and fades within 2.5 s.
-- **Contrast:** Darkest: rear of the van on the unlit valley road, where only a faint silhouette is visible. Brightest: site-office floodlight and white reverse lamps, where the plume is pale but translucent; in red tail glow it should look subtly warm/red rather than self-illuminated.
-- **Scale:** From the rear tailpipe, the plume starts about 0.10–0.20 m wide and expands to roughly 0.5–0.8 m over 1–2 m behind the van. At 1280×800 it should not conceal the rear doors or Ethan when on foot.
-- **Change over life:** Begin as a narrow, faint whitish puff, grow about 2.5×, curl, and fade. Alpha keys `0:0.1, 0.15:0.28, 0.5:0.18, 1:0`; size keys `0:0.4, 0.5:1.4, 1:2.5`.
-- **Variation:** Randomize speed ±25%, direction ±10°, puff scale ±30%, rotation 0–360°, and turbulence phase/strength. No black smoke or thick opaque clouds.
-- **Emitters:** One `ExhaustPlume` emitter at the **actual tailpipe location found on the Iveco model during setup**. The research does not provide its coordinates; do not invent them. Use one emitter for the actual outlet unless the model proves it has two.
-
-### Settings
-
-- **Node type:** `GPUParticles3D`, because the throttle maps to `amount_ratio` and turbulence is available.
-- **Emission:** `amount = 96`; `one_shot = false`; `explosiveness = 0`; `lifetime = 2.5 s`; `emission_shape = EMISSION_SHAPE_SPHERE`; `emission_sphere_radius = 0.06 m`.
-- **Process:** `initial_velocity_min = 1.0 m/s`, `initial_velocity_max = 2.2 m/s` as a visually stable effective puff velocity after leaving the pipe; `direction = (0, -0.26, 0.97)`† in the van's frame: backward and 15° down, as a tailpipe points; `spread = 18°`; `gravity = (0, 0.5, 0) m/s²` for warm rise; `damping_min = 0.8`, `damping_max = 1.4`; `turbulence_enabled = true`, `turbulence_noise_strength = 0.15`, `turbulence_noise_scale = 1.2`, `turbulence_noise_speed = (0.2, 0.1, 0.2)` (initial estimates); `color = (0.90, 0.91, 0.92, 1)`† (pale grey-white), `alpha_curve` `0:0.1, 0.15:0.28, 0.5:0.18, 1:0`; `scale_min = 1.2`, `scale_max = 2.2` (multipliers of the 0.1 m quad: 12–22 cm), `scale_curve` `0:0.4, 0.5:1.4, 1:2.5`. These velocities represent the visible condensed plume, not raw exhaust-gas speed at the pipe.
-- **Draw:** Soft cloud RGBA texture `game/effects/textures/exhaust_puff.png`; `StandardMaterial3D`, `TRANSPARENCY_ALPHA`, `BLEND_MODE_MIX`, `BILLBOARD_PARTICLES`, `vertex_color_use_as_albedo = true`, `shading_mode = SHADING_MODE_PER_PIXEL` (scene-lit), low opacity, depth testing on; `QuadMesh` of size `(0.1, 0.1)` m. Put the emitter on render layer 1 (`layers = 1`), the only layer the tail glow and reversing lamps light.
-- **`local_coords = false`:** Old vapour remains in the world as the van moves away; the new particles start at the moving tailpipe.
-- **`visibility_aabb`:** `AABB(position (-3, -1, -11), size (6, 5, 60))`† in the van's frame from the tailpipe: 49 m behind and 11 m ahead, because the emitter rides with the van while its vapour stays in the world (19 m/s top speed × 2.5 s ≈ 48 m; less when reversing); checked in the editor while driving and reversing.
-- **`preprocess = 0 s`:** The plume should not appear fully formed on scene load before the engine starts. For a scene that explicitly loads with the engine already running, build it naturally using the startup ramp instead of pre-filling.
-
-### Rules a test can measure
-
-- **Starts/stops:** Starts after `engine_on` becomes true, with a 0.4 s delay and 0.6 s ramp. Stops emission immediately when `engine_on` becomes false; existing particles finish their lifetime. No exhaust with the engine off.
-- **While the tree is paused:** Freeze particles and the throttle-smoothing timer during title-screen or pause-menu pause. Resume from the same state, not from a new ignition.
-- **While hidden:** Set `emitting = false` and hide when culled/disabled; when visible again with the engine running, restart the smooth ramp. Do not alter throttle or engine state.
-- **Throttle range and mapping:** Effective throttle `t` is clamped to **0.0–1.0**. Target `amount_ratio = 0.15 + 0.65 × t` when the engine is running, giving **0.15 at idle** and **0.80 at full throttle**; smooth toward target over approximately 0.6 s. During startup, multiply by a ramp from 0 to 1; with the engine off, set `amount_ratio = 0` and `emitting = false`. Keep `amount = 96` fixed at all times. This is a visibility-oriented response curve, not a measured engine-flow equation.
-
-### Evidence
-
-- **Headless test:** Assert engine-off emits none, idle target is 0.15, full throttle target is 0.80, values stay in [0,1], and `amount` never changes. Check pause and hidden rules and safe parent deletion.
-- **Frame strip:** Confirm gradual startup, visible idle plume, higher density with throttle, and a natural fade after switch-off.
-- **Eyes in the game:** Check actual tailpipe placement, rear view/reverse camera, red tail glow, white reverse lamps and office floodlight; verify vapour is not thick smoke and does not move rigidly with the van.
-
-### Frame strip
-
-- **Background:** Actual van rear at the site-office parking place, with the office floodlight; also inspect the reverse camera. Engine condition starts at frame 10 and ends at **frame 100** (3.0 s later). Throttle is 0 until frame 40, then 1.0 from frames 40–80, then 0.
-- **Frame 10:** Engine starts; no instant full plume.
-- **Frame 20 (0.33 s):** Startup delay still suppresses emission.
-- **Frame 30 (0.67 s):** Thin idle vapour begins to appear.
-- **Frame 40 (1.00 s):** Idle plume established; full-throttle command begins.
-- **Frame 55 (1.50 s):** Denser plume trails behind as throttle response rises.
-- **Frame 80 (2.33 s):** Throttle returns to zero; density begins falling toward idle.
-- **Frame 100 (3.00 s):** Engine switches off; new emission stops.
-- **Frame 130 (4.00 s):** Residual vapour has expanded and become faint.
-- **Frame 180 (5.67 s):** All residual vapour has expired.
-
-## 6. Boundaries
-
-- Do **not** change van collision shapes, rigid-body/vehicle movement, acceleration, braking strength, grip, or any other driving physics.
-- Do **not** change input mappings or the meaning of the brake, wiper, ignition, accelerate or handbrake actions.
-- Do **not** change mission state-machine transitions, timers, scripted driving, save rules, or existing test expectations.
-- Do **not** edit the Assignment 5 shaders in `game/shaders/` (`night_cluster`, `foggy_windshield`, `hint_experiment`). The particle effect may read current transforms and state but must not write gameplay state.
-- Do **not** modify other environment objects, lamp behavior, camera logic or weather mechanics just to make particles visible. A presentation-only controller may create particle nodes beside existing objects and read their state.
-- Put new effect resources under `game/effects/`, preview scenes under `game/previews/`, and tests under `game/tests/`. Keep preview fixtures out of shipping exports by updating export exclusions when necessary. The author, not an agent, creates `game/shaders/particles_generated.gdshader` in the editor.
-- **Textures:** the five textures (`water_bead`, `fine_spray`, `roof_stream`, `rain_streak`, `exhaust_puff`) are drawn by a script committed beside them (`tools/make_particle_textures.py`), so they are exact, rebuild identically and need no licence; the script is their provenance record, and `SOURCES.md` points to it (#142).
-- No effect may obscure the road for long, change gameplay difficulty, or reveal BLACKRIDGE story information.
-
-## 7. Predicted failures
-
-| # | Failure | The check that would catch it |
-| --- | --- | --- |
-| 1 | Old Godot 3 property names or incorrect 3D material settings cause errors or invisible particles | Headless configuration/property readback test in Godot 4.7.2, followed by a windowed preview |
-| 2 | Wiper top-turn event gets confused with the park event; flick fires twice per cycle or on load | Headless event-count test across off, slow and fast modes |
-| 3 | A second A1 burst interrupts the first, or pool grows without limit | Headless rapid-trigger test; verify at most two live bursts and frame-strip overlap |
-| 4 | Roof spill fires on every held-brake tick or before roof water has refilled | Headless threshold, rising-edge and 20 s recharge tests |
-| 5 | Small transparent particles disappear behind the windshield or are blurred by MetalFX at 75% | Windowed 1280×800 frame strips from driver view; compare depot and valley road |
-| 6 | `visibility_aabb` is too small, making particles pop off as the van moves | Windowed preview with camera/van movement and editor AABB inspection |
-| 7 | Rain appears under the site-office hood or rotates with the van | Windowed frame strip at the office and while turning the van |
-| 8 | Lamp rain or exhaust continues moving while paused, or pops when hidden and shown | Headless pause/visibility state tests plus windowed pause-menu check |
-| 9 | Exhaust is unlit because its render layer does not match tail/reverse lamps | Windowed reverse-camera, brake-light and floodlight comparisons |
-| 10 | GPU effects appear cheap in headless tests while real rendering exceeds the frame budget | Windowed warm-Mac frame-time capture and visual comparison; do not trust headless GPU timing |
-
-## 8. Price predictions and budgets
-
-These are **predictions, not measurements**. The latest research baseline is **13.25 ms/frame** on battery (roughly 75.5 FPS) at the start with mirrors; 60 FPS allows **16.7 ms/frame**, leaving about **3.45 ms** before the 60 FPS limit in an average starting frame. Warm-Mac slow frames already reach 17–19 ms, so effects should be much cheaper than that remaining average margin. All four designs use `GPUParticles3D`. GPU-time values below are target estimates to validate with a windowed run; Godot's GPU timer may report zero on Metal.
-
-| Effect | Peak particles | Headless CPU (predicted) | GPU time (predicted) | Budget | Compared on |
-| --- | ---: | ---: | ---: | --- | --- |
-| A1 | **116** = (22 + 36) × 2 overlapping bursts | 0.03 ms | 0.12 ms | GPU ≤ 0.25 ms | GPU time |
-| A2 | **80** = (32 + 48) × 1 burst | 0.02 ms | 0.10 ms | GPU ≤ 0.20 ms | GPU time |
-| B1 | **320 per lamp** (160 drops + 160 splash droplets)†; plan for **2,560** at 8 simultaneously active lamp volumes | 0.06 ms | 0.40 ms | GPU ≤ 0.70 ms for 8 volumes | GPU time |
-| B2 | **96** = 96 × 1 continuous emitter | 0.02 ms | 0.18 ms | GPU ≤ 0.30 ms | GPU time |
-| **Total predicted maximum** | **2,852**† | **0.13 ms** | **0.80 ms** | **Combined GPU ≤ 1.45 ms** | Windowed GPU/render impact |
-
-The B1 **eight-lamp simultaneous limit is a planned visibility/culling cap**, not a count of all lamps in the level. Each B effect's peak is its full `amount`, not `amount_ratio × amount`; `amount_ratio` controls active emission density but does not change the allocated maximum. A1 peak assumes two pooled copies of each of its two emitters; A2 peak assumes one copy of each emitter. GPU work also has CPU submission overhead, so the headless figures are only rough scripting overhead estimates and do not measure actual rendered particle cost. A windowed performance run must confirm or reject these budgets.
-
-## 9. Questions
-
-**1. Which node type does each effect use, and which features in your brief does it lack?**  
-All four use `GPUParticles3D`. None of the planned GPU features is missing from that node type in the research's Godot 4.7.2 list. `CPUParticles3D` would not support `amount_ratio`, GPU collision, sub-emitters, trails, turbulence or attractors; B2 specifically needs `amount_ratio` and turbulence, so CPU particles would not meet its design.
-
-**2. With `local_coords` as you set it, what does each A effect do if its parent moves after the event?**  
-A1 uses `local_coords = false`: once emitted, its water stays in world space and follows its own velocity and gravity rather than being dragged along when the van or wiper moves; only new particles use the latest spawn position. A2 uses `local_coords = true`: its water is simulated in the van's frame, so it moves with the van while it pours over the glass, with the braking push in its gravity†.
-
-**3. Under your retrigger rule, how many bursts of each A effect can be alive at once? What peak particle count does that give?**  
-A1 overlaps, with a two-burst pool: the 1.20 s fine spray outlives the 0.91 s fast-wiper top-turn interval, but not two such intervals. Its peak is `2 × (22 + 36) = 116` particles. A2 ignores retriggers until its burst finishes and roof water recharges, so only one burst exists: `32 + 48 = 80` particles.
-
-**4. What will a headless run report as the cost of a GPU effect, and why? With vsync on, what would FPS read with the effect off and with it on?**  
-A headless run draws no particles, so it measures only small CPU-side setup/control work and cannot establish GPU rendering cost. With vsync on a 60 Hz display, both off and on can show about **60 FPS** while both fit within 16.7 ms; only a missed frame or frame-time measurement exposes the slowdown. On this Mac, the GPU timer may show zero under Metal, so use windowed frame-time captures as well.
-
-**5. What does each B effect show on the first frame after its scene loads, with preprocess and without it? While the tree is paused? While the node is hidden?**  
-B1 uses `preprocess = 1.1 s`†, one full lifetime, so when its condition is already true it looks fully populated on the first visible frame; without preprocess it would fill gradually from an initially empty volume. B2 uses `preprocess = 0 s`, so it begins empty and builds after the engine-start delay; adding preprocess would incorrectly create an instant plume. Both freeze while the scene tree is paused. When explicitly hidden or culled, both stop emission; when shown again, B1 repopulates and B2 ramps back in, rather than showing stale particles.
-
-**6. Which settings in your brief belong to emission, which to process, and which to draw?**  
-**Emission** decides when and where particles are born: `amount`, `amount_ratio`, `one_shot`, `emitting`, `explosiveness`, `lifetime`, emission shape/size, spawn transform and preprocess. **Process** controls how particles travel and change: direction, speed ranges, spread, gravity, damping, turbulence, color/alpha curves and size curves. **Draw** controls appearance: mesh, texture, `StandardMaterial3D`, transparency, blend mode, billboard mode, shading and lighting layers. `local_coords` and `visibility_aabb` are node-level simulation/culling settings rather than draw-material settings.
-
-## Revisions
-
-_Add future adjustments below this line with a date, reason, changed setting, and evidence. Do not rewrite the original predictions above after the initial commit._
-
-### 2026-11-07, revision 1 (build): B1's splash emitter keeps emitting (Claude Code)
-
-- **Changed:** `LampSplash` `emitting = false`† becomes `emitting = true`, in all three B1 scenes.
-- **Why:** a particle node that is not emitting can fall idle and drop the splashes its parent
-  sends it, while Godot documents that a node used as another emitter's `sub_emitter` no longer
-  emits on its own. So `true` is the safe value; the † value was Claude Code's mistake.
-- **To confirm in B1's first windowed strip:** splashes appear where drops land, and none rise
-  from the emitter itself.
-- **Evidence:** `game/effects/lamp_rain_*.tscn`, `game/tests/test_lamp_rain_config.gd`.
-
-### 2026-11-07, revision 2 (build): where the exhaust leaves the van (Claude Code)
-
-- **Found:** the Iveco model has no tailpipe. Its rear underside is symmetrical, with no pipe on
-  either side, and a parts-catalogue search did not settle where the 2014 Daily's exits.
-- **Until the author confirms it from a photo of a real Daily:** the plume starts under the rear
-  bumper on the driver's side, at (−0.6, 0.46, 2.85) in the van's frame, and leaves in the
-  brief's direction, backward and 15° down. This is an assumption, not the model's tailpipe.
-- **Evidence:** `TAILPIPE` in `game/features/vehicles/freight_van/van_particles.gd`.
-
-### 2026-11-07, revision 3 (build): what freeing the van does to A2 (Claude Code)
-
-- **Changed:** A2's rule "If the followed node is freed: No new spawn. The detached, world-space
-  spill completes its lifetime and is then freed safely" becomes: the spill moves with the van
-  (`local_coords = true`, the author's choice), so when the van is freed the spill goes with it,
-  and nothing is spawned or dereferenced afterwards.
-- **Why:** the rule was written for the draft's world-space spill. Since A2 moved into the van's
-  frame, there is no detached spill left to finish.
-- **Evidence:** `game/tests/test_roof_spill_state.gd`.
-
-### 2026-11-07, revision 4 (build): camera-facing particles keep their size (Claude Code)
-
-- **Found:** in a windowed check of B2's preview, changing the vapour's size settings changed
-  nothing on screen. In Godot 4 a material with `billboard_mode = BILLBOARD_PARTICLES` turns each
-  quad to the camera and drops the particle's own scale unless `billboard_keep_scale` is on. So
-  every size the brief gives a camera-facing particle (`scale_min`, `scale_max`, `scale_curve`)
-  had no effect: every A1 bead and mist droplet drew at the quad's 10 mm, and every B2 puff at
-  10 cm, never growing.
-- **Changed:** `billboard_keep_scale = true` on every camera-facing particle material: A1's
-  `BigDrops` and `FineSpray`, A2's `RoofBeads`, B1's `LampSplash` in all three scenes, and B2's
-  `ExhaustPlume`. The streaks (A2's `RoofStreams`, B1's `LampRain`) are turned by
-  `transform_align` with billboarding off, so their size already applied.
-- **This is §7's predicted failure 1,** "incorrect 3D material settings": the headless readback
-  checked only the settings the brief named, so a windowed check caught it.
-- **Evidence:** the four configuration tests now read `billboard_keep_scale` (70/70, 68/68,
-  234/234, 42/42); with it off, B2's fails 41/42, exit 1 (`logs/particles/keep_scale/`).
-
-### 2026-11-07, revision 5 (build): B1's streaks as wide as their quads (Claude Code)
-
-- **Found:** `rain_streak.png` drew its line across only the middle quarter of its 16 pixels
-  (width at half alpha 4 px). So the brief's 7–14 mm quads drew streaks about 2–4 mm wide, well
-  under a pixel at a lamp's distance, against §4's "streaks ... 7–14 mm wide" and "1–2 px wide".
-- **Changed:** the texture script draws the streak across the quad's width with soft edges
-  (width at half alpha 12 px of 16). The other four textures rebuild byte-identical. A2's
-  `roof_stream.png` keeps its thin bar: the brief gives its streams a length, not a width.
-- **Evidence:** `logs/particles/streak_width/` (the profile before and after, the import, and
-  the configuration test, 234/234).
-
-### 2026-11-08, revision 6 (tuning): B1's own feature, the splash sub-emitter (Claude Code)
-
-- **Changed:** §4's "Feature neither A effect uses: collision with splashes" becomes the splash
-  sub-emitter (`sub_emitter_mode = SUB_EMITTER_AT_COLLISION`). B2's feature stays the
-  value-driven `amount_ratio`, with turbulence.
-- **Why:** r1 gives A1 and A2 colliders on the glass (revisions 7 and 8), so collision alone no
-  longer sets B1 apart. The author chose the sub-emitter as B1's feature (#147).
-- **Evidence:** the A configuration tests check that no A emitter uses a sub-emitter,
-  turbulence or a driven `amount_ratio` (`test_wiper_flick_config.gd`,
-  `test_roof_spill_config.gd`).
-
-The four revisions below record r1, which the author kept after playing it (#164: "i played and
-all look good proceed"). `TUNING.md` lists every changed setting with its old value, the
-research behind it, Claude Code's predictions and both strips. At the author's request (#165),
-Claude Code wrote these revisions from that list.
-
-### 2026-11-08, revision 7 (tuning r1): A1 as tuned (Claude Code, at the author's request)
-
-- **Changed:**
-  - **Draw:** `StandardMaterial3D` becomes the shared `ShaderMaterial`
-    (`game/effects/scatter_particle.gdshader`), which draws each drop like the windshield's
-    own: the sky's glow, a catch light, the scene behind it refracted, blurred and darker at
-    the rim, a comet's tail along its motion, and a minimum width on screen.
-  - **Emitters:** `BigDrops` 120 beads of 2.5–4.5 mm (22 of 3–7 mm), `FineSpray` 120 droplets
-    of 0.5–1 mm (36 of 1.5–3 mm), both living 1.2 s. New: `WaterSheet` (the bow wave, 24
-    pieces along the blade, 0.15 s), `HeavyDrops` (14 of 5–6.5 mm that slide down),
-    `PillarRunoff` (24 streams along the side window above 5 m/s), `SpillWater` (200 drops at
-    the first top turn within 3 s of a roof spill), and `PassengerWater` and `PassengerLine`
-    (100 drops and the line of water the passenger blade leaves at its top turn, #160).
-  - **Frame:** `local_coords = true`. Each burst is set at the blade tip and turned to the
-    windshield, so §2's directions and boxes are in the glass's frame.
-  - **Motion:** the air pushes the water up the glass, set each tick from the van's speed (g ×
-    (v / vₜ)², up to 40–80 m/s²). Three colliders fitted to the glass hold it there (rigid:
-    beads stick, heavy drops slide). A collider on the driver's blade, on layer 2 only, wipes
-    the passenger blade's water.
-  - **Rules:** freeing the van frees its bursts with it, as revision 3 did for A2, and §9's
-    answer 2 changes with it for A1. §8's A1 peak becomes 2 × (24 + 120 + 14 + 120 + 24 + 100 +
-    24) + 200 = 1,052 particles: two bursts, and one spill's water.
-- **Why:** the author's requests #146–#148 and #160, and the research in `TUNING.md`.
-- **Evidence:** `TUNING.md` (A1); strips `captures/wiper_flick/r0/` (no flick visible) and
-  `r1/` with variants; configuration 451/451 and state 27/27; Effect A's mutations exit 1
-  (`logs/particles/mutations_final/`); commit `1c8447b`.
-
-### 2026-11-08, revision 8 (tuning r1): A2 as tuned (Claude Code, at the author's request)
-
-- **Changed:**
-  - **Draw:** the shared `ShaderMaterial`, as clear water that bends the view behind it, with
-    render priority 1 so that it draws after the wet glass, which had hidden it (#160).
-  - **Gravity:** the scene's still air, (0, −9.8, 0), in place of §3's (0, −9.30, −9.51), plus
-    the water's surge as the van slows, set each tick from its own deceleration.
-  - **Frame:** the glass's, as A1's (#149). The curtain leaves 10.4° off the glass and the
-    rivulets 5° into it; colliders fitted to the glass hold the water there (rigid, friction
-    0.3).
-  - **Emitters:** `RoofStreams` 96 (32), `RoofBeads` 120 (48). New: `Rivulets` (8, 1.6 s) and
-    `WaterWash`, a clear sheet of 40 pieces living 0.6 s (#149). The author kept the sheet
-    (#164).
-  - **Rules:** the spill lives until its rivulets finish, so §3's "disappears within 1.30 s"
-    becomes 1.6 s. §8's A2 peak becomes 40 + 96 + 120 + 8 = 264 particles.
-- **Why:** the author's requests #146, #147, #149 and #160, and the research in `TUNING.md`.
-- **Evidence:** `TUNING.md` (A2); strips `captures/roof_spill/r0/` (no spill visible) and
-  `r1/` with variants; configuration 221/221 and state 13/13; commit `1c8447b`.
-
-### 2026-11-08, revision 9 (tuning r1): B1 as tuned (Claude Code, at the author's request)
-
-- **Changed:**
-  - **Draw:** the shared `ShaderMaterial`, with forward scattering: `scatter` 5 under the
-    street lamps and the depot's wall lights (#154), 60 under the floodlight and the door lamp.
-  - **Drops:** 1–2.5 mm falling at 3.5–8.5 m/s, each drawn as the streak a camera sees
-    (`scale_over_velocity`), in place of §4's 17–34 cm streaks at 6.5–8.5 m/s.
-  - **Counts:** drops and splash droplets per volume, 2,000 and 1,100 (post scene), 5,000 and
-    2,750 (street lamps' own scene, `lamp_rain_street.tscn`, 10 × 10 m, #156), 3,200 and
-    1,800 (floodlight), 300 and 170 (door), in place of 160 and 160.
-  - **Splashes:** 3 droplets a landing (4), living 0.2 s (0.25), started 3 cm up.
-  - **Collision:** rigid, in place of `COLLISION_HIDE_ON_CONTACT`, which in Godot 4.7.2 never
-    set off the splash sub-emitter (#156). Stopped drops fade out, and the rain runs at
-    `fixed_fps` 60. The colliders leave the van's glass water alone (layer 2, #160).
-  - **The title screen** hides the lamps' rain, and leaving it shows the rain again, already
-    falling. §4 had the title freeze it, which showed frozen streaks (#160). The pause menu
-    still freezes it.
-  - **Rules:** §8's B1 peak per volume becomes 3,100 (post), 7,750 (street lamp), 5,000
-    (floodlight) and 470 (door) particles. At most eight volumes rain at once
-    (`MOST_ACTIVE`), so up to 62,000 particles if all eight were street lamps.
-- **Known gap:** drops slower than about 5.5 m/s fade 2–4 m above the ground within their
-  1.1 s life (`TUNING.md`).
-- **Why:** the author's requests #146, #149, #154, #156 and #160, and the research in
-  `TUNING.md`.
-- **Evidence:** `TUNING.md` (B1); strips `captures/lamp_rain/r0/` (no rain visible) and `r1/`
-  with the door lamp; configuration 364/364 and state 13/13; commit `1c8447b`.
-
-### 2026-11-08, revision 10 (tuning r1): B2 as tuned (Claude Code, at the author's request)
-
-- **Changed:**
-  - **Draw:** the shared `ShaderMaterial`: `forward_scatter` 0.75, `scatter` 0.8, `diffuse`
-    0.25.
-  - **A jet that stops:** puffs leave within 2.5 cm of the pipe's centre
-    (`emission_sphere_radius` 0.06 → 0.025) at 4–7 m/s (1–2.2) within 10° (18°). Still air
-    stops them within about a metre (`damping` 0.8–1.4 → 12–18 m/s²). They rise a little
-    (`gravity` 0.5 → 0.8 m/s² up) and curl more (`turbulence_noise_strength` 0.15 → 0.35,
-    scale 1.2 → 1.6, speed (0.2, 0.1, 0.2) → (0.3, 0.25, 0.3)).
-  - **A thin plume that thins out:** puffs born 6–10 cm, three times that by 0.3 of their
-    life and six times by its end (`scale_curve` `0:1, 0.3:3, 1:6`). They are densest at the
-    pipe (alpha `0:0, 0.02:0.22, 0.3:0.14, 0.7:0.05, 1:0`), gone in 1.6 s (2.5), and coloured
-    (0.92, 0.93, 0.94).
-  - **Rules:** §5's "Keep `amount = 96` fixed at all times" becomes 300, still fixed, with
-    `amount_ratio` still 0.15–0.80 of it. "Existing vapour drifts and fades within 2.5 s"
-    becomes 1.6 s. §8's B2 peak becomes 300 particles.
-- **Why:** the author's requests #146 and #149, and the research in `TUNING.md`.
-- **Evidence:** `TUNING.md` (B2); strips `captures/exhaust_vapour/r0/` (no vapour in the rear
-  view) and `r1/` with the reverse camera; configuration 44/44 and state 10/10 (`amount` stays
-  300); commit `1c8447b`.
-
-### 2026-11-08, revision 11 (the author's check): the † values accepted
-
-- **Decided:** the author accepted the values marked †, Claude Code's proposals (#167:
-  "b-accepted"). The ones tuning changed since are recorded in revisions 6–10, which the author
-  kept after playing (#164).
-- **Also decided (#167):** B2 stays as tuned although it is over its GPU budget, 1.11 ms of GPU
-  time against §8's 0.30 ms, and is reported so (`TEST-REPORT.md`, "GPU price"). §8's
-  predictions stay as written.
-
-### 2026-11-20, revision 12 (Phase 2, #330): the passenger blade's line of water (Claude Code, at the author's request)
-
-- **Found:** in a close window still, `PassengerLine` (revision 7, #160) drew as a column of pale
-  flat tiles: 24 pieces 6-8 cm long and 1-1.3 cm wide, scattered over 48 cm, sliding sideways.
-- **Changed (the author's choice, #345):** `amount` 24 → 60; `emission_box_extents`
-  (0.004, 0.24, 0.001) → (0.001, 0.24, 0.0005); `initial_velocity` 0.2-0.6 → 0.02-0.08 m/s;
-  `scale` 1.0-1.3 → 0.2-0.3 (pieces 2-3 mm wide, 1.2-1.8 cm long, overlapping); alpha keys
-  `0:0.95, 0.8:0.8, 1:0` → `0:0.55, 0.8:0.45, 1:0`; the material's `sky` 2 → 0.8, `scatter`
-  10 → 4, `min_pixels` 2 → 1. A thin clear ridge where the blade turned. §8's A1 peak becomes
-  2 × (24 + 120 + 14 + 120 + 24 + 100 + 60) + 200 = 1,124 particles.
-- **Evidence:** `game/tests/test_wiper_flick_config.gd` 451/451; stills
-  `captures/issue330/8_passenger_close_02.png` (before) and
-  `captures/issue330/fixed/8_passenger_close_02.png` (after);
-  mutations `logs/phase_2/realism/issue330/mutations/`.
-
-### 2026-11-21, revision 13 (Phase 2, #354): B1's drops drawn as a camera sees them (Claude Code, at the author's request)
-
-- **Found:** looking up into a lamp's rain, the streaks were long and pointed every way, and many
-  broke into dashes. `transform_align` turns each quad to the camera with its long side along
-  the drop's velocity projected flat onto the screen, at full length, so a drop falling at the eye
-  took its drift's noise for its direction; 1 pixel wide, a streak missed pixels.
-- **Changed:** the shared shader (`game/effects/scatter_particle.gdshader`) gains `camera_streak`,
-  `exposure`, `fall` and `stretch_per_speed`: each drop is drawn as the streak its fall leaves in
-  `exposure` s (0.025) along `fall` (the wind's slant), both ends seen in perspective, so a drop
-  falling at the eye is a dot and streaks meet at the point they fall from; `min_pixels` 1.0 →
-  1.6, its alpha thinned to match. Set in all five lamp-rain scenes; the A effects and B2 are
-  unchanged. `transform_align` stays 3 (the shader reads each drop's width and stretch from it).
-- **Evidence:** `test_lamp_rain_config.gd` 470/470 (450/470 before); five mutations exit 1
-  (`logs/phase_2/realism/rain/step1/mutations/`); stills `captures/audit/lookup/step1/`,
-  `captures/audit/rain/step1/` beside `before/`. Unpriced on the GPU until the mission's end.
-
-### 2026-11-21, revision 14 (Phase 2, #354): B1 brighter and denser in the light (Claude Code, at the author's request)
-
-- **Found:** beside the photos, each lamp's rain was a few white specks; real lamp light shows a
-  dense cone of streaks, brightest where the lamp is behind them.
-- **Changed:** every lamp-rain scene's drops and splash droplets two and a half times as many
-  (street 12,500 and 6,875, post 5,000 and 2,750, floodlight 8,000 and 4,500, door 750 and 425,
-  dock 11,750 and 6,750); the drops' `forward_scatter` 0.5 → 0.7 (water throws light forward),
-  `scatter` 5 → 10 (street lamps, posts) and 60 → 100 (floodlight, door, dock); `exposure`
-  0.025 → 0.03; and a new `near_fade` 2.0 m: drops nearer the eye than that fade out, as the
-  eye focuses past them (looking up, they had streaked across the view like a starfield).
-  §8's B1 peaks rise two and a half times with them; unpriced until the mission's end.
-- **Evidence:** `test_lamp_rain_config.gd` 475/475; five mutations exit 1
-  (`logs/phase_2/realism/rain/step2/mutations/`); stills `captures/audit/rain/step2/`,
-  `captures/audit/lookup/step2/`.
-
-### 2026-11-21, revision 15 (Phase 2, #354): B1's rain from the light (Claude Code, at the author's request)
-
-- **Found:** in the floodlights the rain started 4 m up whatever the lamp's height (the compound's
-  gate flood stands at 7.4 m, its yard floods at 9 m); drops slower than about 5.5 m/s faded 2-4 m
-  above the ground (revision 9's known gap); the compound's four floodlight-rain volumes (#353)
-  used the floodlight scene's direction unturned, so their rain leaned toward +z where all other
-  rain leans toward +x; far off, the drops were 1-2 pixel specks, a glitter.
-- **Changed:**
-  - `initial_velocity_min` 3.5 → 4.0 m/s (a 1 mm drop's fall speed), in every lamp-rain scene;
-  - each scene's drops live long enough for that slowest drop to fall from its lamp to the ground
-    before it fades, and fade only over their last 5% (alpha keys `0:0.1, 0.1:0.8, 0.95:0.8,
-    1:0`, from `0:0.1, 0.15:0.8, 0.75:0.8, 1:0`): `lifetime` and `preprocess` 1.7 s under the
-    street lamps and posts, 1.25 s at the dock, 1.1 s at the floodlight and door (unchanged); the
-    counts grown with the life, so as dense (street 19,300, post 7,700, dock 13,350);
-  - a new scene, `lamp_rain_flood_high.tscn` (`LampRainFloodHigh`, `LampRain.FLOOD_HIGH`): the
-    floodlight's rain falling from just under a high head, its direction the world's slant, life
-    2.25 s, 16,400 drops, its bounds and collider 10 m tall; the compound's four volumes use it,
-    0.5 m under each light;
-  - far drops whose streak is under 6 pixels fade to 0.15 of their strength (`far_pixels`,
-    `far_sheen`), a sheen rather than specks.
-  §8's B1 peaks rise with the counts; unpriced until the mission's end.
-- **Evidence:** `test_lamp_rain_config.gd` 582/582 (456/476 before, the new scene included);
-  `test_gate_light.gd` G6 (5/6 then 6/6); eight mutations exit 1
-  (`logs/phase_2/realism/rain/step3/mutations/`); stills `captures/audit/rain/step3/`,
-  `captures/audit/lookup/step3/`.
-
-### 2026-11-21, revision 16 (Phase 2, #354): rain thrown back toward its light (Claude Code, at the author's request)
-
-- **Found:** from the driver's seat, the rain in the van's own headlights barely showed: the
-  shared shader's single forward lobe (`forward_scatter` 0.7) throws almost nothing back toward
-  a light behind the eye, while real drops throw a strong share back (internal reflection),
-  which is why rain shows so in a car's headlights.
-- **Changed:** `scatter_particle.gdshader` gains `back_scatter`, a second lobe of asymmetry
-  −0.6 added to the forward one: 0.3 in every lamp-rain scene, 1.0 in the van's new headlight
-  rain (`game/effects/headlight_rain.tscn`, Phase 2; `docs/PHASE_BRIEF.md`). The A effects and B2
-  leave it at 0, unchanged.
-- **Evidence:** `test_lamp_rain_config.gd` 588/588, `test_headlights.gd` 32/32; mutations h6, h7
-  exit 1 (`logs/phase_2/realism/rain/step4/mutations/`); stills `captures/audit/rain/step4/`.
-
-### 2026-11-21, revision 17 (Phase 2, #354): B1's splashes as the lit ground shows them (Claude Code, at the author's request)
-
-- **Found:** close to the lit ground, no splash could be told apart: three droplets a landing,
-  0.5-1.5 mm (0.3-1 mm under the floodlight, door and dock), lit evenly and fading from the start.
-- **Changed:** `sub_emitter_amount_at_collision` 3 → 5; `LampSplash` droplets 1.2-3 mm under the
-  street lamps and posts, 1-2.5 mm elsewhere (crown-sized); their material's `glint` 0 → 1.5, so
-  they catch the lamp, and `min_pixels` 1.0 → 1.5; alpha keys `0:0.9, 0.3:0.6, 1:0` (from
-  `0:0.6, 1:0`), brightest at the hit; the splash counts grown five-thirds so no landing is
-  dropped (street 11,460, post 4,580, floodlight and high floodlight 7,500, door 710, dock 11,250).
-  Unpriced until the mission's end.
-- **Found, not changed:** the dock's rain is a strip 3.5 m deep along the wall, so the lit apron in
-  front of the doors gets no rain or splashes; covering it would roughly triple that volume's
-  drops, left for the author's look with the GPU price.
-- **Evidence:** `test_lamp_rain_config.gd` 588/588 (546/588 before); five mutations exit 1
-  (`logs/phase_2/realism/rain/step5/mutations/`); stills `captures/audit/rain/step5/` beside
-  `step5_before/`.
+# CHANGE-BRIEF.md: Animation (Assignment 7)
+
+**Date:** 2026-11-22
+**Status:** Draft by Claude Code for the author's review (the assignment's AI-assisted working
+instruction: "Claude Code may draft CHANGE-BRIEF.md, the phase table, the cycle spec, predictions
+and proposed verdicts. The student reviews and approves"). Nothing below has been built. Commit it
+before the first setup step; later changes go only in dated revisions below. Assignment 6's brief
+is at tag `a6` (`git show a6:CHANGE-BRIEF.md`).
+
+**The pair, the author's choice (2026-11-22, #365):** "Phone ring + get in van". Values marked †
+are Claude Code's proposals for the author to check.
+
+## 1. The two clips
+
+| | Ring (the cycle) | EnterVan (the committing action) |
+| :-- | :-- | :-- |
+| What it communicates | Maya's call is ringing: the dash shows a handset with its ring arcs pulsing, so the player sees the call before T or the auto-answer | Ethan gets into his van: he steps to the driver's door, takes the handle, swings it open and climbs in, so the player sees the van taken, not teleported into |
+| Plays on | `RingIcon` (`Sprite2D`) on the dash's navigation screen (`navigation_display.gd`, in the van's dash viewport, `van_presentation.gd:490`) | Ethan's model (`ethan.glb`), his `AnimationPlayer`, in `driver.gd` |
+| Route | **Sprite2D with an AnimationPlayer frame track** (the preferred route: one player, one authority, the read-back sees it) | **Imported 3D rig** (Mixamo's "Entering Car", `source_assets/mixamo/Entering Car.fbx`, imported in `ethan.glb` as `EnterVan`; `tools/art/convert_mixamo.py:56`) |
+| Authority | `navigation_display.gd` alone: it calls `play("ring")` and `stop()` on its own `RingPlayer`, reading `call_state` and `call_seconds` (`navigation_display.gd:107-127`), which the phone call sets | `driver.gd` alone writes Ethan's `AnimationPlayer` (`play_clip`, `_play`); the app's boarding sequence (`first_drive.gd:828-859`) asks it to (`driver.play_clip("EnterVan", ...)`) and reads `clip_time()` |
+| Cycle or action | the cycle (loops) | the committing action (one shot) |
+
+The ring replaces the call card's code-drawn pulsing circle (`navigation_display.gd`, `_draw_call_card`,
+`pulse := 1.0 + 0.12 * sin(_clock * 8.0)`): the named change on the dash.
+
+## 2. The sheet (the ring)
+
+- **Source:** drawn by a committed script, `tools/art/make_phone_ring_sheet.py` (Pillow), the way
+  Assignment 6's textures were (`tools/make_particle_textures.py`). No licence needed: it is ours,
+  and the script is its provenance (`game/features/vehicles/freight_van/art/ring/ATTRIBUTION.md`,
+  `SOURCES.md`). Date: the day it is drawn.
+- **The file:** `game/features/vehicles/freight_van/art/ring/phone_ring.png`, as the script writes
+  it (the "original as downloaded" is the script's output, committed with its `.import`).
+- **Cell size** 64 × 64 px†; **grid** `hframes = 6`, `vframes = 1`†; **frame order** 0 → 5, left to
+  right: the handset alone (0), then one, two and three ring arcs growing out from it (1-3), the
+  outer arc fading (4-5)†. White on transparent, tinted by the card's colours in the game.
+
+## 3. The cycle spec (the ring)
+
+- **Frames** 6†; **frame rate** 10 fps†; **length** 0.6 s; **`Animation.step`** 0.1 s.
+- **Loop mode:** `Animation.LOOP_LINEAR`.
+- **Track:** one value track, `RingIcon:frame`, `UPDATE_DISCRETE`, keys at 0.0, 0.1, 0.2, 0.3, 0.4
+  and 0.5 s holding frames 0-5.
+- **Seam rule (frame track):** no duplicate across the wrap (frame 5 is not frame 0), and the gap
+  from the last key (0.5 s) to `length` (0.6 s) equals the key interval (0.1 s).
+- **The clip lives as a resource:** `game/animations/phone_ring.tres` (an `AnimationLibrary`),
+  loaded by `navigation_display.gd`, never built in code.
+
+## 4. The phase table (EnterVan)
+
+Measured from the clip (164 frames at 30 fps, 5.47 s, `ethan.glb`, probed 2026-11-22) and from the
+moments the game already reads from it (`first_drive.gd:30-38`). The game uses its first 2.0 s:
+it cuts to black at the cut and Ethan is seated behind it. **Frame rate 30 fps; `Animation.step`
+1/30 s** (the importer's 30 fps, `ethan.glb.import`).
+
+| Phase | Frames | Begins | What the player may do | What the game reads |
+| :-- | :-- | :-- | :-- | :-- |
+| Startup | 0-31 (32) | 0 (E by the van) | Nothing moves him: W/A/S/D, sprint and E are ignored; R (recover) and Esc (pause) still work | from frame 22 his left hand reaches for the handle (IK weight rises, `REACH_FROM`) |
+| Active | 32-47 (16) | 32 (hand on the handle) | as Startup | the door's opening, `driver_door = smoothstep(32, 48)` frames, his hand on the handle |
+| Recovery | 48-59 (12) | 48 (door fully open) | as Startup | at frame 53 the cut begins (`CUT`), a 0.25 s fade to black; at 60 he is seated, the engine starts 0.6 s later |
+
+**Named change:** the boarding constants re-expressed from the table in frames at 30 fps
+(`REACH_FROM` 0.75 → 22/30 s, `DOOR_GRAB` 1.05 → 32/30, `DOOR_OPENED` 1.6 → 48/30, `CUT` 1.75 →
+53/30); each moves by at most 1/60 s. Retiming the clip itself only through the importer or
+`speed_scale`, never by editing it.
+
+**Interrupts (what each does, in every phase):** W (or any move key) and E are ignored; R
+recovers: boarding is cancelled, the door shuts and Ethan is seated in the van at the checkpoint;
+Esc pauses: the clip and the door freeze on their frame and resume from it.
+
+**Import:** `EnterVan`'s loop mode is set explicitly in the importer's per-animation settings
+(`ethan.glb.import`, `_subresources` → `animations` → `EnterVan` → `settings/loop_mode = 0`,
+`LOOP_NONE`), not in a scene, and is verified from an empty import cache.
+
+## 5. The state machine
+
+No `AnimationTree`: the states are code, each naming its clip.
+
+| State | Clip | Enters when | Leaves when |
+| :-- | :-- | :-- | :-- |
+| On foot: idle | `Idle` | no move input | a move key (walk) |
+| On foot: walking / running | `Walk` / `Run` | a move key / with sprint | input released |
+| Boarding | `EnterVan` | E within reach of the driver's door, the van stopped | the cut at frame 53 (seated), or R |
+| In the van | none (Ethan hidden) | boarding ends | E stopped (getting out, `ExitVan`) |
+| Dash: no call | none (`RingIcon` hidden) | no call, or a call answered, missed or ended | a call rings |
+| Dash: ringing | `ring` | `call_state` "ringing" or "auto", `call_seconds < 0` | answered (talking), missed or ended |
+
+## 6. The two clocks
+
+- Ethan's `AnimationPlayer`: `callback_mode_process = ANIMATION_CALLBACK_MODE_PROCESS_IDLE` (1,
+  probed). The app reads `clip_time()` on the process tick (`first_drive.gd`, `_board_van`'s
+  `await get_tree().process_frame`): the same clock, largest disagreement 0 s.
+- `RingPlayer`: `ANIMATION_CALLBACK_MODE_PROCESS_IDLE`†. Nothing in gameplay reads the ring.
+- No method tracks are used to make clocks agree.
+
+## 7. Boundaries
+
+Collision, movement, input, the mission and save rules, the existing tests and their expectations,
+the Assignment 5 shaders (`game/shaders/`), the Assignment 6 effects and every other object stay as
+they are, except: the call card's drawn pulse becomes the ring sprite; the boarding constants are
+re-expressed in frames (above); `EnterVan`'s loop mode becomes an explicit importer setting.
+Presentation reads game state and never writes it.
+
+## 8. The evidence split
+
+| Rule | Checked by |
+| :-- | :-- |
+| Every track resolves (node, property, bone) | read-back tests, both clips |
+| Ring: 6 frames, keys 0.1 s apart, step 0.1, `LOOP_LINEAR`, discrete, frames < 6 | ring read-back |
+| EnterVan: 164 frames, `LOOP_NONE`, step 1/30, from an empty cache | rig read-back (fresh-cache run) |
+| Boarding reads frames 22, 32, 48, 53 | rig read-back (the app's constants) and the edge tests |
+| States and clips | structure test (every clip the code requests exists) and the state test (real input via `Input.parse_input_event`) |
+| Interrupts at every phase boundary | edge tests (input one frame before, on and after frames 32 and 48, and at 0 and 60) |
+| The existing behaviour | pins, committed before the change |
+| The motion reads; the phases are distinct | frame strip (fixture) and the author in play |
+| The ring wraps with no seam | the author in play (five wraps at normal speed) |
+| Registration (the handset does not drift in its cells) | the ring's frame strip, the author |
+| Against the background | the author: the dash at night on the valley road and under the depot's lights |
+
+## 9. The frame strip (EnterVan)
+
+Background: the real depot forecourt at night, the van where Mission 1 starts, Ethan walking up to
+it (the van's own position, not a preview set†). Captured with Movie Maker at 30 fps, trigger (E)
+at capture frame 10. Read: frame 10 (trigger, he turns to the door), 32 (frame 22: his hand
+starts to reach), 42 (frame 32: hand on the handle, the door still shut), 58 (frame 48: the door
+fully open, his foot lifting), 63 (frame 53: the cut begins), 70 (black, seated).
+
+## 10. Predicted failures
+
+| # | Failure | The check that catches it |
+| :-- | :-- | :-- |
+| 1 | A Godot 3 name (`loop = true`, `playback_speed`) leaves the ring not looping | the ring read-back's `loop_mode == LOOP_LINEAR` |
+| 2 | The frame track left on continuous updates sweeps every frame between keys | the read-back's `UPDATE_DISCRETE` check |
+| 3 | `EnterVan`'s loop set in a scene, lost on reimport | the rig read-back from an empty import cache |
+| 4 | The sheet sliced to the wrong grid shows the wrong cells | the frame-range check and the ring's frame strip |
+| 5 | The drawn pulse and the sprite both drawn (two authorities over the ring) | the structure test (the pulse gone) and the strip |
+| 6 | Re-expressed constants shift the door so the hand misses the handle | the edge tests and the EnterVan strip at frame 32 |
+
+## 11. Questions
+
+1. **Routes.** The ring is a `Sprite2D` frame track: its read-back sees the `frame` keys, so it can
+   check every key is a cell the sheet has and that updates are discrete. EnterVan is an imported
+   rig: its read-back resolves bone tracks (`Skeleton3D:mixamorig_Hips`) and pins the clip's length
+   and loop mode from an empty import cache, which a frame track has no need of.
+2. **Continuous updates on the frame track** would interpolate the integer between keys, showing
+   every in-between value (rounded): with consecutive frames it barely shows, but any jump in the
+   order would sweep through the cells between.
+3. **`Animation.step`** will be 0.1 s for the ring (10 fps) and 1/30 s for EnterVan. Left at the
+   default 1/30 s, the ring's keys at 0.1 s would still land (0.1 is three steps), but editor
+   snapping would offer positions the brief never names.
+4. **Authorities.** `navigation_display.gd` over `RingIcon` (nothing else touches the dash's nodes);
+   `driver.gd` over Ethan's `AnimationPlayer` (the cutscene director holds Ethan but plays nothing
+   on him; the app asks `driver.gd`).
+5. **Clocks.** Both players advance on the process tick; the app reads the door's frame on the
+   process tick: no disagreement. If it read on the physics tick at 60 Hz while rendering at 30 fps,
+   it could lag by up to one physics step, 1/60 s.
+6. **Seam.** A frame track: no duplicate across the wrap, the last key's gap equal to the interval.
+   A duplicate (frame 0 keyed again at 0.6 s) would hold the handset alone for two frames each
+   wrap: a visible hitch in the pulse.
+7. **Imported rig.** In the importer's per-animation settings in `ethan.glb.import`; proven by
+   deleting `game/.godot`, importing, and running the read-back.

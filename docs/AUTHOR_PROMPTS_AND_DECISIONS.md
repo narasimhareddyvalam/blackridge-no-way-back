@@ -5158,6 +5158,44 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Ethan knows, what the player sees, what stays hidden) for the joint review; every new place,
        vehicle and character is checked against real photographs first, as before.
 
+361. **The missions on video; the Mission 3 and Mission 2 photos deleted**
+     - **Prompt** (verbatim, 2026-11-22): "Create a folder on desktop and name Blackridge
+       missions, and record all three missions and give me videos, place it there. and delete the
+       mission 3 and mission 2 photos"
+     - **Asked which photos;** the author answered "these opened ones" with a screenshot of the
+       eight Mission 3 folders Claude Code had opened (`captures/audit/waterfront/a2`,
+       `ambush/a3`, `proof/a1`, `airfield/fixed`, `convoy/a7`, `hangar/a4`, `rescue/a7`,
+       `ending/a4`). Deleted from the working tree (all eight committed, so git history keeps
+       them); not yet committed.
+     - **Done:** `~/Desktop/Blackridge missions/Mission 1 - Night Freight.mp4` (6 min 28 s), one
+       continuous playthrough by an automated player through the real controls
+       (`tools/captures/film_kit.gd`, `film_missions.gd`), recorded with Movie Maker.
+362. **Missions 2 and 3: full continuous play**
+     - **Asked** story cut or full continuous play; the author chose "Full continuous play".
+       Mission 2's film was given to a forked Claude Code session, Mission 3's begun by this one.
+363. **Mission 2 first, then the assignment**
+     - **Prompt** (verbatim): "finsih mission 2 and wait for me. we will do assignment. how long to
+       show me mission 2"
+     - **Reported:** Mission 2's bot reached only the shed's gate; its estimate 6-10 hours to the
+       video.
+364. **Films stopped; Assignment 7 first**
+     - **Prompt** (verbatim): "alright stop it for now. well finish assignment first"
+     - **Done:** the Mission 2 session stopped; the film scripts kept uncommitted in
+       `tools/captures/`.
+365. **Assignment 7's requirements**
+     - **Prompt** (verbatim): "check out these requirements .md file in downloads, we might have
+       already finished it" (`~/Downloads/Assignment_7_Claude_AI_Assisted_Full.md`).
+     - **Found:** not done (no `a7` tag, `CHANGE-BRIEF.md` still Assignment 6's).
+     - **Asked** which pair; the author chose "Phone ring + get in van (Recommended)": the
+       looping sprite cycle a ringing-phone icon on the dash screen (a code-drawn sheet, an
+       `AnimationPlayer` frame track), the committing action Ethan's imported `EnterVan` clip,
+       driven by the boarding state.
+366. **Assignment 7's brief approved**
+     - **Prompt** (verbatim): "approved, go ahead."
+     - **Decided:** `CHANGE-BRIEF.md` as drafted (the ring cycle 6 frames at 10 fps, EnterVan's
+       phase table 0-31 / 32-47 / 48-59 at 30 fps, the boarding constants re-expressed in frames,
+       the interrupts, the authorities and clocks); committed before any setup step.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
