@@ -5742,6 +5742,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Answered:** yes: submitted on Canvas (#434), `a7` on GitHub, `main` merged, the film on
        OneDrive; the fresh-clone check was not redone (#428).
 
+443. **Empty the whole Trash**
+     - **Prompt** (verbatim): "empty the whole trash"
+     - **Done:** the Trash emptied (all six items, at the author's word); 0 items left; free space
+       13 GB → 17 GB.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
