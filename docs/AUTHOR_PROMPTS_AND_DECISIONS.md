@@ -5691,6 +5691,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Prompt** (verbatim): "it upploaded to canvas"
      - **Recorded:** Assignment 7 submitted on Canvas by the author (the source ZIP of `a7`).
 
+435. **The walker folders: keep them on the remote, not locally**
+     - **Prompt** (verbatim): "also check my walker folders repo on local and remote and tell me what
+       all i can delete, i want them to be at remote not on my local anymore"
+     - **Asked first:** where the walker folders and their repository are (Claude Code does not search
+       outside the project unasked).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
