@@ -5338,6 +5338,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
        hand bone, the magazine and slide keyed to his hands, upper body only over his legs' walk,
        every earlier clip proven unchanged.
      - **Prompt** (verbatim): "approved, go ahead with the plan"
+     - **Done so far:** the clips converted (`c0cb2bb`, every earlier clip unchanged); the pistol
+       placed in his captured grip by `tools/art/measure_pistol_grip.gd` (the barrel along his
+       straight index finger, the gun's top along his knuckles, the finger on the frame above the
+       trigger guard), after two wrong tries (along the forearm, 60 degrees off; straight ahead,
+       beside the hand); rendered on his rig (`captures/animation/pistol_mocap/`, fixtures).
 
 ## Waiting for the author
 

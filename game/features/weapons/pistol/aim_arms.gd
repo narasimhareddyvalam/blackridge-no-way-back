@@ -10,7 +10,6 @@ extends Node3D
 ## each hand holds, from thumb to little finger).
 
 const PISTOL = preload("pistol.glb")
-const RELOAD_CLIPS = preload("res://animations/pistol_reload.tres")
 const HandGrip = preload("res://features/characters/driver/hand_grip.gd")
 ## The pistol model's grip, its muzzle's way (-y) and its top (+z), in its own file.
 const GRIP_IN_MODEL := Vector3(0.6378, 0.67, -0.055)
@@ -30,8 +29,6 @@ var influence := 0.0
 var wanted := 0.0
 var grip: Node3D
 var pistol: Node3D
-## The reload's player on the held pistol (Assignment 7): this script is its one authority.
-var reload_player: AnimationPlayer
 var _arms := TwoBoneIK3D.new()
 var _hands: SkeletonModifier3D
 var _targets: Array[Node3D] = []
@@ -56,7 +53,7 @@ func setup(skeleton: Skeleton3D, shoulders: float, prefix := "mixamorig_") -> vo
 	for index in range(2):
 		var side: String = ["Right", "Left"][index]
 		var target := Node3D.new()
-		target.name = side + "HandTarget" if index == 0 else "SupportHand"
+		target.name = side + "HandTarget"
 		var pole := Node3D.new()
 		pole.name = side + "ElbowPole"
 		add_child(pole)
@@ -81,11 +78,6 @@ func setup(skeleton: Skeleton3D, shoulders: float, prefix := "mixamorig_") -> vo
 	_hands = HandGrip.new()
 	_hands.name = "HandsOnPistol"
 	skeleton.add_child(_hands)
-	reload_player = AnimationPlayer.new()
-	reload_player.name = "ReloadPlayer"
-	reload_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_IDLE
-	reload_player.add_animation_library("", RELOAD_CLIPS)
-	grip.add_child(reload_player)
 
 
 ## Where the muzzle is, in the world, and the way it points.
