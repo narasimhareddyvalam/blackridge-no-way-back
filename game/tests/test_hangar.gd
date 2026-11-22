@@ -3,13 +3,16 @@ extends SceneTree
 ## #359-#360; GAME_DESIGN §8: "one handgun, hitscan ... ammunition, reload, health and one guard
 ## archetype with patrol/alert/chase/attack states"; GAME_STORY's Act V: "a compact guard
 ## encounter"). On Last Run's stage 3 save the van is back at the airfield's service gate, open, and
-## Maya waits there by her car; on foot, E talks to her and she hands him Adrian's pistol (15 in the
+## Maya waits there by her car; on foot, E talks to her and she hands him his gun (since C68 a rifle,
+## 30 in the magazine and a spare 30, #403; it was Adrian's pistol, 15 and 15; in the
 ## magazine, one spare magazine). Right mouse aims, left mouse fires along the crosshair, R reloads.
 ## Adrian's three men patrol the apron: a man who sees him or hears a shot chases, and in range
 ## stops and shoots; two body hits put a man down, as does one to the head, and he stays down.
 ## Ethan's health at nothing and all begins again at the service gate. Driving the van onto the
 ## airfield, they hear it. At the hangar office's door, no man on him, stage 4 is saved: FIND LILY.
 
+## The rifle's magazine and its spare (C68, #403; the pistol's were 15).
+const ROUNDS := 30
 const STAGE_THREE := "[save]\nversion=2\nmission=\"last_run\"\n\n[run]\nstage=3\n"
 
 var _checks: int = 0
@@ -106,7 +109,7 @@ func _check_reload() -> void:
 		_field.call("service_open"), maya_near, _objective()])
 
 
-## H3: on foot by Maya, E talks to her; she hands him the pistol: 15 and a spare 15; the HUD shows
+## H3: on foot by Maya, E talks to her; she hands him the rifle (C68): 30 and a spare 30; the HUD shows
 ## it; GET INTO THE HANGAR.
 func _check_maya(encounter: Node) -> void:
 	await _press("interact")
@@ -128,22 +131,24 @@ func _check_maya(encounter: Node) -> void:
 	await _frames(10)
 	var ammo := _hud.call("ammo_text") as String
 	_check(offered == "E  Talk to Maya" and bool(gun.get("armed")) and int(gun.get("magazine"))
-		== 15 and int(gun.get("reserve")) == 15 and ammo == "15 / 15"
+		== ROUNDS and int(gun.get("reserve")) == ROUNDS and ammo == "%d / %d" % [ROUNDS, ROUNDS]
 		and _objective() == "GET INTO THE HANGAR", ("H3: by Maya (%s) E talks; she hands him the "
-		+ "pistol (%s), %d and %d spare, the HUD %s; %s") % [offered, gun.get("armed"),
+		+ "rifle (%s), %d and %d spare, the HUD %s; %s") % [offered, gun.get("armed"),
 		gun.get("magazine"), gun.get("reserve"), ammo, _objective()])
 
 
 ## H4: aimed at a man's chest 8 m off, two shots: the first hits and he comes for him, the second
-## puts him down; down, he stays down and no shot hits him again.
+## puts him down; down, he stays down and no shot hits him again. (C68: the rifle is drawn and
+## raised before he is placed, as it fires only from aim.)
 func _check_shots(encounter: Node) -> void:
 	var gun := encounter.get("handgun") as Node
 	var guard := (encounter.get("guards") as Array)[0] as Node3D
+	Input.action_press("aim")
+	await _ready_to_fire()
 	var chest := guard.global_position + Vector3.UP * 1.3
 	var toward := Vector3(guard.global_basis.z.x, 0.0, guard.global_basis.z.z).normalized()
 	_place_ethan(guard.global_position + toward * 8.0, chest)
-	Input.action_press("aim")
-	await _frames(20)
+	await _frames(3)
 	_driver.call("aim_toward", chest)
 	await _frames(5)
 	await _press("fire")
@@ -161,37 +166,45 @@ func _check_shots(encounter: Node) -> void:
 	await _frames(5)
 	Input.action_release("aim")
 	_check(first > 0.0 and first < 100.0 and state_after_first in ["chase", "attack"] and down
-		and float(guard.get("health")) <= 0.0 and left == 13 and int(gun.get("magazine")) == 12
+		and float(guard.get("health")) <= 0.0 and left == ROUNDS - 2 \
+		and int(gun.get("magazine")) == ROUNDS - 3
 		and String(guard.get("state")) == "down", ("H4: a hit (%.0f left, he %s), a second puts "
-		+ "him down (%s), 13 left; down he stays down (%s)") % [first, state_after_first, down,
+		+ "him down (%s), %d left; down he stays down (%s)") % [first, state_after_first, down,
+		ROUNDS - 2,
 		guard.get("state")])
 
 
 ## H5: R reloads in the time it takes: the magazine full again from the spare; empty with nothing
-## spare, the trigger clicks and nothing fires.
+## spare, the trigger clicks and nothing fires. (C68: the rifle is brought out first; slung, R does
+## nothing.)
 func _check_reload_gun(encounter: Node) -> void:
 	encounter.call("reset")
 	var gun := encounter.get("handgun") as Node
+	Input.action_press("aim")
+	await _ready_to_fire()
+	Input.action_release("aim")
+	await _frames(40)
 	gun.set("magazine", 12)
 	var spare_before: int = gun.get("reserve")
-	var missing := 15 - int(gun.get("magazine"))
+	var missing := ROUNDS - int(gun.get("magazine"))
 	await _press("reload")
 	var reloading := bool(gun.get("reloading"))
 	await _seconds(float(gun.get("RELOAD_SECONDS")) + 0.3)
-	var full := int(gun.get("magazine")) == 15 and int(gun.get("reserve")) == spare_before - missing
+	var full := int(gun.get("magazine")) == ROUNDS \
+		and int(gun.get("reserve")) == spare_before - missing
 	gun.set("magazine", 0)
 	gun.set("reserve", 0)
 	var shots_before: int = gun.get("shots")
 	Input.action_press("aim")
-	await _frames(10)
+	await _ready_to_fire()
 	await _press("fire")
 	await _frames(5)
 	Input.action_release("aim")
 	_check(reloading and full and int(gun.get("shots")) == shots_before and int(gun.get("dry"))
 		>= 1, ("H5: R reloads (%s) to a full magazine from the spare (%s); empty, the trigger "
 		+ "clicks (%d) and nothing fires") % [reloading, full, gun.get("dry")])
-	gun.set("magazine", 15)
-	gun.set("reserve", 15)
+	gun.set("magazine", ROUNDS)
+	gun.set("reserve", ROUNDS)
 
 
 ## H6: a man who sees him in the open comes and shoots: his health falls; a man too far to see him
@@ -219,7 +232,7 @@ func _check_guards(encounter: Node) -> void:
 	var far := _flat(hearer.global_position, _driver.global_position)
 	var unseen := not bool(hearer.call("sees", _driver.global_position + Vector3.UP * 1.2))
 	Input.action_press("aim")
-	await _frames(10)
+	await _ready_to_fire()
 	_driver.call("aim_toward", _driver.global_position + Vector3(0.0, 30.0, -10.0))
 	await _press("fire")
 	await _frames(10)
@@ -250,7 +263,8 @@ func _check_retry(encounter: Node) -> void:
 			and _flat(guard.global_position, (guard.get("start") as Transform3D).origin) < 2.0
 	_check(int(encounter.get("retries")) == retries + 1 and bool(_driver.get("active"))
 		and _flat(_driver.global_position, gate) < 8.0 and is_equal_approx(float(encounter.get(
-		"health")), 100.0) and int(gun.get("magazine")) == 15 and int(gun.get("reserve")) == 15
+		"health")), 100.0) and int(gun.get("magazine")) == ROUNDS \
+		and int(gun.get("reserve")) == ROUNDS
 		and standing, ("H7: down, all begins again at the service gate (%.1f m), health %.0f, %d "
 		+ "and %d, every man at his post (%s)") % [_flat(_driver.global_position, gate),
 		encounter.get("health"), gun.get("magazine"), gun.get("reserve"), standing])
@@ -304,6 +318,15 @@ func _place_ethan(at: Vector3, look: Vector3) -> void:
 	var facing := Vector3(look.x - at.x, 0.0, look.z - at.z).normalized()
 	_driver.call("face", facing)
 	_driver.call("look_toward", facing)
+
+
+## The rifle drawn and raised to aim (C68: it fires only from aim), or 8 s.
+func _ready_to_fire() -> void:
+	var waited := 0.0
+	while not bool(_driver.call("can_fire")) and waited < 8.0:
+		await physics_frame
+		waited += 1.0 / 60.0
+	await _frames(5)
 
 
 func _flat(a: Vector3, b: Vector3) -> float:
