@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_proof.gd:43)
+PASS: P1: DRIVE TO THE DEPOT (DRIVE TO THE DEPOT), Maya waiting there by her car (true)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] confrontation (res://features/missions/last_run/story_scenes.gd:105)
+         [2] _story (res://features/missions/last_run/last_run.gd:589)
+         [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] confrontation (res://features/missions/last_run/story_scenes.gd:105)
+         [2] _story (res://features/missions/last_run/last_run.gd:589)
+         [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _run_lines (res://features/missions/last_run/last_run.gd:544)
+       [1] _story (res://features/missions/last_run/last_run.gd:592)
+       [2] _physics_process (res://features/missions/last_run/last_run.gd:778)
+PASS: P2: stopped by her, the confrontation: her routing, Adrian Vale, Lily, five ( | ETHAN: Whose phone was that, Maya? Your number's in it. | MAYA: I routed your jobs. Every one of them. | ETHAN: They tried to kill me tonight. | MAYA: I know. I'm married, Ethan. To Adrian Vale. | ETHAN: Vale. Vale Freight. | MAYA: We have a daughter. Lily. She's five. | ETHAN: Five years. And you never said a word. | MAYA: He has her. If I don't do what he says... | ETHAN: So you chose. Her over me. | MAYA: That's not what this is. Please. Listen to it. Then decide. | ETHAN: I raised you, Maya. | ETHAN: Don't call me.)
+PASS: P3a: days later, in the cab, LISTEN TO THE RECORDING (LISTEN TO THE RECORDING)
+PASS: P3: E plays it: Adrian's offer, Maya's refusal, the records of her changed routes and her warnings (MAYA'S PHONE  ·  VOICE MEMO  ·  19 NOV 23:14  ·  1:52 |  | ADRIAN: Bring him to berth 2. One more run. Lily comes home after. | MAYA: You said she'd come home last time. | ADRIAN: This time it's him or her. Choose. | MAYA: ... | MAYA: No. | ADRIAN: You'd pick your brother over your own daughter? | MAYA: I won't buy her life with his. And I won't leave her with you. |  | VALE FREIGHT DISPATCH, FORWARDED TO HERSELF | 18 NOV 23:58  BR 048's route changed off the compound run (by M. VALE) | 21 NOV 00:40  patrol warning sent to BR 048 from a prepaid number (paid by M. VALE) | 21 NOV 01:05  berth 2 pickup put back two hours (by M. VALE) |  | The dates are the nights you drove.)
+PASS: P4: MEET MAYA AT THE VIEWPOINT (MEET MAYA AT THE VIEWPOINT), Maya there
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _run_lines (res://features/missions/last_run/last_run.gd:544)
+       [1] _story (res://features/missions/last_run/last_run.gd:638)
+       [2] _physics_process (res://features/missions/last_run/last_run.gd:778)
+PASS: P5: at the viewpoint the reconciliation ( | MAYA: I'm not asking you to forgive me. | MAYA: I thought about it. For a second, I thought about saying yes. | ETHAN: I heard. | ETHAN: I heard you say no, too. | ETHAN: I forgive you, Maya. Trusting you again will take longer. | MAYA: That's fair. | MAYA: He knows I turned. He's taking Lily tonight. A private plane, from the airfield. | ETHAN: Then we bring her home. | MAYA: Bring her home. And come home yourself.); stage 2 saved; INTERCEPT THE CONVOY (INTERCEPT THE CONVOY)
+PROOF RESULT: 6/6 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

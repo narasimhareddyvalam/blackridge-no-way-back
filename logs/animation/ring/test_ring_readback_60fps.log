@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_ring_readback.gd:30)
+PASS: R1 the ring's player and sprite exist on the dash (RingPlayer:<AnimationPlayer#1156436773939>, RingIcon:<Sprite2D#1156419996722>)
+PASS: R2 every track resolves []
+PASS: R3 the clip 'ring' exists
+PASS: R4 step is one frame period (0.1000)
+PASS: R5 length 0.600 s is 6 frames at 10 fps
+PASS: R6 the cycle loops (loop_mode 1, LOOP_LINEAR)
+PASS: R7 one value track keying RingIcon:frame (1 tracks, RingIcon:frame)
+PASS: R8 discrete updates
+PASS: R9 six keys, one every frame period from 0 (6 keys)
+PASS: R10 the frame order 0 to 5
+PASS: R11 every key is a cell the sheet has (6 cells)
+PASS: R12 seam: the gap from the last key to length equals the key interval (0.100)
+PASS: R13 seam: no duplicate across the wrap (last 5, first 0)
+PASS: R14 sliced as the brief says: res://features/vehicles/freight_van/art/ring/phone_ring.png, hframes 6, vframes 1, cells (64.0, 64.0)
+PASS: R15 the player advances on the process tick and plays nothing by itself
+RING READBACK RESULT: 15/15 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

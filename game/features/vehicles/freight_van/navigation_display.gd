@@ -1,6 +1,13 @@
 extends Control
 
 const SIZE := Vector2(768, 400)
+## The ringing phone (Assignment 7, CHANGE-BRIEF.md §1-3): the sheet, sliced as the brief says,
+## and its clip, a resource; drawn on the call card where its caller's circle sits.
+const RING_SHEET = preload("art/ring/phone_ring.png")
+const RING_CLIPS = preload("res://animations/phone_ring.tres")
+const RING_GRID := Vector2i(6, 1)
+const RING_SCALE := 0.75
+const RING_AT := Vector2(40, 38)
 const RAIL := 72.0
 const MAP := Rect2(72, 0, 696, 400)
 const VAN_AT := Vector2(0.62, 0.76)
@@ -68,6 +75,9 @@ var _since_draw: float = 0.0
 var _wrong_for: float = 0.0
 var _clock: float = 0.0
 var _fonts := {}
+## The ringing phone's sprite and its player: this script is their one authority.
+var ring_icon: Sprite2D
+var ring_player: AnimationPlayer
 
 
 func _ready() -> void:
@@ -76,6 +86,22 @@ func _ready() -> void:
 		font.font_names = PackedStringArray(["SF Pro Text", "SF Pro", "Helvetica Neue", "Arial"])
 		font.font_weight = weight
 		_fonts[weight] = font
+	ring_icon = Sprite2D.new()
+	ring_icon.name = "RingIcon"
+	ring_icon.texture = RING_SHEET
+	ring_icon.hframes = RING_GRID.x
+	ring_icon.vframes = RING_GRID.y
+	ring_icon.frame = 0
+	ring_icon.scale = Vector2.ONE * RING_SCALE
+	ring_icon.position = MAP.position + Vector2(MARGIN, 112) + RING_AT
+	ring_icon.modulate = INK
+	ring_icon.visible = false
+	add_child(ring_icon)
+	ring_player = AnimationPlayer.new()
+	ring_player.name = "RingPlayer"
+	ring_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_IDLE
+	ring_player.add_animation_library("", RING_CLIPS)
+	add_child(ring_player)
 
 
 func follow(road: RefCounted, depot: Vector3, start: Vector3) -> void:
