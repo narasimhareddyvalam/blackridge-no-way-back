@@ -33,6 +33,28 @@ const RECONCILIATION_LINES: Array = [
 	[24.4, "ETHAN", "Then we bring her home.", 2.4],
 	[27.2, "MAYA", "Bring her home. And come home yourself.", 3.0],
 ]
+## At the service gate (step 7): Adrian comes through it behind Ethan, Lily already with Maya. He
+## draws at DRAW_AT and Ethan fires at SHOT_AT; the black shot hides the fall; after it only his
+## pistol on the wet ground, fallen ahead of him, and his shoes behind it are seen. Every word a draft (#359); nothing in them says how
+## Adrian learned of the hit (N02 stays open).
+const GATE_LINES: Array = [
+	[1.0, "MAYA", "Ethan.", 1.4],
+	[2.9, "ADRIAN", "Maya.", 1.4],
+	[7.0, "ADRIAN", "Eleven years I built that company. You gave it away in a week.", 3.6],
+	[11.0, "ADRIAN", "And you brought him into it.", 2.0],
+	[13.6, "ETHAN", "It's over, Adrian. Let them go home.", 2.8],
+	[16.8, "ETHAN", "Keep your hands where I can see them.", 2.4],
+	[19.4, "MAYA", "Lily. Look at me. Only at me.", 2.8],
+	[23.0, "ADRIAN", "She's my daughter.", 1.4],
+	[24.1, "ETHAN", "Don't!", 0.6],
+	[27.5, "MAYA", "Ethan...", 1.6],
+	[29.8, "ETHAN", "Take her to the car. Don't let her look.", 3.0],
+]
+const ADRIAN_TALKS: Array = [[2.9, 4.3], [7.0, 13.0], [23.0, 23.4]]
+const DRAW_AT := 23.4
+const AIM_AT := 23.5
+const SHOT_AT := 24.3
+const FALL_AT := 25.0
 ## The recording and the records on Maya's phone (step 4; N03's draft).
 const RECORDING := "MAYA'S PHONE  ·  VOICE MEMO  ·  19 NOV 23:14  ·  1:52\n\n" \
 	+ "ADRIAN: Bring him to berth 2. One more run. Lily comes home after.\n" \
@@ -121,4 +143,53 @@ static func reconciliation(maya_at: Vector3, ethan_at: Vector3, valley: Vector3)
 			"exposure": 1.4, "gamma": 0.76, "from": _look(maya_at.lerp(ethan_at, 0.5) + side * 5.0
 			+ Vector3.UP * 1.5, maya_at.lerp(ethan_at, 0.5) + Vector3.UP * 1.4),
 			"to": _look(maya_at.lerp(ethan_at, 0.5) + side * 6.5 + Vector3.UP * 2.2, valley)},
+	]
+
+
+## The confrontation at the service gate (about 33 s): Adrian walks from `adrian_from` to
+## `adrian_at`, Ethan at `ethan_at` between him and Maya at `maya_at` with Lily.
+static func gate_confrontation(maya_at: Vector3, ethan_at: Vector3, adrian_at: Vector3,
+		adrian_from: Vector3) -> Array:
+	var toward := Vector3(adrian_at.x - ethan_at.x, 0.0, adrian_at.z - ethan_at.z).normalized()
+	var side := toward.cross(Vector3.UP)
+	var face_e := ethan_at + Vector3.UP * 1.65
+	var face_a := adrian_at + Vector3.UP * 1.68
+	var middle := ethan_at.lerp(adrian_at, 0.5)
+	return [
+		{"name": "gate_wide", "seconds": 6.0, "fov": Vector2(40.0, 36.0), "exposure": 1.45,
+			"gamma": 0.74, "from": _look(maya_at - toward * 2.5 + side * 1.4 + Vector3.UP * 1.7,
+			ethan_at.lerp(adrian_from, 0.6) + Vector3.UP * 1.3), "to": _look(maya_at
+			- toward * 2.0 + side * 1.2 + Vector3.UP * 1.65, ethan_at.lerp(adrian_at, 0.7)
+			+ Vector3.UP * 1.3)},
+		{"name": "gate_adrian", "seconds": 7.0, "fov": Vector2(30.0, 27.0), "exposure": 1.3,
+			"gamma": 0.8, "lights": [{"at": face_a - toward * 0.9 - side * 0.7, "colour": KEY,
+			"energy": 1.0, "range": 3.0}, {"at": face_a + toward * 0.8 + Vector3.UP * 0.4,
+			"colour": RIM, "energy": 2.0, "range": 3.0}],
+			"from": _look(face_e - toward * 0.7 + side * 0.45, face_a),
+			"to": _look(face_e - toward * 0.6 + side * 0.4, face_a)},
+		{"name": "gate_ethan", "seconds": 6.0, "fov": Vector2(30.0, 27.0), "exposure": 1.3,
+			"gamma": 0.8, "lights": [{"at": face_e + toward * 0.9 + side * 0.6, "colour": KEY,
+			"energy": 1.0, "range": 3.0}],
+			"from": _look(face_a + toward * 0.7 - side * 0.45, face_e),
+			"to": _look(face_a + toward * 0.6 - side * 0.4, face_e)},
+		{"name": "gate_maya_lily", "seconds": 4.0, "fov": Vector2(34.0, 32.0), "exposure": 1.35,
+			"gamma": 0.78, "lights": [{"at": maya_at + Vector3.UP * 1.6 + toward * 1.2
+			- side * 0.6, "colour": KEY, "energy": 1.0, "range": 3.5}, {"at": maya_at
+			+ Vector3.UP * 1.8 - toward * 0.8, "colour": RIM, "energy": 1.5, "range": 3.0}],
+			"from": _look(maya_at + toward * 3.8 - side * 1.6 + Vector3.UP * 1.35, maya_at
+			+ Vector3.UP * 1.15 - side * 0.3), "to": _look(maya_at + toward * 3.5 - side * 1.5
+			+ Vector3.UP * 1.3, maya_at + Vector3.UP * 1.15 - side * 0.3)},
+		{"name": "gate_draw", "seconds": 2.0, "fov": Vector2(46.0, 44.0), "exposure": 1.4,
+			"gamma": 0.76, "from": _look(middle - side * 8.0 - toward * 6.0 + Vector3.UP * 1.8,
+			middle + Vector3.UP * 1.2), "to": _look(middle - side * 7.6 - toward * 5.7
+			+ Vector3.UP * 1.75, middle + Vector3.UP * 1.2)},
+		{"name": "gate_black", "seconds": 1.5, "black": true, "from": _look(middle - side * 7.6
+			- toward * 5.7 + Vector3.UP * 1.75, middle + Vector3.UP * 1.2), "to": _look(middle
+			- side * 7.6 - toward * 5.7 + Vector3.UP * 1.75, middle + Vector3.UP * 1.2)},
+		{"name": "gate_after", "seconds": 8.5, "fov": Vector2(28.0, 26.0), "exposure": 1.35,
+			"gamma": 0.78, "lights": [{"at": adrian_at - toward * 0.9 - side * 0.6 + Vector3.UP
+			* 0.7, "colour": KEY, "energy": 0.9, "range": 2.2}], "from": _look(adrian_at - toward * 1.9 - side * 0.8 + Vector3.UP
+			* 1.15, adrian_at - toward * 0.3 - side * 0.3), "to": _look(adrian_at
+			- toward * 1.75 - side * 0.75 + Vector3.UP * 1.1, adrian_at - toward * 0.3
+			- side * 0.3)},
 	]

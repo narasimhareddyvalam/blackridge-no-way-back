@@ -187,3 +187,18 @@ Claude Code converted them with `tools/art/convert_rocketbox.py` (its `maya` and
 - **Lily:** scaled from 1.43 m to 1.12 m, a five-year-old's height; her Bip02 bones renamed
   Bip01 for the clips; 7,102 triangles.
 - **Materials:** textures halved to 1024 pixels as WebP.
+
+## Adrian (Mission 3's step 7, #359)
+
+- **Model:** Business_Male_03 from the Microsoft Rocketbox avatar library, with its clips
+  m_idle_angry_01, m_gestic_talk_excited_01 and m_walk_neutral_01 (`source_assets/rocketbox/`),
+  chosen by Claude Code from the library's seven business men as the one in a charcoal suit and
+  tie who reads as in his forties (the brief: "Adrian Vale (forties, dark coat)").
+- **Licence:** MIT, Copyright (c) 2020 Microsoft; the in-game credits name him ("MAYA, LILY AND
+  ADRIAN").
+
+### Changes
+
+Claude Code converted him with `tools/art/convert_rocketbox.py` (its `adrian` job) on
+2026-11-22: 7,810 triangles; normal maps kept; textures halved to 1024 pixels as WebP. In the
+game (`adrian.gd`) his right arm is raised by IK to draw the men's pistol.

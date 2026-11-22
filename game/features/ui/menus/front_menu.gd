@@ -564,9 +564,9 @@ func _credits_text() -> String:
 	_section(lines, "THE MEN AT THE HARBOUR", "\"guard\" by bumstrum, licensed CC BY 4.0: the men "
 		+ "waiting at berth 2 and at the airfield, and their pistols, given the walk, run, idle "
 		+ "and fall of Ethan's own Mixamo clips.")
-	_section(lines, "MAYA AND LILY", "Maya is Female_Adult_07 and Lily is Female_Child_01, from "
-		+ "the Microsoft Rocketbox avatar library, with its idles, its talk and its walk, released "
-		+ "under the MIT license above.")
+	_section(lines, "MAYA, LILY AND ADRIAN", "Maya is Female_Adult_07, Lily is Female_Child_01 "
+		+ "and Adrian is Business_Male_03, from the Microsoft Rocketbox avatar library, with its "
+		+ "idles, its talk and its walk, released under the MIT license above.")
 	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "
 		+ "thejinjinjin), licensed CC BY 4.0: the yard's top-loader, its spreader drawn in. The "
 		+ "boxes' markings are set in Barlow Condensed by The Barlow Project Authors, released "

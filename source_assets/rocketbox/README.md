@@ -99,3 +99,12 @@ same library: `Female_Adult_07/` (Maya, in her late twenties to early thirties) 
 `game/features/characters/maya/maya.glb` and `game/features/characters/lily/lily.glb` (Lily
 scaled to 1.12 m and her Bip02 bones renamed Bip01; `game/features/characters/ATTRIBUTION.md`).
 - **Committed:** the two converted models and their textures; the downloads stay out of Git.
+
+## Adrian (Mission 3's step 7, #359)
+
+Downloaded 2026-11-22 by Claude Code, from the same library: `Business_Male_03/` (its
+`Export/Business_Male_03.fbx` and its colour, normal and opacity textures, from
+`Avatars/Professions/`), and the clips `m_idle_angry_01` and `m_gestic_talk_excited_01` (from
+`Animations/all_animations_max_motextr_static/`) in `Animations/`. `tools/art/convert_rocketbox.py`'s
+`adrian` job writes `game/features/characters/adrian/adrian.glb`.
+- **Committed:** the converted model and its textures; the downloads stay out of Git.

@@ -97,6 +97,16 @@ func set_running(on: bool) -> void:
 		_aim(false)
 
 
+## Past the office's door (stage 4): the men still on their feet gone from the airfield, the men
+## put down left lying where they fell; the gun still his.
+func stand_down() -> void:
+	running = false
+	_aim(false)
+	for guard in guards:
+		guard.process_mode = Node.PROCESS_MODE_DISABLED
+		guard.visible = String(guard.get("state")) == "down"
+
+
 ## Maya's pistol in his hands.
 func arm() -> void:
 	handgun.armed = true

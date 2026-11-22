@@ -9030,3 +9030,43 @@ me", #359 "finish mission 3 and same rules"), recorded as drafts for the joint r
 - **Known gaps:** the downed men's fall is the struck man's car-impact clip, a stand-in for a
   fall of its own; the men walk straight lines (no navigation round the plane or the hangar);
   the floods carry no rain volumes (lamp rain's count unchanged); unpriced on the GPU.
+
+## Revision 2026-11-22 (Mission 3's step 7 built: Lily and Adrian, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358, #359), drafts for the
+joint review.
+
+- **Lily** (`game/features/characters/lily/lily.gd`, new; Rocketbox's Female_Child_01, 1.12 m):
+  at stage 4 she waits in the hangar's office, FIND LILY; E by her takes her hand, TAKE LILY TO
+  MAYA. She walks on Ethan's own trail half a step behind him, out at his left where there is
+  room (behind him through the 0.95 m door), her right arm up by IK and her hand in his left
+  (Ethan's own one-hand IK, `grip`), their palms within 15 cm; he walks at a child's pace,
+  1.1 m/s, his clip slowed to match, and cannot run while he leads her (`driver.gd`'s
+  `lead_pace`); she quickens her steps to keep up.
+- **Adrian** (`game/features/characters/adrian/adrian.gd`, new): Rocketbox's Business_Male_03
+  (MIT; a charcoal suit, his forties; `tools/art/convert_rocketbox.py`'s `adrian` job) with
+  Rocketbox's angry idle, an agitated talk and a walk; he draws one-handed (his right arm by IK,
+  the men's pistol in his hand).
+- **The scene at the service gate** (`story_scenes.gd`'s `GATE_LINES`, `gate_confrontation`):
+  with Lily at Maya's side, Adrian walks through the gate behind Ethan; seven shots, about 35 s:
+  Maya sees him, his lines (the company, Maya's betrayal, "And you brought him into it"),
+  Ethan's ("Let them go home"), Maya to Lily ("Look at me. Only at me"); "She's my daughter";
+  he draws; Ethan raises his (`aim_arms.gd`) and fires once; black; then only Adrian's pistol on
+  the wet ground, fallen ahead of him, and his shoes behind it; "Take her to the car. Don't let
+  her look." N02 stays open: no word says how Adrian learned of the hit. GAME_STORY's "Adrian
+  attacks or draws a weapon; Ethan kills him while defending himself and protecting Lily" is kept
+  with N04's draft (Lily out to Maya first): she stands with Maya, Ethan between them and him.
+- **The men at stage 4:** any still on their feet are gone from the airfield; the men put down
+  stay where they fell (`hangar_encounter.gd`'s `stand_down`). A stage 4 reload keeps him armed.
+- **Fixed on the way:** the in-world lines (Maya's handover, the gate scene) now clear between
+  lines instead of staying up until the next.
+- **Tests (first run red):** `test_rescue.gd` R1-R4, 0/1 then 4/4 (R3: led out 4.4 m with sprint
+  held, 1.10 m/s, she 0.60 m at his side, their palms within 0.15 m; R4: one shot, black, Adrian
+  down, Lily with Maya). Mutations (`logs/phase_2/last_run/step7/mutations/`): eight, all exit 1.
+- **Every suite** (`logs/phase_2/last_run/step7/suites/`): 81 runs exit 0, art check 0
+  failures; then `test_menus.gd` 20/20 with Adrian credited (red 19/20 first).
+- **Stills:** `captures/audit/rescue/a1/` (before) and `a7/`: Lily in the office, her hand in his
+  from the side and behind, Adrian coming, Adrian, Ethan, Maya and Lily, the draw (wide and
+  close), after.
+- **Known gaps:** Lily and Adrian walk straight lines (no navigation); Adrian's fall is not shown
+  (a cut on the shot), by choice as well as for want of a fall clip of his rig's.

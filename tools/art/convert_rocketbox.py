@@ -128,6 +128,18 @@ JOBS = {
         "names": ("Lily", "LilyBody"),
         "target": pathlib.Path("game/features/characters/lily/lily.glb"),
     },
+    "adrian": {
+        "character": SOURCE / "Business_Male_03",
+        "fbx": "Business_Male_03.fbx",
+        "prefix": "m020",
+        "clips": [("Idle-loop", CLIPS / "m_idle_angry_01.max.fbx"),
+                  ("Talk-loop", CLIPS / "m_gestic_talk_excited_01.max.fbx"),
+                  ("Walk-loop", CLIPS / "m_walk_neutral_01.max.fbx")],
+        "roughness": {"head": 0.5, "body": 0.6, "opacity": 0.6},
+        "turn": False,
+        "names": ("Adrian", "AdrianBody"),
+        "target": pathlib.Path("game/features/characters/adrian/adrian.glb"),
+    },
     "compound_guard": {
         "character": SOURCE / "Security_Female_01",
         "fbx": "Security_Female_01.fbx",

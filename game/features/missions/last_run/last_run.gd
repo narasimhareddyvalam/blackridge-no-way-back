@@ -31,6 +31,17 @@ const Ambush = preload("ambush.gd")
 const Scenes = preload("story_scenes.gd")
 const Convoy = preload("convoy.gd")
 const Encounter = preload("hangar_encounter.gd")
+const Lily = preload("res://features/characters/lily/lily.gd")
+const Adrian = preload("res://features/characters/adrian/adrian.gd")
+## Step 7: where Lily waits in the office, how near E takes her hand, where Maya receives her,
+## and the scene at the service gate: Ethan between Maya and the gate, Adrian from the airfield.
+const LILY_IN_OFFICE := Vector3(-1.2, 0.0, 0.6)
+const TAKE_WITHIN := 1.6
+const AT_MAYA := 4.5
+const ETHAN_AT_GATE := Vector3(0.5, 0.0, 1.5)
+const ADRIAN_FROM := Vector3(0.0, 0.0, -18.0)
+const ADRIAN_AT := Vector3(0.0, 0.0, -5.5)
+const LEAD_PACE := 1.1
 ## Maya at the service gate (step 6): where she stands from the gate, and her handover (its
 ## words a draft, #359): the office, the three men, Adrian's pistol, the van left outside.
 const MAYA_AT_GATE := Vector3(-4.5, 0.0, 5.0)
@@ -119,6 +130,11 @@ var convoy: Node
 var airfield: Node3D
 ## The hangar's guard encounter (step 6), from stage 3.
 var encounter: Node
+## Lily and Adrian (step 7).
+var lily: Node3D
+var adrian: Node3D
+var _scene_clock := 0.0
+var _scene_events := 0
 var _lines: Array = []
 var _line_clock := 0.0
 var _line_next := 0
@@ -183,8 +199,10 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 		_maya_at_gate()
 	if stage == 4:
 		story = "lily"
+		_maya_at_gate()
 	_ensure_convoy()
 	_ensure_encounter()
+	_ensure_family()
 	_lines.clear()
 	_shown = ""
 	_update_objective()
@@ -204,8 +222,34 @@ func _ensure_encounter() -> void:
 		encounter.connect("heard_van", func() -> void: hangar_lost.emit(true))
 	if encounter != null:
 		encounter.call("reset")
-		encounter.get("handgun").set("armed", false)
+		encounter.get("handgun").set("armed", stage >= 4)
 		encounter.call("set_running", stage == 3)
+
+
+## Lily in the office and Adrian out of sight (step 7), from stage 4.
+func _ensure_family() -> void:
+	if airfield == null:
+		return
+	if lily == null:
+		lily = Lily.new()
+		lily.name = "Lily"
+		add_child(lily)
+		adrian = Adrian.new()
+		adrian.name = "Adrian"
+		add_child(adrian)
+	lily.following = false
+	lily.call("go_to", Vector3.INF, Vector3.ZERO)
+	var office := airfield.get("office") as Node3D
+	var door: Vector3 = airfield.get("office_door")
+	lily.global_position = _on_ground(office.global_position + LILY_IN_OFFICE)
+	var look := door - lily.global_position
+	lily.rotation.y = atan2(look.x, look.z)
+	lily.visible = stage == 4
+	adrian.visible = false
+	adrian.call("reset")
+	if driver != null:
+		driver.set("lead_pace", 0.0)
+		driver.call("grip", Vector3.ZERO, Vector3.ZERO, 0.0)
 
 
 ## Maya by her car just outside the service gate (step 6), facing the way he comes.
@@ -214,6 +258,85 @@ func _maya_at_gate() -> void:
 	_stand_maya(_on_ground(gate + MAYA_AT_GATE), true)
 	var look := gate + Vector3(0.0, 0.0, GATE_POSE_BACK) - maya.global_position
 	maya.rotation.y = atan2(look.x, look.z)
+
+
+func _flat_to(a: Vector3, b: Vector3) -> float:
+	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
+## Where Ethan's left elbow points while he holds Lily's hand: out to his left and back.
+func _ethan_elbow() -> Vector3:
+	var yaw: float = driver.call("facing_yaw")
+	var ahead := Vector3(sin(yaw), 0.0, cos(yaw))
+	var left := Vector3.UP.cross(ahead).normalized()
+	return driver.global_position + left * 0.45 + Vector3.UP * 1.0 - ahead * 0.25
+
+
+## At Maya with Lily (step 7): Lily goes to her; Adrian comes through the gate; the scene.
+func _gate_scene() -> void:
+	story = "gate_scene"
+	var gate: Vector3 = airfield.get("service_gate")
+	driver.set("lead_pace", 0.0)
+	driver.call("grip", Vector3.ZERO, Vector3.ZERO, 0.0)
+	var maya_at := maya.global_position
+	var ethan_at := _on_ground(gate + ETHAN_AT_GATE)
+	var adrian_at := _on_ground(gate + ADRIAN_AT)
+	var adrian_from := _on_ground(gate + ADRIAN_FROM)
+	var beside := (ethan_at - maya_at)
+	beside.y = 0.0
+	lily.call("go_to", maya_at + beside.normalized() * 0.7 + Vector3(0.0, 0.0, 0.3), maya_at)
+	adrian.visible = true
+	adrian.call("place", adrian_from, ethan_at)
+	adrian.call("walk_to", adrian_at)
+	var look := adrian_at - maya_at
+	maya.rotation.y = atan2(look.x, look.z)
+	stand_ethan.emit(ethan_at, adrian_at)
+	_lines = Scenes.GATE_LINES
+	_line_clock = 0.0
+	_line_next = 0
+	_scene_clock = 0.0
+	_scene_events = 0
+	_scene_started = false
+	play_cutscene.call(Scenes.gate_confrontation(maya_at, ethan_at, adrian_at, adrian_from))
+	_update_objective()
+
+
+## The gate scene's clock: its lines, Adrian's talk, his draw, Ethan's aim and shot, the fall
+## under the black; at its end the story goes home (step 8).
+func _run_gate_scene(delta: float) -> void:
+	_scene_clock += delta
+	_scene_started = _scene_started or bool(cutscene_playing.call())
+	if not _lines.is_empty():
+		_talk(delta)
+	var talking := false
+	for span: Array in Scenes.ADRIAN_TALKS:
+		talking = talking or (_scene_clock >= float(span[0]) and _scene_clock < float(span[1]))
+	if not bool(adrian.get("drawn")) and not bool(adrian.get("down")):
+		adrian.call("talk", talking)
+	var chest := adrian.global_position + Vector3.UP * 1.3
+	if _scene_events == 0 and _scene_clock >= Scenes.DRAW_AT:
+		_scene_events = 1
+		adrian.call("draw_at", driver.global_position + Vector3.UP * 1.4)
+	if _scene_events == 1 and _scene_clock >= Scenes.AIM_AT:
+		_scene_events = 2
+		driver.call("set_aiming", true)
+		driver.call("aim_toward", chest)
+	if _scene_events >= 2 and _scene_events < 4:
+		driver.call("aim_toward", chest)
+	if _scene_events == 2 and _scene_clock >= Scenes.SHOT_AT:
+		_scene_events = 3
+		var gun := encounter.get("handgun") as Node
+		var skip: Array[RID] = [driver.get_rid()]
+		gun.call("pull", driver.call("muzzle"), chest, skip)
+	if _scene_events == 3 and _scene_clock >= Scenes.FALL_AT:
+		_scene_events = 4
+		adrian.call("fall")
+		driver.call("set_aiming", false)
+	if _scene_started and not bool(cutscene_playing.call()):
+		lines_cleared.emit()
+		_lines.clear()
+		story = "home"
+		_update_objective()
 
 
 ## Back at the service gate after he went down, or they heard the van (step 6): on foot just
@@ -226,7 +349,8 @@ func retry_hangar() -> void:
 	stand_ethan.emit(_on_ground(gate + Vector3(0.0, 0.0, -INSIDE_GATE)), hangar)
 
 
-## The handover's lines, without a cutscene: true once the last has been shown its time.
+## The handover's lines, without a cutscene: each shown its time, then cleared; true once the
+## last has been shown its time.
 func _talk(delta: float) -> bool:
 	_line_clock += delta
 	while _line_next < _lines.size() and _line_clock >= float(_lines[_line_next][0]):
@@ -234,6 +358,10 @@ func _talk(delta: float) -> bool:
 		line_spoken.emit(String(line[1]), String(line[2]))
 		_maya_play("TalkSad" if String(line[1]) == "MAYA" else "Idle")
 		_line_next += 1
+	if _line_next > 0 and _line_next < _lines.size():
+		var shown: Array = _lines[_line_next - 1]
+		if _line_clock > float(shown[0]) + float(shown[3]):
+			lines_cleared.emit()
 	var last: Array = _lines[_lines.size() - 1]
 	if _line_next >= _lines.size() and _line_clock > float(last[0]) + float(last[3]):
 		lines_cleared.emit()
@@ -379,6 +507,14 @@ func _story(delta: float) -> void:
 			if bool(convoy.get("inside")):
 				story = "service"
 				_maya_at_gate()
+		"lead":
+			driver.call("grip", lily.call("hold_point"), _ethan_elbow(), 1.0)
+			if bool(driver.get("active")) and _flat_to(driver.global_position,
+					maya.global_position) < AT_MAYA and _flat_to(lily.global_position,
+					driver.global_position) < 2.0:
+				_gate_scene()
+		"gate_scene":
+			_run_gate_scene(delta)
 		"gun":
 			if _talk(delta):
 				story = "hangar"
@@ -390,7 +526,8 @@ func _story(delta: float) -> void:
 					and not bool(encounter.call("on_them")):
 				story = "lily"
 				stage = 4
-				encounter.call("set_running", false)
+				encounter.call("stand_down")
+				_ensure_family()
 				var reached := start_progress()
 				reached.set_value("run", "stage", stage)
 				checkpoint_reached.emit(reached)
@@ -427,6 +564,8 @@ func objective_target() -> Vector3:
 		return JUNCTION + Vector3.UP * 1.5
 	if _title == "THE SERVICE GATE" and airfield != null:
 		return (airfield.get("service_gate") as Vector3) + Vector3.UP * 1.5
+	if _title == "TAKE LILY TO MAYA" and maya != null:
+		return maya.global_position + Vector3.UP * 1.9
 	if _title in ["GET INTO THE HANGAR", "FIND LILY"] and airfield != null:
 		return (airfield.get("office_door") as Vector3) + Vector3.UP * 1.5
 	if _title == "MAYA" and stage == 3 and maya != null:
@@ -504,6 +643,9 @@ func interact() -> String:
 
 ## What Ethan on foot at `at` can do with E, or "", and doing it.
 func foot_action(at: Vector3) -> String:
+	if story == "lily" and lily != null and lily.visible and Vector2(at.x
+			- lily.global_position.x, at.z - lily.global_position.z).length() < TAKE_WITHIN:
+		return "Take Lily's hand"
 	if story == "maya" and maya != null and maya.visible and Vector2(at.x
 			- maya.global_position.x, at.z - maya.global_position.z).length() < TALK_WITHIN:
 		return "Talk to Maya"
@@ -511,6 +653,12 @@ func foot_action(at: Vector3) -> String:
 
 
 func do_foot_action(at: Vector3) -> String:
+	if foot_action(at) == "Take Lily's hand":
+		story = "lead"
+		lily.call("lead", driver)
+		driver.set("lead_pace", LEAD_PACE)
+		_update_objective()
+		return ""
 	if foot_action(at) != "Talk to Maya":
 		return ""
 	story = "gun"
@@ -581,6 +729,12 @@ func _update_objective() -> void:
 	if stage == 4:
 		title = "FIND LILY"
 		detail = "In the office at the back of the hangar."
+		if story == "lead":
+			title = "TAKE LILY TO MAYA"
+			detail = "Back out to the service gate, her hand in yours."
+		elif story in ["gate_scene", "home"]:
+			title = ""
+			detail = ""
 	_title = title
 	if title + detail != _shown:
 		_shown = title + detail

@@ -1,5 +1,23 @@
 # HANDOFF.md
 
+**This run (2026-11-22, #359-#360: Mission 3's step 7, Lily and Adrian):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 7 built ...)".
+  Files: `game/features/characters/lily/lily.gd`, `game/features/characters/adrian/` (new: the
+  model, `adrian.gd`), `last_run.gd`, `story_scenes.gd` (the gate scene), `hangar_encounter.gd`
+  (`stand_down`), `driver.gd` (`lead_pace`, `left_hand`), `front_menu.gd` and
+  `game/features/characters/ATTRIBUTION.md` (Adrian), `tools/art/convert_rocketbox.py`,
+  `tools/captures/capture_rescue.gd` (new), `source_assets/rocketbox/README.md`.
+- **Results (exact):** `test_rescue.gd` 0/1 red, then 4/4; mutations (`python3 -I
+  logs/phase_2/last_run/step7/mutations/mutations_step7.py <scratch> <out>`): eight, all exit 1;
+  suites (`bash logs/phase_2/last_run/step7/suites/run_suites.sh <scratch>`): 81 runs exit 0, art
+  check 0 failures; `test_menus.gd` 20/20 after Adrian's credit. Stills
+  `captures/audit/rescue/a7/`. Committed on `develop` (not pushed).
+- **Claude Code's calls for the review:** Adrian's model; every gate-scene word; Lily on his
+  trail; his child's pace; the scene's cut on the shot and the pistol on the ground after it.
+- **Next:** step 8 (the reunion, the statement card, six months later the family home in
+  sunlight, the watcher, black, the title; house: strielecki's "Suburban House V2", CC BY,
+  exported to `game/features/missions/last_run/art/house/`, not yet committed).
+
 **This run (2026-11-22, #359-#360: Mission 3's step 6, the guard encounter at the hangar):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 6 built ...)".
   Files: `game/project.godot` (`fire`, `aim`, `reload`: a protected change, decided under

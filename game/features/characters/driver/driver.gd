@@ -124,6 +124,8 @@ var _player: AnimationPlayer
 var _skeleton: Skeleton3D
 ## Whether he holds a pistol up to aim (`set_aiming`), and its arms.
 var aiming := false
+## Leading someone by the hand (Mission 3's step 7): his pace held to theirs (0 for free).
+var lead_pace := 0.0
 var _aim_arms: Node3D
 var _aim_blend := 0.0
 var _collision: CollisionShape3D
@@ -622,8 +624,10 @@ func _physics_process(delta: float) -> void:
 		direction = _pivot.global_basis * Vector3(movement.x, 0, movement.y)
 		direction.y = 0
 		direction = direction.normalized()
-		if Input.is_action_pressed("sprint") and not aiming:
+		if Input.is_action_pressed("sprint") and not aiming and lead_pace <= 0.0:
 			pace = RUN_SPEED
+		if lead_pace > 0.0:
+			pace = lead_pace
 	var moving := direction.length_squared() > 0.1
 	var climbing := _find_stair(direction, moving)
 	_steps.hurry = pace > WALK_SPEED
@@ -664,7 +668,7 @@ func _physics_process(delta: float) -> void:
 		_play(("Run" if pace > WALK_SPEED and not climbing else _steps.clip() if climbing
 			else "Walk") if moving else "Idle")
 	_player.speed_scale = lerpf(1.0, _steps.rate(), _steps.influence) if climbing and moving \
-		else 1.0
+		else (pace / WALK_SPEED if lead_pace > 0.0 and moving else 1.0)
 	_glide_steps(delta)
 	_place_feet(direction, moving, delta)
 
@@ -949,6 +953,11 @@ func set_aiming(on: bool, _gun: Node = null) -> void:
 	aiming = on and active
 	if _aim_arms != null:
 		_aim_arms.set("wanted", 1.0 if aiming else 0.0)
+
+
+## Where his left palm is, in the world (the hand he leads Lily by).
+func left_hand() -> Vector3:
+	return _grip_seen
 
 
 ## Where his pistol's muzzle is, in the world.
