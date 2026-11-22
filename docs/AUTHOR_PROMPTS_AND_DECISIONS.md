@@ -5731,6 +5731,17 @@ tag `a5`. Pictures the author approved or rejected are filed in
        unpushed; no stash) and moved to the Trash with its unpushed backup branch and
        `blender/Van.blend`, at the author's word. No walker folder remains on the Desktop.
 
+441. **Empty the Trash**
+     - **Prompt** (verbatim): "empty the trash"
+     - **Asked first:** the Trash holds six items, not two: the two walker folders, `A7-submission`,
+       `Basic Shooter Pack.zip`, `Rifle Idle.fbx` and a lecture PDF; emptying deletes all six. Not
+       emptied yet.
+
+442. **Is the assignment done?**
+     - **Prompt** (verbatim): "our assignment is done right"
+     - **Answered:** yes: submitted on Canvas (#434), `a7` on GitHub, `main` merged, the film on
+       OneDrive; the fresh-clone check was not redone (#428).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
