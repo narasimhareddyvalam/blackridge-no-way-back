@@ -5570,6 +5570,23 @@ tag `a5`. Pictures the author approved or rejected are filed in
        `/captures/**/*.mp4`); no history rewrite, so the earlier commits still hold them; then
        `develop` pushed to `origin`. `main` untouched, no tag.
 
+415. **No game code lost? Every requirement met?**
+     - **Prompt** (verbatim): "also are you sure we didnt lose any code of our game?? also, make did
+       you make sure we fulfiled all assignment requirements?"
+     - **Answered:** no game file deleted in Assignment 7; the only deletion since the last push
+       (`beam_rain.gdshader`) was the approved replacement in #354; 0 differences on disk; the
+       current revision passes regression 64/64, headlights 32/32, structure 13/13
+       (`logs/animation/final_check`). Requirements: most done; three gaps Claude Code can fix (a
+       two-clocks record in TEST-REPORT, a Claude-against-you table, an EnterVan preview scene);
+       the human checks, the observed revision and verdict, CLAUDE.md corrections, FRICTIONAL
+       notes, the film link and the release steps are the author's.
+
+416. **Merge develop to main?**
+     - **Prompt** (verbatim): "should we merge develop to main?"
+     - **Answered:** not yet: `main` is the graded Assignment 6 submission; merge by pull request
+       once Assignment 7 is final (the gaps fixed, the author's checks, verdict and film link
+       in), then tag `a7` on that commit.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
