@@ -52,15 +52,27 @@ const DROP := 14
 const PICK := 26
 const SEAT := 47
 ## Slung at his right hip, where his own put-away leaves it and his draw takes it (#400,
-## tools/art/measure_rifle_sling.gd), in his upper back's (Spine2) space. The draw takes it at
-## TAKE and turns it into his hold by HELD; the put-away turns it from his hold (TURN) to hanging
-## by LET_GO, where he lets go. The grip stays in his fist all the while.
+## tools/art/measure_rifle_sling.gd), in his upper back's (Spine2) space. As a rifle is handled in
+## real life (#402), its muzzle points at the ground while it goes to and from the sling, never up
+## across him: in the draw his hand reaches behind his hip and takes the rifle as it comes forward
+## past the grip at TAKE (the fist 0.13 m from it; easing in over TAKE_EASE frames), turning it up
+## into his hold by HELD as his left hand catches the handguard; the put-away lets his
+## left hand off first while the rifle turns from the low ready to a muzzle-down carry (by TURN),
+## hanging nearly straight down from his fist, the muzzle a little ahead, its sights forward and its
+## stock past the outside of his right arm, away from his face, as his hand rises to his shoulder;
+## it turns to hang as his hand lowers to his hip (LOWER to HUNG) and he lets go at LET_GO. The
+## grip stays in his fist all the while.
 const SLUNG := Transform3D(Vector3(-89.71496, 22.00353, 38.30237),
 	Vector3(43.32841, 60.70706, 66.61311), Vector3(-8.594996, 76.35774, -63.9971),
 	Vector3(-23.53078, -54.02867, 20.49663))
-const TAKE := 15
-const HELD := 45
-const TURN := 6
+const TAKE := 37
+const TAKE_EASE := 5.0
+const HELD := 52
+const TURN := 8
+const LOWER := 40
+const HUNG := 54
+## The muzzle-down carry: the barrel this far ahead of straight down (a share of his facing).
+const CARRY_AHEAD := 0.2
 const LET_GO := 62
 ## His left fist counts as on the front when it is this far from his right (a rifle's grip to
 ## handguard is 0.25-0.40 m) and within this angle of where the solved placement points the barrel.
@@ -81,6 +93,8 @@ var _turned := Basis.IDENTITY
 var _last := Basis.IDENTITY
 var _change := 1.0
 ## The left arm's IK and where it reaches: its target follows the part his left hand holds.
+## The put-away's low ready, kept from TURN while his hand rises.
+var _ready_basis := Basis.IDENTITY
 var _ik: TwoBoneIK3D
 var _ik_target: Node3D
 var _reach := 0.0
@@ -139,19 +153,36 @@ func place(delta: float, clip: String, frame: float = 0.0) -> Transform3D:
 		if frame < TAKE:
 			return _letting(hung())
 		basis = hanging.slerp(basis, smoothstep(float(TAKE), float(HELD), frame))
+		if frame < TAKE + TAKE_EASE:
+			wanted = ""
+		var grip := (hung() * GRIP).lerp(right, smoothstep(float(TAKE), TAKE + TAKE_EASE, frame))
+		return _reaching(Transform3D(basis, grip - basis * GRIP), wanted, point, delta)
 	elif clip == "RifleAway":
 		if frame >= LET_GO:
 			return _letting(hung())
-		basis = basis.slerp(hanging, smoothstep(float(TURN), float(LET_GO), frame))
+		if frame < 1.0 or _ready_basis == Basis.IDENTITY:
+			_ready_basis = basis
+		var facing := _bone("Spine2").basis.z.normalized()
+		var carry := _align(Vector3(0, 0, -1), Vector3.DOWN + facing * CARRY_AHEAD, Vector3(0, 1, 0),
+			facing)
+		basis = _ready_basis.slerp(carry, smoothstep(0.0, float(TURN), frame))
+		basis = basis.slerp(hanging, smoothstep(float(LOWER), float(HUNG), frame))
 		if frame > TURN + 4:
 			wanted = ""
 	elif slung:
 		return _letting(hung())
-	var rifle := Transform3D(basis, right - basis * GRIP)
+	if clip != "RifleAway":
+		_ready_basis = Basis.IDENTITY
+	return _reaching(Transform3D(basis, right - basis * GRIP), wanted, point, delta)
+
+
+## Draws his left hand onto the rifle's part `point` (none while `wanted` is empty) by the IK.
+func _reaching(rifle: Transform3D, wanted: String, point: Vector3, delta: float) -> Transform3D:
 	_reach = move_toward(_reach, 0.0 if wanted == "" else 1.0, delta * 8.0)
 	_point = rifle * point if wanted != "" else _point
 	if _ik != null:
-		_ik_target.global_position = _point + (_bone("LeftHand").origin - left) + _correction
+		_ik_target.global_position = _point + (_bone("LeftHand").origin - _fist("Left")) \
+			+ _correction
 		_ik.influence = smoothstep(0.0, 1.0, _reach)
 		_ik.active = _ik.influence > 0.0
 	return rifle

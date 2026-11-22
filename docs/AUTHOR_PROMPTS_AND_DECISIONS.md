@@ -5463,6 +5463,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
        excluded), the hand within 4-7 cm of the T-handle while it pulls; rendered at exact frames
        40-84 from two sides.
 
+402. **The put-away, by the same rules**
+     - **Prompt** (verbatim, after the film of `71bb354`): "do the same thing same rules and check
+       out when hes putting the gun away check and fix it properly"
+     - **Found:** midway through the put-away the rifle turned with his rising hand, its barrel
+       swinging up level across his chest and past his face (frames 6-12 the muzzle 31 degrees up);
+       held at the low ready instead, the stock came within 3-5 cm of his face; and in the draw his
+       hand swept behind his hip with the rifle already in it, through his thigh (1 cm).
+     - **Done (real life: the muzzle points at the ground going to and from the sling, never across
+       oneself; the support hand comes off first; the firing hand lowers the rifle muzzle down and
+       lets it settle on the sling):** the put-away turns from the low ready to a muzzle-down carry
+       by frame 8, the stock past the outside of his right arm, carried so while his hand rises,
+       turned to hang as his hand lowers (40-54), let go at 62; the draw leaves it slung while his
+       hand reaches behind his hip and takes it as the hand comes forward past the grip (frame 37,
+       easing in over 5 frames), turning it up into his hold by 52; checked every frame of both: the
+       muzzle never above level (0 of 70, 0 of 88), clear of his head (0.22 m, 0.48 m), spine
+       (0.26, 0.25), right thigh (0.19, 0.18) and hips (0.26, 0.25) from the bones' lines, never
+       turned over, no jump over 8 cm a frame; renders at exact frames from two sides; the film.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
