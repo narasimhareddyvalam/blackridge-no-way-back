@@ -5503,6 +5503,20 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** `caffeinate -dims` started; the four clips (ring, EnterVan, rifle reload, shock) are
        the submission's.
 
+406. **Finish the assignment while away: the four clips, the Brutalist film, every requirement**
+     - **Prompt** (verbatim, during Step 7's r0): "after the four animations are done, proceed to
+       brutalist video to submit. make sure to follow all the rules and best practices of
+       brutalist. make sure the video includes everything we did in this assignment, show the
+       animations in the video as well. make sure they are wired up in the game. make sure to
+       satisfy all assignment requirements, i am going away for sometime, make sure to finish my
+       assignment when i am back, take decisions for me realistic etc all that. commit as well.
+       see you"
+     - **Taken as:** Claude Code finishes the evidence for the four clips, the film (the course's
+       godot-gamedev skill, walker, at `~/Desktop/brutalist.art`), and the documents, deciding
+       where the author would and saying so; it commits on `develop`. Not taken as leave to push,
+       tag, upload or submit, nor to write the author's own observations, verdicts or
+       FRICTIONAL entries: those stay open for the author.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
