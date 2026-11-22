@@ -250,3 +250,12 @@ test's table gains both clips and both authorities; state tests by real input (R
 the clip plays exactly while `reloading`; the hit plays the shock, then "DRIVE."); edge tests at the
 reload's frames 0, 18, 48 and 66 (fire, R, Esc one frame before, on and after); the Mission 1 and
 Mission 3 suites; a frame strip of each, read at its phase boundaries, and the author in play.
+
+**2026-11-22, the reload's setup (#385).** Rendered on Ethan's rig, the left hand could not reach
+a magazine under the gun held at arm's length (about 0.60 m from his shoulder), so it fell short at
+his chest. The clip now also keys the held gun's `Grip:position` (set only once by `aim_arms.gd`,
+at setup, so the clip is its one writer while it plays): drawn in toward his chest by frame 6 and
+pushed back out from 58 to 65, as a shooter brings a pistol into his workspace to reload. Its keys
+ease in and out (linear with a transition of -2; cubic overshot by 18 cm over the long hold). Seen
+over his right shoulder, as the game's aim camera sits, the drawn-in gun hides behind his shoulder:
+open for the reload's strip and the author's look.

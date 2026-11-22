@@ -5295,6 +5295,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Prompt** (verbatim, after the brief's revision `a95441a`): "approved, go ahead with the
        pins"
 
+385. **The reload clip's setup approved**
+     - **Prompt** (verbatim, after the pins `8155e51`): "approved, go ahead with the reload clip"
+     - **Done:** `tools/art/make_pistol_reload_clip.py` writes `game/animations/pistol_reload.tres`
+       from the phase table; `aim_arms.gd` gains `ReloadPlayer` (idle) and names the left IK target
+       `SupportHand`; the read-back 12/12; poses rendered on Ethan's rig, revised twice (the hand
+       short of the magazine, then a cubic overshoot), see the brief's revision.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
