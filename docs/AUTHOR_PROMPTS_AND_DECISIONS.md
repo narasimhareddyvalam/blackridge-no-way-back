@@ -5546,6 +5546,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** the plan of #409 with additive commands only (`git restore` of the deleted paths,
        `.gitignore` rules, explicit `git add`, commits); no delete, reset, clean or push.
 
+412. **10,000 more staged files?**
+     - **Prompt** (verbatim, after the clean-up): "there are 10000 more staged files?"
+     - **Answered:** Git reports 0 staged, 0 unstaged, 0 untracked ("nothing to commit, working
+       tree clean"). The large count is the 106 unpushed commits on `develop`: 15,525 files since
+       the last push (8 November), 10,916 of them Mission 2 and 3 test logs in `logs/phase_2`.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
