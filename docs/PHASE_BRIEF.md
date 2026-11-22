@@ -8720,3 +8720,120 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
 - **Unverified:** how the guards' rounds feel in play (timing, fairness) and the look of their walk
   at a distance; the cut's flap in the dark; the guards are stand-ins (Assignment 9 replaces their
   behaviour); the GPU price waits for the mission's end on power (now).
+
+## Revision 2026-11-21 (Phase 2, Mission 3, Last Run: the brief, written before any code, #359-#360)
+
+- **Status:** written before any code, at the author's word: "move to mission 3. and finish
+  mission 3 and same rules" (#359) and "make sure everything stays realisitc like in real, keep
+  checking things to real life pictures and create everything" (#360). The author handed over
+  the choices (#358-#359): every choice below is **Claude Code's call**, every story word a draft,
+  every open narrative question (N01-N05, C03) answered only as a draft for the author's review.
+
+### The story so far and to come, plainly (for the joint review of Missions 2 and 3)
+
+- **Mission 1, Night Freight:** Ethan, a freight driver, drives the last run of the night in the
+  rain. On the hill road a man steps out; Ethan hits him and drives away. He believes no one saw.
+- **Mission 2, The Wrong Cargo (days later):** money is short and he wants routine, so he takes a
+  better-paid job from a new dispatcher (Northline Dispatch, by text). He loads a sealed pallet at
+  the transfer shed; the paperwork does not add up (410 kg declared, 1,180 kg weighed; "Vale
+  Freight" under a label; "do not inspect"). He leaves his van in a container yard and takes a
+  dark van to a guarded warehouse. Docked there, the guards turn on him (why is not yet said). An
+  unknown number texts him the way out (it is secretly Maya). He escapes through a cut in the
+  fence, takes his own van back and drives away. Maya, his younger sister, calls that night and
+  tells him to keep taking the work; he thinks she is just being supportive.
+- **What Ethan does not know yet:** Maya is married to Adrian Vale, who runs a freight syndicate
+  (Vale Freight) and uses ordinary jobs to move contraband; she has a five-year-old daughter,
+  Lily; Adrian has made Maya route Ethan's jobs; and Adrian plans to have Ethan killed.
+- **Mission 3, Last Run:**
+  1. **The docks:** a "final pickup" at the waterfront is an ambush. Ethan gets away, barely,
+     and finds an attacker's phone: its messages show his jobs were routed by "M." - Maya.
+  2. **The confrontation:** he faces Maya. She admits routing the jobs, that she is married to
+     Adrian Vale, that she has a daughter, and that Adrian has Lily. He cannot trust her and
+     leaves.
+  3. **The proof:** Maya leaves him her phone: a recording of Adrian offering Lily's freedom for
+     Ethan's death, Maya hesitating, then refusing; and the shipping records showing she changed
+     his routes, delayed the ambush and sent the warnings. He understands; he forgives her, and
+     says trust will take time. Adrian is taking Lily abroad tonight from the airfield.
+  4. **The last run:** Maya gives timing and a route change; Ethan cuts the convoy off on the
+     freight roads, gets into the airfield, gets past the guards, reaches Lily in the hangar and
+     gets her to Maya. Adrian draws a gun; Ethan kills him defending himself and Lily.
+  5. **Home:** Maya and Lily together; Ethan tells the police everything, the night on the hill
+     road too. Six months later, sunlight, a modest house, boxes by the door; Lily wants the drive
+     she was promised. They drive off. A black sedan across the street; a man photographs the
+     house. "Found them." "All three?" "Yes." "Don't approach them. Not yet." Cut to black; two
+     beats; only then the title, BLACKRIDGE: NO WAY BACK.
+
+### Where (the world, Claude Code's call)
+
+- **The harbour flats, east of the loop:** the loop's east end (610, 150) meets a new **east
+  road** through the 25 m rim (a flat corridor in the terrain, its clearings by `cleared_after` so
+  no tree moves) into a new coastal strip x 660-1050 on its own ground, at sea level:
+  - **the waterfront** (the design's docks): a container quay on the water, its edge with
+    bollards and fenders, stacks of containers, a mobile harbour crane, floodlit; a gate;
+  - **the coastal road** south along it, with the **freight road** through the terminal's back
+    lots as the shortcut (the convoy's choke point);
+  - **the airfield:** a short general-aviation strip with edge lights, a windsock, a hangar with
+    its apron and a business jet, a fenced perimeter with a keypad gate.
+  - the sea to the horizon as the water backdrop; nothing beyond is explorable.
+- **The family house (epilogue):** its own small daylight scene on the town's outskirts.
+- Every place, vehicle and person is built after real photographs (Commons and manufacturers'
+  pages, cited in each step), as Missions 1 and 2 were.
+
+### Who (Claude Code's calls; models found, labelled and shown in a sheet as the guard was)
+
+- **Maya** (late twenties to early thirties), **Lily** (five), **Adrian Vale** (forties, dark
+  coat), the **convoy's men and the airfield guards** (the patrol guard model, in dark clothes,
+  armed only in the guard encounter), **the watcher** (seen only through a windshield).
+
+### How it plays (the build order; each step tests first, mutations, every suite, a commit)
+
+1. **Missions in a row:** Mission 2's end saves Mission 3's start (save rules version 2 gains
+   `last_run` and its checkpoints, with the one-time opening flag as Mission 2's); the title shows
+   Mission 3's scene.
+2. **The east road and the harbour flats:** the road, the ground, the sea, the lights.
+3. **The waterfront and the ambush:** DRIVE TO THE WATERFRONT (the dispatcher's "last run"); at
+   berth 2 the trap closes (a cutscene: two SUVs' lights, men out, shots into the van); then play:
+   reverse and drive out through the gate before an SUV blocks it (fail: caught, back to the
+   berth); on the quay the dropped phone (E): the messages from "M.".
+4. **The confrontation and the proof (cutscenes):** Maya waiting at the depot in the rain;
+   subtitled; he leaves. Days later her phone in his van: the recording (subtitles over the phone's
+   screen), the records; the meeting at the viewpoint at first light; Adrian's plan.
+5. **The convoy:** Maya's call with its timing; the convoy (two black SUVs and a van) on the
+   coastal road; Ethan takes the freight road and stops his van across the choke point before it
+   arrives; the convoy stops (scripted, as the design recommends).
+6. **The airfield and the guard encounter (combat, the design's §8):** the gate by Maya's code;
+   one handgun (taken from the convoy's lead car), hitscan fire, a magazine and reload, health,
+   one guard type with patrol, alert, chase and attack (Assignment 9 replaces their behaviour, as
+   D6); caught or killed, back to the gate (a checkpoint).
+7. **Lily and Adrian:** Lily in the hangar's office; E takes her hand, she follows; out to Maya's
+   car. In the hangar Adrian draws; a cutscene: Ethan fires defending himself and Lily; no gore.
+8. **Home:** the reunion; the statement to the police (a card: Ethan told them everything,
+   including the hill road); six months later the house in sunlight, the drive, the watcher, black,
+   the title (C04, AGENTS' order kept).
+
+### Drafts for the open narrative questions (the author's to accept or change)
+
+- **N03 (the recording):** Maya recorded Adrian's call on her phone in her car; Ethan believes it
+  because its date and the records match the nights he drove (the bill 7731-046, the warning).
+- **N04 (Lily's safety):** Lily is kept in the hangar's office; Ethan leads her out to Maya, who
+  waits in her car at the airfield's gate, before Adrian's confrontation.
+- **N05 (accountability):** a card after the reunion: Ethan's statement to the police, the hill
+  road included; the legal outcome off-screen.
+- **N01, N02** stay open: the pedestrian's identity and how Adrian learned of the hit are not
+  shown in Mission 3.
+
+### Rules a test can measure (written first, per step)
+
+- Mission 2's end saves Mission 3's start; a reload at each Mission 3 checkpoint puts the world back.
+- The ambush: staying at the berth is caught; out through the gate in time escapes; the phone is
+  taken by E and its messages name "M.".
+- The convoy stops only if the van blocks the choke point before it arrives; late, it passes, and
+  the retry is at the junction.
+- Combat: a shot hits what the crosshair is on; a guard alerted by sight or a shot attacks;
+  health falls when hit and the retry is at the gate; reload refills from the reserve.
+- Lily follows once her hand is taken and stays within reach; Adrian's scene plays only with Lily
+  safe; the ending's order: reunion, statement, house, drive, watcher, black, title, no title before.
+
+### Not in this mission
+
+- Car chases with pursuit AI; police; more than one weapon; interiors beyond the hangar office.

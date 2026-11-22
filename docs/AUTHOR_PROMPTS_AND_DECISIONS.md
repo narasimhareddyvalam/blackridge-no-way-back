@@ -5150,6 +5150,14 @@ tag `a5`. Pictures the author approved or rejected are filed in
        edits to `game/shaders/`), its open choices Claude Code's calls recorded as drafts (as in
        #358); `caffeinate` on, off when Mission 3 is done.
 
+360. **Realistic as in real life; Mission 2's story to check with Mission 3's**
+     - **Prompt** (verbatim, mid-run): "i am little confused about the story of mission 2, but we
+       will check together with mission 3. make sure everything stays realisitc like in real, keep
+       checking things to real life pictures and create everything,"
+     - **Decision:** Mission 3's brief opens with a plain story summary of Missions 2 and 3 (what
+       Ethan knows, what the player sees, what stays hidden) for the joint review; every new place,
+       vehicle and character is checked against real photographs first, as before.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
