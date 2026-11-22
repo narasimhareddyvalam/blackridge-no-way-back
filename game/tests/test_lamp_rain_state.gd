@@ -65,10 +65,11 @@ func _run() -> void:
 
 func _check_start() -> void:
 	var near := _within_range()
-	_check(_rain.volumes.size() == 24,
+	_check(_rain.volumes.size() == 43,
 		"Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the " +
 		"floodlight, the door lamp, the transfer shed's gate lamp, its yard's 5 lights, " +
-		"its dock front, and the compound's gate flood and 3 yard floods (%d)"
+		"its dock front, the compound's gate flood and 3 yard floods, and the harbour " +
+		"flats' 19 road lamps (%d)"
 		% _rain.volumes.size())
 	var dock: Node3D = null
 	for volume in _rain.volumes:

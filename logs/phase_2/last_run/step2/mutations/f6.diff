@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/industrial_loop.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f6/game/features/environments/industrial_loop/industrial_loop.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/industrial_loop.gd	2026-11-21 19:24:33
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f6/game/features/environments/industrial_loop/industrial_loop.gd	2026-11-21 19:26:41
+@@ -786,7 +786,7 @@
+ ## Whether `at` (x, z) is somewhere the van may be: the valley and hills, or the harbour flats and
+ ## the cut that leads to them.
+ func playable(at: Vector2) -> bool:
+-	return playable_area.has_point(at) or (harbour_flats != null
++	return playable_area.has_point(at) or (false
+ 		and (harbour_flats.get("area") as Rect2).has_point(at))
+ 
+ 

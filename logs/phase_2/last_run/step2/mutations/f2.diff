@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/industrial_loop.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f2/game/features/environments/industrial_loop/industrial_loop.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/industrial_loop.gd	2026-11-21 19:24:33
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f2/game/features/environments/industrial_loop/industrial_loop.gd	2026-11-21 19:26:32
+@@ -38,7 +38,7 @@
+ const PLAYABLE_AREA := Rect2(-140, -290, 780, 510)
+ ## The east road's cut through the rim (Mission 3's step 2, #359): its line (x, z), its road's half
+ ## width and its banks' slope; the trees in its way cleared without moving any other.
+-const EAST_CUT: Array = [Vector2(612.0, 151.7), Vector2(672.0, 151.7), 5.0, 0.9]
++const EAST_CUT: Array = [Vector2(612.0, 151.7), Vector2(672.0, 151.7), 5.0, 30.0]
+ const EAST_CUT_PLOT := Rect2(608.0, 143.0, 64.0, 18.0)
+ ## The east wall of the playable area opens for the east road between these z.
+ const EAST_GAP := Vector2(138.0, 166.0)

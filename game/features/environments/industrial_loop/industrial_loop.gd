@@ -14,6 +14,7 @@ const ROAD_PLACE_SCALE := 8.0
 const ASPHALT_NORMAL = preload("art/asphalt_normal.png")
 const RoadsideForest = preload("roadside_forest.gd")
 const ForestFloor = preload("forest_floor.gd")
+const HarbourFlats = preload("res://features/environments/harbour_flats/harbour_flats.gd")
 const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
 const TransferShed = preload("transfer_shed.gd")
@@ -35,6 +36,12 @@ const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/textur
 const FOREST_CLEARANCE := 2.5
 const TERRAIN_AREA := Rect2(-160, -320, 820, 650)
 const PLAYABLE_AREA := Rect2(-140, -290, 780, 510)
+## The east road's cut through the rim (Mission 3's step 2, #359): its line (x, z), its road's half
+## width and its banks' slope; the trees in its way cleared without moving any other.
+const EAST_CUT: Array = [Vector2(612.0, 151.7), Vector2(672.0, 151.7), 5.0, 0.9]
+const EAST_CUT_PLOT := Rect2(608.0, 143.0, 64.0, 18.0)
+## The east wall of the playable area opens for the east road between these z.
+const EAST_GAP := Vector2(138.0, 166.0)
 const WAREHOUSES: Array[Vector3] = [Vector3(60, 0, 115), Vector3(150, 0, 112),
 	Vector3(250, 0, 120), Vector3(-71, 0, 26)]
 const CONTAINER_ROW := Vector3(100, 0, 145)
@@ -134,6 +141,9 @@ var run_sheet_spot := Vector3.ZERO
 var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
+## The coastal strip east of the rim (Mission 3's step 2), its waterfront and airfield to come.
+var harbour_flats: Node3D
+var _road_asphalt: Material
 var container_yard: Node3D
 var compound: Node3D
 var warehouse_heights: Array[float] = []
@@ -172,6 +182,7 @@ func _ready() -> void:
 	_town()
 	_reflections()
 	_forest()
+	_harbour_flats()
 	lamp_rain.name = "LampRain"
 	add_child(lamp_rain)
 
@@ -227,7 +238,7 @@ func _ground_and_roads() -> void:
 	terrain.name = "HillTerrain"
 	add_child(terrain)
 	_ground = _hill_material()
-	terrain.build(road, TERRAIN_AREA, _flat_plots(), _ground, 42021)
+	terrain.build(road, TERRAIN_AREA, _flat_plots(), _ground, 42021, [EAST_CUT])
 	var asphalt := ShaderMaterial.new()
 	asphalt.shader = ASPHALT
 	asphalt.set_shader_parameter("aggregate_color", _texture("tarred_gravel", "diff"))
@@ -239,6 +250,7 @@ func _ground_and_roads() -> void:
 	asphalt.set_shader_parameter("dry_color", Vector3(0.85, 0.85, 0.85))
 	asphalt.set_shader_parameter("rain_ripples", RIPPLES)
 	asphalt.set_shader_parameter("porosity", ASPHALT_POROSITY)
+	_road_asphalt = asphalt
 	_road_strip(0.0, 0.0, asphalt, false)
 	_road_strip(GhatRoad.VERGE, -0.012, _surface("leaf_scattered_gravel", 1.8, false), true)
 	crossing = BusStop.new()
@@ -762,7 +774,23 @@ func _street_furniture() -> void:
 			Build.box(self, Vector3(x + bar, 1.1, FENCE_Z), Vector3(0.025, 2.2, 0.025), _metal)
 
 
-func _lamp_post(at: Vector3, heading: float) -> void:
+## The harbour flats east of the rim (Mission 3's step 2).
+func _harbour_flats() -> void:
+	harbour_flats = HarbourFlats.new()
+	harbour_flats.name = "HarbourFlats"
+	add_child(harbour_flats)
+	harbour_flats.call("build", terrain, _road_asphalt, _ground, _concrete, _lamp_post)
+	harbour_flats.call("plant", forest, terrain)
+
+
+## Whether `at` (x, z) is somewhere the van may be: the valley and hills, or the harbour flats and
+## the cut that leads to them.
+func playable(at: Vector2) -> bool:
+	return playable_area.has_point(at) or (harbour_flats != null
+		and (harbour_flats.get("area") as Rect2).has_point(at))
+
+
+func _lamp_post(at: Vector3, heading: float) -> Node3D:
 	var post := Streetlight.instantiate() as Node3D
 	post.position = at
 	post.rotation.y = heading
@@ -793,6 +821,7 @@ func _lamp_post(at: Vector3, heading: float) -> void:
 	post.add_child(halo)
 	lamp_rain.add_volume(LampRain.STREET, Transform3D(Basis.IDENTITY,
 		post.transform * LampRain.POST_HEAD))
+	return post
 
 
 func _streetlight_material(part: String) -> Material:
@@ -1038,7 +1067,10 @@ func _boundary() -> void:
 		[Vector3(area.get_center().x, 60, area.position.y), Vector3(area.size.x, 200, 2)],
 		[Vector3(area.get_center().x, 60, area.end.y), Vector3(area.size.x, 200, 2)],
 		[Vector3(area.position.x, 60, area.get_center().y), Vector3(2, 200, area.size.y)],
-		[Vector3(area.end.x, 60, area.get_center().y), Vector3(2, 200, area.size.y)],
+		[Vector3(area.end.x, 60, (area.position.y + EAST_GAP.x) / 2.0), Vector3(2, 200,
+			EAST_GAP.x - area.position.y)],
+		[Vector3(area.end.x, 60, (EAST_GAP.y + area.end.y) / 2.0), Vector3(2, 200,
+			area.end.y - EAST_GAP.y)],
 	]:
 		var shape := BoxShape3D.new()
 		shape.size = wall[1]
@@ -1054,7 +1086,7 @@ func _forest() -> void:
 	add_child(forest)
 	forest.build(road_points, FOREST_CLEARANCE, clearings, TERRAIN_AREA.grow(-4.0),
 		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
-		COMPOUND_DRIVE_PLOT] as Array[Rect2])
+		COMPOUND_DRIVE_PLOT, EAST_CUT_PLOT] as Array[Rect2])
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
@@ -1064,7 +1096,7 @@ func _forest() -> void:
 			else 0.0)
 	forest_floor.build(road_points, clearings, 42020, terrain, mowed,
 		[TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
-		COMPOUND_DRIVE_PLOT] as Array[Rect2])
+		COMPOUND_DRIVE_PLOT, EAST_CUT_PLOT] as Array[Rect2])
 	grass = RoadsideGrass.new()
 	grass.name = "RoadsideGrass"
 	add_child(grass)

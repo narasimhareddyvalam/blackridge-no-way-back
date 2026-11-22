@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/harbour_flats.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f3/game/features/environments/harbour_flats/harbour_flats.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/harbour_flats.gd	2026-11-21 19:25:24
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf/f3/game/features/environments/harbour_flats/harbour_flats.gd	2026-11-21 19:26:32
+@@ -71,7 +71,6 @@
+ 	_body.name = "FlatsBody"
+ 	add_child(_body)
+ 	_land(ground)
+-	_embankment(terrain, ground)
+ 	_quay_walls(concrete)
+ 	_road(EAST_ROAD, asphalt, "EastRoad")
+ 	_road(COASTAL, asphalt, "CoastalRoad")

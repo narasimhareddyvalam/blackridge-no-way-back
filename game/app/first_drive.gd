@@ -801,7 +801,7 @@ func _process(delta: float) -> void:
 		return
 	_hint_time = 0.0
 	var ground := Vector2(van.global_position.x, van.global_position.z)
-	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
+	if van.global_position.y < -5 or not world.playable(ground):
 		_recover()
 	if hud.document_visible() and driver.global_position.distance_to(_document_at) \
 			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission != route):

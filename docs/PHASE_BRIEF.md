@@ -8851,3 +8851,31 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
 - **Tested:** `test_last_run.gd` (new) 1/3 then 3/3; `test_getaway.gd` G4 changed (the save now
   holds Mission 3's start) 5/5. Four mutations exit 1 (`logs/phase_2/last_run/step1/mutations/`);
   every suite (`logs/phase_2/last_run/step1/suites/`): 72 runs exit 0, art check 0 failures.
+
+## Revision 2026-11-21 (Mission 3's step 2, the east road and the harbour flats, built, #359-#360)
+
+- **Real references first (Commons):** Port Angeles, a small Pacific Northwest harbour (its
+  waterfront wide view; William R. Fairchild airport's runway behind chain-link with barbed wire
+  and an evergreen treeline); a Liebherr LHM 550 mobile harbour crane; Dublin's South Quays
+  container terminal at night (amber high-mast floods, reflections, red crane lights).
+- **Built:** `game/features/environments/harbour_flats/harbour_flats.gd` (new): the east road
+  from the loop's east end (609, 151.7) to the coastal road (x 726, z 312 to -282), the loop
+  road's asphalt and markings, 19 of the valley road's lamps every 40 m; the cut through the rim
+  (`hill_terrain.gd`'s `_cut`: the ground lowered to just under the road within 5 m and banks at
+  0.9 m a metre, never raised); the flats' land at road level behind concrete quay walls with a
+  kerb, the sea 2.6 m below their edge out to 4 km, its ripples drifting; the rim brought down to
+  the flats in an embankment from the terrain's own edge heights; the bluff and the cut's banks
+  wooded with the forest's own Pacific Northwest kinds; two pile beacons at the harbour mouth,
+  red right returning (IALA B), flashing every 4 s. The playable area's east wall opens for the
+  road; `industrial_loop.gd`'s `playable(at)` counts the flats and the cut.
+- **No tree moved:** the cut's trees cleared by `cleared_after`; `test_harbour_flats.gd` H8
+  fingerprints the 55,432 trees west of x 600 against their places before the cut. Changed with
+  their reasons: `test_roadside_trees.gd` T8 (32 trees, 14 saplings, 26 colliders fewer, the cut's;
+  the centroid moved as they predict), `test_lamp_rain_state.gd` (43 rain volumes, the flats' 19).
+- **Tested:** `test_harbour_flats.gd` (new) 0/1 then 8/8; seven of eight mutations exit 1, the
+  eighth (the cut as an ordinary clearing) survives because the forest places each tree by a hash
+  of its own place, so that moves none either (`logs/phase_2/last_run/step2/mutations/`); every
+  suite (`logs/phase_2/last_run/step2/suites/`): 70 of 72 runs exit 0 first, the two above changed
+  then 8/8 and 16/16 (`fix/`). Stills `captures/audit/harbour_flats/a3/`.
+- **Known gap:** the mission map's baked ground ends at x 630; the flats show black on it until
+  it is baked again (with the waterfront).
