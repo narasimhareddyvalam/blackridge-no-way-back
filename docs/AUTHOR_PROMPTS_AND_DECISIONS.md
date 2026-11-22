@@ -5561,6 +5561,15 @@ tag `a5`. Pictures the author approved or rejected are filed in
        longer exist. VS Code still lists them from its cache. Closing them in VS Code (or reloading
        the window) clears the badge; nothing to delete, no work at risk.
 
+414. **Push develop to GitHub**
+     - **Prompt** (verbatim): "push develop to github"
+     - **Asked first:** six small MP4s (32 MB) were tracked in the unpushed commits, against the
+       handout's "Keep MP3 files, MP4 files and anything over 25 MB out of GitHub". The author
+       chose "Untrack, then push (Recommended)".
+     - **Done:** the six untracked with `git rm --cached` (kept on disk, ignored by
+       `/captures/**/*.mp4`); no history rewrite, so the earlier commits still hold them; then
+       `develop` pushed to `origin`. `main` untouched, no tag.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

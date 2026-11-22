@@ -57,6 +57,6 @@ __pycache__/
 /.scratch-home/
 
 # Raw Movie Maker takes and encoded videos under captures/ stay on disk and out of GitHub
-# (the handout: no MP4s or files over 25 MB in GitHub). Videos already tracked stay tracked.
+# (the handout: no MP4s or files over 25 MB in GitHub). The six once tracked were untracked (#414).
 /captures/**/*.avi
 /captures/**/*.mp4
