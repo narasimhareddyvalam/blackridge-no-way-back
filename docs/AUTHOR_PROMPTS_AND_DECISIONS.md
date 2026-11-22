@@ -5711,6 +5711,20 @@ tag `a5`. Pictures the author approved or rejected are filed in
        unpushed, uncommitted or stashed) and moved to the Trash (recoverable until emptied). The
        houseghost folder waits: its backup branch, `blender/Van.blend` and its notes.
 
+438. **What are the two things only on the Mac?**
+     - **Prompt** (verbatim): "walker-houseghost-narasimha-v (1.2 GB) still has two things that exist
+       only on your Mac: --? what are the two things that exist only on my mac?"
+     - **Answered:** the six unpushed commits on `backup/pre-author-rewrite` (14 October log entries)
+       and the untracked `blender/Van.blend` (254 MB).
+
+439. **Not used, in Blackridge?**
+     - **Prompt** (verbatim): "we arent using any of it [the Van.blend paragraph quoted] in blackridge
+       right"
+     - **Checked:** nothing in Blackridge refers to `Van.blend` and no copy is in the repository. Dated
+       3 November 16:34, the day Run 23 brought in Max's Iveco Daily (Sketchfab, CC BY) through
+       Blender: most likely a Blender working file saved in that folder then. Blackridge uses its own
+       converted van models, in Git; the source model stays downloadable from Sketchfab.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
