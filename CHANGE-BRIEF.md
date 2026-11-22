@@ -183,3 +183,70 @@ seating Ethan behind the pause menu: the HUD runs while paused, so its fade fini
 stands (the author: the code was wrong); boarding's fade in `_board_van` now stops while the tree
 is paused (`Tween.TWEEN_PAUSE_STOP`), and every interrupt at every boundary passes (48/48,
 `TEST-REPORT.md`).
+
+**2026-11-22, two more clips (#377-#383; draft for the author's review).** The author asked for
+two more animations, made by us rather than downloaded (#381): a pistol reload and Ethan's shock
+after the hit, seen through the windshield (#380). The ring and EnterVan stay the graded pair; these
+two follow the same rules (a resource in `game/animations/`, one authority, a phase table in frames
+at 30 fps, read-back, state and edge tests). Values marked † are Claude Code's proposals.
+
+*Reload (a committing action; our rig on the pistol, Mission 3).*
+
+| | Reload |
+| :-- | :-- |
+| What it communicates | Ethan swaps the magazine: the empty one drops out, his left hand brings the fresh one up and seats it, racks the slide, and his hands close on the grip again; the player sees why the gun cannot fire for 2.2 s |
+| Plays on | the pistol Ethan holds, `aim_arms.gd`'s own `pistol.glb` (its separate `slide_pistolLow_0`, `clip_pistolLow_0` meshes), and a `SupportHand` marker under it that the left arm's IK reads in place of `LEFT_FROM_RIGHT` while the clip plays |
+| Route | **rig, keyed by us:** an `AnimationPlayer` (`ReloadPlayer`) under the held pistol, position and visibility tracks on its parts and the marker; the clip `game/animations/pistol_reload.tres` |
+| Authority | `aim_arms.gd` alone calls `play("reload")` and `stop()` on `ReloadPlayer`, reading the handgun's `reloading` (`handgun.gd:27`), which `driver.set_aiming(on, gun)` already hands it (`driver.gd`, the unused `_gun`) |
+| Clock | `ReloadPlayer` process idle; `handgun.gd` counts the reload down in `_process` (`:102`), the same tick |
+
+Phase table at 30 fps, 66 frames = `RELOAD_SECONDS` 2.2 s (`handgun.gd:17`); loop `LOOP_NONE`.
+
+| Phase | Frames | What it shows | What the player may do | What the game reads |
+| :-- | :-- | :-- | :-- | :-- |
+| Startup | 0-17 (18) | the empty magazine drops from the grip (hidden at 17); the left hand leaves the grip and drops to his belt† | fire and R (reload) are ignored; move, aim and Esc work | `reloading` true from frame 0 |
+| Active | 18-47 (30) | the hand brings the fresh magazine up and pushes it into the grip, seated at 47 | as Startup | — |
+| Recovery | 48-65 (18) | the hand racks the slide (back 48-55, released 56-59) and returns to wrap the grip (60-65) | as Startup | at frame 66 the magazine fills and `reloading` ends (`handgun.gd:109-114`): fire works again |
+
+Interrupts: fire and R are ignored in every phase (`pull()` and `reload()` refuse while reloading,
+`handgun.gd:67`, `:77`); lowering the aim mid-reload lets the clip run on with the gameplay timer†;
+Esc pauses the clip and the timer together; a retry (`refill()`, `:57`) stops the clip and puts the
+parts back (the `RESET` pose).
+
+*Shock (a one-shot in a cutscene; our bone keys on Ethan, Mission 1).*
+
+| | Shock |
+| :-- | :-- |
+| What it communicates | after the hit, Ethan in the driver's seat: his hands clamp the wheel, a sharp breath lifts his shoulders, his head drops, then he lifts it and stares out through the cracked glass; the player sees his panic (GAME_STORY: "He stops, stares into the rain, and panics") without leaving the cab view |
+| Plays on | Ethan's model (`ethan.glb`'s skeleton), seated in the driver's seat for the shot only; his body stays inactive, with no collision added (the struck man's fall moves with any new body) |
+| Route | **rig, keyed by us:** bone-rotation tracks in `game/animations/ethan_shock.tres`, its seated base taken from Mixamo's "Male Sitting Pose" (already in `source_assets/mixamo/`, retargeted by name) and the shock keyed over it |
+| Authority | `driver.gd` alone plays it (a new `play_seated(clip, seat)` beside `play_clip`); the cutscene director (`cutscene_director.gd`) holds the camera and plays nothing on Ethan |
+| Clock | Ethan's `AnimationPlayer`, process idle (as EnterVan) |
+| When | inside Mission 1's existing hold after the hit (`HOLD_SECONDS` 4.0 s, `night_freight/first_drive.gd:64`): the shot starts when the van stops and ends before the hold does, so "DRIVE." comes at the same moment as now |
+
+Phase table at 30 fps, 90 frames = 3.0 s†; loop `LOOP_NONE`, ending on the stare.
+
+| Phase | Frames | What it shows |
+| :-- | :-- | :-- |
+| Grip | 0-11 (12) | his hands close hard on the wheel |
+| Breath | 12-35 (24) | a sharp breath: shoulders rise, his head pulls back a little |
+| Drop | 36-59 (24) | his head falls toward the wheel, shoulders sag |
+| Stare | 60-89 (30) | a slow breath, his head lifts; he stares ahead through the crack |
+
+The shot: the camera outside, off the van's front left corner at the windshield's height, looking
+in at him through the crack, the struck man out of frame†. While it plays the player's keys are
+held (as in the hold now); E, Enter or Space skips it after 1 s (the director's own rule); Esc
+pauses; R recovers as now and ends the shot. It plays once: continuing from the hit's checkpoint
+starts in the cab with nothing replayed (C38). The cab view stays bodiless (#355).
+
+*Boundaries for both.* Nothing else changes: Mission 1's timing, the hit, the fall, Mission 3's
+fight and the handgun's numbers stay as they are. The exceptions: `aim_arms.gd` reads the marker
+while the clip plays; `driver.gd` gains `play_seated`; Mission 1's hold shows the shot.
+
+*Evidence.* Pins before the change (the hold's length and "DRIVE.", the reload's 2.2 s and fire
+refused); read-backs (every track resolves: the pistol's parts and the marker as properties, Ethan's
+bones as bones; key times within half a frame; `LOOP_NONE`; lengths 66 and 90 frames); the structure
+test's table gains both clips and both authorities; state tests by real input (R starts the reload,
+the clip plays exactly while `reloading`; the hit plays the shock, then "DRIVE."); edge tests at the
+reload's frames 0, 18, 48 and 66 (fire, R, Esc one frame before, on and after); the Mission 1 and
+Mission 3 suites; a frame strip of each, read at its phase boundaries, and the author in play.

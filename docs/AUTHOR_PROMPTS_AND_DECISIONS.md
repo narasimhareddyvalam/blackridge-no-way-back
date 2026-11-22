@@ -5253,6 +5253,44 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** a windowed Movie Maker recording in the game (`tools/captures/capture_a7_clips.gd`):
        the dash zoomed in while Maya's call rings, then Ethan getting out and back into the van.
 
+377. **Two more animations: ideas**
+     - **Prompt** (verbatim, after Step 6 and the recordings, `0a5435b`): "i want to create two
+       more new animations. give ideas"
+
+378. **The two new clips: the reload, and something visible**
+     - **Asked** which two and when. The author chose "Pistol reload (Recommended)" with the note
+       "i want something that is visible and looks clean and realistic. also i think entering van
+       should be sprite animation", and "Now, before Step 7".
+
+379. **The second clip: Ethan's shock after the hit; EnterVan stays the rig**
+     - **Asked:** the second clip and whether EnterVan becomes a sprite. The author chose "Ethan's
+       shock after the hit" (Mission 1: Ethan by the struck man, a Mixamo clip) and "Keep 3D rig
+       (Recommended)".
+
+380. **The shock scene: seen through the windshield**
+     - **Asked** (the clip conflicts with GAME_STORY's "stares into the rain", C29 "Ethan cannot
+       get out afterwards" and #355, no body in the cab view): the author chose "Seen through
+       windshield (Recommended)": a short shot from outside the van in the rain, looking in through
+       the cracked windshield at Ethan in the driver's seat (a seated Mixamo shock clip), then back
+       to the cab view and "DRIVE."; he never gets out and the cab view stays bodiless.
+
+381. **Make them ourselves**
+     - **Prompt** (verbatim): "cant we create them on our own? like rig and sprit?"
+     - **Proposed:** the reload as our own rig on the pistol's parts (its slide, magazine and
+       trigger are separate meshes in `pistol.glb`), keyed from a phase table in
+       `game/animations/pistol_reload.tres`; the shock as our own bone keys on Ethan's skeleton
+       over Mixamo's "Male Sitting Pose" (already in `source_assets/`); optionally a HUD reload
+       sprite. No downloads.
+382. **Is the shock a cutscene?**
+     - **Prompt** (verbatim): "will seated shock is like a cut scene or what?"
+
+383. **The plan for both new clips approved**
+     - **Prompt** (verbatim, after the shock was described as a 4 s cutscene through the
+       windshield): "sounds good, proceed"
+     - **Decided:** the brief's dated revision for the pistol reload (our rig on the pistol's parts)
+       and the seated shock (our bone keys on Ethan, a cutscene shot through the windshield); the
+       HUD reload sprite left out (not asked for); `DESIGN_DECISIONS.md` gains the shot.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
