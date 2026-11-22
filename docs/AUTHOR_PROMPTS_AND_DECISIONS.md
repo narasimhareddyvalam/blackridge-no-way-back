@@ -5676,6 +5676,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the ZIP deleted from `~/Desktop/A7-submission/` (rebuilt exactly by
        `git archive --format=zip --prefix=blackridge-no-way-back-a7/ a7`).
 
+432. **Was the ZIP uploaded? Merge develop to main**
+     - **Prompt** (verbatim): "i uploaded the source zip to canvas already right? and merge develop to
+       main"
+     - **Answered:** Claude Code cannot see Canvas; the author confirms the upload on Canvas's
+       submission page. **Done:** PR #2 merged into `main` with a merge commit at the author's word.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
