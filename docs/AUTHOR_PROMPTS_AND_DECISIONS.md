@@ -5351,6 +5351,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
        `Pistol Idle (1).fbx` (Ch33, 250 frames, the same low ready but looking ahead, not up to the
        left; a different file from the first). Both used; the first Pistol Idle kept beside them.
 
+392. **A video before wiring**
+     - **Asked** whether the motion-capture direction is good enough to wire into Mission 3; the
+       author answered "show me video of how they look first".
+     - **Done:** a Movie Maker film of the clips on Ethan with the pistol in his hand, at full
+       speed, from his front-left and over his right shoulder (`tools/captures/film_pistol_clips.gd`).
+
+393. **It reads as a rifle: switch to a rifle**
+     - **Prompt** (verbatim, after the film of the clips): "it looks more like hes holding a rifle
+       not pistol."
+     - **Found:** the clips Mixamo names "Pistol Idle" and "Pistol aim" hold the hands apart and the
+       elbows bent at the chest, a long gun's hold; a compact pistol in one hand shows it.
+     - **Asked:** pistol clips that read as a pistol, switch to a rifle, or drop the reload. The
+       author: "switch to rifle" (against GAME_DESIGN §8's "one handgun"; recorded as C68, the
+       design document unedited).
+
+394. **The rifle: jeandiz's M16**
+     - **Asked** which rifle (three CC BY Sketchfab models, the bolt-action hunting rifles left out
+       because a magazine-swap capture would not match them); the author chose "A: M16 by jeandiz
+       (Recommended)" ("M16 Assault Rifle", 21.7k faces, CC BY). Asked for three Mixamo rifle clips
+       (Ch33, 30 fps): an idle, an aiming idle, a reload.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
