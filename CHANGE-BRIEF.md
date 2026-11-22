@@ -159,3 +159,21 @@ fully open, his foot lifting), 63 (frame 53: the cut begins), 70 (black, seated)
    wrap: a visible hitch in the pulse.
 7. **Imported rig.** In the importer's per-animation settings in `ethan.glb.import`; proven by
    deleting `game/.godot`, importing, and running the read-back.
+
+## Revisions
+
+**2026-11-22, Step 5 (#370).**
+
+1. **Ethan's authority, corrected.** §1 and §11.4 name `driver.gd` alone as the writer of Ethan's
+   `AnimationPlayer`. Wiring found a second file that calls `play()`, `seek()` and `speed_scale` on
+   it: `push_gait.gd`, the pallet jack's push gait. `driver.gd` builds it with its own player
+   (`driver.gd:214`, `PushGait.new(_player)`) and calls it only from its own methods
+   (`push_gait()`, `:386`), so the authority is `driver.gd` and the helper it owns, never a second
+   owner; `stance.gd` only reads the current clip. The structure test (S5-S8) checks that no other
+   script reaches the player.
+2. **The ring on the card.** The handset plays in the call card's disc (`RING_AT`, the circle the
+   pulse drew), the disc now a fixed 24 px; the caller's initial is drawn only while the handset is
+   hidden (talking). `_clock`, used only by the pulse, is gone.
+3. **The boarding moments** are `frames / CLIP_FPS` in `first_drive.gd` (`CLIP_FPS := 30.0`), as
+   §4 says. PIN2's sampled door start moved one physics sample (1.083 to 1.100 s) and the seat
+   (2.017 to 2.033 s), inside its ±0.02 s tolerance: predicted, and the pin is unchanged.

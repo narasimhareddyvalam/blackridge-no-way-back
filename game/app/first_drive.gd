@@ -27,11 +27,14 @@ const VIEWPOINT_NEAR := 40.0
 const STUCK_HINT := 3.0
 const BOARD_SPOT := Vector3(-2.02, 0.0, -0.51)
 const BOARD_RANGE := 4.5
-const DOOR_GRAB := 1.05
-const REACH_FROM := 0.75
+## EnterVan's frame rate (ethan.glb.import); the boarding moments are its phase table's frames
+## (CHANGE-BRIEF.md §4).
+const CLIP_FPS := 30.0
+const DOOR_GRAB := 32.0 / CLIP_FPS
+const REACH_FROM := 22.0 / CLIP_FPS
 const GRIP_ELBOW := Vector3(-1.85, 0.85, -0.95)
-const DOOR_OPENED := 1.6
-const CUT := 1.75
+const DOOR_OPENED := 48.0 / CLIP_FPS
+const CUT := 53.0 / CLIP_FPS
 const FADE_OUT := 0.25
 const CAUGHT_FADE := 0.5
 const FADE_IN := 0.5

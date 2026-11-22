@@ -12,6 +12,9 @@ const RIG := "res://features/characters/ethan/ethan.glb"
 const FPS := 30.0
 const FRAMES := 164
 const CLIP := "EnterVan"
+const APP := "res://app/first_drive.gd"
+## The phase table's frames the boarding sequence reads (CHANGE-BRIEF.md §4), at 30 fps.
+const MOMENTS := {"REACH_FROM": 22, "DOOR_GRAB": 32, "DOOR_OPENED": 48, "CUT": 53}
 
 var _checks: int = 0
 var _failures: int = 0
@@ -67,6 +70,16 @@ func _run() -> void:
 		RIG.get_file() + ".import", CLIP, own], opened == OK
 		and own.has("settings/loop_mode") and int(own["settings/loop_mode"]) == Animation.LOOP_NONE)
 	check("E9 the importer samples at %d fps (%.0f)" % [FPS, fps], is_equal_approx(fps, FPS))
+	var constants := (load(APP) as GDScript).get_script_constant_map()
+	for moment in MOMENTS:
+		var seconds := float(constants.get(moment, -1.0))
+		check("E10 the app's %s is frame %d of the phase table (%.4f s = frame %.2f)" % [moment,
+			MOMENTS[moment], seconds, seconds * FPS], absf(seconds * FPS - MOMENTS[moment]) < 0.01
+			and MOMENTS[moment] < FRAMES)
+	check("E11 the moments come in the phase table's order (reach, grab, open, cut)",
+		float(constants.get("REACH_FROM", 0.0)) < float(constants.get("DOOR_GRAB", 0.0))
+		and float(constants.get("DOOR_GRAB", 0.0)) < float(constants.get("DOOR_OPENED", 0.0))
+		and float(constants.get("DOOR_OPENED", 0.0)) < float(constants.get("CUT", 0.0)))
 	var loops: Array[String] = []
 	for clip_name in player.get_animation_list():
 		loops.append("%s %d" % [clip_name, player.get_animation(clip_name).loop_mode])

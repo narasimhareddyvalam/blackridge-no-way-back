@@ -5214,6 +5214,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
        agreed"
      - **Decided:** the ring and EnterVan are finished first; extra clips are discussed after.
 
+370. **Step 5 approved**
+     - **Prompt** (verbatim, after Step 4's report, `8307dbc`): "approved, go ahead with step 5"
+     - **Decided:** tests first (structure, state through real input, the boarding moments in
+       frames in the rig read-back), then the ring wired in `navigation_display.gd` alone (the
+       handset in the call card's disc while it rings, the drawn pulse gone, the caller's initial
+       once answered) and the boarding constants as frames / 30; the pins re-run.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
