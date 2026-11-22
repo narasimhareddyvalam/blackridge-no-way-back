@@ -1,6 +1,6 @@
 # TYPECHECK.md — GATE T
 
-Reel: `claude-liam-blackridge-animation-gamedev`  |  Checked: 2026-11-22T16:29  |  Overall: PASS  |  Beats checked: 27  |  FAILs: 0
+Reel: `claude-liam-blackridge-animation-gamedev`  |  Checked: 2026-11-22T18:00  |  Overall: PASS  |  Beats checked: 27  |  FAILs: 0
 
 Spec: `skills/make/kerning/reference/type-spec.md` §8.  Floor: 1.9% frame-height.  Contrast: 4.5:1 WCAG.  Kern threshold: 3.5× expected advance.  Wordy budget: 2 elements.
 
@@ -8,7 +8,7 @@ Spec: `skills/make/kerning/reference/type-spec.md` §8.  Floor: 1.9% frame-heigh
 > Narration should DISCUSS on-screen text, not recite it.
 > Exception: LITERAL beats (viewer types/copies/runs the text) are exempt.
 
-> - §8.10 [B24] narration recites the card (0.88) — discuss it, don't read it
+> - §8.10 [B24] narration recites the card (0.90) — discuss it, don't read it
 
 | beat | lane | polarity | worst finding | status | fix |
 |------|------|----------|---------------|--------|-----|

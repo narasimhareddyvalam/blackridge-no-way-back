@@ -47,7 +47,8 @@ COMPONENTS = [
      "boarding loop reading clip_time() for the door and the hand, its interrupts and Step 7's r1.",
      ["B08", "B09", "B10", "B11", "B12", "B13", "B15", "B16"],
      [ETHAN + "ethan.glb", ETHAN + "ethan.glb.import", "app/first_drive.gd",
-      "tests/test_rig_readback.gd", "tests/test_animation_edges.gd", "tests/test_animation_pins.gd"]),
+      "tests/test_rig_readback.gd", "tests/test_animation_edges.gd", "tests/test_animation_pins.gd",
+      "previews/enter_van_preview.gd", "previews/enter_van_preview.tscn"]),
     ("authority", "One authority over Ethan's AnimationPlayer: driver.gd (play_clip, _play) and the "
      "helpers it builds and calls (push_gait.gd, rifle_carry.gd); stance.gd only reads; the structure "
      "and state tests.",
@@ -74,6 +75,17 @@ COMPONENTS = [
      "and the pistol's upper-body clips, kept converted but unused.",
      ["B22"],
      ["animations/pistol_reload.tres", "animations/ethan_pistol.tres"]),
+    ("import-outputs", "Files Godot itself regenerated and that were committed to keep the working "
+     "tree clean (#409-#411): four Poly Haven .import headers (the VRAM-compressed outputs their "
+     "unchanged settings ask for) and the crane spreader's extracted emissive texture. Not "
+     "animation work; context in the footage only.",
+     ["B02"],
+     ["features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_diff_1k.jpg.import",
+      "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.import",
+      "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.import",
+      "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.import",
+      "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp",
+      "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp.import"]),
     ("checks", "The read-back helper and every test: read-backs, structure, states, edges, pins, "
      "and the earlier suites still passing.",
      ["B09", "B21"],

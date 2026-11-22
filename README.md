@@ -125,11 +125,11 @@ Results are in the Assignment 7 section of [TEST-REPORT.md](TEST-REPORT.md), and
 - The four Poly Haven texture `.import` files the empty-cache import rewrites are left
   uncommitted, for the author.
 
-**Film:** "Blackridge, Frame by Frame" (4K, 7 min 20 s), made by Claude Code with the course's
+**Film:** "Blackridge, Frame by Frame" (4K, 7 min 23 s), made by Claude Code with the course's
 Brutalist godot-gamedev skill (walker) while the author was away (#406). It shows `game/` at
 `1e7765e`. Its source is in `youtube/claude-liam-blackridge-animation-gamedev/`: script, beat
 sheet, capture records, evidence ledger, fact check, QC and build log. File:
-`Blackridge-Frame-by-Frame-4K.mp4`, SHA-256 `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040`. The link is added once the author uploads it
+`Blackridge-Frame-by-Frame-4K.mp4`, SHA-256 `9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`. The link is added once the author uploads it
 to OneDrive, the course's media storage. The film is not in GitHub.
 
 To check the clips:

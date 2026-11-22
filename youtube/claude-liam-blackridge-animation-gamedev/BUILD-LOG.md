@@ -75,5 +75,24 @@ labelled fixtures: the three interrupts, the reload and the shock.
 - `exports/landscape/claude-liam-blackridge-animation-gamedev.mp4`, hard-linked as
   `Blackridge-Frame-by-Frame-4K.mp4`: 3840×2160, 30 fps, H.264 and AAC 48 kHz stereo, 439.9 s
   (7 min 20 s), 81.0 MB.
-- SHA-256 `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040`, as the compiler's `.verified.json` beside it also records.
+- SHA-256 `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040` (the first master; replaced, see below).
 - Not in Git: the author uploads it to the course's media storage.
+
+## Update after the author's look (#417, #421)
+
+The author watched the film, played the game and judged all four clips (#417), then asked that
+the lines calling the verdict open be updated (#421).
+- **B16** now ends "The author played it and judged it good, with more to improve next."
+- **B22** now names the seam over five wraps as uncertain and "the author improves Enter Van" as
+  the next step.
+- **B24**'s verdict card and narration say the same.
+
+The three beats were regenerated, transcribed, re-rendered and the master re-exported; the
+footage and the revision shown (`1e7765e`) are unchanged.
+
+The re-exported master (#421): GATE T PASS, Gate V 54 frames 0 BLOCKER 0 MAJOR; every beat's
+render matches its audio; -24.6 LUFS, peak -3.1 dBFS, no silence over 2.5 s; 3840×2160, 30 fps,
+442.8 s (7 min 23 s), 81,219,434 bytes, SHA-256 `9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`, as the compiler's
+`.verified.json` records; hard-linked as `Blackridge-Frame-by-Frame-4K.mp4`. The evidence ledger
+gained the preview scene (EnterVan's component) and an `import-outputs` component for the files
+Godot regenerated (#409-#411): `./art godot-gamedev --check` PASS, 139 files.

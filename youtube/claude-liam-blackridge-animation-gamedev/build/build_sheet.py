@@ -469,8 +469,8 @@ beat("B16", "TUNING",
      "Then tuning. Claude read the first strip: at the old cut, frame fifty-three, both his feet were "
      "still on the ground, so the brief's climbs in was never seen. The author was away, so Claude "
      "decided: move the cut to sixty-two, predicting him rising into the cab before the fade. The "
-     "second strip matched five of six predictions. The pin moved as predicted. The author's verdict "
-     "is still open.",
+     "second strip matched five of six predictions. The pin moved as predicted. The author played it "
+     "and judged it good, with more to improve next.",
      {"type": "GRAPHIC", "remotion": evidence(
          "r0 → r1: the cut moved", "fixture captures · strips r0 and r1 · crops",
          "captures/enter_van/r0 frame 65 · r1 frame 70 · TUNING.md r1 · PIN2 re-pinned 2f91bc5",
@@ -481,7 +481,7 @@ beat("B16", "TUNING",
          rows=[{"label": "r0 · r1", "at": 0.0}],
          cards=[card("Decision", "Claude's, under the author's delegation (#406)", when("B16", "claude decided", 9.0)),
                 card("Prediction", "5 of 6 seen; the foot lift unreadable", when("B16", "five of six", 16.0)),
-                card("Open", "the author's verdict, and an observed revision", when("B16", "verdict", 20.0), "accent")]),
+                card("Verdict", "“good as well, can be improved” (#417)", when("B16", "the author played", 20.0), "accent")]),
       "evidence_media": r1_70_rel},
      "Inspect-and-revise: Claude's reading, one change with a prediction, two strips; the author's "
      "verdict and observation-driven revision are stated as open.")
@@ -589,8 +589,8 @@ beat("B21", "TESTS",
 beat("B22", "LIMITS",
      "Mistakes caught: the pause bug, a second script playing Ethan's clips, hands short of the wheel, "
      "and the brief's strip frames two early. Overruled: the author rejected Claude's hand-keyed "
-     "reload, then corrected its rifle hold in five prompts; no strip reading yet. Uncertain: the seam, and r one. Next step: the author plays r one "
-     "slowed down. The sheet is ours, drawn by a script. The game shown is revision one, E, seven, "
+     "reload, then corrected its rifle hold in five prompts; no strip reading yet. Uncertain: the seam over five wraps. Next step: the author "
+     "improves Enter Van. The sheet is ours, drawn by a script. The game shown is revision one, E, seven, "
      "seven, six, five, E.",
      {"type": "GRAPHIC", "remotion": evidence(
          "Mistakes, limits and sources", "records · CHANGE-BRIEF.md revisions · TUNING.md · SOURCES.md",
@@ -598,8 +598,8 @@ beat("B22", "LIMITS",
          layout="cards", columns=2,
          cards=[card("Mistakes caught", "Esc in the fade · push_gait a 2nd writer · hands short of the rim · §9 two frames early", when("B22", "mistakes", 0.5), "fail"),
                 card("Overruled", "the hand-keyed reload (#386) · the rifle hold, five prompts (#398-#402) · no strip reading yet", when("B22", "overruled", 7.0)),
-                card("Uncertain", "the ring's seam in play · r1's verdict", when("B22", "uncertain", 12.0)),
-                card("Next step", "the author plays r1 at 0.25× and revises", when("B22", "next step", 15.0), "accent"),
+                card("Uncertain", "the ring's seam over five wraps", when("B22", "uncertain", 12.0)),
+                card("Next step", "the author improves EnterVan (#417)", when("B22", "next step", 15.0), "accent"),
                 card("Sheet", "tools/art/make_phone_ring_sheet.py · ours, no licence needed; Mixamo terms; M16 CC BY", when("B22", "the sheet", 18.0)),
                 card("Revision shown", f"game/ at {REVISION}", when("B22", "revision", 21.0), "neutral", True)])},
      "Agent mistakes caught, readings overruled, what remains uncertain, one next step, the sheet's "
@@ -620,15 +620,16 @@ beat("B23", "CONTRIBUTIONS",
 
 beat("B24", "VERDICT",
      "Let's recap with Claude. Implemented: four clips, each a resource with one owner. Verified: "
-     "read-backs, edges at every boundary, mutations that fail. Still open: the author's verdict on "
-     "r one and the seam in play. Human judgement: the author corrected every look.",
+     "read-backs, edges at every boundary, mutations that fail. Still open: the Enter Van revision the "
+     "author plans next, and the seam over five wraps. Human judgement: the author corrected every "
+     "look and judged all four.",
      {"type": "GRAPHIC", "remotion": {"pattern": "ClaudeVerdictArtifact", "props": {
          "artifactTitle": "Verdict", "artifactHeading": TITLE,
          "artifactLines": [
              "Implemented: four clips, each a resource with one owner.",
              "Verified: read-backs, edges at every boundary, mutations that fail.",
-             "Open: the author's verdict on r1, and the ring's seam in play.",
-             "Human judgement: the author corrected every look."]}}},
+             "Open: the EnterVan revision the author plans next; the seam over five wraps.",
+             "Human judgement: the author corrected every look and judged all four."]}}},
      "Walker bookend 4a: verdict separates implemented work, limitations and human judgement.",
      lead_silence_s=0.5,
      qc={"sparse_by_design": True, "sparse_reason": "Locked ClaudeVerdictArtifact bookend: the "

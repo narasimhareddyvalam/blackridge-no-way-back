@@ -43,5 +43,5 @@ strips); the ring and boarding takes are labelled scripted input on the real mai
 frames, crops and the sheet's dark backing are labelled; editor views are labelled "Godot editor
 reconstruction". No reconstruction is presented as a screenshot.
 
-Contributions are stated as the records state them (prompt log #362-#406). Step 7's r1 is stated
-as Claude Code's decision while the author was away, and the author's verdict as open.
+Contributions are stated as the records state them (prompt log #362-#417). Step 7's r1 is stated
+as Claude Code's decision while the author was away, with the author's verdict after play (#417).

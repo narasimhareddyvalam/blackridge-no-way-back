@@ -4246,7 +4246,7 @@
       },
       {
         "text": "both",
-        "startFrame": 109,
+        "startFrame": 108,
         "endFrame": 112
       },
       {
@@ -4257,41 +4257,41 @@
       {
         "text": "feet",
         "startFrame": 118,
-        "endFrame": 123
+        "endFrame": 122
       },
       {
         "text": "were",
-        "startFrame": 123,
+        "startFrame": 122,
         "endFrame": 127
       },
       {
         "text": "still",
         "startFrame": 127,
-        "endFrame": 133
+        "endFrame": 132
       },
       {
         "text": "on",
-        "startFrame": 133,
-        "endFrame": 137
+        "startFrame": 132,
+        "endFrame": 136
       },
       {
         "text": "the",
-        "startFrame": 137,
-        "endFrame": 140
+        "startFrame": 136,
+        "endFrame": 139
       },
       {
         "text": "ground,",
-        "startFrame": 140,
+        "startFrame": 139,
         "endFrame": 148
       },
       {
         "text": "so",
         "startFrame": 154,
-        "endFrame": 157
+        "endFrame": 156
       },
       {
         "text": "the",
-        "startFrame": 157,
+        "startFrame": 156,
         "endFrame": 160
       },
       {
@@ -4302,227 +4302,262 @@
       {
         "text": "climbs",
         "startFrame": 170,
-        "endFrame": 178
+        "endFrame": 176
       },
       {
         "text": "in",
-        "startFrame": 178,
-        "endFrame": 184
+        "startFrame": 176,
+        "endFrame": 183
       },
       {
         "text": "was",
-        "startFrame": 184,
-        "endFrame": 190
+        "startFrame": 183,
+        "endFrame": 187
       },
       {
         "text": "never",
-        "startFrame": 190,
-        "endFrame": 196
+        "startFrame": 187,
+        "endFrame": 193
       },
       {
         "text": "seen.",
-        "startFrame": 196,
-        "endFrame": 206
+        "startFrame": 193,
+        "endFrame": 202
       },
       {
         "text": "The",
-        "startFrame": 224,
-        "endFrame": 227
+        "startFrame": 221,
+        "endFrame": 224
       },
       {
         "text": "author",
-        "startFrame": 227,
-        "endFrame": 234
+        "startFrame": 224,
+        "endFrame": 230
       },
       {
         "text": "was",
-        "startFrame": 234,
-        "endFrame": 239
+        "startFrame": 230,
+        "endFrame": 236
       },
       {
         "text": "away,",
-        "startFrame": 239,
-        "endFrame": 247
+        "startFrame": 236,
+        "endFrame": 244
       },
       {
         "text": "so",
-        "startFrame": 253,
-        "endFrame": 255
+        "startFrame": 250,
+        "endFrame": 251
       },
       {
         "text": "Claude",
-        "startFrame": 255,
-        "endFrame": 264
+        "startFrame": 251,
+        "endFrame": 260
       },
       {
         "text": "decided:",
-        "startFrame": 264,
-        "endFrame": 276
+        "startFrame": 260,
+        "endFrame": 271
       },
       {
         "text": "move",
-        "startFrame": 283,
-        "endFrame": 286
+        "startFrame": 278,
+        "endFrame": 280
       },
       {
         "text": "the",
-        "startFrame": 286,
-        "endFrame": 290
+        "startFrame": 280,
+        "endFrame": 285
       },
       {
         "text": "cut",
-        "startFrame": 290,
-        "endFrame": 295
+        "startFrame": 285,
+        "endFrame": 289
       },
       {
         "text": "to",
-        "startFrame": 295,
-        "endFrame": 299
+        "startFrame": 289,
+        "endFrame": 294
       },
       {
         "text": "sixty-two,",
-        "startFrame": 309,
-        "endFrame": 318
+        "startFrame": 304,
+        "endFrame": 313
       },
       {
         "text": "predicting",
-        "startFrame": 319,
-        "endFrame": 326
+        "startFrame": 314,
+        "endFrame": 321
       },
       {
         "text": "him",
-        "startFrame": 326,
-        "endFrame": 334
+        "startFrame": 321,
+        "endFrame": 329
       },
       {
         "text": "rising",
-        "startFrame": 334,
-        "endFrame": 343
+        "startFrame": 329,
+        "endFrame": 338
       },
       {
         "text": "into",
-        "startFrame": 343,
-        "endFrame": 352
+        "startFrame": 338,
+        "endFrame": 345
       },
       {
         "text": "the",
-        "startFrame": 352,
-        "endFrame": 357
+        "startFrame": 345,
+        "endFrame": 350
       },
       {
         "text": "cab",
-        "startFrame": 357,
-        "endFrame": 361
+        "startFrame": 350,
+        "endFrame": 354
       },
       {
         "text": "before",
-        "startFrame": 361,
-        "endFrame": 371
+        "startFrame": 354,
+        "endFrame": 364
       },
       {
         "text": "the",
-        "startFrame": 371,
-        "endFrame": 376
+        "startFrame": 364,
+        "endFrame": 368
       },
       {
         "text": "fade.",
-        "startFrame": 376,
-        "endFrame": 382
+        "startFrame": 368,
+        "endFrame": 374
       },
       {
         "text": "The",
-        "startFrame": 397,
-        "endFrame": 400
+        "startFrame": 389,
+        "endFrame": 391
       },
       {
         "text": "second",
-        "startFrame": 400,
-        "endFrame": 407
+        "startFrame": 391,
+        "endFrame": 398
       },
       {
         "text": "strip",
-        "startFrame": 407,
-        "endFrame": 417
+        "startFrame": 398,
+        "endFrame": 408
       },
       {
         "text": "matched",
-        "startFrame": 417,
-        "endFrame": 424
+        "startFrame": 408,
+        "endFrame": 414
       },
       {
         "text": "five",
-        "startFrame": 424,
-        "endFrame": 434
+        "startFrame": 414,
+        "endFrame": 424
       },
       {
         "text": "of",
-        "startFrame": 434,
-        "endFrame": 440
+        "startFrame": 424,
+        "endFrame": 430
       },
       {
         "text": "six",
-        "startFrame": 440,
-        "endFrame": 445
+        "startFrame": 430,
+        "endFrame": 435
       },
       {
         "text": "predictions.",
-        "startFrame": 445,
-        "endFrame": 461
+        "startFrame": 435,
+        "endFrame": 451
       },
       {
         "text": "The",
-        "startFrame": 472,
-        "endFrame": 475
+        "startFrame": 462,
+        "endFrame": 464
       },
       {
         "text": "pin",
-        "startFrame": 475,
-        "endFrame": 479
+        "startFrame": 464,
+        "endFrame": 469
       },
       {
         "text": "moved",
-        "startFrame": 479,
-        "endFrame": 490
+        "startFrame": 469,
+        "endFrame": 479
       },
       {
         "text": "as",
-        "startFrame": 490,
-        "endFrame": 494
+        "startFrame": 479,
+        "endFrame": 483
       },
       {
         "text": "predicted.",
-        "startFrame": 494,
-        "endFrame": 509
+        "startFrame": 483,
+        "endFrame": 498
       },
       {
         "text": "The",
-        "startFrame": 519,
-        "endFrame": 522
+        "startFrame": 509,
+        "endFrame": 512
       },
       {
-        "text": "author's",
-        "startFrame": 522,
-        "endFrame": 535
+        "text": "author",
+        "startFrame": 512,
+        "endFrame": 518
       },
       {
-        "text": "verdict",
-        "startFrame": 535,
-        "endFrame": 542
+        "text": "played",
+        "startFrame": 518,
+        "endFrame": 527
       },
       {
-        "text": "is",
-        "startFrame": 542,
-        "endFrame": 549
+        "text": "it",
+        "startFrame": 527,
+        "endFrame": 533
       },
       {
-        "text": "still",
-        "startFrame": 549,
-        "endFrame": 556
+        "text": "and",
+        "startFrame": 533,
+        "endFrame": 538
       },
       {
-        "text": "open.",
-        "startFrame": 556,
-        "endFrame": 567
+        "text": "judged",
+        "startFrame": 538,
+        "endFrame": 546
+      },
+      {
+        "text": "it",
+        "startFrame": 546,
+        "endFrame": 551
+      },
+      {
+        "text": "good,",
+        "startFrame": 551,
+        "endFrame": 557
+      },
+      {
+        "text": "with",
+        "startFrame": 557,
+        "endFrame": 566
+      },
+      {
+        "text": "more",
+        "startFrame": 566,
+        "endFrame": 571
+      },
+      {
+        "text": "to",
+        "startFrame": 571,
+        "endFrame": 575
+      },
+      {
+        "text": "improve",
+        "startFrame": 575,
+        "endFrame": 583
+      },
+      {
+        "text": "next.",
+        "startFrame": 583,
+        "endFrame": 595
       }
     ],
     "B17": [
@@ -6214,116 +6249,116 @@
       {
         "text": "Claude's",
         "startFrame": 223,
-        "endFrame": 236
+        "endFrame": 237
       },
       {
         "text": "hand-keyed",
-        "startFrame": 243,
-        "endFrame": 249
+        "startFrame": 244,
+        "endFrame": 250
       },
       {
         "text": "reload,",
         "startFrame": 250,
-        "endFrame": 254
+        "endFrame": 256
       },
       {
         "text": "then",
         "startFrame": 262,
-        "endFrame": 264
+        "endFrame": 265
       },
       {
         "text": "corrected",
-        "startFrame": 264,
-        "endFrame": 274
+        "startFrame": 265,
+        "endFrame": 275
       },
       {
         "text": "its",
-        "startFrame": 274,
-        "endFrame": 283
+        "startFrame": 275,
+        "endFrame": 284
       },
       {
         "text": "rifle",
-        "startFrame": 283,
+        "startFrame": 284,
         "endFrame": 289
       },
       {
         "text": "hold",
         "startFrame": 289,
-        "endFrame": 298
+        "endFrame": 299
       },
       {
         "text": "in",
-        "startFrame": 298,
-        "endFrame": 303
+        "startFrame": 299,
+        "endFrame": 304
       },
       {
         "text": "five",
-        "startFrame": 303,
-        "endFrame": 310
+        "startFrame": 304,
+        "endFrame": 311
       },
       {
         "text": "prompts;",
-        "startFrame": 310,
+        "startFrame": 311,
         "endFrame": 320
       },
       {
         "text": "no",
         "startFrame": 326,
-        "endFrame": 328
+        "endFrame": 329
       },
       {
         "text": "strip",
-        "startFrame": 328,
-        "endFrame": 336
+        "startFrame": 329,
+        "endFrame": 337
       },
       {
         "text": "reading",
-        "startFrame": 336,
+        "startFrame": 337,
         "endFrame": 344
       },
       {
         "text": "yet.",
         "startFrame": 344,
-        "endFrame": 354
+        "endFrame": 355
       },
       {
         "text": "Uncertain:",
         "startFrame": 362,
-        "endFrame": 374
+        "endFrame": 375
       },
       {
         "text": "the",
-        "startFrame": 374,
-        "endFrame": 380
+        "startFrame": 380,
+        "endFrame": 381
       },
       {
-        "text": "seam,",
-        "startFrame": 380,
+        "text": "seam",
+        "startFrame": 381,
         "endFrame": 386
       },
       {
-        "text": "and",
-        "startFrame": 395,
-        "endFrame": 403
+        "text": "over",
+        "startFrame": 386,
+        "endFrame": 392
       },
       {
-        "text": "r",
-        "startFrame": 404,
-        "endFrame": 411
+        "text": "five",
+        "startFrame": 392,
+        "endFrame": 402
       },
       {
-        "text": "one.",
-        "startFrame": 412,
-        "endFrame": 420
+        "text": "wraps.",
+        "startFrame": 402,
+        "endFrame": 410
       },
       {
         "text": "Next",
-        "startFrame": 421,
-        "endFrame": 427
+        "startFrame": 422,
+        "endFrame": 426
       },
       {
         "text": "step:",
-        "startFrame": 427,
+        "startFrame": 426,
         "endFrame": 436
       },
       {
@@ -6334,132 +6369,122 @@
       {
         "text": "author",
         "startFrame": 441,
-        "endFrame": 446
+        "endFrame": 448
       },
       {
-        "text": "plays",
-        "startFrame": 446,
-        "endFrame": 454
+        "text": "improves",
+        "startFrame": 448,
+        "endFrame": 461
       },
       {
-        "text": "r",
-        "startFrame": 458,
-        "endFrame": 462
+        "text": "Enter",
+        "startFrame": 470,
+        "endFrame": 477
       },
       {
-        "text": "one",
-        "startFrame": 462,
-        "endFrame": 466
-      },
-      {
-        "text": "slowed",
-        "startFrame": 466,
-        "endFrame": 474
-      },
-      {
-        "text": "down.",
-        "startFrame": 474,
-        "endFrame": 484
+        "text": "Van.",
+        "startFrame": 478,
+        "endFrame": 486
       },
       {
         "text": "The",
-        "startFrame": 491,
-        "endFrame": 494
+        "startFrame": 487,
+        "endFrame": 489
       },
       {
         "text": "sheet",
-        "startFrame": 494,
-        "endFrame": 499
+        "startFrame": 489,
+        "endFrame": 495
       },
       {
         "text": "is",
-        "startFrame": 499,
-        "endFrame": 504
+        "startFrame": 495,
+        "endFrame": 500
       },
       {
         "text": "ours,",
-        "startFrame": 508,
-        "endFrame": 512
+        "startFrame": 500,
+        "endFrame": 508
       },
       {
         "text": "drawn",
-        "startFrame": 512,
-        "endFrame": 521
+        "startFrame": 514,
+        "endFrame": 517
       },
       {
         "text": "by",
-        "startFrame": 521,
-        "endFrame": 527
+        "startFrame": 517,
+        "endFrame": 524
       },
       {
         "text": "a",
-        "startFrame": 527,
-        "endFrame": 530
+        "startFrame": 524,
+        "endFrame": 526
       },
       {
         "text": "script.",
-        "startFrame": 530,
-        "endFrame": 538
+        "startFrame": 526,
+        "endFrame": 534
       },
       {
         "text": "The",
-        "startFrame": 538,
-        "endFrame": 551
+        "startFrame": 545,
+        "endFrame": 547
       },
       {
         "text": "game",
-        "startFrame": 551,
-        "endFrame": 555
+        "startFrame": 547,
+        "endFrame": 551
       },
       {
         "text": "shown",
-        "startFrame": 555,
-        "endFrame": 563
+        "startFrame": 551,
+        "endFrame": 560
       },
       {
         "text": "is",
-        "startFrame": 563,
-        "endFrame": 569
+        "startFrame": 560,
+        "endFrame": 566
       },
       {
         "text": "revision",
-        "startFrame": 569,
+        "startFrame": 566,
         "endFrame": 577
       },
       {
         "text": "one,",
-        "startFrame": 604,
-        "endFrame": 628
+        "startFrame": 581,
+        "endFrame": 585
       },
       {
         "text": "E,",
-        "startFrame": 631,
-        "endFrame": 647
+        "startFrame": 586,
+        "endFrame": 593
       },
       {
         "text": "seven,",
-        "startFrame": 647,
-        "endFrame": 647
+        "startFrame": 602,
+        "endFrame": 610
       },
       {
         "text": "seven,",
-        "startFrame": 647,
-        "endFrame": 647
+        "startFrame": 611,
+        "endFrame": 619
       },
       {
         "text": "six,",
-        "startFrame": 647,
-        "endFrame": 647
+        "startFrame": 620,
+        "endFrame": 628
       },
       {
         "text": "five,",
-        "startFrame": 647,
-        "endFrame": 647
+        "startFrame": 628,
+        "endFrame": 636
       },
       {
         "text": "E.",
-        "startFrame": 647,
-        "endFrame": 647
+        "startFrame": 637,
+        "endFrame": 646
       }
     ],
     "B23": [
@@ -6728,46 +6753,46 @@
       {
         "text": "Let's",
         "startFrame": 0,
-        "endFrame": 22
+        "endFrame": 21
       },
       {
         "text": "recap",
-        "startFrame": 22,
-        "endFrame": 28
+        "startFrame": 21,
+        "endFrame": 27
       },
       {
         "text": "with",
-        "startFrame": 28,
-        "endFrame": 36
+        "startFrame": 27,
+        "endFrame": 35
       },
       {
         "text": "Claude.",
-        "startFrame": 36,
+        "startFrame": 35,
         "endFrame": 49
       },
       {
         "text": "Implemented:",
-        "startFrame": 56,
-        "endFrame": 67
+        "startFrame": 55,
+        "endFrame": 66
       },
       {
         "text": "four",
-        "startFrame": 71,
-        "endFrame": 76
+        "startFrame": 66,
+        "endFrame": 75
       },
       {
         "text": "clips,",
-        "startFrame": 76,
-        "endFrame": 85
+        "startFrame": 75,
+        "endFrame": 83
       },
       {
         "text": "each",
-        "startFrame": 85,
-        "endFrame": 94
+        "startFrame": 83,
+        "endFrame": 93
       },
       {
         "text": "a",
-        "startFrame": 94,
+        "startFrame": 93,
         "endFrame": 97
       },
       {
@@ -6778,162 +6803,197 @@
       {
         "text": "with",
         "startFrame": 106,
-        "endFrame": 115
+        "endFrame": 114
       },
       {
         "text": "one",
-        "startFrame": 115,
-        "endFrame": 122
+        "startFrame": 114,
+        "endFrame": 121
       },
       {
         "text": "owner.",
-        "startFrame": 122,
-        "endFrame": 131
+        "startFrame": 121,
+        "endFrame": 130
       },
       {
         "text": "Verified:",
         "startFrame": 144,
-        "endFrame": 154
+        "endFrame": 152
       },
       {
         "text": "read-backs,",
-        "startFrame": 154,
-        "endFrame": 175
+        "startFrame": 152,
+        "endFrame": 173
       },
       {
         "text": "edges",
-        "startFrame": 182,
-        "endFrame": 190
+        "startFrame": 181,
+        "endFrame": 188
       },
       {
         "text": "at",
-        "startFrame": 190,
-        "endFrame": 196
+        "startFrame": 188,
+        "endFrame": 194
       },
       {
         "text": "every",
-        "startFrame": 196,
-        "endFrame": 204
+        "startFrame": 194,
+        "endFrame": 202
       },
       {
         "text": "boundary,",
-        "startFrame": 204,
-        "endFrame": 215
+        "startFrame": 202,
+        "endFrame": 212
       },
       {
         "text": "mutations",
-        "startFrame": 215,
-        "endFrame": 231
+        "startFrame": 212,
+        "endFrame": 229
       },
       {
         "text": "that",
-        "startFrame": 231,
-        "endFrame": 241
+        "startFrame": 229,
+        "endFrame": 239
       },
       {
         "text": "fail.",
-        "startFrame": 241,
-        "endFrame": 252
+        "startFrame": 239,
+        "endFrame": 249
       },
       {
         "text": "Still",
-        "startFrame": 260,
-        "endFrame": 266
+        "startFrame": 257,
+        "endFrame": 263
       },
       {
         "text": "open:",
-        "startFrame": 266,
-        "endFrame": 278
+        "startFrame": 263,
+        "endFrame": 275
       },
       {
         "text": "the",
+        "startFrame": 281,
+        "endFrame": 284
+      },
+      {
+        "text": "Enter",
         "startFrame": 284,
-        "endFrame": 287
+        "endFrame": 290
       },
       {
-        "text": "author's",
-        "startFrame": 287,
-        "endFrame": 299
+        "text": "Van",
+        "startFrame": 290,
+        "endFrame": 295
       },
       {
-        "text": "verdict",
-        "startFrame": 299,
+        "text": "revision",
+        "startFrame": 295,
         "endFrame": 307
       },
       {
-        "text": "on",
+        "text": "the",
         "startFrame": 307,
         "endFrame": 313
       },
       {
-        "text": "r",
-        "startFrame": 317,
-        "endFrame": 321
+        "text": "author",
+        "startFrame": 313,
+        "endFrame": 319
       },
       {
-        "text": "one",
-        "startFrame": 321,
-        "endFrame": 325
+        "text": "plans",
+        "startFrame": 319,
+        "endFrame": 328
+      },
+      {
+        "text": "next,",
+        "startFrame": 328,
+        "endFrame": 340
       },
       {
         "text": "and",
-        "startFrame": 326,
-        "endFrame": 332
-      },
-      {
-        "text": "the",
-        "startFrame": 332,
-        "endFrame": 335
-      },
-      {
-        "text": "seam",
-        "startFrame": 339,
-        "endFrame": 342
-      },
-      {
-        "text": "in",
-        "startFrame": 343,
+        "startFrame": 344,
         "endFrame": 346
       },
       {
-        "text": "play.",
+        "text": "the",
         "startFrame": 346,
-        "endFrame": 355
+        "endFrame": 349
+      },
+      {
+        "text": "seam",
+        "startFrame": 349,
+        "endFrame": 356
+      },
+      {
+        "text": "over",
+        "startFrame": 356,
+        "endFrame": 363
+      },
+      {
+        "text": "five",
+        "startFrame": 363,
+        "endFrame": 373
+      },
+      {
+        "text": "wraps.",
+        "startFrame": 373,
+        "endFrame": 382
       },
       {
         "text": "Human",
-        "startFrame": 367,
-        "endFrame": 374
-      },
-      {
-        "text": "judgement:",
-        "startFrame": 383,
-        "endFrame": 392
-      },
-      {
-        "text": "the",
-        "startFrame": 393,
-        "endFrame": 395
-      },
-      {
-        "text": "author",
-        "startFrame": 395,
+        "startFrame": 382,
         "endFrame": 401
       },
       {
+        "text": "judgement:",
+        "startFrame": 410,
+        "endFrame": 419
+      },
+      {
+        "text": "the",
+        "startFrame": 420,
+        "endFrame": 422
+      },
+      {
+        "text": "author",
+        "startFrame": 422,
+        "endFrame": 428
+      },
+      {
         "text": "corrected",
-        "startFrame": 401,
-        "endFrame": 415
+        "startFrame": 428,
+        "endFrame": 443
       },
       {
         "text": "every",
-        "startFrame": 415,
-        "endFrame": 425
+        "startFrame": 443,
+        "endFrame": 453
       },
       {
-        "text": "look.",
-        "startFrame": 425,
-        "endFrame": 433
+        "text": "look",
+        "startFrame": 453,
+        "endFrame": 460
+      },
+      {
+        "text": "and",
+        "startFrame": 460,
+        "endFrame": 466
+      },
+      {
+        "text": "judged",
+        "startFrame": 466,
+        "endFrame": 475
+      },
+      {
+        "text": "all",
+        "startFrame": 475,
+        "endFrame": 482
+      },
+      {
+        "text": "four.",
+        "startFrame": 482,
+        "endFrame": 491
       }
     ],
     "B25": [

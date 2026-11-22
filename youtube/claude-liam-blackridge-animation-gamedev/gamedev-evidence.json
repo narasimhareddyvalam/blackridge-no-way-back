@@ -42,7 +42,9 @@
         "app/first_drive.gd",
         "tests/test_rig_readback.gd",
         "tests/test_animation_edges.gd",
-        "tests/test_animation_pins.gd"
+        "tests/test_animation_pins.gd",
+        "previews/enter_van_preview.gd",
+        "previews/enter_van_preview.tscn"
       ]
     },
     {
@@ -115,6 +117,21 @@
       "files": [
         "animations/pistol_reload.tres",
         "animations/ethan_pistol.tres"
+      ]
+    },
+    {
+      "id": "import-outputs",
+      "explanation": "Files Godot itself regenerated and that were committed to keep the working tree clean (#409-#411): four Poly Haven .import headers (the VRAM-compressed outputs their unchanged settings ask for) and the crane spreader's extracted emissive texture. Not animation work; context in the footage only.",
+      "beat_ids": [
+        "B02"
+      ],
+      "files": [
+        "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_diff_1k.jpg.import",
+        "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.import",
+        "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.import",
+        "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.import",
+        "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp",
+        "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp.import"
       ]
     },
     {
@@ -329,6 +346,54 @@
       ]
     },
     {
+      "path": "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp",
+      "sha256": "08ae0490c4d173d768b1eff31d40033b5b1284ebd25cf58606273deaaa3f1747",
+      "role": "texture",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
+      "path": "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp.import",
+      "sha256": "8e03dee0020d0be60ad149ad863ddc660f680498d227bdfb4c5d1e3ee634caeb",
+      "role": "import settings",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
+      "path": "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_diff_1k.jpg.import",
+      "sha256": "45bb9b81a6d461cfbc076cca146db05d68c0e19ce167baf26a5d4d679419a609",
+      "role": "import settings",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
+      "path": "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.import",
+      "sha256": "4a387887a46e58df5d1341f67474d2cbad025d4262c97486a571d6b01f90d266",
+      "role": "import settings",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
+      "path": "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.import",
+      "sha256": "7758215b4be09e6cdab0442f604cd6976fad31e560ef203c8a9b92582ee40c33",
+      "role": "import settings",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
+      "path": "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.import",
+      "sha256": "07957c5cd050e741c4e2571831fb55620ee335f9d07dc363b16711ef15bfa4c8",
+      "role": "import settings",
+      "component_ids": [
+        "import-outputs"
+      ]
+    },
+    {
       "path": "features/missions/last_run/hangar_encounter.gd",
       "sha256": "594db6619c553a77d6e3f47d10a841fc1f5417e9bbfe5ecda9338f1da1dda25f",
       "role": "script",
@@ -471,6 +536,22 @@
       "component_ids": [
         "rifle-reload",
         "rifle-reload"
+      ]
+    },
+    {
+      "path": "previews/enter_van_preview.gd",
+      "sha256": "935dc6cd75cd2772fda534139c7af39a9a3c462d1b0b68f61b3cc5edcc3beac3",
+      "role": "script",
+      "component_ids": [
+        "enter-van"
+      ]
+    },
+    {
+      "path": "previews/enter_van_preview.tscn",
+      "sha256": "c3a5c9d8054499fcd4191c4385b56212a21a0baf573541462e124ca95f1e4eb4",
+      "role": "scene",
+      "component_ids": [
+        "enter-van"
       ]
     },
     {
@@ -3442,14 +3523,6 @@
     },
     {
       "path": "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_baseColor.webp.import",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
-      "path": "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
-      "path": "features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp.import",
       "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
     },
     {
@@ -6881,15 +6954,7 @@
       "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
     },
     {
-      "path": "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_diff_1k.jpg.import",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
       "path": "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
-      "path": "features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.import",
       "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
     },
     {
@@ -6929,15 +6994,7 @@
       "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
     },
     {
-      "path": "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.import",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
       "path": "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg",
-      "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
-    },
-    {
-      "path": "features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.import",
       "reason": "Pre-existing Blackridge system or asset from before Assignment 7 (e284453^): environment, audio, UI, missions, characters, vehicle art, shaders, effects and shared builders, unchanged by this assignment. It appears only as context inside the captured footage."
     },
     {

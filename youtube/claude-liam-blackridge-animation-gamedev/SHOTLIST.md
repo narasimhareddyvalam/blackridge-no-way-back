@@ -18,7 +18,7 @@
 | B13 | RESULT | 18.8 | GodotEngineEvidence | fixture capture · strip r0 frames with the per-frame log's lines · strips/enter_van/r0/frame_044.png, strips/enter_van/r0/frame_045.png, strips/enter_van/r0/frame_046.png |
 | B14 | CODE | 12.9 | GodotDevWorkbench | game/features/characters/driver/driver.gd:554–568 · verbatim |
 | B15 | RESULT | 20.2 | GodotEngineEvidence | fixture captures · real input after the setup · 30 fps, real time · takes/interrupt_startup/interrupt_startup.mp4, takes/interrupt_active/interrupt_active.mp4, takes/interrupt_recovery/interrupt_recovery.mp4 |
-| B16 | TUNING | 19.6 | GodotEngineEvidence | fixture captures · strips r0 and r1 · crops · strips/enter_van/r0/frame_065.png, strips/enter_van/r1/frame_070.png |
+| B16 | TUNING | 20.5 | GodotEngineEvidence | fixture captures · strips r0 and r1 · crops · strips/enter_van/r0/frame_065.png, strips/enter_van/r1/frame_070.png |
 | B17 | CODE | 18.0 | GodotDevWorkbench | game/features/characters/driver/rifle_carry.gd:161–174 · verbatim |
 | B18 | RESULT | 15.4 | GodotEngineEvidence | fixture capture · armed by arm(), then real input (aim, R) · 30 fps, real time, then replays · takes/reload/reload.mp4, takes/reload/reload.mp4, takes/reload/reload.mp4 |
 | B19 | CODE | 18.3 | GodotDevWorkbench | game/features/characters/driver/driver.gd:1027–1041 · verbatim |
@@ -26,6 +26,6 @@
 | B21 | TESTS | 20.5 | GodotEngineEvidence | recorded output · scripts/run-test.sh, headless, 60 fps · results, verbatim |
 | B22 | LIMITS | 22.1 | GodotEngineEvidence | records · CHANGE-BRIEF.md revisions · TUNING.md · SOURCES.md |
 | B23 | CONTRIBUTIONS | 15.7 | GodotEngineEvidence | records · docs/AUTHOR_PROMPTS_AND_DECISIONS.md #362-#406 · FRICTIONAL.md |
-| B24 | VERDICT | 15.1 | ClaudeVerdictArtifact | ClaudeVerdictArtifact |
+| B24 | VERDICT | 17.1 | ClaudeVerdictArtifact | ClaudeVerdictArtifact |
 | B25 | HANDOFF | 26.8 | ClaudeComposerAsk | ClaudeComposerAsk |
 | B26 | OUTRO | 4.5 | ClaudeTitleOutro | ClaudeTitleOutro |

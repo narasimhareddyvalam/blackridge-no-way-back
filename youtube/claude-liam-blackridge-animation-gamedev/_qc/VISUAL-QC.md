@@ -43,3 +43,9 @@ B07, B09, B15, B18 and B20 re-rendered (`--force`); every beat's render matches 
 - The master's audio: −24.6 LUFS integrated, true peak −3.1 dBFS, no silence over 2.5 s.
 - Final master: 3840×2160, 30 fps, H.264 and AAC 48 kHz stereo, 439.9 s, 80,969,525 bytes,
   SHA-256 `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040`.
+
+## Pass 4: the re-exported master (#421)
+
+B16, B22 and B24 re-voiced (transcribed: correct) and re-rendered; the master sampled again at
+15/50/85% of every beat; the three beats show the new lines. Final master SHA-256
+`9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`, 442.8 s, Gate V 0 BLOCKER, 0 MAJOR.

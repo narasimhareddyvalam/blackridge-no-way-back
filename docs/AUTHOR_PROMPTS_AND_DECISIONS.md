@@ -5613,6 +5613,14 @@ tag `a5`. Pictures the author approved or rejected are filed in
 421. **Keep the preview; update the film's two lines**
      - **Prompt** (verbatim): "keep the preview, film update those two lines as well"
 
+422. **A submission folder on the Desktop**
+     - **Prompt** (verbatim, during the film's re-export): "alright, palce everything in desktop in a
+       folder and name the folder A7-submission. and place everything we need to submit in that
+       folder"
+     - **Done:** `~/Desktop/A7-submission/` with the film, `SUBMISSION.md`, a draft Canvas note and
+       a checklist of what remains; the source ZIP is made from the `a7` tag once it exists (the
+       film link and the author's OK to merge and tag first), so it matches the submitted commit.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

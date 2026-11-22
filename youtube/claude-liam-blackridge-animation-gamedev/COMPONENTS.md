@@ -1,6 +1,6 @@
 # COMPONENTS — Blackridge, Frame by Frame
 
-From `gamedev-evidence.json`: 131 files in 7 components, 1777 excluded with a reason, 8 verbatim excerpts, 8 code → result pairs.
+From `gamedev-evidence.json`: 139 files in 8 components, 1771 excluded with a reason, 8 verbatim excerpts, 8 code → result pairs.
 
 ## ring-cycle
 
@@ -16,7 +16,7 @@ The committing action: Mixamo's Entering Car in ethan.glb (164 frames at 30 fps,
 
 Beats: B08, B09, B10, B11, B12, B13, B15, B16
 
-Files: `features/characters/ethan/ethan.glb`, `features/characters/ethan/ethan.glb.import`, `app/first_drive.gd`, `tests/test_rig_readback.gd`, `tests/test_animation_edges.gd`, `tests/test_animation_pins.gd`
+Files: `features/characters/ethan/ethan.glb`, `features/characters/ethan/ethan.glb.import`, `app/first_drive.gd`, `tests/test_rig_readback.gd`, `tests/test_animation_edges.gd`, `tests/test_animation_pins.gd`, `previews/enter_van_preview.gd`, `previews/enter_van_preview.tscn`
 
 ## authority
 
@@ -49,6 +49,14 @@ The pistol attempts the author turned down (#386, #393): the hand-keyed reload a
 Beats: B22
 
 Files: `animations/pistol_reload.tres`, `animations/ethan_pistol.tres`
+
+## import-outputs
+
+Files Godot itself regenerated and that were committed to keep the working tree clean (#409-#411): four Poly Haven .import headers (the VRAM-compressed outputs their unchanged settings ask for) and the crane spreader's extracted emissive texture. Not animation work; context in the footage only.
+
+Beats: B02
+
+Files: `features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_diff_1k.jpg.import`, `features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.import`, `features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.import`, `features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.import`, `features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp`, `features/environments/harbour_flats/art/harbour_crane/harbour_crane_Crane_Spreader_4K_emissive.webp.import`
 
 ## checks
 

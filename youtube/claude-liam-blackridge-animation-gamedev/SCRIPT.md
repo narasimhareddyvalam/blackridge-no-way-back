@@ -1,6 +1,6 @@
 # SCRIPT — Blackridge, Frame by Frame
 
-Narration as spoken by Liam (Kokoro `am_onyx`), 27 beats, 1478 words, 439.6 s measured.
+Narration as spoken by Liam (Kokoro `am_onyx`), 27 beats, 1490 words, 442.5 s measured.
 
 ## B00 · ASK · 16.9 s
 
@@ -66,9 +66,9 @@ Enter Van's owner is the driver script. Play clip is the only path into Ethan's 
 
 Now an interrupt in each phase, by real input. In startup, W is held: he doesn't move and the clip runs on. In the active phase, Escape pauses: the clip and the door freeze, then resume. In recovery, R recovers: he's seated at once with the door shut. The edge test ran forty-eight of these, all passing, and found one bug: Escape during the fade seated him behind the pause menu.
 
-## B16 · TUNING · 19.6 s
+## B16 · TUNING · 20.5 s
 
-Then tuning. Claude read the first strip: at the old cut, frame fifty-three, both his feet were still on the ground, so the brief's climbs in was never seen. The author was away, so Claude decided: move the cut to sixty-two, predicting him rising into the cab before the fade. The second strip matched five of six predictions. The pin moved as predicted. The author's verdict is still open.
+Then tuning. Claude read the first strip: at the old cut, frame fifty-three, both his feet were still on the ground, so the brief's climbs in was never seen. The author was away, so Claude decided: move the cut to sixty-two, predicting him rising into the cab before the fade. The second strip matched five of six predictions. The pin moved as predicted. The author played it and judged it good, with more to improve next.
 
 ## B17 · CODE · 18.0 s
 
@@ -92,15 +92,15 @@ What the tests proved. Four read-backs resolve every track and pin each clip's k
 
 ## B22 · LIMITS · 22.1 s
 
-Mistakes caught: the pause bug, a second script playing Ethan's clips, hands short of the wheel, and the brief's strip frames two early. Overruled: the author rejected Claude's hand-keyed reload, then corrected its rifle hold in five prompts; no strip reading yet. Uncertain: the seam, and r one. Next step: the author plays r one slowed down. The sheet is ours, drawn by a script. The game shown is revision one, E, seven, seven, six, five, E.
+Mistakes caught: the pause bug, a second script playing Ethan's clips, hands short of the wheel, and the brief's strip frames two early. Overruled: the author rejected Claude's hand-keyed reload, then corrected its rifle hold in five prompts; no strip reading yet. Uncertain: the seam over five wraps. Next step: the author improves Enter Van. The sheet is ours, drawn by a script. The game shown is revision one, E, seven, seven, six, five, E.
 
 ## B23 · CONTRIBUTIONS · 15.7 s
 
 Who did what. The author chose the clips, rejected what didn't look real, downloaded the motion capture, corrected every look, ruled on the pause bug and approved each step. Claude Code drafted the brief, built, wired and tested the clips, captured the strips, and made r one while the author was away.
 
-## B24 · VERDICT · 15.1 s
+## B24 · VERDICT · 17.1 s
 
-Let's recap with Claude. Implemented: four clips, each a resource with one owner. Verified: read-backs, edges at every boundary, mutations that fail. Still open: the author's verdict on r one and the seam in play. Human judgement: the author corrected every look.
+Let's recap with Claude. Implemented: four clips, each a resource with one owner. Verified: read-backs, edges at every boundary, mutations that fail. Still open: the Enter Van revision the author plans next, and the seam over five wraps. Human judgement: the author corrected every look and judged all four.
 
 ## B25 · HANDOFF · 26.8 s
 

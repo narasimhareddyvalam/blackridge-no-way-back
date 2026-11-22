@@ -22,15 +22,15 @@ them by hash.
 | B13 | At clip 34 the door is 0.011, frame 33's value; 1/30 s; reload timer ends at clip 98.5 | `logs/animation/step7/enter_van_r0.log` (capture 46); `TEST-REPORT.md`, the reload's two clocks |
 | B14 | `play_clip` is the path into Ethan's player; helpers push_gait.gd, rifle_carry.gd; the structure test checks | `driver.gd:554-568`; `CHANGE-BRIEF.md` Step 5 revision; `test_animation_structure.gd` |
 | B15 | W at clip 16: 0.000 m; Esc at 40: frozen at 41 / 0.593, resumed; R at 56: seated; edges 48/48; the Esc-in-fade bug | `capture/takes/interrupt_*/events.txt`; `logs/animation/step7_r1`; `#374` |
-| B16 | r0: feet on the ground at 53; Claude's decision (author away); cut to 62; 5 of 6 predictions; PIN2 moved as predicted; verdict open | `TUNING.md` r0, r1; `#406`; `2f91bc5` |
+| B16 | r0: feet on the ground at 53; Claude's decision (author away); cut to 62; 5 of 6 predictions; PIN2 moved as predicted; the author played it: good, more to improve next | `TUNING.md` r0, r1 and the author's verdict; `#406`; `#417`; `2f91bc5` |
 | B17 | Hand-keyed reload rejected; mocap, then rifle; UpperBody keys the upper body only; enter/leave on `reloading`; RELOAD_SECONDS 99/30 | `#386-#393`; `rifle_carry.gd:161-174`; `handgun.gd:21`; `test_reload_readback.gd` R7, R9 |
 | B18 | Magazine out 14, seated 47; charging handle 8 cm; fire and R ignored; fixture armed directly | `rifle_hold.gd` DROP, SEAT, CHARGE_TRAVEL; `test_reload_readback.gd` R10, R11; `test_reload_edges.gd` 21/21; `capture/CAPTURE.md` |
 | B19 | Keyed over EnterVan's last frame; slid forward to 0.43 m; hand targets on the rim from the mesh; grip over 11 frames | `tools/art/make_ethan_shock.gd`; `driver.gd:1020, 1027-1041`; `SHOCK_REACH`, `SHOCK_GRIP` |
 | B20 | Startle, breaths, no, drop, mirrors, stare; inside the 4 s hold; the author's #404; fixture without the struck man | `CHANGE-BRIEF.md` (the shock remade); `test_shock_state.gd`; `#404`; `capture/CAPTURE.md` |
 | B21 | Read-backs ring 15, rig 14, reload 12, shock 9; suites 81; mutations m1-m3 exit 1, m4 exit 0 by design | `logs/animation/{repin, step7_r1, reload, shock}`; `logs/animation/final_suites`; `logs/animation/mutations/EXITS.txt` |
-| B22 | Mistakes: Esc in the fade, push_gait a second writer, hands short of the rim, §9 two frames early; overruled: #386, #398-#402; sheet by script; revision 1e7765e | `#374`; `CHANGE-BRIEF.md` revisions; `TUNING.md`; `SOURCES.md` |
+| B22 | Mistakes: Esc in the fade, push_gait a second writer, hands short of the rim, §9 two frames early; overruled: #386, #398-#402; uncertain: the seam over five wraps; next step: the author improves EnterVan; sheet by script; revision 1e7765e | `#374`; `CHANGE-BRIEF.md` revisions; `TUNING.md`; `SOURCES.md` |
 | B23 | Who did what | `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #362-#406; `FRICTIONAL.md` |
-| B24 | Verdict lines | the beats above |
+| B24 | Verdict lines; open: the EnterVan revision the author plans next, the seam over five wraps; the author judged all four | the beats above; `#417`; `TEST-REPORT.md` human checks |
 
-Not claimed: that the motion reads or the ring wraps without a visible seam (the author's checks,
-open); that r1 is kept (the author's verdict, open).
+Not claimed: that the ring was watched over five wraps for a seam (not in the author's words,
+#417); the author's verdict on r1 is quoted, not extended.
