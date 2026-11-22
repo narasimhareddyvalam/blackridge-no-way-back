@@ -721,3 +721,27 @@ pin samples on the physics tick, 1/60 s after 62/30 + 0.25 s, as it did before),
 "the rig ethan entering animation was good as well, can be improved will work on it next."
 r1 stays in the game. The author names further improvement as their next piece of work; what to
 improve, and the observation-driven revision the handout asks for, come from them.
+
+## Claude against the author (Assignment 7)
+
+Each of Claude Code's strip readings beside the author's words. Where the author has not spoken
+to a reading, the table says so; nothing is inferred.
+
+| Claude Code's reading | The author's words (#417) | Agree? |
+| :-- | :-- | :-- |
+| r0 (1): §9's capture frames run two early; EnterVan's frame N falls on capture 12 + N | Not addressed by the author | — |
+| r0 (2): at the old cut, frame 53, both feet are still on the ground, so "climbs in" is never seen; the change for r1: the cut to 62 | "the rig ethan entering animation was good as well, can be improved will work on it next." r1 kept | Agrees with r1; more to improve, the author's next work |
+| r0 (3): the door runs one frame behind his hand (1/30 s) | Not addressed by the author | — |
+| r1 comparison: five of six predictions seen; the foot lift at clip 53 not readable from this camera | The same words: "good as well, can be improved" | Agrees; what to improve is not yet named |
+
+**Disagreements named:** none on a strip reading, so far.
+
+The author did overrule Claude Code's own judgement of the renders that came before the strips.
+These were films and stills of the third and fourth clips, which Claude Code had presented as
+right:
+- **#386:** the hand-keyed reload, "hes not even holding gun realistically".
+- **#398-#402:** five corrections of the rifle hold.
+- **#404:** the shock's hands not on the wheel, and the fear not reading.
+
+Each was fixed and then accepted: "the gun reloading animations looks good after lot of
+iterations… the shocked animation is real what i wanted it to be" (#417).
