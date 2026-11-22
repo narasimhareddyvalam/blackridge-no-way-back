@@ -5552,6 +5552,15 @@ tag `a5`. Pictures the author approved or rejected are filed in
        tree clean"). The large count is the 106 unpushed commits on `develop`: 15,525 files since
        the last push (8 November), 10,916 of them Mission 2 and 3 test logs in `logs/phase_2`.
 
+413. **The 30K badge: three `a7-` repositories in VS Code**
+     - **Prompt** (verbatim, with two screenshots of VS Code's Source Control: a 30K badge,
+       `develop` 0↓ 107↑, and three `a7-` repositories at `590f0a36+`): "[Image #16] [Image #17]?"
+     - **Answered:** the three `a7-` entries are Step 6's mutation worktrees
+       (`scratchpad/a7-mutate-m1`…`m4`, from `590f0a3`), already removed with
+       `git worktree remove`; `git worktree list` shows only the main checkout and the folders no
+       longer exist. VS Code still lists them from its cache. Closing them in VS Code (or reloading
+       the window) clears the badge; nothing to delete, no work at risk.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
