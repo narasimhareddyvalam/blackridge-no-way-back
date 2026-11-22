@@ -9,6 +9,8 @@ extends SceneTree
 ##        engine still running; the clip times at which the door begins to open, is fully open,
 ##        and Ethan is seated, as measured (the brief re-expresses the boarding moments in
 ##        frames: these move by at most 1/60 s, and the pin is re-run then).
+##        Re-pinned after TUNING.md's r1 (the cut moved from frame 53 to 62, #406): seated
+##        2.017 s became 2.333 s, as r1 predicted (62/30 + 0.25 s fade, sampled a tick later).
 ##   PIN3 R during boarding (its active phase) recovers: boarding cancelled, seated, door shut.
 
 const LaneKeeper = preload("res://tests/lane_keeper.gd")
@@ -131,9 +133,9 @@ func _pin_boarding() -> void:
 			engine_after = clock - seated_clock
 			break
 	_check(states == ["on foot", "boarding", "seated"] and absf(door_from - 1.083) <= 0.02
-		and absf(door_open - 1.617) <= 0.02 and absf(seated_at - 2.017) <= 0.02
+		and absf(door_open - 1.617) <= 0.02 and absf(seated_at - 2.333) <= 0.02
 		and is_zero_approx(engine_after), ("PIN2: boarding goes %s; the door starts opening at "
-		+ "clip %.3f s (1.083), is fully open at %.3f s (1.617); seated %.3f s in (2.017); the "
+		+ "clip %.3f s (1.083), is fully open at %.3f s (1.617); seated %.3f s in (2.333); the "
 		+ "engine, never stopped when he got out, is running as he sits (%.2f s)") % [states,
 		door_from, door_open, seated_at, engine_after])
 
