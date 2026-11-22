@@ -5633,6 +5633,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** the link (a OneDrive folder link) in `README.md` and `SUBMISSION.md`, and in the
        Desktop folder's `SUBMISSION.md` and `CANVAS-NOTE.txt`; pushed to `develop`, so PR #2 has it.
 
+425. **Is the a7 clone submitted?**
+     - **Prompt** (verbatim): "also i dont have to submit a7 clone to canvas?"
+     - **Answered:** no. The fresh clone is only the handout's check (§5); Canvas gets the source
+       ZIP of the `a7` revision (a `git archive` of the tag) and `SUBMISSION.md`, with the film by
+       link. Flagged: the tracked files total about 3.4 GB, so the ZIP will be large.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
