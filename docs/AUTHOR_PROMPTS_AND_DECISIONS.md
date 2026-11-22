@@ -5445,6 +5445,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the put-away (6-62), its grip in his fist throughout; the film checked densely at the draw,
        the reload and the put-away.
 
+401. **The rifle turned over at the charging handle**
+     - **Prompt** (verbatim, after the film of `a3b589f`): "when hes pulling the reload part
+       backwards, the entire gun is becoming inverted. i dont want any inconsistencies. check how it
+       works in real life and do it, fix it yourself, dont keep waiting for me to correct it. check
+       and do it accurately"
+     - **Found:** to bring the charging handle to his hand the hold turned the whole rifle, which
+       turned it over; with the rifle upright in his right hand his captured left hand already
+       reaches over the top to the receiver's rear (the M16's T-handle) at frames 62-64.
+     - **Done (real life: the rifle stays upright, the right hand on the grip, the left hand reaches
+       over the top behind the carry handle, hooks the T-handle, pulls it back about 8 cm toward the
+       face, lets go and the spring returns it with the bolt carrier):** in the magazine and
+       charging parts the rifle keeps its upright one-hand placement and only the left arm's IK
+       reaches the part; hooked at 62, pulled to 64, let go at 65; the charging handle and the bolt
+       carrier slide back 8 cm and snap home; checked over every frame of all 19 clips that the
+       rifle's top never faces down (lowest 0.56, a cant in the draw; the reload 0.79; slung
+       excluded), the hand within 4-7 cm of the T-handle while it pulls; rendered at exact frames
+       40-84 from two sides.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

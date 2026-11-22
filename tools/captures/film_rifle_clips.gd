@@ -27,6 +27,9 @@ var _dropped: MeshInstance3D
 var _fall := Vector3.ZERO
 ## The magazine's place in the rifle (relative to the rifle's root, with the model's own scale).
 var _magazine_in_rifle := Transform3D.IDENTITY
+## The charging handle and the bolt carrier, and their places in the rifle at rest.
+var _sliders: Array[MeshInstance3D] = []
+var _slider_rest: Array[Transform3D] = []
 var _label: Label
 
 
@@ -70,6 +73,10 @@ func _run() -> void:
 	_rifle.top_level = true
 	_magazine = _rifle.find_child("MAGAZINE_M16A3_0", true, false) as MeshInstance3D
 	_magazine_in_rifle = _rifle.global_transform.affine_inverse() * _magazine.global_transform
+	for part in ["CHANRIGN HANDLE_M16A3_0", "BOLT CARRIER_M16A3_0"]:
+		var mesh := _rifle.find_child(part, true, false) as MeshInstance3D
+		_sliders.append(mesh)
+		_slider_rest.append(_rifle.global_transform.affine_inverse() * mesh.global_transform)
 	_fresh = _magazine.duplicate() as MeshInstance3D
 	root.add_child(_fresh)
 	_fresh.top_level = true
@@ -128,6 +135,11 @@ func _process(delta: float) -> bool:
 		var clip := String(_upper.current_animation) if _upper.is_playing() else ""
 		var frame := _upper.current_animation_position * 30.0 if _upper.is_playing() else 0.0
 		_rifle.global_transform = _hold.call("place", delta, clip, frame)
+		var travel: float = _hold.call("charging_at", clip, frame)
+		for i in _sliders.size():
+			var rest := _slider_rest[i]
+			_sliders[i].global_transform = _rifle.global_transform * Transform3D(rest.basis,
+				rest.origin + Vector3(0.0, 0.0, travel))
 		_reload_magazine(clip, frame, delta)
 	return false
 

@@ -26,16 +26,26 @@ const IN_OWN := Transform3D(Vector3(-71.6355, 22.8132, 65.9387),
 	Vector3(-53.8582, 42.0009, -73.0426), Vector3(-44.3582, -87.8378, -17.8008),
 	Vector3(-3.40057, 22.7076, -4.32732))
 const OWN_CLIPS := ["RifleIdleA", "RifleIdleB", "RifleAimDown", "RifleGrab", "RifleAway"]
-## The reload (#400): where his left hand is on the rifle in each part of it, traced from the
-## capture (frame ranges at 30 fps): on the handguard, cupping the magazine to drop it, at his
-## belt for the fresh one (no part), the fresh one pushed into the magazine well, the charging
-## handle pulled, the handguard again. The rifle turns so that part meets his hand.
+## The reload (#400, #401): where his left hand is on the rifle in each part of it, traced from the
+## capture (frame ranges at 30 fps): on the handguard; cupping the magazine to drop it; at his belt
+## for the fresh one; the fresh one pushed into the magazine well; over the top of the receiver to
+## the charging handle at its rear, hooked at 62, pulled back to 64 and let go at 65 (an M16's
+## T-handle travels back toward the face and the spring returns it); the handguard again. In the
+## magazine and charging parts the rifle stays upright in his right hand, as a real one does, and
+## only his left arm (the IK) reaches the part; on the handguard the barrel runs through his hand.
 const RELOAD_LEFT := [[0, 10, "guard"], [11, 20, "magazine"], [21, 42, ""], [43, 53, "magazine"],
-	[54, 58, ""], [59, 68, "charge"], [69, 99, "guard"]]
+	[54, 61, ""], [62, 65, "charge"], [66, 71, ""], [72, 99, "guard"]]
 ## The hole of his left hand when it cups the magazine's base (the magazine's bottom is y -0.173,
-## z -0.026 to -0.097) and when it hooks the charging handle's T (y 0.02-0.035, z to 0.094).
+## z -0.026 to -0.097) and when its fingers hook the charging handle's T (its rear end at y
+## 0.02-0.035, z 0.094), with the handle at rest.
 const MAGAZINE := Vector3(0.0, -0.205, -0.062)
-const CHARGE := Vector3(0.0, 0.075, 0.075)
+const CHARGE := Vector3(0.0, 0.07, 0.085)
+## The charging handle and the bolt carrier: hooked at HOOK, back by CHARGE_TRAVEL at PULLED,
+## held, let go at RELEASE and home a frame later.
+const CHARGE_TRAVEL := 0.08
+const HOOK := 62.0
+const PULLED := 64.0
+const RELEASE := 65.0
 ## The magazine's frames: the empty one leaves the well at DROP, a fresh one is in his left hand
 ## from PICK (at his belt) and is seated at SEAT.
 const DROP := 14
@@ -110,7 +120,10 @@ func place(delta: float, clip: String, frame: float = 0.0) -> Transform3D:
 			and rad_to_deg(toward.angle_to(barrel)) < LEFT_ANGLE
 		wanted = "guard" if near else ""
 	var point: Vector3 = {"guard": GUARD, "magazine": MAGAZINE, "charge": CHARGE}.get(wanted, Vector3.ZERO)
-	var target := one_hand if wanted == "" else _align(point - GRIP, toward, GRIP_AXIS, knuckles)
+	if wanted == "charge":
+		point += Vector3(0.0, 0.0, charging_at(clip, frame))
+	var target := _align(point - GRIP, toward, GRIP_AXIS, knuckles) if wanted == "guard" \
+		else one_hand
 	support = move_toward(support, 0.0 if wanted == "" else 1.0, delta * 6.0)
 	if wanted != _target:
 		_turned = _last
@@ -175,6 +188,17 @@ func _after_ik() -> void:
 		return
 	_correction += (_point - _fist("Left")) * 0.6
 	_correction = _correction.limit_length(0.25)
+
+
+## How far back the charging handle (and the bolt carrier with it) is at `frame`, in metres.
+func charging_at(clip: String, frame: float) -> float:
+	if clip != "RifleReload" or frame < HOOK or frame >= RELEASE + 1.0:
+		return 0.0
+	if frame < PULLED:
+		return CHARGE_TRAVEL * smoothstep(HOOK, PULLED, frame)
+	if frame < RELEASE:
+		return CHARGE_TRAVEL
+	return CHARGE_TRAVEL * (1.0 - (frame - RELEASE))
 
 
 ## The rifle slung at his right hip this frame.
