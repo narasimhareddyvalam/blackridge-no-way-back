@@ -5,6 +5,15 @@ is at tag `a6`), then Assignment 5's (tag `a5`), and then the final project's sa
 
 # Assignment 7 — Animation (2026-11-22)
 
+Four clips are submitted (#405):
+- **Ring:** the dash sprite cycle (graded pair).
+- **EnterVan:** the rig committing action (graded pair).
+- **Rifle reload:** motion capture, Mission 3 (C68).
+- **Shock:** Ethan's shock after the hit, Mission 1 (C67).
+
+The tables below start with the pair's tests, then the two later clips'
+("The rifle reload and the shock"), then Step 7's revision ("Step 7 r1").
+
 Every run below went through `scripts/run-test.sh` at a fixed 60 fps (Godot 4.7.2, headless) from
 the repository root; logs under `logs/animation/`. Exit codes are the wrapper's. Every log still
 ends with the engine's "resources still in use at exit" lines, which the wrapper does not fail on.
@@ -20,7 +29,7 @@ without a visible seam. Those are the author's checks in play.
 | `test_rig_readback.gd` | one AnimationPlayer; every track of every clip in `ethan.glb` resolves to a real bone; EnterVan's 114 tracks all bone tracks; 164 frames at 30 fps; step 1/30; `LOOP_NONE`, set in `ethan.glb.import`; importer 30 fps; the app's boarding moments on frames 22, 32, 48, 53, in order | 8/9 red before the import setting (`rig/red`), 9/9 from an empty cache (`rig/fresh_cache`); 11/14 red before the moments were frames (`wiring/red`), 14/14 after (`wiring/green`, `repin`) |
 | `test_animation_structure.gd` | the brief's state table (§5) against `phone_ring.tres` and `ethan.glb`, with loop modes; every clip the code asks for exists; the drawn pulse gone; only `navigation_display.gd` names the ring's nodes; nothing outside the driver reaches Ethan's player; the app asks `driver.gd` | 11/13 red before wiring, 13/13 after |
 | `test_animation_states.gd` (real input) | the ring shows and plays `ring` exactly while the call rings or answers itself, every cell seen, wraps 5 → 0, hidden and stopped when talking; Idle, Walk, Run on foot; E boards with EnterVan; seated, Ethan hidden | 6/8 red before wiring, 8/8 after |
-| `test_animation_edges.gd` (real input) | W, E, R, Esc one clip frame before, on and after frames 0, 32, 48 and 60 (48 boardings) | see below; 48/48 at the end (`edges`) |
+| `test_animation_edges.gd` (real input) | W, E, R, Esc one clip frame before, on and after frames 0, 32, 48 and 60 (48 boardings); 69 after Step 7 r1 | see below; 48/48 at the end (`edges`); 48/48 after r1 (`step7_r1`) |
 
 ## The edges (Step 6)
 
@@ -72,12 +81,58 @@ The empty-cache import also rewrites four Poly Haven texture `.import` files (VR
 `green_metal_rust` and `leafy_grass`): it did so in the working tree in Step 4 and again in the
 fresh worktree, so the committed files are older than their own settings. Left for the author.
 
+## The rifle reload and the shock
+
+| Test | What it asserts | Result |
+| :-- | :-- | :-- |
+| `test_reload_pins.gd` (before the clip) | PIN5 R reloads for `RELOAD_SECONDS`, the magazine full from the spare, fire and R refused meanwhile; PIN6 armed, his legs Idle standing and a walk moving | 3/3 with the pistol (`pins_two`); re-pinned for the rifle as its revision predicted (2.2 → 3.317 s observed, magazine 15 → 30, the rifle gaits), its own commit (`ea544d5`), 3/3 |
+| `test_reload_readback.gd` | RifleReload on `rifle_carry.gd`'s own UpperBody: every track a bone; 100 frames, step 1/30, `LOOP_NONE` as the importer's raw clip; no bone below the waist; `RELOAD_SECONDS` = the clip's length; the magazine out 14-25, in his hand 26-46, seated 47; the charging handle 8 cm back at 64-65; process idle | 12/12 (`reload`). It replaces the read-back of the rejected hand-keyed pistol clip (12/12 at `3b00d46`) |
+| `test_reload_edges.gd` (real input, Mission 3) | fire+R and Esc one clip frame before, on and after frames 0, 30, 48 and 99 | 17/22 first (the test: at the end it fired before R, so R then reloaded the round it had fired); 21/21 after R was pressed first there (`reload`) |
+| `test_hangar.gd` | Mission 3's fight with the rifle (30 rounds, fire only from the aim) | 9/9 (`rifle_wire`) |
+| `test_shock_pins.gd` (before the clip) | PIN4 after the hit the van holds 4.0 s before DRIVE., Ethan stays in it, the checkpoint saved | 3/3 before and after (`shock`) |
+| `test_shock_readback.gd` | shock/Shock on Ethan's rig: every track a bone; 105 frames, step 1/30, `LOOP_NONE`; keyed on the phase table's 20 frames; the head up 15° in the startle, down 56° in the drop, level in the stare; turned 44° and −27° at his mirrors | 9/9 (`shock`) |
+| `test_shock_state.gd` (real input, Mission 1) | when the van stops the shot plays: Ethan seen seated on shock/Shock, the cutscene camera current; both wrists within 3 cm of their places on the wheel's rim (read in `skeleton_updated`, where the IK's result shows); hidden after, the cab camera back, DRIVE. at 4.00 s | 3/3 (`shock`); with the hold switched off (a mutation, restored) the grip check fails at 0.137 m |
+
+**The reload's two clocks.** The gun counts the reload down in `_process` and starts it on the R
+press; the clip starts on the next tick, when `rifle_carry.gd` sees `reloading`. In the edge
+test the reload ends at the clip's frame 98.5, one 60 Hz tick before its last frame (99). The
+Esc trial at frame 98 therefore lands just after the reload has ended.
+
+## Step 7 r1 (TUNING.md)
+
+Claude Code's decision under the author's delegation (#406), not the author's observation.
+EnterVan's cut moved from frame 53 to 62 so the player sees him climb in.
+- `test_rig_readback.gd` expects `CUT` 62: 14/14.
+- `test_animation_edges.gd`'s seated boundary is 69: 48/48.
+- `test_animation_states.gd`: 8/8.
+- PIN2 failed as predicted (seated 2.333 s against 2.017) and was re-pinned in its own commit
+  (`2f91bc5`): 3/3 (`step7_r1`).
+
 ## Every earlier suite
 
-82 runs (every earlier test, `test_night_dimming.gd` at 30, 60 and 144 fps) and the art check, in
-three workers through the wrapper: before any change 82/82 exit 0 (`logs/animation/baseline`);
-after wiring 82/82 (`logs/animation/wiring/suites`); after the fade fix 82/82 exit 0, art check
-0 failures (`logs/animation/repin/suites`).
+81 runs (every earlier test, `test_night_dimming.gd` at 30, 60 and 144 fps) and the art check, in
+three workers through the wrapper (the earlier text here said "82": that counted the art check's
+line). Results:
+- before any change: 81/81 exit 0 (`logs/animation/baseline`);
+- after wiring: 81/81 (`logs/animation/wiring/suites`);
+- after the fade fix: 81/81 exit 0, art check 0 failures (`logs/animation/repin/suites`);
+- with the rifle wired in: 81/81 exit 0, the art check 1 failure (`ethan.glb`'s clip list, which it
+  pinned at ten clips), fixed in its own commit (`ff6c3bc`, `logs/animation/rifle_wire/suites`);
+- after Step 7 r1: 81/81 exit 0, 0 failures, no SCRIPT or SHADER ERROR lines, art check
+  0 failures (`logs/animation/final_suites`).
+
+## HUMAN CHECKS (the author) — open
+
+No headless run can show these, and Claude Code's readings of the strips are claims, not checks.
+They wait for the author:
+- **The ring:** it wraps without a visible seam, over five wraps at normal speed; the handset does
+  not drift in its cells; it reads on the dash at night, on the valley road and under the depot's
+  lights.
+- **EnterVan in play:** startup, active and recovery read as distinct, at normal speed and at
+  `--time-scale 0.25`. The verdict on Step 7 r1 (keep, revert or revise), and the observation-driven
+  revision the handout asks for (TUNING.md).
+- **The rifle reload and the shock in play:** the hands on the rifle's parts, and the fear reading
+  through the windshield.
 
 
 # Assignment 6 — particle effects (2026-11-07)
