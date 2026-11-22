@@ -1,10 +1,14 @@
 extends SceneTree
 ## Assignment 7's pins for the reload clip (CHANGE-BRIEF.md, the revision #377-#383), written and
 ## committed before the clip: what the pistol does now in Mission 3, driven with real input.
-##   PIN5 R reloads for RELOAD_SECONDS (2.2 s), then the magazine is full from the spare; while it
-##        reloads a pull of the trigger fires nothing and R again does not restart it.
+##   PIN5 R reloads for RELOAD_SECONDS, then the magazine is full from the spare; while it reloads
+##        a pull of the trigger fires nothing and R again does not restart it.
 ##   PIN6 armed, his legs: standing still his own player plays Idle, walking while he aims it
-##        plays Walk (the reload's upper-body clips must leave this as it is).
+##        plays his walk.
+## Re-pinned for the rifle (C68, #403), as the brief's rifle revision predicted: RELOAD_SECONDS
+## 2.2 s became the reload clip's 99/30 s; the magazine 15 became 30 (from 12 it takes 18 of the
+## spare 30, leaving 12); the rifle is brought out first (slung, R does nothing); and walking with
+## it out his legs play the rifle's gaits, not Walk, settling to Idle once a turn on the spot ends.
 
 const STAGE_THREE := "[save]\nversion=2\nmission=\"last_run\"\n\n[run]\nstage=3\n"
 const TICK := 1.0 / 60.0
@@ -63,7 +67,10 @@ func _run() -> void:
 	gun.set("magazine", 12)
 	var spare: int = gun.get("reserve")
 	Input.action_press("aim")
-	await _frames(20)
+	waited = 0.0
+	while not bool(_driver.call("can_fire")) and waited < 8.0:
+		await physics_frame
+		waited += TICK
 	await _press("reload")
 	var started := bool(gun.get("reloading"))
 	var from_frame := Engine.get_process_frames()
@@ -83,7 +90,7 @@ func _run() -> void:
 	var clock := (Engine.get_process_frames() - from_frame) * TICK
 	Input.action_release("aim")
 	var took := clock
-	var full := int(gun.get("magazine")) == 15 and int(gun.get("reserve")) == spare - 3
+	var full := int(gun.get("magazine")) == 30 and int(gun.get("reserve")) == spare - 18
 	check(("PIN5: R reloads (%s) for %.3f s (RELOAD_SECONDS %.1f), then the magazine is full "
 		+ "from the spare (%s: %d and %d)") % [started, took, float(gun.get("RELOAD_SECONDS")), full,
 		gun.get("magazine"), gun.get("reserve")], started and full
@@ -91,7 +98,11 @@ func _run() -> void:
 	check("PIN5: while it reloads, the trigger fires nothing (%d shots) and R again does not "
 		% (int(gun.get("shots")) - shots) + "restart it (%s, %.3f s in all)" % [again, took],
 		fired_during and again and int(gun.get("shots")) == shots)
-	await _frames(30)
+	var settle := 0
+	while _legs() != "Idle" and settle < 120:
+		await physics_frame
+		settle += 1
+	await _frames(10)
 	var standing := _legs()
 	Input.action_press("aim")
 	_hold("accelerate", true)
@@ -101,7 +112,8 @@ func _run() -> void:
 	Input.action_release("aim")
 	await _frames(30)
 	check("PIN6: armed, his own player plays %s standing and %s walking while he aims" % [
-		standing, walking], standing == "Idle" and walking == "Walk")
+		standing, walking], standing == "Idle" and walking in ["RifleWalk", "RifleStrafeLeft",
+		"RifleStrafeRight", "RifleWalkBack"])
 	_finish()
 
 
