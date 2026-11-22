@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]  (LOG_DIR=<folder> keeps
 # logs out of logs/). Godot runs with HOME=.scratch-home, so user:// is a scratch folder; the run
-# fails if the player's real save folder changes, or if the test file does not exist.
+# fails if the player's real save folder changes, or if the test file does not exist, and (from
+# Assignment 7) if a resource fails to load ("Failed loading resource").
 set -o pipefail
 if [ $# -lt 2 ]; then
 	echo "usage: scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]" >&2
@@ -39,7 +40,7 @@ mkdir -p "$HOME"
 timeout "${3:-120}" "$godot_bin" --headless --path game --script "$script" "${fps_args[@]}" 2>&1 \
 	| tee "$log"
 status=$?
-if grep -qE "SHADER ERROR|SCRIPT ERROR" "$log"; then status=1; fi
+if grep -qE "SHADER ERROR|SCRIPT ERROR|Failed loading resource" "$log"; then status=1; fi
 if [ "$(fingerprint)" != "$before" ]; then
 	echo "REAL SAVE FOLDER CHANGED: $real_saves" | tee -a "$log"
 	status=1
