@@ -4253,3 +4253,55 @@ has the engine's "resources still in use at exit" line, as at the Assignment 5 b
   instanced trees.
 - The look when driving: wind sway, LOD switching at 90 m, and collisions with trunks.
 - The author's verdict on the forest road stills, and on the window fog under Forward+.
+
+## 2026-11-22 — Assignment 7 finished while the author was away (#405-#406; Claude Code)
+
+- **Asked:** #405, finish the shock, then Step 7, all four clips submitted; #406, the Brutalist
+  film, every requirement, decide realistically, commit ("i am going away for sometime").
+  Taken as: finish and commit on `develop`. Not taken as leave to push, tag, upload or submit, or
+  to write the author's observations, verdicts or FRICTIONAL notes.
+- **Done, in commit order:**
+  - `bf69b24` the shock remade: 105 frames, hands by IK on the wheel's rim, seated at a bent-arm
+    reach, the shot widened.
+  - `107af78` Step 7 strip r0 and Claude Code's reading (`TUNING.md`).
+  - `8be9bdb` the reload read-back (now on the mocap clip) and edges.
+  - `8f618ee` r1: the cut 53 → 62 (Claude Code's decision, prediction written first);
+    `c486789` strip r1 and the comparison; `2f91bc5` PIN2 re-pinned, as predicted.
+  - `516c7f2` every earlier suite after r1.
+  - `1379953`, `31cfa00`, `a692249`, `e8ea889`: TEST-REPORT, the brief's revision, SOURCES,
+    README, SUBMISSION, FRICTIONAL.
+  - `1e7765e` the film's capture scripts; `92f7810` the film; `1ae4e90` the `.uid` sidecars.
+- **Tests, run through `scripts/run-test.sh` at 60 fps, real results:**
+  - shock: read-back 9/9, state 3/3 (with the hold off, the grip check fails at 0.137 m), PIN4 3/3;
+  - reload: read-back 12/12, edges 21/21 (17/22 first, a test fault), pins 3/3, hangar 9/9;
+  - the pair after r1: rig read-back 14/14, states 8/8, edges 48/48, pins 3/3 (PIN2 failed as
+    predicted before its re-pin); ring read-back 15/15, structure 13/13;
+  - every earlier suite: 81/81 exit 0, no SCRIPT or SHADER ERROR, art check 0 failures
+    (`logs/animation/final_suites`).
+- **The film:** `youtube/claude-liam-blackridge-animation-gamedev/`.
+  - `./art godot-gamedev --check`: PASS. GATE T: PASS. Gate V: 0 BLOCKER, 0 MAJOR.
+  - Three frame-level QC passes (`_qc/VISUAL-QC.md`).
+  - Master: `exports/landscape/Blackridge-Frame-by-Frame-4K.mp4`, 3840×2160, 439.9 s, SHA-256
+    `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040`. Not in Git.
+  - Open it with `open "/Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-animation-gamedev/exports/landscape/Blackridge-Frame-by-Frame-4K.mp4"`.
+- **The next run may rely on:**
+  - `game/` unchanged since `1e7765e`, the film's revision;
+  - every count above recorded in `TEST-REPORT.md`.
+- **Open, the author's:**
+  1. Watch the film; upload it to OneDrive; put the link in `README.md` and `SUBMISSION.md`.
+  2. Play EnterVan at normal speed and at `--time-scale 0.25`: the verdict on r1 (keep, revert,
+     revise). The handout's observation-driven revision must come from what you see
+     (`TUNING.md`).
+  3. The human checks (`TEST-REPORT.md`, "HUMAN CHECKS"): the ring's seam over five wraps, the
+     ring on the dash at night, the phases reading in play, the reload and the shock in play.
+  4. Your CLAUDE.md corrections (for example `rifle_carry.gd` and `push_gait.gd` as the driver's
+     helpers; the importer key and the ring's process mode now confirmed), committed apart from
+     the agent's draft.
+  5. Your own notes in `FRICTIONAL.md`; check `SUBMISSION.md`'s drafted summary.
+  6. Decide on the four Poly Haven `.import` files the empty-cache import rewrites (uncommitted).
+  7. Then the OK to push `develop`, open the PR to `main`, tag `a7`, run the fresh-clone check,
+     and submit the ZIP on Canvas.
+- **Unverified:**
+  - the motion reading and the seam: no headless run shows them;
+  - how the film plays on another screen or after OneDrive re-encodes it;
+  - the foot lift at clip 53 in r1, which this camera cannot show.
