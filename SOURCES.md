@@ -10,6 +10,7 @@ unchanged; its graded copy is at tag `a5`.
 | --- | --- | --- | --- | --- | --- |
 | `phone_ring.png` in `game/features/vehicles/freight_van/art/ring/` | drawn by `tools/art/make_phone_ring_sheet.py` (Pillow), committed beside it; six 64 x 64 cells, `hframes` 6, `vframes` 1 (`CHANGE-BRIEF.md` §2) | Claude Code wrote the script at the author's direction (#365-#366) | none needed: drawn for this game by code; the script is its provenance (`ATTRIBUTION.md` beside it) | 2026-11-22 | the dash's ringing phone, the `ring` clip (`game/animations/phone_ring.tres`) |
 | `EnterVan` in `game/features/characters/ethan/ethan.glb` | Mixamo's "Entering Car" (`source_assets/mixamo/Entering Car.fbx`), already credited in the game ("THE PEOPLE") | Adobe Mixamo; converted by `tools/art/convert_mixamo.py` | Mixamo's terms, as for Ethan's other clips | 2026-11-22 (its loop mode set in `ethan.glb.import`) | Ethan getting into the van |
+| `PistolIdle`, `PistolReload` (and `PistolAim`, its first frame) in `ethan.glb`, upper body in `game/animations/ethan_pistol.tres` | Mixamo's "Pistol Idle" and "Reloading" for Ch33 (`source_assets/mixamo/`), downloaded by the author with their Adobe account (#389) | Adobe Mixamo; converted by `tools/art/convert_mixamo.py`, the upper body kept by `tools/art/make_pistol_upper_body.gd` | Mixamo's terms, as for Ethan's other clips | 2026-11-22 | Ethan's pistol held and reloaded in Mission 3 |
 
 # Phase 2 — Mission 2, The Wrong Cargo (2026-11-08 onward)
 

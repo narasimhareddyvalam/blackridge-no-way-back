@@ -21,6 +21,9 @@ committed. The conversion:
   knots, so his planted feet stay put (step 2e, #239-#240);
 - names the idle, walk, run and push tracks "<name>-loop", Godot's import hint for a looping
   clip; Godot removes the suffix on import;
+- keeps only the upper body (spine, neck, head, shoulders, arms, hands, fingers) in the pistol
+  clips, so a second player can lay them over his legs' Idle, Walk or Run (Assignment 7, #390);
+  their loop modes are set in ethan.glb.import, not by a name suffix;
 - exports the pedestrian at real size: Mixamo's 1/100 scale and 90-degree turn are baked
   into his skeleton and mesh, and the clips' movement is scaled to match, because the
   physics bones of his ragdoll cannot hang from a scaled skeleton.
@@ -49,6 +52,8 @@ STOPS = {"PushStop"}
 STOP_KNOTS = 6
 REAL_SIZE = {"pedestrian"}
 LOOPING = IN_PLACE | CLIMBS | {"Idle"}
+UPPER_BODY = {"PistolIdle", "PistolReload"}
+UPPER_BONES = ("Spine", "Neck", "Head", "Shoulder", "Arm", "Hand")
 FPS = 30.0
 CHARACTERS = {
     "ethan": ("Breathing Idle.fbx", "Idle", [
@@ -56,7 +61,8 @@ CHARACTERS = {
         ("Running.fbx", "Run"), ("Entering Car.fbx", "EnterVan"),
         ("Exiting Car.fbx", "ExitVan"), ("Pushing.fbx", "Push"),
         ("Push Stop.fbx", "PushStop"), ("Running Up Stairs.fbx", "StairsUp"),
-        ("Pull Heavy Object.fbx", "PullBack")]),
+        ("Pull Heavy Object.fbx", "PullBack"), ("Pistol Idle.fbx", "PistolIdle"),
+        ("Reloading.fbx", "PistolReload")]),
     "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
                                                     ("Breathing Idle.fbx", "Idle")]),
 }
@@ -157,6 +163,27 @@ def stop_in_place(action):
     return [sign * value * 0.01 for value in travel]
 
 
+def upper_body_only(action):
+    """Removes every curve of a bone below the waist (the hips, legs and feet); returns how many
+    curves are kept."""
+    kept = 0
+    for bag_curves in [list(fcurves(action))]:
+        for curve in bag_curves:
+            path = curve.data_path
+            if 'pose.bones["' not in path:
+                continue
+            bone = path[path.index('["') + 2:path.index('"]')]
+            if any(part in bone for part in UPPER_BONES):
+                kept += 1
+                continue
+            for layer in action.layers:
+                for strip in layer.strips:
+                    for bag in strip.channelbags:
+                        if curve in list(bag.fcurves):
+                            bag.fcurves.remove(curve)
+    return kept
+
+
 def fit_range(action):
     keys = [k.co[0] for c in fcurves(action) for k in c.keyframe_points]
     action.use_frame_range = True
@@ -177,6 +204,9 @@ def prepare(action, label):
         print(f"  {label}: cycle {cycle:.3f} s, travel and rise a cycle "
               + ", ".join(f"axis {axis} {speed * cycle:.3f} m" for axis, speed in
                           sorted(moved.items())))
+    if label in UPPER_BODY:
+        print(f"  {label}: upper body only, {upper_body_only(action)} curves kept, "
+              f"{(action.frame_end - action.frame_start + 1):.0f} frames")
     if label in STOPS:
         knots = stop_in_place(action)
         print(f"  {label}: travel at every {STOP_KNOTS}th frame from the first, "

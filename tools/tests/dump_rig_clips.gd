@@ -1,7 +1,8 @@
 extends SceneTree
 ## Writes every clip of Ethan's rig (`ethan.glb`) as numbers, for Assignment 7's check that a
 ## re-conversion changes no earlier clip: for each clip its length and loop mode, and for each
-## track, sampled every 5 frames at 30 fps, its position, rotation or scale. The JSON goes to the
+## track, sampled every 5 frames at 30 fps, its position, rotation or scale; and each bone's rest
+## pose (`__rest__`). The JSON goes to the
 ## path after `--`. Compared by tools/tests/compare_rig_clips.py.
 
 const RIG := "res://features/characters/ethan/ethan.glb"
@@ -12,6 +13,16 @@ func _initialize() -> void:
 	var model := (load(RIG) as PackedScene).instantiate() as Node3D
 	var player := model.find_children("*", "AnimationPlayer", true, false)[0] as AnimationPlayer
 	var clips := {}
+	var skeleton := model.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
+	var rests := {}
+	for bone in skeleton.get_bone_count():
+		var rest := skeleton.get_bone_rest(bone)
+		var q := rest.basis.get_rotation_quaternion()
+		var o := rest.origin
+		var sc := rest.basis.get_scale()
+		rests[skeleton.get_bone_name(bone)] = {"1": [o.x, o.y, o.z], "2": [q.x, q.y, q.z, q.w],
+			"3": [sc.x, sc.y, sc.z]}
+	clips["__rest__"] = rests
 	for clip_name in player.get_animation_list():
 		var clip := player.get_animation(clip_name)
 		var tracks := {}
@@ -38,6 +49,6 @@ func _initialize() -> void:
 	var file := FileAccess.open(out, FileAccess.WRITE)
 	file.store_string(JSON.stringify(clips))
 	file.close()
-	print("DUMP: %d clips to %s" % [clips.size(), out])
+	print("DUMP: %d clips to %s" % [clips.size() - 1, out])
 	model.free()
 	quit()

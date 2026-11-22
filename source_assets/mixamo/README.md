@@ -3,7 +3,7 @@
 Characters and animations from Adobe Mixamo (https://www.mixamo.com) for Mission 1's start
 on foot and the collision (decision C27), and for Ethan's push behind bay 9's pallet jack in
 Mission 2 (step 2e, #238-#240). The author downloaded them with their Adobe account, the
-first seven on 2026-10-31 and the last three on 2026-11-12, and saved them under Mixamo's own
+first seven on 2026-10-31, three more on 2026-11-12 and the two pistol clips on 2026-11-22, and saved them under Mixamo's own
 names; Claude Code moved the last three here from the author's Downloads folder at their
 word (#239). Claude Code converts them into the game and credits them in `SOURCES.md`.
 
@@ -25,6 +25,8 @@ was not ticked); the converter takes it out, and prints what the game moves Etha
 | `Pushing.fbx` | Ch33 | 81 | Ethan `Push` (looping): 0.377 m/s, a 2.67 s stride |
 | `Push Stop.fbx` | Ch33 | 79 | Ethan `PushStop`: three more steps, 0.756 m, then he stands |
 | `Crouch Walk Forward.fbx` | Ch33 | 35 | not used (below) |
+| `Pistol Idle.fbx` | Ch33 | 250 | Ethan `PistolIdle` (looping), upper body only (Assignment 7, #389) |
+| `Reloading.fbx` | Ch33 | 100 | Ethan `PistolReload`, upper body only; its first frame is `PistolAim` (Assignment 7, #389) |
 
 `Crouch Walk Forward.fbx` is kept but not converted: its arms are flung out, the left
 forward and the right up by his head, so they would leave the jack's handle, and it walks at

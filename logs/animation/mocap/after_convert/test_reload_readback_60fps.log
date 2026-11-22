@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: RL1 the held pistol has its ReloadPlayer (ReloadPlayer:<AnimationPlayer#31994152514>)
+PASS: RL2 every track resolves []
+PASS: RL3 the clip 'reload' exists
+PASS: RL4 length 2.2000 s is 66 frames at 30 fps = RELOAD_SECONDS 2.2
+PASS: RL5 step is one frame period (0.03333)
+PASS: RL6 it plays once (loop_mode 0)
+PASS: RL7 it keys the held gun drawn in, the magazine, its visibility, the slide and the left hand [".:position", "Pistol/clip_pistolLow_0:position", "Pistol/clip_pistolLow_0:visible", "Pistol/slide_pistolLow_0:position", "SupportHand:position"]
+PASS: RL8 every key sits on a whole frame at 30 fps (off: [])
+PASS: RL9 the phase table's frames are keyed [0, 17, 18, 47, 48, 55, 58, 65] (missing [])
+PASS: RL10 every track starts at 0 on the rest pose and ends on it []
+PASS: RL11 the magazine's visibility is discrete and it is hidden only from frame 17 ([17])
+PASS: RL12 the player advances on the process tick (the handgun's clock) and plays nothing by itself
+RELOAD READBACK RESULT: 12/12 passed; 0 failed
