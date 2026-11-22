@@ -305,3 +305,59 @@ AI-assisted wording based on the recorded work, added at the author's request.
 - **Learned / still unresolved:** The work showed that passing automated tests does not guarantee visible effects; exhaust remains over its GPU budget, and detailed visual checks are not individually documented.
 - **Human vs AI:** I chose the effects and approved their appearance; AI helped with implementation, tuning, testing, and the process-shader conversion and notes.
 - **Trace:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #160, #164–#171; `TUNING.md`; `TEST-REPORT.md`; this conversation's approval to add these notes.
+
+## Assignment 7
+
+## 2026-11-22 — The four clips (recorded by Claude Code, facts only)
+
+- **The pair (#362-#376).**
+  - The author chose "Phone ring + get in van" (#365). Claude Code drafted the brief, marked its
+    own proposed values with †, and wrote the pins before any clip (PIN1-PIN3, 3/3).
+  - The ring: a code-drawn sheet, a frame track and a read-back (15/15).
+  - EnterVan's loop mode was set in its importer and proved from an empty cache: the read-back was
+    red at 8/9, then 9/9. Mutating the importer setting failed it (7/9).
+  - The boarding moments became the clip's frames, and every test and suite passed again.
+  - The edge test found Esc during the fade seating Ethan behind the pause menu. The author ruled
+    the code wrong (#374); the fix landed and the edges reached 48/48.
+  - The four mutations, each from its own worktree: three failed their tests; the importer
+    mutation passed by design (`TEST-REPORT.md`).
+- **The third clip, the reload (#377-#403).**
+  - The author asked for two more clips made by us (#381). Claude Code's hand-keyed pistol reload
+    was rejected by the author: "hes not even holding gun realistically" (#386).
+  - The author chose motion capture, downloaded the Mixamo clips, then switched to a rifle and
+    chose jeandiz's M16 (C68).
+  - From Claude Code's films the author corrected the hold six times: the right hand on the front
+    of the gun, the draw's hand, the gun not in his hand, the reload's hands, the gun inverting at
+    the charging handle, and the put-away. Each was fixed by measuring the hands against the
+    rifle's parts and real handling (the grip in the fist; the rifle upright through the reload;
+    the M16's charging handle pulled 8 cm; slung at the hip, where both captured clips put it).
+  - Wired into Mission 3: the pins re-pinned as the brief predicted (3/3), the hangar 9/9, the
+    reload read-back 12/12. The edges reached 21/21 after a test fault was fixed (17/22 first).
+- **The fourth clip, the shock (#380, #403-#405).**
+  - The first version was keyed over the Sitting Pose, which raised one leg; its base became
+    EnterVan's last frame.
+  - The author's look (#404): his hands were not on the wheel, and the fear did not read.
+  - Claude Code found that the wheel mesh's origin sits 0.24 m off its rim's middle. It also
+    found that the wheel was 0.67 m from his shoulders, against an arm of 0.48 m.
+  - The shock was remade: 105 frames with a startle, a "no" shake, the drop and his mirrors; a
+    hunch over the wheel; his seat moved forward to a bent-arm reach; and the shot widened to fit
+    the letterbox.
+  - Tests: read-back 9/9, state 3/3 (the wrists within 0.021 m of the rim), PIN4 3/3.
+- **Step 7 (#405-#406).**
+  - Strip r0 and Claude Code's reading (`TUNING.md`): §9's frames run two early; the cut came
+    before Ethan lifted a foot; the door runs one frame behind.
+  - With the author away (#406), Claude Code made r1 itself: the cut moved from 53 to 62. It wrote
+    the prediction first, captured r1 and compared it (five of six seen), then re-pinned PIN2.
+  - Every earlier suite passed again: 81/81.
+- **Open for the author:**
+  - the verdict on r1 and an observation-driven revision;
+  - the human checks;
+  - the CLAUDE.md corrections;
+  - their own notes below.
+- **Trace:** `docs/AUTHOR_PROMPTS_AND_DECISIONS.md` #362-#406; `TUNING.md`; `TEST-REPORT.md`;
+  commits from the brief to `516c7f2`.
+
+## 2026-11-22 — My own notes
+
+_For the author to write: what you tried, expected and saw, what you accepted, changed or
+rejected, and what is still unresolved._

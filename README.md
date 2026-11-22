@@ -55,6 +55,97 @@ The chronological [development record](fractional.md) tracks requests, approvals
 problems, solutions, and actual checks. Git history starts at the 2026-10-28
 baseline commit `e81ec92`.
 
+## Assignment 7 — Animation
+
+Four clips, designed in [CHANGE-BRIEF.md](CHANGE-BRIEF.md) and its dated revisions. Each lives
+as a resource and has one authority that plays it.
+
+- **Ring (the cycle; the graded sprite clip):**
+  - a `Sprite2D` with an `AnimationPlayer` frame track (`RingIcon`, `RingPlayer`) on the dash's
+    navigation screen;
+  - six 64 × 64 cells drawn by `tools/art/make_phone_ring_sheet.py`, 10 fps, `LOOP_LINEAR`;
+  - clip `game/animations/phone_ring.tres`;
+  - played only by `navigation_display.gd` while Maya's call rings.
+- **EnterVan (the committing action; the graded rig clip):**
+  - Mixamo's "Entering Car" on Ethan's imported rig (`ethan.glb`, 30 fps, `LOOP_NONE` set in
+    `ethan.glb.import`);
+  - played only by `driver.gd` when E is pressed at the driver's door;
+  - the app's boarding reads its frames 22, 32, 48 and 62.
+- **Rifle reload:**
+  - Mixamo's captured "reloading", upper body only, on a second player (`UpperBody`) over Ethan's
+    legs, 100 frames;
+  - the M16's magazine and charging handle move on its frames;
+  - played by `driver.gd` through `rifle_carry.gd` in Mission 3 (C68).
+- **Shock:**
+  - 105 frames keyed by `tools/art/make_ethan_shock.gd` over EnterVan's last frame;
+  - Ethan in the driver's seat after the hit, his hands on the wheel, seen through the windshield
+    for 3.5 s inside Mission 1's 4 s hold (C67).
+
+**Starting point:** the game at the end of Assignment 6 and Phase 2 (`a6`, then `develop` to
+2026-11-22), with no sprite clip on the dash and EnterVan already in the game, played from
+seconds.
+
+**Engine and renderer:** Godot 4.7.2 stable, Forward+, on macOS (Apple M4).
+
+**Run:** `/Applications/Godot.app/Contents/MacOS/Godot --path game`, or open
+`game/project.godot` and press F5. Where each clip is seen:
+- the ring: Maya calls on the climb out of the depot;
+- EnterVan: walk to the driver's door and press E;
+- the reload: Mission 3, the hangar; hold the right mouse button to aim, then press R;
+- the shock: Mission 1, when the van stops after the hit.
+
+**Controls:** as Assignment 6's, below. Added for Mission 3 (`project.godot`, flagged for the
+author): the right mouse button aims, the left mouse button fires, and R reloads while the rifle
+is out (elsewhere R recovers).
+
+**What this assignment added:**
+- the brief, the pins and `CLAUDE.md`'s authority rules;
+- the ring sheet, its clip and the drawn pulse it replaces;
+- EnterVan's loop mode in the importer, and the boarding moments expressed in its frames;
+- the read-back, structure, state and edge tests, the mutations, and the fix for a pause during
+  the fade (#374);
+- the rifle with its fifteen Mixamo clips, the hold that keeps it in his hands, and the reload;
+- the shock shot;
+- the EnterVan strips r0 and r1 (`TUNING.md`; r1 moved the cut so the player sees him climb in).
+
+Results are in the Assignment 7 section of [TEST-REPORT.md](TEST-REPORT.md), and sources in
+[SOURCES.md](SOURCES.md).
+
+**Known limitations:**
+- Step 7's r1 is Claude Code's decision while the author was away (#406). The author's verdict
+  on it, and the observation-driven revision, are open.
+- The author's human checks are open: the ring's seam over five wraps, the motion reading in play,
+  and the ring against the dash at night.
+- Every strip is a fixture capture: the van placed, the run sheet treated as signed, Mission 3 at a
+  saved stage.
+- The door moves one frame (1/30 s) behind Ethan's hand.
+- The reload's timer ends one 60 Hz tick before the clip's last frame.
+- The shock's shot has no struck man in frame, and his seat is moved forward up to 0.25 m so
+  his arms reach the wheel.
+- The four Poly Haven texture `.import` files the empty-cache import rewrites are left
+  uncommitted, for the author.
+
+**Film:** made with the course's Brutalist godot-gamedev skill (walker). Its source is in
+`youtube/claude-liam-blackridge-animation-gamedev/`. The file name, SHA-256 and link are added
+once the author uploads it to OneDrive.
+
+To check the clips:
+
+```sh
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_ring_readback.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_rig_readback.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_reload_readback.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_shock_readback.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_animation_structure.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_animation_states.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_animation_edges.gd 60 900
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_reload_edges.gd 60 900
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_shock_state.gd 60 200
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_animation_pins.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_reload_pins.gd 60
+LOG_DIR=logs/animation/<step> scripts/run-test.sh test_shock_pins.gd 60 200
+```
+
 ## Assignment 6 — Particle effects
 
 Four particle effects, all `GPUParticles3D`, designed in [CHANGE-BRIEF.md](CHANGE-BRIEF.md).
