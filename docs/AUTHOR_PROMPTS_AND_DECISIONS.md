@@ -5705,6 +5705,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        over GitHub's 100 MB limit; ignored film files about 700 MB, notes and caches). Nothing
        deleted; the author decides.
 
+437. **The films are on OneDrive**
+     - **Prompt** (verbatim): "the films are in one drive"
+     - **Done:** `walker-jumpman-narasimha-v` re-checked (local `main` = GitHub's `ea0dcf2`; nothing
+       unpushed, uncommitted or stashed) and moved to the Trash (recoverable until emptied). The
+       houseghost folder waits: its backup branch, `blender/Van.blend` and its notes.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
