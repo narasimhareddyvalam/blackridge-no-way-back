@@ -5697,6 +5697,14 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked first:** where the walker folders and their repository are (Claude Code does not search
        outside the project unasked).
 
+436. **They are on the Desktop**
+     - **Prompt** (verbatim): "they are on desktop"
+     - **Checked (read-only):** `walker-jumpman-narasimha-v` (all commits on GitHub; local-only:
+       ignored film files about 300 MB and caches) and `walker-houseghost-narasimha-v` (one branch,
+       `backup/pre-author-rewrite`, 6 commits not on GitHub; untracked `blender/Van.blend`, 254 MB,
+       over GitHub's 100 MB limit; ignored film files about 700 MB, notes and caches). Nothing
+       deleted; the author decides.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
