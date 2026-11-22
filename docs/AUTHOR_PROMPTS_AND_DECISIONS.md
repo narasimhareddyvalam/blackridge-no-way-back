@@ -5408,6 +5408,25 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (behind his right hip at frame 25), easing into his hand over frames 22-28 and back for 0.35
        s after frame 40 of the put-away; the film redone and checked frame by frame.
 
+399. **The draw's hands, and the gun not in his hand**
+     - **Prompts** (verbatim, each with a screenshot of the film): "grabing rifle from back, the hand
+       isnt in correct position check it out" (4 s, the end of the draw: his left hand open under
+       nothing, the rifle hanging at his side); "the gun isnt in his hand at all" (19 s, Rifle Aim
+       To Down: the rifle across him, neither hand round it).
+     - **Found:** the author's own downloads (the draw, the idles, Aim To Down, the put-away) hold the
+       rifle at another angle in the hand than the shooter pack, so one fixed placement misses them
+       by 11-25 cm; and the grip point was the palm's middle, not the inside of the closed fingers.
+     - **Prompt** (verbatim, while it was being fixed): "make it realistic please, look at yourself
+       and make sure its in his hand correctly position. proporsition should be realistic."
+     - **Done:** `game/features/weapons/rifle/rifle_hold.gd` places the rifle from his hands each
+       frame (the grip in the hole of his closed right hand, its axis along his knuckles; the barrel
+       through his left fist while it is under the front; otherwise the solved placement of that
+       set of clips, the shooter pack's or the author's own, solved apart: pack grip 1.2 cm, left
+       hand 1-2 cm, butt 3-5 cm; own grip under 3 cm, left hand 4-10 cm); the sling's grip set in his
+       fist at frame 25 of the draw, the rifle riding in his fist from there and turning from its
+       slung angle over 8 frames; proportion: Ethan 1.77 m, the M16 1.00 m (a real M16A3 1.006 m);
+       the film checked every half second and at the flagged moments (4 s, 19 s) at full size.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

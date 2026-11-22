@@ -4,7 +4,8 @@ puts on the rifle: its pistol grip in his right palm, its handguard in his left 
 charging handle, at frame 58 of the reload, where he pulls it), and its butt in his right shoulder's
 pocket when he aims. Least squares over the six numbers of a rigid placement (scipy). Prints each
 frame's misses in centimetres and IN_HANDS, the rifle's transform in his hand bone's space.
-Usage: python3 tools/art/solve_rifle_grip.py targets.json
+Usage: python3 tools/art/solve_rifle_grip.py targets.json [pack|own]  (one set of clips: the
+Basic Shooter Pack's, or the author's own downloads, which hold the rifle differently)
 """
 
 import json
@@ -17,8 +18,8 @@ from scipy.spatial.transform import Rotation
 ## Points on the rifle, in m16.glb's own space (Godot: the muzzle -z, its top +y), from its parts:
 ## the pistol grip's upper middle where the palm closes, the handguard's underside a hand ahead of
 ## the magazine well, the charging handle's T at the receiver's rear top, and the butt plate.
-GRIP = np.array([0.0, -0.095, 0.085])
-GUARD = np.array([0.0, -0.06, -0.24])
+GRIP = np.array([0.0, -0.105, 0.088])
+GUARD = np.array([0.0, -0.055, -0.24])
 CHARGE = np.array([0.0, 0.03, 0.09])
 BUTT = np.array([0.0, -0.04, 0.44])
 WEIGHT = {"grip": 3.0, "guard": 1.0, "charge": 1.5, "butt": 1.5}
@@ -56,7 +57,7 @@ def residuals(params, frames):
 
 
 def main():
-    frames = load(sys.argv[1])
+    frames = [f for f in load(sys.argv[1]) if len(sys.argv) < 3 or f.get("set") == sys.argv[2]]
     best = None
     for seed in range(24):
         start = np.concatenate([Rotation.random(random_state=seed).as_rotvec(), np.zeros(3)])
