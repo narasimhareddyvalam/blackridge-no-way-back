@@ -4,8 +4,7 @@ extends SceneTree
 ## 990. Ending: a quiet beat in the cab, with no title (C04)"; #358), on Mission 2's stage 4 save
 ## (his van taken back in the yard's bay): DRIVE OUT, marked at the hill road; near it PULL OVER;
 ## passing it at speed does not end the mission; stopped there it ends as Mission 1 does, the cab
-## quiet, the screen fading to black with no title, and the save holds Mission 2's start again
-## (there is no Mission 3 yet).
+## quiet, the screen fading to black with no title, and the save holds Mission 3's start (#359).
 
 const STAGE_FOUR := "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=4\n"
 const SAMPLE := 990
@@ -95,11 +94,11 @@ func _run() -> void:
 	var quiet := not bool(_van.get("engine_on"))
 	var saved := ConfigFile.new()
 	saved.load(_scratch)
-	var stage: int = saved.get_value("cargo", "stage", -1)
+	var stage: int = saved.get_value("run", "stage", -1)
 	var mission: String = saved.get_value("save", "mission", "")
-	_check(ending and cinematic and quiet and mission == "the_wrong_cargo" and stage == 0,
+	_check(ending and cinematic and quiet and mission == "last_run" and stage == 0,
 		("G4: stopped there, the mission ends as Mission 1's: the HUD gone (%s), the engine off "
-		+ "(%s); the save holds Mission 2's start again (%s, stage %d)") % [cinematic, quiet,
+		+ "(%s); the save holds Mission 3's start (%s, stage %d)") % [cinematic, quiet,
 		mission, stage])
 	var titled := false
 	waited = 0.0

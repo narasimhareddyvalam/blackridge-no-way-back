@@ -8837,3 +8837,17 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
 ### Not in this mission
 
 - Car chases with pursuit AI; police; more than one weapon; interiors beyond the hangar office.
+
+## Revision 2026-11-21 (Mission 3's step 1, missions in a row, built; the save rules gain `last_run`, #359)
+
+- **Built:** `game/features/missions/last_run/last_run.gd` (new): Mission 3, Last Run, its start at
+  the freight depot (where Mission 2 began), its objective DRIVE TO THE WATERFRONT, its checkpoints
+  saved as `[run] stage` (0 the depot; 1-3 named for the steps to come), and the same calls the app
+  makes on Mission 2 (`place_reached`, `place_next`, `recover`, `objective_target`,
+  `wants_interact`, `foot_action` ...), so the app now asks "a later mission" where it asked for
+  Mission 2. Mission 2's end saves Mission 3's start with its opening to play (`opening=true`).
+- **The save rules (version 2):** `mission` may be `last_run`, its `[run] stage` from 0 to 3; a
+  file at another stage is kept aside; Mission 2's end writes Mission 3's start, no longer its own.
+- **Tested:** `test_last_run.gd` (new) 1/3 then 3/3; `test_getaway.gd` G4 changed (the save now
+  holds Mission 3's start) 5/5. Four mutations exit 1 (`logs/phase_2/last_run/step1/mutations/`);
+  every suite (`logs/phase_2/last_run/step1/suites/`): 72 runs exit 0, art check 0 failures.

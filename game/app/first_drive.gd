@@ -10,6 +10,7 @@ const CutsceneDirector = preload("res://features/cinematics/cutscene_director.gd
 const Opening = preload("res://features/missions/night_freight/opening_cutscene.gd")
 const Escape = preload("res://features/missions/the_wrong_cargo/escape.gd")
 const CargoOpening = preload("res://features/missions/the_wrong_cargo/opening_cutscene.gd")
+const LastRun = preload("res://features/missions/last_run/last_run.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -59,6 +60,8 @@ const MONTHS: Array[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
 @onready var world: Node3D = $IndustrialLoop
 var driver: CharacterBody3D
 var cargo: Node
+## Mission 3, Last Run (#359): driven through the same calls as Mission 2.
+var run: Node
 var title_camera: Camera3D
 ## The dock hand's round to seal the van, shown as a cutscene (#333).
 var seal_cutscene: Node
@@ -133,6 +136,12 @@ func _ready() -> void:
 	cargo.yard = world.container_yard
 	cargo.compound = world.compound
 	cargo.driver = driver
+	run = LastRun.new()
+	run.name = "LastRun"
+	add_child(run)
+	run.objective_changed.connect(_route_objective)
+	run.checkpoint_reached.connect(route.save_progress)
+	run.driver = driver
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
 	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
@@ -232,15 +241,17 @@ func _back_to_title() -> void:
 func _pick_mission() -> void:
 	_mission = route
 	cargo.active = false
+	run.active = false
 	if route.handed_on != null:
-		_mission = cargo
-		cargo.active = true
-		cargo.configure(van, route.handed_on)
+		var later: String = route.handed_on.get_value("save", "mission", "")
+		_mission = run if later == LastRun.MISSION else cargo
+		_mission.active = true
+		_mission.configure(van, route.handed_on)
 	hud.set_mission(_mission.NAME)
 
 
 func _has_progress() -> bool:
-	return _mission == cargo or route.stage > 0 or route.fleeing
+	return _mission != route or route.stage > 0 or route.fleeing
 
 
 func _reset_session() -> void:
@@ -512,8 +523,8 @@ func _continue_place() -> String:
 
 
 func _last_place() -> String:
-	if _mission == cargo:
-		return cargo.place_reached()
+	if _mission != route:
+		return _mission.place_reached()
 	if route.fleeing:
 		return "Where the van stopped"
 	if route.stage == 0:
@@ -529,8 +540,8 @@ func _last_saved() -> String:
 
 
 func _next_checkpoint() -> String:
-	if _mission == cargo:
-		return cargo.place_next()
+	if _mission != route:
+		return _mission.place_next()
 	return _sentence(Mission.DIRECTIONS[mini(route.stage, Mission.DIRECTIONS.size() - 1)])
 
 
@@ -615,11 +626,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied and route.phone_call.can_answer():
 			route.phone_call.answer()
 	elif event.is_action_pressed("interact") and not _boarding:
-		if van.occupied and hud.document_visible() and _mission == cargo:
+		if van.occupied and hud.document_visible() and _mission != route:
 			_close_run_sheet()
 			return
-		if van.occupied and _mission == cargo and cargo.wants_interact():
-			var note: String = cargo.interact()
+		if van.occupied and _mission != route and _mission.wants_interact():
+			var note: String = _mission.interact()
 			if not note.is_empty():
 				hud.notify(note)
 			return
@@ -628,7 +639,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied:
 			_exit_van()
 		elif hud.document_visible():
-			if _signed or _mission == cargo:
+			if _signed or _mission != route:
 				_close_run_sheet()
 		elif _needs_sheet() and driver.global_position.distance_to(world.run_sheet_spot) \
 				< SHEET_RANGE:
@@ -636,7 +647,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif van.rear_doors_busy():
 			return
 		elif not _foot_task().is_empty():
-			var said: String = cargo.do_foot_action(driver.global_position)
+			var said: String = _mission.do_foot_action(driver.global_position)
 			if not said.is_empty():
 				hud.notify(said)
 		elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
@@ -793,7 +804,7 @@ func _process(delta: float) -> void:
 	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
 		_recover()
 	if hud.document_visible() and driver.global_position.distance_to(_document_at) \
-			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission == cargo):
+			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission != route):
 		_close_run_sheet()
 	hud.set_hint(_hint(0.2))
 
@@ -835,8 +846,8 @@ func _mark_watchers() -> void:
 func _objective_point(on_foot: bool) -> Vector3:
 	if _boarding or _ending or _ended or hud.document_visible():
 		return Vector3.INF
-	if _mission == cargo:
-		return cargo.objective_target()
+	if _mission != route:
+		return _mission.objective_target()
 	if _needs_sheet():
 		return world.run_sheet_at
 	if on_foot or route.fleeing or van.scripted or route.stage >= Mission.TARGETS.size():
@@ -872,8 +883,8 @@ func _hint(delta: float) -> String:
 		_lessons.offer("walk")
 		return _lessons.tick(delta)
 	_lessons.learn("walk")
-	if _mission == cargo and cargo.wants_interact():
-		return "E  " + cargo.interact_label()
+	if _mission != route and _mission.wants_interact():
+		return "E  " + _mission.interact_label()
 	if route.phone_call.can_answer() and not route.phone_call.answers_itself():
 		return "T  Answer the call"
 	if not van.engine_on or van.scripted or van.held or route.fleeing:
@@ -883,9 +894,9 @@ func _hint(delta: float) -> String:
 
 
 func _foot_task() -> String:
-	if _mission != cargo or not driver.active or van.occupied or van.rear_doors_busy():
+	if _mission == route or not driver.active or van.occupied or van.rear_doors_busy():
 		return ""
-	return cargo.foot_action(driver.global_position)
+	return _mission.foot_action(driver.global_position)
 
 
 func _teach_driving(delta: float) -> void:

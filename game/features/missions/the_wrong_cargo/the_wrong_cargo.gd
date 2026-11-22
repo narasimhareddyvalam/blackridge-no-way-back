@@ -13,6 +13,7 @@ signal text_received(sender: String, words: String)
 signal drive_completed
 
 const Escape = preload("escape.gd")
+const LastRun = preload("res://features/missions/last_run/last_run.gd")
 
 const MISSION := "the_wrong_cargo"
 const NAME := "The Wrong Cargo"
@@ -579,14 +580,16 @@ func _to_the_end() -> float:
 		vehicle.global_position.z - road_end.z).length()
 
 
-## Stopped where the hill road begins (step 7): Mission 2's start saved again, since there is no
-## Mission 3 yet, and the end as Mission 1's, a quiet beat in the cab with no title (C04).
+## Stopped where the hill road begins (step 7): Mission 3's start saved (#359, its opening to
+## play), and the end as Mission 1's, a quiet beat in the cab with no title (C04).
 func _check_end() -> void:
 	if _completed or not bool(vehicle.get("occupied")) or _to_the_end() > END_STOP \
 			or absf(float(vehicle.get("speed"))) > STOPPED:
 		return
 	_completed = true
-	checkpoint_reached.emit(start_progress())
+	var next := LastRun.start_progress()
+	next.set_value("run", "opening", true)
+	checkpoint_reached.emit(next)
 	drive_completed.emit()
 
 

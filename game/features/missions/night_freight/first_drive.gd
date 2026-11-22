@@ -8,6 +8,7 @@ signal struck(speed: float)
 
 const SaveFile = preload("res://shared/save/save_file.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
+const LastRun = preload("res://features/missions/last_run/last_run.gd")
 const MISSION := "night_freight"
 const NAME := "Night Freight"
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
@@ -418,6 +419,8 @@ func _upgrade(config: ConfigFile, from: int) -> void:
 func _valid_progress(config: ConfigFile) -> bool:
 	if config.get_value("save", "mission", "") == WrongCargo.MISSION:
 		return WrongCargo.valid_progress(config)
+	if config.get_value("save", "mission", "") == LastRun.MISSION:
+		return LastRun.valid_progress(config)
 	var value: Variant = config.get_value("drive", "stage", -1)
 	if config.get_value("save", "mission", "") != MISSION or not value is int or value < 0 \
 			or value >= TARGETS.size():
