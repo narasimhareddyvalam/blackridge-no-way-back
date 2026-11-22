@@ -1,0 +1,2 @@
+-tracks/0/path = NodePath("RingIcon:frame")
++tracks/0/path = NodePath("RingIcon:frame_index")

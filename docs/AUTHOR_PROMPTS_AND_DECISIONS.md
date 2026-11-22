@@ -5221,6 +5221,38 @@ tag `a5`. Pictures the author approved or rejected are filed in
        handset in the call card's disc while it rings, the drawn pulse gone, the caller's initial
        once answered) and the boarding constants as frames / 30; the pins re-run.
 
+371. **Step 6 approved**
+     - **Prompt** (verbatim, after Step 5's report, `590f0a3`): "approved, go ahead with step 6"
+     - **Decided:** edge tests at EnterVan's frames 0, 32, 48 and 60 (an input one frame before,
+       on and after each), the pins re-run, the four mutations each in its own git worktree in
+       the scratchpad, `TEST-REPORT.md`.
+
+372. **Show the two clips after Step 6**
+     - **Prompt** (verbatim, during Step 6): "show me two animations that we added after you done
+       with this step"
+     - **Decided:** after Step 6 is committed, a windowed Movie Maker recording of each in the
+       game (the dash ringing; Ethan getting into the van), opened for the author.
+
+373. **The assignment file on screen**
+     - **Prompt** (verbatim, with a screenshot of its name): "whats this?"
+     - **Answered:** the assignment's working copy in `~/Downloads/`, read only; not on the Desktop.
+374. **Esc during boarding's fade: the code is wrong**
+     - **Asked** (Step 6's edge test, frame 59, Esc: the HUD runs while paused, so the fade to
+       black finished and seated Ethan behind the pause menu, against the brief's "Esc pauses: the
+       clip and the door freeze"): fix the code or amend the brief. The author chose "Fix the code
+       (Recommended)": that one fade, in `first_drive.gd`'s boarding, stops while paused
+       (`Tween.TWEEN_PAUSE_STOP`); the HUD's other fades unchanged.
+
+375. **Why so many files in the working tree**
+     - **Prompt** (verbatim): "no i mean why does it say 30k+ in working tree?"
+     - **Answered:** 641 paths, almost all older than Assignment 7: 522 untracked capture stills
+       and videos (`captures/audit`, `issue330`, `windshield`, about 900 MB), 65 photo deletions
+       (#361), untracked Phase 2 logs (`logs/phase_2`, 219 MB); about 25 are this assignment's.
+376. **Show the two clips now**
+     - **Prompt** (verbatim, the suites still running): "show me the two animations now"
+     - **Done:** a windowed Movie Maker recording in the game (`tools/captures/capture_a7_clips.gd`):
+       the dash zoomed in while Maya's call rings, then Ethan getting out and back into the van.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

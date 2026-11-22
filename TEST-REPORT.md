@@ -1,7 +1,84 @@
 # TEST-REPORT
 
-Assignment 6 comes first. Assignment 5's report follows with its text unchanged (its graded copy
-is at tag `a5`), and then the final project's saving checks.
+Assignment 7 comes first. Assignment 6's report follows with its text unchanged (its graded copy
+is at tag `a6`), then Assignment 5's (tag `a5`), and then the final project's saving checks.
+
+# Assignment 7 — Animation (2026-11-22)
+
+Every run below went through `scripts/run-test.sh` at a fixed 60 fps (Godot 4.7.2, headless) from
+the repository root; logs under `logs/animation/`. Exit codes are the wrapper's. Every log still
+ends with the engine's "resources still in use at exit" lines, which the wrapper does not fail on.
+A headless run draws nothing: none of this shows that the motion reads or that the cycle wraps
+without a visible seam. Those are the author's checks in play.
+
+## The tests
+
+| Test | What it asserts | Result |
+| :-- | :-- | :-- |
+| `test_animation_pins.gd` (Step 2, before any clip) | PIN1 the call's states and timing; PIN2 boarding on foot → boarding (EnterVan) → seated, the door's clip times; PIN3 R in the active phase recovers | 3/3 before the change (`logs/animation/pins`), 3/3 after wiring (`wiring/green`) and after the fade fix (`repin`) |
+| `test_ring_readback.gd` | the ring's tracks resolve; 6 keys at k × 0.1 s within half a frame period; step 0.1; length 0.6; `LOOP_LINEAR`; `UPDATE_DISCRETE`; frames 0-5 in order, each a cell of the 6 × 1 sheet; the seam rule (last key + 0.1 = length, frame 5 ≠ frame 0); the slicing; process-idle clock, no autoplay | 15/15 (`ring`, `rig/fresh_cache`, `wiring/green`, `repin`) |
+| `test_rig_readback.gd` | one AnimationPlayer; every track of every clip in `ethan.glb` resolves to a real bone; EnterVan's 114 tracks all bone tracks; 164 frames at 30 fps; step 1/30; `LOOP_NONE`, set in `ethan.glb.import`; importer 30 fps; the app's boarding moments on frames 22, 32, 48, 53, in order | 8/9 red before the import setting (`rig/red`), 9/9 from an empty cache (`rig/fresh_cache`); 11/14 red before the moments were frames (`wiring/red`), 14/14 after (`wiring/green`, `repin`) |
+| `test_animation_structure.gd` | the brief's state table (§5) against `phone_ring.tres` and `ethan.glb`, with loop modes; every clip the code asks for exists; the drawn pulse gone; only `navigation_display.gd` names the ring's nodes; nothing outside the driver reaches Ethan's player; the app asks `driver.gd` | 11/13 red before wiring, 13/13 after |
+| `test_animation_states.gd` (real input) | the ring shows and plays `ring` exactly while the call rings or answers itself, every cell seen, wraps 5 → 0, hidden and stopped when talking; Idle, Walk, Run on foot; E boards with EnterVan; seated, Ethan hidden | 6/8 red before wiring, 8/8 after |
+| `test_animation_edges.gd` (real input) | W, E, R, Esc one clip frame before, on and after frames 0, 32, 48 and 60 (48 boardings) | see below; 48/48 at the end (`edges`) |
+
+## The edges (Step 6)
+
+The rule asserted for each interrupt is the brief's (§4): W and E ignored (he does not move, the
+clip runs on, he ends seated); R recovers (seated, boarding cancelled, the door shut); Esc pauses
+(the clip and the door hold their frame for 30 ticks, then resume from it). Before frame 0 there is
+no clip frame: the input arrives while he steps to the door. After frame 60 he is seated and the
+van's rules apply (W drives, E gets him out). The full table is in the log (`TABLE:` lines).
+
+| Run | Result | What failed, and why |
+| :-- | :-- | :-- |
+| r1 (`edges_r1_first_run`) | 39/48 | the test, eight times: before frame 0 he moves 0.37 m because his scripted walk to the door carries him, not the key; at frame 59-60 the boarding ended inside the 18-tick window, which the test did not allow; one input landed just after he sat. The game, once: **Esc at frame 59** |
+| r2 (`edges_r2_test_fixed`) | 46/48 | the test once more (frame 61, E: the game handled it seated and he got out, the van's rule; the test chose the rule from a state read a tick early), and **Esc at frame 59** |
+| r3 (`edges_r3_code_fixed`) | 47/48 | Esc at frame 59 now passes after the fix below; frame 61, E: the test checked "boarding over", but getting out holds `_boarding` as its own lock (`first_drive.gd:785`) |
+| r4 (`edges`) | **48/48**, exit 0 | — |
+
+**The finding.** Esc during the fade to black (frames 53-60) did not freeze boarding: the HUD runs
+while the tree is paused (`driving_hud.gd:88`, `PROCESS_MODE_ALWAYS`), so its fade tween finished
+and seated Ethan behind the pause menu, against the brief's rule. The author decided the code was
+wrong (#374): that one fade in `_board_van` now stops while paused
+(`set_pause_mode(Tween.TWEEN_PAUSE_STOP)`); the HUD's other fades are unchanged.
+
+## The re-pins
+
+The pins pass unchanged after wiring and after the fade fix. PIN2's sampled door start moved one
+physics sample (1.083 → 1.100 s) and the seat (2.017 → 2.033 s) when the boarding moments became
+frames (`DOOR_GRAB` 1.05 → 32/30 s, `CUT` 1.75 → 53/30 s): the brief predicted a shift of at most
+1/60 s, and both stay inside the pin's ±0.02 s. No pin was edited.
+
+## The mutations (Step 6)
+
+Each made in its own git worktree from `590f0a3` (`git worktree add --detach`, in the scratchpad),
+never in the working tree; the diffs are in `logs/animation/mutations/`.
+
+| # | Mutation | Test | Exit | What caught it |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 | the ring's track subname `RingIcon:frame` → `RingIcon:frame_index`, in the clip only | `test_ring_readback.gd` | **1** | `track_problems`: "ring track 0: RingIcon has no property frame_index" (R2), and R7 |
+| 2 | the cycle's `loop_mode = 1` → `0` (`LOOP_NONE`) | `test_ring_readback.gd` | **1** | R6 (loop_mode 0, expected LOOP_LINEAR) |
+| 3 | one frame key set to 6 (= hframes × vframes) | `test_ring_readback.gd` | **1** | R11 (every key a cell of the sheet), and R10 |
+| 4 | the rig imported from an empty cache (a fresh worktree has no `game/.godot`; `--import`, exit 0) | `test_rig_readback.gd` | **0** | nothing to catch: EnterVan's loop mode is in the importer (`ethan.glb.import`), so it survives; 14/14 |
+
+Mutation 4 does not fail, by design: it is the failure an importer setting prevents. That the
+setting acts was shown in Step 4: set to 1 in `ethan.glb.import`, the clip imported looping and E7
+and E8 failed (7/9, `logs/animation/rig/mutation_loop`); set back to 0, 9/9. Mutation 1 breaks a
+property, not a bone: EnterVan's tracks live inside `ethan.glb` and are not edited by hand; the
+bone branch of `track_problems` is exercised by every one of the rig's 114 bone tracks resolving.
+
+The empty-cache import also rewrites four Poly Haven texture `.import` files (VRAM compression,
+`green_metal_rust` and `leafy_grass`): it did so in the working tree in Step 4 and again in the
+fresh worktree, so the committed files are older than their own settings. Left for the author.
+
+## Every earlier suite
+
+82 runs (every earlier test, `test_night_dimming.gd` at 30, 60 and 144 fps) and the art check, in
+three workers through the wrapper: before any change 82/82 exit 0 (`logs/animation/baseline`);
+after wiring 82/82 (`logs/animation/wiring/suites`); after the fade fix 82/82 exit 0, art check
+0 failures (`logs/animation/repin/suites`).
+
 
 # Assignment 6 — particle effects (2026-11-07)
 

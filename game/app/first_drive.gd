@@ -847,7 +847,7 @@ func _board_van() -> void:
 		await get_tree().process_frame
 		if token != _boarding_token:
 			return
-	await hud.fade(1.0, FADE_OUT).finished
+	await hud.fade(1.0, FADE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_STOP).finished
 	if token != _boarding_token:
 		return
 	driver.grip(Vector3.ZERO, Vector3.ZERO, 0.0)

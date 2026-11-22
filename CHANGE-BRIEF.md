@@ -177,3 +177,9 @@ fully open, his foot lifting), 63 (frame 53: the cut begins), 70 (black, seated)
 3. **The boarding moments** are `frames / CLIP_FPS` in `first_drive.gd` (`CLIP_FPS := 30.0`), as
    §4 says. PIN2's sampled door start moved one physics sample (1.083 to 1.100 s) and the seat
    (2.017 to 2.033 s), inside its ±0.02 s tolerance: predicted, and the pin is unchanged.
+
+**2026-11-22, Step 6 (#374).** The edge test found Esc during the fade to black (frames 53-60)
+seating Ethan behind the pause menu: the HUD runs while paused, so its fade finished. §4's rule
+stands (the author: the code was wrong); boarding's fade in `_board_van` now stops while the tree
+is paused (`Tween.TWEEN_PAUSE_STOP`), and every interrupt at every boundary passes (48/48,
+`TEST-REPORT.md`).
