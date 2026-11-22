@@ -5621,6 +5621,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
        a checklist of what remains; the source ZIP is made from the `a7` tag once it exists (the
        film link and the author's OK to merge and tag first), so it matches the submitted commit.
 
+423. **Open the PR and tag a7**
+     - **Prompt** (verbatim): "open the PR and tag a7."
+     - **Asked first:** tag now without the film link, or wait; who merges. The author chose
+       "Wait for the film link (Recommended)" and "You merge it, I merge on OK".
+     - **Done:** the pull request `develop` → `main` opened; the `a7` tag waits for the film link,
+       committed on `develop`, and the merge.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
