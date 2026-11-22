@@ -338,3 +338,18 @@ elbows stay bent. To make that reach he is moved forward in the seat by at most 
 the cab camera's eye sits behind where a driver's shoulders would be. The shot looks down over the
 dash from a little above his eyes, fov 37° to 33°, so his head and his hands on the wheel both sit
 inside the letterbox.
+
+**2026-11-22, Step 7 (#405-#406; TUNING.md).**
+1. **§9's capture frames are two frames early.** EnterVan's frame N falls on capture frame
+   12 + N, not 10 + N: one frame for the input to reach the app, one for the walk to
+   `BOARD_SPOT`. Read the strip at capture 12, 34, 44, 60, 65, and at 82 for seated (after r1).
+2. **r1 (Claude Code's decision under the author's delegation, #406; not the author's
+   observation).** §4's cut moves from frame 53 to 62. Recovery becomes 48-68: from 53 he steps up
+   (root motion in the clip), at 58 he is on the step, and from 62 he goes in behind the door as
+   the fade begins; he is seated at 69. Before this, the cut came while both his feet were still
+   on the ground, so §1's "climbs in" was never seen. As predicted, PIN2's seat moves from
+   2.017 s to 2.333 s, re-pinned in its own commit. The edge test's seated boundary becomes 69.
+   The author's verdict on r1, and the observation-driven revision, are open.
+3. **The reload's edges** (the rifle's revision): fire, R and Esc one frame before, on and after
+   frames 0, 30, 48 and 99, all as the table says. The gun's timer ends the reload one 60 Hz tick
+   before the clip's last frame.
