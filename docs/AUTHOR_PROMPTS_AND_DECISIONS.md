@@ -5592,6 +5592,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Recorded:** as the author's own observations in play, in `TUNING.md` (r1) and
        `TEST-REPORT.md` (human checks), quoted, not extended.
 
+418. **Fix the three gaps**
+     - **Prompt** (verbatim): "yes fix three gaps"
+     - **Done:** see the commits that follow: the two clocks in TEST-REPORT, the Claude-against-you
+       table in TUNING, and the EnterVan preview scene with a strip from it.
+
+419. **The preview scene: just doc edits?**
+     - **Prompt** (verbatim, while the preview was being captured): "what are you doing?? i thought
+       it was just doc edits?"
+     - **Answered:** gaps 1 and 2 are doc edits; gap 3, approved with them, is the preview scene
+       (two new files under `game/previews/`, no existing game file touched). Claude Code should
+       have said it was starting it; it paused and asked whether to keep or drop it.
+
+420. **Is the film ready?**
+     - **Prompt** (verbatim): "the video wont change right?? that is ready to submit?"
+     - **Answered:** the film is final and unaffected by the doc edits and the preview; it shows
+       `game/` at `1e7765e`. Two lines say the author's verdict on r1 is open, true when made;
+       offered to update them.
+
+421. **Keep the preview; update the film's two lines**
+     - **Prompt** (verbatim): "keep the preview, film update those two lines as well"
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
