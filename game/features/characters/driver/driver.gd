@@ -9,6 +9,10 @@ const HandleClear = preload("res://features/characters/driver/handle_clear.gd")
 const Stance = preload("res://features/characters/driver/stance.gd")
 const HandGrip = preload("res://features/characters/driver/hand_grip.gd")
 const AimArms = preload("res://features/weapons/pistol/aim_arms.gd")
+const RifleCarry = preload("res://features/characters/driver/rifle_carry.gd")
+
+## The rifle is slung again (stow_rifle), for the app to board the van after it.
+signal rifle_stowed
 ## Aiming a pistol (Mission 3's step 6): his shoulders' height, and the camera nearer, over his
 ## right shoulder and narrower, as a third-person game's aim is.
 const SHOULDERS := 1.4
@@ -128,6 +132,9 @@ var aiming := false
 var lead_pace := 0.0
 var _aim_arms: Node3D
 var _aim_blend := 0.0
+## His rifle in Mission 3 (rifle_carry.gd: its clips, its place, its gaits) and whether he moves.
+var _rifle: Node
+var _moving := false
 var _collision: CollisionShape3D
 var _route: Array[Vector3] = []
 var _scripted: bool = false
@@ -213,6 +220,11 @@ func _ready() -> void:
 	_legs_on_steps()
 	_gait = PushGait.new(_player)
 	_steps = StairSteps.new()
+	_rifle = RifleCarry.new()
+	_rifle.name = "RifleCarry"
+	add_child(_rifle)
+	_rifle.call("setup", _model, _skeleton, _player)
+	_rifle.connect("stowed", func() -> void: rifle_stowed.emit())
 	_pivot = Node3D.new()
 	_pivot.position.y = EYE
 	add_child(_pivot)
@@ -651,10 +663,13 @@ func _physics_process(delta: float) -> void:
 	if grounded and is_on_floor() and not climbing and get_floor_normal().y > 0.99 \
 			and global_position.y - before < -SNAP_DOWN:
 		_glide -= global_position.y - before
+	var with_rifle := bool(_rifle.call("armed")) and bool(_rifle.call("drawn"))
 	if aiming:
-		_model.rotation.y = lerp_angle(_model.rotation.y, _pivot.rotation.y + PI,
+		var turn: float = _rifle.call("barrel_offset") if with_rifle else 0.0
+		_model.rotation.y = lerp_angle(_model.rotation.y, _pivot.rotation.y + PI - turn,
 			1.0 - exp(-delta * TURN_RATE * 2.0))
-		_aim_arms.set("pitch", _pivot.rotation.x + ARM_TILT)
+		if not with_rifle and _aim_arms != null:
+			_aim_arms.set("pitch", _pivot.rotation.x + ARM_TILT)
 	elif moving:
 		_model.rotation.y = lerp_angle(_model.rotation.y, atan2(direction.x, direction.z),
 			1.0 - exp(-delta * TURN_RATE))
@@ -664,17 +679,25 @@ func _physics_process(delta: float) -> void:
 		_steps.entry = -1.0
 		if start >= 0.0:
 			_player.seek(start / StairSteps.FPS, false)
+	elif with_rifle and not climbing:
+		var legs: Array = _rifle.call("legs", direction, moving, pace, pace > WALK_SPEED)
+		_play(legs[0])
 	else:
 		_play(("Run" if pace > WALK_SPEED and not climbing else _steps.clip() if climbing
 			else "Walk") if moving else "Idle")
-	_player.speed_scale = lerpf(1.0, _steps.rate(), _steps.influence) if climbing and moving \
-		else (pace / WALK_SPEED if lead_pace > 0.0 and moving else 1.0)
+	_moving = moving
+	if with_rifle and not climbing:
+		_player.speed_scale = float(_rifle.get("legs_speed"))
+	else:
+		_player.speed_scale = lerpf(1.0, _steps.rate(), _steps.influence) if climbing \
+			and moving else (pace / WALK_SPEED if lead_pace > 0.0 and moving else 1.0)
 	_glide_steps(delta)
 	_place_feet(direction, moving, delta)
 
 
 func _process(delta: float) -> void:
 	_ease_camera(delta)
+	_rifle.call("update", delta, _moving)
 
 
 ## His camera comes in at once when something stands between it and him, and eases back out,
@@ -943,8 +966,16 @@ func get_camera() -> Camera3D:
 	return _camera
 
 
-## His pistol up to aim, or down (Mission 3's step 6); `gun` is the handgun he holds.
-func set_aiming(on: bool, _gun: Node = null) -> void:
+## His weapon up to aim, or down (Mission 3's step 6); `gun` is the gun he carries. With the rifle
+## (C68) rifle_carry.gd draws, raises and lowers it; otherwise the IK arms hold a pistol up.
+func set_aiming(on: bool, gun: Node = null) -> void:
+	_rifle.call("carry", gun)
+	if bool(_rifle.call("armed")):
+		aiming = on and active
+		if aiming and gun == null:
+			_rifle.call("ready_now")
+		_rifle.set("want_aim", aiming)
+		return
 	if on and _aim_arms == null:
 		_aim_arms = AimArms.new()
 		_aim_arms.name = "Aim"
@@ -960,8 +991,33 @@ func left_hand() -> Vector3:
 	return _grip_seen
 
 
-## Where his pistol's muzzle is, in the world.
+## A round has hit him: his flinch, with the rifle out (the hangar's hurt).
+func flinch() -> void:
+	_rifle.call("flinch")
+
+
+## Whether he can fire (with the rifle: raised to aim) and reload (with it out).
+func can_fire() -> bool:
+	return not bool(_rifle.call("armed")) or bool(_rifle.call("can_fire"))
+
+
+func can_reload() -> bool:
+	return not bool(_rifle.call("armed")) or bool(_rifle.call("can_reload"))
+
+
+## Whether his rifle is out (drawn), and putting it away: `rifle_stowed` when it hangs slung.
+func rifle_out() -> bool:
+	return bool(_rifle.call("armed")) and bool(_rifle.call("drawn"))
+
+
+func stow_rifle() -> void:
+	_rifle.call("stow")
+
+
+## Where his weapon's muzzle is, in the world.
 func muzzle() -> Vector3:
+	if bool(_rifle.call("armed")) and bool(_rifle.call("drawn")):
+		return _rifle.call("muzzle")
 	if _aim_arms == null:
 		return global_position + Vector3.UP * SHOULDERS + _facing() * 0.6
 	return _aim_arms.call("muzzle")

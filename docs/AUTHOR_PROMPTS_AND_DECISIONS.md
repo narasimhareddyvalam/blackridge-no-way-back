@@ -5481,6 +5481,16 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (0.26, 0.25), right thigh (0.19, 0.18) and hips (0.26, 0.25) from the bones' lines, never
        turned over, no jump over 8 cm a frame; renders at exact frames from two sides; the film.
 
+403. **Wire it in; four animations for Assignment 7**
+     - **Prompt** (verbatim, after the film of `e25d4cb`): "its nice for now proceed. what wire them
+       up in the game, and we are submiting four animations for our assignment 7 right? i want to
+       submit 4"
+     - **Asked:** which four, and whether the rifle replaces the pistol in Mission 3. The author
+       chose "Ring, EnterVan, Rifle reload, Shock" and "Yes, replace the pistol (Recommended)" (30
+       rounds and a spare, the reload the clip's 3.3 s, the draw, aim, fire, reload, hit, put-away
+       and gaits on his body; Mission 3's pistol tests updated in their own commits; Adrian's men
+       keep their pistols).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

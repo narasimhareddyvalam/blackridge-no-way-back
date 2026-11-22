@@ -128,6 +128,8 @@ func hurt(amount: float) -> void:
 		return
 	health = maxf(0.0, health - amount)
 	hurt_now.emit(health)
+	if driver != null and driver.has_method("flinch"):
+		driver.call("flinch")
 	if health <= 0.0:
 		_out = true
 		retries += 1
@@ -182,10 +184,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not armed_on_foot() or event.is_echo():
 		return
 	if event.is_action_pressed("reload"):
-		handgun.call("reload")
+		if bool(driver.call("can_reload")):
+			handgun.call("reload")
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("fire") and Input.is_action_pressed("aim"):
-		_fire()
+		if bool(driver.call("can_fire")):
+			_fire()
 		get_viewport().set_input_as_handled()
 
 

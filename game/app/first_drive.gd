@@ -833,6 +833,11 @@ func _board_van() -> void:
 	hud.set_hint("")
 	_boarding_token += 1
 	var token := _boarding_token
+	if bool(driver.call("rifle_out")):
+		driver.call("stow_rifle")
+		await Signal(driver, "rifle_stowed")
+		if token != _boarding_token:
+			return
 	driver.walk_to(_path_to(_on_ground(van.to_global(BOARD_SPOT))))
 	while driver.walking():
 		await get_tree().physics_frame

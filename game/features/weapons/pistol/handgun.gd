@@ -8,13 +8,17 @@ extends Node3D
 ## (`dry`). A reload takes RELOAD_SECONDS and fills the magazine from the spare. Its muzzle flashes
 ## and it is heard (`fired`, which the encounter's men listen for). The model is the men's own
 ## pistol (`pistol.glb`), shown in his hands while he aims.
+## Since C68 (#393-#403) Ethan's gun is a rifle, an M16 (rifle_carry.gd shows it and handles it):
+## a 30-round magazine and one spare, and a reload as long as the reload clip (100 frames at
+## 30 fps, its last frame at 99/30 s), so the magazine fills as his hands finish. Hitscan, BETWEEN
+## and REACH are as they were.
 
 signal fired(at: Vector3)
 
 const MODEL = preload("pistol.glb")
 const SHOT = preload("res://features/audio/last_run/pistol_shot.wav")
-const MAGAZINE := 15
-const RELOAD_SECONDS := 2.2
+const MAGAZINE := 30
+const RELOAD_SECONDS := 99.0 / 30.0
 const BETWEEN := 0.25
 const REACH := 60.0
 ## What a round stops at: the world, the van and the men (`ArmedGuard.TARGETS`).
