@@ -5725,6 +5725,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Blender: most likely a Blender working file saved in that folder then. Blackridge uses its own
        converted van models, in Git; the source model stays downloadable from Sketchfab.
 
+440. **Let the six commits go**
+     - **Prompt** (verbatim): "let them go,"
+     - **Done:** `walker-houseghost-narasimha-v` re-checked (`main` = GitHub's `714b124`; nothing else
+       unpushed; no stash) and moved to the Trash with its unpushed backup branch and
+       `blender/Van.blend`, at the author's word. No walker folder remains on the Desktop.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
