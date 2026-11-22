@@ -11,6 +11,13 @@ Four clips are submitted (#405):
 - **Rifle reload:** motion capture, Mission 3 (C68).
 - **Shock:** Ethan's shock after the hit, Mission 1 (C67).
 
+**Source revision, engine and renderer:**
+- **Revisions:** `game/` at `1e7765e`, the revision the film shows. The EnterVan preview scene was
+  added after it (`ee9ddf9`, `game/previews/`, excluded from the export).
+- **Engine:** Godot 4.7.2 stable (4.7.2.stable.official.ed1daf0bf), on macOS (Apple M4).
+- **Rendering:** the tests run headless with Godot's dummy renderer; the strips and the film's
+  takes were rendered with Forward+ by Movie Maker.
+
 The tables below start with the pair's tests, then the two later clips'
 ("The rifle reload and the shock"), then Step 7's revision ("Step 7 r1").
 
@@ -107,6 +114,21 @@ EnterVan's cut moved from frame 53 to 62 so the player sees him climb in.
 - `test_animation_states.gd`: 8/8.
 - PIN2 failed as predicted (seated 2.333 s against 2.017) and was re-pinned in its own commit
   (`2f91bc5`): 3/3 (`step7_r1`).
+
+## The two clocks
+
+The tick each clip advances on, the tick gameplay reads it on, and the largest disagreement
+measured.
+
+| Clip | Advances on | Gameplay reads it | Largest disagreement, measured |
+| :-- | :-- | :-- | :-- |
+| Ring | `RingPlayer`, process idle (`test_ring_readback.gd`) | Nothing in gameplay reads the ring. Its one owner, `navigation_display.gd`, starts and stops it in its own `_process` from the call's state | None to measure: nothing reads the cycle's frame |
+| EnterVan | Ethan's `AnimationPlayer`, process idle | `_board_van` (`first_drive.gd:914-920`) reads `clip_time()` when `process_frame` resumes it, before the player advances that tick, and sets the door | **One frame, 1/30 s** at the strips' 30 fps. `enter_van_r0.log`, capture 46: clip frame 34, door 0.011, the value for frame 33. The brief (§6) predicted 0 s |
+| Rifle reload | `UpperBody`, process idle (`test_reload_readback.gd` R12) | `handgun.gd` counts `RELOAD_SECONDS` down in `_process` from the R press; `rifle_carry.gd` starts the clip on the next tick | **One 60 Hz tick, 1/60 s.** The reload ends at the clip's frame 98.5 of 99 (`test_reload_edges.gd`) |
+| Shock | Ethan's `AnimationPlayer`, process idle | Nothing reads its frames. The cutscene's 3.5 s shot runs on its own timer | The clip (104/30 = 3.467 s) ends 0.033 s before the shot does and holds its last frame |
+
+Both measured gaps are a single tick, below what the eye separates at these frame rates, and are
+kept as they are.
 
 ## Every earlier suite
 
