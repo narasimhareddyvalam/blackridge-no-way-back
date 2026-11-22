@@ -5302,6 +5302,43 @@ tag `a5`. Pictures the author approved or rejected are filed in
        `SupportHand`; the read-back 12/12; poses rendered on Ethan's rig, revised twice (the hand
        short of the magazine, then a cubic overshoot), see the brief's revision.
 
+386. **The reload poses rejected**
+     - **Prompt** (verbatim, with the side sheet of `3b00d46`): "wtf is that? its so bad. [Image
+       #13]?? hes not even holding gun realistically"
+     - **Found:** the rest pose itself (frames 0 and 65) is Mission 3's existing aim hold
+       (`aim_arms.gd`): the right fist above the slide, the pistol hanging below it, the fingers not
+       round the grip, the left hand beside it; and a reload keyed as a wrist target over IK cannot
+       give finger work or a magazine held in the hand. Claude Code's "reads as a real reload" was
+       wrong.
+
+387. **The reload by motion capture**
+     - **Asked** how to go on; the author chose "Motion capture (Recommended)": Mixamo pistol clips
+       for Ethan (Ch33), a pistol aim or idle and a pistol reload, downloaded by the author; the
+       hold fixed with them; Claude Code keys only the gun's own parts to match his hands.
+       `3b00d46`'s hand-keyed attempt stays in the history as the rejected first try.
+
+388. **A rifle instead?**
+     - **Prompt** (verbatim): "i dont want to use pistol, i want rifle maybe? i downloaded rifle
+       idle and reload, check"
+     - **Found:** `~/Downloads/Rifle Idle.fbx` (Ch33, 232 frames at 30 fps) and `Reloading.fbx`
+       (Ch33, 100 frames at 30 fps). Rendered in Blender: Rifle Idle holds a long gun low at the
+       hips; Reloading starts and ends with both hands together forward at the chest, a handgun's
+       hold, its left hand going to the belt and then high: the two do not match. A rifle also
+       conflicts with GAME_DESIGN §8's "one handgun" and Mission 3's pistol from Maya.
+
+389. **The pistol after all: Pistol Idle and Reloading**
+     - **Asked** rifle or pistol, the author answered "i donwloaded pistol idle check it out":
+       `~/Downloads/Pistol Idle.fbx` (Ch33, 250 frames at 30 fps, a low ready). Rendered: Reloading
+       is a full pistol reload (aim, the gun tipped up and the spare from the belt at 35, seated at
+       45, an overhand rack 52-64, back on aim by 70-100).
+390. **The exact, complete clips in the game**
+     - **Prompt** (verbatim): "i want exact complete animation in  the game."
+     - **Proposed:** both clips whole (Reloading's 100 frames, so the reload takes 3.33 s instead of
+       2.2 s; Pistol Idle's 250 looping), aiming on Reloading's first frame, the pistol in his right
+       hand bone, the magazine and slide keyed to his hands, upper body only over his legs' walk,
+       every earlier clip proven unchanged.
+     - **Prompt** (verbatim): "approved, go ahead with the plan"
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

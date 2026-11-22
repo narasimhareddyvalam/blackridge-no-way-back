@@ -259,3 +259,24 @@ pushed back out from 58 to 65, as a shooter brings a pistol into his workspace t
 ease in and out (linear with a transition of -2; cubic overshot by 18 cm over the long hold). Seen
 over his right shoulder, as the game's aim camera sits, the drawn-in gun hides behind his shoulder:
 open for the reload's strip and the author's look.
+
+**2026-11-22, the reload by motion capture (#386-#390).** The author rejected the hand-keyed reload
+(`3b00d46`: "hes not even holding gun realistically"); its rest pose was Mission 3's IK hold, the
+fist above the gun. It is replaced by two Mixamo clips the author downloaded for Ethan (Ch33, 30
+fps), whole and untrimmed ("i want exact complete animation in the game"). This supersedes the
+reload rows above; the shock is unchanged.
+
+| | Reload (motion capture) |
+| :-- | :-- |
+| Clips | `PistolReload` (Mixamo "Reloading", 100 frames, 3.33 s, once) and `PistolIdle` ("Pistol Idle", 250 frames, a low ready, looping), converted into `ethan.glb` by `tools/art/convert_mixamo.py` with upper-body tracks only (spine, neck, head, shoulders, arms, hands, fingers); `PistolAim`, the reload's first frame, a one-frame slice set in `ethan.glb.import` |
+| Route | **imported 3D rig**; loop modes in `ethan.glb.import` (`PistolIdle` `LOOP_LINEAR`, `PistolReload` and `PistolAim` `LOOP_NONE`) |
+| Plays on | Ethan's skeleton, through a second `AnimationPlayer` (`UpperBody`) that `driver.gd` builds and alone plays, keying only upper-body bones, after his own player, so his legs keep Idle, Walk and Run |
+| The pistol | attached to his right hand bone (`BoneAttachment3D`), held in his captured grip; its magazine and slide keyed by us in `game/animations/pistol_reload.tres` to his hands' frames (out at about 30, in his left hand to the grip, seated at 45, the slide back in the overhand rack about 58) |
+| Gameplay | `RELOAD_SECONDS` 2.2 → 100/30 s (3.33 s), so the magazine fills as his hands finish (PIN5 changes, predicted; its update is its own commit) |
+| Authority | `driver.gd` over `UpperBody` (armed: `PistolIdle`; aiming: `PistolAim`; reloading: `PistolReload`), reading the handgun's `reloading`; the gun parts' player owned by the code that attaches the pistol |
+
+Phase table (100 frames at 30 fps): startup 0-29 (the gun tipped up, the left hand to the belt),
+active 30-47 (the magazine out, the fresh one in his hand, seated at 45-47), recovery 48-99 (the
+overhand rack 52-64, back on aim by 70). Fire and R are ignored throughout; Esc pauses. Every
+earlier clip in `ethan.glb` must stay as it was: sampled before and after the re-conversion and
+compared.

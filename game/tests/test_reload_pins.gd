@@ -3,6 +3,8 @@ extends SceneTree
 ## committed before the clip: what the pistol does now in Mission 3, driven with real input.
 ##   PIN5 R reloads for RELOAD_SECONDS (2.2 s), then the magazine is full from the spare; while it
 ##        reloads a pull of the trigger fires nothing and R again does not restart it.
+##   PIN6 armed, his legs: standing still his own player plays Idle, walking while he aims it
+##        plays Walk (the reload's upper-body clips must leave this as it is).
 
 const STAGE_THREE := "[save]\nversion=2\nmission=\"last_run\"\n\n[run]\nstage=3\n"
 const TICK := 1.0 / 60.0
@@ -89,7 +91,30 @@ func _run() -> void:
 	check("PIN5: while it reloads, the trigger fires nothing (%d shots) and R again does not "
 		% (int(gun.get("shots")) - shots) + "restart it (%s, %.3f s in all)" % [again, took],
 		fired_during and again and int(gun.get("shots")) == shots)
+	await _frames(30)
+	var standing := _legs()
+	Input.action_press("aim")
+	_hold("accelerate", true)
+	await _frames(40)
+	var walking := _legs()
+	_hold("accelerate", false)
+	Input.action_release("aim")
+	await _frames(30)
+	check("PIN6: armed, his own player plays %s standing and %s walking while he aims" % [
+		standing, walking], standing == "Idle" and walking == "Walk")
 	_finish()
+
+
+func _legs() -> String:
+	return String((_driver.get("_player") as AnimationPlayer).current_animation)
+
+
+func _hold(action: String, down: bool) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = down
+	event.strength = 1.0 if down else 0.0
+	Input.parse_input_event(event)
 
 
 func _place_ethan(at: Vector3, look: Vector3) -> void:
