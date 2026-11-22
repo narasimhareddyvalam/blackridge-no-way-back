@@ -6,13 +6,16 @@ extends SceneTree
 ##         and stop() on its RingPlayer), the drawn pulse gone.
 ##   Ethan: `ethan.glb`'s AnimationPlayer, played only by `driver.gd` and the push gait it builds
 ##         (`push_gait.gd`, given the player by `driver.gd` and called only through it); the app
-##         asks `driver.gd` by name (`play_clip`).
+##         asks `driver.gd` by name (`play_clip`). Since the rifle (C68), `rifle_carry.gd`, which
+##         driver.gd builds and calls, also plays its upper-body player and names his legs' gaits:
+##         every clip it asks for must exist in the rig.
 
 const RING := "res://animations/phone_ring.tres"
 const RIG := "res://features/characters/ethan/ethan.glb"
 const NAVIGATION := "res://features/vehicles/freight_van/navigation_display.gd"
 const ETHAN_WRITERS := ["res://features/characters/driver/driver.gd",
-	"res://features/characters/driver/push_gait.gd"]
+	"res://features/characters/driver/push_gait.gd",
+	"res://features/characters/driver/rifle_carry.gd"]
 const ASKS_DRIVER := ["res://app/first_drive.gd"]
 ## The brief's state table (§5): each state's clip and the loop mode its resource must give it.
 const RING_STATES := {"ringing": "ring", "auto": "ring", "talking": "", "missed": "", "": ""}
