@@ -5196,6 +5196,24 @@ tag `a5`. Pictures the author approved or rejected are filed in
        phase table 0-31 / 32-47 / 48-59 at 30 fps, the boarding constants re-expressed in frames,
        the interrupts, the authorities and clocks); committed before any setup step.
 
+367. **Step 4 approved; show the animations**
+     - **Prompt** (verbatim, after Step 3's report, `f6f5565`): "approved, editor is closed, go
+       ahead and show me the animations you added."
+     - **Decided:** Step 4 as proposed: `EnterVan`'s loop mode in `ethan.glb.import`, the rig
+       read-back, the empty import cache made by moving `game/.godot` aside (not deleting it);
+       the ring shown as a preview of its six cells at 10 fps, and EnterVan in the game.
+
+368. **Two more clips?**
+     - **Prompt** (verbatim, during Step 4): "no add more professional animations that will get me
+       full marks, i mean add these as well but two more well animations"
+     - **Found:** the rubric (60 implementation points, 20 comparative) gives no points for more
+       clips ("A two-frame cycle that wraps cleanly and an action whose phases read outrank a long
+       clip that does neither").
+369. **The agreed pair first**
+     - **Prompt** (verbatim): "no i am saying about extra clips. finish the two first that we
+       agreed"
+     - **Decided:** the ring and EnterVan are finished first; extra clips are discussed after.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

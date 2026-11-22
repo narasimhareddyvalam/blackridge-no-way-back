@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: E1 the rig has one AnimationPlayer (1)
+PASS: E2 every track of every clip resolves (node, bone) []
+PASS: E3 the clip 'EnterVan' exists
+PASS: E4 its tracks are bone tracks on the skeleton (114 of 114)
+PASS: E5 length 5.4667 s is 164 frames at 30 fps
+PASS: E6 step is one frame period (0.03333, 1/30 = 0.03333)
+PASS: E7 it plays once (loop_mode 0, LOOP_NONE)
+FAIL: E8 its loop mode is set in the importer: ethan.glb.import _subresources animations EnterVan {  }
+PASS: E9 the importer samples at 30 fps (30)
+INFO: the rig's clips and loop modes: ["EnterVan 0", "ExitVan 0", "Idle 1", "PullBack 1", "Push 1", "PushStop 0", "Run 1", "StairsUp 1", "Walk 1", "WalkBack 1"]
+RIG READBACK RESULT: 8/9 passed; 1 failed
