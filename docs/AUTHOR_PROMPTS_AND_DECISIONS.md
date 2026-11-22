@@ -5682,6 +5682,15 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Answered:** Claude Code cannot see Canvas; the author confirms the upload on Canvas's
        submission page. **Done:** PR #2 merged into `main` with a merge commit at the author's word.
 
+433. **Why rebuild?**
+     - **Prompt** (verbatim): "why are you saying you will rebuild?"
+     - **Answered:** only because the Desktop ZIP was deleted at the author's word (#431); a rebuild
+       is needed only if it was not yet on Canvas.
+
+434. **Uploaded**
+     - **Prompt** (verbatim): "it upploaded to canvas"
+     - **Recorded:** Assignment 7 submitted on Canvas by the author (the source ZIP of `a7`).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
