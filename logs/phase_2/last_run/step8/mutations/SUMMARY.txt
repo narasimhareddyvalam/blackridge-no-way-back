@@ -1,0 +1,19 @@
+e1  no reunion after the gate      test_ending.gd exit 1, 0/2 passed; 2 failed
+      FAIL: E1: the reunion plays (false), they speak, the hill road named (false), police lights coming (false), the stat
+      FAIL: E2: the epilogue plays (none)
+e2  no statement card              test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E1: the reunion plays (true), they speak, the hill road named (true), police lights coming (true), the stateme
+e3  the title before the black     test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E5: absolute black at 73.0 s, the title -1.0 s after it and never before, then the title screen (true), the so
+e4  black held only a moment       test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E5: absolute black at 73.0 s, the title 0.6 s after it and never before, then the title screen (true), the sou
+e5  a message out of order         test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E4: the phone's four messages, word for word, in order ([3, -1, 4, 5])
+e6  rain in the sunlit home        test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E2: the home in sunlight (true), its world without rain (1 emitters), the night's rain and engines muted (true
+e7  the night's rain left playing  test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E2: the home in sunlight (true), its world without rain (0 emitters), the night's rain and engines muted (fals
+e8  never back to the title        test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E5: absolute black at 73.0 s, the title 2.2 s after it and never before, then the title screen (false), the so
+e9  Lily's words changed           test_ending.gd exit 1, 4/5 passed; 1 failed
+      FAIL: E3: Maya and Ethan's words (true) and Lily's promise (false), as written

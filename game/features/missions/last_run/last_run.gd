@@ -26,6 +26,9 @@ signal call_now(lines: Array)
 ## Down in the hangar's encounter, or the van heard on the airfield (step 6): the app fades and
 ## calls `retry_hangar`.
 signal hangar_lost(heard: bool)
+## The ending (step 8): begun (the app stops play), and over (the app goes to the title screen).
+signal ending_started
+signal game_finished
 
 const Ambush = preload("ambush.gd")
 const Scenes = preload("story_scenes.gd")
@@ -33,6 +36,13 @@ const Convoy = preload("convoy.gd")
 const Encounter = preload("hangar_encounter.gd")
 const Lily = preload("res://features/characters/lily/lily.gd")
 const Adrian = preload("res://features/characters/adrian/adrian.gd")
+const Epilogue = preload("epilogue.gd")
+## Step 8: police lights up the freight track from POLICE_FROM to POLICE_STOP, flashing; the
+## reunion's length (its shots), the epilogue begun just before its last card ends.
+const POLICE_FROM := Vector3(0.0, 0.0, 42.0)
+const POLICE_STOP := Vector3(0.0, 0.0, 20.0)
+const POLICE_SPEED := 4.5
+const FLASH := 0.22
 ## Step 7: where Lily waits in the office, how near E takes her hand, where Maya receives her,
 ## and the scene at the service gate: Ethan between Maya and the gate, Adrian from the airfield.
 const LILY_IN_OFFICE := Vector3(-1.2, 0.0, 0.6)
@@ -134,6 +144,12 @@ var encounter: Node
 var lily: Node3D
 var adrian: Node3D
 var _scene_clock := 0.0
+## The ending (step 8): the police lights, the epilogue, and where it stands ("", "reunion",
+## "epilogue", "done").
+var police: Node3D
+var epilogue: Node
+var _ending_phase := ""
+var _police_lights: Array[OmniLight3D] = []
 var _scene_events := 0
 var _lines: Array = []
 var _line_clock := 0.0
@@ -339,6 +355,91 @@ func _run_gate_scene(delta: float) -> void:
 		_update_objective()
 
 
+## The reunion (step 8): Ethan walks to Maya and Lily, they speak, police lights come up the
+## track, the cards; the epilogue starts under the last card and ends the game.
+func _run_ending(delta: float) -> void:
+	if _ending_phase == "":
+		_start_reunion()
+		return
+	_scene_clock += delta
+	if _ending_phase == "reunion":
+		if not _lines.is_empty():
+			_talk(delta)
+		_move_police(delta)
+		if _scene_clock >= _reunion_seconds() - 0.15:
+			_start_epilogue()
+	elif _ending_phase == "epilogue" and not bool(cutscene_playing.call()):
+		driver.set("held", true)
+
+
+func _start_reunion() -> void:
+	_ending_phase = "reunion"
+	_scene_clock = 0.0
+	ending_started.emit()
+	var gate: Vector3 = airfield.get("service_gate")
+	var maya_at := maya.global_position
+	var ethan_at := driver.global_position
+	var across := Vector3(ethan_at.x - maya_at.x, 0.0, ethan_at.z - maya_at.z).normalized()
+	var to: Array[Vector3] = [maya_at + across * 1.2]
+	driver.call("walk_to", to)
+	var police_from := _on_ground(gate + POLICE_FROM)
+	_ensure_police()
+	police.global_position = police_from
+	police.visible = true
+	_lines = Scenes.REUNION_LINES
+	_line_clock = 0.0
+	_line_next = 0
+	play_cutscene.call(Scenes.reunion(maya_at, ethan_at, police_from))
+
+
+func _reunion_seconds() -> float:
+	var total := 0.0
+	for shot: Dictionary in Scenes.reunion(Vector3.ZERO, Vector3.FORWARD, Vector3.BACK):
+		total += float(shot["seconds"])
+	return total
+
+
+## Two lights, blue and red, on a bar a patrol car's height up, flashing in turn.
+func _ensure_police() -> void:
+	if police != null:
+		return
+	police = Node3D.new()
+	police.name = "PoliceLights"
+	add_child(police)
+	for index in range(2):
+		var light := OmniLight3D.new()
+		light.light_color = Color(0.15, 0.3, 1.0) if index == 0 else Color(1.0, 0.08, 0.06)
+		light.omni_range = 18.0
+		light.light_energy = 0.0
+		police.add_child(light)
+		light.position = Vector3(0.45 * (1.0 if index == 0 else -1.0), 1.55, 0.0)
+		_police_lights.append(light)
+
+
+func _move_police(delta: float) -> void:
+	var gate: Vector3 = airfield.get("service_gate")
+	var stop := _on_ground(gate + POLICE_STOP)
+	var to := stop - police.global_position
+	to.y = 0.0
+	police.global_position += to.normalized() * minf(to.length(), POLICE_SPEED * delta)
+	var turn := int(_scene_clock / FLASH) % 2
+	for index in range(_police_lights.size()):
+		_police_lights[index].light_energy = 6.0 if index == turn else 0.0
+
+
+func _start_epilogue() -> void:
+	_ending_phase = "epilogue"
+	epilogue = Epilogue.new()
+	epilogue.name = "Epilogue"
+	add_child(epilogue)
+	epilogue.connect("finished", func() -> void:
+		_ending_phase = "done"
+		police.visible = false
+		game_finished.emit())
+	var size := Vector2i(driver.get_viewport().get_visible_rect().size)
+	epilogue.call("play", size)
+
+
 ## Back at the service gate after he went down, or they heard the van (step 6): on foot just
 ## inside it, the van outside, every man at his post, the gun full.
 func retry_hangar() -> void:
@@ -515,6 +616,8 @@ func _story(delta: float) -> void:
 				_gate_scene()
 		"gate_scene":
 			_run_gate_scene(delta)
+		"home":
+			_run_ending(delta)
 		"gun":
 			if _talk(delta):
 				story = "hangar"

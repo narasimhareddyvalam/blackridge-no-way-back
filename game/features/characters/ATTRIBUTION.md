@@ -161,7 +161,9 @@ Claude Code converted it with `tools/art/convert_patrol_guard.py` (its `syndicat
   aligned before baking, scaled to 1.80 m with his shoes at the origin.
 - **The clips:** Ethan's own Mixamo idle, walk and run, the hips scaled by height, so he walks at
   1.738 m/s and runs at 4.943 m/s as the patrol guards do; and Mixamo's "Hit By Car" as `Fall`
-  (Mission 3's step 6), for a man put down at the airfield, no gore.
+  (Mission 3's step 6), for a man put down at the airfield, no gore; and "Male Sitting Pose" as
+  `Sit` (step 8), for the unidentified watcher at a sedan's wheel in the ending, his face never
+  shown.
 - **In the game:** the ambush at berth 2 (`ambush.gd`) and Adrian's men at the airfield
   (`armed_guard.gd`), a stand-in archetype that patrols, sees, hears, chases and shoots.
 - **His pistol:** written apart (`game/features/weapons/pistol/pistol.glb`, 0.034 by 0.136 by

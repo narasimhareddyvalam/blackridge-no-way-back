@@ -25,7 +25,8 @@ jacket, gloves and boots, his own rig's bones mapped to Mixamo's names (`BUMSTRU
 dropped and his pistol written apart as the game's pistol (`game/features/weapons/pistol/`).
 For the hangar's encounter (Mission 3's step 6) he also gets Mixamo's "Hit By Car" as `Fall`, not
 looping and not in place: a man put down falls to the ground (no gore), a stand-in for a fall of
-its own.
+its own; and Mixamo's "Male Sitting Pose" as `Sit` (looping), for the watcher in the ending, seen
+only as a shape at a car's wheel.
 """
 
 import math
@@ -69,7 +70,7 @@ CHARACTERS = {
         "target": "game/features/characters/syndicate_man/syndicate_man.glb",
         "name": "SyndicateMan", "bones": BUMSTRUM, "drop": ("cigarette",) + PISTOL_PARTS,
         "pistol": "game/features/weapons/pistol/pistol.glb",
-        "extra": [("Hit By Car.fbx", "Fall", False)]},
+        "extra": [("Hit By Car.fbx", "Fall", False), ("Male Sitting Pose.fbx", "Sit-loop", False)]},
 }
 HEIGHT = 1.80
 MAX_TEXTURE = 1024

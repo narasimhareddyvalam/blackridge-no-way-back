@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut8/e1/game/features/missions/last_run/last_run.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd	2026-11-21 22:25:53
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut8/e1/game/features/missions/last_run/last_run.gd	2026-11-21 22:47:32
+@@ -359,7 +359,6 @@
+ ## track, the cards; the epilogue starts under the last card and ends the game.
+ func _run_ending(delta: float) -> void:
+ 	if _ending_phase == "":
+-		_start_reunion()
+ 		return
+ 	_scene_clock += delta
+ 	if _ending_phase == "reunion":

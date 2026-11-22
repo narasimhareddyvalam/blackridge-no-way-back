@@ -55,7 +55,9 @@ func play(shots: Array, hud: CanvasLayer, driver: Node3D, player_camera: Camera3
 	for each: Dictionary in shots:
 		for key in ["card", "caption", "full_card"]:
 			if each.has(key):
-				_texts.append(String((each[key] as Array)[0]))
+				for line: Variant in each[key]:
+					if line is String and not String(line).is_empty():
+						_texts.append(String(line))
 	playing = true
 	shot = -1
 	_t = 0.0

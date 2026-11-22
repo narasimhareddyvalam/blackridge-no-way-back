@@ -9070,3 +9070,53 @@ joint review.
   close), after.
 - **Known gaps:** Lily and Adrian walk straight lines (no navigation); Adrian's fall is not shown
   (a cut on the shot), by choice as well as for want of a fall clip of his rig's.
+
+## Revision 2026-11-22 (Mission 3's step 8 built: home, the watcher, black, the title; Mission 3 playable to its end, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358, #359), drafts for the
+joint review, except the final cinematic's lines and messages, which are GAME_STORY's, word for
+word.
+
+- **The reunion** (`story_scenes.gd`'s `REUNION_LINES`, `reunion`): after the gate scene Ethan
+  walks to Maya and Lily; Lily asks to go home; Maya and Ethan speak about the past ("You gave up so
+  much for me ... I never knew how to carry that"; "It was never yours to carry"), and he says he
+  will tell the police everything, the hill road too, as patrol-car lights, blue and red, come up
+  the freight track flashing in turn. GAME_STORY's "Ethan and Maya speak openly about the past" and
+  "cooperate with the investigation into the collision, admitting that he fled" kept.
+- **N05's draft, as a card:** HE TOLD THEM EVERYTHING / THAT NIGHT. THE HILL ROAD INCLUDED. The
+  legal outcome stays off-screen. Then a beat of black and SIX MONTHS LATER / BLACKRIDGE.
+- **The epilogue** (`last_run/epilogue.gd`, new): the family home on a late afternoon in sunlight,
+  a world of its own drawn over the screen (a SubViewport), so the night's environment, fog, AgX
+  grade, lamps and rain are left untouched: a sky and a low warm sun, strielecki's "Suburban House
+  V2" (CC BY 4.0), lawn, a concrete drive and the street, cedars, firs, hemlocks and alders round
+  it (one mesh each), moving boxes by the porch, Ethan's van in the drive. As GAME_STORY writes
+  it: Maya, "You don't have to look after me anymore, Ethan"; Ethan, "This time, it's not about
+  looking after you. It's about being a family."; Lily, "Uncle Ethan! You promised we'd go for a
+  drive!"; they walk to the van, it leaves down the road with the drive's own music; the camera
+  stays on the empty driveway, the music fades; the frame finds the black sedan across the street
+  (the town's Fairheaven repainted black); through its windshield a man in the driver's seat
+  (bumstrum's model, seated by Mixamo's sitting pose), his phone held up in both hands before his
+  face, the glass's daylight glare over him: his face is never seen; the phone's four messages,
+  word for word ("Found them." "All three?" "Yes." "Don't approach them. Not yet."); he lowers it,
+  the engine starts and he drives away; absolute black held 2.2 s; only then BLACKRIDGE: NO WAY
+  BACK; then the title screen. The night's engines, rain and music are muted while it plays.
+- **The save after the end:** left at Last Run's last checkpoint (stage 4); Continue replays the
+  finale. Claude Code's call; a "finished" state is the author's to choose.
+- **Changed with its reason:** `cutscene_director.gd`'s `all_texts` now records every line a card
+  shows, not only its first (its own doc says "every word the cutscene puts on screen"); the
+  opening, cargo-opening and getaway tests read it unchanged and pass.
+- **Fixed on the way:** two card shots in a row hid the second card (the first's fade-out ended
+  after it); a beat of black now separates them.
+- **Tests (first run red):** `test_ending.gd` E1-E5, 0/2 then 5/5 (the reunion and its card, the
+  epilogue's sunlight and no rain, the story's words, the messages in order, the title 2.2 s after
+  the black and never before, the title screen and the sound back). Mutations
+  (`logs/phase_2/last_run/step8/mutations/`): nine, all exit 1. Credits: THE FAMILY HOME
+  (strielecki; menus red 19/20, then 20/20).
+- **Every suite** (`logs/phase_2/last_run/step8/suites/`): 82 runs exit 0, art check 0 failures.
+- **Stills:** `captures/audit/ending/a1/` (before the fixes) and `a4/`: the reunion, Maya, Ethan,
+  the police lights, both cards, the home, Maya and Ethan, the family line, Lily's promise, the
+  keys, the drive, the empty driveway, across the street, the watcher, the messages, away, black,
+  the title.
+- **Known gaps:** voices wait for the author's pass (subtitles only); the van and the sedan glide
+  (no wheel turn) and the family walk in straight lines; the sedan's driver is lit only by a faint
+  fill; the downed men and Adrian are not shown being taken away; GPU price waits.

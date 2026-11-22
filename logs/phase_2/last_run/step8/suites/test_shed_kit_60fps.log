@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_shed_kit.gd:77)
+PASS: F1: the dock floor runs over the strip west of x -82 at 1.3 m, in the floor's own material (0 of 176 points bare)
+PASS: F0: the shed has its kit (Building/ShedKit) handing out its placements
+PASS: F2: two exits for people, at least a third of the shed's diagonal apart (19.4 m; 2 exits)
+PASS: F2: a lit EXIT sign over each exit, its letters 0.15 m high (at least 6 in)
+PASS: F2: an emergency light inside by each exit
+PASS: F2: every point of the floor within 250 ft (76.2 m) of travel of an exit (farthest 39.5 m)
+PASS: F3: 8 extinguishers, each top at most 5 ft and bottom at least 4 in above its floor
+PASS: F3: a sign over each extinguisher
+PASS: F3: every point of the dock floor and the lane within 75 ft (22.9 m) of travel of an extinguisher (farthest 21.9 m)
+PASS: F4: the forklift's charger, its marked area, an eyewash and a spill kit by it
+PASS: F4: the eyewash within 55 ft (16.8 m) of the charger in a clear line (5.3 m)
+PASS: F4: NO SMOKING signed at the charging area
+PASS: F5: a convex mirror 0.61 m across at each of the 6 aisles' mouths, facing the cross-aisle, 2-3 m up
+PASS: F6: the first-aid cabinet within 5 m of the side door
+PASS: F6: the walkway's crossing over the cross-aisle (5 bars)
+PASS: F6: the speed limit, forklift traffic, first-aid and eyewash signs (["extinguisher", "no_smoking", "eyewash", "first_aid", "forklifts", "speed"])
+PASS: F6: nothing solid of the kit on the cross-aisle, the stair or a load
+SHED KIT RESULT: 17/17 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

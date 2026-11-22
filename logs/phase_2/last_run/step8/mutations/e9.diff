@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/epilogue.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut8/e9/game/features/missions/last_run/epilogue.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/epilogue.gd	2026-11-21 22:44:31
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut8/e9/game/features/missions/last_run/epilogue.gd	2026-11-21 22:48:11
+@@ -62,7 +62,7 @@
+ const LINES: Array = [
+ 	[8.0, "MAYA", "You don't have to look after me anymore, Ethan.", 3.2],
+ 	[11.8, "ETHAN", "This time, it's not about looking after you. It's about being a family.", 4.2],
+-	[17.6, "LILY", "Uncle Ethan! You promised we'd go for a drive!", 3.2],
++	[17.6, "LILY", "Uncle Ethan! You said we'd go for a drive!", 3.2],
+ ]
+ const MESSAGES: Array = [[56.5, true, "Found them."], [58.6, false, "All three?"],
+ 	[60.6, true, "Yes."], [64.0, false, "Don't approach them. Not yet."]]

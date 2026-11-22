@@ -1,5 +1,27 @@
 # HANDOFF.md
 
+**This run (2026-11-22, #359-#360: Mission 3's step 8; Mission 3 playable to its end):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 8 built ...)".
+  Files: `game/features/missions/last_run/epilogue.gd` (new), `art/house/` and `art/ATTRIBUTION.md`
+  (new), `last_run.gd` (the reunion, police lights, the epilogue), `story_scenes.gd` (reunion,
+  cards), `game/app/first_drive.gd` (`_ending_begins`, `_game_finished`), `cutscene_director.gd`
+  (`all_texts`), `front_menu.gd` (the house's credit), the syndicate man's `Sit` clip
+  (`tools/art/convert_patrol_guard.py`), `tools/captures/capture_ending.gd` (new).
+- **Results (exact):** `test_ending.gd` 0/2 red, then 5/5; mutations (`python3 -I
+  logs/phase_2/last_run/step8/mutations/mutations_step8.py <scratch> <out>`): nine, all exit 1;
+  suites (`bash logs/phase_2/last_run/step8/suites/run_suites.sh <scratch>`): 82 runs exit 0,
+  art check 0 failures.
+  Stills `captures/audit/ending/a4/`. Committed on `develop` (not pushed).
+- **Mission 3 now plays from Mission 2's end to the title:** the waterfront and the ambush, the
+  depot, the recording, the viewpoint, the convoy, the airfield's encounter, Lily, Adrian, the
+  reunion, six months later, the watcher, black, the title.
+- **For the author's joint review of Missions 2 and 3:** every Mission 3 word but the final
+  cinematic's (drafts); the new controls (fire, aim, reload: a protected change); the models
+  (crane, Suburban, bumstrum's men, PC-12, Maya, Lily, Adrian, the house); step 5 as a tail (the
+  brief had a choke point); the pistol from Maya; the save after the end.
+- **Next:** the author's look and play of Missions 2 and 3 together (#359); voices; the GPU price
+  on power; the map's ground east of x 630; the missing `weathered_plank_siding_diff_2k.jpg`.
+
 **This run (2026-11-22, #359-#360: Mission 3's step 7, Lily and Adrian):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 7 built ...)".
   Files: `game/features/characters/lily/lily.gd`, `game/features/characters/adrian/` (new: the

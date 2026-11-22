@@ -156,6 +156,8 @@ func _ready() -> void:
 	run.stand_ethan.connect(_stand_ethan)
 	run.seat_ethan.connect(_seat_ethan)
 	run.hangar_lost.connect(_lost_in_hangar)
+	run.ending_started.connect(_ending_begins)
+	run.game_finished.connect(_game_finished)
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
 	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
@@ -656,6 +658,20 @@ func _lost_in_hangar(heard: bool) -> void:
 	hud.fade(0.0, CAUGHT_FADE * 1.5)
 	hud.notify("They heard the van. Leave it outside the gate." if heard
 		else "You went down. Back at the gate.")
+
+
+## The game's ending begins (Mission 3's step 8): play stops; the cutscenes and the epilogue run.
+func _ending_begins() -> void:
+	_ending = true
+	van.held = true
+
+
+## The game's end, after the title (Mission 3's step 8): the title screen, as after Mission 1's
+## quiet ending; the save left at Last Run's last checkpoint.
+func _game_finished() -> void:
+	hud.fade(1.0, 0.01)
+	_back_to_title()
+	hud.reveal(TITLE_FADE_IN)
 
 
 ## Whether Ethan stands armed on the airfield (Mission 3's step 6): R reloads there.

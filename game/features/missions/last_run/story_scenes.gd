@@ -55,6 +55,23 @@ const DRAW_AT := 23.4
 const AIM_AT := 23.5
 const SHOT_AT := 24.3
 const FALL_AT := 25.0
+## After it (step 8; GAME_STORY's "Resolution"): Maya and Lily together, Ethan and Maya speak
+## openly about the past, his sacrifices a bond and a burden, and he means to tell the police all of
+## it, the collision included, as police lights come up the freight track. Then two cards: N05's
+## draft (he told them everything that night; the outcome left off-screen) and the time cut, a
+## beat of black between them. Every
+## word a draft (#359).
+const REUNION_LINES: Array = [
+	[1.5, "LILY", "Mommy, can we go home now?", 2.4],
+	[4.4, "MAYA", "Soon, baby. Soon.", 2.0],
+	[7.4, "MAYA", "You gave up so much for me, Ethan. All those years.", 3.2],
+	[11.0, "MAYA", "I never knew how to carry that. So I hid from it.", 3.2],
+	[14.6, "ETHAN", "It was never yours to carry.", 2.4],
+	[17.6, "ETHAN", "When they get here, I'm telling them everything. The hill road too.", 3.6],
+	[21.8, "MAYA", "Then I'll be right there with you.", 2.6],
+]
+const STATEMENT := ["HE TOLD THEM EVERYTHING", "THAT NIGHT. THE HILL ROAD INCLUDED."]
+const LATER := ["SIX MONTHS LATER", "BLACKRIDGE"]
 ## The recording and the records on Maya's phone (step 4; N03's draft).
 const RECORDING := "MAYA'S PHONE  ·  VOICE MEMO  ·  19 NOV 23:14  ·  1:52\n\n" \
 	+ "ADRIAN: Bring him to berth 2. One more run. Lily comes home after.\n" \
@@ -192,4 +209,42 @@ static func gate_confrontation(maya_at: Vector3, ethan_at: Vector3, adrian_at: V
 			* 1.15, adrian_at - toward * 0.3 - side * 0.3), "to": _look(adrian_at
 			- toward * 1.75 - side * 0.75 + Vector3.UP * 1.1, adrian_at - toward * 0.3
 			- side * 0.3)},
+	]
+
+
+## The reunion at the service gate (about 27 s and two cards): Maya and Lily at `maya_at`, Ethan
+## coming from `ethan_at`, police lights coming from `police_from`.
+static func reunion(maya_at: Vector3, ethan_at: Vector3, police_from: Vector3) -> Array:
+	var across := Vector3(ethan_at.x - maya_at.x, 0.0, ethan_at.z - maya_at.z).normalized()
+	var side := across.cross(Vector3.UP)
+	var close := maya_at + across * 1.2
+	var face_m := maya_at + Vector3.UP * 1.6
+	var face_e := close + Vector3.UP * 1.65
+	return [
+		{"name": "reunion_wide", "seconds": 8.0, "fov": Vector2(38.0, 34.0), "exposure": 1.45,
+			"gamma": 0.74, "from": _look(maya_at + side * 6.5 + across * 2.0 + Vector3.UP * 1.8,
+			maya_at.lerp(ethan_at, 0.4) + Vector3.UP * 1.1), "to": _look(maya_at + side * 5.5
+			+ across * 1.6 + Vector3.UP * 1.7, maya_at.lerp(close, 0.5) + Vector3.UP * 1.1)},
+		{"name": "reunion_maya", "seconds": 8.0, "fov": Vector2(28.0, 26.0), "exposure": 1.3,
+			"gamma": 0.8, "lights": [{"at": face_m + across * 0.9 - side * 0.6, "colour": KEY,
+			"energy": 0.9, "range": 3.0}],
+			"from": _look(face_e + across * 0.5 - side * 0.4, face_m),
+			"to": _look(face_e + across * 0.4 - side * 0.35, face_m)},
+		{"name": "reunion_ethan", "seconds": 7.0, "fov": Vector2(28.0, 26.0), "exposure": 1.3,
+			"gamma": 0.8, "lights": [{"at": face_e - across * 0.9 + side * 0.6, "colour": KEY,
+			"energy": 0.9, "range": 3.0}],
+			"from": _look(face_m - across * 0.5 + side * 0.4, face_e),
+			"to": _look(face_m - across * 0.4 + side * 0.35, face_e)},
+		{"name": "reunion_lights", "seconds": 4.5, "fov": Vector2(40.0, 38.0), "exposure": 1.45,
+			"gamma": 0.74, "from": _look(maya_at - across * 3.0 + side * 2.0 + Vector3.UP * 1.6,
+			police_from.lerp(maya_at, 0.5) + Vector3.UP * 1.0), "to": _look(maya_at - across * 2.8
+			+ side * 1.9 + Vector3.UP * 1.6, police_from.lerp(maya_at, 0.6) + Vector3.UP * 1.0)},
+		{"name": "reunion_statement", "seconds": 5.5, "black": true, "card": STATEMENT,
+			"from": _look(maya_at + Vector3.UP * 4.0, maya_at), "to": _look(maya_at + Vector3.UP
+			* 4.0, maya_at)},
+		{"name": "reunion_beat", "seconds": 1.0, "black": true, "from": _look(maya_at
+			+ Vector3.UP * 4.0, maya_at), "to": _look(maya_at + Vector3.UP * 4.0, maya_at)},
+		{"name": "reunion_later", "seconds": 4.5, "black": true, "card": LATER,
+			"from": _look(maya_at + Vector3.UP * 4.0, maya_at), "to": _look(maya_at + Vector3.UP
+			* 4.0, maya_at)},
 	]
