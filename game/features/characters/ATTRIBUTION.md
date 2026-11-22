@@ -160,7 +160,10 @@ Claude Code converted it with `tools/art/convert_patrol_guard.py` (its `syndicat
 - **The rig:** its bones mapped to Ethan's Mixamo names (the `BUMSTRUM` map), its A-pose limbs
   aligned before baking, scaled to 1.80 m with his shoes at the origin.
 - **The clips:** Ethan's own Mixamo idle, walk and run, the hips scaled by height, so he walks at
-  1.738 m/s and runs at 4.943 m/s as the patrol guards do.
+  1.738 m/s and runs at 4.943 m/s as the patrol guards do; and Mixamo's "Hit By Car" as `Fall`
+  (Mission 3's step 6), for a man put down at the airfield, no gore.
+- **In the game:** the ambush at berth 2 (`ambush.gd`) and Adrian's men at the airfield
+  (`armed_guard.gd`), a stand-in archetype that patrols, sees, hears, chases and shoots.
 - **His pistol:** written apart (`game/features/weapons/pistol/pistol.glb`, 0.034 by 0.136 by
   0.180 m, a compact handgun's size) and scaled with him.
 - **Materials:** textures halved to 1024 pixels as WebP.

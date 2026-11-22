@@ -31,6 +31,11 @@ const RIDGE := 1.8
 const DOOR_OPENING := Vector2(22.0, 6.8)
 const BAY := 6.5
 const OFFICE_SIZE := Vector3(6.0, 3.0, 4.5)
+## The office's door, a real one's width, toward the hangar's middle along its front.
+const OFFICE_DOOR := 0.95
+const APRON_POLE := 10.0
+const APRON_FLOOD := Color(0.95, 0.96, 1.0)
+const OFFICE_DOOR_AT := 1.1
 const PLANE_AT := Transform3D(Basis(Vector3.UP, PI / 2.0), Vector3(960.0, 0.0, -155.0))
 const GATE := Vector3(760.0, 0.0, -150.0)
 const GATE_WIDE := 7.0
@@ -56,7 +61,13 @@ var door_opening := DOOR_OPENING
 var hangar_at := HANGAR_AT
 var hangar_size := HANGAR_SIZE
 var hangar_lights: Array[Node3D] = []
+## The apron's own floods: LED heads on poles along its hangar side, and wall packs over the
+## hangar's door, as a general-aviation apron is lit for night work.
+var apron_lights: Array[Node3D] = []
 var office: Node3D
+## The office's door way, in the world (its middle on the floor), and how wide it is.
+var office_door := Vector3.ZERO
+var office_door_width := OFFICE_DOOR
 var plane: Node3D
 var fence_runs: Array = []
 var gate := GATE
@@ -83,6 +94,7 @@ func build(asphalt: Material, slab: Material, cladding: Material, metal: Materia
 	_windsock(metal)
 	_hangar(slab, cladding, metal)
 	_office(cladding)
+	_apron_lights(metal)
 	_plane()
 	_fence(concrete, metal)
 	_access(asphalt, lamp_post)
@@ -262,6 +274,55 @@ func _wall(at: Vector3, size: Vector3, cladding: Material) -> void:
 	_body.add_child(collision)
 
 
+## Two flood poles at the apron's hangar side, their heads tipped out over it, and two wall packs
+## over the hangar's door shining down onto its front.
+func _apron_lights(metal: Material) -> void:
+	var lens := StandardMaterial3D.new()
+	lens.albedo_color = Color(0.9, 0.9, 0.88)
+	lens.emission_enabled = true
+	lens.emission = APRON_FLOOD
+	lens.emission_energy_multiplier = 6.0
+	var front := HANGAR_AT.z - HANGAR_SIZE.z / 2.0
+	for x: float in [APRON.position.x + 12.0, APRON.end.x - 12.0]:
+		var foot := Vector3(x, TOP, APRON.end.y + 2.0)
+		Build.box(self, foot + Vector3.UP * APRON_POLE / 2.0, Vector3(0.22, APRON_POLE, 0.22),
+			metal).name = "ApronPole"
+		var head := Node3D.new()
+		head.name = "ApronFlood"
+		add_child(head)
+		head.position = foot + Vector3(0.0, APRON_POLE, -0.35)
+		head.rotation.x = deg_to_rad(-55.0)
+		Build.box(head, Vector3.ZERO, Vector3(0.62, 0.42, 0.12), metal)
+		Build.box(head, Vector3(0.0, 0.0, -0.065), Vector3(0.54, 0.34, 0.01), lens)
+		var beam := SpotLight3D.new()
+		beam.light_color = APRON_FLOOD
+		beam.light_energy = 30.0
+		beam.spot_range = 50.0
+		beam.spot_angle = 50.0
+		beam.spot_attenuation = 0.9
+		beam.shadow_enabled = true
+		head.add_child(beam)
+		beam.position = Vector3(0.0, 0.0, -0.12)
+		apron_lights.append(beam)
+	for x: float in [HANGAR_AT.x - DOOR_OPENING.x / 2.0 - 1.5, HANGAR_AT.x + DOOR_OPENING.x / 2.0
+			+ 1.5]:
+		var pack := Node3D.new()
+		pack.name = "WallPack"
+		add_child(pack)
+		pack.position = Vector3(x, DOOR_OPENING.y + 0.6, front - 0.2)
+		pack.rotation.x = deg_to_rad(-60.0)
+		Build.box(pack, Vector3.ZERO, Vector3(0.36, 0.26, 0.18), metal)
+		Build.box(pack, Vector3(0.0, 0.0, -0.095), Vector3(0.3, 0.2, 0.01), lens)
+		var beam := SpotLight3D.new()
+		beam.light_color = APRON_FLOOD
+		beam.light_energy = 6.0
+		beam.spot_range = 22.0
+		beam.spot_angle = 60.0
+		pack.add_child(beam)
+		beam.position = Vector3(0.0, 0.0, -0.14)
+		apron_lights.append(beam)
+
+
 ## The office in the hangar's back right corner: walls, a door way toward the floor, a lit window.
 func _office(cladding: Material) -> void:
 	var half := HANGAR_SIZE / 2.0
@@ -274,10 +335,15 @@ func _office(cladding: Material) -> void:
 	var front := -OFFICE_SIZE.z / 2.0
 	_wall(at + Vector3(-OFFICE_SIZE.x / 2.0, OFFICE_SIZE.y / 2.0, 0.0), Vector3(0.15,
 		OFFICE_SIZE.y, OFFICE_SIZE.z), cladding)
-	_wall(at + Vector3(-1.4, OFFICE_SIZE.y / 2.0, front), Vector3(OFFICE_SIZE.x - 2.8 - 1.0,
-		OFFICE_SIZE.y, 0.15), cladding)
-	_wall(at + Vector3(OFFICE_SIZE.x / 2.0 - 0.5, OFFICE_SIZE.y / 2.0, front), Vector3(1.0,
-		OFFICE_SIZE.y, 0.15), cladding)
+	var left := -OFFICE_SIZE.x / 2.0
+	var door_from := OFFICE_DOOR_AT - OFFICE_DOOR / 2.0
+	var door_to := OFFICE_DOOR_AT + OFFICE_DOOR / 2.0
+	var right := OFFICE_SIZE.x / 2.0
+	_wall(at + Vector3((left + door_from) / 2.0, OFFICE_SIZE.y / 2.0, front), Vector3(door_from
+		- left, OFFICE_SIZE.y, 0.15), cladding)
+	_wall(at + Vector3((door_to + right) / 2.0, OFFICE_SIZE.y / 2.0, front), Vector3(right
+		- door_to, OFFICE_SIZE.y, 0.15), cladding)
+	office_door = at + Vector3(OFFICE_DOOR_AT, TOP + 0.1, front)
 	Build.box(self, at + Vector3(0.0, OFFICE_SIZE.y + 0.05, 0.0), Vector3(OFFICE_SIZE.x, 0.1,
 		OFFICE_SIZE.z), cladding).name = "OfficeCeiling"
 	var glass := StandardMaterial3D.new()
@@ -381,6 +447,12 @@ func gate_open() -> bool:
 
 func open_service() -> void:
 	_slide(SERVICE_GATE, true)
+
+
+## The service gate standing open at once (a reload at the checkpoint past it).
+func open_service_now() -> void:
+	_gates[SERVICE_GATE][1] = float(_gates[SERVICE_GATE][3])
+	_gates[SERVICE_GATE][2] = float(_gates[SERVICE_GATE][3])
 
 
 func service_open() -> bool:

@@ -23,6 +23,9 @@ Mission 3's syndicate men (#359) are converted the same way (the job "syndicate_
 by bumstrum on Sketchfab (CC BY 4.0; source_assets/sketchfab/32_syndicate_man/), a man in a black
 jacket, gloves and boots, his own rig's bones mapped to Mixamo's names (`BUMSTRUM`), his cigarette
 dropped and his pistol written apart as the game's pistol (`game/features/weapons/pistol/`).
+For the hangar's encounter (Mission 3's step 6) he also gets Mixamo's "Hit By Car" as `Fall`, not
+looping and not in place: a man put down falls to the ground (no gore), a stand-in for a fall of
+its own.
 """
 
 import math
@@ -65,7 +68,8 @@ CHARACTERS = {
     "syndicate_man": {"source": "source_assets/sketchfab/32_syndicate_man/syndicate_man_raw.glb",
         "target": "game/features/characters/syndicate_man/syndicate_man.glb",
         "name": "SyndicateMan", "bones": BUMSTRUM, "drop": ("cigarette",) + PISTOL_PARTS,
-        "pistol": "game/features/weapons/pistol/pistol.glb"},
+        "pistol": "game/features/weapons/pistol/pistol.glb",
+        "extra": [("Hit By Car.fbx", "Fall", False)]},
 }
 HEIGHT = 1.80
 MAX_TEXTURE = 1024
@@ -359,7 +363,7 @@ def main(job):
     scale = stand(guard, meshes)
     _write_pistol(job, pistol, scale)
     baked = []
-    for file, name, moving in JOBS:
+    for file, name, moving in JOBS + job.get("extra", []):
         clip, objects = import_clip(file)
         source_action = clip.animation_data.action
         bpy.context.scene.frame_set(int(source_action.frame_range[0]))

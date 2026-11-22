@@ -562,8 +562,8 @@ func _credits_text() -> String:
 		+ "\"Pilatus PC 12/47\" by helijah, licensed CC BY 4.0: the plane at the airfield, "
 		+ "repainted. Blackridge is not affiliated with Chevrolet, Liebherr or Pilatus.")
 	_section(lines, "THE MEN AT THE HARBOUR", "\"guard\" by bumstrum, licensed CC BY 4.0: the men "
-		+ "waiting at berth 2 and their pistols, given the walk and idle of Ethan's own Mixamo "
-		+ "clips.")
+		+ "waiting at berth 2 and at the airfield, and their pistols, given the walk, run, idle "
+		+ "and fall of Ethan's own Mixamo clips.")
 	_section(lines, "MAYA AND LILY", "Maya is Female_Adult_07 and Lily is Female_Child_01, from "
 		+ "the Microsoft Rocketbox avatar library, with its idles, its talk and its walk, released "
 		+ "under the MIT license above.")

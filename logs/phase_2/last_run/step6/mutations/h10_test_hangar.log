@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: H1: left mouse fires (true), right mouse aims (true), R reloads (true)
+PASS: H2: reloaded at stage 3, the van at the service gate (14.0 m), open (true), Maya by her car there (true), MAYA (MAYA)
+PASS: H3: by Maya (E  Talk to Maya) E talks; she hands him the pistol (true), 15 and 15 spare, the HUD 15 / 15; GET INTO THE HANGAR
+PASS: H4: a hit (50 left, he chase), a second puts him down (true), 13 left; down he stays down (down)
+PASS: H5: R reloads (true) to a full magazine from the spare (true); empty, the trigger clicks (1) and nothing fires
+FAIL: H6: seen in the open a man shoots (false), his health falls (false, 100); 30 m off and unseen (true), another hears a shot and comes (true)
+PASS: H7: down, all begins again at the service gate (4.0 m), health 100, 15 and 15, every man at his post (true)
+PASS: H8: the van driven onto the airfield, they hear it (true); back at the gate on foot (4.0 m), the van outside it (14.0 m)
+PASS: H9: at the office door (0.95 m wide), stage 4 saved, FIND LILY
+HANGAR RESULT: 8/9 passed; 1 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_hangar.gd:46)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:241)
+       [1] _story (res://features/missions/last_run/last_run.gd:383)
+       [2] _physics_process (res://features/missions/last_run/last_run.gd:527)

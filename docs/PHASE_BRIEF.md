@@ -8977,3 +8977,56 @@ joint review of Missions 2 and 3.
 - **Known gaps:** the mission map's ground still ends at x 630 (the flats black on it); a texture
   `weathered_plank_siding_diff_2k.jpg` is reported missing in every run since before Mission 3
   (not from this work, not yet traced); the GPU price waits for the mission's end.
+
+## Revision 2026-11-22 (Mission 3's step 6 built: the guard encounter at the hangar, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358 "take all decisions for
+me", #359 "finish mission 3 and same rules"), recorded as drafts for the joint review.
+
+- **New controls (protected, decided under #358/#359, the author's OK still wanted):**
+  `project.godot` gains `fire` (left mouse), `aim` (right mouse) and `reload` (R). R keeps its
+  old meaning (`recover`) everywhere except while Ethan stands armed on the airfield, where it
+  reloads. Reverting is removing the three actions and the encounter's input.
+- **The pistol's source (the brief: the convoy's lead car):** Maya waits by her car at the
+  service gate and hands Ethan Adrian's pistol ("It was in the car"); her lines (`MAYA_GUN`,
+  drafts) tell him where Lily is, that three men are outside, and to leave the van.
+- **The encounter** (`last_run/hangar_encounter.gd`, new; GAME_DESIGN §8): three of Adrian's men
+  (`syndicate_man/armed_guard.gd`, new: bumstrum's model, a stand-in archetype as D6), one at the
+  hangar's door, one walking the apron round the plane, one along the hangar's east wall. They
+  patrol (standing at their posts 2.5 s first), see 25 m and 60 degrees either side with nothing
+  solid between, stop and turn for 0.5 s (alert), run to where he was seen or heard and search
+  5 s (chase), and in 18 m stand with both hands on the pistol and fire every 1.1 s (attack),
+  hitting from 55% near to 15% far, 15% less when he runs; each hit takes 20 of his 100. A shot
+  carries over the whole airfield (150 m), as outdoors. Two body rounds put a man down, or one to
+  the head; he falls (Mixamo's fall, no gore) and no round stops at him again.
+- **His handgun** (`weapons/pistol/handgun.gd`, new): 15 in the magazine and one spare of 15,
+  semi-automatic (0.25 s between pulls), out to 60 m along the crosshair (the camera's middle to
+  the first thing there, then from the muzzle to that point); empty, the trigger clicks; a reload
+  takes 2.2 s. Aiming, both his arms come up to a two-handed grip, his hands closed round it
+  (`weapons/pistol/aim_arms.gd`, new, shared with the men: TwoBoneIK3D plus Ethan's own
+  `hand_grip.gd`), the camera nearer, over his right shoulder, narrower (`driver.gd`). The HUD
+  shows the rounds, his health, a crosshair while aiming and a brief red wash when he is hit.
+- **Fail and retry:** at nothing, the screen fades and all begins again at the service gate, on
+  foot just inside it, the van outside, the gun full, every man at his post. Driving the van onto
+  the airfield past the gate, they hear it: the same.
+- **The checkpoint:** at the hangar office's door, no man after him, stage 4 is saved (Last Run's
+  places gain "The hangar"); FIND LILY (step 7).
+- **Fixed on the way:** a reload at stage 3 put the van back at the depot (`START`); it is now
+  at the service gate, the gate open at once. The office's door way was 2.3 m wide with a 0.5 m
+  gap beside it; it is now one 0.95 m door. The apron had no lights: two 10 m LED flood poles on
+  its hangar side and two wall packs over the hangar's door now light it (each light just in
+  front of its housing, which had shadowed its own beam).
+- **Tests (first run red):** `test_hangar.gd` H1-H9, 0/3 (the encounter missing) then 9/9.
+  Mutations (`logs/phase_2/last_run/step6/mutations/`): ten, all exit 1 (h8 survived first: the
+  app recovers the van to the checkpoint itself, so its line was redundant; replaced by the
+  checkpoint left at the depot, exit 1).
+- **Every suite** (`logs/phase_2/last_run/step6/suites/`): 79 of 80 runs exit 0 (art check 0
+  failures) first; `test_convoy.gd` C4 changed with its reason (after Maya's code the objective
+  is now MAYA, her handover, not GET INTO THE HANGAR), then 4/4 (`fix/`), with `test_menus.gd`
+  20/20 after the credits' wording.
+- **Stills** `captures/audit/hangar/a1/` (before the fixes) to `a4/`: Maya at the gate, her
+  pistol, aiming over the shoulder and from the side, a man shooting, a man down, the office door,
+  the apron lit.
+- **Known gaps:** the downed men's fall is the struck man's car-impact clip, a stand-in for a
+  fall of its own; the men walk straight lines (no navigation round the plane or the hangar);
+  the floods carry no rain volumes (lamp rain's count unchanged); unpriced on the GPU.

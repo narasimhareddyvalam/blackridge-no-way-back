@@ -155,6 +155,7 @@ func _ready() -> void:
 	run.text_received.connect(hud.show_text_message)
 	run.stand_ethan.connect(_stand_ethan)
 	run.seat_ethan.connect(_seat_ethan)
+	run.hangar_lost.connect(_lost_in_hangar)
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
 	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
@@ -646,6 +647,33 @@ func _spotted_tailing(lost: bool) -> void:
 	hud.notify("You lost them." if lost else "They saw you. Stay further back.")
 
 
+## Down in the hangar's encounter, or the van heard on the airfield (Mission 3's step 6): the
+## screen fades, Ethan on foot just inside the service gate, the van outside, every man at his post.
+func _lost_in_hangar(heard: bool) -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	run.call("retry_hangar")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("They heard the van. Leave it outside the gate." if heard
+		else "You went down. Back at the gate.")
+
+
+## Whether Ethan stands armed on the airfield (Mission 3's step 6): R reloads there.
+func _armed_on_foot() -> bool:
+	return _mission == run and run.encounter != null and bool(run.encounter.call(
+		"armed_on_foot"))
+
+
+## His pistol's rounds, his health and the crosshair while he is armed on foot.
+func _show_combat() -> void:
+	if not _armed_on_foot():
+		hud.hide_combat()
+		return
+	var gun: Node = run.encounter.get("handgun")
+	hud.show_combat(int(gun.get("magazine")), int(gun.get("reserve")), float(run.encounter.get(
+		"health")), bool(driver.get("aiming")), bool(gun.get("reloading")))
+
+
 ## Caught in the ambush (Mission 3's step 3): the screen fades, the van is back in berth 2 and the
 ## escape begins again, the cutscene not played twice.
 func _caught_in_ambush() -> void:
@@ -673,7 +701,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			seal_cutscene.call("skip")
 			get_viewport().set_input_as_handled()
 		return
-	if event.is_action_pressed("recover"):
+	if event.is_action_pressed("recover") and not _armed_on_foot():
 		_recover()
 	elif event.is_action_pressed("vsync_debug"):
 		_toggle_vsync()
@@ -843,6 +871,7 @@ func _on_ground(point: Vector3) -> Vector3:
 
 
 func _process(delta: float) -> void:
+	_show_combat()
 	_guide_to_van()
 	_follow_on_map(delta)
 	_aim_marker()

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg6b/h8/game/features/missions/last_run/last_run.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd	2026-11-21 21:02:41
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg6b/h8/game/features/missions/last_run/last_run.gd	2026-11-21 21:12:50
+@@ -174,8 +174,6 @@
+ 		vehicle.recover(recovery_pose)
+ 	if stage >= 3 and airfield != null:
+ 		var gate: Vector3 = airfield.get("service_gate")
+-		recovery_pose = Transform3D(Basis.IDENTITY, _on_ground(gate + Vector3(0.0, 0.0,
+-			GATE_POSE_BACK)) + Vector3.UP * 0.1)
+ 		vehicle.recover(recovery_pose)
+ 		airfield.call("open_service_now")
+ 	if stage == 3:

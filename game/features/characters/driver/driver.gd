@@ -8,6 +8,14 @@ const AnkleWatch = preload("res://features/characters/driver/ankle_watch.gd")
 const HandleClear = preload("res://features/characters/driver/handle_clear.gd")
 const Stance = preload("res://features/characters/driver/stance.gd")
 const HandGrip = preload("res://features/characters/driver/hand_grip.gd")
+const AimArms = preload("res://features/weapons/pistol/aim_arms.gd")
+## Aiming a pistol (Mission 3's step 6): his shoulders' height, and the camera nearer, over his
+## right shoulder and narrower, as a third-person game's aim is.
+const SHOULDERS := 1.4
+const AIM_FOV := 50.0
+const AIM_ARM := 1.7
+const AIM_SIDE := 0.55
+const AIM_RATE := 8.0
 const WALK_SPEED := 1.705
 const RUN_SPEED := 4.535
 const BLEND := 0.2
@@ -114,6 +122,10 @@ var _passing: Array[RID] = []
 var _model: Node3D
 var _player: AnimationPlayer
 var _skeleton: Skeleton3D
+## Whether he holds a pistol up to aim (`set_aiming`), and its arms.
+var aiming := false
+var _aim_arms: Node3D
+var _aim_blend := 0.0
 var _collision: CollisionShape3D
 var _route: Array[Vector3] = []
 var _scripted: bool = false
@@ -245,6 +257,13 @@ func set_active(value: bool) -> void:
 	_hold.active = false
 	_fingers.amount = 0.0
 	handling = false
+	aiming = false
+	_aim_blend = 0.0
+	if _aim_arms != null:
+		_aim_arms.set("wanted", 0.0)
+		_aim_arms.set("influence", 0.0)
+	if _camera != null:
+		_camera.fov = 70.0
 	_end_stair()
 	_play("Idle")
 	if value:
@@ -603,7 +622,7 @@ func _physics_process(delta: float) -> void:
 		direction = _pivot.global_basis * Vector3(movement.x, 0, movement.y)
 		direction.y = 0
 		direction = direction.normalized()
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and not aiming:
 			pace = RUN_SPEED
 	var moving := direction.length_squared() > 0.1
 	var climbing := _find_stair(direction, moving)
@@ -628,7 +647,11 @@ func _physics_process(delta: float) -> void:
 	if grounded and is_on_floor() and not climbing and get_floor_normal().y > 0.99 \
 			and global_position.y - before < -SNAP_DOWN:
 		_glide -= global_position.y - before
-	if moving:
+	if aiming:
+		_model.rotation.y = lerp_angle(_model.rotation.y, _pivot.rotation.y + PI,
+			1.0 - exp(-delta * TURN_RATE * 2.0))
+		_aim_arms.set("pitch", _pivot.rotation.x + ARM_TILT)
+	elif moving:
 		_model.rotation.y = lerp_angle(_model.rotation.y, atan2(direction.x, direction.z),
 			1.0 - exp(-delta * TURN_RATE))
 	if climbing and moving and _player.current_animation != _steps.clip():
@@ -667,7 +690,10 @@ func _ease_camera(delta: float) -> void:
 		var rate := BOOM_EASE if wanted >= _shown else BOOM_IN
 		_shown_speed += (rate * rate * (wanted - _shown) - 2.0 * rate * _shown_speed) * delta
 		_shown = minf(_shown + _shown_speed * delta, reach)
-	_camera.position = Vector3(0.0, 0.0, _shown)
+	_aim_blend = move_toward(_aim_blend, 1.0 if aiming else 0.0, AIM_RATE * delta)
+	_camera.position = Vector3(AIM_SIDE * _aim_blend, 0.0, lerpf(_shown, minf(_shown, AIM_ARM),
+		_aim_blend))
+	_camera.fov = lerpf(70.0, AIM_FOV, _aim_blend)
 
 
 ## How far out on its arm from `at` his camera may be, so as to stay this side of what his arm
@@ -911,3 +937,31 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func get_camera() -> Camera3D:
 	return _camera
+
+
+## His pistol up to aim, or down (Mission 3's step 6); `gun` is the handgun he holds.
+func set_aiming(on: bool, _gun: Node = null) -> void:
+	if on and _aim_arms == null:
+		_aim_arms = AimArms.new()
+		_aim_arms.name = "Aim"
+		_model.add_child(_aim_arms)
+		_aim_arms.call("setup", _skeleton, SHOULDERS)
+	aiming = on and active
+	if _aim_arms != null:
+		_aim_arms.set("wanted", 1.0 if aiming else 0.0)
+
+
+## Where his pistol's muzzle is, in the world.
+func muzzle() -> Vector3:
+	if _aim_arms == null:
+		return global_position + Vector3.UP * SHOULDERS + _facing() * 0.6
+	return _aim_arms.call("muzzle")
+
+
+## His camera turned so the middle of the screen (the crosshair) lies on `point`.
+func aim_toward(point: Vector3) -> void:
+	for attempt in range(4):
+		var to := point - _camera.global_position
+		_pivot.rotation.y = atan2(-to.x, -to.z)
+		_pivot.rotation.x = clampf(atan2(to.y, Vector2(to.x, to.z).length()) - ARM_TILT, -0.5,
+			0.6)

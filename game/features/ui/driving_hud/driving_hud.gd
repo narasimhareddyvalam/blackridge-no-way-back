@@ -19,6 +19,8 @@ const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
 const OBJECTIVE_LEFT := 392.0
 const OBJECTIVE_FOOT := 30.0
 const SUBTITLE_FOOT := 82.0
+const COMBAT_FOOT := 64.0
+const HEALTH_WIDTH := 160.0
 const SUBTITLE_HEIGHT := 68.0
 const SUBTITLE_GAP := 12.0
 const HINT_MARGIN := 28.0
@@ -60,6 +62,15 @@ var _notice_timer: float = 0.0
 var _fade: ColorRect
 var _subtitles: PanelContainer
 var _subtitle_holder: CenterContainer
+## Armed on foot (Mission 3's step 6): rounds in the magazine and spare, health, the crosshair,
+## and a brief red wash over the screen when he is hit.
+var _combat: VBoxContainer
+var _ammo: Label
+var _health_bar: ColorRect
+var _health_fill: ColorRect
+var _crosshair: Control
+var _hit_edge: ColorRect
+var _last_health := 100.0
 var _speaker: Label
 var _words: Label
 var _document: PanelContainer
@@ -156,6 +167,7 @@ func _ready() -> void:
 	van_guide.name = "VanGuide"
 	root.add_child(van_guide)
 	_build_subtitles(root)
+	_build_combat(root)
 	_build_document(root)
 	menu = FrontMenu.new()
 	menu.name = "FrontMenu"
@@ -458,6 +470,8 @@ func _process(delta: float) -> void:
 			_notice.text = ""
 	if _subtitles.visible:
 		_place_subtitles()
+	if _hit_edge.color.a > 0.0:
+		_hit_edge.color.a = maxf(0.0, _hit_edge.color.a - delta * 0.9)
 
 
 func show_title(place: String, saved: String) -> void:
@@ -540,6 +554,87 @@ func set_target(point: Vector3, from: Vector3, camera: Camera3D, on_foot: bool) 
 	var metres := Vector2(point.x - from.x, point.z - from.z).length()
 	_distance.text = "%d m" % roundi(metres) if metres < 1000.0 else "%.1f km" % (metres / 1000.0)
 	_distance.visible = not _cinematic and not menu_visible and objective_marker.shown()
+
+
+func _build_combat(root: Control) -> void:
+	_hit_edge = ColorRect.new()
+	_hit_edge.name = "HitEdge"
+	_hit_edge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_hit_edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hit_edge.color = Color(0.55, 0.0, 0.0, 0.0)
+	root.add_child(_hit_edge)
+	_combat = VBoxContainer.new()
+	_combat.name = "Combat"
+	_combat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_combat.anchor_left = 1.0
+	_combat.anchor_right = 1.0
+	_combat.anchor_top = 1.0
+	_combat.anchor_bottom = 1.0
+	_combat.offset_right = -HINT_MARGIN
+	_combat.offset_bottom = -COMBAT_FOOT
+	_combat.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_combat.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_combat.alignment = BoxContainer.ALIGNMENT_END
+	root.add_child(_combat)
+	_ammo = _lettered(_label("", 30))
+	_ammo.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_combat.add_child(_ammo)
+	_health_bar = ColorRect.new()
+	_health_bar.custom_minimum_size = Vector2(HEALTH_WIDTH, 6.0)
+	_health_bar.color = Color(0.0, 0.0, 0.0, 0.5)
+	_health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_combat.add_child(_health_bar)
+	_health_fill = ColorRect.new()
+	_health_fill.color = Color("e3c799")
+	_health_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_health_fill.size = Vector2(HEALTH_WIDTH, 6.0)
+	_health_bar.add_child(_health_fill)
+	_combat.visible = false
+	_crosshair = Control.new()
+	_crosshair.name = "Crosshair"
+	_crosshair.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_crosshair.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	root.add_child(_crosshair)
+	for tick: Rect2 in [Rect2(-1.0, -9.0, 2.0, 5.0), Rect2(-1.0, 4.0, 2.0, 5.0),
+			Rect2(-9.0, -1.0, 5.0, 2.0), Rect2(4.0, -1.0, 5.0, 2.0), Rect2(-1.0, -1.0, 2.0, 2.0)]:
+		var shade := ColorRect.new()
+		shade.color = Color(0.0, 0.0, 0.0, 0.6)
+		shade.position = tick.position - Vector2.ONE
+		shade.size = tick.size + Vector2.ONE * 2.0
+		shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_crosshair.add_child(shade)
+		var mark := ColorRect.new()
+		mark.color = Color(0.95, 0.95, 0.92, 0.9)
+		mark.position = tick.position
+		mark.size = tick.size
+		mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_crosshair.add_child(mark)
+	_crosshair.visible = false
+
+
+## His pistol and health while he is armed on foot; the crosshair while he aims; a red wash
+## over the screen a moment each time his health falls.
+func show_combat(magazine: int, reserve: int, health: float, aiming: bool,
+		reloading: bool) -> void:
+	_combat.visible = true
+	_ammo.text = "RELOADING" if reloading else "%d / %d" % [magazine, reserve]
+	_health_fill.size = Vector2(HEALTH_WIDTH * clampf(health / 100.0, 0.0, 1.0), 6.0)
+	_crosshair.visible = aiming
+	if health < _last_health - 0.01:
+		_hit_edge.color.a = 0.35
+	_last_health = health
+
+
+func hide_combat() -> void:
+	if _combat.visible or _crosshair.visible:
+		_combat.visible = false
+		_crosshair.visible = false
+	_last_health = 100.0
+
+
+## The rounds shown, as "magazine / spare" ("" when not armed).
+func ammo_text() -> String:
+	return _ammo.text if _combat.visible else ""
 
 
 func show_subtitle(speaker: String, words: String) -> void:

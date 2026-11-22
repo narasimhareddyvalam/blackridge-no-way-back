@@ -23,10 +23,30 @@ signal text_received(sender: String, words: String)
 signal convoy_spotted(lost: bool)
 ## Maya's call with the convoy's timing (step 5): the app starts it on Mission 1's phone.
 signal call_now(lines: Array)
+## Down in the hangar's encounter, or the van heard on the airfield (step 6): the app fades and
+## calls `retry_hangar`.
+signal hangar_lost(heard: bool)
 
 const Ambush = preload("ambush.gd")
 const Scenes = preload("story_scenes.gd")
 const Convoy = preload("convoy.gd")
+const Encounter = preload("hangar_encounter.gd")
+## Maya at the service gate (step 6): where she stands from the gate, and her handover (its
+## words a draft, #359): the office, the three men, Adrian's pistol, the van left outside.
+const MAYA_AT_GATE := Vector3(-4.5, 0.0, 5.0)
+const GATE_POSE_BACK := 14.0
+const INSIDE_GATE := 4.0
+const TALK_WITHIN := 2.6
+const AT_OFFICE := 1.6
+const MAYA_GUN: Array = [
+	[0.5, "MAYA", "You came.", 1.6],
+	[2.4, "ETHAN", "Where is she?", 1.6],
+	[4.3, "MAYA", "The office, at the back of the hangar. Three of his men outside it.", 3.2],
+	[7.8, "MAYA", "Here. It's Adrian's. It was in the car.", 2.6],
+	[10.7, "ETHAN", "I drive vans, Maya.", 2.0],
+	[13.0, "MAYA", "Then only if they make you. Fifteen in it, and one spare.", 3.0],
+	[16.3, "MAYA", "Leave the van here. They'd hear it. I'll be right here.", 3.0],
+]
 ## Where the tail begins (step 5): the coastal road at the east road's end.
 const JUNCTION := Vector3(726.0, 0.0, 151.7)
 const AT_JUNCTION := 40.0
@@ -66,8 +86,9 @@ const STOPPED := 0.4
 const MISSION := "last_run"
 const NAME := "Last Run"
 const PLACES: Array[String] = ["The freight depot", "Away from the waterfront", "The viewpoint",
-	"The airfield gate"]
-const NEXT: Array[String] = ["The waterfront", "The viewpoint", "The airfield", "Home"]
+	"The airfield gate", "The hangar"]
+const NEXT: Array[String] = ["The waterfront", "The viewpoint", "The airfield", "The hangar",
+	"Home"]
 const START := Transform3D(Basis(Vector3.UP, PI), Vector3(-28.0, 0.1, 93.0))
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
 const TITLE_LOOK := Vector3(1.3, 1.3, 0.7)
@@ -96,6 +117,8 @@ var story := ""
 ## The convoy (step 5) and the airfield it drives to; the app gives the airfield.
 var convoy: Node
 var airfield: Node3D
+## The hangar's guard encounter (step 6), from stage 3.
+var encounter: Node
 var _lines: Array = []
 var _line_clock := 0.0
 var _line_next := 0
@@ -149,9 +172,19 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 		recovery_pose = Transform3D(Basis(Vector3.UP, PI / 2.0), _on_ground(VIEWPOINT_MEETING
 			+ Vector3(-6.0, 0.0, 0.0)) + Vector3.UP * 0.1)
 		vehicle.recover(recovery_pose)
+	if stage >= 3 and airfield != null:
+		var gate: Vector3 = airfield.get("service_gate")
+		recovery_pose = Transform3D(Basis.IDENTITY, _on_ground(gate + Vector3(0.0, 0.0,
+			GATE_POSE_BACK)) + Vector3.UP * 0.1)
+		vehicle.recover(recovery_pose)
+		airfield.call("open_service_now")
 	if stage == 3:
-		story = "inside"
+		story = "maya"
+		_maya_at_gate()
+	if stage == 4:
+		story = "lily"
 	_ensure_convoy()
+	_ensure_encounter()
 	_lines.clear()
 	_shown = ""
 	_update_objective()
@@ -159,6 +192,55 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 
 func recover() -> void:
 	vehicle.recover(recovery_pose)
+
+
+func _ensure_encounter() -> void:
+	if encounter == null and airfield != null and driver != null:
+		encounter = Encounter.new()
+		encounter.name = "HangarEncounter"
+		add_child(encounter)
+		encounter.call("build", airfield, driver, vehicle)
+		encounter.connect("down_and_out", func() -> void: hangar_lost.emit(false))
+		encounter.connect("heard_van", func() -> void: hangar_lost.emit(true))
+	if encounter != null:
+		encounter.call("reset")
+		encounter.get("handgun").set("armed", false)
+		encounter.call("set_running", stage == 3)
+
+
+## Maya by her car just outside the service gate (step 6), facing the way he comes.
+func _maya_at_gate() -> void:
+	var gate: Vector3 = airfield.get("service_gate")
+	_stand_maya(_on_ground(gate + MAYA_AT_GATE), true)
+	var look := gate + Vector3(0.0, 0.0, GATE_POSE_BACK) - maya.global_position
+	maya.rotation.y = atan2(look.x, look.z)
+
+
+## Back at the service gate after he went down, or they heard the van (step 6): on foot just
+## inside it, the van outside, every man at his post, the gun full.
+func retry_hangar() -> void:
+	var gate: Vector3 = airfield.get("service_gate")
+	vehicle.recover(recovery_pose)
+	encounter.call("reset")
+	var hangar: Vector3 = airfield.get("hangar_at")
+	stand_ethan.emit(_on_ground(gate + Vector3(0.0, 0.0, -INSIDE_GATE)), hangar)
+
+
+## The handover's lines, without a cutscene: true once the last has been shown its time.
+func _talk(delta: float) -> bool:
+	_line_clock += delta
+	while _line_next < _lines.size() and _line_clock >= float(_lines[_line_next][0]):
+		var line: Array = _lines[_line_next]
+		line_spoken.emit(String(line[1]), String(line[2]))
+		_maya_play("TalkSad" if String(line[1]) == "MAYA" else "Idle")
+		_line_next += 1
+	var last: Array = _lines[_lines.size() - 1]
+	if _line_next >= _lines.size() and _line_clock > float(last[0]) + float(last[3]):
+		lines_cleared.emit()
+		_maya_play("Idle")
+		_lines.clear()
+		return true
+	return false
 
 
 ## Maya and her car at the depot (`at_depot`), or out of sight.
@@ -296,6 +378,22 @@ func _story(delta: float) -> void:
 		"tail":
 			if bool(convoy.get("inside")):
 				story = "service"
+				_maya_at_gate()
+		"gun":
+			if _talk(delta):
+				story = "hangar"
+				encounter.call("arm")
+		"hangar":
+			var door: Vector3 = airfield.get("office_door")
+			if bool(driver.get("active")) and Vector2(driver.global_position.x - door.x,
+					driver.global_position.z - door.z).length() < AT_OFFICE \
+					and not bool(encounter.call("on_them")):
+				story = "lily"
+				stage = 4
+				encounter.call("set_running", false)
+				var reached := start_progress()
+				reached.set_value("run", "stage", stage)
+				checkpoint_reached.emit(reached)
 		"reconciliation":
 			if _run_lines(delta):
 				story = "approach"
@@ -329,8 +427,10 @@ func objective_target() -> Vector3:
 		return JUNCTION + Vector3.UP * 1.5
 	if _title == "THE SERVICE GATE" and airfield != null:
 		return (airfield.get("service_gate") as Vector3) + Vector3.UP * 1.5
-	if _title == "GET INTO THE HANGAR" and airfield != null:
-		return (airfield.get("hangar_at") as Vector3) + Vector3.UP * 1.5
+	if _title in ["GET INTO THE HANGAR", "FIND LILY"] and airfield != null:
+		return (airfield.get("office_door") as Vector3) + Vector3.UP * 1.5
+	if _title == "MAYA" and stage == 3 and maya != null:
+		return maya.global_position + Vector3.UP * 1.9
 	if _title == "DRIVE TO THE DEPOT":
 		return depot_meeting + Vector3.UP * 1.5
 	if _title == "MEET MAYA AT THE VIEWPOINT":
@@ -369,8 +469,10 @@ func interact_label() -> String:
 func interact() -> String:
 	if _title == "THE SERVICE GATE":
 		airfield.call("open_service")
-		story = "inside"
+		story = "maya"
 		stage = 3
+		if encounter != null:
+			encounter.call("set_running", true)
 		var reached := start_progress()
 		reached.set_value("run", "stage", stage)
 		checkpoint_reached.emit(reached)
@@ -401,11 +503,22 @@ func interact() -> String:
 
 
 ## What Ethan on foot at `at` can do with E, or "", and doing it.
-func foot_action(_at: Vector3) -> String:
+func foot_action(at: Vector3) -> String:
+	if story == "maya" and maya != null and maya.visible and Vector2(at.x
+			- maya.global_position.x, at.z - maya.global_position.z).length() < TALK_WITHIN:
+		return "Talk to Maya"
 	return ""
 
 
-func do_foot_action(_at: Vector3) -> String:
+func do_foot_action(at: Vector3) -> String:
+	if foot_action(at) != "Talk to Maya":
+		return ""
+	story = "gun"
+	var look := at - maya.global_position
+	maya.rotation.y = atan2(look.x, look.z)
+	_lines = MAYA_GUN
+	_line_clock = 0.0
+	_line_next = 0
 	return ""
 
 
@@ -459,8 +572,15 @@ func _update_objective() -> void:
 				detail = "Along the freight track to the airfield's south side. Maya's code " \
 					+ "opens it."
 	if stage == 3:
-		title = "GET INTO THE HANGAR"
-		detail = "Lily is held in the hangar's office. Adrian's men are on the apron."
+		title = "MAYA"
+		detail = "She is waiting by her car at the service gate."
+		if story == "hangar":
+			title = "GET INTO THE HANGAR"
+			detail = "Lily is in the office at the back of the hangar. Right mouse aims, left " \
+				+ "mouse fires, R reloads."
+	if stage == 4:
+		title = "FIND LILY"
+		detail = "In the office at the back of the hangar."
 	_title = title
 	if title + detail != _shown:
 		_shown = title + detail

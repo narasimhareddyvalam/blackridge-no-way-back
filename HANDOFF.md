@@ -1,5 +1,26 @@
 # HANDOFF.md
 
+**This run (2026-11-22, #359-#360: Mission 3's step 6, the guard encounter at the hangar):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 6 built ...)".
+  Files: `game/project.godot` (`fire`, `aim`, `reload`: a protected change, decided under
+  #358/#359, flagged for the author), `game/features/weapons/pistol/` (`handgun.gd`,
+  `aim_arms.gd` new), `game/features/characters/syndicate_man/` (`armed_guard.gd` new, the model
+  with `Fall`), `game/features/missions/last_run/` (`hangar_encounter.gd` new, `last_run.gd`),
+  `driver.gd` (aiming), `driving_hud.gd` (rounds, health, crosshair), `airfield.gd` (office door,
+  apron lights, `open_service_now`), `game/app/first_drive.gd`, `front_menu.gd`,
+  `tools/art/convert_patrol_guard.py`, `tools/captures/capture_hangar.gd` (new).
+- **Results (exact):** `test_hangar.gd` 0/3 red, then 9/9; mutations (`python3 -I
+  logs/phase_2/last_run/step6/mutations/mutations_step6.py <scratch> <out>`): ten, all exit 1;
+  suites (`bash logs/phase_2/last_run/step6/suites/run_suites.sh <scratch>`): 79 of 80 exit 0,
+  art check 0 failures, `test_convoy.gd` 3/4 there (C4's objective now MAYA), changed, then 4/4;
+  `test_menus.gd` 20/20. Stills `captures/audit/hangar/a4/`. Committed on `develop` (not pushed).
+- **Claude Code's calls for the review:** the controls; Maya handing over Adrian's pistol at the
+  service gate; the men's numbers (sight 25 m, 60 degrees, 18 m to shoot, 20 a hit, two body
+  rounds); the van heard on the airfield; the stand-in fall; Adrian as Rocketbox's
+  Business_Male_03 (a charcoal suit, his forties), chosen for step 7.
+- **Next:** step 7 (Lily in the office, her hand taken, out to Maya; Adrian at the gate, his
+  draw, Ethan's shot, no gore), step 8 (home, the watcher, black, the title).
+
 **This run (2026-11-21 into 11-22, #359-#360: Mission 3's steps 3, 4 and 5):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Mission 3's steps 3, 4 and 5
   built ...)". Files: `game/features/environments/harbour_flats/` (`waterfront.gd`,

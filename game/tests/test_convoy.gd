@@ -5,7 +5,8 @@ extends SceneTree
 ## two black SUVs are ahead heading north and Maya calls; TAIL THE CONVOY, 25-200 m behind: too
 ## close for 2 s and they see him (back to the junction, the convoy reset); kept back, the convoy
 ## keys through the airfield's gate, which shuts behind it; THE SERVICE GATE along the freight
-## track; at it E keys Maya's code, the gate opens, stage 3 is saved, GET INTO THE HANGAR.
+## track; at it E keys Maya's code, the gate opens, stage 3 is saved, MAYA (she waits there,
+## step 6).
 
 const STAGE_TWO := "[save]\nversion=2\nmission=\"last_run\"\n\n[run]\nstage=2\n"
 const JUNCTION := Vector3(726.0, 0.0, 151.7)
@@ -129,7 +130,7 @@ func _check_tail(convoy: Node) -> void:
 		opened, through_shut, not bool(field.call("gate_open")), _objective()])
 
 
-## C4: at the service gate E keys Maya's code: it opens, stage 3 saved, GET INTO THE HANGAR.
+## C4: at the service gate E keys Maya's code: it opens, stage 3 saved, MAYA (step 6).
 func _check_service_gate() -> void:
 	var field := _app.get_node("IndustrialLoop").get("harbour_flats").get("airfield") as Node3D
 	var gate: Vector3 = field.get("service_gate")
@@ -148,7 +149,7 @@ func _check_service_gate() -> void:
 	saved.load(_scratch)
 	_check(offered == "E  Key in Maya's code" and bool(field.call("service_open")) and shut_before
 		and clear_after and int(saved.get_value("run", "stage", -1)) == 3
-		and _objective() == "GET INTO THE HANGAR", ("C4: at the service gate (%s), shut (%s), E "
+		and _objective() == "MAYA", ("C4: at the service gate (%s), shut (%s), E "
 		+ "keys the code, it slides open (%s) and the way is clear (%s), stage %s saved, %s") % [
 		offered, shut_before, field.call("service_open"), clear_after,
 		saved.get_value("run", "stage", -1), _objective()])

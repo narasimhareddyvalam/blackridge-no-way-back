@@ -1,0 +1,28 @@
+h1  R never reloads                test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H5: R reloads (false) to a full magazine from the spare (false); empty, the trigger clicks (1) and nothing fir
+h2  one body hit kills             test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H4: a hit (0 left, he down), a second puts him down (true), 13 left; down he stays down (down)
+h3  the men deaf to shots          test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H6: seen in the open a man shoots (true), his health falls (true, 100); 30 m off and unseen (true), another he
+h4  their rounds never hurt        test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H6: seen in the open a man shoots (true), his health falls (false, 100); 30 m off and unseen (true), another h
+h5  down, no retry                 test_hangar.gd exit 1, 6/9 passed; 3 failed
+      FAIL: H7: down, all begins again at the service gate (11.4 m), health 0, 3 and 15, every man at his post (false)
+      FAIL: H8: the van driven onto the airfield, they hear it (false); back at the gate on foot (11.4 m), the van outside
+      FAIL: H9: at the office door (0.95 m wide), stage 3 saved, GET INTO THE HANGAR
+h6  the van unheard                test_hangar.gd exit 1, 7/9 passed; 2 failed
+      FAIL: H8: the van driven onto the airfield, they hear it (true); back at the gate on foot (4.0 m), the van outside i
+      FAIL: H9: at the office door (0.95 m wide), stage 3 saved, GET INTO THE HANGAR
+h7  the office never reached       test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H9: at the office door (0.95 m wide), stage 3 saved, GET INTO THE HANGAR
+h8  stage 3 reloads at the depot   test_hangar.gd exit 0, 9/9 passed; 0 failed
+h9  Maya keeps the pistol          test_hangar.gd exit 1, 5/9 passed; 4 failed
+      FAIL: H3: by Maya (E  Talk to Maya) E talks; she hands him the pistol (false), 15 and 15 spare, the HUD ; GET INTO T
+      FAIL: H4: a hit (100 left, he patrol), a second puts him down (false), 13 left; down he stays down (patrol)
+      FAIL: H5: R reloads (false) to a full magazine from the spare (false); empty, the trigger clicks (0) and nothing fir
+      FAIL: H6: seen in the open a man shoots (true), his health falls (true, 100); 30 m off and unseen (true), another he
+h10  the men never see              test_hangar.gd exit 1, 8/9 passed; 1 failed
+      FAIL: H6: seen in the open a man shoots (false), his health falls (false, 100); 30 m off and unseen (true), another 
+h8  stage 3's checkpoint left at the depot test_hangar.gd exit 1, 7/9 passed; 2 failed
+      FAIL: H2: reloaded at stage 3, the van at the service gate (1032.6 m), open (true), Maya by her car there (true), MA
+      FAIL: H8: the van driven onto the airfield, they hear it (true); back at the gate on foot (4.0 m), the van outside i
