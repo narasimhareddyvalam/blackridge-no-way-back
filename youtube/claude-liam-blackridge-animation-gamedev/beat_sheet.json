@@ -1,0 +1,2104 @@
+{
+  "metadata": {
+    "title": "Blackridge, Frame by Frame",
+    "slug": "claude-liam-blackridge-animation-gamedev",
+    "kind": "godot-gamedev",
+    "modifier": "walker",
+    "game": "Blackridge: No Way Back",
+    "game_project": "game/",
+    "game_revision": "1e7765e",
+    "brand": "claude-liam",
+    "audience": "Godot developers and students following the @NikBearBrown Claude workflows",
+    "register": "Teardown",
+    "engine": "kokoro",
+    "voice": "am_onyx",
+    "voice_kokoro": "am_onyx",
+    "palette": "claude",
+    "style_preset": "claude",
+    "aspect_ratio": "16:9",
+    "fit": "contain",
+    "fps": 30,
+    "captions": false,
+    "channel": "@NikBearBrown",
+    "channel_title": "@NikBearBrown",
+    "folderLabel": "@NikBearBrown",
+    "greeting": "Namaste, Liam",
+    "greeting_note": "hello lexicon: Namaste (Hindi), as in the author's earlier films.",
+    "persona": "Liam (in for Bear)",
+    "presenter": "Liam (in for Bear)",
+    "in_for_bear": true,
+    "teaching_contract": "code-then-result-v1",
+    "note": "Contributions are stated as the records state them (prompt log #362-#406).",
+    "build": {
+      "at": "2026-11-22T16:33:18",
+      "cut": "master",
+      "filled": 27,
+      "of": 27,
+      "slates": [],
+      "skin_warnings": []
+    }
+  },
+  "beats": [
+    {
+      "beat_id": "B00",
+      "act": "ASK",
+      "role_note": "COLD OPEN LAW + walker bookend 1: Claude composer, prompt begins 'Please use Walker to convert my game design document about …', describing this game. Eyebrow discloses it is reconstructed.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Namaste. This is Liam, in for Bear. This is Blackridge: No Way Back, a Godot game where you drive a freight van through a rainy town at night. The prompt on screen is a reconstruction; the real work began from the author's brief. Let's take apart the four animation clips this build added, and how each was timed and tested.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "command": "Please use Walker to convert my game design document about Blackridge: No Way Back, a narrative crime game where you drive freight through a rainy town at night, into four animation clips: a phone ringing on the dash, Ethan getting into his van, a rifle reload, and his shock after the hit.",
+            "topic": "RECONSTRUCTED PROMPT · BLACKRIDGE",
+            "segment": "Blackridge, Frame by Frame",
+            "greeting": "Namaste, Liam",
+            "runningText": "reading the brief…",
+            "output": [
+              "Brief and pins committed before any clip.",
+              "Four clips, one owner each.",
+              "Two strips; one revision open for the author."
+            ],
+            "folderLabel": "@NikBearBrown"
+          }
+        },
+        "show": [
+          {
+            "at": "Namaste",
+            "event": "Composer types the reconstructed Walker prompt"
+          },
+          {
+            "at": "reconstruction",
+            "event": "Running line, then three result lines land"
+          }
+        ]
+      },
+      "audio_file": "mp3/beat-B00.mp3",
+      "actual_duration_s": 16.9,
+      "render_duration_s": 16.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B00.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B01",
+      "act": "BLUF",
+      "role_note": "EXECUTIVE-SUMMARY LAW, walker bookend 2. Single-word trigger 'movie' -> 'resource': the misconception that a clip is footage, which the body dismantles.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "A clip is a resource: tracks, keys, a length and a loop mode. In Blackridge, each of four clips has exactly one owner that plays it, and its timing is designed in frames.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "BrutalistHesitantWriter",
+          "props": {
+            "text": "A clip is a movie.\nIn Blackridge, four clips,\none owner each,\ntimed in frames.",
+            "triggerWords": "movie",
+            "replacementWords": "resource",
+            "fontSize": 80,
+            "mistakeRate": 2,
+            "hesitateWithin": 2,
+            "hesitateBetween": 8,
+            "charMs": 30,
+            "seed": "claude-liam-blackridge-animation-gamedev",
+            "contextTitle": "Blackridge, Frame by Frame"
+          }
+        },
+        "show": [
+          {
+            "at": 0.8,
+            "event": "Writer types 'A clip is a movie.'"
+          },
+          {
+            "at": "resource",
+            "event": "Deletes 'movie', types 'resource'"
+          }
+        ]
+      },
+      "lead_silence_s": 0.8,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "Hesitant-writer bookend (EXECUTIVE-SUMMARY LAW): the overview is typed token by token, so steady-state frames are mostly cream."
+      },
+      "audio_file": "mp3/beat-B01.mp3",
+      "actual_duration_s": 10.933,
+      "render_duration_s": 10.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B01.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      },
+      "audio_notes": "lead 0.8 s baked with ffmpeg; 10.13 s -> 10.93 s"
+    },
+    {
+      "beat_id": "B02",
+      "act": "SETUP",
+      "role_note": "Identifies the game, both graded clips, their routes, which loops and which commits, and the two further clips.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Four clips. The ring is the cycle: a sprite on the dash, looping while Maya's call rings. Enter Van is the committing action: Ethan's imported rig getting into his van, played once. Two more ride the same rig: a motion captured rifle reload, and a keyed shock after the hit. Godot four point seven point two.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Four clips, two routes",
+            "label": "held frames · scripted input and fixture captures",
+            "source": "capture/takes/ring_play, captures/enter_van/r1 frame 44, capture/takes/reload, capture/takes/shock · game 1e7765e",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/dash.png",
+                "aspect": 1.6,
+                "caption": "Ring: Sprite2D frame track, loops",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.46,
+                  "h": 0.56
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_044.png",
+                "aspect": 1.6,
+                "caption": "EnterVan: imported rig, commits",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/reload/stills/reload_f30.png",
+                "aspect": 1.6,
+                "caption": "Rifle reload: motion capture",
+                "row": 1,
+                "at": 0.0
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/shock/stills/shock_f58.png",
+                "aspect": 1.6,
+                "caption": "Shock: keyed bones, seated",
+                "row": 1,
+                "at": 0.0
+              }
+            ],
+            "cards": [],
+            "rows": [
+              {
+                "label": "the pair",
+                "at": 0.0
+              },
+              {
+                "label": "two more",
+                "at": 9.23
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 16.94
+          }
+        },
+        "show": [
+          {
+            "at": "the ring",
+            "event": "Ring and EnterVan stills"
+          },
+          {
+            "at": "two more",
+            "event": "Reload and shock stills"
+          }
+        ]
+      },
+      "audio_file": "mp3/beat-B02.mp3",
+      "actual_duration_s": 16.94,
+      "render_duration_s": 16.966666666666665,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B02.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B03",
+      "act": "SPEC",
+      "role_note": "Specification shown verbatim from CHANGE-BRIEF.md (outside game/, so not a gamedev excerpt).",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Before any clip existed, the brief fixed the cycle's spec, six frames at ten per second with its seam rule, and Enter Van's phase table in frames: startup, active and recovery, what the player may do in each, and what the game reads. Then pins recorded how the game behaved, all committed before setup.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The brief came first",
+            "label": "document · CHANGE-BRIEF.md, verbatim",
+            "source": "CHANGE-BRIEF.md §3, §4 · brief e284453 · pins 1cf092d · first clip f6f5565",
+            "layout": "document",
+            "media": [],
+            "cards": [
+              {
+                "label": "Cycle spec",
+                "text": "6 frames · 10 fps · seam rule",
+                "at": 2.93,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Phase table",
+                "text": "startup · active · recovery, in frames",
+                "at": 5.97,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Order",
+                "text": "e284453 brief → 1cf092d pins → f6f5565 clip",
+                "at": 14.67,
+                "tone": "neutral",
+                "mono": true
+              }
+            ],
+            "rows": [],
+            "excerpt": "- **Frames** 6†; **frame rate** 10 fps†; **length** 0.6 s; **`Animation.step`** 0.1 s.\n- **Seam rule (frame track):** no duplicate across the wrap (frame 5 is not frame 0), and the gap\n| Startup | 0-31 (32) | 0 (E by the van) | Nothing moves him: W/A/S/D, sprint and E are ignored; R (recover) and Esc (pause) still work | from frame 22 his left hand reaches for the handle (IK weight rises, `REACH_FROM`) |\n| Active | 32-47 (16) | 32 (hand on the handle) | as Startup | the door's opening, `driver_door = smoothstep(32, 48)` frames, his hand on the handle |",
+            "documentLabel": "CHANGE-BRIEF.md",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 16.36
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B03.mp3",
+      "actual_duration_s": 16.36,
+      "render_duration_s": 16.366666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B03.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B04",
+      "act": "CODE",
+      "role_note": "Question 1, what a clip is, pointed at the clip's own lines.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "So what is a clip? This file is the whole ring. Length point six seconds, loop mode one, linear, and a step of point one. One value track, Ring Icon's frame, with update discrete, so the integer jumps instead of sweeping. Six keys, frames zero to five. The last key sits one step before the length: that's the seam rule.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "The ring: a clip is a resource",
+            "project": "Blackridge: No Way Back",
+            "path": "game/animations/phone_ring.tres",
+            "source": "animations/phone_ring.tres:4–18 · Claude Code, directed by the author · verbatim",
+            "code": "resource_name = \"ring\"\nlength = 0.6\nloop_mode = 1\nstep = 0.1\ntracks/0/type = \"value\"\ntracks/0/imported = false\ntracks/0/enabled = true\ntracks/0/path = NodePath(\"RingIcon:frame\")\ntracks/0/interp = 1\ntracks/0/loop_wrap = true\ntracks/0/keys = {\n\"times\": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),\n\"transitions\": PackedFloat32Array(1, 1, 1, 1, 1, 1),\n\"update\": 1,\n\"values\": [0, 1, 2, 3, 4, 5]",
+            "startLine": 4,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Length",
+                "value": "0.6 s · loop_mode 1 = LOOP_LINEAR"
+              },
+              {
+                "label": "Track",
+                "value": "RingIcon:frame · update 1 = discrete"
+              },
+              {
+                "label": "Seam",
+                "value": "last key 0.5 + step 0.1 = length"
+              }
+            ],
+            "cues": [
+              {
+                "at": 2.7,
+                "line": 5,
+                "label": "length"
+              },
+              {
+                "at": 3.47,
+                "line": 6,
+                "label": "loop"
+              },
+              {
+                "at": 6.83,
+                "line": 11,
+                "label": "track"
+              },
+              {
+                "at": 8.13,
+                "line": 17,
+                "label": "discrete"
+              },
+              {
+                "at": 11.13,
+                "line": 15,
+                "label": "keys"
+              },
+              {
+                "at": 15.77,
+                "line": 15,
+                "label": "seam"
+              }
+            ],
+            "output": [
+              "test_ring_readback.gd: 15/15, step, length, LOOP_LINEAR, discrete, seam (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 17.02
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B04.mp3",
+      "actual_duration_s": 17.02,
+      "render_duration_s": 17.033333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B04.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B05",
+      "act": "RESULT",
+      "role_note": "Result of B04: the sheet, its slicing, and the cells the frame track shows.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Here's the sheet that track reads: six sixty-four pixel cells in one row, drawn by a script in white, so the dash can tint them. The sprite slices it with six frames across and one down. On the dash, the handset alone, then one, two, three arcs, then the arcs fading away, and back to the handset.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The sheet, sliced",
+            "label": "the sheet on a dark backing, cell lines drawn · the ring take: six frames 3 apart, one 0.6 s cycle, crops ×3",
+            "source": "capture/sheet/phone_ring_on_dark.png (from game/features/vehicles/freight_van/art/ring/phone_ring.png) · tools/art/make_phone_ring_sheet.py · hframes 6, vframes 1 · ring take frames",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-motion/sheet/phone_ring_on_dark.png",
+                "aspect": 6.0,
+                "caption": "phone_ring.png: 6 × 64 px cells, white on transparent",
+                "row": 0,
+                "at": 0.0
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f0.png",
+                "aspect": 1.5,
+                "caption": "frame 123",
+                "row": 1,
+                "at": 10.7
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f1.png",
+                "aspect": 1.5,
+                "caption": "frame 126",
+                "row": 1,
+                "at": 11.299999999999999
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f2.png",
+                "aspect": 1.5,
+                "caption": "frame 129",
+                "row": 1,
+                "at": 11.899999999999999
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f3.png",
+                "aspect": 1.5,
+                "caption": "frame 132",
+                "row": 1,
+                "at": 12.5
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f4.png",
+                "aspect": 1.5,
+                "caption": "frame 135",
+                "row": 1,
+                "at": 13.1
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/takes/ring_play/stills/ring_f5.png",
+                "aspect": 1.5,
+                "caption": "frame 138",
+                "row": 1,
+                "at": 13.7
+              }
+            ],
+            "cards": [],
+            "rows": [
+              {
+                "label": "sheet",
+                "at": 0.0
+              },
+              {
+                "label": "on the dash",
+                "at": 10.07
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.87
+          }
+        },
+        "evidence_media": "capture/sheet/phone_ring_on_dark.png"
+      },
+      "audio_file": "mp3/beat-B05.mp3",
+      "actual_duration_s": 15.87,
+      "render_duration_s": 15.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B05.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B06",
+      "act": "CODE",
+      "role_note": "Question 2, one authority, pointed at the ring's owner.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "One authority means exactly one node writes to an animated node. For the ring it's the navigation display, and only these lines call play and stop. It reads its own call state and call seconds: ringing, or answering itself, with the timer below zero. Nothing else touches the dash.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "One authority over the ring",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/vehicles/freight_van/navigation_display.gd",
+            "source": "features/vehicles/freight_van/navigation_display.gd:167–175 · Claude Code, directed by the author · verbatim",
+            "code": "func _drive_ring() -> void:\n\tvar ringing := caller != \"\" and call_state in [\"ringing\", \"auto\"] and call_seconds < 0.0 \\\n\t\tand is_instance_valid(vehicle) and route_index >= 0\n\tif ringing and not ring_player.is_playing():\n\t\tring_icon.visible = true\n\t\tring_player.play(\"ring\")\n\telif not ringing and (ring_player.is_playing() or ring_icon.visible):\n\t\tring_player.stop()\n\t\tring_icon.visible = false",
+            "startLine": 167,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Owner",
+                "value": "navigation_display.gd alone"
+              },
+              {
+                "label": "Reads",
+                "value": "call_state, call_seconds"
+              },
+              {
+                "label": "Writes",
+                "value": "RingPlayer play/stop, RingIcon visible"
+              }
+            ],
+            "cues": [
+              {
+                "at": 5.73,
+                "line": 172,
+                "label": "play"
+              },
+              {
+                "at": 8.73,
+                "line": 168,
+                "label": "reads state"
+              },
+              {
+                "at": 12.4,
+                "line": 168,
+                "label": "call_seconds < 0"
+              },
+              {
+                "at": 13.53,
+                "line": 174,
+                "label": "stop"
+              }
+            ],
+            "output": [
+              "test_animation_structure.gd: only navigation_display.gd names the ring's nodes (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 15.62
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B06.mp3",
+      "actual_duration_s": 15.62,
+      "render_duration_s": 15.633333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B06.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B07",
+      "act": "RESULT",
+      "role_note": "Result of B06: the ring cycle playing under its owner in real play.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In play: Maya calls on the climb out of the depot, and the camera zooms to the dash. The handset pulses while it rings. This is scripted input on the real game, in real time. The state test saw every cell, the wrap from five to zero, and the icon hidden once the call connects.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The ring in play",
+            "label": "scripted input · real main scene · 30 fps, real time, then replays",
+            "source": "capture/takes/ring_play/ring_dash.mp4 · tools/captures/capture_a7_clips.gd · game 1e7765e",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/ring_play/ring_dash.mp4",
+                "aspect": 1.6,
+                "caption": "Maya's call ringing, the dash zoomed, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.46,
+                  "h": 0.56
+                }
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/ring_play/ring_dash.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 5.5,
+                "row": 1,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.46,
+                  "h": 0.56
+                }
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/ring_play/ring_dash.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 11.0,
+                "row": 2,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.46,
+                  "h": 0.56
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "State test",
+                "text": "every cell seen · wraps 5 → 0 · hidden when talking",
+                "at": 9.33,
+                "tone": "pass",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "in play",
+                "at": 0.0
+              },
+              {
+                "label": "replay",
+                "at": 5.5
+              },
+              {
+                "label": "replay",
+                "at": 11.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.3
+          }
+        },
+        "evidence_media": "capture/takes/ring_play/ring_dash.mp4"
+      },
+      "audio_file": "mp3/beat-B07.mp3",
+      "actual_duration_s": 15.3,
+      "render_duration_s": 15.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B07.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B08",
+      "act": "CODE",
+      "role_note": "The rig clip's import setting.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Enter Van is Mixamo's Entering Car on Ethan's imported rig, a hundred sixty-four frames at thirty per second. Its loop mode is set here, in the importer's per-animation settings: zero, loop none. In a scene, it would be lost on the next import.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "EnterVan: the loop mode in the importer",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/characters/ethan/ethan.glb.import",
+            "source": "features/characters/ethan/ethan.glb.import:44–49 · Claude Code, directed by the author · verbatim",
+            "code": "\"EnterVan\": {\n\"save_to_file/enabled\": false,\n\"save_to_file/fallback_path\": \"\",\n\"save_to_file/keep_custom_tracks\": \"\",\n\"save_to_file/path\": \"\",\n\"settings/loop_mode\": 0,",
+            "startLine": 44,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Clip",
+                "value": "EnterVan, 164 frames at 30 fps"
+              },
+              {
+                "label": "Setting",
+                "value": "settings/loop_mode 0 = LOOP_NONE"
+              },
+              {
+                "label": "Why here",
+                "value": "a scene edit is lost on reimport"
+              }
+            ],
+            "cues": [
+              {
+                "at": 6.43,
+                "line": 49,
+                "label": "loop_mode 0"
+              }
+            ],
+            "output": [
+              "test_rig_readback.gd from an empty cache: 9/9 (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 14.12
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B08.mp3",
+      "actual_duration_s": 14.12,
+      "render_duration_s": 14.133333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B08.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B09",
+      "act": "RESULT",
+      "role_note": "Result of B08: the importer setting proven from an empty cache, its mutation, and the clip playing once in real play.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In play, it runs once: he gets in, and the cab view takes over. To prove the setting holds, the cache was deleted and the game imported fresh. The read-back resolved all one hundred fourteen bone tracks and read loop none. Set to one in the importer instead, the clip imported looping, and the same test failed two checks.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "From an empty cache, then once in play",
+            "label": "recorded output · scripted input on the real main scene, 30 fps, real time",
+            "source": "logs/animation/rig/fresh_cache/test_rig_readback_60fps.log · logs/animation/rig/mutation_loop/test_rig_readback_60fps.log · capture/takes/ring_play/boarding.mp4",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/ring_play/boarding.mp4",
+                "aspect": 1.6,
+                "caption": "real play: E at the door, EnterVan once, then the cab",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.52,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/ring_play/boarding.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 8.0,
+                "row": 1,
+                "crop": {
+                  "x": 0.28,
+                  "y": 0.2,
+                  "w": 0.52,
+                  "h": 0.6
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Fresh import",
+                "text": "E7 it plays once (loop_mode 0, LOOP_NONE)",
+                "at": 7.5,
+                "tone": "pass",
+                "mono": true
+              },
+              {
+                "label": "Fresh import",
+                "text": "RIG READBACK RESULT: 9/9 passed; 0 failed",
+                "at": 9.23,
+                "tone": "pass",
+                "mono": true
+              },
+              {
+                "label": "Importer set to 1",
+                "text": "RIG READBACK RESULT: 7/9 passed; 2 failed",
+                "at": 11.27,
+                "tone": "fail",
+                "mono": true
+              }
+            ],
+            "rows": [
+              {
+                "label": "in play",
+                "at": 0.0
+              },
+              {
+                "label": "replay",
+                "at": 8.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 16.68
+          }
+        },
+        "evidence_media": "capture/takes/ring_play/boarding.mp4"
+      },
+      "audio_file": "mp3/beat-B09.mp3",
+      "actual_duration_s": 16.68,
+      "render_duration_s": 16.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B09.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B10",
+      "act": "CODE",
+      "role_note": "Question 4, feel in frames: the phase table's boundaries as the app's constants.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Designing feel in frames means the phase table becomes code. The boarding reads Enter Van's frames over thirty: the reach from frame twenty-two, the hand on the handle at thirty-two, the door fully open at forty-eight, and the cut to black at sixty-two.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "The phase table, in frames",
+            "project": "Blackridge: No Way Back",
+            "path": "game/app/first_drive.gd",
+            "source": "app/first_drive.gd:30–38 · Claude Code, directed by the author · verbatim",
+            "code": "## EnterVan's frame rate (ethan.glb.import); the boarding moments are its phase table's frames\n## (CHANGE-BRIEF.md §4).\nconst CLIP_FPS := 30.0\nconst DOOR_GRAB := 32.0 / CLIP_FPS\nconst REACH_FROM := 22.0 / CLIP_FPS\nconst GRIP_ELBOW := Vector3(-1.85, 0.85, -0.95)\nconst DOOR_OPENED := 48.0 / CLIP_FPS\nconst CUT := 62.0 / CLIP_FPS\nconst FADE_OUT := 0.25",
+            "startLine": 30,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Startup",
+                "value": "0–31: the step and the reach"
+              },
+              {
+                "label": "Active",
+                "value": "32–47: the handle, the door swings"
+              },
+              {
+                "label": "Recovery",
+                "value": "48–68: he climbs in; cut at 62"
+              }
+            ],
+            "cues": [
+              {
+                "at": 5.4,
+                "line": 32,
+                "label": "CLIP_FPS"
+              },
+              {
+                "at": 7.73,
+                "line": 34,
+                "label": "REACH_FROM"
+              },
+              {
+                "at": 9.67,
+                "line": 33,
+                "label": "DOOR_GRAB"
+              },
+              {
+                "at": 11.4,
+                "line": 36,
+                "label": "DOOR_OPENED"
+              },
+              {
+                "at": 12.9,
+                "line": 37,
+                "label": "CUT"
+              }
+            ],
+            "output": [
+              "test_rig_readback.gd: the app's moments on frames 22, 32, 48, 62: 14/14 (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 14.14
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B10.mp3",
+      "actual_duration_s": 14.14,
+      "render_duration_s": 14.166666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B10.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B11",
+      "act": "RESULT",
+      "role_note": "Result of B10: the strip read at each phase boundary of the table.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Here's the frame strip at each boundary, a fixture at the depot at night. Frame zero, he faces the door. Twenty-two, the reach. Thirty-two, the hand on the handle, the door shut. Forty-eight, the door open. Fifty-eight, he's rising into the cab. Then black, and seated.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The strip at each phase boundary",
+            "label": "fixture capture · Movie Maker · strip r1 · crops",
+            "source": "captures/enter_van/r1 · capture frame = 12 + clip frame · logs/animation/step7/enter_van_r1.log",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_012.png",
+                "aspect": 1.6,
+                "caption": "clip 0: trigger",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_034.png",
+                "aspect": 1.6,
+                "caption": "clip 22: the reach",
+                "row": 0,
+                "at": 5.33,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_044.png",
+                "aspect": 1.6,
+                "caption": "clip 32: hand on the handle",
+                "row": 0,
+                "at": 6.4,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_060.png",
+                "aspect": 1.6,
+                "caption": "clip 48: the door open",
+                "row": 1,
+                "at": 8.63,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_070.png",
+                "aspect": 1.6,
+                "caption": "clip 58: rising into the cab",
+                "row": 1,
+                "at": 10.3,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_082.png",
+                "aspect": 1.6,
+                "caption": "clip 70: seated, fading up",
+                "row": 1,
+                "at": 12.73,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              }
+            ],
+            "cards": [],
+            "rows": [
+              {
+                "label": "startup → active",
+                "at": 0.0
+              },
+              {
+                "label": "recovery",
+                "at": 8.63
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 13.76
+          }
+        },
+        "evidence_media": "evidence/strips/enter_van/r1/frame_060.png"
+      },
+      "audio_file": "mp3/beat-B11.mp3",
+      "actual_duration_s": 13.76,
+      "render_duration_s": 13.766666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B11.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B12",
+      "act": "CODE",
+      "role_note": "Question 3, the two clocks, pointed at the reader and its clock.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The two clocks. Ethan's animation player advances on the process tick. The boarding loop reads clip time and sets the door, then waits for the next process frame. The brief predicted no disagreement, because both use the process tick.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "Two clocks: the clip and the door",
+            "project": "Blackridge: No Way Back",
+            "path": "game/app/first_drive.gd",
+            "source": "app/first_drive.gd:914–920 · Claude Code, directed by the author · verbatim",
+            "code": "\tdriver.play_clip(\"EnterVan\", van.global_basis.x)\n\twhile driver.clip_time() < CUT:\n\t\tvar time: float = driver.clip_time()\n\t\tvan.driver_door = smoothstep(DOOR_GRAB, DOOR_OPENED, time)\n\t\tdriver.grip(van.door_handle(), van.to_global(GRIP_ELBOW),\n\t\t\tsmoothstep(REACH_FROM, DOOR_GRAB, time))\n\t\tawait get_tree().process_frame",
+            "startLine": 914,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Clip clock",
+                "value": "Ethan's AnimationPlayer, process idle"
+              },
+              {
+                "label": "Reader",
+                "value": "_board_van, resumed on process_frame"
+              },
+              {
+                "label": "Predicted",
+                "value": "0 s apart (brief §6)"
+              }
+            ],
+            "cues": [
+              {
+                "at": 4.53,
+                "line": 916,
+                "label": "clip_time()"
+              },
+              {
+                "at": 5.63,
+                "line": 917,
+                "label": "driver_door"
+              },
+              {
+                "at": 7.27,
+                "line": 920,
+                "label": "await"
+              }
+            ],
+            "output": [
+              "logs/animation/step7/enter_van_r0.log: clip and door, frame by frame (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 12.91
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B12.mp3",
+      "actual_duration_s": 12.91,
+      "render_duration_s": 12.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B12.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B13",
+      "act": "RESULT",
+      "role_note": "Result of B12: the clocks' measured disagreement.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The per-frame log disagrees by one frame. The process frame signal resumes the loop before the player advances, so on the frame where the clip reads thirty-four, the door holds the value for thirty-three. That's one thirtieth of a second, below what the eye separates, so it stays. The reload has the same kind of gap: its timer ends one sixtieth early.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The clocks, measured",
+            "label": "fixture capture · strip r0 frames with the per-frame log's lines",
+            "source": "logs/animation/step7/enter_van_r0.log · captures/enter_van/r0 frames 44-46 · TEST-REPORT.md, the reload's two clocks",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r0/frame_044.png",
+                "aspect": 1.6,
+                "caption": "clip 32: door 0.000",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r0/frame_045.png",
+                "aspect": 1.6,
+                "caption": "clip 33: door 0.000",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r0/frame_046.png",
+                "aspect": 1.6,
+                "caption": "clip 34: door 0.011 (= frame 33's value)",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Log",
+                "text": "capture 46 movie 81 clip 34.00 door 0.011 boarding true occupied false",
+                "at": 7.73,
+                "tone": "accent",
+                "mono": true
+              },
+              {
+                "label": "Size",
+                "text": "1/30 s · kept, recorded",
+                "at": 10.83,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Reload",
+                "text": "timer ends at clip 98.5 of 99",
+                "at": 14.43,
+                "tone": "neutral",
+                "mono": true
+              }
+            ],
+            "rows": [
+              {
+                "label": "r0",
+                "at": 0.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 18.77
+          }
+        },
+        "evidence_media": "evidence/strips/enter_van/r0/frame_046.png"
+      },
+      "audio_file": "mp3/beat-B13.mp3",
+      "actual_duration_s": 18.77,
+      "render_duration_s": 18.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B13.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B14",
+      "act": "CODE",
+      "role_note": "Question 2 for the rig: one authority over Ethan's player.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Enter Van's owner is the driver script. Play clip is the only path into Ethan's animation player, with the rifle helper it builds and calls. The app asks; it never plays. The structure test checks that no other script reaches the player.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "One authority over Ethan's player",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/characters/driver/driver.gd",
+            "source": "features/characters/driver/driver.gd:554–568 · Claude Code, directed by the author · verbatim",
+            "code": "func play_clip(clip: String, facing: Vector3, from: float = 0.0,\n\t\tshift := Vector3.ZERO) -> void:\n\t_scripted = true\n\t_route.clear()\n\tvelocity = Vector3.ZERO\n\t_end_stair()\n\tvar yaw := atan2(facing.x, facing.z)\n\t_model.position = shift\n\tif from > 0.0:\n\t\t_model.rotation.y = yaw\n\t\t_player.play(clip)\n\t\t_player.seek(from, true)\n\t\treturn\n\tvar turn := create_tween()\n\tturn.tween_property(_model, \"rotation:y\",",
+            "startLine": 554,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Owner",
+                "value": "driver.gd (play_clip, _play)"
+              },
+              {
+                "label": "Helpers it owns",
+                "value": "push_gait.gd, rifle_carry.gd"
+              },
+              {
+                "label": "Caller",
+                "value": "first_drive.gd asks; never plays"
+              }
+            ],
+            "cues": [
+              {
+                "at": 2.0,
+                "line": 554,
+                "label": "play_clip"
+              },
+              {
+                "at": 4.03,
+                "line": 564,
+                "label": "_player.play"
+              }
+            ],
+            "output": [
+              "test_animation_structure.gd: 13/13, no other script reaches Ethan's player (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 12.95
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B14.mp3",
+      "actual_duration_s": 12.95,
+      "render_duration_s": 12.966666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B14.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B15",
+      "act": "RESULT",
+      "role_note": "Result of B14: the state machine playing EnterVan in real play, interrupted in each phase.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Now an interrupt in each phase, by real input. In startup, W is held: he doesn't move and the clip runs on. In the active phase, Escape pauses: the clip and the door freeze, then resume. In recovery, R recovers: he's seated at once with the door shut. The edge test ran forty-eight of these, all passing, and found one bug: Escape during the fade seated him behind the pause menu.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "An interrupt in each phase",
+            "label": "fixture captures · real input after the setup · 30 fps, real time",
+            "source": "capture/takes/interrupt_startup, _active, _recovery · events.txt · test_animation_edges.gd 48/48",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/interrupt_startup/interrupt_startup.mp4",
+                "aspect": 1.6,
+                "caption": "startup: W held at clip 16, ignored; he ends seated",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/interrupt_active/interrupt_active.mp4",
+                "aspect": 1.6,
+                "caption": "active: Esc at clip 40, the menu over the frozen door, resumed",
+                "startFrom": 0.0,
+                "at": 6.07,
+                "row": 1
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/interrupt_recovery/interrupt_recovery.mp4",
+                "aspect": 1.6,
+                "caption": "recovery: R at clip 56, seated at once",
+                "startFrom": 0.0,
+                "at": 10.07,
+                "row": 2
+              }
+            ],
+            "cards": [
+              {
+                "label": "Edge test",
+                "text": "W, E, R, Esc · before, on, after 0, 32, 48, 69 · 48/48",
+                "at": 13.43,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Found",
+                "text": "Esc in the fade → TWEEN_PAUSE_STOP (#374)",
+                "at": 15.83,
+                "tone": "fail",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "startup",
+                "at": 0.0
+              },
+              {
+                "label": "active",
+                "at": 6.07
+              },
+              {
+                "label": "recovery",
+                "at": 10.07
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 20.16
+          }
+        },
+        "evidence_media": "capture/takes/interrupt_active/interrupt_active.mp4"
+      },
+      "audio_file": "mp3/beat-B15.mp3",
+      "actual_duration_s": 20.16,
+      "render_duration_s": 20.166666666666668,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B15.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B16",
+      "act": "TUNING",
+      "role_note": "Inspect-and-revise: Claude's reading, one change with a prediction, two strips; the author's verdict and observation-driven revision are stated as open.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Then tuning. Claude read the first strip: at the old cut, frame fifty-three, both his feet were still on the ground, so the brief's climbs in was never seen. The author was away, so Claude decided: move the cut to sixty-two, predicting him rising into the cab before the fade. The second strip matched five of six predictions. The pin moved as predicted. The author's verdict is still open.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "r0 → r1: the cut moved",
+            "label": "fixture captures · strips r0 and r1 · crops",
+            "source": "captures/enter_van/r0 frame 65 · r1 frame 70 · TUNING.md r1 · PIN2 re-pinned 2f91bc5",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r0/frame_065.png",
+                "aspect": 1.6,
+                "caption": "r0, clip 53: the fade begins, feet on the ground",
+                "row": 0,
+                "at": 0.0,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              },
+              {
+                "kind": "image",
+                "src": "blackridge-motion/strips/enter_van/r1/frame_070.png",
+                "aspect": 1.6,
+                "caption": "r1, clip 58: rising into the cab, no fade",
+                "row": 0,
+                "at": 9.43,
+                "crop": {
+                  "x": 0.25,
+                  "y": 0.22,
+                  "w": 0.4,
+                  "h": 0.6
+                }
+              }
+            ],
+            "cards": [
+              {
+                "label": "Decision",
+                "text": "Claude's, under the author's delegation (#406)",
+                "at": 8.5,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Prediction",
+                "text": "5 of 6 seen; the foot lift unreadable",
+                "at": 14.13,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Open",
+                "text": "the author's verdict, and an observed revision",
+                "at": 17.83,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "r0 · r1",
+                "at": 0.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 19.56
+          }
+        },
+        "evidence_media": "evidence/strips/enter_van/r1/frame_070.png"
+      },
+      "audio_file": "mp3/beat-B16.mp3",
+      "actual_duration_s": 19.56,
+      "render_duration_s": 19.566666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B16.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B17",
+      "act": "CODE",
+      "role_note": "The reload's state code.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The third clip. The author rejected a hand-keyed pistol reload, chose motion capture, then a rifle. Mixamo's reloading plays on a second player that keys only the upper body, so his legs keep their own clips. These lines enter the reload while the gun reloads, and leave it when the gun is done. The gun's timer is the clip's length, ninety-nine thirtieths.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "The reload: the gun decides, the clip follows",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/characters/driver/rifle_carry.gd",
+            "source": "features/characters/driver/rifle_carry.gd:161–174 · Claude Code, directed by the author · verbatim",
+            "code": "\t\t\"ready\":\n\t\t\tif reloading:\n\t\t\t\t_go(\"reload\")\n\t\t\telif want_aim:\n\t\t\t\t_go(\"raise\")\n\t\t\"aim\", \"fire\":\n\t\t\tif reloading:\n\t\t\t\t_go(\"reload\")\n\t\t\telif not want_aim and state == \"aim\":\n\t\t\t\t_go(\"lower\")\n\t\t\"reload\":\n\t\t\tif not reloading:\n\t\t\t\t_go(\"aim\" if want_aim else \"ready\")\n\t_show_upper(moving)",
+            "startLine": 161,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Clip",
+                "value": "RifleReload, 100 frames, upper body"
+              },
+              {
+                "label": "Player",
+                "value": "UpperBody, over his own player"
+              },
+              {
+                "label": "Timer",
+                "value": "RELOAD_SECONDS = 99 / 30 (handgun.gd:21)"
+              }
+            ],
+            "cues": [
+              {
+                "at": 10.8,
+                "line": 163,
+                "label": "reloading → reload"
+              },
+              {
+                "at": 12.83,
+                "line": 173,
+                "label": "done → aim/ready"
+              }
+            ],
+            "output": [
+              "test_reload_readback.gd 12/12 · test_reload_edges.gd 21/21 (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 17.96
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B17.mp3",
+      "actual_duration_s": 17.96,
+      "render_duration_s": 17.966666666666665,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B17.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B18",
+      "act": "RESULT",
+      "role_note": "Result of B17: the reload played in Mission 3.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In Mission three: the empty magazine drops at frame fourteen, the fresh one comes up in his left hand, seated at forty-seven, then the charging handle pulled back eight centimetres. Fire and R are ignored until the end. This take is a fixture: he was armed directly, skipping the handover.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The reload in Mission 3",
+            "label": "fixture capture · armed by arm(), then real input (aim, R) · 30 fps, real time, then replays",
+            "source": "capture/takes/reload/reload.mp4 · tools/captures/capture_reload_strip.gd · game 1e7765e",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/reload/reload.mp4",
+                "aspect": 1.6,
+                "caption": "aim held, R pressed, the whole reload, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/reload/reload.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 5.0,
+                "row": 1
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/reload/reload.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same excerpt",
+                "startFrom": 0.0,
+                "at": 10.0,
+                "row": 2
+              }
+            ],
+            "cards": [
+              {
+                "label": "Magazine",
+                "text": "out 14 · in hand 26 · seated 47",
+                "at": 2.07,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Charging handle",
+                "text": "8 cm back at 64-65",
+                "at": 6.3,
+                "tone": "neutral",
+                "mono": true
+              },
+              {
+                "label": "Edges",
+                "text": "fire, R, Esc at 0, 30, 48, 99 · 21/21",
+                "at": 9.97,
+                "tone": "pass",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "reload",
+                "at": 0.0
+              },
+              {
+                "label": "replay",
+                "at": 5.0
+              },
+              {
+                "label": "replay",
+                "at": 10.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.36
+          }
+        },
+        "evidence_media": "capture/takes/reload/reload.mp4"
+      },
+      "audio_file": "mp3/beat-B18.mp3",
+      "actual_duration_s": 15.36,
+      "render_duration_s": 15.366666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B18.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B19",
+      "act": "CODE",
+      "role_note": "The shock's playing code: the seat reach and the grip.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "The fourth clip is keyed by a script over Enter Van's last, seated frame. Play seated puts Ethan in the driver's seat and plays it. These lines slide him forward until his shoulders are forty-three centimetres from the rim, so his elbows stay bent; set each hand's target on the rim, read from the wheel mesh itself; and fade the grip in over eleven frames.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotDevWorkbench",
+          "props": {
+            "mode": "code",
+            "title": "The shock: seated, hands on the rim",
+            "project": "Blackridge: No Way Back",
+            "path": "game/features/characters/driver/driver.gd",
+            "source": "features/characters/driver/driver.gd:1027–1041 · Claude Code, directed by the author · verbatim",
+            "code": "\tvar reach := (_bone_at(\"LeftArm\") + _bone_at(\"RightArm\") - rim[0] - rim[1]) / 2.0\n\tvar along := reach.dot(level.normalized())\n\tvar room := along * along - reach.length_squared() + SHOCK_REACH * SHOCK_REACH\n\tglobal_position += level.normalized() * clampf(-along - sqrt(maxf(room, 0.0)), 0.0,\n\t\tSHOCK_SLIDE)\n\tfor index in range(2):\n\t\tvar side := -1.0 if index == 0 else 1.0\n\t\tvar shoulder := _bone_at(\"%sArm\" % [\"Left\", \"Right\"][index])\n\t\t_hold_targets[index].global_position = rim[index] + (shoulder - rim[index]).normalized() \\\n\t\t\t* SHOCK_PALM\n\t\t_hold_poles[index].global_position = shoulder + van.global_basis * Vector3(\n\t\t\tside * 0.35, -0.5, 0.1)\n\t_hold.active = true\n\t_hold.influence = 0.0\n\tcreate_tween().tween_property(_hold, \"influence\", 1.0, SHOCK_GRIP)",
+            "startLine": 1027,
+            "codeFontSize": 24,
+            "inspectorLabel": "Source notes — not Inspector values",
+            "notes": [
+              {
+                "label": "Clip",
+                "value": "shock/Shock, 105 frames, LOOP_NONE (played at line 1020)"
+              },
+              {
+                "label": "Keys",
+                "value": "tools/art/make_ethan_shock.gd"
+              },
+              {
+                "label": "Reach",
+                "value": "SHOCK_REACH 0.43 m of a 0.48 m arm"
+              }
+            ],
+            "cues": [
+              {
+                "at": 7.27,
+                "line": 1030,
+                "label": "slide"
+              },
+              {
+                "at": 12.57,
+                "line": 1035,
+                "label": "rim target"
+              },
+              {
+                "at": 16.9,
+                "line": 1041,
+                "label": "grip tween"
+              }
+            ],
+            "output": [
+              "test_shock_readback.gd 9/9 · test_shock_state.gd 3/3, wrists within 0.021 m (recorded)"
+            ],
+            "dense": true,
+            "durationSeconds": 18.28
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B19.mp3",
+      "actual_duration_s": 18.28,
+      "render_duration_s": 18.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B19.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B20",
+      "act": "RESULT",
+      "role_note": "Result of B19: the shock in Mission 1.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Seen through the windshield in Mission one's four second hold: a startle, panicked breaths, his head shaking no, the drop toward the wheel, a look at each mirror, then a stare. The author asked for the hands on the wheel and fear that reads; this is that revision. A fixture, with no struck man in frame.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "The shock, through the windshield",
+            "label": "fixture capture · the van placed and held · 30 fps, real time, then replays",
+            "source": "capture/takes/shock/shock.mp4 · tools/captures/capture_shock_shot.gd · #404 · game 1e7765e",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/shock/shock.mp4",
+                "aspect": 1.6,
+                "caption": "the 3.5 s shot inside the 4 s hold, real time",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/shock/shock.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same shot",
+                "startFrom": 0.0,
+                "at": 4.0,
+                "row": 1
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-motion/takes/shock/shock.mp4",
+                "aspect": 1.6,
+                "caption": "replay of the same shot",
+                "startFrom": 0.0,
+                "at": 8.0,
+                "row": 2
+              }
+            ],
+            "cards": [
+              {
+                "label": "Phases",
+                "text": "startle · panic · no · drop · mirrors · stare",
+                "at": 2.8,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Author's look",
+                "text": "hands on the wheel; fear that reads (#404)",
+                "at": 8.43,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "the shot",
+                "at": 0.0
+              },
+              {
+                "label": "replay",
+                "at": 4.0
+              },
+              {
+                "label": "replay",
+                "at": 8.0
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.3
+          }
+        },
+        "evidence_media": "capture/takes/shock/shock.mp4"
+      },
+      "audio_file": "mp3/beat-B20.mp3",
+      "actual_duration_s": 15.3,
+      "render_duration_s": 15.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B20.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B21",
+      "act": "TESTS",
+      "role_note": "What the read-backs proved, the mutations that failed them, and what no headless run can show.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "What the tests proved. Four read-backs resolve every track and pin each clip's key times, step and loop mode. The structure, state and edge tests pass, and every earlier suite still does. Three mutations, a broken track, loop none on the cycle and a key past the sheet, fail as they should; the fourth, a fresh import, can't, by design. None of this shows the motion reads, or that the ring wraps without a seam.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What the tests proved",
+            "label": "recorded output · scripts/run-test.sh, headless, 60 fps",
+            "source": "logs/animation/{repin, step7_r1, reload, shock, mutations} · TEST-REPORT.md",
+            "layout": "document",
+            "media": [],
+            "cards": [
+              {
+                "label": "Read-backs",
+                "text": "ring 15 · rig 14 · reload 12 · shock 9",
+                "at": 1.07,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Suites",
+                "text": "81 earlier runs pass",
+                "at": 7.7,
+                "tone": "pass",
+                "mono": false
+              },
+              {
+                "label": "Mutations",
+                "text": "3 fail · the importer's passes by design",
+                "at": 9.57,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Can't show",
+                "text": "the motion reading · the seam",
+                "at": 16.83,
+                "tone": "accent",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "RING READBACK RESULT: 15/15 passed; 0 failed\nRIG READBACK RESULT: 14/14 passed; 0 failed\nRELOAD READBACK RESULT: 12/12 passed; 0 failed\nSHOCK READBACK RESULT: 9/9 passed; 0 failed\nANIMATION EDGES RESULT: 48/48 passed; 0 failed\nANIMATION PINS RESULT: 3/3 passed; 0 failed\nm1 exit 1\nm2 exit 1\nm3 exit 1\nm4 exit 0",
+            "documentLabel": "results, verbatim",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 20.5
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B21.mp3",
+      "actual_duration_s": 20.5,
+      "render_duration_s": 20.5,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B21.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B22",
+      "act": "LIMITS",
+      "role_note": "Agent mistakes caught, readings overruled, what remains uncertain, one next step, the sheet's source and licence and the revision shown.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Mistakes caught: the pause bug, a second script playing Ethan's clips, hands short of the wheel, and the brief's strip frames two early. Overruled: the author rejected Claude's hand-keyed reload, then corrected its rifle hold in five prompts; no strip reading yet. Uncertain: the seam, and r one. Next step: the author plays r one slowed down. The sheet is ours, drawn by a script. The game shown is revision one, E, seven, seven, six, five, E.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Mistakes, limits and sources",
+            "label": "records · CHANGE-BRIEF.md revisions · TUNING.md · SOURCES.md",
+            "source": "brief revisions · #374 · #386 · #404 · TUNING.md · SOURCES.md · git 1e7765e",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "Mistakes caught",
+                "text": "Esc in the fade · push_gait a 2nd writer · hands short of the rim · §9 two frames early",
+                "at": 0.0,
+                "tone": "fail",
+                "mono": false
+              },
+              {
+                "label": "Overruled",
+                "text": "the hand-keyed reload (#386) · the rifle hold, five prompts (#398-#402) · no strip reading yet",
+                "at": 6.2,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Uncertain",
+                "text": "the ring's seam in play · r1's verdict",
+                "at": 12.07,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Next step",
+                "text": "the author plays r1 at 0.25× and revises",
+                "at": 14.03,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Sheet",
+                "text": "tools/art/make_phone_ring_sheet.py · ours, no licence needed; Mixamo terms; M16 CC BY",
+                "at": 16.37,
+                "tone": "neutral",
+                "mono": false
+              },
+              {
+                "label": "Revision shown",
+                "text": "game/ at 1e7765e",
+                "at": 18.97,
+                "tone": "neutral",
+                "mono": true
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 22.08
+          },
+          "rendered": {
+            "out": "media/B22.mp4",
+            "at": "2026-11-22T21:28:09.849349+00:00"
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B22.mp3",
+      "actual_duration_s": 22.08,
+      "render_duration_s": 22.1,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B22.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B23",
+      "act": "CONTRIBUTIONS",
+      "role_note": "Human and AI contributions, stated as the records state them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Who did what. The author chose the clips, rejected what didn't look real, downloaded the motion capture, corrected every look, ruled on the pause bug and approved each step. Claude Code drafted the brief, built, wired and tested the clips, captured the strips, and made r one while the author was away.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Who did what",
+            "label": "records · docs/AUTHOR_PROMPTS_AND_DECISIONS.md #362-#406 · FRICTIONAL.md",
+            "source": "prompt log · FRICTIONAL.md · SUBMISSION.md",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "The author",
+                "text": "Chose the clips · rejected what wasn't real · downloaded the mocap · corrected every look · ruled on the bug · approved each step",
+                "at": 0.73,
+                "tone": "accent",
+                "mono": false
+              },
+              {
+                "label": "Claude Code",
+                "text": "Drafted the brief · built, wired, tested · captured strips · made r1 while the author was away",
+                "at": 8.73,
+                "tone": "neutral",
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 1,
+            "durationSeconds": 15.7
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B23.mp3",
+      "actual_duration_s": 15.7,
+      "render_duration_s": 15.7,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B23.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B24",
+      "act": "VERDICT",
+      "role_note": "Walker bookend 4a: verdict separates implemented work, limitations and human judgement.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Let's recap with Claude. Implemented: four clips, each a resource with one owner. Verified: read-backs, edges at every boundary, mutations that fail. Still open: the author's verdict on r one and the seam in play. Human judgement: the author corrected every look.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeVerdictArtifact",
+          "props": {
+            "artifactTitle": "Verdict",
+            "artifactHeading": "Blackridge, Frame by Frame",
+            "artifactLines": [
+              "Implemented: four clips, each a resource with one owner.",
+              "Verified: read-backs, edges at every boundary, mutations that fail.",
+              "Open: the author's verdict on r1, and the ring's seam in play.",
+              "Human judgement: the author corrected every look."
+            ]
+          }
+        }
+      },
+      "lead_silence_s": 0.5,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "Locked ClaudeVerdictArtifact bookend: the component fixes the card layout and the four recap lines are the mandated content."
+      },
+      "audio_file": "mp3/beat-B24.mp3",
+      "actual_duration_s": 15.135,
+      "render_duration_s": 15.166666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B24.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      },
+      "audio_notes": "lead 0.5 s baked with ffmpeg; 14.63 s -> 15.13 s"
+    },
+    {
+      "beat_id": "B25",
+      "act": "HANDOFF",
+      "role_note": "HANDOFF LAW + walker Your Turn: Liam reads the prompt aloud, discusses it, signs off.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Your turn. Paste this into Claude. Please use Walker to help me retime one phase of one clip in my game. I will pick the phase myself. Before you change anything, ask for my prediction of what the frame strip will show at each boundary, then change the phase table, not the keys, capture the strip, and show me predicted versus seen. It makes you commit before you look. Judge the answer on three things: it asks for your prediction first, changes only the table, and flags every mismatch. Liam, in for Bear.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "command": "Please use Walker to help me retime one phase of one clip in my game. I will pick the phase myself. Before you change anything, ask for my prediction of what the frame strip will show at each boundary, then change the phase table, not the keys, capture the strip, and show me predicted versus seen.",
+            "topic": "YOUR TURN · BLACKRIDGE",
+            "segment": "Blackridge, Frame by Frame",
+            "greeting": "Your turn.",
+            "runningText": "paste this into Claude…",
+            "folderLabel": "@NikBearBrown"
+          }
+        }
+      },
+      "audio_file": "mp3/beat-B25.mp3",
+      "actual_duration_s": 26.79,
+      "render_duration_s": 26.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B25.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      }
+    },
+    {
+      "beat_id": "B26",
+      "act": "OUTRO",
+      "role_note": "OUTRO-LOCK: exact title, hardcoded @NikBearBrown, slug-seeded mascot, spoken title + handle, 1.0 s silent tail.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Blackridge, Frame by Frame. At Nik Bear Brown.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeTitleOutro",
+          "props": {
+            "title": "Blackridge, Frame by Frame",
+            "slug": "claude-liam-blackridge-animation-gamedev"
+          }
+        }
+      },
+      "kind": "outro_voice",
+      "tail_silence_s": 1.0,
+      "audio_file": "mp3/beat-B26.mp3",
+      "actual_duration_s": 4.456,
+      "render_duration_s": 4.466666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B26.mp4",
+        "filled_by": "media",
+        "at": "2026-11-22T16:33:18"
+      },
+      "audio_notes": "tail 1.0 s baked with ffmpeg; 3.46 s -> 4.46 s"
+    }
+  ]
+}

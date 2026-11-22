@@ -1,0 +1,17 @@
+# RIFF — Blackridge, Frame by Frame
+
+Observations come from the inspected frames of each artifact; interpretations name their source.
+
+| Artifact, time | Visible observation | Interpretation (source) | Narration | Next experiment |
+| --- | --- | --- | --- | --- |
+| `capture/sheet/phone_ring_on_dark.png`; ring take frames 123-138 (B05) | Six cells: the handset alone, one, two, three arcs, then two and one fading arcs; on the dash, the arcs change every three capture frames | 10 fps clip on a 30 fps capture: each cell holds three frames (`phone_ring.tres`, step 0.1) | "…the handset alone, then one, two, three arcs, then the arcs fading away…" | Capture the dash at 60 fps and count six frames per cell |
+| `capture/takes/ring_play/ring_dash.mp4` (B07) | The dash zoomed; "Maya, incoming call"; the handset's arcs pulse steadily; "Answer the call" prompt | `_drive_ring` plays while `call_state` is ringing and `call_seconds < 0` | "The handset pulses while it rings." | Answer at once with T and predict the icon hidden on the next frame |
+| `capture/takes/ring_play/boarding.mp4` (B09) | In the dark at the roadside: Ethan at the van's door, the door opens, he goes in; the cab view takes over | EnterVan plays once (`LOOP_NONE`), the cut at frame 62 hands over to the cab | "In play, it runs once…" | Hold E after seating and predict ExitVan, not EnterVan again |
+| `captures/enter_van/r1` frames 12-82 (B11) | Facing the door; the reach; the hand at the handle with the door shut; the door open; rising into the opening; the cab | The phase boundaries 0, 22, 32, 48, the climb at 58, seated at 70 (`TUNING.md` r1) | "Frame zero, he faces the door…" | Read the same frames at `--time-scale 0.25` in play |
+| `captures/enter_van/r0` frames 44-46 with the log (B13) | The door looks shut at all three; the log reads 0, 0 and 0.011 | The door's value is frame 33's at the clip's frame 34: one frame behind (`enter_van_r0.log`) | "…the door holds the value for thirty-three." | Read `clip_time()` after the player's process and predict 0 s |
+| `capture/takes/interrupt_*` (B15) | Startup: W held, he stays put, boarding goes on. Active: the pause menu over a frozen half-open door, then on. Recovery: the cab at once | `events.txt` of each take; `test_animation_edges.gd` 48/48 | "In startup, W is held…" | Press E during the fade (frames 62-69) and predict "ignored" |
+| `captures/enter_van/r0` 65 against `r1` 70 (B16) | r0: at the door, both feet down, the fade begun; r1: half inside the cab, no fade | The cut moved from 53 to 62 (`TUNING.md` r1) | "…at the old cut, frame fifty-three, both his feet were still on the ground…" | The author plays r1 slowed and decides |
+| `capture/takes/reload/reload.mp4` (B18) | HUD 12/30, then RELOADING; magazine out and the fresh one up to the well; the charging handle; HUD 30/12 | The magazine and handle on the clip's frames (`rifle_hold.gd`); the gun's timer equals the clip | "…the empty magazine drops at frame fourteen…" | Press fire at frame 50 and predict no round |
+| `capture/takes/shock/shock.mp4` (B20) | Seated, hands on the wheel; startle, breaths, head shaking, the drop, mirror looks, the stare | Keys at the phase table's frames (`make_ethan_shock.gd`); IK grip (`driver.gd:1027-1041`) | "…a startle, panicked breaths, his head shaking no…" | Capture with the struck man in frame |
+
+Missing or failed renders: none recorded yet; see `_qc/VISUAL-QC.md`.

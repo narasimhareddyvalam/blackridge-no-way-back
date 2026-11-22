@@ -1,0 +1,2 @@
+cutscene (letterbox) from movie frame 20 to 124: Shock frames 0-104 at movie 20+N
+shock.mp4 = movie frames 20-124 (the shot only)

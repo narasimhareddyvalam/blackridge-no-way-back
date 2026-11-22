@@ -1,0 +1,6 @@
+TAKE movie 45 clip 44.0 door 0.000 boarding false occupied false paused false: E pressed (active phase take)
+TAKE movie 87 clip 40.0 door 0.407 boarding true occupied false paused false: Esc pressed
+TAKE movie 92 clip 41.0 door 0.593 boarding true occupied false paused true: paused
+TAKE movie 132 clip 41.0 door 0.593 boarding true occupied false paused true: after 40 frames paused
+TAKE movie 134 clip 42.0 door 0.593 boarding true occupied false paused false: Esc again: resumed
+TAKE movie 209 clip 46.0 door 0.000 boarding false occupied true paused false: end of take
