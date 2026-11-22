@@ -5372,6 +5372,21 @@ tag `a5`. Pictures the author approved or rejected are filed in
        (Recommended)" ("M16 Assault Rifle", 21.7k faces, CC BY). Asked for three Mixamo rifle clips
        (Ch33, 30 fps): an idle, an aiming idle, a reload.
 
+395. **Rifle clips: use all of them**
+     - **Prompt** (verbatim, after the summary of what is left in the assignment): "i downloaded
+       lot of rifle animations, use all of them correctly"
+     - **Found:** six in Downloads (Firing Rifle, Grab Rifle From Back, Rifle Aim To Down, Rifle
+       Idle, Rifle Idle (1), Rifle Put Away), all Ch33 at 30 fps; no rifle reload among them.
+396. **The Basic Shooter Pack**
+     - **Prompt** (verbatim): "i downloaded basic shooter pack from mixamo, check now if we have
+       reload in it"
+     - **Found:** `~/Downloads/Basic Shooter Pack/`, 17 skinless clips and Ch33: its `reloading` is
+       the same 100-frame clip as the earlier Reloading, and it is a rifle reload (Claude Code had
+       called it a pistol's: its frames 52-64 pull the M16's charging handle by the cheek);
+       `rifle aiming idle` holds the reload's own start pose.
+     - **Asked:** the 15 that fit the game as mapped, without jump and grenade (new mechanics); the
+       author chose "Yes, as mapped (Recommended)".
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

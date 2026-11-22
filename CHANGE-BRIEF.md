@@ -280,3 +280,40 @@ active 30-47 (the magazine out, the fresh one in his hand, seated at 45-47), rec
 overhand rack 52-64, back on aim by 70). Fire and R are ignored throughout; Esc pauses. Every
 earlier clip in `ethan.glb` must stay as it was: sampled before and after the re-conversion and
 compared.
+
+**2026-11-22, the rifle and its clips (#393-#396).** Ethan's weapon is a rifle (C68): jeandiz's
+M16 (`game/features/weapons/rifle/m16.glb`, CC BY), held and moved with fifteen Mixamo clips for Ch33
+at 30 fps, whole and untrimmed. It supersedes the pistol rows above (their clips stay converted but
+unused); the shock is unchanged. Values marked † are Claude Code's proposals.
+
+| State (armed) | Clip, from | Plays on | Enters when | Leaves when |
+| :-- | :-- | :-- | :-- | :-- |
+| Slung | none (the rifle on his back, on `Spine2`) | — | Maya hands it over; after Put Away | aim held |
+| Draw | `RifleGrab` ("Grab Rifle From Back", 88) | upper body | aim held while slung | its last frame |
+| Ready | `RifleIdleA` / `RifleIdleB` ("Rifle Idle", 258; "Rifle Idle (1)", 232), alternating | upper body | drawn, not aiming | aim held; moving; put away |
+| Raise | `RifleAimDown` ("Rifle Aim To Down", 46) backward | upper body | aim held while ready | its first frame |
+| Aim | `RifleAim` ("rifle aiming idle", 90, looping) | upper body | raised | aim released; fire; R |
+| Fire | `RifleFire` ("firing rifle", 9) | upper body | a shot (left mouse while aiming) | its last frame, back to Aim |
+| Lower | `RifleAimDown` forward | upper body | aim released | its last frame, to Ready |
+| Reload | `RifleReload` ("reloading", 100 = 3.3 s) | upper body | R with room in the magazine | its last frame (the magazine fills) |
+| Hit | `RifleHit` ("hit reaction", 14) | upper body | a guard's round hits him | its last frame |
+| Put away | `RifleAway` ("Rifle Put Away", 70) | upper body | before he gets into the van | its last frame, to Slung |
+| Moving, armed | `RifleWalk`, `RifleWalkBack`, `RifleRun`, `RifleRunBack`, `RifleStrafe`, `RifleStrafeLeft`, `RifleStrafeRight`, `RifleStrafe2` (the pack's gaits, walked in place) | his own player (whole body) | a move key while drawn | input released |
+| Turning, armed | `RifleTurnLeft` ("turn left", 27), `RifleTurnRight` ("turning right 45 degrees", 31) | his own player | standing, his facing swinging past 45°† | the turn done |
+
+Left out: "rifle jump" and "toss grenade" (the game has no jump and no grenades; adding them is a
+new mechanic); "Ch33_nonPBR" (the character, already in the game).
+
+The committing action, the draw (88 frames at 30 fps)†: startup 0-39 (his right hand goes back over
+his shoulder), active 40-59 (the hand takes the rifle: it moves from his back to his hand at the
+frame the hand reaches it), recovery 60-87 (the rifle comes round to the ready). Aim, fire and R are
+ignored until 88; Esc pauses. The reload (100 frames): startup 0-29, active 30-47 (the magazine
+out and the fresh one seated at 45-47), recovery 48-99 (the charging handle pulled at 52-64).
+
+Gameplay numbers†: a 30-round magazine and one spare; `RELOAD_SECONDS` 100/30 s (the clip's length,
+so the magazine fills as his hands finish; PIN5 changes, predicted); hitscan, damage and range as
+the pistol's. Owners: `driver.gd` alone plays his own player and `UpperBody` (reading the gun's
+`armed`, `reloading` and the shot), attaches the rifle to his back or his right hand, and keys
+nothing else. Upper-body clips keep only the bones above the waist (`make_rifle_upper_body.gd`);
+the gaits keep the whole body. Every earlier clip in `ethan.glb` stays as it was (sampled before
+and after and compared).
