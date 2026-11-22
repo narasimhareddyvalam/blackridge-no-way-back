@@ -84,7 +84,8 @@ CHARACTERS = {
         ("basic_shooter_pack/strafe right.fbx", "RifleStrafeRight"),
         ("basic_shooter_pack/strafe (2).fbx", "RifleStrafe2"),
         ("basic_shooter_pack/turn left.fbx", "RifleTurnLeft"),
-        ("basic_shooter_pack/turning right 45 degrees.fbx", "RifleTurnRight")]),
+        ("basic_shooter_pack/turning right 45 degrees.fbx", "RifleTurnRight"),
+        ("Male Sitting Pose.fbx", "Sit")]),
     "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
                                                     ("Breathing Idle.fbx", "Idle")]),
 }
