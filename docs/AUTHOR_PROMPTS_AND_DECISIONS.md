@@ -5387,6 +5387,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Asked:** the 15 that fit the game as mapped, without jump and grenade (new mechanics); the
        author chose "Yes, as mapped (Recommended)".
 
+397. **The rifle film: the sling across his back; not wired yet**
+     - **Done:** the nineteen rifle clips converted (every earlier clip unchanged), the M16 in his
+       hands from the captured aim, slung where his hand meets it at frame 23 of the draw, and a 45 s
+       film of them all (`captures/animation/rifle_mocap/film/rifle_clips.mp4`, a fixture).
+     - **Asked** how it sits slung and whether to wire it in; the author chose "Across his back
+       (Recommended)" and, for wiring, "Not yet".
+
+398. **The right hand on the front of the gun**
+     - **Prompt** (verbatim): "i saw the vide you opened, the the hand on front part of the gun
+       (right hand). check the video yourself and make sure hes holding the gun at all times in the
+       best realistic way"
+     - **Found** (markers on his hands, the muzzle and the butt): the rifle placed from one aim frame
+       sat wrong in the other clips: the butt on his upper arm, the idle near vertical, and at the
+       reload's frame 58 his left hand at the muzzle instead of the charging handle.
+     - **Done:** one placement solved by least squares over 18 key frames of all the clips
+       (`tools/art/dump_rifle_targets.gd`, `solve_rifle_grip.py`): the grip in his right palm
+       (2 cm), the left palm on the handguard (7-15 cm, a palm's thickness under the rail), the butt
+       in his shoulder pocket (8-10 cm); the sling across his back where the draw reaches for it
+       (behind his right hip at frame 25), easing into his hand over frames 22-28 and back for 0.35
+       s after frame 40 of the put-away; the film redone and checked frame by frame.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

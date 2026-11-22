@@ -52,7 +52,12 @@ STOPS = {"PushStop"}
 STOP_KNOTS = 6
 REAL_SIZE = {"pedestrian"}
 LOOPING = IN_PLACE | CLIMBS | {"Idle"}
-UPPER_BODY = {"PistolIdle", "PistolReload", "PistolAim"}
+UPPER_BODY = {"PistolIdle", "PistolReload", "PistolAim", "RifleIdleA", "RifleIdleB", "RifleAim",
+              "RifleFire", "RifleAimDown", "RifleReload", "RifleHit", "RifleGrab", "RifleAway"}
+## The rifle's gaits (the Basic Shooter Pack): walked in place like his own walk, but looped by
+## ethan.glb.import, not by a name suffix (Assignment 7, #396).
+RIFLE_GAITS = {"RifleWalk", "RifleWalkBack", "RifleRun", "RifleRunBack", "RifleStrafe",
+               "RifleStrafeLeft", "RifleStrafeRight", "RifleStrafe2"}
 UPPER_BONES = ("Spine", "Neck", "Head", "Shoulder", "Arm", "Hand")
 FPS = 30.0
 CHARACTERS = {
@@ -62,7 +67,24 @@ CHARACTERS = {
         ("Exiting Car.fbx", "ExitVan"), ("Pushing.fbx", "Push"),
         ("Push Stop.fbx", "PushStop"), ("Running Up Stairs.fbx", "StairsUp"),
         ("Pull Heavy Object.fbx", "PullBack"), ("Pistol Idle (1).fbx", "PistolIdle"),
-        ("Reloading.fbx", "PistolReload"), ("Pistol aim.fbx", "PistolAim")]),
+        ("Reloading.fbx", "PistolReload"), ("Pistol aim.fbx", "PistolAim"),
+        ("rifle/Rifle Idle.fbx", "RifleIdleA"), ("rifle/Rifle Idle (1).fbx", "RifleIdleB"),
+        ("basic_shooter_pack/rifle aiming idle.fbx", "RifleAim"),
+        ("basic_shooter_pack/firing rifle.fbx", "RifleFire"),
+        ("rifle/Rifle Aim To Down.fbx", "RifleAimDown"),
+        ("basic_shooter_pack/reloading.fbx", "RifleReload"),
+        ("basic_shooter_pack/hit reaction.fbx", "RifleHit"),
+        ("rifle/Grab Rifle From Back.fbx", "RifleGrab"), ("rifle/Rifle Put Away.fbx", "RifleAway"),
+        ("basic_shooter_pack/walking.fbx", "RifleWalk"),
+        ("basic_shooter_pack/walking backwards.fbx", "RifleWalkBack"),
+        ("basic_shooter_pack/rifle run.fbx", "RifleRun"),
+        ("basic_shooter_pack/run backwards.fbx", "RifleRunBack"),
+        ("basic_shooter_pack/strafe.fbx", "RifleStrafe"),
+        ("basic_shooter_pack/strafe left.fbx", "RifleStrafeLeft"),
+        ("basic_shooter_pack/strafe right.fbx", "RifleStrafeRight"),
+        ("basic_shooter_pack/strafe (2).fbx", "RifleStrafe2"),
+        ("basic_shooter_pack/turn left.fbx", "RifleTurnLeft"),
+        ("basic_shooter_pack/turning right 45 degrees.fbx", "RifleTurnRight")]),
     "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
                                                     ("Breathing Idle.fbx", "Idle")]),
 }
@@ -195,7 +217,7 @@ def prepare(action, label):
     action.use_fake_user = True
     retarget(action)
     fit_range(action)
-    if label in IN_PLACE:
+    if label in IN_PLACE or label in RIFLE_GAITS:
         print(f"  {label}: ground speed {abs(walk_in_place(action)):.3f} m/s, "
               f"cycle {(action.frame_end - action.frame_start) / FPS:.3f} s")
     if label in CLIMBS:
