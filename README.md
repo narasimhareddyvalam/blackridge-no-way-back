@@ -129,8 +129,10 @@ Results are in the Assignment 7 section of [TEST-REPORT.md](TEST-REPORT.md), and
 Brutalist godot-gamedev skill (walker) while the author was away (#406). It shows `game/` at
 `1e7765e`. Its source is in `youtube/claude-liam-blackridge-animation-gamedev/`: script, beat
 sheet, capture records, evidence ledger, fact check, QC and build log. File:
-`Blackridge-Frame-by-Frame-4K.mp4`, SHA-256 `9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`. The link is added once the author uploads it
-to OneDrive, the course's media storage. The film is not in GitHub.
+`Blackridge-Frame-by-Frame-4K.mp4`, SHA-256 `9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`. Watch it
+on OneDrive, the course's media storage (the Assignment 7 folder): https://northeastern-my.sharepoint.com/:f:/g/personal/valam_n_northeastern_edu/IgCJJIQEBdPOQIXjGOoYxva0AQGV6SCr4LIiJIzFIg1gJHY?e=C5NQm3
+
+The film is not in GitHub.
 
 To check the clips:
 

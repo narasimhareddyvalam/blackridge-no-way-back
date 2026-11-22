@@ -5628,6 +5628,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** the pull request `develop` → `main` opened; the `a7` tag waits for the film link,
        committed on `develop`, and the merge.
 
+424. **The film's link**
+     - **Prompt** (verbatim): "https://northeastern-my.sharepoint.com/:f:/g/personal/valam_n_northeastern_edu/IgCJJIQEBdPOQIXjGOoYxva0AQGV6SCr4LIiJIzFIg1gJHY?e=C5NQm3"
+     - **Done:** the link (a OneDrive folder link) in `README.md` and `SUBMISSION.md`, and in the
+       Desktop folder's `SUBMISSION.md` and `CANVAS-NOTE.txt`; pushed to `develop`, so PR #2 has it.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
