@@ -1,0 +1,8 @@
+r1  Mission 2's end saves its own start test_last_run.gd exit 1, 2/3 passed; 1 failed
+      FAIL: L1: Mission 2's end saves Mission 3's start (the_wrong_cargo, checkpoint -1)
+r2  Mission 1's save check refuses Last Run test_last_run.gd exit 1, 2/3 passed; 1 failed
+      FAIL: L2: Continue names it () and starts Mission 3 at the depot (596.78 m off), headed NIGHT FREIGHT, the objective
+r3  the app plays Mission 2 for a Last Run save test_last_run.gd exit 1, 2/3 passed; 1 failed (SCRIPT ERROR)
+      FAIL: L2: Continue names it (The Wrong Cargo · The freight depot) and starts Mission 3 at the depot (0.00 m off), he
+r4  any checkpoint accepted        test_last_run.gd exit 1, 2/3 passed; 1 failed (SCRIPT ERROR)
+      FAIL: L3: a Last Run file at a checkpoint it has not got is kept aside

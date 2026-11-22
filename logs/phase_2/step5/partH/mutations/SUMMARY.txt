@@ -1,0 +1,26 @@
+h1  trailers short of the bumpers        test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y1: dry vans backed square onto docks 1-3, rears within 0.1 m of the bumpers (3)
+h2  trailers skewed                      test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y1: dry vans backed square onto docks 1-3, rears within 0.1 m of the bumpers (3)
+h3  trailers floating                    test_yard.gd exit 1, 11/13 passed; 2 failed
+      FAIL: Y1: their floors within the leveller's 0.1 m of the dock and their landing gear down on the paving
+      FAIL: Y1: a chock at each docked trailer's rear tandem
+h4  chocks away from the tandem          test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y1: a chock at each docked trailer's rear tandem
+h5  the coupled trailer's gear down      test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y4: the tractor coupled, its fifth wheel under the kingpin (0.00 m), the trailer's landing gear cranked up 0.0
+h6  the tractor off the kingpin          test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y4: the tractor coupled, its fifth wheel under the kingpin (0.50 m), the trailer's landing gear cranked up 0.2
+h7  the box truck nose in                test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y5: the box truck inside the east bay's lines, nose out
+h8  cars over the kerb                   test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y6: the sedan and the covered car each inside a staff bay's lines, short of the kerb
+h9  the sedan nose out                   test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y6: the sedan nose in, toward the kerb
+h10  dumpsters off the wall               test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y7: the dumpsters against the east wall outside, on the paving
+h11  a trailer in the van's way           test_yard.gd exit 1, 11/13 passed; 2 failed
+      FAIL: Y1: dry vans backed square onto docks 1-3, rears within 0.1 m of the bumpers (3)
+      FAIL: Y8: nothing in the van's way from the gate to bay 9 or by the west exit's stair (1 of 10 in the way)
+h12  nothing solid                        test_yard.gd exit 1, 12/13 passed; 1 failed
+      FAIL: Y8: each parked vehicle solid (0 shapes)

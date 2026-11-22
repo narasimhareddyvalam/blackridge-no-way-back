@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: RL1 the held pistol has its ReloadPlayer (<Object#null>)
+RELOAD READBACK RESULT: 0/1 passed; 1 failed

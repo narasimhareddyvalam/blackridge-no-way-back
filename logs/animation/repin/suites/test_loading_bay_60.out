@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _start (res://tests/test_loading_bay.gd:80)
+       [7] _run (res://tests/test_loading_bay.gd:56)
+PASS: L0: the east warehouse has its open door
+PASS: L1: door 3 open, its door raised into its tracks, the other six shut
+PASS: L1: inside door 3 the floor at the dock's height over the whole warehouse, the leveller, 2 pallets, 10 racks' ends beyond 5 m, lit
+PASS: L2: each east door's number on the court (7), guide lines either side of door 3
+PASS: L3: 5 floodlights on 3 poles, shadows on at most one
+PASS: L3: two trailers dropped square at the west docks on their gear; pallet stacks, a forklift and dumpsters; each solid (not: )
+PASS: L3: nothing in the van's way from the gate to door 3 ([])
+PASS: L4: 0.58 m short of door 3's bumpers, no docking, and the objective says how far (BACK ONTO DOOR 3 / 0.6 m short of the bumpers. Back in until the red line reaches them.)
+PASS: L4: backed onto door 3 (0.003 m, 0.0°, 0.00 m off), its signal red, stage 3 saved, the objective the escape's GET OUT AND RUN (GET OUT AND RUN / They have come for the van. Get out before they reach the cab.)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _start (res://tests/test_loading_bay.gd:80)
+PASS: L5: reloaded at stage 3: the dark van docked at door 3 (0.030 m), its doors open, his own van sealed in the yard, the gate shut
+LOADING BAY RESULT: 10/10 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

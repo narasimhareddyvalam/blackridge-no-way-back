@@ -1,0 +1,38 @@
+e1  heaters hung too high                test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E1: 6 gas unit heaters, each hung 2.4-4.3 m (8-14 ft) above its floor
+e2  level louvers                        test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E1: each heater hung level, its louvers turning the air down at least 17° and toward the doors it heats
+e3  flues short of the roof              test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E1: each heater's flue rises from its top to the roof (6 flues)
+e4  heaters against the raised doors     test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E1: every heater clear of the raised doors, the racks and the lights
+e5  a fan under a light                  test_shed_fitout.gd exit 1, 21/23 passed; 2 failed
+      FAIL: E2: each fan centred between four sprinkler heads
+      FAIL: E2: each fan clear of the racks, the duct, the raised doors, the lights over it and the heaters' rods and flue
+e6  fans up among the sprinklers         test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E2: the blades at least 3 ft below every sprinkler head over them (least 0.24 m)
+e7  fans off centre of the heads         test_shed_fitout.gd exit 1, 20/23 passed; 3 failed
+      FAIL: E2: each fan centred between four sprinkler heads
+      FAIL: E3: 3 sprinkler lines over the staging lanes and the cross-aisle, heads at most 15 ft apart (along 2.67 m, acr
+      FAIL: E3: each head covers at most 130 ft² (111.9 ft²), the last line within half a spacing of the dock wall
+e8  fans too fast                        test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E2: the fans turn slowly, as in winter (half a second turned them less than a radian)
+e9  a fan hung from one joist            test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E2: each fan hung from a channel across two joists' bottom chords
+e10  sprinkler lines too far apart        test_shed_fitout.gd exit 1, 20/23 passed; 3 failed
+      FAIL: E2: each fan centred between four sprinkler heads
+      FAIL: E3: 2 sprinkler lines over the staging lanes and the cross-aisle, heads at most 15 ft apart (along 2.67 m, acr
+      FAIL: E3: each head covers at most 130 ft² (195.2 ft²), the last line within half a spacing of the dock wall
+e11  tray rods too far apart              test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E4: the trays on rods at most 12 ft apart (widest 4.07 m)
+e12  the numbers over the doors           test_shed_fitout.gd exit 1, 21/23 passed; 2 failed
+      FAIL: E5: each number on the pier beside its own door, 1.8-3.0 m up, never behind its raised door
+      FAIL: E5: a control station by each door, centred 1.2-1.6 m above the dock floor, out of its opening (9)
+e13  stations too high                    test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E5: a control station by each door, centred 1.2-1.6 m above the dock floor, out of its opening (9)
+e14  the shut docks' lights green         test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E5: inside red and green lights by every door, red at the eight shut docks
+e15  the clock far from the side door     test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E6: the time clock, its card racks and the notice board within 3 m of the side door, beside it, not in it
+e16  the fans still                       test_shed_fitout.gd exit 1, 22/23 passed; 1 failed
+      FAIL: E2: the fans turn slowly, as in winter (half a second turned them less than a radian)

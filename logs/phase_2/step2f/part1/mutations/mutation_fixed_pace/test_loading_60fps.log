@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: the van docked at bay 9 and chocked
+PASS: H8: the shed's side door, beside the drive-in lane, keeps Ethan out while shut (true); the hint offers it (E  Open the door) and E swings it open (95°)
+PASS: H8: inside, the stair climbs from the drive-in lane to the dock floor, Ethan's feet 1.30 m up at its top, and its rail keeps him from stepping off its open side (true)
+PASS: H1: on the deck the hint offers the lift (E  Lower the lift); E lowers it to the van's floor (0.465 m against 0.465); its bridge plate rests on the van's rear sill (0.000 m off it) and reaches 0.23 m past it over the floor, its edge 0.095 m above the floor; Ethan rides it (his feet 0.47 m)
+PASS: H1: E again raises it flush with the dock floor (1.300 m), its plate stored upright (its edge 2.21 m up), Ethan with it (1.30 m)
+PASS: H9: behind its handle the hint offers the jack (E  Take the pallet jack); E takes it, its forks raising the pallet above them 0.040 m off the floor
+PASS: H9: pushed on to the lift's deck, the pallet stops at the deck's front against the bridge plate standing up as a toe guard, never over the edge (its front at z 19.738, the plate at 19.740)
+FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "Walk", "Idle"]), then walks nearly upright behind it (leaning 3° at most), the jack at the pace of his feet, 1.200 m/s, his planted feet slipping at most 0.030 m/s, the load getting going slowly (0.320 m in its first 0.3 s), the handle tilted down to his hands (26° to 38°), his palms at most 0.030 m off its loop
+PASS: H9: E sets the pallet down on the lift's deck (0.000 m above it, 0.208 m off its middle) and E again lets go of the jack
+PASS: H1: by the pendant on the deck E lowers the lift (E  Lower the lift), the pallet riding it down to the van's floor (0.465 m against 0.465), and Ethan with it (0.001 m off the deck)
+PASS: H2: behind the handle again E takes the jack (E  Take the pallet jack) and pushes the pallet into the van, walking in behind it over the bridge plate (his feet never below 0.465 m, the deck at 0.465; 0.48 m into the hold)
+FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push"] and inside ["Push"], his head at most 1.471 m above the hold's floor under its 1.536 m roof and 1.412 m above the sill under its 1.45 m rear door; in the hold the jack goes at Pushing's own pace, 1.196 m/s, his planted feet slipping at most 0.377 m/s, his hands at most 0.006 m off the handle, at arm's length (1.75 m behind the jack), the handle tilted down ((21.13984, 46.70982)°) so his palms stay at least 0.18 m below the top of his head
+PASS: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Push held, true; his toes at most 0.046 m up), his hands on the handle (0.000 m off it, 0.43 m below the top of his head), his head 1.393 m up under the roof
+PASS: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (0.010 m from it), between the wheel arches (-0.003 m off the middle), and it goes with the van
+PASS: H2: beside it in the hold E straps the load down to the floor rings (E  Strap the load; 2 straps)
+FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack", "Idle"]), his planted feet slipping at most 0.511 m/s, his hands on the handle (at most 0.101 m off it), his head under the roof and the door (1.492 and 1.412 m)
+PASS: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go of it (E  Let go of the jack)
+PASS: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0141 m at the rear (against 0.0139) and 0.0122 m at the front (against 0.0121)
+PASS: H1: E at the pendant raises the lift again with the jack on it (1.30 m), the load left in the van
+FAIL: H2: W let go on the dock as he walks behind it (["Push", "PushStop", "", "Idle"]), the load rolls on 0.00 m with his last step, his planted feet slipping at most 0.108 m/s; then he stands (Idle), his hands on the handle (0.483 m off it)
+FAIL: H2: W let go while he leans in to get it going (["Push", "PushStop", "", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at most 0.082 m/s; then he stands (Idle) and lets go of the handle (his hands 0.40 m off it)
+PASS: H9: with the jack's back to the dock's front wall there is no room to stand behind its handle, so the hint does not offer it () and E leaves it (held: false)
+LOADING RESULT: 17/22 passed; 5 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

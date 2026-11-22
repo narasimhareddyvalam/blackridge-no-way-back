@@ -1,0 +1,6 @@
+d8  the hold does not settle with the body           test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is 0.0148 m off the floor drawn, the pallet stands 0.0000 m off it,
+d9  the plate laid once, not kept on the sill        test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is -0.0000 m off the floor drawn, the pallet stands 0.0000 m off it
+d10  the load rides the van's frame, not its body     test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is -0.0000 m off the floor drawn, the pallet stands 0.0142 m off it

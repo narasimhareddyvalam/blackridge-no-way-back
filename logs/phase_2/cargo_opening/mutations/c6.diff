@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/app/first_drive.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c6/game/app/first_drive.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/app/first_drive.gd	2026-11-21 18:23:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c6/game/app/first_drive.gd	2026-11-21 18:24:46
+@@ -782,7 +782,7 @@
+ 	_aim_marker()
+ 	_mark_watchers()
+ 	if _mission == cargo and cargo.call_due() and not route.phone_call.active:
+-		route.phone_call.start("MAYA", WrongCargo.MAYA_CHECK_IN)
++		pass
+ 	if route.phone_call.talking:
+ 		_navigation().call_seconds = route.phone_call.elapsed
+ 	_hint_time += delta

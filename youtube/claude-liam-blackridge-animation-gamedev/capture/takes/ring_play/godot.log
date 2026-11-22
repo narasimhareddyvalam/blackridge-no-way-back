@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+ERROR: Can't create shader cache folder, no shader caching will happen: user://
+   at: RendererCompositorRD (servers/rendering/renderer_rd/renderer_compositor_rd.cpp:345)
+
+Movie Maker mode enabled, recording movie in 1280×800 @ 30 FPS...
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://../tools/captures/capture_a7_clips.gd:36)
+WARNING: MetalFX temporal upscaling does not support 3D MSAA. Disabling 3D MSAA internally.
+     at: _configure_3d_render_buffers (servers/rendering/renderer_viewport.cpp:196)
+CLIP: the call rings; zooming to the dash
+CLIP: getting out
+CLIP: E by the door, EnterVan
+CLIP: seated; done
+WARNING: 31 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+--------------------------------------------------------------------------------
+Done recording movie at path: /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/takes/ring_play/ring_play.avi
+638 frames at 30 FPS (movie length: 00:00:21:08), recorded in 00:01:38 (21% of real-time speed).
+CPU render time: 3.24 seconds (average: 5.08 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 4.51 seconds (average: 7.07 ms/frame)
+--------------------------------------------------------------------------------

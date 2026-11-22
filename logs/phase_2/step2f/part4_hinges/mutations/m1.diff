@@ -1,0 +1,4 @@
+1366c1366
+< 			bracket.position = Vector3(door.position.x, height, door.position.z)
+---
+> 			bracket.position = Vector3(door.position.x, height, door.position.z + 0.05)

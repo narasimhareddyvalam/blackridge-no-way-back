@@ -1,0 +1,42 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _start (res://tests/test_container_yard.gd:84)
+       [7] _run (res://tests/test_container_yard.gd:62)
+PASS: C0: the world has its container yard (IndustrialLoop/ContainerYard)
+PASS: C1: the yard fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (190.0 m of 196.0 m, 15 strands)
+PASS: C2: 88 ISO 668 containers, 20 ft, 40 ft and 40 ft high cube
+PASS: C2: each on the one below or the paving, corner on corner, of one length, at most 3 high (highest 3)
+PASS: C2: the lane 16 m wide between the blocks and nothing in the van's way (0 in it)
+PASS: C2: every stack solid, the fence round, the shut gate and the dark van as big as his (not: )
+PASS: C3: away from the line, E at the keypad is not offered
+PASS: C3: the gate shut, and E offered at the stop line
+PASS: C3: E keys the code in, his window down, a beep a key (4), and the gate slides open (11.4 s)
+PASS: C3: and shuts behind the van, the window up again (9.8 s)
+PASS: C4: out of the bay, the dark van is not his yet ("Leave your van in the marked bay first")
+PASS: C5: in the bay, E at the dark van's door: one drivable van, the dark one, in its place and paint, empty (0 carried)
+PASS: C5: his van left where it stood (0.0000 m) with its load (1), shut and sealed
+PASS: C5: the mirror cameras as before (3)
+PASS: C6: stage 2 saved, the container yard reached, the objective the next place (DRIVE TO THE WAREHOUSE COMPOUND / Out of the yard and east on the valley road; the compound's gate is on the left.)
+PASS: C6: and Ethan gets in the dark van by E
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _start (res://tests/test_container_yard.gd:84)
+PASS: C7: reloaded at stage 2: the dark van his (0.25 m, (0.2, 0.21, 0.22, 1.0)), his own in the bay (0.00 m), sealed (4182260)
+CONTAINER YARD RESULT: 17/17 passed; 0 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

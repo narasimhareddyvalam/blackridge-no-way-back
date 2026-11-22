@@ -30,6 +30,9 @@ request (decision C31):
   the rear door, which had none.
 - **Split into parts:**
   - both front doors with their windows, on their hinges;
+  - both rear doors (added on 2026-11-11 for step 2d, by the same script), each turning about
+    the body's outer rear corner so it opens to 270 degrees and lies against the side, as a
+    Daily's do on their long hinges; the rear plate goes with the left one;
   - the four wheels, each on its centre;
   - the steering wheel, on its column;
   - the windshield glass, on its own;
@@ -46,3 +49,11 @@ request (decision C31):
 The game also uses `iveco_exterior.glb` for the oncoming van that dazzles the player (decision
 C33, Run 23 step 4): its paint textures are tinted dark grey in code, and a second plate,
 "BR 731", is laid over its own front and rear. The files in this folder are not changed for it.
+
+## A derived file: the tail lamp masks
+
+- **Tail lamp masks (2026-11-20, #343, #344):** `tail_lamp_masks.png` is made from the model's own
+  `iveco_exterior_Window_baseColor.webp` by `tools/art/make_tail_lamp_mask.py`: red where that
+  texture is the lamps' red lens, green where it is their clear section's chrome reflector, black
+  elsewhere, so `tail_lamp.gdshader` lights each part as a real lamp's. It is a derivative of the
+  model's texture and is shared under the same licence.

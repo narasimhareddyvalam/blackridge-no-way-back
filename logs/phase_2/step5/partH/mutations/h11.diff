@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h11/game/features/environments/industrial_loop/yard_vehicles.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h11/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:29:06
+@@ -35,7 +35,7 @@
+ const TRUCK_WIDTH := 2.28
+ ## The docks and their bumpers' faces (`transfer_building.gd`), the trailer bays and the staff
+ ## bays (`transfer_yard.gd`).
+-const TRAILER_DOCKS: Array[float] = [-80.0, -76.0, -72.0]
++const TRAILER_DOCKS: Array[float] = [-80.0, -76.0, -47.75]
+ const BUMPER_FACE := 20.13
+ const DOCK_GAP := 0.02
+ const BAYS: Array[float] = [-37.4, -33.6, -29.8]

@@ -1,0 +1,141 @@
+m1  the stair at his flat pace     test_dock_worker.gd exit 1, 30/33 passed; 3 failed
+      FAIL: W12: on the dock stair he takes a tread a step, his feet taking turns (true; 4 steps down, 4 up), each step 0.
+      FAIL: W13: his hand on the rail's side holds the rail all the way down and up (0.154 and 0.134 m off it), the log in
+      FAIL: W22: he never floats up or drops: his height changes at most 5 cm a frame as he walks (0.178 m at most, back a
+m2  no feet on the treads          test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W12: on the dock stair he takes a tread a step, his feet taking turns (true; 0 steps down, 0 up), each step 0.
+m3  no hand on the rail            test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W13: his hand on the rail's side holds the rail all the way down and up (0.361 and 0.680 m off it), the log in
+m4  the log in his rail hand going down test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W13: his hand on the rail's side holds the rail all the way down and up (0.003 and 0.000 m off it), the log in
+m5  reaching ahead going down      test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W13: his hand on the rail's side holds the rail all the way down and up (0.115 and 0.000 m off it), the log in
+m6  getting going at once          test_dock_worker.gd exit 1, 31/33 passed; 2 failed
+      FAIL: W14: he gets up to pace and slows to a stop over a step or two, never changing pace faster than 3.5 m/s a seco
+      FAIL: W32: he steps over the wheel guide out and back (2 times), his feet clear of its top (by 0.019 m at the least,
+m7  no slowing to a stop           test_dock_worker.gd exit 1, 31/33 passed; 2 failed
+      FAIL: W14: he gets up to pace and slows to a stop over a step or two, never changing pace faster than 3.5 m/s a seco
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (false, never past x -40.50
+m8  snapping round                 test_dock_worker.gd exit 1, 31/33 passed; 2 failed
+      FAIL: W15: he turns on the spot, never snapping round (4 frames), at most 9937° a second standing (360)
+      FAIL: W31: walking on the level he carries the log before him at his waist (6 of 2098 frames not, out: 0.77 m up, 0.
+m9  corners walked sharp           test_dock_worker.gd exit 1, 16/33 passed; 17 failed
+      FAIL: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["StandUp", "Idle", "TurnRight
+      FAIL: W9 his way: over the dock floor to the stair's landing (6.46 m), down the stair (3.87 m from its foot), out of
+      FAIL: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT), all from one place: the log laid on the step crouc
+      FAIL: W11 back at his desk within the doors' 90 s (-1.0 s)
+      FAIL: W12: on the dock stair he takes a tread a step, his feet taking turns (true; 0 steps down, 0 up), each step 0.
+      FAIL: W13: his hand on the rail's side holds the rail all the way down and up (inf and inf m off it), the log in his
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk"])
+      FAIL: W24: as the seal goes on his hands are on the hasp, his right wrist 0.000 m from it and his left 0.000 m (a ha
+      FAIL: W16: the seal is in his hand until it is on the hasp (0 frames before, 0 after), and a pen is in his hand all 
+      FAIL: W11 back, he sits at his desk: Walk, his hips 0.42 m over the seat and 0.53 m from its middle, facing the desk
+      FAIL: W25: noting, he holds the seal log up before his chest in his left hand (its page inf--inf m up and inf--inf m
+      FAIL: W28: he crouches to lay the log on the van's rear step and to take it up (his hips {  } m lower), and while he
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 0 of 0 frames, tugging it 0.000 m out 
+      FAIL: W30: his arms as a man's are: at the hasp his elbows bent {  } degrees (70-160, never locked straight), his wr
+      FAIL: W32: he steps over the wheel guide out and back (0 times), his feet clear of its top (by inf m at the least, )
+      FAIL: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 0.00 s 
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (true, never past x -46.02)
+m11  no seal in his hand            test_dock_worker.gd exit 1, 31/33 passed; 2 failed
+      FAIL: W24: as the seal goes on his hands are on the hasp, his right wrist 0.103 m from it and his left 0.108 m (a ha
+      FAIL: W16: the seal is in his hand until it is on the hasp (0 frames before, 0 after), and a pen is in his hand all 
+m12  the seal kept in his hand      test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W16: the seal is in his hand until it is on the hasp (187 frames before, 2805 after), and a pen is in his hand
+m13  no pen                         test_dock_worker.gd exit 1, 30/33 passed; 3 failed
+      FAIL: W16: the seal is in his hand until it is on the hasp (187 frames before, 0 after), and a pen is in his hand al
+      FAIL: W25: noting, he holds the seal log up before his chest in his left hand (its page 1.10-1.10 m up and 0.30-0.30
+      FAIL: W30: his arms as a man's are: at the hasp his elbows bent { "L": (96.65224, 96.65224), "R": (81.09708, 81.0970
+m14  the scanner always lit         test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W17: his scanner dark until he aims (615 frames lit before), a red line to the load's shipping label for 0.40 
+m15  aiming too long                test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 1.02 s 
+m16  aimed at the load's middle     test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 0.40 s 
+m17  no green flash                 test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 0.40 s 
+m18  the stair taken beside it      test_dock_worker.gd exit 1, 27/33 passed; 6 failed
+      FAIL: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT), all from one place: the log laid on the step crouc
+      FAIL: W11 back at his desk within the doors' 90 s (-1.0 s)
+      FAIL: W22: he never floats up or drops: his height changes at most 5 cm a frame as he walks (0.831 m at most, out at
+      FAIL: W18: off the stair, walking, his feet stay on the floor he walks on, his toes never more than 3 cm below it (0
+      FAIL: W27: on his walks his body (0.25 m round) meets nothing solid but floors and the stair, nor the dock seal's pa
+      FAIL: W31: walking on the level he carries the log before him at his waist (41 of 1991 frames not, out: 0.84 m up, 0
+m19  out with no room behind the van test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (false, never past x -39.11
+m20  through the shut door          test_dock_worker.gd exit 1, 29/33 passed; 4 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+      FAIL: W21: the side door shut, he stops inside it and pushes it open, going through only once it has swung open (0.0
+      FAIL: W27: on his walks his body (0.25 m round) meets nothing solid but floors and the stair, nor the dock seal's pa
+      FAIL: W31: walking on the level he carries the log before him at his waist (0 of 2080 frames not), its face seen by 
+m21  no cutscene                    test_dock_worker.gd exit 1, 30/33 passed; 3 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last ([]), each
+      FAIL: W31: walking on the level he carries the log before him at his waist (0 of 2098 frames not), its face seen by 
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (true, never past x -40.51)
+m22  the player's control not held  test_sealing.gd exit 1, 14/15 passed; 1 failed
+      FAIL: H5b: the doors shut and the dock hand sent out, his round is shown (true, its camera current: true); Ethan ste
+m23  Ethan not stepping clear       test_sealing.gd exit 1, 9/15 passed; 6 failed
+      FAIL: H5b: the doors shut and the dock hand sent out, his round is shown (true, its camera current: true); Ethan ste
+      FAIL: H5: the doors shut, the objective says to wait for the seal (WAIT FOR THE SEAL); the dock worker walks out to 
+      FAIL: H5b: with the dock hand on his way back the cutscene ends: Ethan's own camera and his control back (false)
+      FAIL: H5: at the sealed doors E (E  Open the rear doors) shows the check: the number  on the bolt, on the cap and on
+      FAIL: H6: checked, "loaded" saves Mission 2's stage 1 (stage 0 in the file) and the objective moves on (WAIT FOR THE
+      FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middl
+m24  the cutscene running on        test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m25  no skipping                    test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (true, never past x -40.51)
+m26  a camera behind the wall       test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m27  too little room behind the van test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W20: with the van too near the dock to stand behind, he waits inside the side door (false, never past x -39.11
+m28  the chair left out             test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W23: walking he never goes into his chair, never stepping nearer it than half his body's width (he pushes it i
+m29  the floor taken from a metre up test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m30  the seal shot as he passes its lens test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m31  the door camera in the trailer test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m32  his way by the load as before  test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W27: on his walks his body (0.25 m round) meets nothing solid but floors and the stair, nor the dock seal's pa
+m33  his left hand off the hasp     test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W24: as the seal goes on his hands are on the hasp, his right wrist 0.103 m from it and his left 0.589 m (a ha
+m34  standing as near the doors as before test_sealing.gd exit 0, 15/15 passed; 0 failed
+m35  the log at 1/100 of its size again test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m36  his way along the dock face as before test_dock_worker.gd exit 1, 31/33 passed; 2 failed
+      FAIL: W27: on his walks his body (0.25 m round) meets nothing solid but floors and the stair, nor the dock seal's pa
+      FAIL: W32: he steps over the wheel guide out and back (0 times), his feet clear of its top (by inf m at the least, )
+m37  through the wheel guide        test_dock_worker.gd exit 1, 29/33 passed; 4 failed
+      FAIL: W22: he never floats up or drops: his height changes at most 5 cm a frame as he walks (0.200 m at most, out at
+      FAIL: W18: off the stair, walking, his feet stay on the floor he walks on, his toes never more than 3 cm below it (0
+      FAIL: W27: on his walks his body (0.25 m round) meets nothing solid but floors and the stair, nor the dock seal's pa
+      FAIL: W32: he steps over the wheel guide out and back (0 times), his feet clear of its top (by inf m at the least, )
+m38  his feet not lifted over it    test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W32: he steps over the wheel guide out and back (2 times), his feet clear of its top (by -0.066 m at the least
+m40  the log kept in his hand at the hasp test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W28: he crouches to lay the log on the van's rear step and to take it up (his hips { "setting_down": 0.5032428
+m41  the log over the step          test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W28: he crouches to lay the log on the van's rear step and to take it up (his hips { "setting_down": 0.5032428
+m42  sealing standing upright       test_dock_worker.gd exit 1, 29/33 passed; 4 failed
+      FAIL: W11 back at his desk within the doors' 90 s (92.2 s)
+      FAIL: W24: as the seal goes on his hands are on the hasp, his right wrist 0.351 m from it and his left 0.347 m (a ha
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 0 of 182 frames, tugging it -inf m out
+      FAIL: W30: his arms as a man's are: at the hasp his elbows bent { "L": (179.9993, 179.9993), "R": (179.9996, 179.999
+m43  no stoop                       test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m44  his hands left turned as the clip has them test_dock_worker.gd exit 1, 30/33 passed; 3 failed
+      FAIL: W25: noting, he holds the seal log up before his chest in his left hand (its page 1.01-1.01 m up and 0.42-0.42
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 0 of 182 frames, tugging it -inf m out
+      FAIL: W31: walking on the level he carries the log before him at his waist (1 of 2098 frames not, back: 0.95 m up, 0
+m45  no tug                         test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m46  no twist                       test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m47  the pen's tip off his fingers  test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W30: his arms as a man's are: at the hasp his elbows bent { "L": (96.65224, 96.65224), "R": (81.09708, 81.0970
+m48  the log hung walking           test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W31: walking on the level he carries the log before him at his waist (2098 of 2098 frames not, out: 0.66 m up,
+m49  no paper shot                  test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", 
+m50  writing at the doors           test_dock_worker.gd exit 0, 33/33 passed; 0 failed
+m51  no tick drawn                  test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W25: noting, he holds the seal log up before his chest in his left hand (its page inf--inf m up and inf--inf m
+m53  his hand off the seal checking test_dock_worker.gd exit 1, 32/33 passed; 1 failed
+      FAIL: W29: checking the seal (view, verify, tug, twist), his right hand on it 0 of 182 frames, tugging it -inf m out

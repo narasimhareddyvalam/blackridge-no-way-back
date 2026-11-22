@@ -1,0 +1,50 @@
+start, behind the fade: the van stopped in the open court, its rear doors shut, Ethan at the wheel
+01_takes_the_right_doors_handle: hidden camera at (-45.05, 1.8, 24.3) looking at (-47.95, 0.9, 28.0), fov 55; clip WalkBack frame 7 at 1.11x; objective OPEN THE REAR DOORS
+02_pulls_it_open_stepping_back: hidden camera at (-45.05, 1.8, 24.3) looking at (-47.95, 0.9, 28.0), fov 55; clip Idle frame 10 at 1.00x; objective OPEN THE REAR DOORS
+03_round_its_edge_to_push_it_on: hidden camera at (-45.05, 1.8, 24.3) looking at (-47.95, 0.9, 28.0), fov 55; clip Idle frame 5 at 1.00x; objective OPEN THE REAR DOORS
+04_it_swings_round_to_its_stay: hidden camera at (-50.65, 1.8, 24.6) looking at (-47.55, 0.9, 28.0), fov 55; clip WalkBack frame 6 at 1.12x; objective OPEN THE REAR DOORS
+05_the_left_door_by_its_edge: hidden camera at (-50.65, 1.8, 24.6) looking at (-47.55, 0.9, 28.0), fov 55; clip Walk frame 7 at 0.78x; objective OPEN THE REAR DOORS
+06_the_left_door_swinging_round: hidden camera at (-45.05, 1.8, 24.3) looking at (-47.95, 0.9, 28.0), fov 55; clip Idle frame 30 at 1.00x; objective OPEN THE REAR DOORS
+07_both_doors_on_their_stays: hidden camera at (-45.05, 1.8, 24.3) looking at (-47.95, 0.9, 28.0), fov 55; clip Idle frame 20 at 1.00x; objective BACK ONTO BAY 9
+08_backing_onto_bay_9: hidden camera at (-41.6, 2.8, 31.5) looking at (-47.75, 1.0, 24.5), fov 55; clip Idle frame 176 at 1.00x; objective BACK ONTO BAY 9
+backed onto bay 9: docked, its rear 0.00 m from the bumpers
+09_the_rear_wheel_chocked: hidden camera at (-44.35, 1.45, 23.74) looking at (-46.8, 0.1, 21.69), fov 50; clip Idle frame 42 at 1.00x; objective LOAD THE PALLET
+chocked: true
+10_the_side_door_open: hidden camera at (-37.3, 2.0, 22.2) looking at (-40.0, 1.1, 17.5), fov 55; clip Idle frame 53 at 1.00x; objective LOAD THE PALLET
+11_up_the_stair_a_tread_a_step: hidden camera at (-40.5, 2.35, 15.5) looking at (-44.2, 1.1, 14.6), fov 60; clip Walk frame 3 at 0.65x; objective LOAD THE PALLET
+12_taken_standing_back_to_pump: hidden camera at (-44.8, 3.1, 14.0) looking at (-47.2, 2.2, 15.5), fov 55; clip Idle frame 42 at 1.00x; objective ROLL THE PALLET IN
+13_pumping_the_handle_lifted: hidden camera at (-44.8, 3.1, 14.0) looking at (-47.2, 2.2, 15.5), fov 55; clip Idle frame 53 at 1.00x; objective ROLL THE PALLET IN
+pumped up in 4 strokes
+14_pumped_up_and_stepped_in_close: hidden camera at (-44.8, 3.1, 14.26) looking at (-47.2, 2.2, 15.76), fov 55; clip Idle frame 30 at 1.00x; objective ROLL THE PALLET IN
+15_leaning_in_to_get_it_going: hidden camera at (-44.41, 3.1, 14.9) looking at (-47.08, 2.2, 15.86), fov 55; clip Push frame 9 at 0.65x; objective ROLL THE PALLET IN
+16_walking_upright_behind_it: hidden camera at (-44.71, 3.1, 15.75) looking at (-47.32, 2.2, 16.86), fov 55; clip Walk frame 15 at 0.52x; objective ROLL THE PALLET IN
+17_walking_from_ethans_camera: Ethan's own camera, the window; clip Walk frame 15 at 0.52x; objective ROLL THE PALLET IN
+18_against_the_toe_guard_stepped_up_to_it: hidden camera at (-44.96, 3.1, 17.01) looking at (-47.52, 2.2, 18.23), fov 55; clip Idle frame 91 at 1.00x; objective ROLL THE PALLET IN
+19_the_lowering_valve_open_the_pallet_sinking: hidden camera at (-44.96, 3.1, 17.01) looking at (-47.52, 2.2, 18.23), fov 55; clip Idle frame 111 at 1.00x; objective ROLL THE PALLET IN
+20_the_pendant_up_down_and_its_stop: hidden camera at (-48.27, 2.5, 17.95) looking at (-48.62, 2.38, 17.5), fov 35; clip Idle frame 14 at 1.00x; objective LOWER THE LIFT
+21_held_the_lift_going_down_beeping: hidden camera at (-45.5, 2.5, 16.6) looking at (-47.75, 0.6, 20.0), fov 60; clip Idle frame 115 at 1.00x; objective LOWER THE LIFT
+22_the_lift_down_its_plate_on_the_sill: hidden camera at (-45.5, 2.5, 16.6) looking at (-47.75, 0.6, 20.0), fov 60; clip Idle frame 264 at 1.00x; objective ROLL THE PALLET IN
+pumped up in 7 strokes
+23_into_the_van_stooped: hidden camera at (-47.75, 1.95, 22.75) looking at (-47.75, 1.0, 19.4), fov 72; clip Push frame 34 at 1.00x; objective ROLL THE PALLET IN
+24_into_the_van_from_ethans_camera: Ethan's own camera, the window; clip Push frame 35 at 1.00x; objective ROLL THE PALLET IN
+25_against_the_bulkhead_stooped: hidden camera at (-47.45, 1.9, 19.55) looking at (-47.75, 0.9, 22.6), fov 70; clip Push frame 55 at 0.00x; objective ROLL THE PALLET IN
+26_hooked_to_the_floor_ring: hidden camera at (-47.0, 2.15, 23.3) looking at (-47.75, 1.1, 22.4), fov 75; clip Push frame 55 at 0.00x; objective STRAP THE LOAD
+27_thrown_over_the_load: hidden camera at (-47.0, 2.15, 23.3) looking at (-47.75, 1.1, 22.4), fov 75; clip Push frame 55 at 0.00x; objective STRAP THE LOAD
+28_hooked_to_the_far_ring: hidden camera at (-47.0, 2.15, 23.3) looking at (-47.75, 1.1, 22.4), fov 75; clip Push frame 55 at 0.00x; objective STRAP THE LOAD
+strapped by hand in 14 presses
+29_strapped_down: hidden camera at (-47.0, 2.15, 23.3) looking at (-47.75, 1.1, 22.4), fov 75; clip Push frame 55 at 0.00x; objective RAISE THE LIFT
+30_strapped_down_from_the_doors: hidden camera at (-47.45, 1.9, 19.55) looking at (-47.75, 0.9, 22.6), fov 70; clip Push frame 55 at 0.00x; objective RAISE THE LIFT
+31_pulling_out_stooped: hidden camera at (-47.75, 1.95, 22.75) looking at (-47.75, 1.0, 19.4), fov 72; clip PullBack frame 18 at 1.00x; objective RAISE THE LIFT
+32_out_and_walking_back_upright: Ethan's own camera, the window; clip PullBack frame 18 at 1.00x; objective RAISE THE LIFT
+33_pulling_the_empty_jack_off_the_lift: hidden camera at (-45.45, 3.1, 16.55) looking at (-47.83, 2.2, 18.09), fov 55; clip WalkBack frame 15 at 0.86x; objective TAKE THE CHOCK OUT
+34_the_jack_left_on_the_dock: hidden camera at (-45.47, 3.1, 14.96) looking at (-47.85, 2.2, 16.49), fov 55; clip Idle frame 74 at 1.00x; objective TAKE THE CHOCK OUT
+35_the_left_door_tugged_off_its_stay: hidden camera at (-43.15, 1.65, 23.24) looking at (-46.65, 0.85, 23.64), fov 55; clip Idle frame 6 at 1.00x; objective CLOSE THE REAR DOORS
+36_it_swings_back_round: hidden camera at (-43.15, 1.65, 23.24) looking at (-46.65, 0.85, 23.64), fov 55; clip Walk frame 26 at 0.88x; objective CLOSE THE REAR DOORS
+37_walked_shut_onto_its_latch: hidden camera at (-45.45, 2.35, 21.24) looking at (-47.95, 0.85, 23.24), fov 70; clip Walk frame 26 at 0.24x; objective CLOSE THE REAR DOORS
+38_the_right_door_off_its_stay: hidden camera at (-52.35, 1.65, 23.24) looking at (-48.85, 0.85, 23.64), fov 55; clip Idle frame 15 at 1.00x; objective CLOSE THE REAR DOORS
+39_the_right_door_walked_shut: hidden camera at (-50.05, 2.35, 21.24) looking at (-47.55, 0.85, 23.24), fov 70; clip Walk frame 4 at 0.22x; objective CLOSE THE REAR DOORS
+40_both_doors_shut_on_their_latches: hidden camera at (-45.45, 2.35, 21.24) looking at (-47.95, 0.85, 23.24), fov 70; clip Idle frame 14 at 1.00x; objective WAIT FOR THE SEAL
+the doors closed by hand: open false, a job under way false
+41_the_dock_worker_seals_the_doors: hidden camera at (-44.9, 1.8, 21.3) looking at (-47.75, 1.1, 23.1), fov 55; clip Idle frame 180 at 1.00x; objective WAIT FOR THE SEAL
+42_the_bolt_seal_on_the_hasp: hidden camera at (-46.65, 1.15, 22.61) looking at (-47.75, 0.9, 23.16), fov 45; clip Idle frame 13 at 1.00x; objective CHECK THE SEAL
+the worker reached the doors and the van was sealed: true, after 25.7 s

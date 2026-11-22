@@ -9,10 +9,47 @@ const SaveFile = preload("res://shared/save/save_file.gd")
 const SETTINGS_VERSION := 1
 const VanGuide = preload("van_guide.gd")
 const FrontMenu = preload("res://features/ui/menus/front_menu.gd")
+const MissionMap = preload("mission_map.gd")
+const ObjectiveMarker = preload("objective_marker.gd")
+const SeenMarks = preload("seen_marks.gd")
+## The HUD's lettering, Barlow Condensed SemiBold (SIL Open Font License 1.1, `fonts/OFL.txt`).
+const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
+## The objective beside the mission map (#356): its left edge clear of the map, its foot level
+## with the map's.
+const OBJECTIVE_LEFT := 392.0
+const OBJECTIVE_FOOT := 30.0
+const SUBTITLE_FOOT := 82.0
+const COMBAT_FOOT := 64.0
+const HEALTH_WIDTH := 160.0
+const SUBTITLE_HEIGHT := 68.0
+const SUBTITLE_GAP := 12.0
+const HINT_MARGIN := 28.0
+## A soft dark fade behind the map and the objective, round from the screen's bottom-left corner,
+## so they read over a bright dashboard.
+const BACKING := Vector2(900.0, 240.0)
+const PROMPT_FOOT := 178.0
+const TEXT_WIDTH := 380.0
+const TEXT_SECONDS := 10.0
 
 var menu_visible: bool = true
 var settings_path: String = ""
 var van_guide := VanGuide.new()
+var mission_map := MissionMap.new()
+var objective_marker := ObjectiveMarker.new()
+## Over each guard who sees Ethan, how near he is to being caught (#358).
+var seen_marks := SeenMarks.new()
+## Where the objective sends the player (#358), or Vector3.INF; `set_target` gives it.
+var target := Vector3.INF
+## A key that does something here, at the bottom centre (#358): its keycap and what it does.
+var prompt: PanelContainer
+var _prompt_key: Label
+var _prompt_label: Label
+var _distance: Label
+var _text_card: PanelContainer
+var _text_sender: Label
+var _text_words: Label
+var _text_timer := 0.0
+var _backing: TextureRect
 var menu: Control
 var _heading: VBoxContainer
 var _eyebrow: Label
@@ -24,6 +61,16 @@ var _cinematic: bool = false
 var _notice_timer: float = 0.0
 var _fade: ColorRect
 var _subtitles: PanelContainer
+var _subtitle_holder: CenterContainer
+## Armed on foot (Mission 3's step 6): rounds in the magazine and spare, health, the crosshair,
+## and a brief red wash over the screen when he is hit.
+var _combat: VBoxContainer
+var _ammo: Label
+var _health_bar: ColorRect
+var _health_fill: ColorRect
+var _crosshair: Control
+var _hit_edge: ColorRect
+var _last_health := 100.0
 var _speaker: Label
 var _words: Label
 var _document: PanelContainer
@@ -43,26 +90,84 @@ func _ready() -> void:
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
+	_backing = TextureRect.new()
+	_backing.name = "ObjectiveBacking"
+	var fade := GradientTexture2D.new()
+	fade.gradient = Gradient.new()
+	fade.gradient.set_color(0, Color(0.0, 0.0, 0.0, 0.62))
+	fade.gradient.set_color(1, Color(0.0, 0.0, 0.0, 0.0))
+	fade.gradient.set_offset(1, 0.72)
+	fade.fill = GradientTexture2D.FILL_RADIAL
+	fade.fill_from = Vector2(0.0, 1.0)
+	fade.fill_to = Vector2(0.75, 0.0)
+	fade.width = 128
+	fade.height = 64
+	_backing.texture = fade
+	_backing.stretch_mode = TextureRect.STRETCH_SCALE
+	_backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_backing.anchor_top = 1.0
+	_backing.anchor_bottom = 1.0
+	_backing.offset_left = 0.0
+	_backing.offset_right = BACKING.x
+	_backing.offset_top = -BACKING.y
+	_backing.offset_bottom = 0.0
+	root.add_child(_backing)
+	mission_map.name = "MissionMap"
+	mission_map.set_font(LETTERING)
+	root.add_child(mission_map)
 	_heading = VBoxContainer.new()
-	_heading.position = Vector2(32, 28)
 	_heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_heading.add_theme_constant_override("separation", 0)
+	_heading.anchor_top = 1.0
+	_heading.anchor_bottom = 1.0
+	_heading.offset_left = OBJECTIVE_LEFT
+	_heading.offset_bottom = -OBJECTIVE_FOOT
+	_heading.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	root.add_child(_heading)
-	_eyebrow = _label("NIGHT FREIGHT", 14, Color("bcad89"))
+	_eyebrow = _lettered(_label("NIGHT FREIGHT", 17, Color("d9b97a")))
 	_heading.add_child(_eyebrow)
-	_objective = _label("RETURN TO THE DEPOT", 25)
-	_heading.add_child(_objective)
-	_detail = _label("", 16, Color("c0c9cc"))
+	var title_row := HBoxContainer.new()
+	title_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_row.add_theme_constant_override("separation", 14)
+	_heading.add_child(title_row)
+	_objective = _lettered(_label("RETURN TO THE DEPOT", 32))
+	title_row.add_child(_objective)
+	_distance = _lettered(_label("", 22, ObjectiveMarker.AMBER))
+	_distance.size_flags_vertical = Control.SIZE_SHRINK_END
+	_distance.visible = false
+	title_row.add_child(_distance)
+	_detail = _lettered(_label("", 19, Color("b9c2c4")))
+	_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_detail.custom_minimum_size.x = 520.0
 	_heading.add_child(_detail)
-	_hint = _label("", 15)
-	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	_hint.position = Vector2(32, -45)
+	_hint = _lettered(_label("", 17, Color("cfd4d0")))
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hint.anchor_left = 1.0
+	_hint.anchor_right = 1.0
+	_hint.anchor_top = 1.0
+	_hint.anchor_bottom = 1.0
+	_hint.offset_right = -HINT_MARGIN
+	_hint.offset_bottom = -HINT_MARGIN
+	_hint.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	root.add_child(_hint)
-	_notice = _label("", 18, Color("e3c799"))
-	_notice.position = Vector2(32, 127)
+	_notice = _lettered(_label("", 22, Color("e3c799")))
+	_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_notice.anchor_left = 0.5
+	_notice.anchor_right = 0.5
+	_notice.offset_top = 70.0
+	_notice.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.add_child(_notice)
+	objective_marker.name = "ObjectiveMarker"
+	root.add_child(objective_marker)
+	seen_marks.name = "SeenMarks"
+	root.add_child(seen_marks)
+	_build_prompt(root)
+	_build_text_card(root)
 	van_guide.name = "VanGuide"
 	root.add_child(van_guide)
 	_build_subtitles(root)
+	_build_combat(root)
 	_build_document(root)
 	menu = FrontMenu.new()
 	menu.name = "FrontMenu"
@@ -79,6 +184,113 @@ func _ready() -> void:
 	root.add_child(_fade)
 
 
+## The key prompt (#358): a keycap and its action at the bottom centre over a soft dark pill,
+## as a game shows what a key does where the player stands; the other controls stay at the right.
+func _build_prompt(root: Control) -> void:
+	prompt = PanelContainer.new()
+	prompt.name = "KeyPrompt"
+	prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var pill := StyleBoxFlat.new()
+	pill.bg_color = Color(0.03, 0.035, 0.04, 0.62)
+	pill.set_corner_radius_all(22)
+	pill.content_margin_left = 10.0
+	pill.content_margin_right = 22.0
+	pill.content_margin_top = 8.0
+	pill.content_margin_bottom = 8.0
+	prompt.add_theme_stylebox_override("panel", pill)
+	prompt.anchor_left = 0.5
+	prompt.anchor_right = 0.5
+	prompt.anchor_top = 1.0
+	prompt.anchor_bottom = 1.0
+	prompt.offset_bottom = -PROMPT_FOOT
+	prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	root.add_child(prompt)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 12)
+	prompt.add_child(row)
+	var cap := PanelContainer.new()
+	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var keycap := StyleBoxFlat.new()
+	keycap.bg_color = Color(0.91, 0.91, 0.89)
+	keycap.set_corner_radius_all(6)
+	keycap.border_width_bottom = 3
+	keycap.border_color = Color(0.55, 0.56, 0.55)
+	keycap.content_margin_left = 11.0
+	keycap.content_margin_right = 11.0
+	keycap.content_margin_top = 1.0
+	keycap.content_margin_bottom = 1.0
+	cap.add_theme_stylebox_override("panel", keycap)
+	row.add_child(cap)
+	_prompt_key = _lettered(_label("E", 22, Color(0.06, 0.07, 0.08)))
+	_prompt_key.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0))
+	_prompt_key.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cap.add_child(_prompt_key)
+	_prompt_label = _lettered(_label("", 22, Color("e8e9e4")))
+	_prompt_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(_prompt_label)
+	prompt.visible = false
+
+
+## A text on Ethan's phone (#358): a dark card at the right, the sender over the words, shown
+## for TEXT_SECONDS, as a game shows a message arriving.
+func _build_text_card(root: Control) -> void:
+	_text_card = PanelContainer.new()
+	_text_card.name = "TextMessage"
+	_text_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var card := StyleBoxFlat.new()
+	card.bg_color = Color(0.03, 0.035, 0.04, 0.78)
+	card.set_corner_radius_all(10)
+	card.border_width_left = 4
+	card.border_color = ObjectiveMarker.AMBER
+	card.content_margin_left = 18.0
+	card.content_margin_right = 18.0
+	card.content_margin_top = 12.0
+	card.content_margin_bottom = 14.0
+	_text_card.add_theme_stylebox_override("panel", card)
+	_text_card.anchor_left = 1.0
+	_text_card.anchor_right = 1.0
+	_text_card.offset_left = -TEXT_WIDTH - HINT_MARGIN
+	_text_card.offset_right = -HINT_MARGIN
+	_text_card.offset_top = 150.0
+	root.add_child(_text_card)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 4)
+	_text_card.add_child(column)
+	_text_sender = _lettered(_label("", 16, Color("d9b97a")))
+	column.add_child(_text_sender)
+	_text_words = _lettered(_label("", 20, Color("e8e9e4")))
+	_text_words.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_text_words.custom_minimum_size.x = TEXT_WIDTH - 36.0
+	column.add_child(_text_words)
+	_text_card.visible = false
+
+
+func show_text_message(sender: String, words: String) -> void:
+	_text_sender.text = "TEXT  ·  " + sender
+	_text_words.text = words
+	_text_timer = TEXT_SECONDS
+	_refresh_overlays()
+
+
+func clear_text_message() -> void:
+	_text_words.text = ""
+	_text_timer = 0.0
+	_refresh_overlays()
+
+
+## The last text's words while it shows, else "".
+func text_message() -> String:
+	return _text_words.text if _text_timer > 0.0 else ""
+
+
+func _lettered(label: Label) -> Label:
+	label.add_theme_font_override("font", LETTERING)
+	return label
+
+
 func _label(words: String, size: int, color: Color = Color("e2e5df")) -> Label:
 	var label := Label.new()
 	label.text = words
@@ -93,10 +305,11 @@ func _label(words: String, size: int, color: Color = Color("e2e5df")) -> Label:
 func _build_subtitles(root: Control) -> void:
 	var holder := CenterContainer.new()
 	holder.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	holder.offset_top = -150.0
-	holder.offset_bottom = -82.0
+	holder.offset_top = -SUBTITLE_FOOT - SUBTITLE_HEIGHT
+	holder.offset_bottom = -SUBTITLE_FOOT
 	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(holder)
+	_subtitle_holder = holder
 	_subtitles = PanelContainer.new()
 	_subtitles.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var panel := StyleBoxFlat.new()
@@ -247,10 +460,18 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	if _text_timer > 0.0 and not menu_visible:
+		_text_timer -= delta
+		if _text_timer <= 0.0:
+			_refresh_overlays()
 	if _notice_timer > 0 and not menu_visible:
 		_notice_timer -= delta
 		if _notice_timer <= 0:
 			_notice.text = ""
+	if _subtitles.visible:
+		_place_subtitles()
+	if _hit_edge.color.a > 0.0:
+		_hit_edge.color.a = maxf(0.0, _hit_edge.color.a - delta * 0.9)
 
 
 func show_title(place: String, saved: String) -> void:
@@ -282,8 +503,17 @@ func set_menu(value: bool) -> void:
 func _refresh_overlays() -> void:
 	var shown := not _cinematic and not menu_visible
 	_heading.visible = shown
-	_hint.visible = shown
+	var keyed := _keyed(_hint.text)
+	_hint.visible = shown and keyed.is_empty()
+	prompt.visible = shown and not keyed.is_empty()
+	objective_marker.visible = shown
+	seen_marks.visible = shown
+	_text_card.visible = shown and _text_timer > 0.0
+	_distance.visible = shown and target != Vector3.INF and objective_marker.shown()
 	_notice.visible = shown
+	mission_map.visible = shown
+	_backing.visible = shown
+	van_guide.visible = not _cinematic
 
 
 func set_objective(title: String, detail: String) -> void:
@@ -293,12 +523,134 @@ func set_objective(title: String, detail: String) -> void:
 
 func set_hint(words: String) -> void:
 	_hint.text = words
+	var keyed := _keyed(words)
+	if not keyed.is_empty():
+		_prompt_key.text = keyed[0]
+		_prompt_label.text = keyed[1]
+		var width := prompt.get_combined_minimum_size().x
+		prompt.offset_left = -width / 2.0
+		prompt.offset_right = width / 2.0
+	_refresh_overlays()
+
+
+## One key and what it does ("E  Get in the van"), as [key, action]; [] for anything else, the
+## controls taught at the right ("W / S  Accelerate / brake").
+func _keyed(words: String) -> Array:
+	var parts := words.split("  ", false, 1)
+	if parts.size() != 2 or parts[0].length() != 1 or "\n" in words:
+		return []
+	return [parts[0], parts[1].strip_edges()]
+
+
+## Where the objective sends the player (#358): its marker in the world, its pin on the map and
+## its distance beside the objective, measured from `from` (the van, or Ethan on foot).
+func set_target(point: Vector3, from: Vector3, camera: Camera3D, on_foot: bool) -> void:
+	target = point
+	objective_marker.point_at(point, from, camera, on_foot)
+	mission_map.set_target(point)
+	if point == Vector3.INF:
+		_distance.visible = false
+		return
+	var metres := Vector2(point.x - from.x, point.z - from.z).length()
+	_distance.text = "%d m" % roundi(metres) if metres < 1000.0 else "%.1f km" % (metres / 1000.0)
+	_distance.visible = not _cinematic and not menu_visible and objective_marker.shown()
+
+
+func _build_combat(root: Control) -> void:
+	_hit_edge = ColorRect.new()
+	_hit_edge.name = "HitEdge"
+	_hit_edge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_hit_edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hit_edge.color = Color(0.55, 0.0, 0.0, 0.0)
+	root.add_child(_hit_edge)
+	_combat = VBoxContainer.new()
+	_combat.name = "Combat"
+	_combat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_combat.anchor_left = 1.0
+	_combat.anchor_right = 1.0
+	_combat.anchor_top = 1.0
+	_combat.anchor_bottom = 1.0
+	_combat.offset_right = -HINT_MARGIN
+	_combat.offset_bottom = -COMBAT_FOOT
+	_combat.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_combat.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_combat.alignment = BoxContainer.ALIGNMENT_END
+	root.add_child(_combat)
+	_ammo = _lettered(_label("", 30))
+	_ammo.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_combat.add_child(_ammo)
+	_health_bar = ColorRect.new()
+	_health_bar.custom_minimum_size = Vector2(HEALTH_WIDTH, 6.0)
+	_health_bar.color = Color(0.0, 0.0, 0.0, 0.5)
+	_health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_combat.add_child(_health_bar)
+	_health_fill = ColorRect.new()
+	_health_fill.color = Color("e3c799")
+	_health_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_health_fill.size = Vector2(HEALTH_WIDTH, 6.0)
+	_health_bar.add_child(_health_fill)
+	_combat.visible = false
+	_crosshair = Control.new()
+	_crosshair.name = "Crosshair"
+	_crosshair.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_crosshair.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	root.add_child(_crosshair)
+	for tick: Rect2 in [Rect2(-1.0, -9.0, 2.0, 5.0), Rect2(-1.0, 4.0, 2.0, 5.0),
+			Rect2(-9.0, -1.0, 5.0, 2.0), Rect2(4.0, -1.0, 5.0, 2.0), Rect2(-1.0, -1.0, 2.0, 2.0)]:
+		var shade := ColorRect.new()
+		shade.color = Color(0.0, 0.0, 0.0, 0.6)
+		shade.position = tick.position - Vector2.ONE
+		shade.size = tick.size + Vector2.ONE * 2.0
+		shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_crosshair.add_child(shade)
+		var mark := ColorRect.new()
+		mark.color = Color(0.95, 0.95, 0.92, 0.9)
+		mark.position = tick.position
+		mark.size = tick.size
+		mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_crosshair.add_child(mark)
+	_crosshair.visible = false
+
+
+## His pistol and health while he is armed on foot; the crosshair while he aims; a red wash
+## over the screen a moment each time his health falls.
+func show_combat(magazine: int, reserve: int, health: float, aiming: bool,
+		reloading: bool) -> void:
+	_combat.visible = true
+	_ammo.text = "RELOADING" if reloading else "%d / %d" % [magazine, reserve]
+	_health_fill.size = Vector2(HEALTH_WIDTH * clampf(health / 100.0, 0.0, 1.0), 6.0)
+	_crosshair.visible = aiming
+	if health < _last_health - 0.01:
+		_hit_edge.color.a = 0.35
+	_last_health = health
+
+
+func hide_combat() -> void:
+	if _combat.visible or _crosshair.visible:
+		_combat.visible = false
+		_crosshair.visible = false
+	_last_health = 100.0
+
+
+## The rounds shown, as "magazine / spare" ("" when not armed).
+func ammo_text() -> String:
+	return _ammo.text if _combat.visible else ""
 
 
 func show_subtitle(speaker: String, words: String) -> void:
 	_speaker.text = speaker
 	_words.text = words
 	_subtitles.visible = true
+	_place_subtitles()
+
+
+## Above the objective when it shows (its height follows its lines), at the foot when it does not.
+func _place_subtitles() -> void:
+	var foot := SUBTITLE_FOOT
+	if _heading.is_visible_in_tree():
+		foot = maxf(foot, OBJECTIVE_FOOT + _heading.size.y + SUBTITLE_GAP)
+	_subtitle_holder.offset_bottom = -foot
+	_subtitle_holder.offset_top = -foot - SUBTITLE_HEIGHT
 
 
 func clear_subtitle() -> void:

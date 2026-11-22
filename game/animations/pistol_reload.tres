@@ -1,0 +1,72 @@
+[gd_resource type="AnimationLibrary" load_steps=2 format=3]
+
+[sub_resource type="Animation" id="Animation_reload"]
+resource_name = "reload"
+length = 2.2
+loop_mode = 0
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pistol/clip_pistolLow_0:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2, 0.566667, 0.6, 1, 1.26667, 1.46667, 1.56667, 2.16667),
+"transitions": PackedFloat32Array(-2, -2, 2, -2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector3(0.63775, 0.660413, -0.040479), Vector3(0.63775, 0.660413, -0.040479), Vector3(0.63775, 0.700373, -0.153639), Vector3(0.63775, 0.700373, -0.753639), Vector3(0.8278, 0.83003, -0.30013), Vector3(0.6778, 0.69003, -0.16013), Vector3(0.63775, 0.677063, -0.087629), Vector3(0.63775, 0.664409, -0.051795), Vector3(0.63775, 0.660413, -0.040479), Vector3(0.63775, 0.660413, -0.040479)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pistol/clip_pistolLow_0:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pistol/slide_pistolLow_0:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.6, 1.73333, 1.83333, 1.86667, 1.93333, 2.16667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.641454, 0.651277, 0.0138), Vector3(0.641454, 0.651277, 0.0138), Vector3(0.641454, 0.651277, 0.0138), Vector3(0.641454, 0.676277, 0.0138), Vector3(0.641454, 0.676277, 0.0138), Vector3(0.641454, 0.651277, 0.0138), Vector3(0.641454, 0.651277, 0.0138)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SupportHand:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.566667, 0.6, 1, 1.26667, 1.46667, 1.56667, 1.6, 1.73333, 1.83333, 1.93333, 2.06667, 2.16667),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector3(0.05, -0.03, 0), Vector3(0.06, -0.07, -0.03), Vector3(0.19, -0.37, -0.26), Vector3(0.19, -0.38, -0.26), Vector3(0.19, -0.38, -0.26), Vector3(0.04, -0.24, -0.12), Vector3(-5e-05, -0.167499, -0.107033), Vector3(-5e-05, -0.131665, -0.094379), Vector3(-5e-05, -0.120349, -0.090383), Vector3(-5e-05, -0.120349, -0.090383), Vector3(0.02, 0.07, -0.02), Vector3(0.02, 0.07, -0.055), Vector3(0.05, 0.1, -0.1), Vector3(0.06, 0, -0.02), Vector3(0.05, -0.03, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.93333, 2.16667),
+"transitions": PackedFloat32Array(-2, -2, -2, -2),
+"update": 0,
+"values": [Vector3(-0.04, -0.1, 0.52), Vector3(-0.02, -0.2, 0.34), Vector3(-0.02, -0.2, 0.34), Vector3(-0.04, -0.1, 0.52)]
+}
+
+[resource]
+_data = {
+&"reload": SubResource("Animation_reload")
+}

@@ -122,7 +122,7 @@ func _check_blocked(oncoming: Node3D) -> void:
 		var power := _glare_power()
 		brightest = maxf(brightest, maxf(power.x, power.y))
 		darkest = minf(darkest, _exposure())
-		var lit_rain: Variant = _rain().get_shader_parameter("oncoming")
+		var lit_rain: Variant = _presentation.get("rain_backlit")
 		backlit = maxf(backlit, 0.0 if lit_rain == null else float(lit_rain))
 		always_high = always_high and bool(oncoming.get("high_beams"))
 		var gap := -_van_from(oncoming).z - OncomingVan.BUMPERS
@@ -209,10 +209,6 @@ func _glare_power() -> Vector2:
 
 func _glass() -> ShaderMaterial:
 	return _presentation.get("_glass")
-
-
-func _rain() -> ShaderMaterial:
-	return _presentation.get("_beam_rain_material")
 
 
 func _tap(action: String) -> void:

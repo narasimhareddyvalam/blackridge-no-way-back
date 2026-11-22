@@ -23,6 +23,19 @@ const BAR := 0.1
 const ITEM_WIDTH := 440.0
 const VOLUME_STEP := 5.0
 const STUDIO := "NRVALAM WORKS"
+const ROCKETBOX_LICENSE := ("Permission is hereby granted, free of charge, to any person "
+	+ "obtaining a copy of this software and associated documentation files (the \"Software\"), "
+	+ "to deal in the Software without restriction, including without limitation the rights to "
+	+ "use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the "
+	+ "Software, and to permit persons to whom the Software is furnished to do so, subject to the "
+	+ "following conditions:\n\nThe above copyright notice and this permission notice shall be "
+	+ "included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS "
+	+ "PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT "
+	+ "LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND "
+	+ "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY "
+	+ "CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, "
+	+ "ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN "
+	+ "THE SOFTWARE.")
 const CONTROLS := [["W / S", "Accelerate / brake"], ["A / D", "Steer"],
 	["W A S D", "Walk, on foot"], ["SHIFT", "Run"], ["Q", "Forward / reverse (stop first)"],
 	["SPACE", "Handbrake"], ["Z / C", "Left / right indicator"], ["X", "Hazard lights"],
@@ -510,6 +523,74 @@ func _credits_text() -> String:
 		+ "and its glass, lights and wipers rebuilt. Blackridge is not affiliated with Iveco.")
 	_section(lines, "THE PEOPLE", "Ethan and the man at the crossing are Adobe Mixamo "
 		+ "characters, with Mixamo animations.")
+	_section(lines, "THE GATE GUARDS, THE DOCK WORKER AND THE FORKLIFT DRIVER", "The guard at "
+		+ "the transfer shed is Security_Male_01, the guard at the warehouse compound is "
+		+ "Security_Female_01 (her pistol left out), the dock worker at bay 9 is "
+		+ "Construction_Male_08 and the forklift's driver is Construction_Male_07, all from the "
+		+ "Microsoft Rocketbox avatar library, with its seated and standing idles, its walk and "
+		+ "its reach to a door. "
+		+ "Copyright (c) 2020 Microsoft, released under the MIT license:")
+	lines.append(_plain_text(ROCKETBOX_LICENSE))
+	_section(lines, "THE DEPOT", "\"Industrial Overhead Door\", \"Foam Pad Dock Seal\" and "
+		+ "\"DLHH Electrohydraulic Dock Leveler\" by Maxwell autodoors (Sketchfab: maihupronoob), "
+		+ "licensed CC BY 4.0: the transfer shed's dock doors, seals and levellers. \"Warehouse "
+		+ "Forklift Gameready\" by Kamran Mughal (Sketchfab: absologixemployee), \"Pallet Jack\" by "
+		+ "FFeller and \"Euro pallet photoscanned\" by widthRider, licensed CC BY 4.0: the "
+		+ "forklift, the pallet jack and the pallets inside the docks. \"Office Chair\" by Red "
+		+ "Fox (Sketchfab: nokillnando), licensed CC BY 4.0: the dock worker's chair at bay 9.")
+	_section(lines, "THE GATEHOUSES", "\"Monitor Dell P2314H\" by GregorJan (Sketchfab: "
+		+ "login166), the keyboard and mouse of \"PC Setup - Game Ready\" by Melon Polygons, "
+		+ "\"Corded Phone With Buttons\" by dudecon, \"Walkie Talkie\" by barism09 and \"Indoor "
+		+ "air conditioner unit\" by Rylae Shylna (Sketchfab: risteralline), licensed CC BY 4.0: "
+		+ "the guards' monitors, keyboards, phones, radios and air conditioners, each sized as the "
+		+ "real thing. The guards' chairs are Red Fox's \"Office Chair\" on a draughtsman's tall "
+		+ "gas lift and foot ring, added for this game. Blackridge is not affiliated with Dell or "
+		+ "Kenwood.")
+	_section(lines, "THE GATES", "\"Automatic Boom Barriers\" and \"Sliding Gate Motors - "
+		+ "Residential\" by Maxwell autodoors (Sketchfab: maihupronoob) and \"Abandoned Factory "
+		+ "Warning Light\" by x4vier28, licensed CC BY 4.0: the transfer shed's barrier cabinet "
+		+ "(its own arm removed), the sliding gates' motors and the gates' warning lamps.")
+	_section(lines, "THE COMPOUND GATE'S LIGHT", "\"LED Floodlight\" by The Street Light Man "
+		+ "(Sketchfab: thestreetlightman), licensed CC BY 4.0: the floods on the compound gate's "
+		+ "pole, stood on their yokes.")
+	_section(lines, "THE COMPOUND'S PATROLS", "\"Security Guard - Rigged 3D Model\" by qsardor57913 "
+		+ "(Sketchfab: qsardor57913), licensed CC BY 4.0: the patrol guards, given the walk and idle "
+		+ "of Ethan's own Mixamo clips.")
+	_section(lines, "THE HARBOUR", "\"Harbor crane\" by TGVMisterH, licensed CC BY 4.0: the "
+		+ "terminal's mobile harbour crane at berth 2, its own glow removed. \"Chevrolet Suburban "
+		+ "2015-Unmarked\" by David_Holiday, licensed CC BY 4.0: the black SUVs, repainted. "
+		+ "\"Pilatus PC 12/47\" by helijah, licensed CC BY 4.0: the plane at the airfield, "
+		+ "repainted. Blackridge is not affiliated with Chevrolet, Liebherr or Pilatus.")
+	_section(lines, "THE MEN AT THE HARBOUR", "\"guard\" by bumstrum, licensed CC BY 4.0: the men "
+		+ "waiting at berth 2 and at the airfield, and their pistols, given the walk, run, idle "
+		+ "and fall of Ethan's own Mixamo clips.")
+	_section(lines, "THE FAMILY HOME", "\"Suburban House V2\" by strielecki, licensed CC BY 4.0: "
+		+ "the house six months later.")
+	_section(lines, "MAYA, LILY AND ADRIAN", "Maya is Female_Adult_07, Lily is Female_Child_01 "
+		+ "and Adrian is Business_Male_03, from the Microsoft Rocketbox avatar library, with its "
+		+ "idles, its talk and its walk, released under the MIT license above.")
+	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "
+		+ "thejinjinjin), licensed CC BY 4.0: the yard's top-loader, its spreader drawn in. The "
+		+ "boxes' markings are set in Barlow Condensed by The Barlow Project Authors, released "
+		+ "under the SIL Open Font License 1.1; the shipping lines on them are made up.")
+	_section(lines, "THE YARD AT NIGHT", "\"Semi Truck 1980\" by Brian Trepanier (Sketchfab: "
+		+ "CMBC), \"Truck Trailer FREE\" by NLM (Sketchfab: NLM-Group), \"LCT 3000 '95 - Low poly "
+		+ "model\" by Daniel Zhabotinsky and \"dumpster\" by YJ_, licensed CC BY 4.0: the yard's "
+		+ "tractor, trailers, box truck and dumpsters, slimmed for the game and the trailer's "
+		+ "landing gear made separate.")
+	_section(lines, "THE WET GROUND", "Rain ripples and reflections adapted from \"Rain Puddle "
+		+ "Shader v3\" by GloriousGlider8 (YourSoftware Foundation) and from GodotSSRWater by "
+		+ "Marcel Bankmann, both released under the MIT license; their copyright and license "
+		+ "notices are kept in the game's wet ground shader.")
+	_section(lines, "THE ROADSIDE TREES", "\"Realistic HD Mountain hemlock (21/43)\" by "
+		+ "PlantCatalog, \"Realistic fir trees pack (LODS, gameready)\" by lolipop_1707 and "
+		+ "\"Western Red Cedar *Inspired* Tree - WINTER Ver.\" by SirSonat, licensed CC BY 4.0: "
+		+ "the hemlocks, young firs and cedars by the forest highway, the cedar narrowed and each "
+		+ "given a lighter far version. The red alders were built for this game.")
+	_section(lines, "THE GAS STATION AND MAIN STREET", "\"Gas pump\" by SavinienBerault, "
+		+ "\"Pay phone Scan MEDPOLY\" by evan4129 and \"Fairheaven LT '80\" by Daniel "
+		+ "Zhabotinsky, licensed CC BY 4.0: the station's pumps, its payphone and the sedan "
+		+ "parked on main street, each reduced for the game.")
 	_section(lines, "THE FOREST, THE ROAD AND THE YARD", "Textures, trees, plants, rocks and "
 		+ "props from Poly Haven, released CC0 by its artists.")
 	_section(lines, "INTERIOR MODEL", "\"FREE // Honda E (Detailed Interior) 2021\" by Alex "

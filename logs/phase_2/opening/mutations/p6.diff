@@ -1,0 +1,10 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/night_freight/opening_cutscene.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p6/game/features/missions/night_freight/opening_cutscene.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/night_freight/opening_cutscene.gd	2026-11-21 17:30:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p6/game/features/missions/night_freight/opening_cutscene.gd	2026-11-21 17:30:52
+@@ -99,5 +99,5 @@
+ 				+ Vector3.UP * 1.3)},
+ 		{"name": "title", "seconds": 8.0, "fov": Vector2(40.0, 40.0), "full_card": TITLE,
+ 			"hold": 3.6, "exposure": 1.2, "gamma": 0.8,
+-			"from": _look(crane_high, crane_at), "to": "player"},
++			"from": _look(crane_high, crane_at), "to": _look(crane_high, crane_at)},
+ 	]

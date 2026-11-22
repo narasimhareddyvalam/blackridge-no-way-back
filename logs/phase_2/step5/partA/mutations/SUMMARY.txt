@@ -1,0 +1,9 @@
+Part A mutations (#267), each on an APFS clone of game/, tools/ and scripts/, test_racking.gd at 60 fps, the diffs beside:
+m1  aisles 11.5 ft (138 in), not 12.5                    exit 1, 9/11: R3 (narrowest 3.51 m) and R9 (the aisle lights move onto the joists)
+m2  post protectors only on the posts' east sides        exit 1, 10/11: R4
+m3  pallets at 0.22/0.78 of the bay, not 0.25/0.75       exit 1, 10/11: R7 (pallets under 3 in from a post)
+m4  joists every 1.833 m (6 ft), not 2.0625              exit 1, 10/11: R9 (a light 0.15 m from a joist)
+m5  sprinkler mains 2.4 m under the deck, not 0.2        exit 1, 10/11: R10 (the mains under the racks' top + 0.3 m)
+m6  floor lines 6 in wide, not 4                         exit 1, 10/11: R8
+m7  rows 0.1 m off the back wall, not 0.3                exit 1, 10/11: R2
+m8  the racks a fifth full                               exit 1, 10/11: R7 (places full under 70%)

@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/audio/first_drive/driving_audio.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g14/game/features/audio/first_drive/driving_audio.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/audio/first_drive/driving_audio.gd	2026-11-16 14:53:13
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g14/game/features/audio/first_drive/driving_audio.gd	2026-11-16 15:02:08
+@@ -1,6 +1,6 @@
+ extends Node
+ 
+-const SHELTER_DB := 14.0
++const SHELTER_DB := 0.0
+ const ROOT := "res://features/audio/first_drive/"
+ const MUSIC_DB := -13.0
+ const CALL_DUCK := -13.0

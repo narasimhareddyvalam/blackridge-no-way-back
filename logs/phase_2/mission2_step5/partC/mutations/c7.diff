@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c7/game/features/environments/industrial_loop/warehouse.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:43:57
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c7/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:46:34
+@@ -353,7 +353,7 @@
+ 		var x := docks[index]
+ 		var number := Build.text(self, "%d" % (index + 1), Vector3(x, 0.025, rect.end.y
+ 			+ COURT_NUMBER_OUT), 160, yellow.albedo_color)
+-		number.name = "CourtNumber%d" % (index + 1)
++		number.name = "Mark%d" % (index + 1)
+ 		number.rotation.x = -PI / 2.0
+ 		number.shaded = true
+ 		number.double_sided = false

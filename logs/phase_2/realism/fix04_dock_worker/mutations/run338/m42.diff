@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m42/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m42/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:23:10
+@@ -81,7 +81,7 @@
+ ## 8 cm out and 7 cm left of it, palm to the door and fingers up, steadying the hasp; both elbows
+ ## bent.
+ const STOOP := deg_to_rad(15.0)
+-const RISE_FROM := 1.6
++const RISE_FROM := 3.2
+ const STOOP_ON := Vector2(0.2, 0.9)
+ const STOOP_BONES: Array[String] = ["Bip01 Spine", "Bip01 Spine1", "Bip01 Spine2"]
+ const STOOP_SHARES: Array[float] = [0.5, 0.375, 0.125]

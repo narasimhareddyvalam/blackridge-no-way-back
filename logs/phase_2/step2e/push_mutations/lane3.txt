@@ -1,0 +1,10 @@
+mutation_no_lead: exit 1; LOADING RESULT: 17/21 passed; 4 failed; fails on its check: True; script error: False
+    FAIL: H2: on the dock the jack goes at the pace of Ethan's feet, 0.566 m/s (Pushing played 1.5 times its own 0.377 m/s), his planted feet slipping at most 0.024 m/s, the load getting going slowly (0.0
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push"] and inside ["Push"], his head at most 1.514 m above the h
+    FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Push held, true; his toes at most 0.048 m up), his hands on the handle (0.042 m off it), his head 1.374 m up unde
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped (true), his planted feet slipping at most 0.020 m/s, his hands on the handle (at most 0.049 m off it), his head under the roo
+mutation_slides_off_the_plate: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push"] and inside ["Push"], his head at most 1.516 m above the h
+mutation_pulls_upright_in_van: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped (false), his planted feet slipping at most 0.018 m/s, his hands on the handle (at most 0.021 m off it), his head under the ro
+clone restored byte for byte after each

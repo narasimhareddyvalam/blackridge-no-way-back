@@ -1,0 +1,26 @@
+Step 4 (1 and 4) mutations, each on an APFS clone, test_loading.gd at 60 fps:
+m1  the lift runs on a tap, held or not                     exit 1, 10/31 passed; 21 failed
+      FAIL: H17: with E held Ethan starts the lift (0.028 m), then walks off its deck (1.04 m from its middle): it stops (
+      FAIL: H15: held a moment, the lift moves 0.049 m and stops when let go (-0.0183 m in the next second); the hint offe
+      FAIL: H1: on the deck the hint offers the lift (E  Hold to lower the lift); E lowers it to the van's floor (1.300 m 
+      FAIL: H1: E again raises it flush with the dock floor (0.465 m), its plate stored upright (its edge 0.56 m up), Etha
+      FAIL: H9: behind its handle the hint offers the jack (E  Hold to raise the lift); E takes it, its forks raising the 
+      FAIL: H9: pushed on to the lift's deck, the pallet stops at the deck's front against the bridge plate standing up as
+      FAIL: H2: on the dock Ethan leans in to get the load going (["Walk", "Idle"]), then walks nearly upright behind it (
+      FAIL: H9: E sets the pallet down on the lift's deck (0.527 m above it, 0.550 m off its middle) and E again lets go o
+      FAIL: H1: by the pendant on the deck E lowers the lift (E  Hold to raise the lift), the pallet riding it down to the
+      FAIL: H2: behind the handle again E takes the jack (E  Take the pallet jack) and pushes the pallet into the van, wal
+      FAIL: H2: under the van's low roof Ethan stoops (1.80 m tall, against 1.80 standing) in Pushing's own lean, his clip
+      FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Idle held, false; his toes at
+      FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (3.711 m from it), between t
+      FAIL: H2: beside it in the hold E straps the load down to the floor rings (E  Let go of the jack; 0 straps)
+      FAIL: H10: from the take to the strap the objective only goes on, never back to LOAD THE PALLET: lowering the lift w
+      FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (false), never Pushing pl
+      FAIL: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go 
+      FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.000
+      FAIL: H1: E at the pendant raises the lift again with the jack on it (0.47 m), the load left in the van
+      FAIL: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs al
+      FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped 
+m2  letting go of E does not stop it                        exit 1, 29/31 passed; 2 failed
+      FAIL: H15: held a moment, the lift moves 0.047 m and stops when let go (-0.1377 m in the next second); the hint offe
+      FAIL: H16: its pendant has UP, DOWN and a red emergency stop (["PendantUp", "PendantDown", "PendantStop"]), and its 

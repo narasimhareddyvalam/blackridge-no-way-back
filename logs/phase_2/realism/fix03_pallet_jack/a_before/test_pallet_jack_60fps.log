@@ -1,0 +1,92 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _build (res://tests/test_pallet_jack.gd:450)
+       [7] _run (res://tests/test_pallet_jack.gd:85)
+FAIL: P1: its steer wheels, both bogies and four load rollers cut free, each about its own axle or pin (missing: Steering/SteerWheels, Chassis/BogieL, Chassis/BogieR, Chassis/RollerL1, Chassis/RollerL2, Chassis/RollerR1, Chassis/RollerR2; off their axles: ; the bogie's pin at z inf)
+FAIL: P2: standing lowered, its steer wheels and load rollers on the floor (the farthest inf m off) and its forks' tops 0.115 m up (91 mm)
+FAIL: P3: each stroke raises the forks [0.024, 0.024, 0.024, 0.024] m, the load [0.010, 0.020, 0.030, 0.040] m only once they meet its deck (0.036 m up), 0.040 m clear at the last; its wheels and rollers on the floor (inf m off, E  Pump the handle, swung -0°)
+FAIL: P4: A held swings the steering unit to 25.0° (100-105°), at most 115° a second (120), and let go it comes back straight (0.0°)
+ERROR: Node not found: "Steering/SteerWheels" (relative to "/root/FirstDrive/IndustrialLoop/TransferShed/Building/PalletJack").
+   at: get_node (scene/main/node.cpp:1976)
+   GDScript backtrace (most recent call first):
+       [0] _pose (res://tests/test_pallet_jack.gd:326)
+       [1] _check_turns (res://tests/test_pallet_jack.gd:244)
+       [2] _run (res://tests/test_pallet_jack.gd:113)
+       [3] _check_swing (res://tests/test_pallet_jack.gd:231)
+SCRIPT ERROR: Cannot call method 'get_parent_node_3d' on a null value.
+          at: _pose (res://tests/test_pallet_jack.gd:327)
+          GDScript backtrace (most recent call first):
+              [0] _pose (res://tests/test_pallet_jack.gd:327)
+              [1] _check_turns (res://tests/test_pallet_jack.gd:244)
+              [2] _run (res://tests/test_pallet_jack.gd:113)
+              [3] _check_swing (res://tests/test_pallet_jack.gd:231)
+FAIL: P5: its heading turns at v·sin(δ)/L about its rollers' line (0.0° in all against 0.0°, within 0.0%), the line sliding sideways 0.0% of the pivot's travel
+FAIL: P6: every wheel and roller rolls its distance over its radius (within inf%: SteerWheels 0.000 m off in 0.00 m, RollerL1 0.000 m off in 0.00 m, RollerL2 0.000 m off in 0.00 m, RollerR1 0.000 m off in 0.00 m, RollerR2 0.000 m off in 0.00 m)
+FAIL: P7: his hands on the handle's loop through the turns, as it swings (the farthest 0.328 m off)
+ERROR: Node not found: "Steering/SteerWheels" (relative to "/root/FirstDrive/IndustrialLoop/TransferShed/Building/PalletJack").
+   at: get_node (scene/main/node.cpp:1976)
+   GDScript backtrace (most recent call first):
+       [0] _pose (res://tests/test_pallet_jack.gd:326)
+       [1] _check_pivot (res://tests/test_pallet_jack.gd:275)
+       [2] _run (res://tests/test_pallet_jack.gd:114)
+       [3] _check_turns (res://tests/test_pallet_jack.gd:268)
+       [4] _drive (res://tests/test_pallet_jack.gd:317)
+       [5] _seconds (res://tests/test_pallet_jack.gd:444)
+SCRIPT ERROR: Cannot call method 'get_parent_node_3d' on a null value.
+          at: _pose (res://tests/test_pallet_jack.gd:327)
+          GDScript backtrace (most recent call first):
+              [0] _pose (res://tests/test_pallet_jack.gd:327)
+              [1] _check_pivot (res://tests/test_pallet_jack.gd:275)
+              [2] _run (res://tests/test_pallet_jack.gd:114)
+              [3] _check_turns (res://tests/test_pallet_jack.gd:268)
+              [4] _drive (res://tests/test_pallet_jack.gd:317)
+              [5] _seconds (res://tests/test_pallet_jack.gd:444)
+ERROR: Node not found: "Steering/SteerWheels" (relative to "/root/FirstDrive/IndustrialLoop/TransferShed/Building/PalletJack").
+   at: get_node (scene/main/node.cpp:1976)
+   GDScript backtrace (most recent call first):
+       [0] _pose (res://tests/test_pallet_jack.gd:326)
+       [1] _check_pivot (res://tests/test_pallet_jack.gd:279)
+       [2] _seconds (res://tests/test_pallet_jack.gd:444)
+SCRIPT ERROR: Cannot call method 'get_parent_node_3d' on a null value.
+          at: _pose (res://tests/test_pallet_jack.gd:327)
+          GDScript backtrace (most recent call first):
+              [0] _pose (res://tests/test_pallet_jack.gd:327)
+              [1] _check_pivot (res://tests/test_pallet_jack.gd:279)
+              [2] _seconds (res://tests/test_pallet_jack.gd:444)
+ERROR: Node not found: "Steering/SteerWheels" (relative to "/root/FirstDrive/IndustrialLoop/TransferShed/Building/PalletJack").
+   at: get_node (scene/main/node.cpp:1976)
+   GDScript backtrace (most recent call first):
+       [0] _pose (res://tests/test_pallet_jack.gd:326)
+       [1] _check_pivot (res://tests/test_pallet_jack.gd:282)
+       [2] _drive (res://tests/test_pallet_jack.gd:317)
+       [3] _seconds (res://tests/test_pallet_jack.gd:444)
+SCRIPT ERROR: Cannot call method 'get_parent_node_3d' on a null value.
+          at: _pose (res://tests/test_pallet_jack.gd:327)
+          GDScript backtrace (most recent call first):
+              [0] _pose (res://tests/test_pallet_jack.gd:327)
+              [1] _check_pivot (res://tests/test_pallet_jack.gd:282)
+              [2] _drive (res://tests/test_pallet_jack.gd:317)
+              [3] _seconds (res://tests/test_pallet_jack.gd:444)
+SCRIPT ERROR: Invalid access to property or key 'ahead' on a base object of type 'Dictionary'.
+          at: _check_pivot (res://tests/test_pallet_jack.gd:283)
+          GDScript backtrace (most recent call first):
+              [0] _check_pivot (res://tests/test_pallet_jack.gd:283)
+              [1] _drive (res://tests/test_pallet_jack.gd:317)
+              [2] _seconds (res://tests/test_pallet_jack.gd:444)
+FAIL: P9: set down, the load rests on the floor (0.000 m) and the wheels stayed on it (inf m off)
+FAIL: P2: set down, lowered, its steer wheels and load rollers on the floor (the farthest inf m off) and its forks' tops 0.115 m up (91 mm)
+PALLET JACK RESULT: 0/9 passed; 9 failed
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

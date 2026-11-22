@@ -1,0 +1,18 @@
+g1  not watching the hand          test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B12 (shed): he watches his hand on the pull while sliding (0 of 150 ticks), looks at the driver as it opens (1
+      FAIL: B12 (compound): he watches his hand on the pull while sliding (0 of 150 ticks), looks at the driver as it open
+g2  no look at the driver          test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B12 (shed): he watches his hand on the pull while sliding (150 of 150 ticks), looks at the driver as it opens 
+      FAIL: B12 (compound): he watches his hand on the pull while sliding (150 of 150 ticks), looks at the driver as it op
+k1  the notepads spread as sold    test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B13 (shed): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air condi
+      FAIL: B13 (compound): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air c
+k2  the thermos off the counter    test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B13 (shed): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air condi
+      FAIL: B13 (compound): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air c
+k3  the box monitor back           test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B13 (shed): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air condi
+      FAIL: B13 (compound): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air c
+k4  the clock off the wall         test_booths.gd exit 1, 23/25 passed; 2 failed
+      FAIL: B13 (shed): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air condi
+      FAIL: B13 (compound): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air c

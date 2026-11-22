@@ -1,0 +1,16 @@
+e1  no loop at the shed            test_free_exit.gd exit 1, 4/6 passed; 2 failed
+      FAIL: X2: driven out of the shed's yard, the van finds the barrier up and passes under it (front -1.75 m past its li
+      FAIL: X3: and the barrier comes down behind it (the van's rear -7.3 m past its line)
+e2  the shed's loop either way     test_free_exit.gd exit 1, 5/6 passed; 1 failed
+      FAIL: X1: a van over the shed's exit loop facing in leaves the barrier down
+e3  the arm stays up after         test_free_exit.gd exit 1, 5/6 passed; 1 failed
+      FAIL: X3: and the barrier comes down behind it (the van's rear 10.3 m past its line)
+e4  no loop at the yard            test_free_exit.gd exit 1, 4/6 passed; 2 failed
+      FAIL: X5: driven out of the container yard, the van waits on the loop while the gate slides open (the objective: DRI
+      FAIL: X6: and the gate shuts behind it (0.0 s; the van's rear -7.3 m past its line)
+e5  the yard's loop either way     test_free_exit.gd exit 1, 5/6 passed; 1 failed
+      FAIL: X4: a van over the yard's exit loop facing in leaves the gate shut
+e6  the gate stays open after      test_free_exit.gd exit 1, 5/6 passed; 1 failed
+      FAIL: X6: and the gate shuts behind it (20.0 s; the van's rear 10.4 m past its line)
+e7  no word to wait                test_free_exit.gd exit 1, 5/6 passed; 1 failed
+      FAIL: X5: driven out of the container yard, the van waits on the loop while the gate slides open (the objective: DRI

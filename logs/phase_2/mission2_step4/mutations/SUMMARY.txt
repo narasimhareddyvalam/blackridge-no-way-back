@@ -1,0 +1,53 @@
+b0  before: no container yard      test_container_yard.gd exit 1, 0/1 passed; 1 failed
+      FAIL: C0: the world has its container yard (IndustrialLoop/ContainerYard)
+y1  the gate gap 9 m               test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C1: the yard fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (187.0 m of 196.0 m, 15 st
+y2  the fence 1.8 m                test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C1: the yard fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (190.0 m of 196.0 m, 15 st
+y3  no barbed wire                 test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C1: the yard fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (190.0 m of 196.0 m, 0 str
+y4  stacks floating                test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C2: each on the one below or the paving, corner on corner, of one length, at most 3 high (highest 3)
+y5  four high                      test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C2: each on the one below or the paving, corner on corner, of one length, at most 3 high (highest 4)
+y6  a block in the lane            test_container_yard.gd exit 1, 14/17 passed; 3 failed
+      FAIL: C2: the lane 16 m wide between the blocks and nothing in the van's way (8 in it)
+      FAIL: C5: in the bay, E at the dark van's door: one drivable van, the dark one, in its place and paint, empty
+      FAIL: C7: reloaded at stage 2: the dark van his (3.83 m, (0.2, 0.21, 0.22, 1.0)), his own in the bay (0.00 m), seale
+y7  the gate without the code      test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C3: E keys the code in, his window down, a beep a key (0), and the gate slides open (9.9 s)
+y8  the window kept up             test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C3: E keys the code in, his window down, a beep a key (4), and the gate slides open (11.4 s)
+y9  the gate never shuts           test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C3: and shuts behind the van, the window up again (20.0 s)
+y10  the keypad from anywhere       test_container_yard.gd exit 1, 11/17 passed; 6 failed
+      FAIL: C3: away from the line, E at the keypad is not offered
+      FAIL: C4: out of the bay, the dark van is not his yet ("")
+      FAIL: C5: in the bay, E at the dark van's door: one drivable van, the dark one, in its place and paint, empty
+      FAIL: C5: his van left where it stood (inf m) with its load (0) and its seal
+      FAIL: C6: stage 2 saved, the container yard reached, the objective the next place (TAKE THE DARK VAN / The charcoal 
+      FAIL: C6: and Ethan gets in the dark van by E
+y11  the swap outside the bay       test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C4: out of the bay, the dark van is not his yet ("Take the dark van")
+y12  his van moved 5 cm             test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C5: his van left where it stood (0.0500 m) with its load (1) and its seal
+y13  the load not left              test_container_yard.gd exit 0, 17/17 passed; 0 failed
+y14  the seal lost                  test_container_yard.gd exit 1, 15/17 passed; 2 failed
+      FAIL: C5: his van left where it stood (0.0000 m) with its load (1) and its seal
+      FAIL: C7: reloaded at stage 2: the dark van his (0.25 m, (0.2, 0.21, 0.22, 1.0)), his own in the bay (0.00 m), seale
+y15  the dark van left standing     test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C7: reloaded at stage 2: the dark van his (0.25 m, (0.2, 0.21, 0.22, 1.0)), his own in the bay (0.00 m), seale
+y16  not repainted                  test_container_yard.gd exit 1, 15/17 passed; 2 failed
+      FAIL: C5: in the bay, E at the dark van's door: one drivable van, the dark one, in its place and paint, empty
+      FAIL: C7: reloaded at stage 2: the dark van his (0.25 m, (1.0, 1.0, 1.0, 1.0)), his own in the bay (0.00 m), sealed 
+y17  stage 2 not saved              test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C6: stage 2 saved, the container yard reached, the objective the next place (MISSION 2 IS BEING BUILT / Next: 
+y18  the reload not restored        test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C7: reloaded at stage 2: the dark van his (2.02 m, (1.0, 1.0, 1.0, 1.0)), his own in the bay (inf m), sealed (
+y19  the stacks not solid           test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C2: every stack solid, the fence round and the shut gate too (not: stack at (72.2, 135.0), stack at (84.7, 135
+y13  the load not left              test_container_yard.gd exit 1, 15/17 passed; 2 failed
+      FAIL: C5: in the bay, E at the dark van's door: one drivable van, the dark one, in its place and paint, empty (1 car
+      FAIL: C5: his van left where it stood (0.0000 m) with its load (0), shut and sealed
+y20  the dark van's box not fitted  test_container_yard.gd exit 1, 16/17 passed; 1 failed
+      FAIL: C2: every stack solid, the fence round, the shut gate and the dark van as big as his (not: the dark van (2.0, 

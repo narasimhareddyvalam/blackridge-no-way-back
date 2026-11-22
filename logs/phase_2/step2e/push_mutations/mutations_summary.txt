@@ -1,0 +1,15 @@
+Step 2e, Ethan's push (#240): ten mutations, each on an APFS clone of game/ with its own HOME,
+run by the scratch script mutations_push.py in three lanes; each undoes one part of the push and
+test_loading.gd must exit 1 on its own check. Each lane's clone was restored byte for byte after
+each mutation (lane*.txt). Logs: <mutation>/test_loading_60fps.log.
+
+mutation_fixed_pace: exit 1; LOADING RESULT: 15/21 passed; 6 failed; fails on its check: True; script error: False
+mutation_instant_start: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False
+mutation_no_hands: exit 1; LOADING RESULT: 17/21 passed; 4 failed; fails on its check: True; script error: False
+mutation_no_lead: exit 1; LOADING RESULT: 17/21 passed; 4 failed; fails on its check: True; script error: False
+mutation_no_push_stop: exit 1; LOADING RESULT: 19/21 passed; 2 failed; fails on its check: True; script error: False
+mutation_pulls_upright_in_van: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False
+mutation_slides_off_the_plate: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False
+mutation_stands_in_van: exit 1; LOADING RESULT: 18/21 passed; 3 failed; fails on its check: True; script error: False
+mutation_stop_without_travel: exit 1; LOADING RESULT: 19/21 passed; 2 failed; fails on its check: True; script error: False
+mutation_van_at_dock_rate: exit 1; LOADING RESULT: 20/21 passed; 1 failed; fails on its check: True; script error: False

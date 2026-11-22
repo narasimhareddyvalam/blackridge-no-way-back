@@ -1,0 +1,16 @@
+1_driver_at_the_stop_line: the van at (-71.0, -0.15, 60.9), heading 0.00 rad, headlights true, wipers 1
+  saved 1_driver_at_the_stop_line.png (1280x800), near black 5%
+2_driver_in_the_court: the van at (-62.0, -0.15, 42.0), heading 0.15 rad, headlights true, wipers 1
+  saved 2_driver_in_the_court.png (1280x800), near black 8%
+3_docks_at_eye_height: camera at (-58.0, 1.7, 36.0) looking at (-62.0, 3.0, 20.0), fov 60
+  saved 3_docks_at_eye_height.png (1280x800), near black 0%
+4_office_and_walkway: camera at (-80.0, 1.7, 36.0) looking at (-88.0, 3.0, 20.0), fov 60
+  saved 4_office_and_walkway.png (1280x800), near black 0%
+5_east_side_and_cut_walls: camera at (-33.0, 1.7, 45.0) looking at (-33.0, 4.0, -5.0), fov 60
+  saved 5_east_side_and_cut_walls.png (1280x800), near black 19%
+6_depot_from_above: camera at (-66.0, 55.0, 95.0) looking at (-60.0, 0.0, 22.0), fov 50
+  saved 6_depot_from_above.png (1280x800), near black 0%
+7_depot_from_above_debug_light_not_the_game: camera at (-66.0, 55.0, 95.0) looking at (-60.0, 0.0, 22.0), fov 50
+  saved 7_depot_from_above_debug_light_not_the_game.png (1280x800), near black 2%
+8_plan_from_above_debug_light_not_the_game: straight down from (-59.0, 120.0, 21.0), 76 m from top to bottom, north up
+  saved 8_plan_from_above_debug_light_not_the_game.png (1280x800), near black 0%

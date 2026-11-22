@@ -57,12 +57,27 @@ vec4 strongest(vec4 a, vec4 b) {
 	return b.z > a.z ? b : a;
 }
 
-vec4 wet_glass(vec4 drop, float film, float smear, vec2 sheet, vec2 screen_uv,
-		vec3 glint_from) {
+// streak: how far (of the screen's height) a thick film smears the scene down it, each point of
+// the streak seeing the light through a differently tilted piece of water (#346); 0 for none.
+vec4 wet_glass_streaked(vec4 drop, float film, float smear, vec2 sheet, vec2 screen_uv,
+		vec3 glint_from, float streak) {
 	float coverage = drop.z;
 	vec2 lens = -drop.xy * coverage * drop.w + sheet;
 	float blur = mix(film * 1.4 + smear * 1.2, 0.6, coverage);
 	vec3 behind = textureLod(scene_color, screen_uv + lens, blur).rgb;
+	if (streak > 0.0) {
+		vec3 sum = vec3(0.0);
+		vec3 most = vec3(0.0);
+		for (int tap = 0; tap < 5; tap++) {
+			float along = float(tap) / 4.0 - 0.5;
+			vec2 wave = vec2((noise(vec2(screen_uv.y * 90.0 + along * 7.0, screen_uv.x * 40.0))
+				- 0.5) * streak * 0.35, along * streak);
+			vec3 seen = textureLod(scene_color, screen_uv + lens + wave, blur).rgb;
+			sum += seen;
+			most = max(most, seen);
+		}
+		behind = mix(sum / 5.0, most, 0.6);
+	}
 	float rim = smoothstep(0.6, 1.0, length(drop.xy)) * coverage;
 	vec3 normal = normalize(vec3(drop.xy, sqrt(max(0.0, 1.0 - dot(drop.xy, drop.xy)))));
 	float glint = pow(max(dot(normal, normalize(glint_from)), 0.0), 40.0) * coverage;
@@ -71,4 +86,10 @@ vec4 wet_glass(vec4 drop, float film, float smear, vec2 sheet, vec2 screen_uv,
 		+ vec3(glint * brightness * 0.6);
 	float alpha = clamp(max(coverage * 0.95, max(film * 0.5, smear * 0.3)), 0.0, 0.96);
 	return vec4(colour, alpha);
+}
+
+
+vec4 wet_glass(vec4 drop, float film, float smear, vec2 sheet, vec2 screen_uv,
+		vec3 glint_from) {
+	return wet_glass_streaked(drop, film, smear, sheet, screen_uv, glint_from, 0.0);
 }

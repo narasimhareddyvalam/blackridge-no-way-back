@@ -1,0 +1,154 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+ERROR: Can't create shader cache folder, no shader caching will happen: user://
+   at: RendererCompositorRD (servers/rendering/renderer_rd/renderer_compositor_rd.cpp:345)
+
+Movie Maker mode enabled, recording movie in 1280×800 @ 30 FPS...
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://../tools/captures/capture_reload_strip.gd:47)
+WARNING: MetalFX temporal upscaling does not support 3D MSAA. Disabling 3D MSAA internally.
+     at: _configure_3d_render_buffers (servers/rendering/renderer_viewport.cpp:196)
+STRIP R pressed at movie frame 285
+STRIP capture 0 movie 285 clip -1.00 reloading false magazine 12
+STRIP capture 1 movie 286 clip -1.00 reloading true magazine 12
+STRIP capture 2 movie 287 clip 0.00 reloading true magazine 12
+STRIP capture 3 movie 288 clip 1.00 reloading true magazine 12
+STRIP capture 4 movie 289 clip 2.00 reloading true magazine 12
+STRIP capture 5 movie 290 clip 3.00 reloading true magazine 12
+STRIP capture 6 movie 291 clip 4.00 reloading true magazine 12
+STRIP capture 7 movie 292 clip 5.00 reloading true magazine 12
+STRIP capture 8 movie 293 clip 6.00 reloading true magazine 12
+STRIP capture 9 movie 294 clip 7.00 reloading true magazine 12
+STRIP capture 10 movie 295 clip 8.00 reloading true magazine 12
+STRIP capture 11 movie 296 clip 9.00 reloading true magazine 12
+STRIP capture 12 movie 297 clip 10.00 reloading true magazine 12
+STRIP capture 13 movie 298 clip 11.00 reloading true magazine 12
+STRIP capture 14 movie 299 clip 12.00 reloading true magazine 12
+STRIP capture 15 movie 300 clip 13.00 reloading true magazine 12
+STRIP capture 16 movie 301 clip 14.00 reloading true magazine 12
+STRIP capture 17 movie 302 clip 15.00 reloading true magazine 12
+STRIP capture 18 movie 303 clip 16.00 reloading true magazine 12
+STRIP capture 19 movie 304 clip 17.00 reloading true magazine 12
+STRIP capture 20 movie 305 clip 18.00 reloading true magazine 12
+STRIP capture 21 movie 306 clip 19.00 reloading true magazine 12
+STRIP capture 22 movie 307 clip 20.00 reloading true magazine 12
+STRIP capture 23 movie 308 clip 21.00 reloading true magazine 12
+STRIP capture 24 movie 309 clip 22.00 reloading true magazine 12
+STRIP capture 25 movie 310 clip 23.00 reloading true magazine 12
+STRIP capture 26 movie 311 clip 24.00 reloading true magazine 12
+STRIP capture 27 movie 312 clip 25.00 reloading true magazine 12
+STRIP capture 28 movie 313 clip 26.00 reloading true magazine 12
+STRIP capture 29 movie 314 clip 27.00 reloading true magazine 12
+STRIP capture 30 movie 315 clip 28.00 reloading true magazine 12
+STRIP capture 31 movie 316 clip 29.00 reloading true magazine 12
+STRIP capture 32 movie 317 clip 30.00 reloading true magazine 12
+STRIP capture 33 movie 318 clip 31.00 reloading true magazine 12
+STRIP capture 34 movie 319 clip 32.00 reloading true magazine 12
+STRIP capture 35 movie 320 clip 33.00 reloading true magazine 12
+STRIP capture 36 movie 321 clip 34.00 reloading true magazine 12
+STRIP capture 37 movie 322 clip 35.00 reloading true magazine 12
+STRIP capture 38 movie 323 clip 36.00 reloading true magazine 12
+STRIP capture 39 movie 324 clip 37.00 reloading true magazine 12
+STRIP capture 40 movie 325 clip 38.00 reloading true magazine 12
+STRIP capture 41 movie 326 clip 39.00 reloading true magazine 12
+STRIP capture 42 movie 327 clip 40.00 reloading true magazine 12
+STRIP capture 43 movie 328 clip 41.00 reloading true magazine 12
+STRIP capture 44 movie 329 clip 42.00 reloading true magazine 12
+STRIP capture 45 movie 330 clip 43.00 reloading true magazine 12
+STRIP capture 46 movie 331 clip 44.00 reloading true magazine 12
+STRIP capture 47 movie 332 clip 45.00 reloading true magazine 12
+STRIP capture 48 movie 333 clip 46.00 reloading true magazine 12
+STRIP capture 49 movie 334 clip 47.00 reloading true magazine 12
+STRIP capture 50 movie 335 clip 48.00 reloading true magazine 12
+STRIP capture 51 movie 336 clip 49.00 reloading true magazine 12
+STRIP capture 52 movie 337 clip 50.00 reloading true magazine 12
+STRIP capture 53 movie 338 clip 51.00 reloading true magazine 12
+STRIP capture 54 movie 339 clip 52.00 reloading true magazine 12
+STRIP capture 55 movie 340 clip 53.00 reloading true magazine 12
+STRIP capture 56 movie 341 clip 54.00 reloading true magazine 12
+STRIP capture 57 movie 342 clip 55.00 reloading true magazine 12
+STRIP capture 58 movie 343 clip 56.00 reloading true magazine 12
+STRIP capture 59 movie 344 clip 57.00 reloading true magazine 12
+STRIP capture 60 movie 345 clip 58.00 reloading true magazine 12
+STRIP capture 61 movie 346 clip 59.00 reloading true magazine 12
+STRIP capture 62 movie 347 clip 60.00 reloading true magazine 12
+STRIP capture 63 movie 348 clip 61.00 reloading true magazine 12
+STRIP capture 64 movie 349 clip 62.00 reloading true magazine 12
+STRIP capture 65 movie 350 clip 63.00 reloading true magazine 12
+STRIP capture 66 movie 351 clip 64.00 reloading true magazine 12
+STRIP capture 67 movie 352 clip 65.00 reloading true magazine 12
+STRIP capture 68 movie 353 clip 66.00 reloading true magazine 12
+STRIP capture 69 movie 354 clip 67.00 reloading true magazine 12
+STRIP capture 70 movie 355 clip 68.00 reloading true magazine 12
+STRIP capture 71 movie 356 clip 69.00 reloading true magazine 12
+STRIP capture 72 movie 357 clip 70.00 reloading true magazine 12
+STRIP capture 73 movie 358 clip 71.00 reloading true magazine 12
+STRIP capture 74 movie 359 clip 72.00 reloading true magazine 12
+STRIP capture 75 movie 360 clip 73.00 reloading true magazine 12
+STRIP capture 76 movie 361 clip 74.00 reloading true magazine 12
+STRIP capture 77 movie 362 clip 75.00 reloading true magazine 12
+STRIP capture 78 movie 363 clip 76.00 reloading true magazine 12
+STRIP capture 79 movie 364 clip 77.00 reloading true magazine 12
+STRIP capture 80 movie 365 clip 78.00 reloading true magazine 12
+STRIP capture 81 movie 366 clip 79.00 reloading true magazine 12
+STRIP capture 82 movie 367 clip 80.00 reloading true magazine 12
+STRIP capture 83 movie 368 clip 81.00 reloading true magazine 12
+STRIP capture 84 movie 369 clip 82.00 reloading true magazine 12
+STRIP capture 85 movie 370 clip 83.00 reloading true magazine 12
+STRIP capture 86 movie 371 clip 84.00 reloading true magazine 12
+STRIP capture 87 movie 372 clip 85.00 reloading true magazine 12
+STRIP capture 88 movie 373 clip 86.00 reloading true magazine 12
+STRIP capture 89 movie 374 clip 87.00 reloading true magazine 12
+STRIP capture 90 movie 375 clip 88.00 reloading true magazine 12
+STRIP capture 91 movie 376 clip 89.00 reloading true magazine 12
+STRIP capture 92 movie 377 clip 90.00 reloading true magazine 12
+STRIP capture 93 movie 378 clip 91.00 reloading true magazine 12
+STRIP capture 94 movie 379 clip 92.00 reloading true magazine 12
+STRIP capture 95 movie 380 clip 93.00 reloading true magazine 12
+STRIP capture 96 movie 381 clip 94.00 reloading true magazine 12
+STRIP capture 97 movie 382 clip 95.00 reloading true magazine 12
+STRIP capture 98 movie 383 clip 96.00 reloading true magazine 12
+STRIP capture 99 movie 384 clip 97.00 reloading true magazine 12
+STRIP capture 100 movie 385 clip 98.00 reloading true magazine 12
+STRIP capture 101 movie 386 clip -1.00 reloading false magazine 30
+STRIP capture 102 movie 387 clip -1.00 reloading false magazine 30
+STRIP capture 103 movie 388 clip -1.00 reloading false magazine 30
+STRIP capture 104 movie 389 clip -1.00 reloading false magazine 30
+STRIP capture 105 movie 390 clip -1.00 reloading false magazine 30
+STRIP capture 106 movie 391 clip -1.00 reloading false magazine 30
+STRIP capture 107 movie 392 clip -1.00 reloading false magazine 30
+STRIP capture 108 movie 393 clip -1.00 reloading false magazine 30
+STRIP capture 109 movie 394 clip -1.00 reloading false magazine 30
+STRIP capture 110 movie 395 clip -1.00 reloading false magazine 30
+STRIP capture 111 movie 396 clip -1.00 reloading false magazine 30
+STRIP capture 112 movie 397 clip -1.00 reloading false magazine 30
+STRIP capture 113 movie 398 clip -1.00 reloading false magazine 30
+STRIP capture 114 movie 399 clip -1.00 reloading false magazine 30
+STRIP capture 115 movie 400 clip -1.00 reloading false magazine 30
+STRIP capture 116 movie 401 clip -1.00 reloading false magazine 30
+STRIP capture 117 movie 402 clip -1.00 reloading false magazine 30
+STRIP capture 118 movie 403 clip -1.00 reloading false magazine 30
+STRIP capture 119 movie 404 clip -1.00 reloading false magazine 30
+STRIP capture 120 movie 405 clip -1.00 reloading false magazine 30
+STRIP capture 121 movie 406 clip -1.00 reloading false magazine 30
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 31 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+--------------------------------------------------------------------------------
+Done recording movie at path: /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/takes/reload/reload.avi
+407 frames at 30 FPS (movie length: 00:00:13:17), recorded in 00:01:03 (20% of real-time speed).
+CPU render time: 1.95 seconds (average: 4.79 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 3.07 seconds (average: 7.55 ms/frame)
+--------------------------------------------------------------------------------

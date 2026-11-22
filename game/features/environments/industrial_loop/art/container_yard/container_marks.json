@@ -1,0 +1,614 @@
+{
+ "strips": [
+  {
+   "code": "HLVU4377471",
+   "line": 5
+  },
+  {
+   "code": "GYPU4345977",
+   "line": 4
+  },
+  {
+   "code": "GYPU7493710",
+   "line": 4
+  },
+  {
+   "code": "TLSU5076952",
+   "line": 7
+  },
+  {
+   "code": "TSAU5198539",
+   "line": 3
+  },
+  {
+   "code": "TLSU9522918",
+   "line": 7
+  },
+  {
+   "code": "TSAU3876961",
+   "line": 3
+  },
+  {
+   "code": "GYPU7940485",
+   "line": 4
+  },
+  {
+   "code": "GYPU9134426",
+   "line": 4
+  },
+  {
+   "code": "HLVU9978156",
+   "line": 5
+  },
+  {
+   "code": "TLSU1931479",
+   "line": 7
+  },
+  {
+   "code": "NDLU3787770",
+   "line": 0
+  },
+  {
+   "code": "PCGU8154540",
+   "line": 6
+  },
+  {
+   "code": "TSAU2280793",
+   "line": 3
+  },
+  {
+   "code": "TLSU7438201",
+   "line": 7
+  },
+  {
+   "code": "GYPU2480582",
+   "line": 4
+  },
+  {
+   "code": "MRDU4564007",
+   "line": 2
+  },
+  {
+   "code": "PCGU2269901",
+   "line": 6
+  },
+  {
+   "code": "TSAU7522293",
+   "line": 3
+  },
+  {
+   "code": "PCGU4101590",
+   "line": 6
+  },
+  {
+   "code": "TSAU4844167",
+   "line": 3
+  },
+  {
+   "code": "MRDU1151859",
+   "line": 2
+  },
+  {
+   "code": "TSAU6671902",
+   "line": 3
+  },
+  {
+   "code": "MRDU7745436",
+   "line": 2
+  },
+  {
+   "code": "MRDU1658817",
+   "line": 2
+  },
+  {
+   "code": "KSTU6815890",
+   "line": 1
+  },
+  {
+   "code": "TSAU6194667",
+   "line": 3
+  },
+  {
+   "code": "TLSU3697544",
+   "line": 7
+  },
+  {
+   "code": "PCGU9655207",
+   "line": 6
+  },
+  {
+   "code": "NDLU2656570",
+   "line": 0
+  },
+  {
+   "code": "PCGU8516640",
+   "line": 6
+  },
+  {
+   "code": "GYPU9514283",
+   "line": 4
+  },
+  {
+   "code": "GYPU6470392",
+   "line": 4
+  },
+  {
+   "code": "TSAU8281919",
+   "line": 3
+  },
+  {
+   "code": "PCGU9754637",
+   "line": 6
+  },
+  {
+   "code": "GYPU2948626",
+   "line": 4
+  },
+  {
+   "code": "KSTU3348874",
+   "line": 1
+  },
+  {
+   "code": "TSAU8052384",
+   "line": 3
+  },
+  {
+   "code": "KSTU4314143",
+   "line": 1
+  },
+  {
+   "code": "GYPU3216825",
+   "line": 4
+  },
+  {
+   "code": "PCGU9241275",
+   "line": 6
+  },
+  {
+   "code": "GYPU6248493",
+   "line": 4
+  },
+  {
+   "code": "GYPU1095344",
+   "line": 4
+  },
+  {
+   "code": "KSTU6737709",
+   "line": 1
+  },
+  {
+   "code": "TSAU7493261",
+   "line": 3
+  },
+  {
+   "code": "TSAU9606198",
+   "line": 3
+  },
+  {
+   "code": "NDLU4433472",
+   "line": 0
+  },
+  {
+   "code": "TLSU8856335",
+   "line": 7
+  },
+  {
+   "code": "TLSU1330689",
+   "line": 7
+  },
+  {
+   "code": "TSAU7996029",
+   "line": 3
+  },
+  {
+   "code": "TSAU4739161",
+   "line": 3
+  },
+  {
+   "code": "TSAU1546723",
+   "line": 3
+  },
+  {
+   "code": "TLSU8453495",
+   "line": 7
+  },
+  {
+   "code": "TSAU6495824",
+   "line": 3
+  },
+  {
+   "code": "NDLU7334811",
+   "line": 0
+  },
+  {
+   "code": "PCGU6806228",
+   "line": 6
+  },
+  {
+   "code": "GYPU9656919",
+   "line": 4
+  },
+  {
+   "code": "PCGU7665443",
+   "line": 6
+  },
+  {
+   "code": "MRDU2458747",
+   "line": 2
+  },
+  {
+   "code": "MRDU5001395",
+   "line": 2
+  },
+  {
+   "code": "TLSU5498639",
+   "line": 7
+  },
+  {
+   "code": "MRDU6422742",
+   "line": 2
+  },
+  {
+   "code": "GYPU3353793",
+   "line": 4
+  },
+  {
+   "code": "GYPU6040555",
+   "line": 4
+  },
+  {
+   "code": "HLVU1891321",
+   "line": 5
+  },
+  {
+   "code": "TLSU8393101",
+   "line": 7
+  },
+  {
+   "code": "TLSU3376483",
+   "line": 7
+  },
+  {
+   "code": "TSAU1780433",
+   "line": 3
+  },
+  {
+   "code": "HLVU7705384",
+   "line": 5
+  },
+  {
+   "code": "KSTU9192618",
+   "line": 1
+  },
+  {
+   "code": "MRDU3963240",
+   "line": 2
+  },
+  {
+   "code": "HLVU2556061",
+   "line": 5
+  },
+  {
+   "code": "MRDU9842013",
+   "line": 2
+  },
+  {
+   "code": "GYPU4353674",
+   "line": 4
+  },
+  {
+   "code": "MRDU2762338",
+   "line": 2
+  },
+  {
+   "code": "GYPU3139077",
+   "line": 4
+  },
+  {
+   "code": "NDLU2272379",
+   "line": 0
+  },
+  {
+   "code": "PCGU8535465",
+   "line": 6
+  },
+  {
+   "code": "PCGU9536091",
+   "line": 6
+  },
+  {
+   "code": "GYPU1410831",
+   "line": 4
+  },
+  {
+   "code": "TLSU4819797",
+   "line": 7
+  },
+  {
+   "code": "TSAU1480837",
+   "line": 3
+  },
+  {
+   "code": "MRDU5249592",
+   "line": 2
+  },
+  {
+   "code": "MRDU3383787",
+   "line": 2
+  },
+  {
+   "code": "GYPU7656822",
+   "line": 4
+  },
+  {
+   "code": "HLVU2644922",
+   "line": 5
+  },
+  {
+   "code": "TLSU2229533",
+   "line": 7
+  },
+  {
+   "code": "HLVU5522893",
+   "line": 5
+  },
+  {
+   "code": "MRDU9168246",
+   "line": 2
+  },
+  {
+   "code": "HLVU1580150",
+   "line": 5
+  },
+  {
+   "code": "NDLU4685350",
+   "line": 0
+  },
+  {
+   "code": "PCGU8524882",
+   "line": 6
+  },
+  {
+   "code": "GYPU2268589",
+   "line": 4
+  },
+  {
+   "code": "TSAU5984728",
+   "line": 3
+  },
+  {
+   "code": "NDLU2168791",
+   "line": 0
+  },
+  {
+   "code": "NDLU2102921",
+   "line": 0
+  },
+  {
+   "code": "NDLU6857103",
+   "line": 0
+  },
+  {
+   "code": "PCGU1406300",
+   "line": 6
+  },
+  {
+   "code": "MRDU1919398",
+   "line": 2
+  },
+  {
+   "code": "KSTU1352767",
+   "line": 1
+  },
+  {
+   "code": "MRDU2353833",
+   "line": 2
+  },
+  {
+   "code": "TLSU1857730",
+   "line": 7
+  },
+  {
+   "code": "MRDU1752356",
+   "line": 2
+  },
+  {
+   "code": "KSTU3658695",
+   "line": 1
+  },
+  {
+   "code": "MRDU6358411",
+   "line": 2
+  },
+  {
+   "code": "PCGU3898299",
+   "line": 6
+  },
+  {
+   "code": "NDLU9853014",
+   "line": 0
+  },
+  {
+   "code": "TSAU8100559",
+   "line": 3
+  },
+  {
+   "code": "MRDU7305714",
+   "line": 2
+  },
+  {
+   "code": "GYPU3169791",
+   "line": 4
+  },
+  {
+   "code": "HLVU1059380",
+   "line": 5
+  },
+  {
+   "code": "KSTU2775450",
+   "line": 1
+  },
+  {
+   "code": "NDLU2524784",
+   "line": 0
+  },
+  {
+   "code": "NDLU1891506",
+   "line": 0
+  },
+  {
+   "code": "TSAU2366773",
+   "line": 3
+  },
+  {
+   "code": "HLVU5059644",
+   "line": 5
+  },
+  {
+   "code": "NDLU9515188",
+   "line": 0
+  },
+  {
+   "code": "KSTU2153409",
+   "line": 1
+  },
+  {
+   "code": "NDLU7456893",
+   "line": 0
+  },
+  {
+   "code": "PCGU6232639",
+   "line": 6
+  },
+  {
+   "code": "GYPU9767255",
+   "line": 4
+  },
+  {
+   "code": "MRDU3645613",
+   "line": 2
+  },
+  {
+   "code": "PCGU5856348",
+   "line": 6
+  },
+  {
+   "code": "PCGU7732536",
+   "line": 6
+  },
+  {
+   "code": "KSTU2586836",
+   "line": 1
+  },
+  {
+   "code": "MRDU8657324",
+   "line": 2
+  },
+  {
+   "code": "KSTU3265152",
+   "line": 1
+  },
+  {
+   "code": "TLSU6581028",
+   "line": 7
+  }
+ ],
+ "strip_grid": [
+  8,
+  16
+ ],
+ "lines": [
+  {
+   "name": "NORDLINE",
+   "owner": "NDLU",
+   "livery": [
+    0.16,
+    0.3,
+    0.48
+   ]
+  },
+  {
+   "name": "KESTREL",
+   "owner": "KSTU",
+   "livery": [
+    0.5,
+    0.17,
+    0.12
+   ]
+  },
+  {
+   "name": "MERIDIAN LINES",
+   "owner": "MRDU",
+   "livery": [
+    0.2,
+    0.36,
+    0.25
+   ]
+  },
+  {
+   "name": "TRANSARC",
+   "owner": "TSAU",
+   "livery": [
+    0.48,
+    0.48,
+    0.46
+   ]
+  },
+  {
+   "name": "GREYPORT",
+   "owner": "GYPU",
+   "livery": [
+    0.15,
+    0.37,
+    0.38
+   ]
+  },
+  {
+   "name": "HALVARD",
+   "owner": "HLVU",
+   "livery": [
+    0.4,
+    0.13,
+    0.16
+   ]
+  },
+  {
+   "name": "PACIFIC CARGO",
+   "owner": "PCGU",
+   "livery": [
+    0.56,
+    0.33,
+    0.14
+   ]
+  },
+  {
+   "name": "TRILEASE",
+   "owner": "TLSU",
+   "livery": [
+    0.78,
+    0.78,
+    0.74
+   ]
+  }
+ ],
+ "types": {
+  "22G1": [
+   "MAX GROSS 30,480 KG 67,200 LB",
+   "TARE 2,230 KG 4,920 LB",
+   "NET 28,250 KG 62,280 LB",
+   "CU.CAP. 33.2 CU.M 1,172 CU.FT"
+  ],
+  "42G1": [
+   "MAX GROSS 30,480 KG 67,200 LB",
+   "TARE 3,750 KG 8,270 LB",
+   "NET 26,730 KG 58,930 LB",
+   "CU.CAP. 67.7 CU.M 2,391 CU.FT"
+  ],
+  "45G1": [
+   "MAX GROSS 30,480 KG 67,200 LB",
+   "TARE 3,900 KG 8,600 LB",
+   "NET 26,580 KG 58,600 LB",
+   "CU.CAP. 76.4 CU.M 2,698 CU.FT"
+  ]
+ }
+}

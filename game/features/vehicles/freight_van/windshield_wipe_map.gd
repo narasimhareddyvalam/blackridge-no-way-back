@@ -8,6 +8,7 @@ const REWET_SECONDS := 2.0
 const SPEED_REWET := 10.0
 
 var vehicle: Node
+var rewet_seconds: float = REWET_SECONDS
 var map_size := Vector2(512.0, 256.0)
 var _previous_angle: float = NAN
 var _delta: float = 0.0
@@ -25,7 +26,7 @@ func _draw() -> void:
 		draw_rect(whole, Color.WHITE)
 		_filled = true
 		return
-	var seconds := REWET_SECONDS
+	var seconds := rewet_seconds
 	if is_instance_valid(vehicle):
 		seconds /= 1.0 + absf(float(vehicle.get("actual_speed"))) / SPEED_REWET
 	var rewet := 1.0 - exp(-_delta / seconds)

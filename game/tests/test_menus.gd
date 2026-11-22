@@ -7,7 +7,15 @@ const OLD_WORDS: Array[String] = ["PROTOTYPE", "prototype", "freight loop", "ind
 	"Begin / continue drive", "Drive again", "First drive"]
 const KEYS: Array[String] = ["W / S", "A / D", "SPACE", "Z / C", "J / K", "MOUSE", "SHIFT", "ESC"]
 const CREDITED: Array[String] = ["NRVALAM WORKS", "Max", "CC BY 4.0", "Mixamo", "Poly Haven",
-	"Alex Murias", "Godot Engine", "MIT"]
+	"Alex Murias", "Microsoft Rocketbox", "Construction_Male_08", "Construction_Male_07",
+	"Security_Female_01",
+	"Brian Trepanier", "NLM (Sketchfab: NLM-Group)", "YJ_", "Maxwell autodoors",
+	"Kamran Mughal", "FFeller", "widthRider", "Red Fox (Sketchfab: nokillnando)", "GloriousGlider8",
+	"Marcel Bankmann", "PlantCatalog", "lolipop_1707", "SirSonat", "SavinienBerault", "evan4129",
+	"Daniel Zhabotinsky", "GregorJan", "Melon Polygons", "dudecon", "barism09", "Rylae Shylna", "x4vier28", "jinjinjin", "Barlow",
+	"The Street Light Man", "qsardor57913", "TGVMisterH", "David_Holiday", "bumstrum", "helijah",
+	"Female_Adult_07", "Female_Child_01", "Business_Male_03", "strielecki",
+	"Godot Engine", "MIT"]
 
 var _checks: int = 0
 var _failures: int = 0

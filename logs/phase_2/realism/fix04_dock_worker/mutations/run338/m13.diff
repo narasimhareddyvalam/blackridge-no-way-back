@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m13/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m13/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:20:06
+@@ -785,7 +785,7 @@
+ 	_route = _way_back()
+ 	var to := _route[0] - global_position
+ 	_turn_to(Vector3(to.x, 0.0, to.z), func() -> void:
+-		_show_pen(true)
++		_show_pen(false)
+ 		_next("noting", "Note"))
+ 
+ 

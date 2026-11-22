@@ -10,33 +10,62 @@ extends SceneTree
 
 const Readback = preload("res://tests/particle_readback.gd")
 const SLANT := Vector3(0.08, -0.997, 0.0)
-const BRIGHT_SPLASH := {"splash_scale": Vector2(0.05, 0.15), "splash_scatter": 30.0,
+const BRIGHT_SPLASH := {"splash_scale": Vector2(0.12, 0.3), "splash_scatter": 30.0,
 	"splash_diffuse": 1.0}
-const PLAIN_SPLASH := {"splash_scale": Vector2(0.03, 0.1), "splash_scatter": 60.0,
+const PLAIN_SPLASH := {"splash_scale": Vector2(0.1, 0.25), "splash_scatter": 60.0,
 	"splash_diffuse": 0.3}
 const VARIANTS := {
 	"res://effects/lamp_rain_street.tscn": {"root": "LampRainStreet",
-		"box": Vector3(5.0, 0.2, 5.0), "direction": SLANT, "drops": 5000, "splashes": 2750,
-		"scatter": 5.0, "splash": BRIGHT_SPLASH,
+		"box": Vector3(5.0, 0.2, 5.0), "direction": SLANT, "drops": 19300, "splashes": 11460, "life": 1.7,
+		"scatter": 10.0, "splash": BRIGHT_SPLASH,
 		"aabb": AABB(Vector3(-6.0, -8.5, -6.0), Vector3(12.0, 10.0, 12.0)),
 		"collider": Vector3(12.0, 10.0, 12.0), "collider_at": Vector3(0.0, -3.5, 0.0)},
 	"res://effects/lamp_rain_post.tscn": {"root": "LampRainPost",
-		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT, "drops": 2000, "splashes": 1100,
-		"scatter": 5.0, "splash": BRIGHT_SPLASH,
+		"box": Vector3(3.0, 0.2, 3.0), "direction": SLANT, "drops": 7700, "splashes": 4580, "life": 1.7,
+		"scatter": 10.0, "splash": BRIGHT_SPLASH,
 		"aabb": AABB(Vector3(-4.0, -8.5, -4.0), Vector3(8.0, 10.0, 8.0)),
 		"collider": Vector3(8.0, 10.0, 8.0), "collider_at": Vector3(0.0, -3.5, 0.0)},
 	"res://effects/lamp_rain_floodlight.tscn": {"root": "LampRainFloodlight",
 		"box": Vector3(3.5, 0.1, 6.5), "direction": Vector3(0.023, -0.997, 0.077),
-		"drops": 3200, "splashes": 1800, "scatter": 60.0, "splash": PLAIN_SPLASH,
+		"drops": 8000, "splashes": 7500, "life": 1.1, "scatter": 100.0, "splash": PLAIN_SPLASH,
 		"aabb": AABB(Vector3(-4.5, -5.0, -7.5), Vector3(9.0, 6.0, 15.0)),
 		"collider": Vector3(9.0, 6.0, 15.0), "collider_at": Vector3(0.0, -2.0, 0.0)},
 	"res://effects/lamp_rain_door.tscn": {"root": "LampRainDoor",
-		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT, "drops": 300, "splashes": 170,
-		"scatter": 60.0, "splash": PLAIN_SPLASH,
+		"box": Vector3(1.0, 0.1, 0.8), "direction": SLANT, "drops": 750, "splashes": 710, "life": 1.1,
+		"scatter": 100.0, "splash": PLAIN_SPLASH,
 		"aabb": AABB(Vector3(-1.5, -3.5, -1.5), Vector3(3.0, 4.0, 3.0)),
 		"collider": Vector3(3.0, 4.0, 3.0), "collider_at": Vector3(0.0, -1.5, 0.0)},
+	"res://effects/lamp_rain_dock.tscn": {"root": "LampRainDock",
+		"box": Vector3(21.0, 0.1, 1.75), "direction": SLANT, "drops": 13350, "splashes": 11250, "life": 1.25,
+		"scatter": 100.0, "splash": PLAIN_SPLASH,
+		"aabb": AABB(Vector3(-21.5, -5.1, -2.65), Vector3(43.0, 5.6, 5.3)),
+		"collider": Vector3(43.0, 5.6, 5.3), "collider_at": Vector3(0.0, -2.3, 0.0)},
+	"res://effects/lamp_rain_flood_high.tscn": {"root": "LampRainFloodHigh",
+		"box": Vector3(3.5, 0.1, 6.5), "direction": SLANT, "drops": 16400, "splashes": 7500,
+		"life": 2.25, "scatter": 100.0, "splash": PLAIN_SPLASH,
+		"aabb": AABB(Vector3(-4.5, -9.0, -7.5), Vector3(9.0, 10.0, 15.0)),
+		"collider": Vector3(9.0, 10.0, 15.0), "collider_at": Vector3(0.0, -4.0, 0.0)},
 }
 const WATER := Color(0.88, 0.89, 0.9, 1.0)
+## Each drop drawn as a camera sees it (the audit, #354): the streak its fall leaves in an exposure
+## of EXPOSURE s, in perspective (a dot when it falls at the eye), at least MIN_PIXELS wide so it
+## does not break into dashes; two and a half times as many drops as before, brighter and lit
+## more strongly from behind (step 2), and faded within 2 m of the eye, which focuses past them.
+const EXPOSURE := 0.03
+const MIN_PIXELS := 1.6
+## Rain from the light (step 3): the slowest drop a 1 mm one's 4 m/s, and each scene's drops
+## living long enough ("life") for it to fall from its lamp to the ground before it fades (the
+## last 5% of its life); the counts grown with the life so the rain is as dense; the compound's
+## floods' rain from just under their heads (`lamp_rain_flood_high.tscn`), slanting as all rain;
+## far drops whose streak is under 6 pixels fade to a sheen of 0.15 (specks are not what the eye
+## sees of far rain); and a backward lobe of 0.3, as water throws light back toward its source
+## (step 4).
+const SLOWEST := 4.0
+## Splashes as the lit ground shows them (step 5): five droplets a landing, crown-sized (1-3 mm),
+## catching the lamp in a glint, brightest at the instant of the hit; the splash counts grown
+## with the droplets so none are dropped.
+const SPLASH_DROPLETS := 5
+const SPLASH_GLINT := 1.5
 const SCATTER := "res://effects/scatter_particle.gdshader"
 const FLAT: Array[Vector2] = [Vector2(0.0, 1.0), Vector2(1.0, 1.0)]
 
@@ -97,13 +126,14 @@ func _check_variant(path: String, variant: Dictionary) -> void:
 func _rain(variant: Dictionary) -> Dictionary:
 	return {
 		"node": {"amount": variant["drops"], "one_shot": false, "explosiveness": 0.0,
-			"lifetime": 1.1, "fixed_fps": 60,
-			"local_coords": false, "visibility_aabb": variant["aabb"], "preprocess": 1.1,
+			"lifetime": variant["life"], "fixed_fps": 60,
+			"local_coords": false, "visibility_aabb": variant["aabb"],
+			"preprocess": variant["life"],
 			"emitting": false, "collision_base_size": 0.01,
 			"sub_emitter": NodePath("../LampSplash"),
 			"transform_align": GPUParticles3D.TRANSFORM_ALIGN_Z_BILLBOARD_Y_TO_VELOCITY},
 		"process": {"emission_shape": ParticleProcessMaterial.EMISSION_SHAPE_BOX,
-			"emission_box_extents": variant["box"], "initial_velocity_min": 3.5,
+			"emission_box_extents": variant["box"], "initial_velocity_min": SLOWEST,
 			"initial_velocity_max": 8.5, "direction": variant["direction"], "spread": 4.0,
 			"gravity": Vector3(0.0, -0.5, 0.0), "damping_min": 0.0, "damping_max": 0.15,
 			"color": WATER, "scale_min": 0.1, "scale_max": 0.25,
@@ -111,15 +141,17 @@ func _rain(variant: Dictionary) -> Dictionary:
 			"collision_mode": ParticleProcessMaterial.COLLISION_RIGID, "collision_friction": 1.0,
 			"collision_bounce": 0.0,
 			"sub_emitter_mode": ParticleProcessMaterial.SUB_EMITTER_AT_COLLISION,
-			"sub_emitter_amount_at_collision": 3},
-		"alpha_curve": [Vector2(0.0, 0.1), Vector2(0.15, 0.8), Vector2(0.75, 0.8),
+			"sub_emitter_amount_at_collision": SPLASH_DROPLETS},
+		"alpha_curve": [Vector2(0.0, 0.1), Vector2(0.1, 0.8), Vector2(0.95, 0.8),
 			Vector2(1.0, 0.0)],
 		"scale_curve": [Vector2(0.0, 0.9), Vector2(0.5, 1.0), Vector2(1.0, 0.9)],
 		"scale_over_velocity_curve": {"x": FLAT, "y": [Vector2(0.0, 1.0), Vector2(1.0, 201.0)],
 			"z": FLAT},
-		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": 1.0,
-			"forward_scatter": 0.5, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
-			"sky": 0.0, "still_fade": 1.0}},
+		"draw": {"shader": SCATTER, "params": {"face_camera": false, "min_pixels": MIN_PIXELS,
+			"forward_scatter": 0.7, "scatter": variant["scatter"], "diffuse": 0.3, "glint": 0.0,
+			"sky": 0.0, "still_fade": 1.0, "camera_streak": true, "exposure": EXPOSURE,
+			"near_fade": 2.0, "far_pixels": 6.0, "far_sheen": 0.15, "back_scatter": 0.3,
+			"fall": SLANT.normalized()}},
 		"mesh": {"size": Vector2(0.01, 0.01)},
 		"texture": "res://effects/textures/rain_streak.png",
 	}
@@ -138,10 +170,10 @@ func _splash(variant: Dictionary) -> Dictionary:
 			"gravity": Vector3(0.0, -9.8, 0.0), "color": WATER,
 			"scale_min": variant["splash"]["splash_scale"].x,
 			"scale_max": variant["splash"]["splash_scale"].y},
-		"alpha_curve": [Vector2(0.0, 0.6), Vector2(1.0, 0.0)],
-		"draw": {"shader": SCATTER, "params": {"face_camera": true, "min_pixels": 1.0,
+		"alpha_curve": [Vector2(0.0, 0.9), Vector2(0.3, 0.6), Vector2(1.0, 0.0)],
+		"draw": {"shader": SCATTER, "params": {"face_camera": true, "min_pixels": 1.5,
 			"forward_scatter": 0.5, "scatter": variant["splash"]["splash_scatter"],
-			"diffuse": variant["splash"]["splash_diffuse"], "glint": 0.0, "sky": 0.0}},
+			"diffuse": variant["splash"]["splash_diffuse"], "glint": SPLASH_GLINT, "sky": 0.0}},
 		"mesh": {"size": Vector2(0.01, 0.01)},
 		"texture": "res://effects/textures/water_bead.png",
 	}

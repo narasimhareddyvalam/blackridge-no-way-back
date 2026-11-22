@@ -1,0 +1,9 @@
+{
+	"destination": "game/features/environments/industrial_loop/polyhaven",
+	"models": {
+		"can_rusted": "1k",
+		"plastic_bottle_gallon": "1k",
+		"wine_bottles_01": "1k",
+		"trashbag": "1k"
+	}
+}

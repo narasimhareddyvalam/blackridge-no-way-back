@@ -1,0 +1,10 @@
+GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75
+HUD lines 66, frames 2045
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+RK  the cross-aisle        31     676     646     35.928     33.535     2.899     4.087  0 particles; nodes toggled 1, rain volumes active 3
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+RK       2.899    -1.188 to   6.986     1.50  not settled at this precision  30.2, 30.0

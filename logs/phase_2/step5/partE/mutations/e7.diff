@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e7/game/features/environments/industrial_loop/shed_fitout.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:30:05
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e7/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:33:29
+@@ -67,7 +67,7 @@
+ ## that each fan's centre falls between four heads.
+ const SPRINKLER_ZS: Array[float] = [9.7, 13.6, 17.5]
+ const HEAD_STEP := 16.0 / 6.0
+-const HEAD_PHASE := -72.6667
++const HEAD_PHASE := -72.0
+ const OFFICE_FRONT := 12.0
+ ## Tray: 0.8 m off the wall at 6 m above the dock floor, on trapezes every 3 m.
+ const TRAY_UP := 6.0

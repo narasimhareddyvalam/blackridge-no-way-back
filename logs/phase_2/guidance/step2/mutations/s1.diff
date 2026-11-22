@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut2/s1/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 17:36:47
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut2/s1/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 17:42:00
+@@ -138,7 +138,7 @@
+ ## marked bay, the dark van's door; Vector3.INF when it sends him nowhere (wait, pull forward,
+ ## leave the van).
+ func objective_target() -> Vector3:
+-	if not active or vehicle == null:
++	if true:
+ 		return Vector3.INF
+ 	var rear := vehicle.to_global(Vector3(0.0, 1.0, VAN_REAR + 0.6))
+ 	match _title:

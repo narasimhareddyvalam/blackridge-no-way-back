@@ -32,7 +32,7 @@ var _picked: int = 0
 
 
 func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value: int,
-		terrain: Node3D, mowed := PackedFloat32Array()) -> void:
+		terrain: Node3D, mowed := PackedFloat32Array(), cleared_after: Array[Rect2] = []) -> void:
 	_terrain = terrain
 	_mowed = mowed
 	for index in range(road_points.size()):
@@ -69,7 +69,8 @@ func build(road_points: PackedVector3Array, clearings: Array[Rect2], seed_value:
 			var centre := _tile_centre(key, tile_size)
 			var ground: float = _terrain.height_at(point.x, point.y)
 			placed += 1
-			if _mown(point):
+			if _mown(point) or cleared_after.any(func(plot: Rect2) -> bool:
+					return plot.has_point(point)):
 				mown += 1
 				continue
 			if not tiles.has(key):

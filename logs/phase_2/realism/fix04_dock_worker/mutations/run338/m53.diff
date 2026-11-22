@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m53/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m53/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:24:24
+@@ -126,7 +126,7 @@
+ const TWIST := Vector2(1.8, 2.6)
+ const TWIST_BY := deg_to_rad(25.0)
+ const SEAL_LET_GO := Vector2(2.7, 3.0)
+-const ON_THE_SEAL := Vector3(0.025, 0.0, 0.09)
++const ON_THE_SEAL := Vector3(0.025, 0.0, 0.25)
+ ## Handing the log from his right hand to his left before he writes: both hands on it before him
+ ## by HANDS_TOGETHER, his right letting go over RIGHT_OFF, the log on to his left side by PASSED.
+ const PASS_SECONDS := 1.0

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/story_scenes.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutp/p3/game/features/missions/last_run/story_scenes.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/story_scenes.gd	2026-11-21 20:02:52
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutp/p3/game/features/missions/last_run/story_scenes.gd	2026-11-21 20:07:06
+@@ -39,7 +39,7 @@
+ 	+ "MAYA: You said she'd come home last time.\n" \
+ 	+ "ADRIAN: This time it's him or her. Choose.\n" \
+ 	+ "MAYA: ...\n" \
+-	+ "MAYA: No.\n" \
++	+ "MAYA: Yes.\n" \
+ 	+ "ADRIAN: You'd pick your brother over your own daughter?\n" \
+ 	+ "MAYA: I won't buy her life with his. And I won't leave her with you.\n\n" \
+ 	+ "VALE FREIGHT DISPATCH, FORWARDED TO HERSELF\n" \

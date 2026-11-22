@@ -1,0 +1,35 @@
+k1  the gate gap 9 m               test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K1: the compound fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (391.0 m of 400.0 m, 2
+k2  not stepped clear of the yard  test_compound.gd exit 1, 7/10 passed; 3 failed
+      FAIL: K1: the compound fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (391.3 m of 400.0 m, 2
+      FAIL: K1: both warehouses inside it, and its fence 0.0 m from the container yard's at the nearest
+      FAIL: K4: the fence round, the shut gate and the booth solid (not: the step's side)
+k3  the shed's guard               test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K2: the booth before the gate on the driver's side, its guard seated, a stand-in, not the shed's guard, with n
+k4  the guard not seated           test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K2: the booth before the gate on the driver's side, its guard seated, a stand-in, not the shed's guard, with n
+k5  the booth on the far side      test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K2: the booth before the gate on the driver's side, its guard seated, a stand-in, not the shed's guard, with n
+k6  not marked a stand-in          test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K2: the booth before the gate on the driver's side, its guard seated, a stand-in, not the shed's guard, with n
+k7  the gate without the run sheet test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K3: E hands the run sheet over, his window down; after her check the gate slides open (9.9 s), and the objecti
+k8  the window kept up             test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K3: E hands the run sheet over, his window down; after her check the gate slides open (12.9 s), and the object
+k9  the gate never shuts           test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K3: and shuts behind the van, the window up again (20.0 s)
+k10  the booth from anywhere        test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K3: on the drive, E at the booth not yet offered; the objective: stop at the booth (STOP AT THE BOOTH / Stop a
+k11  the booth not solid            test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K4: the fence round, the shut gate and the booth solid (not: the booth)
+k12  the gate not solid             test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K4: the fence round, the shut gate and the booth solid (not: the gate)
+k13  the fence not solid            test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K4: the fence round, the shut gate and the booth solid (not: west, south, east, north, the step's side, the st
+k14  the objective not naming it    test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K5: at the container yard the objective names the compound (MISSION 2 IS BEING BUILT / Out of the yard and eas
+k15  E at the booth not wired       test_compound.gd exit 1, 8/10 passed; 2 failed
+      FAIL: K3: the gate shut, and E offered at the booth's line
+      FAIL: K3: E hands the run sheet over, his window down; after her check the gate slides open (20.0 s), and the object
+k16  no barbed wire                 test_compound.gd exit 1, 9/10 passed; 1 failed
+      FAIL: K1: the compound fenced round in 2.4 m chain-link with barbed wire but for its 6 m gate (394.0 m of 400.0 m, 0

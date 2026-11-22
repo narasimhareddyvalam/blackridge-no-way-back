@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/cinematics/cutscene_director.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p5/game/features/cinematics/cutscene_director.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/cinematics/cutscene_director.gd	2026-11-21 17:23:08
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutop/p5/game/features/cinematics/cutscene_director.gd	2026-11-21 17:30:52
+@@ -220,8 +220,6 @@
+ 		_hidden_driver = false
+ 	if is_instance_valid(_player_camera):
+ 		_player_camera.make_current()
+-	if is_instance_valid(_hud):
+-		_hud.call("set_cinematic", false)
+ 	if is_instance_valid(_driver):
+ 		_driver.set("held", false)
+ 	finished.emit(skipped)

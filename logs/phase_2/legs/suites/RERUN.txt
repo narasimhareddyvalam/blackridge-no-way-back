@@ -1,0 +1,6 @@
+test_loading.gd failed H18 in this suite run (34/35): it counted a fifth pump stroke, reading the
+game's hint, which refreshes every 0.2 s (first_drive.gd), before the refresh after the fourth
+stroke had lifted the load; the game ignored that press (the lever's pause at neutral). The test
+now reads the hint once a refresh has passed (HINT_REFRESH 0.25 s). Rerun alone: 35/35
+(logs/phase_2/legs/suites_rerun/); three copies at once, as the suites run: 35/35 each.
+Every other run in SUMMARY.txt: exit 0 (43 of 44 lines with the art check).

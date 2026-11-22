@@ -1,0 +1,31 @@
+Docking mutations (#287, steps 1-3), each on an APFS clone, its tests at 60 fps:
+d1  the guides float 0.5 m up                        test_rear_camera.gd exit 1, 2/7 passed; 5 failed
+      FAIL: C3 in the game's view the guides lie on the ground (at most 0.000 m off it), 0.000 m apart and parallel (inf m
+      FAIL: C4 on the game's view each line is drawn where its camera sees its ground point (at most 0.00 px off, 0 pieces
+      FAIL: C4 on the dash screen each line is drawn where its camera sees its ground point (at most 0.00 px off, 0 pieces
+      FAIL: C5 a 0.8 m wall 1.5 m behind the van hides the guides behind it (0 pieces before, 0 with it; 0 seen through it
+      FAIL: C6 on an 8° slope behind the van the guides follow the ground (at most 0.000 m off it, rising 0.00 m)
+d3  the guides too wide (3.8 m apart)                test_rear_camera.gd exit 1, 6/7 passed; 1 failed
+      FAIL: C3 in the game's view the guides lie on the ground (at most 0.010 m off it), 3.800 m apart and parallel (0.000
+d4  the camera back in the air, tilted 16°           test_rear_camera.gd exit 1, 5/7 passed; 2 failed
+      FAIL: C1 in reverse the game's view is the rear camera (true), on the body's rear: 0.183 m behind its surface at tha
+      FAIL: C2 the bumper's top edge at the bottom of the picture (game view, dash screen: false at (0.5, 2.345), false at
+d8  the hold does not settle with the body           test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is 0.0148 m off the floor drawn, the pallet stands 0.0000 m off it,
+d9  the plate laid once, not kept on the sill        test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is -0.0000 m off the floor drawn, the pallet stands 0.0000 m off it
+d10  the load rides the van's frame, not its body     test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K5 loaded (520 kg), the van's floor as met is -0.0000 m off the floor drawn, the pallet stands 0.0142 m off it
+d5  the bay measures at the van's middle only        test_docking.gd exit 1, 4/5 passed; 1 failed
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+d6  the bay docks within 0.3 m again                 test_docking.gd exit 1, 1/5 passed; 4 failed
+      FAIL: K1 the red stop line runs across the van (-1.00 to 1.00 m) on the ground 0.100-0.100 m behind its bumper, wher
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+      FAIL: K3 stopped with the red line 0.1 m short of the bumpers (0.194 m from them) it does not dock (docked), and the
+      FAIL: K4 at every gap the bay docks within the plate rests on the sill and reaches onto the floor (gap 0.000: docked
+d7  no red stop line                                 test_docking.gd exit 1, 2/5 passed; 3 failed
+      FAIL: K1 the red stop line runs across the van (inf to -inf m) on the ground inf--inf m behind its bumper, where the
+      FAIL: K2 backed in at a crawl and stopped as the red line reaches the bumpers, the van docks: stopped by the brake, 
+      FAIL: K3 stopped with the red line 0.1 m short of the bumpers (0.001 m from them) it does not dock (docked), and the
+d2  the guides drawn through what stands behind      test_rear_camera.gd exit 1, 6/7 passed; 1 failed
+      FAIL: C5 a 0.8 m board 1.625 m behind the van hides the guides behind it (40 pieces before, 40 with it; 20 seen thro

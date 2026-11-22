@@ -26,13 +26,15 @@ var edge_distance := PackedFloat32Array()
 
 
 func build(road: RefCounted, bounds: Rect2, flat_areas: Array[Rect2], surface: Material,
-		seed_value: int) -> void:
+		seed_value: int, cuts: Array = []) -> void:
 	area = bounds
 	columns = int(bounds.size.x / SPACING) + 1
 	rows = int(bounds.size.y / SPACING) + 1
 	_natural(seed_value)
 	_carve(road)
 	_flatten(flat_areas)
+	for cut: Array in cuts:
+		_cut(cut[0], cut[1], cut[2], cut[3])
 	for chunk_row in range(0, rows - 1, CHUNK):
 		for chunk_column in range(0, columns - 1, CHUNK):
 			_chunk(chunk_column, chunk_row, surface)
@@ -158,6 +160,27 @@ func _flatten(flat_areas: Array[Rect2]) -> void:
 				var cell := row * columns + column
 				if edge_distance[cell] > 0.0:
 					heights[cell] = 0.0
+
+
+## A road cut through high ground (#359, the east road through the rim): from `from` to `to`
+## (x, z), the ground lowered to just under the road within `half_width` of its line, and rising
+## from there at `slope` (metres up for each metre out), as a road cut's banks do; it never raises
+## the ground.
+func _cut(from: Vector2, to: Vector2, half_width: float, slope: float) -> void:
+	var reach := half_width + PLATEAU / slope
+	var box := Rect2(from, Vector2.ZERO).expand(to).grow(reach)
+	var first_column := maxi(ceili((box.position.x - area.position.x) / SPACING), 0)
+	var last_column := mini(floori((box.end.x - area.position.x) / SPACING), columns - 1)
+	var first_row := maxi(ceili((box.position.y - area.position.y) / SPACING), 0)
+	var last_row := mini(floori((box.end.y - area.position.y) / SPACING), rows - 1)
+	for row in range(first_row, last_row + 1):
+		for column in range(first_column, last_column + 1):
+			var at := Vector2(area.position.x + column * SPACING, area.position.y + row * SPACING)
+			var nearest := Geometry2D.get_closest_point_to_segment(at, from, to)
+			var out := at.distance_to(nearest)
+			var bank := -UNDER_ROAD + maxf(out - half_width, 0.0) * slope
+			var cell := row * columns + column
+			heights[cell] = minf(heights[cell], bank)
 
 
 func _chunk(first_column: int, first_row: int, surface: Material) -> void:

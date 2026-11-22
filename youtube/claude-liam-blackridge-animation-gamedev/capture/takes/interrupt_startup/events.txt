@@ -1,0 +1,4 @@
+TAKE movie 45 clip 44.0 door 0.000 boarding false occupied false paused false: E pressed (startup phase take)
+TAKE movie 63 clip 16.0 door 0.000 boarding true occupied false paused false: W held
+TAKE movie 78 clip 31.0 door 0.000 boarding true occupied false paused false: W released; moved 0.000 m
+TAKE movie 153 clip 35.0 door 0.000 boarding false occupied true paused false: end of take

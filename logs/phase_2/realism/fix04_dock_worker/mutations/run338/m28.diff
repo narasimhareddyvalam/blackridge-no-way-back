@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m28/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:18:29
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m28/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:21:38
+@@ -478,7 +478,7 @@
+ ## so his way round behind it is clear of it (#333).
+ func _tuck(delta: float) -> void:
+ 	_timer += delta
+-	_roll(1.0 - smoothstep(0.0, 1.0, clampf(_timer / TUCK_SECONDS, 0.0, 1.0)))
++	_roll(1.0)
+ 	if _timer < TUCK_SECONDS:
+ 		return
+ 	if _job == "scan":

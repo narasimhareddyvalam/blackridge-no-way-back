@@ -9,7 +9,7 @@ been used here. Preview approval and final selection remain open.
 
 ## Current assets
 
-All nineteen WAV files in `game/features/audio/first_drive/` were synthesized for
+All twenty-one WAV files in `game/features/audio/first_drive/` were synthesized for
 this prototype with the original source
 `source_assets/audio/first_drive/synthesize.py`. They are mono, 16-bit PCM at
 22,050 Hz before Godot import. They are provisional synthesized effects, not
@@ -36,6 +36,44 @@ recordings of a real vehicle, and have no third-party asset source.
 | `breathing.wav` | Ethan's shaky breathing in the quiet ending after the hit: three breaths with a tremble on each exhale | 9.9 s | Loop, fading in |
 | `engine_tick.wav` | The hot engine ticking as it cools in the quiet ending | 0.06 s | One shot, twelve times at random gaps |
 | `skid.wav` | Locked tyres skidding on the wet crossing paint: tyre hiss, rubber scrub and a squeal near 960 Hz (added 2026-11-01, Run 24 step 3) | 2.0 s | Loop while the locked wheels brake, louder with speed |
+| `door_latch.wav` | A rear door's latch: a 96 Hz thud, the bolt's rattle, a metal ring near 1.9 and 2.7 kHz and the catch's second click (added 2026-11-12, step 2f part 1 B, #247) | 0.4 s | One shot as a door shuts; quieter as its handle frees the latch |
+| `door_stay.wav` | A rear door's stay on the van's side: a softer 74 Hz knock and a click (added 2026-11-12, step 2f part 1 B, #247) | 0.35 s | One shot as the stay catches a door folded back; quieter as Ethan tugs it off |
+
+### The loading sounds (Phase 2, step 4, #286)
+
+The five WAV files in `game/features/audio/loading/` were synthesized on 2026-11-14 by
+`source_assets/audio/loading/synthesize.py`, the same way and format as the first drive's: mono,
+16-bit PCM at 22,050 Hz, no third-party source, provisional like the rest. Each plays from a 3D
+player at its source, the lift's or the pallet jack's, on the Ambience bus with the rain.
+
+| File | Role | Source duration | Playback intent |
+| --- | --- | --- | --- |
+| `lift_beep.wav` | The dock lift's motion alarm: a piezo beep at 2.8 kHz, 0.3 s on and 0.3 s off | 0.6 s | Loop while the lift moves (its import loops forward) |
+| `jack_pump.wav` | One stroke of the pallet jack's handle: a creak, the piston's 95 Hz knock and the check valve's click | 0.5 s | One shot per stroke |
+| `jack_lower.wav` | The jack's lowering valve opened: oil hissing back, dying away | 1.2 s | One shot as a load is let down |
+| `strap_hook.wav` | A strap's steel hook snapped into a floor ring | 0.2 s | One shot per hook |
+| `ratchet_click.wav` | One pull of a ratchet strap: its pawl over three teeth, each a little higher | 0.32 s | One shot per pull |
+
+### The transfer shed's sounds (Phase 2, step 5 of #253, part G, #302)
+
+The ten WAV files in `game/features/audio/shed/` were synthesized on 2026-11-16 by
+`source_assets/audio/shed/synthesize.py`, the same way and format as the loading sounds, no
+third-party source, provisional like the rest. Each plays from a 3D player at its source on the
+Ambience bus; the looping ones loop by their imports (`loop_mode=2`). Under the shed's roof the
+yard's rain falls away by 14 dB (`driving_audio.gd`'s `shelter`, from `shed_sounds.gd`).
+
+| File | Role | Source duration | Playback intent |
+| --- | --- | --- | --- |
+| `forklift_motor.wav` | The electric forklift's traction motor: a whine near 880 Hz over the tyres' rumble | 2 s | Loop while it moves, pitch with speed |
+| `forklift_pump.wav` | Its hydraulic pump as the forks lift: a whine near 420 Hz over a buzz | 1.5 s | Loop while lifting |
+| `forklift_horn.wav` | Its horn: two notes a minor third apart | 0.4 s | One shot at an aisle's mouth |
+| `reverse_alarm.wav` | A broadband ("white noise") reversing alarm, the author's choice (#302) | 1 s | Loop while it backs |
+| `roof_rain.wav` | Heavy rain drumming on the steel roof from under it | 6 s | Loop, four places under the roof |
+| `heater_run.wav` | A gas unit heater running: its fan's whoosh and the burner's roar | 4 s | Loop while on its thermostat |
+| `heater_start.wav` | A heater lighting: the igniter's ticks and the gas catching | 1.5 s | One shot as it comes on |
+| `fan_whoosh.wav` | A 20 ft fan turning at 15 rpm: a faint swish at 2 Hz over its gearbox's hum | 4 s | Loop at each fan |
+| `radio.wav` | A small radio on the dock desk playing low, a stand-in for the author's choice | 8 s | Loop |
+| `scanner_beep.wav` | The dock worker's handheld scanner reading a pallet's label | 0.12 s | One shot per scan |
 
 These files can be opened individually for audition. The in-game mix has Master,
 Vehicle, Ambience, and Music sliders under Settings, reached from the title screen or the pause

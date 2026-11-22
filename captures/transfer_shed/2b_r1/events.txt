@@ -1,0 +1,55 @@
+TAKE frame 0: state | phase settle, speed 0.00, front z 95.52, barrier 0 deg, checking false, window 0.00
+TAKE frame 12: wipers pressed and released | phase settle, speed 0.00, front z 78.48, barrier 0 deg, checking false, window 0.00
+TAKE frame 12: on the spur, 26 m before the gate | phase settle, speed 0.00, front z 78.48, barrier 0 deg, checking false, window 0.00
+TAKE frame 15: state | phase approach, speed 0.23, front z 78.47, barrier 0 deg, checking false, window 0.00
+TAKE frame 30: state | phase approach, speed 1.87, front z 77.92, barrier 0 deg, checking false, window 0.00
+TAKE frame 45: state | phase approach, speed 3.24, front z 76.60, barrier 0 deg, checking false, window 0.00
+TAKE frame 60: state | phase approach, speed 3.56, front z 74.84, barrier 0 deg, checking false, window 0.00
+TAKE frame 75: state | phase approach, speed 3.57, front z 73.07, barrier 0 deg, checking false, window 0.00
+TAKE frame 90: state | phase approach, speed 3.57, front z 71.30, barrier 0 deg, checking false, window 0.00
+TAKE frame 105: state | phase approach, speed 3.58, front z 69.53, barrier 0 deg, checking false, window 0.00
+TAKE frame 120: state | phase approach, speed 3.52, front z 68.18, barrier 0 deg, checking false, window 0.00
+TAKE frame 135: state | phase approach, speed 3.52, front z 66.42, barrier 0 deg, checking false, window 0.00
+TAKE frame 150: state | phase approach, speed 3.53, front z 64.65, barrier 0 deg, checking false, window 0.00
+TAKE frame 165: state | phase approach, speed 3.53, front z 62.88, barrier 0 deg, checking false, window 0.00
+TAKE frame 180: state | phase approach, speed 3.54, front z 61.10, barrier 0 deg, checking false, window 0.00
+TAKE frame 195: state | phase approach, speed 3.54, front z 59.34, barrier 0 deg, checking false, window 0.00
+TAKE frame 203: braking for the line | phase stopping, speed 3.54, front z 58.39, barrier 0 deg, checking false, window 0.00
+TAKE frame 210: state | phase stopping, speed 1.44, front z 57.83, barrier 0 deg, checking false, window 0.00
+TAKE frame 215: stopped, front 2.72 m before the arm | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking false, window 0.00
+TAKE frame 223: looking left at the booth | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking false, window 0.00
+TAKE frame 225: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking false, window 0.00
+TAKE frame 235: interact pressed and released | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking false, window 0.00
+TAKE frame 240: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 0.08
+TAKE frame 255: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 0.33
+TAKE frame 270: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 0.58
+TAKE frame 285: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 0.83
+TAKE frame 300: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 1.00
+TAKE frame 315: state | phase stopped, speed 0.00, front z 57.72, barrier 0 deg, checking true, window 1.00
+TAKE frame 326: looking ahead again | phase stopped, speed 0.00, front z 57.72, barrier 1 deg, checking false, window 1.00
+TAKE frame 330: state | phase stopped, speed 0.00, front z 57.72, barrier 4 deg, checking false, window 1.00
+TAKE frame 345: state | phase stopped, speed 0.00, front z 57.72, barrier 15 deg, checking false, window 1.00
+TAKE frame 360: state | phase stopped, speed 0.00, front z 57.72, barrier 26 deg, checking false, window 1.00
+TAKE frame 375: state | phase stopped, speed 0.00, front z 57.72, barrier 38 deg, checking false, window 1.00
+TAKE frame 390: state | phase stopped, speed 0.00, front z 57.72, barrier 49 deg, checking false, window 1.00
+TAKE frame 405: state | phase stopped, speed 0.00, front z 57.72, barrier 60 deg, checking false, window 1.00
+TAKE frame 420: state | phase stopped, speed 0.00, front z 57.72, barrier 71 deg, checking false, window 1.00
+TAKE frame 435: state | phase stopped, speed 0.00, front z 57.72, barrier 82 deg, checking false, window 1.00
+TAKE frame 444: barrier up | phase through, speed 0.00, front z 57.72, barrier 89 deg, checking false, window 0.99
+TAKE frame 450: state | phase through, speed 0.49, front z 57.68, barrier 90 deg, checking false, window 0.89
+TAKE frame 465: state | phase through, speed 1.93, front z 57.06, barrier 90 deg, checking false, window 0.64
+TAKE frame 480: state | phase through, speed 3.34, front z 55.73, barrier 90 deg, checking false, window 0.39
+TAKE frame 495: state | phase through, speed 3.56, front z 53.97, barrier 90 deg, checking false, window 0.14
+TAKE frame 510: state | phase through, speed 3.56, front z 52.20, barrier 90 deg, checking false, window 0.00
+TAKE frame 525: state | phase through, speed 3.57, front z 50.43, barrier 90 deg, checking false, window 0.00
+TAKE frame 540: state | phase through, speed 3.57, front z 48.66, barrier 90 deg, checking false, window 0.00
+TAKE frame 555: state | phase through, speed 3.58, front z 46.89, barrier 80 deg, checking false, window 0.00
+TAKE frame 570: state | phase through, speed 3.58, front z 45.12, barrier 69 deg, checking false, window 0.00
+TAKE frame 585: state | phase through, speed 3.59, front z 43.35, barrier 58 deg, checking false, window 0.00
+TAKE frame 588: inside the yard | phase done, speed 3.55, front z 42.99, barrier 56 deg, checking false, window 0.00
+TAKE frame 600: state | phase done, speed 0.00, front z 42.32, barrier 46 deg, checking false, window 0.00
+TAKE frame 615: state | phase done, speed 0.00, front z 42.32, barrier 35 deg, checking false, window 0.00
+TAKE frame 630: state | phase done, speed 0.00, front z 42.32, barrier 24 deg, checking false, window 0.00
+TAKE frame 645: state | phase done, speed 0.00, front z 42.32, barrier 13 deg, checking false, window 0.00
+TAKE frame 660: state | phase done, speed 0.00, front z 42.32, barrier 2 deg, checking false, window 0.00
+TAKE frame 675: state | phase done, speed 0.00, front z 42.32, barrier 0 deg, checking false, window 0.00

@@ -22,7 +22,7 @@ import urllib.request
 from collections.abc import Callable
 
 API = "https://api.polyhaven.com"
-HEADERS = {"User-Agent": "BlackridgeNoWayBack-asset-fetch/1.0"}
+HEADERS = {"User-Agent": "asset-fetch/1.0"}
 TEXTURE_MAPS = {"diff": "Diffuse", "nor_gl": "nor_gl", "arm": "arm"}
 
 

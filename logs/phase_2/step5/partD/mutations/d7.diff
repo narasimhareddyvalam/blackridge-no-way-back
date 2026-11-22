@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d7/game/features/environments/industrial_loop/shed_floor.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:51:25
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d7/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:52:47
+@@ -285,7 +285,7 @@
+ 
+ ## How wet a track is this far in from its door: drying out by WET_REACH.
+ func _drying(distance: float) -> float:
+-	return 0.75 * pow(clampf(1.0 - distance / WET_REACH, 0.0, 1.0), 1.3)
++	return 0.75
+ 
+ 
+ ## A wheel's mark along `path`, `offset` to its left, in the grime (0) or gloss (1) map.

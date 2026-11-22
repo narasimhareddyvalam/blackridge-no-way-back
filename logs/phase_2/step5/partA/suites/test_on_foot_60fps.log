@@ -1,0 +1,57 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The drive begins on foot: the van is empty, its engine off, lights off, wipers parked
+PASS: Ethan starts at the site office door, by the clipboard (0.00 m from it)
+PASS: The player sees Ethan through his own camera
+PASS: Ethan is the Mixamo character, standing in his Idle clip
+PASS: The objective says to sign the run sheet
+PASS: At the clipboard the hint says E signs it
+PASS: The cluster and map screens are off with the engine
+PASS: Before signing, no guide to the van shows: the run sheet comes first
+PASS: The site office is the timber building from Blender, its siding, roof, door, landing and plinth in Poly Haven textures at real size (5 of 5)
+PASS: The clipboard hangs on the office's front wall, 1.44 m up, 1.8 cm proud of it
+PASS: The gooseneck lamp over the OFFICE board lights the clipboard and Ethan standing at it
+PASS: A floodlight on the office's corner shines on the parked van, 13.8 m away, with nothing in between
+PASS: Walking at the wall, Ethan stops 0.31 m short of it
+PASS: Before signing, E at the van only reminds him to sign the run sheet first
+PASS: E at the clipboard shows the run sheet as approved, unsigned
+PASS: A moment later he signs it "E. Cole", and the objective becomes getting in the van
+PASS: E puts the sheet away, and the hint teaches walking (WASD  Walk     SHIFT  Run     MOUSE  Look)
+PASS: After signing, a corner map and a marker over the van guide him to it (VAN  17 m)
+PASS: From the office door, W and the mouse take Ethan round the van's front to the driver's door (0.28 m from it after 11.2 s)
+PASS: Ethan steps up a 20 cm kerb onto the pavement behind it (0.23 m) and walks on, but a 50 cm ledge stops him (1.00 m on)
+PASS: Walking into the van's side, he stops against it and cannot climb it (0.30 m from its side, feet 0.00 m up)
+PASS: Near the van the hint says E gets him in
+PASS: W walks Ethan at the Walk clip's own pace (Walk, 1.71 m/s)
+PASS: He covers 0.85 m in half a second
+PASS: SHIFT runs at the Run clip's pace (Run, 4.53 m/s)
+PASS: Letting go returns him to Idle
+PASS: E near the van starts boarding and clears the hint
+PASS: Ethan walks to the door and plays Entering Car
+PASS: The driver's door swings outward about 31 degrees as he pulls it (-31.0)
+PASS: The door glass swings with the door
+PASS: His left hand holds the door handle while the door swings open (at most 9.1 cm off)
+PASS: With the door open, the cabin lamp lights the cab (energy 1.10)
+PASS: The guide to the van hides while he gets in
+PASS: After the cut the player sits in the driver's seat (2.5 s)
+PASS: The door is shut behind him
+PASS: The route's objective returns (RETURN TO THE DEPOT)
+PASS: The engine starts and the gauge needles sweep to the top (1.00)
+PASS: After the sweep the low beams and the wipers come on (2.0 s after the cut)
+PASS: The dash screens come on with the engine
+PASS: In the van the guide hides, and with the door shut the cabin lamp has faded out
+PASS: I switches the cabin lamp on (energy 1.10) and off again, from the seat
+PASS: In the seat, the hint teaches the pedals and the wheel (W / S  Accelerate / brake     A / D  Steer)
+PASS: The van drives after Ethan gets in (4.3 m/s)
+PASS: E at a stop plays Exiting Car: the door opens, he steps out, and the door is shut behind him (3.5 s)
+PASS: The door opens wide for him to step out (70 degrees)
+PASS: He pushes the door shut with his hand on it (at most 5.3 cm off the door)
+PASS: The cabin lamp is on while the door is open (energy 1.10)
+PASS: Getting back into the running van needs no second ignition (2.2 s)
+PASS: New drive starts at the site office again, with the run sheet to sign
+ON FOOT RESULT: 49/49 passed; 0 failed
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf1/e7/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-19 09:16:00
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf1/e7/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-19 09:21:10
+@@ -328,7 +328,7 @@
+ ## The objective from the swap to the loading bay (step 5; its words drafts for the author, S3).
+ func _to_the_compound() -> Array[String]:
+ 	if yard != null and bool(yard.call("exiting")) and not bool(yard.call("gate_open")):
+-		return ["WAIT FOR THE GATE", "The yard's gate is sliding open."]
++		pass
+ 	if bool(compound.call("vehicle_through")):
+ 		var judge := compound.get("judge") as Node
+ 		var verdict := String(judge.get("verdict"))

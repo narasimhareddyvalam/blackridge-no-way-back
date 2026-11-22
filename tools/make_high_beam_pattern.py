@@ -1,53 +1,55 @@
-"""Generate the headlight high-beam pattern used as a SpotLight3D light projector.
+"""Generate the headlight high-beam pattern used as a SpotLight3D light projector (#282).
 
-A high beam keeps the low beam lit and adds a long-reaching hot spot on the horizon, with
-no cutoff. The image covers the spotlight's whole cone with the top row pointing up, like
-the low-beam pattern, and the lamp is aimed 2 degrees down, so the horizon sits 2 degrees
-above the image's centre. Values are written sRGB-encoded because Godot samples light
-projectors as sRGB.
+A high beam keeps the low beam lit and adds the high-beam lamp's long-reaching hot spot. The
+high-beam lamp is UMTRI-2001-19's measured US high beam (Schoettle, Sivak and Flannagan,
+"High-Beam and Low-Beam Headlighting Patterns in the U.S. and Europe at the Turn of the
+Millennium", University of Michigan Transportation Research Institute, 2001): the median
+luminous intensity, in candelas, of the high beams of the 20 best-selling US passenger vehicles
+of model year 2000, its Table 6's middle rows, kept in
+tools/data/umtri_2001_19_us_high_beam_medians.csv. Its brightest point is 39,590 cd at H 1R.
+The low beam is tools/make_low_beam_pattern.py's measured one.
+
+The spotlight is aimed level on high beams, as the high beams were measured (HIGH_TILT), and
+the low beam's lamp is 1.25 degrees lower (LOW_TILT, its cutoff 1.75% down as UN Regulation 48
+allows these lamps), so the low beam is drawn 1.25 degrees down from its own pattern. The two are added in candelas, interpolated as the low beam's
+(tools/make_low_beam_pattern.py), and the sum normalised to its brightest point, at the measured points or between them; the game's
+high-beam energy is the low beam's times that point over the low beam's brightest.
 
 Usage, from the repository root:
     python3 -I tools/make_high_beam_pattern.py
 """
 
-import math
+import importlib.util
 import pathlib
 
 import numpy as np
-from PIL import Image
 
-LOW = pathlib.Path("game/features/vehicles/freight_van/art/low_beam_pattern.png")
+LOW_SCRIPT = pathlib.Path("tools/make_low_beam_pattern.py")
+DATA = pathlib.Path("tools/data/umtri_2001_19_us_high_beam_medians.csv")
 OUT = pathlib.Path("game/features/vehicles/freight_van/art/high_beam_pattern.png")
-SIZE = 256
-HALF_ANGLE = 35.0
-HORIZON = 2.0
-CORE = (7.5, 3.2)
-SPREAD = (21.0, 7.0, 0.32)
+HIGH_TILT = 0.0
+LOW_TILT = -1.25
 
 
-def to_linear(srgb: np.ndarray) -> np.ndarray:
-    return np.where(srgb <= 0.04045, srgb / 12.92, np.power((srgb + 0.055) / 1.055, 2.4))
-
-
-def to_srgb(linear: np.ndarray) -> np.ndarray:
-    return np.where(linear <= 0.0031308, 12.92 * linear,
-                    1.055 * np.power(linear, 1.0 / 2.4) - 0.055)
+def low_beam():
+    spec = importlib.util.spec_from_file_location("make_low_beam_pattern", LOW_SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def main() -> None:
-    tan_half = math.tan(math.radians(HALF_ANGLE))
-    centres = (np.arange(SIZE) + 0.5) / (SIZE / 2.0) - 1.0
-    side = np.degrees(np.arctan(centres[None, :] * tan_half))
-    up = np.degrees(np.arctan(-centres[:, None] * tan_half)) - HORIZON
-    low = to_linear(np.asarray(Image.open(LOW).convert("L"), dtype=np.float64) / 255.0)
-    core = np.exp(-(side / CORE[0]) ** 2 - (up / CORE[1]) ** 2)
-    spread = SPREAD[2] * np.exp(-(side / SPREAD[0]) ** 2 - ((up + 1.0) / SPREAD[1]) ** 2)
-    linear = np.clip(low + core + spread, 0.0, 1.0)
-    grey = np.round(to_srgb(linear) * 255.0).astype(np.uint8)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(np.dstack([grey, grey, grey])).save(OUT)
-    above = linear[: SIZE // 2 - 8, :].mean()
-    print(f"wrote {OUT} ({SIZE}x{SIZE}); mean light above the low-beam cutoff {above:.3f}")
+    low = low_beam()
+    side, up = low.grid()
+    light = low.candelas(DATA, side, up) + low.candelas(low.DATA, side,
+                                                         up + HIGH_TILT - LOW_TILT)
+    sides, ups, _ = low.measured(DATA)
+    at_points = low.candelas(DATA, sides, ups) + low.candelas(low.DATA, sides,
+                                                              ups + HIGH_TILT - LOW_TILT)
+    peak = max(light.max(), at_points.max())
+    low_peak = 10 ** low.measured(low.DATA)[2].max()
+    low.save(light / peak, OUT)
+    print(f"wrote {OUT}, brightest {peak:.0f} cd, {peak / low_peak:.4f} times the low beam's")
 
 
 if __name__ == "__main__":

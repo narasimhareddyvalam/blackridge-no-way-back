@@ -1,0 +1,12 @@
+{
+	"destination": "game/features/environments/industrial_loop/polyhaven",
+	"textures": {
+		"painted_plaster_wall": "2k",
+		"painted_brick": "2k"
+	},
+	"models": {
+		"modular_street_seating": "1k",
+		"propane_tank": "1k",
+		"utility_box_02": "1k"
+	}
+}

@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr1/r1/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 19:14:09
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutr1/r1/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 19:14:41
+@@ -587,7 +587,7 @@
+ 			or absf(float(vehicle.get("speed"))) > STOPPED:
+ 		return
+ 	_completed = true
+-	var next := LastRun.start_progress()
++	var next := start_progress()
+ 	next.set_value("run", "opening", true)
+ 	checkpoint_reached.emit(next)
+ 	drive_completed.emit()

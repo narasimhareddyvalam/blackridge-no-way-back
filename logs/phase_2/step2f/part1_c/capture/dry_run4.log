@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+start, behind the fade: the van stopped in the open court, its rear doors shut, Ethan at the wheel
+01_takes_the_right_doors_handle: hidden camera (a headless run draws nothing); clip WalkBack frame 3 at 0.86x; objective OPEN THE REAR DOORS
+02_pulls_it_open_stepping_back: hidden camera (a headless run draws nothing); clip Idle frame 6 at 1.00x; objective OPEN THE REAR DOORS
+03_round_its_edge_to_push_it_on: hidden camera (a headless run draws nothing); clip Walk frame 4 at 0.58x; objective OPEN THE REAR DOORS
+04_it_swings_round_to_its_stay: hidden camera (a headless run draws nothing); clip Walk frame 1 at 0.08x; objective OPEN THE REAR DOORS
+05_the_left_door_by_its_edge: hidden camera (a headless run draws nothing); clip Walk frame 2 at 0.35x; objective OPEN THE REAR DOORS
+06_the_left_door_swinging_round: hidden camera (a headless run draws nothing); clip Idle frame 22 at 1.00x; objective OPEN THE REAR DOORS
+07_both_doors_on_their_stays: hidden camera (a headless run draws nothing); clip Idle frame 19 at 1.00x; objective BACK ONTO BAY 9
+08_backing_onto_bay_9: hidden camera (a headless run draws nothing); clip Idle frame 172 at 1.00x; objective BACK ONTO BAY 9
+backed onto bay 9: docked, its rear 0.00 m from the bumpers
+09_the_rear_wheel_chocked: hidden camera (a headless run draws nothing); clip Idle frame 39 at 1.00x; objective LOAD THE PALLET
+chocked: true
+10_the_side_door_open: hidden camera (a headless run draws nothing); clip Idle frame 50 at 1.00x; objective LOAD THE PALLET
+11_up_the_stair_a_tread_a_step: hidden camera (a headless run draws nothing); clip Walk frame 1 at 0.65x; objective LOAD THE PALLET
+12_taken_close_to_the_handle: hidden camera (a headless run draws nothing); clip Idle frame 39 at 1.00x; objective ROLL THE PALLET IN
+13_leaning_in_to_get_it_going: hidden camera (a headless run draws nothing); clip Push frame 8 at 0.58x; objective ROLL THE PALLET IN
+14_walking_upright_behind_it: hidden camera (a headless run draws nothing); clip Walk frame 12 at 0.52x; objective ROLL THE PALLET IN
+15_walking_from_ethans_camera: Ethan's own camera (a headless run draws nothing); clip Walk frame 12 at 0.52x; objective ROLL THE PALLET IN
+16_against_the_toe_guard_stepped_up_to_it: hidden camera (a headless run draws nothing); clip Idle frame 91 at 1.00x; objective ROLL THE PALLET IN
+17_the_lift_down_its_plate_on_the_sill: hidden camera (a headless run draws nothing); clip Idle frame 90 at 1.00x; objective ROLL THE PALLET IN
+18_into_the_van_stooped: hidden camera (a headless run draws nothing); clip Push frame 32 at 1.00x; objective ROLL THE PALLET IN
+19_into_the_van_from_ethans_camera: Ethan's own camera (a headless run draws nothing); clip Push frame 32 at 1.00x; objective ROLL THE PALLET IN
+20_against_the_bulkhead_stooped: hidden camera (a headless run draws nothing); clip Push frame 55 at 0.00x; objective ROLL THE PALLET IN
+21_strapped_down: hidden camera (a headless run draws nothing); clip Push frame 55 at 0.00x; objective RAISE THE LIFT
+22_pulling_out_stooped: hidden camera (a headless run draws nothing); clip Push frame 58 at -1.00x; objective RAISE THE LIFT
+23_out_and_walking_back_upright: hidden camera (a headless run draws nothing); clip WalkBack frame 8 at 0.95x; objective RAISE THE LIFT
+24_let_go_walking_his_last_step: hidden camera (a headless run draws nothing); clip Idle frame 55 at 1.00x; objective TAKE THE CHOCK OUT
+25_let_go_leaning_push_stop: hidden camera (a headless run draws nothing); clip Idle frame 16 at 1.00x; objective TAKE THE CHOCK OUT
+the doors closed by hand: open true, a job under way false
+26_the_dock_worker_seals_the_doors: hidden camera (a headless run draws nothing); clip Idle frame 108 at 1.00x; objective PULL FORWARD
+27_the_bolt_seal_on_the_hasp: hidden camera (a headless run draws nothing); clip Idle frame 183 at 1.00x; objective PULL FORWARD
+the worker reached the doors and the van was sealed: false, after 60.0 s
+WARNING: 19 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

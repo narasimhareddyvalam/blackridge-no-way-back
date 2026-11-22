@@ -70,7 +70,6 @@ func _draw() -> void:
 	_forward = Vector2(view.x, view.z).normalized()
 	_right = Vector2(-_forward.y, _forward.x)
 	_centre = Vector2(size.x - MAP_MARGIN - MAP_RADIUS, MAP_MARGIN + MAP_RADIUS)
-	_draw_map()
 	_draw_marker()
 
 

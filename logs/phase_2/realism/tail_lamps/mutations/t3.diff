@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t3/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:48:04
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t3/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:57:23
+@@ -363,7 +363,7 @@
+ 	tail_lamps.material_override = _lamp
+ 	for label in REAR_INDICATORS:
+ 		var piece := outside.get_node(label) as MeshInstance3D
+-		piece.material_override = _lamp
++		pass
+ 		piece.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+ 	for label in INDICATORS:
+ 		_indicators.append(outside.get_node(label) as MeshInstance3D)

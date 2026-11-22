@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _start (res://tests/test_free_exit.gd:61)
+       [7] _run (res://tests/test_free_exit.gd:45)
+PASS: X1: a van over the shed's exit loop facing in leaves the barrier down
+PASS: X2: driven out of the shed's yard, the van finds the barrier up and passes under it (front 9.55 m past its line)
+PASS: X3: and the barrier comes down behind it (the van's rear 8.0 m past its line)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _start (res://tests/test_free_exit.gd:61)
+PASS: X4: a van over the yard's exit loop facing in leaves the gate shut
+PASS: X5: driven out of the container yard, the van waits on the loop while the gate slides open (the objective: WAIT FOR THE GATE), then drives out (front 9.56 m past its line)
+PASS: X6: and the gate shuts behind it (9.1 s; the van's rear 10.4 m past its line)
+FREE EXIT RESULT: 6/6 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

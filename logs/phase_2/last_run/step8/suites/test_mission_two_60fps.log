@@ -1,0 +1,137 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _build (res://tests/test_mission_two.gd:1084)
+       [7] _check_mission_one_hands_on (res://tests/test_mission_two.gd:80)
+       [8] _run (res://tests/test_mission_two.gd:70)
+PASS: Finishing Mission 1 saves Mission 2's start: version 2, the_wrong_cargo, checkpoint 0, and no Mission 1 section
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _build (res://tests/test_mission_two.gd:1084)
+       [7] _check_title (res://tests/test_mission_two.gd:92)
+       [8] _run (res://tests/test_mission_two.gd:71)
+       [9] _check_mission_one_hands_on (res://tests/test_mission_two.gd:88)
+       [10] _free_app (res://tests/test_mission_two.gd:1097)
+PASS: Launched with that save, the title shows Mission 2's own scene: the van parked in the depot bay where Mission 1 ended, through the title camera (0.00 m from its spot)
+PASS: Continue comes first and names it (The Wrong Cargo · The freight depot)
+PASS: Mission 1 stays finished while the save is on Mission 2: no call, no encounter, no checkpoint of its own
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _build (res://tests/test_mission_two.gd:1084)
+       [7] _check_continue (res://tests/test_mission_two.gd:113)
+       [8] _run (res://tests/test_mission_two.gd:72)
+       [9] _check_title (res://tests/test_mission_two.gd:108)
+       [10] _free_app (res://tests/test_mission_two.gd:1097)
+PASS: Continue from Mission 2's third checkpoint names it (The Wrong Cargo · The container yard) and starts Mission 2 there: Ethan in the dark van at the container yard (0.00 m off, step 4), the screen headed The Wrong Cargo
+PASS: Paused, Mission 2 names itself, its next checkpoint and its last save (The warehouse compound; The container yard)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _build (res://tests/test_mission_two.gd:1084)
+       [7] _check_new_game (res://tests/test_mission_two.gd:137)
+       [8] _run (res://tests/test_mission_two.gd:73)
+       [9] _check_continue (res://tests/test_mission_two.gd:132)
+       [10] _free_app (res://tests/test_mission_two.gd:1097)
+PASS: New game, asked first, goes back to Mission 1's start at the office, saved as version 2
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _build (res://tests/test_mission_two.gd:1084)
+       [7] _check_gate (res://tests/test_mission_two.gd:156)
+       [8] _run (res://tests/test_mission_two.gd:74)
+       [9] _check_new_game (res://tests/test_mission_two.gd:150)
+       [10] _free_app (res://tests/test_mission_two.gd:1097)
+PASS: At Mission 2's start the gate's barrier is down, and the objective is the transfer shed (DRIVE TO THE TRANSFER SHED)
+PASS: The booth's windows are glass you see through: 6 panes, each transparent, lit by the scene and not glowing
+PASS: Inside the booth stand a counter, a chair and a lit monitor, and its light casts shadows, so it leaves the booth only through the glass
+PASS: The guard sits in the booth: a skinned character playing a looping idle, marked a stand-in (D6), with nothing in him to collide with
+PASS: He sits on the chair: his hips 0.12 m above its seat
+PASS: A light in front of the guard, within 1.2 m of his head and casting no shadow, lights his face
+PASS: He faces the lane-side window: his knees point 0° from it
+PASS: The fence along the gate line runs to the barrier cabinet (0.00 m short) and the booth stands outside it, on the road side
+PASS: The barbed strands and the bottom wire are drawn as thin wire, at least a pixel wide (272 wires)
+PASS: The chain-link is a blended veil, not hashed, and glints at no more than 0.15 of a wire's light (68 panels)
+PASS: E1: the platform is level (0.00 m at worst) and no tree may stand on it (0 open spots)
+PASS: E2: every cut is held: 65 walls; of 401 points along the edges, 0 slope in front and 0 have higher ground 3 m behind than any wall there
+PASS: E3: the shed's walls span x -90.00..-40.00, z -10.00..20.00, eaves 9.00 m; 0 pieces of the old warehouse remain
+PASS: E4: a closed, solid door fills each opening but docks 5 and 9, which stand open, every point of it, no gap to see through (wrong: )
+PASS: E4: nine dock openings 2.74 x 3.05 m from 1.3 m up at x -80 + 4n and -47.75, framed by the wall (bay 9's below only beside its passage), and the drive-in door's 3.7 x 2.9 m at the yard's level at x -42.75 (wrong: )
+PASS: E4: under bay 9's door a passage as wide as its lift's pit reaches down to a 0.4 m sill, a kerb below it (0 walls in it; kerb true), so the lowered lift meets a van's floor (step 2e)
+PASS: E5: the office is lit inside, and its door stands at the yard's level in the front wall
+PASS: E11: the drive-in lane inside the shed is a concrete slab flush with the apron, 0.02 m up, never the hill's dirt: of 540 points, 0 not on the shed's slab (first ), 0 not drawn in its textured concrete
+PASS: F1: each dock has a seal framing its door on the wall's face (wrong: )
+PASS: F2: two solid bumpers under each door, tops at 1.3 m (bay 9's at its 0.4 m sill, where a van's rear meets them) and 0.10-0.20 m proud (18 bumpers; wrong: )
+PASS: F3: docks 1-8 each have a leveller inside, its deck at 1.3 m, and bay 9 none (wrong: )
+PASS: F4: a lit light over each of the ten doors, aimed down (10 lights; wrong at x )
+PASS: F5: a red/green signal beside each dock door, green at docks 5 and 9 and red at the others (wrong: )
+PASS: F6: docks 5 and 9 stand open, a lit arm light inside each aimed out into its bay (wrong: )
+PASS: F6: the inside by the docks is lit (23 lights under the roof) with the forklift, the pallet jack and 11 pallets (missing: )
+PASS: E6: the yard is paved everywhere inside the fence: 0 of 2988 points between the fence and the shed unpaved
+PASS: E6: the fence and the walls close the yard but for the gate (0 of 526 points along its edge open), and the court is 35.0 m deep
+PASS: E6: a solid rail runs between the walkway and the court, from the office
+PASS: E7: the yard carries its bay lines (10 of 10), numbers and signs (missing: )
+PASS: E7: the trailer bays stand beside the shed's east wall and the car bays beside the walkway (astray: )
+PASS: The arrows lead in north from the gate, then east, and out west to the gate, each on its own right-hand side (north true, east true, west true)
+PASS: Every yard sign stands on a solid post (3 of 3)
+PASS: No sign stands in the drive from the gate to the side yard (0 do)
+PASS: The van's way in, right, then back onto bay 9 is clear of anything solid (blocked by: )
+PASS: Driving at the closed barrier, the van stops against its arm: its front 0.03 m short of the arm's line, and the barrier stays down
+PASS: At the gate the objective asks for a stop and names E (STOP AT THE GATE: Back up level with the guard's window, then press E to hand the guard the run sheet.)
+PASS: Against the arm, Ethan's window is past the booth's, and the objective says to back up level with it (Back up level with the guard's window, then press E to hand the guard the run sheet.)
+PASS: There, E offers the guard nothing: she cannot reach a window 2.6 m past hers
+PASS: With its front at the stop line, the van's driver sits beside the guard's window: Ethan's eye 0.00 m from it along the lane, the booth 0.44 m from the van's side
+PASS: Looking left from the seat at the stop line, Ethan sees the guard in his side window, clear of the windscreen pillar: his head 94° left of straight ahead
+PASS: Within a second of the stop the guard looks at Ethan (16° off his eye)
+PASS: E at the gate hands the guard the run sheet instead of leaving the van; the barrier waits for the guard's check
+PASS: E lowers the driver's window, because the sheet goes through it (1.00 open)
+PASS: While she checks the sheet the guard has slid her window open (0.52 m), as a gatehouse's sash is
+PASS: Stopped at the line, the booth's open window is level with Ethan's: 0.47 m of the opening beside his window's glass, his eye within it (59.07 to 59.53, his eye 59.30)
+PASS: While the arm rises after her check the objective says to wait for it, not to stop and press E again (WAIT FOR THE BARRIER)
+PASS: After the check the barrier is up within 8 s
+PASS: Her check done, the window slides shut again (0.000 m open)
+PASS: The van drives through the gate: its rear 14.41 m past the arm
+PASS: Once the barrier is up, the window that went down goes back up (0.00 open)
+PASS: Once the van is clear, the barrier comes back down behind it
+PASS: Over 2114 physics frames the arm was never across the van while it was lower than fully up (0 frames it was)
+PASS: A kerbed island with 3 bollards guards the booth, and the van driven up the middle of the lane touched neither (0 contacts)
+PASS: The guard stays where he sits from the start of the gate to its end (0.000 m)
+MISSION TWO RESULT: 61/61 passed; 0 failed
+WARNING: 17 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Setup: the van docked at bay 9 and chocked
+FAIL: H8: the shed's side door, beside the drive-in lane, keeps Ethan out while shut (true); the hint offers it (W / S  Accelerate / brake     A / D  Steer) and E swings it open (-1°)
+FAIL: H8: inside, the stair climbs from the drive-in lane to the dock floor, Ethan's feet -0.00 m up at its top, and its rail keeps him from stepping off its open side (false)
+FAIL: H1: on the deck the hint offers the lift (); E lowers it to the van's floor (1.300 m against 0.461), its bridge plate laid on the floor (its edge inf m up at z -inf), Ethan riding it (his feet 0.00 m)
+FAIL: H1: E again raises it flush with the dock floor (1.300 m), its plate stored upright (its edge inf m up), Ethan with it (0.00 m)
+LOADING RESULT: 1/5 passed; 4 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

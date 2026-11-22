@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h10/game/features/environments/industrial_loop/yard_vehicles.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h10/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:29:06
+@@ -51,7 +51,7 @@
+ const EAST_WALL := -40.0
+ const DUMPSTER_Z := -2.0
+ const DUMPSTER_DEPTH := 1.75
+-const DUMPSTER_FROM_WALL := 0.15
++const DUMPSTER_FROM_WALL := 1.0
+ const CHOCK := Vector3(0.25, 0.2, 0.3)
+ const CHOCK_OUT := 1.0
+ ## The chock just ahead of the tandem's forward tyres (their axle 0.6 m ahead of the tandem's middle,

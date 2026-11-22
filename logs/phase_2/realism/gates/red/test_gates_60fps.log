@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_gates.gd:43)
+FAIL: G1 (yard): the gate is the one cantilever sliding gate (sliding_gate.gd)
+FAIL: G1 (compound): the gate is the one cantilever sliding gate (sliding_gate.gd)
+FAIL: B1: the barrier's cabinet is a real model, its hub carrying the arm (inf m from the arm's pivot)
+FAIL: B2: shut, the arm's tip lies in the fork of its rest post
+FAIL: B3: red lamps along the arm (0)
+FAIL: B4: a warning lamp flashes while it moves
+GATES RESULT: 0/6 passed; 6 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

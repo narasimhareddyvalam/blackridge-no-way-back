@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: W1: bay 9's dock station is Poly Haven's Metal Office Desk and Red Fox's office chair, with Poly Haven's Clipboard as the seal log and its Stationery Supplies' pen cup (so)
+PASS: W2: the desk and the chair stand on the dock floor (their feet 1.300 and 1.300 m up) and the seal log and pen cup on the desk's top (2.088 and 2.088 m)
+PASS: W3: the station keeps to its corner, clear of the load's approach to the lift, the lift's pit, the edge rail by 0.03 m, the dock wall and the way to the stair, with room to walk between it and bay 9's staged load (0.97 m; it spans x -46.44 to -44.84, z 17.55 to 19.55)
+PASS: W4: the desk's drawers face the lift and the chair stands in its kneehole facing it, its column 0.35 m out from the desk's front and 0.00 m off its middle
+PASS: W5: the desk and the chair are solid, so nobody walks or pushes a load through them
+PASS: W6: from where Ethan stands behind the van and comes to its doors, the chair's back is in sight through bay 9's doorway (hidden from none)
+PASS: W7 at the start he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+PASS: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["StandUp", "Walk", "Seal"], carried true)
+PASS: W9 his way: over the dock floor to the stair's landing (0.03 m), down the stair (0.03 m from its foot), out of the side door (0.03 m), never into the van
+PASS: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT): the seal put on in Seal (Seal), then Check against his log and Note (["StandUp", "Walk", "Seal", "Check", "Note", "Walk", "SitDown"])
+FAIL: W11 back at his desk within the doors' 60 s (63.9 s)
+PASS: W11 back, he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+DOCK WORKER RESULT: 11/12 passed; 1 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:927)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:155)
+       [6] _run (res://tests/test_dock_worker.gd:68)

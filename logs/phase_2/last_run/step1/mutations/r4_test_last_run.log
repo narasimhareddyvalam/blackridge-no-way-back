@@ -1,0 +1,54 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: L1: Mission 2's end saves Mission 3's start (last_run, checkpoint 0)
+PASS: L2: Continue names it (Last Run · The freight depot) and starts Mission 3 at the depot (0.00 m off), headed LAST RUN, the objective DRIVE TO THE WATERFRONT
+FAIL: L3: a Last Run file at a checkpoint it has not got is kept aside
+LAST RUN RESULT: 2/3 passed; 1 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _build (res://tests/test_last_run.gd:88)
+       [7] _run (res://tests/test_last_run.gd:33)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _run (res://tests/test_last_run.gd:55)
+       [7] _free (res://tests/test_last_run.gd:101)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _build (res://tests/test_last_run.gd:88)
+       [7] _run (res://tests/test_last_run.gd:74)
+       [8] _free (res://tests/test_last_run.gd:101)
+SCRIPT ERROR: Out of bounds get index '40' (on base: 'Array[String]')
+          at: place_reached (res://features/missions/last_run/last_run.gd:63)
+          GDScript backtrace (most recent call first):
+              [0] place_reached (res://features/missions/last_run/last_run.gd:63)
+              [1] _last_place (res://app/first_drive.gd:527)
+              [2] _continue_place (res://app/first_drive.gd:522)
+              [3] _show_title (res://app/first_drive.gd:208)
+              [4] _ready (res://app/first_drive.gd:188)
+              [5] _build (res://tests/test_last_run.gd:88)
+              [6] _run (res://tests/test_last_run.gd:74)
+              [7] _free (res://tests/test_last_run.gd:101)
+WARNING: 20 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

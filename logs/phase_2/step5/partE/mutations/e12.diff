@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e12/game/features/environments/industrial_loop/shed_fitout.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:30:05
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutE/e12/game/features/environments/industrial_loop/shed_fitout.gd	2026-11-16 09:33:57
+@@ -28,7 +28,7 @@
+ const DOCKS: Array[float] = [-80.0, -76.0, -72.0, -68.0, -64.0, -60.0, -56.0, -52.0, -47.75]
+ const OPENING := 2.74
+ ## Each dock's kit on the pier east of its door, about 1.47-2.53 m from its middle.
+-const PIER := 2.0
++const PIER := 0.0
+ const NUMBER_UP := 2.3
+ const NUMBER_SIZE := Vector2(0.32, 0.44)
+ const STATION_UP := 1.45

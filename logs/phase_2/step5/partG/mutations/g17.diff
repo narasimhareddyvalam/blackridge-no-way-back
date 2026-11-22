@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g17/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-16 14:49:54
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g17/game/features/characters/dock_worker/dock_worker.gd	2026-11-16 15:02:28
+@@ -47,7 +47,7 @@
+ ## corner and clear of Ethan's way and of the pendant (at the deck's north-west corner), he reads
+ ## the label of a pallet just set down on bay 9's lift with a handheld scanner in his right hand,
+ ## its beep a second into the look, and goes back to his desk.
+-const SCAN_AT := Vector3(-46.6, 1.3, 17.05)
++const SCAN_AT := Vector3(-47.4, 1.3, 17.6)
+ const SCAN_SECONDS := 3.0
+ const LIFT_DECK := Vector2(1.87, 2.46)
+ const BEEP_AT := 1.0

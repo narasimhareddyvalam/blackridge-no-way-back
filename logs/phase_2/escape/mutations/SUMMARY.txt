@@ -1,0 +1,50 @@
+e1  guards see 25 m                test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E4: in a guard's cone 10 m off in the open he is caught after 1.02 s (1.0 s), not seen at 16 m (true)
+e2  caught at a glance             test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E4: in a guard's cone 10 m off in the open he is caught after 0.22 s (1.0 s), not seen at 16 m (false)
+e3  guards see through walls       test_escape.gd exit 1, 2/12 passed; 10 failed
+      FAIL: E3: E gets him out, the objective GET PAST THE PATROLS (GET OUT AND RUN)
+      FAIL: E4: in a guard's cone 10 m off in the open he is caught after 3.02 s (1.0 s), not seen at 16 m (false)
+      FAIL: E5: behind the forklift a guard 15 m off does not catch him in 2 s (false); in the open beside it he is seen (
+      FAIL: E6: within 1.5 m he is caught at once, even behind a guard (60 frames)
+      FAIL: E7: caught, all is as at the escape's start: in the van at door 3, the guards at their starts (false), the gat
+      FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (20.0 s, 0 sent: ); the objecti
+      FAIL: E9: the cut at x 138, z 140 lets him through on foot (false, at x 139.40), is too narrow for the van (true); t
+      FAIL: E10: through the cut he is out (false), not caught, and sent to the yard's keypad: GET BACK TO YOUR VAN (GET O
+      FAIL: E11: at the keypad on foot E keys the code in (offered R  Recover the van to the last checkpoint), the gate op
+      FAIL: E12: E at his van's door (offered ): his van drivable in the bay (false), white (false), loaded (false), seale
+e4  never caught close             test_escape.gd exit 1, 9/12 passed; 3 failed
+      FAIL: E6: within 1.5 m he is caught at once, even behind a guard (60 frames)
+      FAIL: E7: caught, all is as at the escape's start: in the van at door 3, the guards at their starts (false), the gat
+      FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (0.0 s, 0 sent: Don't go for th
+e5  safe in the van                test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E2: staying in the van he is caught when they reach the cab (30.0 s), then he is in the van at door 3 again (t
+e6  the warning not unsent on a catch test_escape.gd exit 1, 10/12 passed; 2 failed
+      FAIL: E7: caught, all is as at the escape's start: in the van at door 3, the guards at their starts (true), the gate
+      FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (0.0 s, 0 sent: ); the objectiv
+e7  the warning sent again and again test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (1.8 s, 61 sent: Don't go for t
+e8  the fence not cut              test_escape.gd exit 1, 10/12 passed; 2 failed
+      FAIL: E9: the cut at x 138, z 140 lets him through on foot (false, at x 138.36), is too narrow for the van (true); t
+      FAIL: E10: through the cut he is out (false), not caught, and sent to the yard's keypad: GET BACK TO YOUR VAN (REACH
+e9  still in the compound past the cut test_escape.gd exit 1, 9/12 passed; 3 failed
+      FAIL: E10: through the cut he is out (false), not caught, and sent to the yard's keypad: GET BACK TO YOUR VAN (REACH
+      FAIL: E11: at the keypad on foot E keys the code in (offered ESC  Pause and all controls), the gate opens and is sti
+      FAIL: E12: E at his van's door (offered ): his van drivable in the bay (false), white (false), loaded (false), seale
+e10  the yard's gate shuts at once on foot test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E11: at the keypad on foot E keys the code in (offered E  Key in the gate code), the gate opens and is still o
+e11  no dark van left at door 3     test_escape.gd exit 1, 11/12 passed; 1 failed
+      FAIL: E12: E at his van's door (offered E  Take your van back): his van drivable in the bay (true), white (true), lo
+e12  vans do not block sight        test_escape.gd exit 1, 5/12 passed; 7 failed
+      FAIL: E3: E gets him out, the objective GET PAST THE PATROLS (GET OUT AND RUN)
+      FAIL: E4: in a guard's cone 10 m off in the open he is caught after 3.02 s (1.0 s), not seen at 16 m (false)
+      FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (20.0 s, 0 sent: ); the objecti
+      FAIL: E9: the cut at x 138, z 140 lets him through on foot (false, at x 139.40), is too narrow for the van (true); t
+      FAIL: E10: through the cut he is out (false), not caught, and sent to the yard's keypad: GET BACK TO YOUR VAN (GET O
+      FAIL: E11: at the keypad on foot E keys the code in (offered R  Recover the van to the last checkpoint), the gate op
+      FAIL: E12: E at his van's door (offered ): his van drivable in the bay (false), white (false), loaded (false), seale
+e13  the guard by the cut never leaves it test_escape_route.gd exit 0, 1/1 passed; 0 failed
+e13  the guard by the cut never leaves it test_escape_route.gd exit 1, 0/1 passed; 1 failed
+      FAIL: R1: out at once, round the back of the east warehouse and between the warehouses to the trailers (true), waiti
+e14  no mark over a guard who sees him test_escape.gd exit 1, 12/13 passed; 1 failed
+      FAIL: E14: seen by a guard for half a second, a mark over him half full ([]); hidden again, it empties and goes (tru

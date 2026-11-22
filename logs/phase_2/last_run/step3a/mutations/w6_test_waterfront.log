@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: W1: the access road from the coastal road to the gate, solid (0 holes) and clear (0 blocked), the gate open at (840.0, 0.0, 200.0)
+PASS: W2: the terminal fenced in chain-link (459 m), shut along its west side (3 of 3 points) but open at the gate (true)
+PASS: W3: 84 stacks of containers at ISO sizes, two to four high (true), solid (6)
+PASS: W4: the mobile harbour crane on the apron (x 982), its boom out over the water to x 1019, 41 m high, solid at its base (true)
+PASS: W5: 4 high masts, their warm floods 25 m up or more (true), rain in each one's light (4)
+PASS: W6: 10 mooring bollards along the quay's edge (true), at most 15 m apart, 10 fenders on its wall
+PASS: W7: berth 2 marked at the quay's edge ((992.0, 0.0, 232.0)), a clear lane from the gate to it (41 of 41)
+FAIL: W8: the objective sends the van to the gate (true), then inside to berth 2 (DRIVE TO THE WATERFRONT)
+WATERFRONT RESULT: 7/8 passed; 1 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_waterfront.gd:44)

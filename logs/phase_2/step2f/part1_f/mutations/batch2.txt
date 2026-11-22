@@ -1,0 +1,20 @@
+mutation_post_on_the_load_path: exit 1; LOADING RESULT: 8/26 passed; 18 failed; fails on its check: True; script error: False
+    FAIL: H9: pushed on to the lift's deck, the pallet stops at the deck's front against the bridge plate standing up as a toe guard, never over the edge (its front at z 17.480, the plate at 19.740)
+    FAIL: H2: on the dock Ethan leans in to get the load going (["Push", "PushStop"]), then walks nearly upright behind it (leaning inf° at most), the jack at the pace of his feet, 0.000 m/s, his planted 
+    FAIL: H9: E sets the pallet down on the lift's deck (0.000 m above it, 0.540 m off its middle) and E again lets go of the jack
+    FAIL: H1: by the pendant on the deck E lowers the lift (E  Take the pallet jack), the pallet riding it down to the van's floor (1.340 m against 0.465), and Ethan with it (-0.000 m off the deck)
+    FAIL: H2: behind the handle again E takes the jack (E  Set the pallet down) and pushes the pallet into the van, walking in behind it over the bridge plate (his feet never below 1.299 m, the deck at 1.
+    FAIL: H2: under the van's low roof Ethan stoops (1.80 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "PushStop", ""] and inside [], his head at most -inf m ab
+    FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Idle held, false; his toes at most 0.020 m up), his hands on the handle (0.402 m off it, 0.88 m below the top of 
+    FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (5.940 m from it), between the wheel arches (-0.540 m off the middle), and it goes with the van
+    FAIL: H2: beside it in the hold E straps the load down to the floor rings (E  Take the pallet jack; 0 straps)
+    FAIL: H10: from the take to the strap the objective only goes on, never back to LOAD THE PALLET: lowering the lift while the pallet waits on its deck, then, the lift down, rolling it in (["ROLL THE PA
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (false), and walks backward upright once out (["Idle", "WalkBack", "Walk"]), his planted feet slipping at most 0
+    FAIL: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go of it (E  Set the pallet down)
+    FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0000 m at the rear (against 0.0579) and 0.0000 m at the front (against -0.0319)
+    FAIL: H1: E at the pendant raises the lift again with the jack on it (1.30 m), the load left in the van
+    FAIL: H2: W let go on the dock as he walks behind it (["Push", "PushStop", "", "Idle"]), the load rolls on 0.00 m with his last step, his planted feet slipping at most 0.046 m/s; then he stands (Idle)
+    FAIL: H2: W let go while he leans in to get it going (["Push", "PushStop", "", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.00 m, his planted feet slipping at mos
+    FAIL: H13: nothing goes through the lift's pendant post: the load stays outside it (at the nearest -0.020 m) and so does Ethan (1.094 m)
+    FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped round the loop, at most 0.045 m from its tube's middle, a finger's thickness and the
+clone restored byte for byte after each

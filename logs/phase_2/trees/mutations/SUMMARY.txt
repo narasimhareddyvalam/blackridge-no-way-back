@@ -1,0 +1,16 @@
+#280 mutations, each on an APFS clone, test_roadside_trees.gd at 60 fps, the latest run of each (m5 first ran as a draw from Godot's global generator, which moved nothing and survived):
+m1  no roadside kinds (the band 0 m)                        exit 1, 4/8 passed; 4 failed
+      FAIL: T1 the roadside has its real kinds: { "red_alder": 0, "young_fir": 0, "mountain_hemlock": 0, "western_red_ceda
+      FAIL: T2 alders and young firs take the open edge (0% of the first 4 m), hemlock and cedar the band behind (0% of th
+      FAIL: T3 each kind within its real height (red_alder inf-0.0 m, young_fir inf-0.0 m, mountain_hemlock inf-0.0 m, wes
+      FAIL: T4 every roadside tree in the collision area has its trunk's collider, as thick as its model's trunk (0 checke
+m2  the edge and the band behind swapped                    exit 1, 7/8 passed; 1 failed
+      FAIL: T2 alders and young firs take the open edge (20% of the first 4 m), hemlock and cedar the band behind (20% of 
+m3  trunk colliders not sized with their tree               exit 1, 7/8 passed; 1 failed
+      FAIL: T4 every roadside tree in the collision area has its trunk's collider, as thick as its model's trunk (2348 che
+m4  the foliage left as imported, without the wind          exit 1, 7/8 passed; 1 failed
+      FAIL: T6 every alpha-cut surface sways in the needles' wind (0 of 6)
+m5  a draw from the forest's own random sequence for the kind exit 1, 7/8 passed; 1 failed
+      FAIL: T8 nothing moved: 11836 trees, 6622 saplings, 9835 colliders, centroid (240.5468, 32.31253, -23.50055)
+m6  the cedar at its modelled girth, 2.1 m at breast height exit 1, 7/8 passed; 1 failed
+      FAIL: T4 every roadside tree in the collision area has its trunk's collider, as thick as its model's trunk (2348 che

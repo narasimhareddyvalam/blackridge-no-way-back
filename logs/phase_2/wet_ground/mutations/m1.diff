@@ -1,0 +1,4 @@
+20c20
+< const CONCRETE_POROSITY := 0.5
+---
+> const CONCRETE_POROSITY := 0.3

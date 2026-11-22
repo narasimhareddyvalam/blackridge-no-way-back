@@ -12,20 +12,29 @@ committed. The conversion:
 - halves textures larger than 2048 pixels and writes them as WebP;
 - renames every bone prefix ("mixamorig7:", "mixamorig12:") to "mixamorig:", so the
   animations of one character play on the other;
-- makes the walk and run cycles walk in place (the game moves the character) and prints
-  their ground speed; the car and hit clips keep their own motion;
-- names the idle, walk and run tracks "<name>-loop", Godot's import hint for a looping
+- makes the walk, run and push cycles walk in place (the game moves the character) and
+  prints their ground speed; the car and hit clips keep their own motion;
+- makes the stair climb climb in place too: its forward travel and its rise both taken out, so
+  that the game carries him up the stair's own incline, and prints both for a cycle (#253);
+- takes Push Stop's travel out of it too, the hips' forward travel at knots every six frames
+  with straight lines between, and prints those knots: the game moves Ethan by the same
+  knots, so his planted feet stay put (step 2e, #239-#240);
+- names the idle, walk, run and push tracks "<name>-loop", Godot's import hint for a looping
   clip; Godot removes the suffix on import;
+- keeps only the upper body (spine, neck, head, shoulders, arms, hands, fingers) in the pistol
+  clips, so a second player can lay them over his legs' Idle, Walk or Run (Assignment 7, #390);
+  their loop modes are set in ethan.glb.import, not by a name suffix;
 - exports the pedestrian at real size: Mixamo's 1/100 scale and 90-degree turn are baked
   into his skeleton and mesh, and the clips' movement is scaled to match, because the
   physics bones of his ragdoll cannot hang from a scaled skeleton.
 
-Usage, from the repository root:
+Usage, from the repository root (add "-- ethan" to rebuild only him):
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \\
         --python tools/art/convert_mixamo.py
 """
 
 import pathlib
+import sys
 
 import bpy
 
@@ -37,15 +46,46 @@ QUALITY = 90
 ROUGHNESS = {"Body": 0.5, "Hair": 0.55, "Eyelashes": 0.6, "Suit": 0.82, "Shirt": 0.8,
              "Pants": 0.85, "Tie": 0.55, "Belt": 0.45, "Shoes": 0.4, "Sneakers": 0.75}
 TINT = {("pedestrian", "Shirt"): (0.08, 0.087, 0.098)}
-IN_PLACE = {"Walk", "WalkBack", "Run"}
+IN_PLACE = {"Walk", "WalkBack", "Run", "Push", "PullBack"}
+CLIMBS = {"StairsUp"}
+STOPS = {"PushStop"}
+STOP_KNOTS = 6
 REAL_SIZE = {"pedestrian"}
-LOOPING = IN_PLACE | {"Idle"}
+LOOPING = IN_PLACE | CLIMBS | {"Idle"}
+UPPER_BODY = {"PistolIdle", "PistolReload", "PistolAim", "RifleIdleA", "RifleIdleB", "RifleAim",
+              "RifleFire", "RifleAimDown", "RifleReload", "RifleHit", "RifleGrab", "RifleAway"}
+## The rifle's gaits (the Basic Shooter Pack): walked in place like his own walk, but looped by
+## ethan.glb.import, not by a name suffix (Assignment 7, #396).
+RIFLE_GAITS = {"RifleWalk", "RifleWalkBack", "RifleRun", "RifleRunBack", "RifleStrafe",
+               "RifleStrafeLeft", "RifleStrafeRight", "RifleStrafe2"}
+UPPER_BONES = ("Spine", "Neck", "Head", "Shoulder", "Arm", "Hand")
 FPS = 30.0
 CHARACTERS = {
     "ethan": ("Breathing Idle.fbx", "Idle", [
         ("Walking.fbx", "Walk"), ("Walking Backwards.fbx", "WalkBack"),
         ("Running.fbx", "Run"), ("Entering Car.fbx", "EnterVan"),
-        ("Exiting Car.fbx", "ExitVan")]),
+        ("Exiting Car.fbx", "ExitVan"), ("Pushing.fbx", "Push"),
+        ("Push Stop.fbx", "PushStop"), ("Running Up Stairs.fbx", "StairsUp"),
+        ("Pull Heavy Object.fbx", "PullBack"), ("Pistol Idle (1).fbx", "PistolIdle"),
+        ("Reloading.fbx", "PistolReload"), ("Pistol aim.fbx", "PistolAim"),
+        ("rifle/Rifle Idle.fbx", "RifleIdleA"), ("rifle/Rifle Idle (1).fbx", "RifleIdleB"),
+        ("basic_shooter_pack/rifle aiming idle.fbx", "RifleAim"),
+        ("basic_shooter_pack/firing rifle.fbx", "RifleFire"),
+        ("rifle/Rifle Aim To Down.fbx", "RifleAimDown"),
+        ("basic_shooter_pack/reloading.fbx", "RifleReload"),
+        ("basic_shooter_pack/hit reaction.fbx", "RifleHit"),
+        ("rifle/Grab Rifle From Back.fbx", "RifleGrab"), ("rifle/Rifle Put Away.fbx", "RifleAway"),
+        ("basic_shooter_pack/walking.fbx", "RifleWalk"),
+        ("basic_shooter_pack/walking backwards.fbx", "RifleWalkBack"),
+        ("basic_shooter_pack/rifle run.fbx", "RifleRun"),
+        ("basic_shooter_pack/run backwards.fbx", "RifleRunBack"),
+        ("basic_shooter_pack/strafe.fbx", "RifleStrafe"),
+        ("basic_shooter_pack/strafe left.fbx", "RifleStrafeLeft"),
+        ("basic_shooter_pack/strafe right.fbx", "RifleStrafeRight"),
+        ("basic_shooter_pack/strafe (2).fbx", "RifleStrafe2"),
+        ("basic_shooter_pack/turn left.fbx", "RifleTurnLeft"),
+        ("basic_shooter_pack/turning right 45 degrees.fbx", "RifleTurnRight"),
+        ("Male Sitting Pose.fbx", "Sit")]),
     "pedestrian": ("Hit By Car.fbx", "HitByVan", [("Walking.fbx", "Walk"),
                                                     ("Breathing Idle.fbx", "Idle")]),
 }
@@ -101,6 +141,72 @@ def walk_in_place(action):
     return slope * FPS * 0.01
 
 
+def climb_in_place(action):
+    """Takes the even forward travel and the even rise out of the hips; returns both, in metres
+    a second."""
+    moved = {}
+    for curve in hip_curves(action):
+        first, last = curve.keyframe_points[0].co, curve.keyframe_points[-1].co
+        if abs(last[1] - first[1]) < 1.0:
+            continue
+        slope = (last[1] - first[1]) / (last[0] - first[0])
+        for key in curve.keyframe_points:
+            for point in (key.co, key.handle_left, key.handle_right):
+                point[1] -= slope * (point[0] - first[0])
+        curve.update()
+        moved[curve.array_index] = slope * FPS * 0.01
+    return moved
+
+
+def stop_in_place(action):
+    curves = hip_curves(action)
+    forward = max(curves, key=lambda c: abs(c.keyframe_points[-1].co[1]
+                                            - c.keyframe_points[0].co[1]))
+    first = forward.keyframe_points[0].co[0]
+    last = forward.keyframe_points[-1].co[0]
+    knots = [first + step for step in range(0, int(round(last - first)) + 1, STOP_KNOTS)]
+    if knots[-1] < last:
+        knots.append(last)
+    start = forward.evaluate(first)
+    travel = [forward.evaluate(frame) - start for frame in knots]
+
+    def along(frame):
+        if frame <= knots[0]:
+            return travel[0]
+        for a, b, va, vb in zip(knots, knots[1:], travel, travel[1:]):
+            if frame <= b:
+                return va + (vb - va) * (frame - a) / (b - a)
+        return travel[-1]
+
+    for key in forward.keyframe_points:
+        for point in (key.co, key.handle_left, key.handle_right):
+            point[1] -= along(point[0])
+    forward.update()
+    sign = 1.0 if travel[-1] >= 0.0 else -1.0
+    return [sign * value * 0.01 for value in travel]
+
+
+def upper_body_only(action):
+    """Removes every curve of a bone below the waist (the hips, legs and feet); returns how many
+    curves are kept."""
+    kept = 0
+    for bag_curves in [list(fcurves(action))]:
+        for curve in bag_curves:
+            path = curve.data_path
+            if 'pose.bones["' not in path:
+                continue
+            bone = path[path.index('["') + 2:path.index('"]')]
+            if any(part in bone for part in UPPER_BONES):
+                kept += 1
+                continue
+            for layer in action.layers:
+                for strip in layer.strips:
+                    for bag in strip.channelbags:
+                        if curve in list(bag.fcurves):
+                            bag.fcurves.remove(curve)
+    return kept
+
+
 def fit_range(action):
     keys = [k.co[0] for c in fcurves(action) for k in c.keyframe_points]
     action.use_frame_range = True
@@ -112,9 +218,23 @@ def prepare(action, label):
     action.use_fake_user = True
     retarget(action)
     fit_range(action)
-    if label in IN_PLACE:
+    if label in IN_PLACE or label in RIFLE_GAITS:
         print(f"  {label}: ground speed {abs(walk_in_place(action)):.3f} m/s, "
               f"cycle {(action.frame_end - action.frame_start) / FPS:.3f} s")
+    if label in CLIMBS:
+        moved = climb_in_place(action)
+        cycle = (action.frame_end - action.frame_start) / FPS
+        print(f"  {label}: cycle {cycle:.3f} s, travel and rise a cycle "
+              + ", ".join(f"axis {axis} {speed * cycle:.3f} m" for axis, speed in
+                          sorted(moved.items())))
+    if label in UPPER_BODY:
+        print(f"  {label}: upper body only, {upper_body_only(action)} curves kept, "
+              f"{(action.frame_end - action.frame_start + 1):.0f} frames")
+    if label in STOPS:
+        knots = stop_in_place(action)
+        print(f"  {label}: travel at every {STOP_KNOTS}th frame from the first, "
+              f"{(action.frame_end - action.frame_start) / FPS:.3f} s: "
+              f"[{', '.join(f'{knot:.3f}' for knot in knots)}] m")
 
 
 def take_action(name, label):
@@ -251,5 +371,7 @@ def build(name, base_file, base_label, extras):
           f"{target.stat().st_size / 1e6:.1f} MB")
 
 
+ONLY = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 for character, (base_file, base_label, extras) in CHARACTERS.items():
-    build(character, base_file, base_label, extras)
+    if not ONLY or character in ONLY:
+        build(character, base_file, base_label, extras)

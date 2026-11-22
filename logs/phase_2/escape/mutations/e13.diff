@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/escape.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e13/game/features/missions/the_wrong_cargo/escape.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/escape.gd	2026-11-21 18:07:48
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutesc/e13/game/features/missions/the_wrong_cargo/escape.gd	2026-11-21 18:10:34
+@@ -33,7 +33,7 @@
+ 	{"at": Vector3(234.6, FLOOR, 133.4), "yaw": -PI / 2.0, "wait": 3.0, "look": 0.0,
+ 		"route": [Vector3(245.4, FLOOR, 135.6), Vector3(242.0, FLOOR, 141.0),
+ 			Vector3(208.0, FLOOR, 141.0)]},
+-	{"at": Vector3(233.4, FLOOR, 134.6), "yaw": -PI / 2.0, "wait": 3.0, "look": 0.0,
++	{"at": Vector3(233.4, FLOOR, 134.6), "yaw": -PI / 2.0, "wait": 999.0, "look": 0.0,
+ 		"route": [Vector3(243.0, FLOOR, 136.4), Vector3(228.0, FLOOR, 136.0),
+ 			Vector3(171.0, FLOOR, 139.5), Vector3(141.5, FLOOR, 139.5)]},
+ 	{"at": Vector3(200.0, FLOOR, 142.0), "yaw": 0.0, "wait": 0.0, "look": deg_to_rad(45.0),

@@ -1,0 +1,4 @@
+TAKE movie 45 clip 44.0 door 0.000 boarding false occupied false paused false: E pressed (recovery phase take)
+TAKE movie 103 clip 56.0 door 1.000 boarding true occupied false paused false: R pressed
+TAKE movie 108 clip 3.0 door 0.000 boarding false occupied true paused false: after R
+TAKE movie 183 clip 78.0 door 0.000 boarding false occupied true paused false: end of take

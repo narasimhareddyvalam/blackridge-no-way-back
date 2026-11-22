@@ -7,6 +7,7 @@ const EXTERIOR_ART = preload("res://features/vehicles/freight_van/art/iveco/ivec
 const PLATE = preload("art/number_plate.png")
 const LOW_BEAM = preload("res://features/vehicles/freight_van/art/low_beam_pattern.png")
 const HIGH_BEAM = preload("res://features/vehicles/freight_van/art/high_beam_pattern.png")
+const VanPresentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
 const IVECO_PLACE := Vector3(0.0, 0.01, 0.5)
 const PAINTED: Array[String] = ["Back_door", "Body_exterior_1", "Lateral_door", "Front_door"]
 const PAINT := Color("4a545e")
@@ -37,11 +38,11 @@ const HIGH_POWER := 3.2
 const FLARE_SIZE := 0.045
 const FLARE_LEVEL := 6.0
 const FLARE_FALLOFF := 30.0
-const LENS_GLOW := 30.0
 
 var road: RefCounted
 var opponent: Node3D
 var lamps: Array[SpotLight3D] = []
+var _lens: ShaderMaterial
 var high_beams: bool = false
 var speed: float = CRUISE
 var distance: float = 0.0
@@ -87,8 +88,7 @@ func _build() -> void:
 	van.position = IVECO_PLACE
 	add_child(van)
 	_paint(van)
-	(van.get_node("Headlights") as MeshInstance3D).material_override = Build.luminous(
-		Color("e9ebdc"), LENS_GLOW)
+	_lens = VanPresentation.lit_lens(van.get_node("Headlights") as MeshInstance3D)
 	(van.get_node("TailLamps") as MeshInstance3D).material_override = Build.luminous(
 		Color("68251e"))
 	for label in TYRES:
@@ -121,9 +121,7 @@ func _build() -> void:
 	for at in LAMPS:
 		var lamp := SpotLight3D.new()
 		lamp.position = at
-		lamp.rotation_degrees.x = -2.0
 		lamp.light_color = Color("fff0db")
-		lamp.light_energy = 650.0
 		lamp.spot_angle = 35.0
 		lamp.spot_angle_attenuation = 0.2
 		lamp.spot_attenuation = 1.0
@@ -227,3 +225,9 @@ func _set_high(value: bool) -> void:
 	for lamp in lamps:
 		lamp.light_projector = HIGH_BEAM if value else LOW_BEAM
 		lamp.spot_range = HIGH_RANGE if value else LOW_RANGE
+		lamp.rotation_degrees.x = VanPresentation.HIGH_BEAM_TILT if value \
+			else VanPresentation.LOW_BEAM_TILT
+		lamp.light_energy = VanPresentation.HIGH_BEAM_ENERGY if value \
+			else VanPresentation.LOW_BEAM_ENERGY
+	if _lens != null:
+		VanPresentation.light_lens(_lens, true, value)

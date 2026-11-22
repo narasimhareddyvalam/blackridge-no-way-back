@@ -1,0 +1,2 @@
+v8  the arm short of its fork      test_gates.gd exit 1, 17/18 passed; 1 failed
+      FAIL: B2: shut, the arm spans the lane, its tip lying in the fork of its rest post past the lane's far edge (false)

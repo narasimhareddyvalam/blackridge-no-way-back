@@ -207,14 +207,19 @@ func _check_call() -> void:
 		+ "music dips %.0f dB" % dipped)
 	var heard: Array[String] = [_hud.call("subtitle")]
 	var talked := PhoneCall.GAP + 0.6
+	var overlaps := 0
 	while bool(_route.get("phone_call").get("active")) and talked < 60.0:
 		await physics_frame
 		talked += 1.0 / 60.0
 		var shown: String = _hud.call("subtitle")
 		if shown != "" and shown != heard[-1]:
 			heard.append(shown)
+		if shown != "" and _covers_objective():
+			overlaps += 1
 	_check(heard == APPROVED, "Her call plays the 13 approved lines in order, as subtitles "
 		+ "(%d heard; first \"%s\", last \"%s\")" % [heard.size(), heard[0], heard[-1]])
+	_check(overlaps == 0, "Her subtitles sit clear of the objective beneath them (%d frames over it)"
+		% overlaps)
 	_check(talked > 20.0 and talked < 40.0, "The call is short: %.0f s once connected" % talked)
 	await _seconds(DUCK_WAIT)
 	_check(_hud.call("subtitle") == "" and absf(float(_audio.call("music_level"))) < 0.5
@@ -224,6 +229,13 @@ func _check_call() -> void:
 	var hint := (_hud.get("_hint") as Label).text
 	_check(hint.begins_with("L  High beams"),
 		"After the call, on the dark climb, the hint teaches the high beams (%s)" % hint)
+
+
+func _covers_objective() -> bool:
+	var lines := _hud.get("_subtitles") as Control
+	var heading := _hud.get("_heading") as Control
+	return lines.is_visible_in_tree() and heading.is_visible_in_tree() \
+		and lines.get_global_rect().intersects(heading.get_global_rect())
 
 
 func _index() -> int:

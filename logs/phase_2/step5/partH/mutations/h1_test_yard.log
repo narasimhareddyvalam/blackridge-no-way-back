@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Y0: the yard has its vehicles (YardVehicles) handing out their placements
+FAIL: Y1: dry vans backed square onto docks 1-3, rears within 0.1 m of the bumpers (3)
+PASS: Y1: their floors within the leveller's 0.1 m of the dock and their landing gear down on the paving
+PASS: Y1: a chock at each docked trailer's rear tandem
+PASS: Y2: the docks' outside signals red, a trailer at each shut door
+PASS: Y3: a dropped trailer in the west bay and a coupled one in the middle bay, each inside its lines
+PASS: Y4: the tractor coupled, its fifth wheel under the kingpin (0.00 m), the trailer's landing gear cranked up 0.28 m
+PASS: Y5: the box truck inside the east bay's lines, nose out
+PASS: Y6: the sedan and the covered car each inside a staff bay's lines, short of the kerb
+PASS: Y6: the sedan nose in, toward the kerb
+PASS: Y7: the dumpsters against the east wall outside, on the paving
+PASS: Y8: nothing in the van's way from the gate to bay 9 or by the west exit's stair (0 of 10 in the way)
+PASS: Y8: each parked vehicle solid (10 shapes)
+YARD RESULT: 12/13 passed; 1 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:927)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:155)
+       [6] _run (res://tests/test_yard.gd:65)

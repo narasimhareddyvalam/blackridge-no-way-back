@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c3/game/features/environments/industrial_loop/warehouse.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:43:57
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut5c/c3/game/features/environments/industrial_loop/warehouse.gd	2026-11-18 12:46:09
+@@ -368,7 +368,7 @@
+ ## leveller, two pallets staged, the first racks' ends beyond and a high bay light.
+ func _inside() -> void:
+ 	var slab := _surface(Color(0.55, 0.55, 0.53))
+-	var inner := Vector3(rect.size.x - WALL * 2.0, DOCK_FLOOR, rect.size.y - WALL * 2.0)
++	var inner := Vector3(rect.size.x - WALL * 2.0, DOCK_FLOOR, rect.size.y * 0.5)
+ 	var centre := Vector3(rect.get_center().x, DOCK_FLOOR / 2.0, rect.get_center().y)
+ 	Build.box(self, centre, inner, slab).name = "InteriorFloor"
+ 	_solid(centre, inner)

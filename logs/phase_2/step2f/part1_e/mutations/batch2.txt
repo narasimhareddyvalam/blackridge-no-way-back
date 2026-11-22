@@ -1,0 +1,7 @@
+mutation_stooped_hands_in_his_chest: exit 1; LOADING RESULT: 22/25 passed; 3 failed; fails on its check: True; script error: False
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "Walk"] and inside ["Push"], his head at most 1.540 m abo
+    FAIL: H2: pulling the jack back out, Ethan plays Pushing backward, stooped, in the hold (true), and walks backward upright once out (["Push", "WalkBack"]), his planted feet slipping at most 0.020 m/s,
+    FAIL: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs all the time he holds it, taking it, pushing, stooped in the van, pulling out, stoppin
+mutation_fingers_curl_as_the_clip_holds_them: exit 1; LOADING RESULT: 24/25 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped round the loop, at most 0.045 m from its tube's middle, a finger's thickness and the
+clone restored byte for byte after each

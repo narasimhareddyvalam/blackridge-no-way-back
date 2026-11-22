@@ -1,17 +1,29 @@
 extends Node3D
 
 const Build = preload("res://shared/components/mesh_builder.gd")
-const ASPHALT = preload("wet_asphalt.gdshader")
+const ASPHALT = preload("wet_ground.gdshader")
+const RIPPLES = preload("art/wet_ground/ripple_data.png")
 const WALL = preload("industrial_wall.gdshader")
 const DepotDetail = preload("depot_detail.gd")
 const CONCRETE_COLOR = preload("art/concrete_albedo.png")
 const CONCRETE_NORMAL = preload("art/concrete_normal.png")
 const ASPHALT_COLOR = preload("art/asphalt_albedo.png")
+## How porous asphalt is, for its wet darkening (Lagarde: lerp(1, 0.2, porosity)).
+const ASPHALT_POROSITY := 0.7
+const ROAD_PLACE_SCALE := 8.0
 const ASPHALT_NORMAL = preload("art/asphalt_normal.png")
 const RoadsideForest = preload("roadside_forest.gd")
 const ForestFloor = preload("forest_floor.gd")
+const HarbourFlats = preload("res://features/environments/harbour_flats/harbour_flats.gd")
 const RoadsideGrass = preload("roadside_grass.gd")
 const GhatRoad = preload("ghat_road.gd")
+const TransferShed = preload("transfer_shed.gd")
+const TownStation = preload("town_station.gd")
+const ContainerYard = preload("container_yard.gd")
+const Compound = preload("compound.gd")
+const TransferBuilding = preload("transfer_building.gd")
+## The site office's height, for the mission map's block (#356).
+const OFFICE_HEIGHT := 3.6
 const HillTerrain = preload("hill_terrain.gd")
 const GhatDressing = preload("ghat_dressing.gd")
 const BusStop = preload("bus_stop.gd")
@@ -24,9 +36,22 @@ const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/textur
 const FOREST_CLEARANCE := 2.5
 const TERRAIN_AREA := Rect2(-160, -320, 820, 650)
 const PLAYABLE_AREA := Rect2(-140, -290, 780, 510)
+## The east road's cut through the rim (Mission 3's step 2, #359): its line (x, z), its road's half
+## width and its banks' slope; the trees in its way cleared without moving any other.
+const EAST_CUT: Array = [Vector2(612.0, 151.7), Vector2(672.0, 151.7), 5.0, 0.9]
+const EAST_CUT_PLOT := Rect2(608.0, 143.0, 64.0, 18.0)
+## The east wall of the playable area opens for the east road between these z.
+const EAST_GAP := Vector2(138.0, 166.0)
 const WAREHOUSES: Array[Vector3] = [Vector3(60, 0, 115), Vector3(150, 0, 112),
 	Vector3(250, 0, 120), Vector3(-71, 0, 26)]
 const CONTAINER_ROW := Vector3(100, 0, 145)
+## The container yard (Mission 2's step 4, `container_yard.gd`), its driveway to the road.
+const CONTAINER_YARD_PLOT := Rect2(62.0, 130.0, 76.0, 41.0)
+## The warehouse compound (Mission 2's step 5, `compound.gd`) and its driveway to the road.
+const COMPOUND_PLOT := Rect2(126.0, 90.0, 150.0, 58.0)
+const COMPOUND_DRIVE_PLOT := Rect2(193.5, 146.0, 10.5, 24.0)
+## The Phase 1 warehouses the compound rebuilds (part B, `warehouse.gd`), west and east.
+const COMPOUND_WAREHOUSES: Array[Vector3] = [Vector3(150, 0, 112), Vector3(250, 0, 120)]
 const SILOS: Array[float] = [466.0, 482.0]
 const SILO_Z := 62.0
 const DEPOT_PLOT := Rect2(-62, 72, 68, 58)
@@ -71,6 +96,10 @@ const POST_SHADOWS_TO := 45.0
 const HALO_SIZE := 2.4
 const HALO_STRENGTH := 0.8
 const MIST_BELOW := 0.6
+## How much a lamp's light the rain in its cone scatters toward the eye, per metre: four times
+## `lamp_mist.gdshader`'s own 0.004, as heavy rain lights up under a lamp (the author's street
+## photo; kept from the trial, #276).
+const MIST_SCATTERING := 0.016
 const SECURITY_LIGHT := "res://features/environments/depot_yard/polyhaven/models/security_light/" \
 	+ "security_light.gltf"
 const DEPOT_FRONT := 112.5
@@ -112,9 +141,18 @@ var run_sheet_spot := Vector3.ZERO
 var office_transform := Transform3D.IDENTITY
 var forest: Node3D
 var forest_floor: Node3D
+## The coastal strip east of the rim (Mission 3's step 2), its waterfront and airfield to come.
+var harbour_flats: Node3D
+var _road_asphalt: Material
+var container_yard: Node3D
+var compound: Node3D
+var warehouse_heights: Array[float] = []
 var grass: Node3D
 var _ground: ShaderMaterial
 var lamp_rain := LampRain.new()
+var transfer_shed: Node3D
+var warehouse_widths: Array[float] = []
+var _yard_surface: Material
 var _metal := Build.material(Color("343d43"), 0.48)
 var _concrete := Build.material(Color("4b5254"))
 var _lamp := Build.luminous(Color("ffd7a0"), 1.5)
@@ -138,8 +176,13 @@ func _ready() -> void:
 	add_child(DepotDetail.new())
 	_street_furniture()
 	_boundary()
+	_transfer_shed()
+	_container_yard()
+	_compound()
+	_town()
 	_reflections()
 	_forest()
+	_harbour_flats()
 	lamp_rain.name = "LampRain"
 	add_child(lamp_rain)
 
@@ -195,17 +238,19 @@ func _ground_and_roads() -> void:
 	terrain.name = "HillTerrain"
 	add_child(terrain)
 	_ground = _hill_material()
-	terrain.build(road, TERRAIN_AREA, _flat_plots(), _ground, 42021)
+	terrain.build(road, TERRAIN_AREA, _flat_plots(), _ground, 42021, [EAST_CUT])
 	var asphalt := ShaderMaterial.new()
 	asphalt.shader = ASPHALT
 	asphalt.set_shader_parameter("aggregate_color", _texture("tarred_gravel", "diff"))
 	asphalt.set_shader_parameter("aggregate_normal", _texture("tarred_gravel", "nor_gl"))
 	asphalt.set_shader_parameter("aggregate_arm", _texture("tarred_gravel", "arm"))
 	asphalt.set_shader_parameter("arm_roughness", 1.0)
-	asphalt.set_shader_parameter("damp_gloss", 1.0)
 	asphalt.set_shader_parameter("texture_scale", 1.0 / 2.2)
 	asphalt.set_shader_parameter("crack_amount", 0.0)
 	asphalt.set_shader_parameter("dry_color", Vector3(0.85, 0.85, 0.85))
+	asphalt.set_shader_parameter("rain_ripples", RIPPLES)
+	asphalt.set_shader_parameter("porosity", ASPHALT_POROSITY)
+	_road_asphalt = asphalt
 	_road_strip(0.0, 0.0, asphalt, false)
 	_road_strip(GhatRoad.VERGE, -0.012, _surface("leaf_scattered_gravel", 1.8, false), true)
 	crossing = BusStop.new()
@@ -218,21 +263,32 @@ func _ground_and_roads() -> void:
 	dressing = GhatDressing.new()
 	dressing.name = "GhatDressing"
 	add_child(dressing)
-	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS)
+	var openings: Array[Vector3] = [TransferShed.road_opening()]
+	dressing.build(road, terrain, _concrete, LANDSLIDE_AT, crossing.index, CURVE_RAILS, openings,
+		_flat_plots())
 	var yard := ShaderMaterial.new()
 	yard.shader = ASPHALT
 	yard.set_shader_parameter("aggregate_color", ASPHALT_COLOR)
 	yard.set_shader_parameter("aggregate_normal", ASPHALT_NORMAL)
 	yard.set_shader_parameter("dry_color", Vector3(0.48, 0.49, 0.50))
+	yard.set_shader_parameter("rain_ripples", RIPPLES)
+	yard.set_shader_parameter("porosity", ASPHALT_POROSITY)
+	yard.set_shader_parameter("slab", true)
+	_yard_surface = yard
 	_depot_ground(yard)
 
 
 func _flat_plots() -> Array[Rect2]:
 	var plots: Array[Rect2] = [DEPOT_PLOT, FENCE_PLOT, LUMBER_YARD, SKYLINE_PLOT]
-	for item in WAREHOUSES:
+	for item in WAREHOUSES.slice(0, WAREHOUSES.size() - 1):
 		plots.append(Rect2(item.x - 23, item.z - 15.5, 46, 33.4))
 	plots.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	plots.append(Rect2(SILOS[0] - 8, SILO_Z - 8, SILOS[1] - SILOS[0] + 16, 16))
+	plots.append_array(TransferShed.flat_plots())
+	plots.append(TownStation.PLOT)
+	plots.append(CONTAINER_YARD_PLOT)
+	plots.append(COMPOUND_PLOT)
+	plots.append(COMPOUND_DRIVE_PLOT)
 	return plots
 
 
@@ -256,12 +312,14 @@ func _road_strip(extra: float, height: float, surface: Material, solid: bool) ->
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for index in range(count):
 		var next := (index + 1) % count
-		_road_vertex(tool, lefts[index], normals[index])
-		_road_vertex(tool, lefts[next], normals[next])
-		_road_vertex(tool, rights[index], normals[index])
-		_road_vertex(tool, rights[index], normals[index])
-		_road_vertex(tool, lefts[next], normals[next])
-		_road_vertex(tool, rights[next], normals[next])
+		var here := (widths[index] + extra) / ROAD_PLACE_SCALE
+		var there := (widths[next] + extra) / ROAD_PLACE_SCALE
+		_road_vertex(tool, lefts[index], normals[index], Color(0.0, here, 0.0))
+		_road_vertex(tool, lefts[next], normals[next], Color(0.0, there, 0.0))
+		_road_vertex(tool, rights[index], normals[index], Color(1.0, here, 0.0))
+		_road_vertex(tool, rights[index], normals[index], Color(1.0, here, 0.0))
+		_road_vertex(tool, lefts[next], normals[next], Color(0.0, there, 0.0))
+		_road_vertex(tool, rights[next], normals[next], Color(1.0, there, 0.0))
 	if solid:
 		_shoulder(tool, rights, across, 1.0)
 		_shoulder(tool, lefts, across, -1.0)
@@ -292,7 +350,11 @@ func _shoulder(tool: SurfaceTool, edge: PackedVector3Array, across: PackedVector
 		_road_vertex(tool, d, normal_next)
 
 
-func _road_vertex(tool: SurfaceTool, vertex: Vector3, normal: Vector3) -> void:
+## `place`: where across the road the vertex is (red, 0 its left edge, 1 its right) and the road's
+## half width there (green, over ROAD_PLACE_SCALE), for `wet_ground.gdshader`'s drainage.
+func _road_vertex(tool: SurfaceTool, vertex: Vector3, normal: Vector3,
+		place := Color(0.5, 0.0, 0.0)) -> void:
+	tool.set_color(place)
 	tool.set_normal(normal)
 	tool.set_uv(Vector2(vertex.x, vertex.z))
 	tool.add_vertex(vertex)
@@ -387,7 +449,13 @@ func _buildings() -> void:
 	var window := Build.luminous(Color("bfad80") * 0.55)
 	for item: Vector3 in WAREHOUSES:
 		var size := Vector3(_random.randf_range(24, 38), _random.randf_range(9, 15), 23)
+		warehouse_widths.append(size.x)
+		warehouse_heights.append(size.y)
+		if item == WAREHOUSES[WAREHOUSES.size() - 1]:
+			continue
 		clearings.append(Rect2(item.x - size.x / 2 - 4, item.z - 15.5, size.x + 8, 33.4))
+		if COMPOUND_WAREHOUSES.has(item):
+			continue
 		Build.box(self, item + Vector3.UP * size.y / 2, size, masonry, true)
 		Build.box(self, item + Vector3.UP * (size.y + 0.18),
 			size * Vector3(1.025, 0, 1.025) + Vector3.UP * 0.36, _metal)
@@ -398,13 +466,6 @@ func _buildings() -> void:
 			Build.box(self, item + Vector3(x, 2.6, 11.58), Vector3(5.8, 5.2, 0.1), siding)
 			Build.box(self, item + Vector3(x, 0.65, 12.8), Vector3(6.5, 1.3, 2.2), _concrete)
 		Build.box(self, item + Vector3(0, size.y + 0.7, 0), Vector3(6, 1.4, 4), _metal)
-	for index in range(9):
-		var at := CONTAINER_ROW + Vector3(index * 12, 1.4, 0)
-		var surface := _wall_material(Color.from_hsv(0.5 + index * 0.015, 0.3, 0.25))
-		Build.box(self, at, Vector3(10, 2.8, 3.2), surface, true)
-		for rib in range(13):
-			Build.box(self, at + Vector3(-4.8 + rib * 0.8, 0, 1.62),
-				Vector3(0.055, 2.7, 0.035), _metal)
 	clearings.append(Rect2(CONTAINER_ROW.x - 7, CONTAINER_ROW.z - 4, 110, 8))
 	for x in SILOS:
 		Build.cylinder(self, Vector3(x, 9, SILO_Z), 5.8, 18, siding)
@@ -704,6 +765,8 @@ func _office_lights(office: Node3D) -> void:
 func _street_furniture() -> void:
 	clearings.append(FENCE_PLOT)
 	for x in range(FENCE_FROM, FENCE_TO, 10):
+		if x >= CONTAINER_YARD_PLOT.position.x - 2.0:
+			continue
 		Build.box(self, Vector3(x, 1.1, FENCE_Z), Vector3(0.08, 2.2, 0.08), _metal)
 		Build.box(self, Vector3(x + 5, 1.8, FENCE_Z), Vector3(10, 0.04, 0.04), _metal)
 		Build.box(self, Vector3(x + 5, 0.7, FENCE_Z), Vector3(10, 0.04, 0.04), _metal)
@@ -711,7 +774,27 @@ func _street_furniture() -> void:
 			Build.box(self, Vector3(x + bar, 1.1, FENCE_Z), Vector3(0.025, 2.2, 0.025), _metal)
 
 
-func _lamp_post(at: Vector3, heading: float) -> void:
+## The harbour flats east of the rim (Mission 3's step 2).
+func _harbour_flats() -> void:
+	harbour_flats = HarbourFlats.new()
+	harbour_flats.name = "HarbourFlats"
+	add_child(harbour_flats)
+	harbour_flats.call("build", terrain, _road_asphalt, _ground, _concrete, _lamp_post)
+	harbour_flats.call("plant", forest, terrain)
+	harbour_flats.call("build_waterfront", _yard_surface, _road_asphalt, _concrete, _metal,
+		container_yard, lamp_rain, _lamp_post)
+	harbour_flats.call("build_airfield", _road_asphalt, _yard_surface,
+		_wall_material(Color("8e9496")), _metal, _concrete, _lamp_post)
+
+
+## Whether `at` (x, z) is somewhere the van may be: the valley and hills, or the harbour flats and
+## the cut that leads to them.
+func playable(at: Vector2) -> bool:
+	return playable_area.has_point(at) or (harbour_flats != null
+		and (harbour_flats.get("area") as Rect2).has_point(at))
+
+
+func _lamp_post(at: Vector3, heading: float) -> Node3D:
 	var post := Streetlight.instantiate() as Node3D
 	post.position = at
 	post.rotation.y = heading
@@ -742,6 +825,7 @@ func _lamp_post(at: Vector3, heading: float) -> void:
 	post.add_child(halo)
 	lamp_rain.add_volume(LampRain.STREET, Transform3D(Basis.IDENTITY,
 		post.transform * LampRain.POST_HEAD))
+	return post
 
 
 func _streetlight_material(part: String) -> Material:
@@ -809,6 +893,7 @@ func _mist(light: SpotLight3D, depth: float) -> void:
 	air.set_shader_parameter("spot_falloff", light.spot_angle_attenuation)
 	air.set_shader_parameter("light_range", light.spot_range)
 	air.set_shader_parameter("light_decay", light.spot_attenuation)
+	air.set_shader_parameter("scattering", MIST_SCATTERING)
 	air.set_shader_parameter("fade_begin", light.distance_fade_begin
 		if light.distance_fade_enabled else 1.0e6)
 	air.set_shader_parameter("fade_length", light.distance_fade_length)
@@ -873,6 +958,110 @@ func _reflections() -> void:
 	add_child(probe)
 
 
+## The mission map's roads (#356): the loop road, and the drives to the transfer shed's gate, the
+## container yard's and the compound's, each from its gate to the loop road's nearest point.
+func map_roads() -> Array[PackedVector3Array]:
+	var roads: Array[PackedVector3Array] = [road_points]
+	for gate: Vector3 in [Vector3(TransferShed.LANE_X, 0.0, TransferShed.GATE_Z),
+			Vector3(100.0, 0.0, 158.0), Vector3(200.0, 0.0, 146.0)]:
+		roads.append(PackedVector3Array([gate, road_points[_nearest_road(Vector2(gate.x,
+			gate.z))]]))
+	return roads
+
+
+## The mission map's buildings (x, z): the warehouses and the site office.
+func map_places() -> Array[PackedVector2Array]:
+	var places: Array[PackedVector2Array] = []
+	for index in range(mini(WAREHOUSES.size(), warehouse_widths.size())):
+		var item := WAREHOUSES[index]
+		var half := Vector2(warehouse_widths[index] / 2.0, 11.5)
+		places.append(PackedVector2Array([Vector2(item.x - half.x, item.z - half.y),
+			Vector2(item.x + half.x, item.z - half.y), Vector2(item.x + half.x, item.z + half.y),
+			Vector2(item.x - half.x, item.z + half.y)]))
+	var office := PackedVector2Array()
+	for corner: Vector2 in [Vector2(-3.0, -1.8), Vector2(3.0, -1.8), Vector2(3.0, 1.8),
+			Vector2(-3.0, 1.8)]:
+		var at := office_transform * Vector3(corner.x, 0.0, corner.y)
+		office.append(Vector2(at.x, at.z))
+	places.append(office)
+	return places
+
+
+## The mission map's buildings as blocks (#356): each one's corners (x, z) and its height: the
+## warehouses, the site office and the transfer shed.
+func map_blocks() -> Array:
+	var blocks: Array = []
+	var places := map_places()
+	for index in range(places.size()):
+		var height := OFFICE_HEIGHT
+		if index < warehouse_heights.size():
+			height = warehouse_heights[index]
+		blocks.append({"corners": places[index], "height": height})
+	var shed := TransferBuilding.BUILDING
+	var corners := PackedVector2Array()
+	for corner: Vector2 in [shed.position, Vector2(shed.end.x, shed.position.y), shed.end,
+			Vector2(shed.position.x, shed.end.y)]:
+		var at := Vector3(corner.x, 0.0, corner.y)
+		if transfer_shed != null:
+			at = (transfer_shed.get_node("Building") as Node3D).global_transform * at
+		corners.append(Vector2(at.x, at.z))
+	blocks.append({"corners": corners, "height": TransferBuilding.EAVES})
+	return blocks
+
+
+## The mission map's fences (x, z): the compound's, and the container yard's bounds.
+func map_fences() -> Array[PackedVector2Array]:
+	var compound_fence := PackedVector2Array(Compound.OUTLINE)
+	compound_fence.append(Compound.OUTLINE[0])
+	var yard := ContainerYard.YARD
+	return [compound_fence, PackedVector2Array([yard.position, Vector2(yard.end.x, yard.position.y),
+		yard.end, Vector2(yard.position.x, yard.end.y), yard.position])]
+
+
+func _transfer_shed() -> void:
+	transfer_shed = TransferShed.new()
+	transfer_shed.name = "TransferShed"
+	add_child(transfer_shed)
+	transfer_shed.build(road, warehouse_widths[WAREHOUSES.size() - 1], _yard_surface, _concrete,
+		_metal, _wall_material(Color("aeb1ad")), terrain)
+	clearings.append_array(transfer_shed.clearings)
+	_lamp_post(transfer_shed.lamp_at, 0.0)
+	for index in range(transfer_shed.yard_lamps.size()):
+		_lamp_post(transfer_shed.yard_lamps[index], transfer_shed.yard_lamp_headings[index])
+	lamp_rain.add_volume(LampRain.DOCK, Transform3D(Basis.IDENTITY, transfer_shed.dock_rain_at))
+
+
+func _container_yard() -> void:
+	container_yard = ContainerYard.new()
+	container_yard.name = "ContainerYard"
+	add_child(container_yard)
+	container_yard.build(_yard_surface)
+
+
+func _compound() -> void:
+	compound = Compound.new()
+	compound.name = "WarehouseCompound"
+	add_child(compound)
+	compound.build(_yard_surface, _concrete, _metal, _wall_material(Color("aeb1ad")))
+	var houses: Array[Rect2] = []
+	var heights: Array[float] = []
+	for item in COMPOUND_WAREHOUSES:
+		var index := WAREHOUSES.find(item)
+		houses.append(Rect2(item.x - warehouse_widths[index] / 2.0, item.z - 11.5,
+			warehouse_widths[index], 23.0))
+		heights.append(warehouse_heights[index])
+	compound.build_warehouses(houses, heights, _metal)
+	for place: Transform3D in compound.get("rain_places"):
+		lamp_rain.add_volume(LampRain.FLOOD_HIGH, place)
+
+
+func _town() -> void:
+	var town := TownStation.new()
+	town.name = "TownStation"
+	add_child(town)
+	town.build(terrain)
+
+
 func _boundary() -> void:
 	var walls := StaticBody3D.new()
 	walls.name = "Boundary"
@@ -882,7 +1071,10 @@ func _boundary() -> void:
 		[Vector3(area.get_center().x, 60, area.position.y), Vector3(area.size.x, 200, 2)],
 		[Vector3(area.get_center().x, 60, area.end.y), Vector3(area.size.x, 200, 2)],
 		[Vector3(area.position.x, 60, area.get_center().y), Vector3(2, 200, area.size.y)],
-		[Vector3(area.end.x, 60, area.get_center().y), Vector3(2, 200, area.size.y)],
+		[Vector3(area.end.x, 60, (area.position.y + EAST_GAP.x) / 2.0), Vector3(2, 200,
+			EAST_GAP.x - area.position.y)],
+		[Vector3(area.end.x, 60, (EAST_GAP.y + area.end.y) / 2.0), Vector3(2, 200,
+			area.end.y - EAST_GAP.y)],
 	]:
 		var shape := BoxShape3D.new()
 		shape.size = wall[1]
@@ -897,7 +1089,8 @@ func _forest() -> void:
 	forest.name = "RoadsideForest"
 	add_child(forest)
 	forest.build(road_points, FOREST_CLEARANCE, clearings, TERRAIN_AREA.grow(-4.0),
-		PLAYABLE_AREA, 42019, terrain)
+		PLAYABLE_AREA, 42019, terrain, [TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
+		COMPOUND_DRIVE_PLOT, EAST_CUT_PLOT] as Array[Rect2])
 	forest_floor = ForestFloor.new()
 	forest_floor.name = "ForestFloor"
 	add_child(forest_floor)
@@ -905,7 +1098,9 @@ func _forest() -> void:
 	for index in range(road_points.size()):
 		mowed.append(RoadsideGrass.MOWED if road.sections[index] == GhatRoad.Section.VALLEY
 			else 0.0)
-	forest_floor.build(road_points, clearings, 42020, terrain, mowed)
+	forest_floor.build(road_points, clearings, 42020, terrain, mowed,
+		[TownStation.PLOT, CONTAINER_YARD_PLOT, COMPOUND_PLOT,
+		COMPOUND_DRIVE_PLOT, EAST_CUT_PLOT] as Array[Rect2])
 	grass = RoadsideGrass.new()
 	grass.name = "RoadsideGrass"
 	add_child(grass)

@@ -1,0 +1,4 @@
+339c339
+< 		var index := _clear_of_barriers(int(branch[0]), side)
+---
+> 		var index: int = int(branch[0]) if int(branch[0]) != 470 else 474

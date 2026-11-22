@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y6/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:49:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y6/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:50:29
+@@ -58,7 +58,7 @@
+ const ROWS := 7
+ const FIRST_ROW := 135.0
+ const WEST_CELLS: Array[Array] = [["Container40", 72.2], ["Container40", 84.7]]
+-const EAST_CELLS: Array[Array] = [["Container40", 115.7], ["Container20", 125.2],
++const EAST_CELLS: Array[Array] = [["Container40", 108.0], ["Container20", 125.2],
+ 	["Container20", 131.6]]
+ const MOST_HIGH := 3
+ const SEED := 312

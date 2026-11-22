@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: The map fills the van's own display, 13.6 x 7.1 cm, and no more: it covers the screen's glass to within 0.0 mm and stops 0.1 mm short of the buttons and knob around it
+PASS: The display faces the driver, as the van's own screen does (0.82)
+PASS: It looks like an LCD: a thin black border, backlit blacks (0.012), and a little dimmer seen from the side (25%)
+PASS: Glossy glass sits in front of it, and it throws a faint glow on the dash
+PASS: It goes dark with the engine off, and starts up with a fade at the ignition (50% after 0.6 s)
+PASS: The map turns with the van, heading-up (0.0 degrees behind)
+PASS: It zooms out at speed and in when slow (1.91 px/m at 58 km/h, 2.67 at 29 km/h)
+PASS: It counts down the distance along the road to the depot turn, 1822 m, not the 366 m straight line
+PASS: The clock runs (3.0 s in 3 s), and the arrival time follows the drive left (205 s to go, then 204 s)
+PASS: A hairpin warning shows 96 m before the hairpin, and none on the open road
+PASS: Driving the wrong way it says Turn around, and stops once the van turns back
+PASS: In the depot bay it says Arrived
+PASS: Every line on the screen's run sheet comes from the signed run sheet
+PASS: In reverse the camera fills the display with parking guide lines
+PASS: In reverse, white reversing lamps glow in both rear clusters and light the ground behind, and the camera brightens its picture for the dark (3.0x); in drive they are off (2 lamps found)
+DASH SCREEN RESULT: 15/15 passed; 0 failed
+WARNING: 18 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

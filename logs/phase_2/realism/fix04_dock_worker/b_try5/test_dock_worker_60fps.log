@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_dock_worker.gd:110)
+PASS: W1: bay 9's dock station is Poly Haven's Metal Office Desk and Red Fox's office chair, with Poly Haven's Clipboard as the seal log and its Stationery Supplies' pen cup (so)
+PASS: W2: the desk and the chair stand on the dock floor (their feet 1.300 and 1.300 m up) and the seal log and pen cup on the desk's top (2.088 and 2.088 m)
+PASS: W3: the station keeps to its corner, clear of the load's approach to the lift, the lift's pit, the edge rail by 0.03 m, the dock wall and the way to the stair, with room to walk between it and bay 9's staged load (0.97 m; it spans x -46.44 to -44.84, z 17.55 to 19.55)
+PASS: W4: the desk's drawers face the lift and the chair stands in its kneehole facing it, its column 0.35 m out from the desk's front and 0.00 m off its middle
+PASS: W5: the desk and the chair are solid, so nobody walks or pushes a load through them
+PASS: W6: from where Ethan stands behind the van and comes to its doors, the chair's back is in sight through bay 9's doorway (hidden from none)
+PASS: W7 at the start he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+PASS: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["StandUp", "TurnRight180", "WalkStart"], carried true)
+PASS: W9 his way: over the dock floor to the stair's landing (0.01 m), down the stair (0.20 m from its foot), out of the side door (0.03 m), never into the van
+PASS: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT): the seal put on in Seal (Seal), then Check against his log and Note (["StandUp", "TurnRight180", "WalkStart", "Walk", "WalkStop", "TurnLeft90", "Seal", "Check", "Note", "WalkStart", "Walk", "WalkStop", "TurnRight90", "SitDown"])
+PASS: W11 back at his desk within the doors' 90 s (71.4 s)
+FAIL: W12: on the dock stair he takes a tread a step, his feet taking turns (false; 11 steps down, 5 up), each step 0.05-0.80 s (0.45-0.85), each planted foot on its tread (0.105 m off: up foot 1 at 0.92 along, tread 4, body at 1.16)
+FAIL: W13: his hand on the rail's side holds the rail all the way down and up (0.137 and 0.419 m off it), the log in his other hand (true, true; the farthest at { "down": "0.45 along", "up": "1.12 along" })
+FAIL: W14: he gets up to pace and slows to a stop over a step or two, never changing pace faster than 3.5 m/s a second (at most 14.0)
+PASS: W15: he turns on the spot, never snapping round (0 frames), at most 198° a second standing (360)
+PASS: W16: the seal is in his hand until it is on the hasp (280 frames before, 0 after), and a pen is in his hand all the time he notes (132 of 132 frames)
+PASS: W11 back, he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+PASS: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 0.40 s (0.3-0.5), ending 0.000 m from it, then a green flash of 0.22 s with the beep (true), the label read (true)
+DOCK WORKER RESULT: 15/18 passed; 3 failed
+WARNING: 32 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

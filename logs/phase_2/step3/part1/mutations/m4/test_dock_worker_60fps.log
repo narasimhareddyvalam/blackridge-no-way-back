@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: W1: bay 9's dock station is Poly Haven's Metal Office Desk and Red Fox's office chair, with Poly Haven's Clipboard as the seal log and its Stationery Supplies' pen cup (so)
+PASS: W2: the desk and the chair stand on the dock floor (their feet 1.300 and 1.300 m up) and the seal log and pen cup on the desk's top (2.088 and 2.088 m)
+PASS: W3: the station keeps to its corner, clear of the load's approach to the lift, the lift's pit, the edge rail by 0.03 m, the dock wall and the way to the stair (it spans x -46.44 to -44.84, z 17.55 to 19.55)
+PASS: W4: the desk's drawers face the lift and the chair stands in its kneehole facing it, its column 0.35 m out from the desk's front and 0.00 m off its middle
+FAIL: W5: the desk and the chair are solid, so nobody walks or pushes a load through them
+FAIL: W6: from where Ethan stands behind the van and comes to its doors, the chair's back is in sight through bay 9's doorway (hidden from (-47.6, 1.7, 25.0) (nothing), (-47.5, 1.75, 21.6) (nothing), (-47.2, 2.3, 23.0) (nothing))
+DOCK WORKER RESULT: 4/6 passed; 2 failed
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 RID allocations of type 'P12GodotShape3D' were leaked at exit.
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

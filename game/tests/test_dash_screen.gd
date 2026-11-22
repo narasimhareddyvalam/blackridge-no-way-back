@@ -54,6 +54,7 @@ func _run() -> void:
 	await _check_directions()
 	_check_run_sheet()
 	await _check_reverse()
+	await _check_rear_view()
 	await _check_reversing_lamps()
 	_finish()
 
@@ -204,6 +205,40 @@ func _check_reverse() -> void:
 		"In reverse the camera fills the display with parking guide lines")
 
 
+## Into reverse by the game's own gear key, the game's view becomes the van's rear camera, as a
+## driver watches it reversing (#252): from high on the van's back, looking back and down past
+## its bumper, its parking guides over the picture; out of reverse, the driver's own view again.
+func _check_rear_view() -> void:
+	await _shift()
+	var reversing := int(_van.get("gear")) < 0
+	var view := _app.get_viewport().get_camera_3d()
+	var at := _van.to_local(view.global_position) if view != null else Vector3.ZERO
+	var looks := _van.global_basis.inverse() * -view.global_basis.z if view != null \
+		else Vector3.ZERO
+	var guided := false
+	for found in _presentation.find_children("*", "Control", true, false):
+		guided = guided or (found.get_script() == ParkingGuides and found.is_visible_in_tree()
+			and not found.get_parent() is SubViewport)
+	await _shift()
+	var back: bool = _app.get_viewport().get_camera_3d() == _van.call("get_camera")
+	_check(reversing and at.z > 2.5 and at.y > 1.8 and looks.z > 0.6 and looks.y < 0.0
+		and guided and back and int(_van.get("gear")) > 0,
+		("In reverse (by the gear key: %s) the game's view is the van's rear camera, high on "
+		+ "its back (%s in the van's frame) looking back and down (%s), the parking guides over "
+		+ "it (%s); out of reverse the driver's own view again (%s)") % [reversing, at, looks,
+		guided, back])
+
+
+func _shift() -> void:
+	for pressed in [true, false]:
+		var event := InputEventAction.new()
+		event.action = "change_gear"
+		event.pressed = pressed
+		Input.parse_input_event(event)
+		await process_frame
+	await _seconds(0.2)
+
+
 func _check_reversing_lamps() -> void:
 	_van.set("gear", 1)
 	await _seconds(0.2)
@@ -215,8 +250,9 @@ func _check_reversing_lamps() -> void:
 	for lamp in lamps:
 		var aim := _van.global_basis.inverse() * -lamp.global_basis.z
 		lit = lit and lamp.light_energy > 0.0 and lamp.light_cull_mask & 1 != 0 and aim.y < -0.05
-	var lens := _van.find_child("ReversingLenses", true, false) as GeometryInstance3D
-	var glowing := lens != null and lens.visible
+	var tail_lamps := _van.find_child("TailLamps", true, false) as MeshInstance3D
+	var lamp := tail_lamps.material_override as ShaderMaterial if tail_lamps != null else null
+	var glowing := lamp != null and float(lamp.get_shader_parameter("reverse")) > 0.0
 	var gain := 1.0
 	var view: SubViewport = _presentation.get("reverse_view")
 	for child in view.get_children():

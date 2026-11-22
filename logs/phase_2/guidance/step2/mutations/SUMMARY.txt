@@ -1,0 +1,14 @@
+s1  the objective sends nowhere    test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G10: DRIVE TO THE TRANSFER SHED has its place, the booth's window (inf m off): a marker over it, a pin on the 
+s2  the marker never drawn         test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G10: DRIVE TO THE TRANSFER SHED has its place, the booth's window (0.0 m off): a marker over it, a pin on the 
+s3  the distance half what it is   test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G10: DRIVE TO THE TRANSFER SHED has its place, the booth's window (0.0 m off): a marker over it, a pin on the 
+s4  no pin on the map              test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G10: DRIVE TO THE TRANSFER SHED has its place, the booth's window (0.0 m off): a marker over it, a pin on the 
+s5  the key left among the controls test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G11: at the booth's window a key prompt at the bottom centre, E  Hand over the run sheet (shown false, E ), no
+s6  no prompt at the gate          test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G11: at the booth's window a key prompt at the bottom centre, E  Hand over the run sheet (shown false, E ), no
+s7  the prompt off centre          test_guidance.gd exit 1, 10/11 passed; 1 failed
+      FAIL: G11: at the booth's window a key prompt at the bottom centre, E  Hand over the run sheet (shown false, E Hand 

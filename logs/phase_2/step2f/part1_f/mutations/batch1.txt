@@ -1,0 +1,5 @@
+mutation_doors_hang_on_nothing: exit 1; REAR DOORS RESULT: 17/18 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: R10: each rear door hangs on 2 hinges, shut and on its stay: each hinge's arm, on the door, runs from the door's edge to its pin, and its bracket from the pin to the body's corner, nothing open 
+mutation_reverse_keeps_the_driver_view: exit 1; DASH SCREEN RESULT: 15/16 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: In reverse (by the gear key: true) the game's view is the van's rear camera, high on its back ((-0.450001, 1.878957, -0.720001) in the van's frame) looking back and down ((0.0, -0.149438, -0.988
+clone restored byte for byte after each

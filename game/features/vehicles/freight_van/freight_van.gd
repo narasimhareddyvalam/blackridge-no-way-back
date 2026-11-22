@@ -6,6 +6,9 @@ signal wiper_swept
 signal collided(strength: float)
 signal window_operated
 signal engine_started
+## A rear door's sound as Ethan works it (part B): "release" as its handle frees the latch,
+## "stay" as the stay on the side catches it, "unhook" as he tugs it off, "latch" as it shuts.
+signal rear_door_sounded(kind: String)
 
 const TURN_FLOOR_CLEARANCE: float = 0.1
 const SLOPE_GRAVITY: float = 9.8
@@ -15,6 +18,12 @@ const WIPER_CYCLES: Array[float] = [0.0, 0.75, 1.1]
 const IGNITION_SECONDS: float = 1.4
 const LOCKED_GRIP: float = 1.5
 const CLOCK_START: float = 23.0 * 3600.0 + 42.0 * 60.0
+const VanHold = preload("res://features/vehicles/freight_van/van_hold.gd")
+const RearDoorHands = preload("res://features/vehicles/freight_van/rear_door_hands.gd")
+const SEAL_POINT := Vector3(0.0, 1.05, 2.88)
+## Where a sheet held out of the driver's window leaves it: the window's outer face at its sill, by
+## the driver's eye (the glass at x -0.90, its sill 1.34 m up, #355).
+const WINDOW_HOLD := Vector3(-0.95, 1.4, -0.78)
 
 @export var maximum_speed: float = 19.0
 @export var reverse_speed: float = 5.0
@@ -36,6 +45,18 @@ var throttle: float = 0.0
 var scripted_brake: float = 0.0
 var scripted_steer: float = 0.0
 var driver_door: float = 0.0
+var rear_doors_open: bool = false:
+	set(value):
+		rear_doors_open = value
+		if value and get_node_or_null("Hold") == null:
+			var hold := VanHold.new()
+			hold.name = "Hold"
+			add_child(hold)
+var chocked: bool = false
+var load_kg: float = 0.0
+var load_z: float = 0.0
+var sealed: bool = false
+var seal_number: String = ""
 var speed: float = 0.0
 var actual_speed: float = 0.0
 var steering: float = 0.0
@@ -63,13 +84,23 @@ var _wiper_half: int = 0
 var _turn_started: bool = false
 var _collision_cooldown: float = 0.0
 var _visual: Node3D
+var _door_hands: RearDoorHands
 var _turn_query := PhysicsShapeQueryParameters3D.new()
 var _turn_shape_pose: Transform3D
+
+
+## The point at the driver's window a sheet is held out from, in the world (#355).
+func window_hold() -> Vector3:
+	return to_global(WINDOW_HOLD)
 
 
 func _ready() -> void:
 	_visual = $VanPresentation
 	_visual.configure(self)
+	_door_hands = RearDoorHands.new()
+	_door_hands.name = "RearDoorHands"
+	_door_hands.van = self
+	add_child(_door_hands)
 	floor_snap_length = 0.4
 	var collision: CollisionShape3D = $CollisionShape3D
 	var physical_shape := collision.shape as BoxShape3D
@@ -112,6 +143,8 @@ func _physics_process(delta: float) -> void:
 		var drag := 0.28 + absf(speed) * 0.035 + speed * speed * 0.001
 		speed = move_toward(speed, 0.0, drag * delta)
 		speed = clampf(speed + drive_force * delta + pull, -reverse_speed, speed_limit)
+	if chocked and speed > 0.0:
+		speed = 0.0
 	var yaw := speed * lock_curvature * delta if locked \
 		else speed / wheelbase * tan(steering * _steering_limit()) * delta
 	if not _rotation_blocked(yaw):
@@ -148,6 +181,11 @@ func door_handle() -> Vector3:
 
 func door_opening_toward(point: Vector3) -> float:
 	return _visual.door_opening_toward(point)
+
+
+## Whether the rear doors have room to swing round to the sides.
+func rear_swing_clear() -> bool:
+	return _visual.rear_swing_clear()
 
 
 func steering_for(curvature: float) -> float:
@@ -293,6 +331,7 @@ func wiper_cycles() -> float:
 
 
 func recover(at: Transform3D) -> void:
+	_door_hands.cancel()
 	global_transform = at
 	velocity = Vector3.ZERO
 	speed = 0.0
@@ -304,8 +343,104 @@ func recover(at: Transform3D) -> void:
 	gear = 1
 	indicator = 0
 	hazards_on = false
+	rear_doors_open = false
+	chocked = false
 	_turn_started = false
 	reset_physics_interpolation()
+
+
+## The hasp across the rear doors, where a bolt seal goes through them (step 2e-3), in the world.
+func seal_point() -> Vector3:
+	return to_global(SEAL_POINT)
+
+
+## A bolt seal numbered `number` through the rear doors' hasp: they stay shut until it is cut.
+func put_seal(number: String) -> void:
+	sealed = true
+	seal_number = number
+
+
+## Ethan (`driver`) opens the rear doors by hand (part B, `rear_door_hands.gd`); false if a job on
+## them is already under way.
+func open_rear_doors(driver: Node3D) -> bool:
+	return not rear_doors_open and _door_hands.start(driver, true, _rear_door_nodes(),
+		_rear_door_extents())
+
+
+## Ethan (`driver`) closes the rear doors by hand, the left first.
+func close_rear_doors(driver: Node3D) -> bool:
+	return rear_doors_open and _door_hands.start(driver, false, _rear_door_nodes(),
+		_rear_door_extents())
+
+
+## Whether Ethan is at the rear doors by hand just now.
+func rear_doors_busy() -> bool:
+	return _door_hands.busy()
+
+
+## Which door his hand holds, with which hand and where, while it does (`rear_door_hands.gd`).
+func rear_door_hold() -> Dictionary:
+	return _door_hands.hold()
+
+
+## The rear doors' angles from shut, left and right, while his hands work them; else empty.
+func rear_door_angles() -> Array[float]:
+	return _door_hands.angles()
+
+
+func _rear_door_nodes() -> Array[Node3D]:
+	var doors: Array[Node3D] = []
+	for index in range(2):
+		doors.append(_visual.call("rear_door", index))
+	return doors
+
+
+func _rear_door_extents() -> Array[AABB]:
+	var extents: Array[AABB] = []
+	for index in range(2):
+		extents.append(_visual.call("rear_door_extent", index))
+	return extents
+
+
+## Empty, unsealed and shut at the back, as a mission starts again from the beginning.
+func unload() -> void:
+	_door_hands.cancel()
+	load_kg = 0.0
+	load_z = 0.0
+	sealed = false
+	seal_number = ""
+	rear_doors_open = false
+
+
+## Where a bridge plate laid into the hold rests on its rear sill, in the world, on the body as
+## it stands, settled under its load (#287).
+func sill() -> Vector3:
+	return _visual.to_global(VanHold.SILL)
+
+
+## A point of the hold (`local`, in the van's frame) where the body puts it, settled under its
+## load and following the ground.
+func floor_point(local: Vector3) -> Vector3:
+	return _visual.to_global(local)
+
+
+## The van's body as drawn, which its hold and a load in it ride with.
+func body() -> Node3D:
+	return _visual
+
+
+## A load of `kg` set down `at_z` along the van (its frame), so its weight sits where it stands.
+func add_load(kg: float, at_z: float) -> void:
+	if kg <= 0.0:
+		return
+	load_z = (load_z * load_kg + at_z * kg) / (load_kg + kg)
+	load_kg += kg
+
+
+func remove_load(kg: float, at_z: float) -> void:
+	var left := maxf(0.0, load_kg - kg)
+	load_z = (load_z * load_kg - at_z * kg) / left if left > 0.0 else 0.0
+	load_kg = left
 
 
 func get_camera() -> Camera3D:

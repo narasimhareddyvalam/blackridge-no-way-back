@@ -143,6 +143,33 @@ def score(t, i):
     return (note * envelope + drone) * math.sin(math.pi * t / 32) ** 2
 
 
+def door_latch():
+    rattle = noise_function(211, 0.6, 1.0)
+    thud = noise_function(223, 0.06, 1.0)
+
+    def sample(t, i):
+        body = (math.sin(TAU * 96 * t) * 0.7 + thud(t, i) * 0.5) * math.exp(-t * 18)
+        bolt = rattle(t, i) * math.exp(-t * 160) * 0.55
+        ring = (math.sin(TAU * 1870 * t) * 0.16 + math.sin(TAU * 2740 * t) * 0.1) \
+            * math.exp(-t * 45)
+        second = t - 0.028
+        catch = rattle(t, i) * math.exp(-second * 220) * 0.3 if second >= 0 else 0.0
+        return body + bolt + ring + catch
+
+    return sample
+
+
+def door_stay():
+    knock = noise_function(229, 0.12, 1.0)
+
+    def sample(t, i):
+        body = (math.sin(TAU * 74 * t) * 0.55 + knock(t, i) * 0.45) * math.exp(-t * 14)
+        click = math.sin(TAU * 1240 * t) * math.exp(-t * 70) * 0.12
+        return body + click
+
+    return sample
+
+
 if __name__ == '__main__':
     OUTPUT.mkdir(parents=True, exist_ok=True)
     render('engine', 4, engine, True)
@@ -178,4 +205,6 @@ if __name__ == '__main__':
            (math.sin(TAU * 3100 * t) * 0.5 + math.sin(TAU * 4700 * t) * 0.3)
            * math.exp(-t * 90) * 0.5)
     render('skid', 2.0, skid(), True)
-    print('Rendered 19 original prototype sounds at 22,050 Hz.')
+    render('door_latch', 0.4, door_latch())
+    render('door_stay', 0.35, door_stay())
+    print('Rendered 21 original prototype sounds at 22,050 Hz.')

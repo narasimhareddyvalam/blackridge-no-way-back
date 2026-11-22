@@ -5,9 +5,12 @@ signal checkpoint_saved
 signal checkpoint_save_failed(error: int)
 signal drive_completed
 signal struck(speed: float)
+## The van has come to rest after the hit: the hold begins (Assignment 7's shock, C67).
+signal came_to_rest
 
 const SaveFile = preload("res://shared/save/save_file.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
+const LastRun = preload("res://features/missions/last_run/last_run.gd")
 const MISSION := "night_freight"
 const NAME := "Night Freight"
 const TITLE_EYE := Vector3(3.2, 1.0, -9.5)
@@ -145,6 +148,8 @@ func _physics_process(delta: float) -> void:
 	if vehicle.locked:
 		_watch_lock()
 	if _held_for >= 0.0 and absf(vehicle.speed) < 0.05:
+		if is_zero_approx(_held_for):
+			came_to_rest.emit()
 		_held_for += delta
 		if _held_for >= HOLD_SECONDS:
 			_held_for = -1.0
@@ -354,8 +359,16 @@ func _save_checkpoint(announce: bool = true) -> Error:
 	return _write_progress(config, announce)
 
 
+## Saves a checkpoint another mission reached, such as Mission 2's "loaded" (step 2e-3), into the
+## same progress file, announced as Mission 1's are.
+func save_progress(config: ConfigFile) -> Error:
+	return _write_progress(config, true)
+
+
 func _save_finished() -> void:
-	_write_progress(WrongCargo.start_progress(), false)
+	var config := WrongCargo.start_progress()
+	config.set_value("cargo", "opening", true)
+	_write_progress(config, false)
 
 
 func _progress_at(at_stage: int) -> ConfigFile:
@@ -410,6 +423,8 @@ func _upgrade(config: ConfigFile, from: int) -> void:
 func _valid_progress(config: ConfigFile) -> bool:
 	if config.get_value("save", "mission", "") == WrongCargo.MISSION:
 		return WrongCargo.valid_progress(config)
+	if config.get_value("save", "mission", "") == LastRun.MISSION:
+		return LastRun.valid_progress(config)
 	var value: Variant = config.get_value("drive", "stage", -1)
 	if config.get_value("save", "mission", "") != MISSION or not value is int or value < 0 \
 			or value >= TARGETS.size():

@@ -1,0 +1,4 @@
+1360c1360
+< 			arm.mesh = (made.get_node("HingeArm%s%s" % [level, side]) as MeshInstance3D).mesh
+---
+> 			arm.mesh = (made.get_node("HingeArmUpper%s" % side) as MeshInstance3D).mesh

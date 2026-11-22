@@ -1,0 +1,4 @@
+42c42
+< const FIRST_Z := -9.75 + 0.3 + BASE_ALONG / 2.0
+---
+> const FIRST_Z := -9.75 + 0.1 + BASE_ALONG / 2.0

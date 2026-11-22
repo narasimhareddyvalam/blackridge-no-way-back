@@ -1,0 +1,43 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_shed_work.gd:86)
+PASS: W0: the shed's forklift is a working truck (Building/Forklift)
+PASS: W1: parked while no one is near (moved 0.000 m, turned 0.000 rad)
+PASS: W1: its load is its own, not one of the mission's Pallet<n>
+PASS: W2: the putaway: the load in floor bay FS-01 within 5 cm ((-48.0, 1.3, 9.099999)), the truck parked again (83.7 s)
+PASS: W2: and the pick: the load back in dock 6's lane within 5 cm, the truck parked again (182.8 s)
+PASS: W3: the load carried 0.10-0.15 m up whenever it moves loaded (0 frames out)
+PASS: W4: never over 5 mph (fastest 2.20 m/s), slower in the aisle (0.00 m/s)
+PASS: W5: its blue spot 3-5 m ahead in its direction of travel (0 frames out of 9338)
+PASS: W6: its alarm only while it backs (0 frames wrong, 2765 backing)
+PASS: W7: its horn where it crosses aisle 05's mouth, going and coming (4 of 4 horns)
+PASS: W8: the driver looks the way he backs (his head turned at least 45°)
+PASS: W10: with Ethan in its way on the cross-aisle it stops, at least 2 m short of him (2.14 m)
+PASS: W10: and goes on when he has left its way (0.1 s)
+PASS: W9: the driver seated, his hands on the wheel (0.070 m) and his feet on the plate (0.000 m)
+PASS: S1: bay 9's dock worker goes to scan the pallet set down on the lift, at his place beside its deck within 15 s (9.5 s), never stepping on the deck while it is down
+PASS: S2: he faces the pallet, the scanner in his hand, and reads it once with its beep (1 reads)
+PASS: S3: then he is back at his desk, seated, the scanner put away (20.3 s)
+PASS: S4: the same pallet set down again does not send him a second time
+PASS: S5: with the lift down, he scans from beside it and waits off its deck rather than step to his chair over the pit
+PASS: S5: and sits down once it is up again (11.0 s)
+PASS: R1: rain drumming on the roof from 4 places under it, on the Ambience bus
+PASS: R2: under the roof the yard's rain falls away (-24.0 dB outside, -38.0 dB inside)
+PASS: R3: each heater heard where it hangs, running on its thermostat, 50-70% of the time over two hours
+PASS: R4: each fan's slow swish heard where it turns (2)
+PASS: R5: a radio on the dock desk playing low
+SHED WORK RESULT: 25/25 passed; 0 failed
+WARNING: 31 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

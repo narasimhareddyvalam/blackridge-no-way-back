@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/muth/o7/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-21 12:37:30
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/muth/o7/game/features/environments/industrial_loop/guard_booth.gd	2026-11-21 13:11:15
+@@ -503,7 +503,6 @@
+ 			_lay_sheet((_van.call("window_hold") as Vector3) + out * SHEET_OUT * (1.0 - gone)
+ 				- out * SHEET.y * gone, toward_van, 0.0)
+ 			if _hand_t >= IN_SECONDS:
+-				sheet.visible = false
+ 				_next("back")
+ 
+ 

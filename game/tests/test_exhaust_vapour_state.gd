@@ -47,6 +47,8 @@ func _run() -> void:
 	_driver = _app.get("driver")
 	await process_frame
 	_hud.resume_requested.emit()
+	await process_frame
+	await _tap("interact")
 	await _seconds(0.5)
 	_check(not _van.engine_on and not _plume.emitting and is_zero_approx(_plume.amount_ratio),
 		"On foot at the office, with the engine off, there is no exhaust")

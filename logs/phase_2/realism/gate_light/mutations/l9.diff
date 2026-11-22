@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/ui/menus/front_menu.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutgl/l9/game/features/ui/menus/front_menu.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/ui/menus/front_menu.gd	2026-11-21 10:39:37
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutgl/l9/game/features/ui/menus/front_menu.gd	2026-11-21 10:42:55
+@@ -550,7 +550,7 @@
+ 		+ "Residential\" by Maxwell autodoors (Sketchfab: maihupronoob) and \"Abandoned Factory "
+ 		+ "Warning Light\" by x4vier28, licensed CC BY 4.0: the transfer shed's barrier cabinet "
+ 		+ "(its own arm removed), the sliding gates' motors and the gates' warning lamps.")
+-	_section(lines, "THE COMPOUND GATE'S LIGHT", "\"LED Floodlight\" by The Street Light Man "
++	_section(lines, "THE COMPOUND GATE'S LIGHT", "\"LED Floodlight\" by its author "
+ 		+ "(Sketchfab: thestreetlightman), licensed CC BY 4.0: the floods on the compound gate's "
+ 		+ "pole, stood on their yokes.")
+ 	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "

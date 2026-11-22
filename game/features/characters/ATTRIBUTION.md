@@ -5,7 +5,8 @@ them, are made from Adobe Mixamo characters and animations:
 
 - **Source:** Adobe Mixamo, https://www.mixamo.com
 - **Ethan:** Mixamo character "Ch33", with the animations Breathing Idle, Walking, Walking
-  Backwards, Running, Entering Car and Exiting Car (decision C28).
+  Backwards, Running, Entering Car and Exiting Car (decision C28), and Pushing and Push Stop
+  for bay 9's pallet jack (added on 2026-11-12, Phase 2's step 2e, #240).
 - **The pedestrian:** Mixamo character "Ch01", with Hit By Car, and Ethan's Walking and
   Breathing Idle (the idle added on 2026-11-01, Run 22, for waiting at the bus stop).
 - **Licence:** Adobe's Mixamo terms. They are free to use in games, including games that
@@ -31,5 +32,175 @@ author's request:
 - **The pedestrian at real size (2026-11-01):** Mixamo's 1/100 scale and 90-degree turn are
   baked into his skeleton, so his physics ragdoll can attach to it. In the game Hit By Car now
   gives only his standing pose; the hit itself is physics.
+- **Pushing and Push Stop (2026-11-12):** Pushing plays in place like the walk; Push Stop's
+  forward travel is taken out at every sixth frame, and the game moves Ethan by the same
+  amounts. His hands are held to the pallet jack's handle in the game, not in the clips.
 
 The source downloads are described in `source_assets/mixamo/README.md`.
+
+## The gate guard
+
+`guard/guard.glb`, with the textures Godot extracts next to it, is made from the Microsoft
+Rocketbox avatar library (decision C55):
+
+- **Source:** https://github.com/microsoft/Microsoft-Rocketbox: the avatar
+  `Assets/Avatars/Professions/Security_Male_01` and the animation
+  `Assets/Animations/all_animations_max_motextr_static/m_sit_chair_breathe_01.max.fbx`,
+  downloaded on 2026-11-11 (`source_assets/rocketbox/README.md`).
+- **Licence:** MIT, copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`). Free for
+  any use, including a game that is sold, if the copyright and licence notice go with it; the
+  in-game credits carry them.
+
+### Changes
+
+Claude Code converted the downloads with `tools/art/convert_rocketbox.py` on 2026-11-11, at the
+author's request:
+
+- **The clip:** baked onto him bone by bone, because a Rocketbox clip's rest pose is its own
+  first frame: each bone turns as the clip turns it, on his own bone lengths. It is named
+  `SitIdle-loop`, which Godot loops as `SitIdle`.
+- **Placement:** turned to face the model's front and moved so that his shoes stand at its
+  origin, under his hips.
+- **Materials:** one roughness per part (head 0.56, uniform 0.72, kit 0.5); Rocketbox's specular
+  maps are dropped and nothing is metallic.
+- **Textures:** halved from 2048 to 1024 pixels and stored as WebP.
+- **In the game:** he sits at the gate booth's counter, and a `LookAtModifier3D` turns his head
+  (`transfer_shed.gd`).
+
+## The dock worker
+
+`dock_worker/dock_worker.glb`, with the textures Godot extracts next to it, is made from the
+Microsoft Rocketbox avatar library (decision C58):
+
+- **Source:** https://github.com/microsoft/Microsoft-Rocketbox: the avatar
+  `Assets/Avatars/Professions/Construction_Male_08` and the animations
+  `Assets/Animations/all_animations_max_motextr_static/m_idle_neutral_01.max.fbx`,
+  `Assets/Animations/all_animations_max_motextr_xy/m_walk_neutral_01.max.fbx` and
+  `Assets/Animations/all_animations_max_motextr_static/m_try_door_outwards.max.fbx`,
+  downloaded on 2026-11-11 (`source_assets/rocketbox/README.md`).
+- **Licence:** MIT, copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`), as for
+  the gate guard; the in-game credits carry the notice.
+
+### Changes
+
+Claude Code converted the downloads with `tools/art/convert_rocketbox.py` on 2026-11-11, at the
+author's request:
+
+- **The clips:** each baked onto him bone by bone, as the guard's is, and named `Idle-loop`,
+  `Walk-loop` (the walk in place, its forward motion taken out in the library) and `Seal`, which
+  Godot imports as the looping `Idle` and `Walk` and the one-shot `Seal`.
+- **Placement:** moved so that his shoes stand at the origin, under his hips; he already faces
+  the model's front.
+- **Materials:** one roughness per part (head 0.56, work suit 0.72, hard hat 0.35); Rocketbox's
+  specular maps are not used and nothing is metallic.
+- **Textures:** halved from 2048 to 1024 pixels and stored as WebP.
+- **In the game:** he comes out of the transfer shed's side door to seal a loaded van's doors
+  at bay 9 and walks back in (`dock_worker.gd`, `transfer_shed.gd`).
+
+## The forklift driver
+
+`forklift_driver/forklift_driver.glb`, with the textures Godot extracts next to it, is made from
+the Microsoft Rocketbox avatar library (part G of step 5 of #253; the author chose him from the
+library's previews, #303):
+
+- **Source:** https://github.com/microsoft/Microsoft-Rocketbox: the avatar
+  `Assets/Avatars/Professions/Construction_Male_07` and the animation
+  `Assets/Animations/all_animations_max_motextr_static/m_sit_table_idle_neutral_01.max.fbx`
+  (already here for the dock worker), the avatar downloaded on 2026-11-16
+  (`source_assets/rocketbox/README.md`).
+- **Licence:** MIT, copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`); the
+  in-game credits carry the notice.
+
+### Changes
+
+Claude Code converted the download with `tools/art/convert_rocketbox.py` (its `forklift_driver`
+job) on 2026-11-16, at the author's request:
+
+- **The clip:** the seated idle at a table baked onto him bone by bone, named `SitIdle-loop`
+  (Godot imports it as the looping `SitIdle`), his arms forward.
+- **Materials and textures:** as the dock worker's: one roughness per part (head 0.56, work
+  suit 0.72, hard hat 0.35), no specular maps, textures halved to 1024 pixels as WebP.
+- **In the game:** seated on the shed's forklift, his hands set on its wheel and his feet on its
+  plate by two-bone IK and his head turned the way he backs (`forklift_truck.gd`,
+  `look_travel.gd`).
+
+## The compound's patrol guards (Mission 2's step 6, #358)
+
+- **Model:** "Security Guard - Rigged 3D Model" by qsardor57913,
+  https://sketchfab.com/3d-models/1e3307732bbf4453b30f021bfec5bcaf (fetched 2026-11-21 through
+  the Blender MCP add-on's Sketchfab import, `source_assets/sketchfab/29_security_guard/`).
+- **Licence:** CC BY 4.0 (Sketchfab's "CC Attribution"); the in-game credits name the author
+  ("THE COMPOUND'S PATROLS").
+
+### Changes
+
+Claude Code converted it with `tools/art/convert_patrol_guard.py` on 2026-11-21, at the author's
+word to choose the best real-life patrol guard (#358):
+
+- **The rig:** the Sketchfab suffixes dropped from the bone names; scaled to 1.80 m and stood with
+  his shoes at the origin.
+- **The clips:** Ethan's own Mixamo idle, walk and run (`source_assets/mixamo/`) baked onto him
+  as turns from the T-pose, the walk and run in place (`Idle`, `Walk`, `Run`).
+- **Materials:** one roughness (0.78), nothing metallic, textures halved to 1024 pixels as WebP.
+- **In the game:** `patrol_guard.gd`, a stand-in (D6) with a torch on his left epaulette.
+
+## The men at the harbour (Mission 3's step 3, #359)
+
+- **Model:** "guard" by bumstrum, https://sketchfab.com/3d-models/9f146fae6af1482ab6bff56ed5677c28
+  (fetched 2026-11-21 through the Blender MCP add-on's Sketchfab import,
+  `source_assets/sketchfab/32_syndicate_man/`).
+- **Licence:** CC BY 4.0 (Sketchfab's "CC Attribution"); the in-game credits name the author
+  ("THE MEN AT THE HARBOUR").
+
+### Changes
+
+Claude Code converted it with `tools/art/convert_patrol_guard.py` (its `syndicate_man` job) on
+2026-11-21, at the author's word to finish Mission 3 (#359):
+
+- **The rig:** its bones mapped to Ethan's Mixamo names (the `BUMSTRUM` map), its A-pose limbs
+  aligned before baking, scaled to 1.80 m with his shoes at the origin.
+- **The clips:** Ethan's own Mixamo idle, walk and run, the hips scaled by height, so he walks at
+  1.738 m/s and runs at 4.943 m/s as the patrol guards do; and Mixamo's "Hit By Car" as `Fall`
+  (Mission 3's step 6), for a man put down at the airfield, no gore; and "Male Sitting Pose" as
+  `Sit` (step 8), for the unidentified watcher at a sedan's wheel in the ending, his face never
+  shown.
+- **In the game:** the ambush at berth 2 (`ambush.gd`) and Adrian's men at the airfield
+  (`armed_guard.gd`), a stand-in archetype that patrols, sees, hears, chases and shoots.
+- **His pistol:** written apart (`game/features/weapons/pistol/pistol.glb`, 0.034 by 0.136 by
+  0.180 m, a compact handgun's size) and scaled with him.
+- **Materials:** textures halved to 1024 pixels as WebP.
+
+## Maya and Lily (Mission 3's step 4, #359)
+
+- **Models:** Female_Adult_07 (Maya) and Female_Child_01 (Lily) from the Microsoft Rocketbox
+  avatar library, with its clips f_idle_nervous_01, f_gestic_talk_sad_01,
+  f_gestic_talk_femalestressed_01, f_idle_breathe_01 and f_walk_neutral_01
+  (`source_assets/rocketbox/`).
+- **Licence:** MIT, Copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`); the
+  in-game credits name both ("MAYA AND LILY").
+
+### Changes
+
+Claude Code converted them with `tools/art/convert_rocketbox.py` (its `maya` and `lily` jobs) on
+2026-11-21:
+
+- **Maya:** 8,308 triangles; her see-through part (`f007_opacity`) alpha-blended; normal maps
+  kept.
+- **Lily:** scaled from 1.43 m to 1.12 m, a five-year-old's height; her Bip02 bones renamed
+  Bip01 for the clips; 7,102 triangles.
+- **Materials:** textures halved to 1024 pixels as WebP.
+
+## Adrian (Mission 3's step 7, #359)
+
+- **Model:** Business_Male_03 from the Microsoft Rocketbox avatar library, with its clips
+  m_idle_angry_01, m_gestic_talk_excited_01 and m_walk_neutral_01 (`source_assets/rocketbox/`),
+  chosen by Claude Code from the library's seven business men as the one in a charcoal suit and
+  tie who reads as in his forties (the brief: "Adrian Vale (forties, dark coat)").
+- **Licence:** MIT, Copyright (c) 2020 Microsoft; the in-game credits name him ("MAYA, LILY AND
+  ADRIAN").
+
+### Changes
+
+Claude Code converted him with `tools/art/convert_rocketbox.py` (its `adrian` job) on
+2026-11-22: 7,810 triangles; normal maps kept; textures halved to 1024 pixels as WebP. In the
+game (`adrian.gd`) his right arm is raised by IK to draw the men's pistol.

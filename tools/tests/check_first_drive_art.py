@@ -29,13 +29,15 @@ for path in sorted([*VAN.glob('*.glb'), *WORLD.glob('*.glb')]):
         data = document['accessors'][index]
         view = document['bufferViews'][data['bufferView']]
         width = {'VEC3': 3, 'VEC2': 2, 'SCALAR': 1}[data['type']]
-        return np.frombuffer(binary, dtype='<u4' if data['componentType'] == 5125 else '<f4',
+        kinds = {5123: '<u2', 5125: '<u4', 5126: '<f4'}
+        return np.frombuffer(binary, dtype=kinds[data['componentType']],
                              offset=view.get('byteOffset', 0) + data.get('byteOffset', 0),
                              count=data['count'] * width).reshape(-1, width)
 
     triangles = 0
     all_points = []
-    for index, primitive in enumerate(document['meshes'][0]['primitives']):
+    primitives = [part for mesh in document['meshes'] for part in mesh['primitives']]
+    for index, primitive in enumerate(primitives):
         positions = accessor(primitive['attributes']['POSITION'])
         normals = accessor(primitive['attributes']['NORMAL'])
         uvs = accessor(primitive['attributes']['TEXCOORD_0'])
@@ -62,8 +64,9 @@ for path in sorted([*VAN.glob('*.glb'), *WORLD.glob('*.glb')]):
               'Van body fits existing vehicle footprint with trim allowance')
     print(f'GEOMETRY: {path.name}: {triangles} triangles')
 
-check(len(list(VAN.glob('*.glb'))) == 5 and len(list(WORLD.glob('*.glb'))) == 3,
-      'All five vehicle assets (with the driver\'s door) and three depot props exist')
+check(len(list(VAN.glob('*.glb'))) == 6 and len(list(WORLD.glob('*.glb'))) == 3,
+      'All six vehicle assets (with the driver\'s door and the rear doors\' hinges) and three '
+      'depot props exist')
 
 COCKPIT = VAN / 'cockpit'
 COCKPIT_TRIANGLES = 900000
@@ -146,8 +149,8 @@ IVECO_PARTS = {
     'iveco_exterior.glb': {'Body', 'BodyGlass', 'Headlights', 'TailLamps', 'FrontIndicatorLeft',
                            'FrontIndicatorRight', 'RearIndicatorLeft', 'RearIndicatorRight',
                            'Windshield', 'DriverDoor', 'DriverWindow', 'PassengerDoor',
-                           'PassengerWindow', 'WheelFrontLeft', 'WheelFrontRight',
-                           'WheelRearLeft', 'WheelRearRight'},
+                           'PassengerWindow', 'RearDoorLeft', 'RearDoorRight', 'WheelFrontLeft',
+                           'WheelFrontRight', 'WheelRearLeft', 'WheelRearRight'},
     'iveco_cab.glb': {'Cab', 'SteeringWheel'}}
 IVECO_INVERTED = {'iveco_exterior.glb': 49, 'iveco_cab.glb': 17}
 IVECO_TEXTURE = {'iveco_exterior.glb': 2048, 'iveco_cab.glb': 1024}
@@ -239,6 +242,13 @@ door, _, _, _ = places['DriverDoor']
 check(door[0] < 0 and door[2] < 0 and places['PassengerDoor'][0][0] > 0
       and places['Windshield'][2][2] + places['Windshield'][3][2] < 0,
       'Iveco faces -Z with the driver\'s door on the left (-X)')
+left, _, left_low, left_high = places['RearDoorLeft']
+right, _, right_low, right_high = places['RearDoorRight']
+check(left[0] < -0.95 and right[0] > 0.95 and left[2] > 2.3 and right[2] > 2.3
+      and left_low[0] > 0.1 and abs(left_high[0] - 1.0) < 0.05
+      and right_high[0] < -0.1 and abs(right_low[0] + 1.0) < 0.05,
+      'Iveco rear doors turn about the body\'s outer rear corners (step 2d): the left one at -X, '
+      'the right one at +X, each door reaching in from its pivot to the middle')
 hub, turn, _, _ = places['SteeringWheel']
 column = rotated(turn, np.array([0.0, 0.0, 1.0]))
 check(hub[0] < 0 and column[1] > 0.5 and column[2] > 0.5,
@@ -310,5 +320,197 @@ check(np.allclose(building.min(0), [-3.0, 0.0, -1.8], atol=0.001)
 check(triangles < 30000, f'office/site_office.glb bounded geometry (<30000 triangles)')
 check((OFFICE / 'site_office.glb').stat().st_size < FILE_LIMIT, 'The office file is under 25 MB')
 print(f'GEOMETRY: office/site_office.glb: {triangles} triangles')
+
+GUARD = ROOT / 'game/features/characters/guard'
+check(sorted(path.name for path in GUARD.glob('*.glb')) == ['guard.glb'],
+      "The gate guard exists: Microsoft Rocketbox's Security_Male_01 (C55)")
+guard_triangles = 0
+if (GUARD / 'guard.glb').exists():
+    document, binary = gltf_parts(GUARD / 'guard.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            guard_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    clips = [animation['name'] for animation in document.get('animations', [])]
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(webp_size(binary[start:start + view['byteLength']])))
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(guard_triangles < 12000, 'guard/guard.glb bounded geometry (<12000 triangles)')
+    check(clips == ['SitIdle-loop'], 'guard/guard.glb carries one clip, the seated idle, looping')
+    check(len(sizes) == 6 and max(sizes) <= 1024,
+          'guard/guard.glb holds six WebP textures of at most 1024 pixels (colour and normal '
+          'for head, uniform and kit)')
+    check(joints == 80, 'guard/guard.glb keeps Rocketbox\'s 80-bone skeleton')
+    check((GUARD / 'guard.glb').stat().st_size < FILE_LIMIT, 'The guard file is under 25 MB')
+print(f'GEOMETRY: guard/guard.glb: {guard_triangles} triangles')
+
+WORKER = ROOT / 'game/features/characters/dock_worker'
+check(sorted(path.name for path in WORKER.glob('*.glb')) == ['dock_worker.glb'],
+      "Bay 9's dock worker exists: Microsoft Rocketbox's Construction_Male_08 (C58)")
+worker_triangles = 0
+if (WORKER / 'dock_worker.glb').exists():
+    document, binary = gltf_parts(WORKER / 'dock_worker.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            worker_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    clips = sorted(animation['name'] for animation in document.get('animations', []))
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(webp_size(binary[start:start + view['byteLength']])))
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(worker_triangles < 12000,
+          'dock_worker/dock_worker.glb bounded geometry (<12000 triangles)')
+    check(clips == ['Check', 'CrouchIn', 'CrouchOut', 'Idle-loop', 'Note', 'Seal', 'SitDown',
+                    'SitIdle-loop', 'StandUp', 'TakeDocuments', 'TurnLeft180', 'TurnLeft90',
+                    'TurnRight180', 'TurnRight90', 'Walk-loop', 'WalkStart', 'WalkStop'],
+          'dock_worker/dock_worker.glb carries his seventeen clips: the standing idle and the walk, '
+          'looping, the reach to the doors\' hasp, and at his desk sitting down, the seated idle, '
+          'standing up, checking the log and noting in it; (#329) his walk\'s start and stop, his '
+          'turns on the spot of 90 and 180 degrees each way and his taking a document; and (#338) '
+          'his crouching down and rising, at the van\'s rear step')
+    check(len(sizes) == 6 and max(sizes) <= 1024,
+          'dock_worker/dock_worker.glb holds six WebP textures of at most 1024 pixels (colour and '
+          'normal for head, work suit and hard hat)')
+    check(joints == 81, 'dock_worker/dock_worker.glb keeps Rocketbox\'s 81-bone skeleton')
+    check((WORKER / 'dock_worker.glb').stat().st_size < FILE_LIMIT,
+          'The dock worker file is under 25 MB')
+print(f'GEOMETRY: dock_worker/dock_worker.glb: {worker_triangles} triangles')
+
+ETHAN = ROOT / 'game/features/characters/ethan'
+
+
+def hips_drift(document, binary, animation):
+    """How far, across the floor, an animation's hips get from where they start, at most and at
+    its end, in metres: the armature's own turn and 1/100 scale applied, glTF's Y up. In place,
+    only their sway is left: Pushing's swings 0.14 m to the side, and Push Stop ends 0.05 m to
+    one side; with their travel, Pushing's go 1.0 m and Push Stop's 0.82 m."""
+    hips = next(index for index, node in enumerate(document['nodes'])
+                if node.get('name') == 'mixamorig:Hips')
+    armature = next(node for node in document['nodes'] if node.get('name') == 'Armature')
+    x, y, z, w = armature.get('rotation', [0.0, 0.0, 0.0, 1.0])
+    turn = np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+                     [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+                     [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+    scale = armature.get('scale', [1.0, 1.0, 1.0])[0]
+    channel = next(c for c in animation['channels'] if c['target'].get('node') == hips
+                   and c['target']['path'] == 'translation')
+    output = document['accessors'][animation['samplers'][channel['sampler']]['output']]
+    view = document['bufferViews'][output['bufferView']]
+    start = view.get('byteOffset', 0) + output.get('byteOffset', 0)
+    points = np.frombuffer(binary, dtype='<f4', count=output['count'] * 3,
+                           offset=start).reshape(-1, 3) @ turn.T * scale
+    across = np.linalg.norm((points - points[0])[:, [0, 2]], axis=1)
+    return across.max(), across[-1]
+
+
+if (ETHAN / 'ethan.glb').exists():
+    document, binary = gltf_parts(ETHAN / 'ethan.glb')
+    animations = {animation['name']: animation for animation in document.get('animations', [])}
+    earlier = ['EnterVan', 'ExitVan', 'Idle-loop', 'PullBack-loop', 'Push-loop', 'PushStop',
+               'Run-loop', 'StairsUp-loop', 'Walk-loop', 'WalkBack-loop']
+    ## Assignment 7 (#389-#403): the pistol clips (kept, unused since C68), the rifle's nineteen
+    ## and the seated pose under the shock, their loop modes set in ethan.glb.import.
+    assignment_7 = ['PistolAim', 'PistolIdle', 'PistolReload', 'RifleAim', 'RifleAimDown',
+                    'RifleAway', 'RifleFire', 'RifleGrab', 'RifleHit', 'RifleIdleA', 'RifleIdleB',
+                    'RifleReload', 'RifleRun', 'RifleRunBack', 'RifleStrafe', 'RifleStrafe2',
+                    'RifleStrafeLeft', 'RifleStrafeRight', 'RifleTurnLeft', 'RifleTurnRight',
+                    'RifleWalk', 'RifleWalkBack', 'Sit']
+    check(sorted(animations) == sorted(earlier + assignment_7),
+          'ethan/ethan.glb carries his ten clips: the idle, walk, walk back and run, looping, '
+          'the van\'s way in and out, Mixamo\'s Pushing, looping, and Push Stop (#240), and its '
+          'Running Up Stairs and Pull Heavy Object, looping (#254-#257); and Assignment 7\'s '
+          'twenty-three (the pistol\'s three, the rifle\'s nineteen, the seated pose)')
+    for name in ('Walk-loop', 'Push-loop', 'PushStop', 'StairsUp-loop', 'PullBack-loop'):
+        if name in animations:
+            most, end = hips_drift(document, binary, animations[name])
+            check(most < 0.25 and end < 0.06,
+                  f'ethan/ethan.glb\'s {name} walks in place, the game moving him: his hips get '
+                  f'at most {most:.3f} m from where they start across the floor, {end:.3f} m at '
+                  f'its end')
+    joints = len(document['skins'][0]['joints']) if document.get('skins') else 0
+    check(joints == 65, 'ethan/ethan.glb keeps Mixamo\'s 65-bone skeleton')
+    check((ETHAN / 'ethan.glb').stat().st_size < FILE_LIMIT, 'The Ethan file is under 25 MB')
+
+DEPOT = WORLD / 'depot'
+door_triangles = 0
+check((DEPOT / 'dock_door.glb').exists(),
+      "The dock door exists: Maxwell autodoors' sectional door, made game-ready")
+if (DEPOT / 'dock_door.glb').exists():
+    document, binary = gltf_parts(DEPOT / 'dock_door.glb')
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            door_triangles += document['accessors'][primitive['indices']]['count'] // 3
+    check(0 < door_triangles < 6000, 'depot/dock_door.glb bounded geometry (<6000 triangles)')
+    check(not document.get('images'),
+          'depot/dock_door.glb carries no textures (its wall is gone)')
+    check((DEPOT / 'dock_door.glb').stat().st_size < FILE_LIMIT, 'The dock door file is under 25 MB')
+print(f'GEOMETRY: depot/dock_door.glb: {door_triangles} triangles')
+
+
+def image_size(data):
+    if data[:8] == b'\x89PNG\r\n\x1a\n':
+        return int.from_bytes(data[16:20], 'big'), int.from_bytes(data[20:24], 'big')
+    if data[:2] == b'\xff\xd8':
+        index = 2
+        while index < len(data) - 9:
+            marker = data[index + 1]
+            length = int.from_bytes(data[index + 2:index + 4], 'big')
+            if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+                return (int.from_bytes(data[index + 7:index + 9], 'big'),
+                        int.from_bytes(data[index + 5:index + 7], 'big'))
+            index += 2 + length
+    if data[:4] == b'RIFF':
+        return webp_size(data)
+    return (0, 0)
+
+
+DEPOT_MODELS = {'dock_seal.glb': (2000, False), 'dock_leveller.glb': (12000, True),
+                'forklift.glb': (12000, True), 'pallet_jack.glb': (8000, True),
+                'pallet.glb': (6000, True), 'carton.glb': (1000, True)}
+for name, (limit, textured) in DEPOT_MODELS.items():
+    triangles = 0
+    check((DEPOT / name).exists(), f'depot/{name} exists, made game-ready')
+    if not (DEPOT / name).exists():
+        continue
+    document, binary = gltf_parts(DEPOT / name)
+    for mesh in document['meshes']:
+        for primitive in mesh['primitives']:
+            triangles += document['accessors'][primitive['indices']]['count'] // 3
+    sizes = []
+    for image in document.get('images', []):
+        view = document['bufferViews'][image['bufferView']]
+        start = view.get('byteOffset', 0)
+        sizes.append(max(image_size(binary[start:start + view['byteLength']])))
+    check(0 < triangles < limit, f'depot/{name} bounded geometry (<{limit} triangles)')
+    check(bool(sizes) == textured and all(0 < size <= 1024 for size in sizes),
+          f'depot/{name} textures at most 1024 pixels ({len(sizes)})')
+    print(f'GEOMETRY: depot/{name}: {triangles} triangles, textures {sizes}')
+if (DEPOT / 'pallet_jack.glb').exists():
+    document, _ = gltf_parts(DEPOT / 'pallet_jack.glb')
+    nodes = {node.get('name'): (index, node) for index, node in enumerate(document['nodes'])}
+    steering = nodes.get('Steering', (None, {}))
+    tiller = nodes.get('Tiller', (None, {}))
+    at = steering[1].get('translation', [0.0, 0.0, 0.0])
+    foot = tiller[1].get('translation', [0.0, 0.0, 0.0])
+    hinged = tiller[0] is not None and tiller[0] in steering[1].get('children', [])
+    meshes = [name for name, (_, node) in nodes.items() if 'mesh' in node]
+    chassis = nodes.get('Chassis', (None, {}))[1].get('children', [])
+    rolling = all(nodes.get(name, (None, {}))[0] in chassis for name in
+                  ['BogieL', 'BogieR', 'RollerL1', 'RollerL2', 'RollerR1', 'RollerR2'])
+    wheels = nodes.get('SteerWheels', (None, {}))[0] in steering[1].get('children', [])
+    check(sorted(meshes) == ['BogieL', 'BogieR', 'Chassis', 'RollerL1', 'RollerL2', 'RollerR1',
+                             'RollerR2', 'SteerWheels', 'Steering', 'Tiller']
+          and hinged and rolling and wheels
+          and abs(at[0]) < 0.01 and abs(at[1]) < 0.01 and abs(at[2] - 0.689) < 0.01
+          and abs(foot[0]) < 0.01 and abs(foot[1] - 0.30) < 0.01 and abs(foot[2] - 0.071) < 0.01,
+          'depot/pallet_jack.glb turns and tilts as a real one: its frame, its steering unit '
+          'turning on the pump\'s axis 0.689 m behind its middle, and its handle hinged inside it '
+          f'at the shaft\'s foot, 0.30 m up, its steer wheels in the steering unit and its load '
+          f'rollers and bogies in the frame (meshes {meshes}; steering at {at}, handle at {foot})')
+
 print(f'ART RESULT: {len(failures)} failures')
 raise SystemExit(1 if failures else 0)

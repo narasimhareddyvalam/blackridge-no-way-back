@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t4/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:48:04
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut_tail2/t4/game/features/vehicles/freight_van/van_presentation.gd	2026-11-20 15:57:38
+@@ -1600,7 +1600,7 @@
+ 		var lit: bool = vehicle.indicator_lit and (
+ 			vehicle.hazards_on or vehicle.indicator == side)
+ 		_indicators[index].material_override = _amber if lit else null
+-		_lamp.set_shader_parameter("amber_left" if side < 0 else "amber_right", 1.0 if lit else 0.0)
++		_lamp.set_shader_parameter("amber_right" if side < 0 else "amber_left", 1.0 if lit else 0.0)
+ 	for index in range(_tires.size()):
+ 		_tires[index].rotation.y = vehicle.steering * 0.4 if index % 2 == 0 else 0.0
+ 		_tires[index].rotation.x -= vehicle.actual_speed * delta / TYRE_RADIUS

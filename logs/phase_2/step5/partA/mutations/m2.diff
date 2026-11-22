@@ -1,0 +1,4 @@
+121c121
+< 				if _faces_aisle(x + side * FRAME_DEEP / 2.0, aisle_faces):
+---
+> 				if side > 0.0 and _faces_aisle(x + side * FRAME_DEEP / 2.0, aisle_faces):

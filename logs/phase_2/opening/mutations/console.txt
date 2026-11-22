@@ -1,0 +1,14 @@
+p1  no opening on a new game       test_opening.gd exit 1, 0/1 passed; 1 failed
+      FAIL: O1: a new game plays the opening (no cutscene playing)
+p2  Ethan's keys not held          test_opening.gd exit 1, 5/6 passed; 1 failed
+      FAIL: O1: a new game plays the opening in the film look: black bars, the HUD and map hidden, its own camera, Ethan's
+p3  the game's title in the opening test_opening.gd exit 1, 5/6 passed; 1 failed
+      FAIL: O2: its shots in the storyboard's order over 49.0 s (["studio", "lamp_in_the_water", "hill_road", "crossing", 
+p4  hard cuts, no dip              test_opening.gd exit 1, 5/6 passed; 1 failed
+      FAIL: O6: every cut dips through black (black at the cuts { 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0 }), each 
+p5  skipping leaves the HUD hidden test_opening.gd exit 1, 5/6 passed; 1 failed
+      FAIL: O3: E skips it at once and gives play back as it starts: the player's camera, no bars, the HUD, Ethan free, SI
+p6  ending on its own camera, not the player's test_opening.gd exit 1, 5/6 passed; 1 failed
+      FAIL: O4: played through (49.1 s), it ends on the player's own camera behind Ethan (12.86 m off) and gives him back
+p7  rain falling through Ethan     test_on_foot.gd exit 1, 51/52 passed; 1 failed
+      FAIL: Rain stops on Ethan instead of falling through him: a particle collider round his body for the rain's layer, n

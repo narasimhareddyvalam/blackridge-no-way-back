@@ -1,0 +1,65 @@
+first_drive_regression.gd          60   exit 0   REGRESSION RESULT: 64/64 passed; 0 failed | bad lines 0, ERROR: lines 3
+first_drive_integration.gd         60   exit 0   BEHAVIOR RESULT: 0 failures | bad lines 0, ERROR: lines 3
+test_materials.gd                  60   exit 0   MATERIALS RESULT: 92/92 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_headlights.gd                 60   exit 0   HEADLIGHTS RESULT: 32/32 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_rain_physics.gd               60   exit 0   RAIN PHYSICS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 0
+test_cockpit.gd                    60   exit 0   COCKPIT RESULT: 25/25 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_ghat_road.gd                  60   exit 0   GHAT ROAD RESULT: 33/33 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_wipers.gd                     60   exit 0   WIPERS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_on_foot.gd                    60   exit 0   ON FOOT RESULT: 50/50 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_oncoming_van.gd               60   exit 0   ONCOMING VAN RESULT: 21/21 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_collision.gd                  60   exit 0   COLLISION RESULT: 44/44 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_crossing.gd                   60   exit 0   CROSSING RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_maya_call.gd                  60   exit 0   CALL RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_hit_speeds.gd                 60   exit 0   HIT SPEEDS RESULT: 12/12 passed; 0 failed | bad lines 0, ERROR: lines 5
+test_dash_screen.gd                60   exit 0   DASH SCREEN RESULT: 16/16 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_save_rules.gd                 60   exit 0   SAVE RULES RESULT: 29/29 passed; 0 failed | bad lines 0, ERROR: lines 7
+test_mirrors.gd                    60   exit 0   MIRRORS RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_menus.gd                      60   exit 0   MENUS RESULT: 20/20 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_mission_two.gd                60   exit 0   MISSION TWO RESULT: 61/61 passed; 0 failed | bad lines 0, ERROR: lines 7
+test_bay_nine.gd                   60   exit 0   BAY NINE RESULT: 20/20 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_loading.gd                    60   exit 0   LOADING RESULT: 35/35 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_sealing.gd                    60   exit 0   SEALING RESULT: 15/15 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_stair.gd                      60   exit 0   STAIR RESULT: 33/33 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_rear_doors.gd                 60   exit 0   REAR DOORS RESULT: 19/19 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_dock_worker.gd                60   exit 0   DOCK WORKER RESULT: 32/32 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_racking.gd                    60   exit 0   RACKING RESULT: 11/11 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_wet_ground.gd                 60   exit 0   WET GROUND RESULT: 5/5 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_roadside.gd                   60   exit 0   ROADSIDE RESULT: 4/4 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_roadside_trees.gd             60   exit 0   ROADSIDE TREES RESULT: 8/8 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_town.gd                       60   exit 0   TOWN RESULT: 8/8 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_rear_camera.gd                60   exit 0   REAR CAMERA RESULT: 7/7 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_docking.gd                    60   exit 0   DOCKING RESULT: 5/5 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_shed_floor.gd                 60   exit 0   SHED FLOOR RESULT: 18/18 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_shed_fitout.gd                60   exit 0   SHED FITOUT RESULT: 23/23 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_shed_kit.gd                   60   exit 0   SHED KIT RESULT: 17/17 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_shed_work.gd                  60   exit 0   SHED WORK RESULT: 25/25 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_yard.gd                       60   exit 0   YARD RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_container_yard.gd             60   exit 0   CONTAINER YARD RESULT: 17/17 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_compound.gd                   60   exit 0   COMPOUND RESULT: 10/10 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_warehouses.gd                 60   exit 0   WAREHOUSES RESULT: 21/21 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_loading_bay.gd                60   exit 0   LOADING BAY RESULT: 10/10 passed; 0 failed | bad lines 0, ERROR: lines 4
+test_free_exit.gd                  60   exit 0   FREE EXIT RESULT: 6/6 passed; 0 failed | bad lines 0, ERROR: lines 4
+test_forklift.gd                   60   exit 0   FORKLIFT RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_pallet_jack.gd                60   exit 0   PALLET JACK RESULT: 11/11 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_tail_lamps.gd                 60   exit 0   TAIL LAMPS RESULT: 6/6 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_moon_roof_rain.gd             60   exit 0   MOON ROOF RAIN RESULT: 4/4 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_windshield_water.gd           60   exit 0   WINDSHIELD WATER RESULT: 14/14 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_booths.gd                     60   exit 0   BOOTHS RESULT: 31/31 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_gates.gd                      60   exit 0   GATES RESULT: 18/18 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_yard_realism.gd               60   exit 0   YARD REALISM RESULT: 5/5 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_docks.gd                      60   exit 0   DOCKS RESULT: 15/15 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_gate_light.gd                 60   exit 0   GATE LIGHT RESULT: 6/6 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_wiper_flick_config.gd         60   exit 0   WIPER FLICK CONFIG RESULT: 451/451 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_roof_spill_config.gd          60   exit 0   ROOF SPILL CONFIG RESULT: 221/221 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_lamp_rain_config.gd           60   exit 0   LAMP RAIN CONFIG RESULT: 588/588 passed; 0 failed | bad lines 0, ERROR: lines 1
+test_exhaust_vapour_config.gd      60   exit 0   EXHAUST VAPOUR CONFIG RESULT: 44/44 passed; 0 failed | bad lines 0, ERROR: lines 0
+test_wiper_flick_state.gd          60   exit 0   WIPER FLICK STATE RESULT: 27/27 passed; 0 failed | bad lines 0, ERROR: lines 2
+test_roof_spill_state.gd           60   exit 0   ROOF SPILL STATE RESULT: 13/13 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_lamp_rain_state.gd            60   exit 0   LAMP RAIN STATE RESULT: 16/16 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_exhaust_vapour_state.gd       60   exit 0   EXHAUST VAPOUR STATE RESULT: 10/10 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_night_dimming.gd              30   exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_night_dimming.gd              60   exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 3
+test_night_dimming.gd              144  exit 0   NIGHT DIMMING RESULT: 30/30 passed; 0 failed | bad lines 0, ERROR: lines 2
+check_first_drive_art.py exit 0 ART RESULT: 0 failures
+DONE

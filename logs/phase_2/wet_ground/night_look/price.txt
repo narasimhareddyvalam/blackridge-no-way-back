@@ -1,0 +1,14 @@
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+RRF      0.603     0.481 to   0.724        -  an option, no budget           45.2, 46.3
+RGL      0.607     0.498 to   0.715        -  an option, no budget           45.2, 45.3
+RDK      0.030    -0.068 to   0.129        -  an option, no budget           45.2, 45.1
+RHZ      2.964    -3.722 to   9.650        -  an option, no budget           44.9, 45.2
+ARF      0.521     0.413 to   0.629        -  an option, no budget           52.6, 54.7
+AGL      0.727     0.608 to   0.846        -  an option, no budget           52.8, 53.0
+ADK      0.022    -0.066 to   0.110        -  an option, no budget           52.6, 52.5
+AHZ     -0.058    -0.325 to   0.210        -  an option, no budget           46.4, 45.9
+DRF      0.515     0.233 to   0.797        -  an option, no budget           49.1, 50.6
+DGL      0.558     0.381 to   0.736        -  an option, no budget           51.6, 52.4
+DDK      0.032    -0.141 to   0.206        -  an option, no budget           52.6, 52.6
+DHZ     -0.047    -0.238 to   0.144        -  an option, no budget           52.8, 52.6

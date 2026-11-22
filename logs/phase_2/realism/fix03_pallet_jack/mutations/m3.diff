@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m3/game/features/environments/industrial_loop/pallet_jack.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:50:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf3/m3/game/features/environments/industrial_loop/pallet_jack.gd	2026-11-19 15:51:29
+@@ -52,7 +52,7 @@
+ ## Its frame drawn 24 mm above its lowered place (its rollers off the floor), its forks' tops
+ ## then at 91 mm (spec sheets: about 76 mm); pumped, the forks rise 36 mm to meet a pallet's
+ ## deck (its underside 0.127 m up) and 40 mm more to lift it clear.
+-const FRAME_DROP := 0.024
++const FRAME_DROP := 0.0
+ const FORKS_MEET := 0.036
+ const FORKS_RAISED := 0.076
+ ## With no sidestep in his clips (#327) he keeps behind the handle as he walks, so the handle

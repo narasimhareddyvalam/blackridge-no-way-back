@@ -1,0 +1,7 @@
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+RK  the cross-aisle        40    1586    1695     17.969     16.444     1.518     0.089  0 particles; nodes toggled 1, rain volumes active 8
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+RK       1.518     1.430 to   1.607     1.50  not settled at this precision  57.3, 59.9

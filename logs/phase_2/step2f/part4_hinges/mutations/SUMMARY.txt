@@ -1,0 +1,4 @@
+Hinge mutations (#259), each on an APFS clone, test_rear_doors.gd at 60 fps:
+m1  brackets set 5 cm behind their pins (m1.diff)          exit 1, 17/18, R10: every hinge's bracket to the body 0.033-0.045 m
+m2  upper hinges given the lower bracket (m2.diff)         exit 1, 17/18, R10: upper brackets to the body 0.014-0.023 m
+Earlier (before the Blender meshes): R10 failed on the box hinges ("a plain box"), then 18/18.

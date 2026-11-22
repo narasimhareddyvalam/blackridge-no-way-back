@@ -1,0 +1,169 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Unable to open file: res://.godot/imported/leafy_grass_diff_1k.jpg-f372801a7838ed61990b0623179f5ec7.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/test_ring_readback.gd:29)
+ERROR: Failed loading resource: res://.godot/imported/leafy_grass_diff_1k.jpg-f372801a7838ed61990b0623179f5ec7.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/test_ring_readback.gd:29)
+ERROR: Failed loading resource: res://features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/test_ring_readback.gd:29)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg".
+          at: GDScript::reload (res://features/missions/last_run/epilogue.gd:36)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_ring_readback.gd:29)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://features/missions/last_run/last_run.gd:0)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_ring_readback.gd:29)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://features/missions/the_wrong_cargo/the_wrong_cargo.gd:0)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_ring_readback.gd:29)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://features/missions/night_freight/first_drive.gd:0)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_ring_readback.gd:29)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://app/first_drive.gd:0)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/test_ring_readback.gd:29)
+ERROR: Failed to load script "res://app/first_drive.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/test_ring_readback.gd:29)
+ERROR: Unable to open file: res://.godot/imported/leafy_grass_diff_1k.jpg-f372801a7838ed61990b0623179f5ec7.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:432)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://.godot/imported/leafy_grass_diff_1k.jpg-f372801a7838ed61990b0623179f5ec7.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:432)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_diff_1k.jpg.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:432)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Unable to open file: res://.godot/imported/leafy_grass_nor_gl_1k.jpg-fb804ca3468906042e6b9d001aa27681.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:433)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://.godot/imported/leafy_grass_nor_gl_1k.jpg-fb804ca3468906042e6b9d001aa27681.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:433)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://features/environments/industrial_loop/polyhaven/textures/leafy_grass/leafy_grass_nor_gl_1k.jpg.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _hill_material (res://features/environments/industrial_loop/industrial_loop.gd:433)
+       [2] _ground_and_roads (res://features/environments/industrial_loop/industrial_loop.gd:240)
+       [3] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [4] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Unable to open file: res://.godot/imported/green_metal_rust_nor_gl_1k.jpg-f755afd5ebd05f5822b710f6a26389f6.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://.godot/imported/green_metal_rust_nor_gl_1k.jpg-f755afd5ebd05f5822b710f6a26389f6.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Unable to open file: res://.godot/imported/green_metal_rust_nor_gl_1k.jpg-f755afd5ebd05f5822b710f6a26389f6.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://.godot/imported/green_metal_rust_nor_gl_1k.jpg-f755afd5ebd05f5822b710f6a26389f6.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Failed loading resource: res://features/environments/industrial_loop/polyhaven/textures/green_metal_rust/green_metal_rust_nor_gl_1k.jpg.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _texture (res://features/environments/industrial_loop/industrial_loop.gd:1128)
+       [1] _streetlight_material (res://features/environments/industrial_loop/industrial_loop.gd:846)
+       [2] _lamp_post (res://features/environments/industrial_loop/industrial_loop.gd:805)
+       [3] _depot (res://features/environments/industrial_loop/industrial_loop.gd:577)
+       [4] _ready (res://features/environments/industrial_loop/industrial_loop.gd:174)
+       [5] _run (res://tests/test_ring_readback.gd:30)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_ring_readback.gd:30)
+PASS: R1 the ring's player and sprite exist on the dash (RingPlayer:<AnimationPlayer#1174254177286>, RingIcon:<Sprite2D#1174237400069>)
+PASS: R2 every track resolves []
+PASS: R3 the clip 'ring' exists
+PASS: R4 step is one frame period (0.1000)
+PASS: R5 length 0.600 s is 6 frames at 10 fps
+PASS: R6 the cycle loops (loop_mode 1, LOOP_LINEAR)
+PASS: R7 one value track keying RingIcon:frame (1 tracks, RingIcon:frame)
+PASS: R8 discrete updates
+PASS: R9 six keys, one every frame period from 0 (6 keys)
+FAIL: R10 the frame order 0 to 5
+FAIL: R11 every key is a cell the sheet has (6 cells)
+PASS: R12 seam: the gap from the last key to length equals the key interval (0.100)
+PASS: R13 seam: no duplicate across the wrap (last 6, first 0)
+PASS: R14 sliced as the brief says: res://features/vehicles/freight_van/art/ring/phone_ring.png, hframes 6, vframes 1, cells (64.0, 64.0)
+PASS: R15 the player advances on the process tick and plays nothing by itself
+RING READBACK RESULT: 13/15 passed; 2 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

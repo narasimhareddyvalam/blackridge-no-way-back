@@ -1,0 +1,41 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_dock_worker.gd:178)
+PASS: W1: bay 9's dock station is Poly Haven's Metal Office Desk and Red Fox's office chair, with Poly Haven's Clipboard as the seal log and its Stationery Supplies' pen cup (so)
+PASS: W2: the desk and the chair stand on the dock floor (their feet 1.300 and 1.300 m up) and the seal log and pen cup on the desk's top (2.088 and 2.088 m)
+PASS: W3: the station keeps to its corner, clear of the load's approach to the lift, the lift's pit, the edge rail by 0.03 m, the dock wall and the way to the stair, with room to walk between it and bay 9's staged load (0.97 m; it spans x -46.44 to -44.84, z 17.55 to 19.55)
+PASS: W4: the desk's drawers face the lift and the chair stands in its kneehole facing it, its column 0.35 m out from the desk's front and 0.00 m off its middle
+PASS: W5: the desk and the chair are solid, so nobody walks or pushes a load through them
+PASS: W6: from where Ethan stands behind the van and comes to its doors, the chair's back is in sight through bay 9's doorway (hidden from none)
+PASS: W7 at the start he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+PASS: W8 sent to seal, he stands up from his desk and takes the seal log in his hand (["StandUp", "Idle", "TurnRight180"], carried true)
+PASS: W9 his way: over the dock floor to the stair's landing (0.03 m), down the stair (0.20 m from its foot), out of the side door (0.23 m), never into the van
+PASS: W10 at the doors, view, verify, tug, twist (C-TPAT's VVTT): the seal put on in Seal (Seal), then Check against his log and Note (["StandUp", "Idle", "TurnRight180", "WalkStart", "", "Walk", "WalkStop", "Idle", "Walk", "WalkStop", "Idle", "Seal", "Check", "TurnLeft180", "Note", "WalkStart", "Walk", "WalkStop", "TurnRight90", "Idle", "SitDown"])
+PASS: W11 back at his desk within the doors' 90 s (78.8 s)
+PASS: W12: on the dock stair he takes a tread a step, his feet taking turns (true; 4 steps down, 4 up), each step 0.50-0.80 s (0.45-0.85), each planted foot on its tread (0.008 m off: up foot 0 at 0.13 along, tread 1, body at 0.38, 0.008 m off its IK's aim); plants ["d5@873", "d4@904", "d3@935", "d2@965", "d1@996", "u1@3880", "u2@3928", "u3@3975", "u4@4022", "u5@4070"]
+PASS: W13: his hand on the rail's side holds the rail all the way down and up (0.003 and 0.000 m off it), the log in his other hand (true, true; the farthest at { "down": "0.45 along, 0.003 m off its IK\'s aim at (-43.65, 1.500467, 14.72459)", "up": "0.88 along, 0.000 m off its IK\'s aim at (-43.65, 2.220479, 14.08765)" })
+PASS: W14: he gets up to pace and slows to a stop over a step or two, never changing pace faster than 3.5 m/s a second (at most 2.8, out in Walk at (-45.15806, 1.3, 12.52613); ["0.99", "1.04", "1.09", "1.13", "1.18", "1.23", "1.27", "1.32", "1.37", "1.40", "1.40"])
+PASS: W15: he turns on the spot, never snapping round (0 frames), at most 159° a second standing (360)
+PASS: W19: his round shown as it happens, the cameras cutting as he reaches each part, the bolt seal last (["desk", "stair", "door", "apron", "doors", "paper", "doors", "seal"]), each seeing him or it all the while (0 of 3113 frames not: ), ending 3.7 s after he turns back, and room behind the van as he seals (2.94 m to the bumpers)
+PASS: W24: as the seal goes on his hands are on the hasp, his right wrist 0.076 m from it and his left 0.109 m (a hand's length, 0.15), the seal in his hand 0.086 m from it; left shoulder 0.590 m from its aim, the aim 0.033 m from his left hand
+PASS: W23: walking he never goes into his chair, never stepping nearer it than half his body's width (he pushes it in under the desk before he sets off and draws it out to sit): stepping nearer, at least 0.20 m from its footprint (0.21 m at the nearest, out in Walk at (-46.64466, 1.3, 18.92117))
+PASS: W22: he never floats up or drops: his height changes at most 5 cm a frame as he walks (0.035 m at most, out at (-44.01614, 0.795436, 14.48319))
+PASS: W21: the side door shut, he stops inside it and pushes it open, going through only once it has swung open (1.00 of the way at the least)
+PASS: W18: off the stair, walking, his feet stay on the floor he walks on, his toes never more than 3 cm below it (0.017 m at most: Bip01 L Toe0 toe at (-40.31838, 0.002515, 17.58668), back, on ShedBody)
+PASS: W16: the seal is in his hand until it is on the hasp (208 frames before, 0 after), and a pen is in his hand all the time he notes (162 of 162 frames)
+PASS: W11 back, he sits at his desk: SitIdle, his hips 0.11 m over the seat and 0.05 m from its middle, facing the desk (1.00), the log on it true
+FAIL: W26: the seal log in either of his hands is the size of the one on his desk (0.010 and 0.010 of it), not shrunk by the model's skeleton (#337)
+PASS: W25: noting, he holds the seal log up before his chest in his left hand (its page 1.10-1.10 m up and 0.30-0.30 m before him, 0.62 m clear of the van's doors, his hand 0.001 m from the board) and ticks its row for this van with his pen, the tick drawn stroke by stroke under the pen's tip (0.003 m from it at the most; 2.0 of 2 strokes), and the log he puts back on his desk shows the row and its tick (true)
+PASS: W17: his scanner dark until he aims (0 frames lit before), a red line to the load's shipping label for 0.40 s (0.3-0.5), ending 0.000 m from it, then a green flash of 0.22 s with the beep (true), the label read (true)
+PASS: W20: with the van too near the dock to stand behind, he waits inside the side door (true, never past x -40.51), Enter skips his cutscene at once (true), and pulled forward again, out he goes (true; he was out at (-40.50791, 0.02, 17.49719))
+DOCK WORKER RESULT: 26/27 passed; 1 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

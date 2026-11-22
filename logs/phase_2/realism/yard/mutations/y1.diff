@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/muty/y1/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-20 21:22:13
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/muty/y1/game/features/environments/industrial_loop/container_yard.gd	2026-11-20 21:29:48
+@@ -497,7 +497,7 @@
+ 					if not placed.has(kind):
+ 						placed[kind] = []
+ 					draw.randi()
+-					var strip: Dictionary = strips[markings.size()]
++					var strip: Dictionary = strips[0]
+ 					var line: Dictionary = lines[int(strip["line"])]
+ 					var livery: Array = line["livery"]
+ 					var shade := 1.0 + wear.randf_range(-LIVERY_JITTER, LIVERY_JITTER)

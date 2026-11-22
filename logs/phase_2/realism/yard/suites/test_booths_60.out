@@ -1,0 +1,49 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_booths.gd:92)
+PASS: B1: the shed's and the compound's booths are one booth (guard_booth.gd)
+PASS: B2 (shed): a half-glazed door 0.86 x 2.03 m on the face away from the lane (-1.00), its handle 1.00 m up
+PASS: B3 (shed): every pane in an aluminium frame of head, sill and jambs 35-75 mm across (7 of 7)
+PASS: B14 (shed): open, the sash leaves 0.47 m clear about where the stop line puts the driver's eye (-0.10 m along the booth)
+PASS: B4 (shed): the service window slides 0.52 m along its track, staying in it, and shuts again
+PASS: B7 (shed): the sash moves only under her left hand: over 156 moving ticks her grip never 3 cm from its pull (0.0 cm at most), her hand on it before it starts
+PASS: B8 (shed): sliding it her elbow bends 80-127 degrees, hangs below her reach (-0.02 m at most above it) and her wrist turns 24 degrees at most
+PASS: B11 (shed): her hand moves at a person's pace, 1.3 m/s at most
+PASS: B10 (shed): her chair in as a person pulls hers in, so she leans only 13 degrees to reach, her toes 0.32 m clear of the front wall
+PASS: B9 (shed): she stays seated and lets go after (her grip 0.63 m from the pull at the end)
+PASS: B15 (shed): turning to the driver beside him his body turns too (31 degrees), his head no further than a neck turns (limited: true)
+PASS: B12 (shed): he watches his hand on the pull while sliding (156 of 156 ticks), looks at the driver as it opens (1.5 s) and at the van as it shuts (1.5 s), then back where his gate has him look (true)
+PASS: B5 (shed): inside, the LED panel's frame, a heater, a phone and its handset, a logbook with ruled pages and a radio (missing [])
+PASS: B6 (shed): outside, an air conditioner 0.38 m out of the wall, a lamp over the door (true), a camera on the roof's corner watching the lane (true), a downpipe from the roof (true) and a fascia (true)
+PASS: B16 (shed): the counter before the open window is kept clear, where the sheet passes (in the way: [])
+PASS: B13 (shed): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air conditioner's head on the walls; the monitor, keyboard, mouse, phone, notepads, a thermos and a pencil cup on the counter; a radio in its charger) (wrong: [])
+PASS: B2 (compound): a half-glazed door 0.86 x 2.03 m on the face away from the lane (-1.00), its handle 1.00 m up
+PASS: B3 (compound): every pane in an aluminium frame of head, sill and jambs 35-75 mm across (7 of 7)
+PASS: B14 (compound): open, the sash leaves 0.47 m clear about where the stop line puts the driver's eye (-0.10 m along the booth)
+PASS: B4 (compound): the service window slides 0.52 m along its track, staying in it, and shuts again
+PASS: B7 (compound): the sash moves only under her left hand: over 156 moving ticks her grip never 3 cm from its pull (0.0 cm at most), her hand on it before it starts
+PASS: B8 (compound): sliding it her elbow bends 85-137 degrees, hangs below her reach (-0.01 m at most above it) and her wrist turns 40 degrees at most
+PASS: B11 (compound): her hand moves at a person's pace, 1.7 m/s at most
+PASS: B10 (compound): her chair in as a person pulls hers in, so she leans only 20 degrees to reach, her toes 0.11 m clear of the front wall
+PASS: B9 (compound): she stays seated and lets go after (her grip 0.67 m from the pull at the end)
+PASS: B15 (compound): turning to the driver beside him his body turns too (31 degrees), his head no further than a neck turns (limited: true)
+PASS: B12 (compound): he watches his hand on the pull while sliding (156 of 156 ticks), looks at the driver as it opens (1.5 s) and at the van as it shuts (1.5 s), then back where his gate has him look (true)
+PASS: B5 (compound): inside, the LED panel's frame, a heater, a phone and its handset, a logbook with ruled pages and a radio (missing [])
+PASS: B6 (compound): outside, an air conditioner 0.38 m out of the wall, a lamp over the door (true), a camera on the roof's corner watching the lane (true), a downpipe from the roof (true) and a fascia (true)
+PASS: B16 (compound): the counter before the open window is kept clear, where the sheet passes (in the way: [])
+PASS: B13 (compound): the kit is real models, each resting where it belongs (a clock, a first-aid case and the air conditioner's head on the walls; the monitor, keyboard, mouse, phone, notepads, a thermos and a pencil cup on the counter; a radio in its charger) (wrong: [])
+BOOTHS RESULT: 31/31 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

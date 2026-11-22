@@ -1,0 +1,13 @@
+#267 part C mutations, each on an APFS clone, test_town.gd at 60 fps:
+m1  the canopy 4.0 m up, below a US canopy's 14 ft 6 in     exit 1, 7/8 passed; 1 failed
+      FAIL: N3 the van fits: canopy 4.00 m up, the lane between the islands 4.0 m, and its box drives in, between the isla
+m2  the islands 2.5 m apart                                 exit 1, 7/8 passed; 1 failed
+      FAIL: N3 the van fits: canopy 4.60 m up, the lane between the islands 2.5 m, and its box drives in, between the isla
+m3  the dispensers without bodies                           exit 1, 7/8 passed; 1 failed
+      FAIL: N7 everything one could walk or drive into is solid (not: ["Dispenser1", "Dispenser2", "Dispenser3", "Dispense
+m4  a real brand on the price sign                          exit 1, 7/8 passed; 1 failed
+      FAIL: N6 no real brand on any sign (SHELL, REGULAR, PLUS, DIESEL, GROCERY, ICE, PROPANE EXCHANGE, NEWSPAPERS, HARDWA
+m5  the canopy's downlights casting shadows                 exit 1, 7/8 passed; 1 failed
+      FAIL: N5 lit as a station at night: 8 downlights under the canopy (8 out of place, pointing elsewhere or shadowed), 
+m6  the price sign on the road's shoulder                   exit 1, 7/8 passed; 1 failed
+      FAIL: N2 nothing built within 1 m of the road's asphalt (nearest PriceSignBody, -0.16 m from it)

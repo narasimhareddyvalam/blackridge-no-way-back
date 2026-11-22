@@ -1,7 +1,7 @@
 extends SceneTree
 
 const LaneKeeper = preload("res://tests/lane_keeper.gd")
-const ASPHALT := "res://features/environments/industrial_loop/wet_asphalt.gdshader"
+const ASPHALT := "res://features/environments/industrial_loop/wet_ground.gdshader"
 const TRIGGER_SIDE := 729
 const LEAD := 15
 const NEAR := 2

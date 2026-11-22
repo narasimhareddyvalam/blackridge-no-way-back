@@ -1,0 +1,44 @@
+Step 2c-1: why the yard changed Mission 1's fall (2026-11-11, Claude Code)
+
+The yard made test_collision.gd 43/44: "Leaning shows the road from 1.9 m past the bumper, where a
+harder hit leaves him (2.9 m from the seat)" needs a gain of at least 1.0 m and measures 0.98 m.
+The struck man's fall at the bus stop's crossing, far from the shed, changed with the yard.
+
+Method: probes/collision_precise.gd is test_collision.gd with the lean check printing three
+decimals (its condition is the old strict "> 1.0", so it reports 43/44 even at a gain of exactly
+1.000) and extra PRECISE lines: the gain measured at the height of his hips and at the road under
+him. Every run: Godot 4.7.2 headless, --fixed-fps 60, HOME=.scratch-home. "Clone" runs are on an
+APFS clone of game/ with one change, named below. Each log's "comes to rest", "lies ... ahead" and
+first "PRECISE at x" lines give the fall.
+
+The two falls seen
+  old (2b r2, committed)  rests 3.7 s, lies 2.4 m out, hips 0.168 m above the road,
+                          gain at his hips 1.000 m, at the road under him 1.10-1.12 m
+  new (2c-1)              rests 5.3 s, lies 2.0 m out, hips 0.170 m above the road,
+                          gain at his hips 0.980 m, at the road under him 1.07-1.08 m
+  (../collision_rerun/, ../collision_marks/lean_road.log, lean_road_2b_r2.log)
+
+What moves it, and what does not (all on the new fall unless named)
+  fall_1..9.log        1-9 boxes added after the world is built (probes/fall_sample.gd): new
+  ids_1..9.log         1-9 unused physics bodies created before it (probes/fall_ids.gd): new
+  clone_t.log          the terrain flattened as at HEAD (no FLAT): new
+  clone_f.log          the forest placed as at HEAD (no CLEARING): new
+  clone_v1.log         without the two yard pole lights: new
+  clone_v2.log         the yard not built: OLD
+  clone_v3.log         the fence as at HEAD: new
+  clone_v4.log         the spur's surface as at HEAD: new
+  clone_w1..w4.log     the walls / the walkway rail / the kerb stop / the bollards without
+                       their colliders, one group each: new
+  hook_z_0.log         the yard not built, no box: OLD
+  hook_z_1..3.log      the yard not built, 1-3 plain boxes added in its place: new
+  hook_y_1..6.log      the yard, and 1-6 plain boxes added while it is built: new
+  spot_z2_*.log        the yard not built, one box buried 50 m under one of six places on the
+                       map, added while the world is built: new
+  spot_y2_*.log        the yard, and one such box under one of four places: new
+
+Reading (a claim from these runs, not a check): the fall depends on the bodies the world builds,
+not on anything near him. The first extra body added while the world is built switches the old
+fall to the new one, wherever it is, even 50 m underground; no further change tried (about 30)
+moved the new fall. Bodies created after the build, or never placed in the world, change nothing.
+The engine's reason was not found. Everything the player sees holds in both falls: from the seat
+the hood hides him, leaning shows him (0 and 9 of 11 parts in the new fall).

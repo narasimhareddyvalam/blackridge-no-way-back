@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb4/g2/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 19:50:33
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb4/g2/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 19:53:37
+@@ -59,7 +59,7 @@
+ ## through, and the driver (the van leaving) for GREET_SECONDS once it is shut; else where his gate
+ ## has him look (`look_at_point`).
+ const LOOK_AT_HAND := 0.15
+-const GREET_SECONDS := 1.5
++const GREET_SECONDS := 0.0
+ const HandTurn = preload("res://shared/components/hand_turn.gd")
+ ## The kit, real models (Poly Haven, CC0, `art/booth/POLYHAVEN.md`; the pencil cup the dock desk's).
+ const ART := "res://features/environments/industrial_loop/art/booth/models/"

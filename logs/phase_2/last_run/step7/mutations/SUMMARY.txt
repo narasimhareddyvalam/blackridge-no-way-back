@@ -1,0 +1,19 @@
+r1  her hand never taken           test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R2: by her (E  Take Lily's hand) E takes her hand: she follows (false); TAKE LILY TO MAYA
+r2  he runs on ahead of her        test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R3: led out (6.8 m), sprint held he walks at her pace (1.71 m/s), she at his side (0.89 m), her hand in his (0
+r3  her arm never up to his hand   test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R3: led out (4.4 m), sprint held he walks at her pace (1.10 m/s), she at his side (0.60 m), her hand in his (0
+r4  no scene at Maya               test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R4: at Maya the scene plays (false), Adrian comes (false), draws (false), one shot (0), black (false), he is d
+r5  Adrian never draws             test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R4: at Maya the scene plays (true), Adrian comes (true), draws (false), one shot (1), black (true), he is down
+r6  Ethan never fires              test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R4: at Maya the scene plays (true), Adrian comes (true), draws (true), one shot (0), black (true), he is down 
+r7  Lily left out of the office    test_rescue.gd exit 1, 0/4 passed; 4 failed
+      FAIL: R1: stage 4: Lily in the office (false), no man about (0), the van at the service gate (14.0 m), Maya there (t
+      FAIL: R2: by her (W / S  Accelerate / brake     A / D  Steer) E takes her hand: she follows (false); FIND LILY
+      FAIL: R3: led out (16.8 m), sprint held he walks at her pace (4.53 m/s), she at his side (11.15 m), her hand in his 
+      FAIL: R4: at Maya the scene plays (false), Adrian comes (false), draws (false), one shot (0), black (false), he is d
+r8  the men still about at stage 4 test_rescue.gd exit 1, 3/4 passed; 1 failed
+      FAIL: R1: stage 4: Lily in the office (true), no man about (3), the van at the service gate (14.0 m), Maya there (tr

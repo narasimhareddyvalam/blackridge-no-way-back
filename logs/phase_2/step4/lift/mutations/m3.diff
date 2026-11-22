@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/van_bay.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutLift/m3/m3/game/features/environments/industrial_loop/van_bay.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/van_bay.gd	2026-11-14 14:25:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutLift/m3/m3/game/features/environments/industrial_loop/van_bay.gd	2026-11-14 14:27:09
+@@ -144,7 +144,7 @@
+ func _physics_process(delta: float) -> void:
+ 	if _holder != null and (not Input.is_action_pressed("interact")
+ 			or not is_instance_valid(_holder)
+-			or (_holder != _lift and not _at_controls(_holder.global_position))):
++			or false):
+ 		_holder = null
+ 		_lift.call("hold", false)
+ 	if not is_instance_valid(vehicle):

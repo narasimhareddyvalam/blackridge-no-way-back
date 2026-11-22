@@ -9,11 +9,13 @@ const STONE := "res://features/environments/industrial_loop/polyhaven/textures/"
 const CELLS := {"hairpin_left": 0, "hairpin_right": 1, "curve_left": 2, "curve_right": 3,
 	"chevron_left": 4, "chevron_right": 5, "speed_15": 6, "speed_20": 7, "speed_25": 8,
 	"steep_grade": 9, "grade_9": 10, "road_closed": 11, "landslide": 12, "scenic_view": 13,
-	"low_gear": 14, "pedestrian": 15, "ahead": 16, "arrow_down_left": 17, "bus_stop": 18}
+	"low_gear": 14, "pedestrian": 15, "ahead": 16, "arrow_down_left": 17, "bus_stop": 18,
+	"limit_45": 20, "limit_45_weathered": 21, "deer_crossing": 22, "mile_0": 23, "mile_1": 24}
 const ATLAS_COLUMNS := 4
 const FACE_SIZE := {"diamond": 1.15, "plate": 0.62, "chevron": 0.75, "board": 1.25,
-	"flag": 0.7}
-const BACK_SIZE := {"diamond": Vector2(0.67, 0.67), "flag": Vector2(0.6, 0.92)}
+	"flag": 0.7, "regulatory": 30 * 0.0254, "milepost": 36 * 0.0254}
+const BACK_SIZE := {"diamond": Vector2(0.67, 0.67), "flag": Vector2(0.6, 0.92),
+	"regulatory": Vector2(24 * 0.0254, 30 * 0.0254), "milepost": Vector2(10 * 0.0254, 36 * 0.0254)}
 const DROP := 1.2
 const DEEP_DROP := 3.0
 const DROP_PROBE := 6.5
@@ -45,10 +47,42 @@ const CROSSING_LEAD := 15
 const LANDSLIDE_LENGTH := 9
 const RUN_EXTENSION := 2
 const RUN_GAP := 6
+## The roadside of #267's part B, at the MUTCD's sizes and spacings: delineators along the valley
+## 200 ft (61 m) apart on straights and S = 3 sqrt(R - 50) ft on curves (MUTCD 3F.04); a
+## weathered SPEED LIMIT 45 (R2-1) at the loop's start, its post leaning, and a clean one where
+## the valley begins after the descent; deer crossings (W11-3) where the forest meets the road;
+## mile markers (D10-1) at the start and a mile on; dry branches on the verge, one just onto the
+## asphalt's edge; litter on the verges; a bin at the viewpoint's lay-by.
+const VALLEY_TANGENT := 61.0
+const VALLEY_TIGHTEST := 12.0
+const KEEP_CLEAR_GROW := 2.0
+const LEAN := deg_to_rad(4.0)
+const LIMITS := [["limit_45_weathered", 8, 1.0, true], ["limit_45", 995, 1.0, false]]
+## The first well clear of the loop's start signs and the guide sign 90 m on (#267's stills).
+const DEER := [25, 1015]
+const MILE := 1609.344
+const MILEPOST_HEIGHT := 1.6
+const POLYHAVEN := "res://features/environments/industrial_loop/polyhaven/models/%s/%s.gltf"
+const BIN := "res://features/environments/depot_yard/polyhaven/models/metal_trash_can/" \
+	+ "metal_trash_can.gltf"
+const TYRE := "res://features/environments/depot_yard/polyhaven/models/old_tyre/old_tyre.gltf"
+const BIN_BASE := 0.072
+## Each branch: road sample, side, how far out from the asphalt's edge its middle lies.
+## (The branches spread 0.88 m either side of their middle across the road, as measured.)
+const BRANCHES := [[150, -1.0, 1.1], [470, 1.0, 0.68], [900, -1.0, 1.2]]
+## Each piece of litter: model, sample, side, out from the asphalt's edge, lying on its side.
+const LITTER := [["can_rusted", 1000, -1.0, 0.7, true], ["plastic_bottle_gallon", 1025, 1.0, 0.9,
+	true], ["wine_bottles_01", 1040, -1.0, 0.6, true], ["old_tyre", 600, -1.0, 1.0, true],
+	["can_rusted", 407, 1.0, 0.4, true]]
+const LAYBY_APEX := 405
+## The lay-by's bin stands on its open side, the view's, away from the walls on its inner side.
+const LAYBY_SIDE := 1.0
 
 var guardrail_segments: int = 0
 var wall_segments: int = 0
 var delineator_count: int = 0
+var valley_delineators: Array[Vector3] = []
+var roadside: Array[Dictionary] = []
 var mirror_count: int = 0
 var signs: Array[Dictionary] = []
 
@@ -61,11 +95,21 @@ var _posts: Array[Transform3D] = []
 var _steel := StandardMaterial3D.new()
 var _concrete: Material
 var _flashers: Array[MeshInstance3D] = []
+var _keep_clear: Array[Rect2] = []
+var _barrier_sides: Array[PackedByteArray] = []
 
 
+## Each opening is (x, z, half width): a side road's mouth, where the rail on that side of the
+## road stops, each run ending with its terminal.
 func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: Vector2,
-		crossing: int = -1, outside_rails: Array[Vector2] = []) -> void:
+		crossing: int = -1, outside_rails: Array[Vector2] = [],
+		openings: Array[Vector3] = [], keep_clear: Array[Rect2] = []) -> void:
 	_road = road
+	for rect in keep_clear:
+		_keep_clear.append(rect.grow(KEEP_CLEAR_GROW))
+	for mouth in openings:
+		_keep_clear.append(Rect2(mouth.x - mouth.z, mouth.y - mouth.z, mouth.z * 2.0,
+			mouth.z * 2.0))
 	_terrain = terrain
 	_points = road.points
 	_concrete = concrete
@@ -79,6 +123,8 @@ func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: 
 	_steel.cull_mode = BaseMaterial3D.CULL_DISABLED
 	var landslide := _nearest(landslide_at)
 	var drops := _drops(landslide, outside_rails)
+	_open(drops, openings)
+	_barrier_sides = drops
 	_barriers(drops)
 	_rail_hardware(drops)
 	_delineators(drops)
@@ -88,7 +134,11 @@ func build(road: RefCounted, terrain: Node3D, concrete: Material, landslide_at: 
 	_landslide(landslide)
 	_mirrors()
 	_crossing_signs(crossing)
+	_roadside_signs()
 	_build_signs()
+	_branches()
+	_litter()
+	_layby_bin()
 
 
 func _drops(landslide: int, outside_rails: Array[Vector2]) -> Array[PackedByteArray]:
@@ -119,6 +169,21 @@ func _drops(landslide: int, outside_rails: Array[Vector2]) -> Array[PackedByteAr
 			if dropped or (_road.is_layby(index) and side == _outer_side(index)):
 				(left if side_index == 0 else right)[index] = 1
 	return [_continuous(left, landslide), _continuous(right, landslide)]
+
+
+func _open(drops: Array[PackedByteArray], openings: Array[Vector3]) -> void:
+	for opening in openings:
+		var at := Vector2(opening.x, opening.y)
+		var index := _nearest(at)
+		var left := _edge(index, -1.0, RAIL_INSET)
+		var right := _edge(index, 1.0, RAIL_INSET)
+		var side_index := 0 if Vector2(left.x, left.z).distance_to(at) \
+			< Vector2(right.x, right.z).distance_to(at) else 1
+		var side := -1.0 if side_index == 0 else 1.0
+		for other in range(_points.size()):
+			var edge := _edge(other, side, RAIL_INSET)
+			if Vector2(edge.x, edge.z).distance_to(at) < opening.z:
+				drops[side_index][other] = 0
 
 
 func _continuous(flags: PackedByteArray, landslide: int) -> PackedByteArray:
@@ -208,6 +273,23 @@ func _delineators(drops: Array[PackedByteArray]) -> void:
 			lenses.append(Transform3D(facing.scaled_local(Vector3(0.07, 0.16, 0.012)),
 				at + Vector3(0, 0.92, 0) + facing.z * 0.045))
 			delineator_count += 1
+	var next := 0
+	for index in range(_points.size()):
+		if _road.sections[index] != GhatRoad.Section.VALLEY or index < next:
+			continue
+		next = index + _valley_step(index)
+		var facing := Basis(Vector3.UP, _road.heading_at(index))
+		for side_index in range(2):
+			var at := _edge(index, -1.0 if side_index == 0 else 1.0, -0.3)
+			if drops[side_index][index] != 0 or _kept_clear(at):
+				continue
+			at.y = _terrain.height_at(at.x, at.z)
+			posts.append(Transform3D(facing.scaled_local(Vector3(0.1, 1.1, 0.08)),
+				at + Vector3.UP * 0.5))
+			lenses.append(Transform3D(facing.scaled_local(Vector3(0.07, 0.16, 0.012)),
+				at + Vector3(0, 0.92, 0) + facing.z * 0.045))
+			delineator_count += 1
+			valley_delineators.append(at)
 	var white := StandardMaterial3D.new()
 	white.albedo_color = Color("e8e8e2")
 	white.roughness = 0.6
@@ -217,6 +299,133 @@ func _delineators(drops: Array[PackedByteArray]) -> void:
 	lens.roughness = 0.12
 	_multimesh(_box(), posts, white, "Delineators")
 	_multimesh(_box(), lenses, lens, "DelineatorReflectors")
+
+
+## Samples to the next valley delineator: 200 ft on a straight, S = 3 sqrt(R - 50) ft on a curve
+## of radius R ft, the curve's radius from its heading over 20 m.
+func _valley_step(index: int) -> int:
+	var count := _points.size()
+	var turn := absf(angle_difference(_road.heading_at(posmod(index - 5, count)),
+		_road.heading_at((index + 5) % count)))
+	var spacing := VALLEY_TANGENT
+	if turn > 0.0001:
+		var radius_ft := 10.0 * GhatRoad.SPACING / turn / 0.3048
+		spacing = clampf(3.0 * sqrt(maxf(radius_ft - 50.0, 0.0)) * 0.3048, VALLEY_TIGHTEST,
+			VALLEY_TANGENT)
+	return maxi(1, roundi(spacing / GhatRoad.SPACING))
+
+
+func _kept_clear(at: Vector3) -> bool:
+	for rect in _keep_clear:
+		if rect.has_point(Vector2(at.x, at.z)):
+			return true
+	return false
+
+
+func _roadside_signs() -> void:
+	for limit: Array in LIMITS:
+		_sign(String(limit[0]), int(limit[1]), float(limit[2]), 2.0, "regulatory", NAN,
+			SHOULDER_POST, LEAN if bool(limit[3]) else 0.0)
+	for index: int in DEER:
+		_sign("deer_crossing", index, 1.0, 2.15, "diamond")
+	_sign("mile_0", 3, 1.0, MILEPOST_HEIGHT, "milepost")
+	_sign("mile_1", roundi(MILE / GhatRoad.SPACING) % _points.size(), 1.0, MILEPOST_HEIGHT,
+		"milepost")
+
+
+func _branches() -> void:
+	for branch: Array in BRANCHES:
+		var side: float = branch[1]
+		var index := _clear_of_barriers(int(branch[0]), side)
+		var at := _beside(index, side, float(branch[2]))
+		var turn: float = _road.heading_at(index) + deg_to_rad(8.0 * side)
+		_place(POLYHAVEN % ["dry_branches_medium_01", "dry_branches_medium_01"], "Branch",
+			Transform3D(Basis(Vector3.UP, turn), at), {"kind": "branch", "index": index})
+
+
+func _litter() -> void:
+	var draw := RandomNumberGenerator.new()
+	draw.seed = 267
+	for item: Array in LITTER:
+		var asset := String(item[0])
+		var index := _clear_of_barriers(int(item[1]), float(item[2])) \
+			if int(item[1]) != LAYBY_APEX + 2 else int(item[1])
+		var at := _beside(index, float(item[2]), float(item[3]))
+		var turn := Basis(Vector3.UP, draw.randf_range(0.0, TAU))
+		var lying := Basis(Vector3.RIGHT, PI / 2.0) if bool(item[4]) and asset != "old_tyre" \
+			else Basis.IDENTITY
+		var path := TYRE if asset == "old_tyre" else POLYHAVEN % [asset, asset]
+		var placed := _place(path, "Litter", Transform3D(turn * lying, at), {"kind": "litter",
+			"asset": asset, "index": index})
+		if asset == "wine_bottles_01":
+			for bottle in placed.get_children():
+				if not String(bottle.name).ends_with("bordeaux"):
+					bottle.queue_free()
+		_settle(placed, at.y)
+
+
+func _layby_bin() -> void:
+	var at := _beside(LAYBY_APEX, LAYBY_SIDE, 0.6)
+	var bin := _place(BIN, "LaybyBin", Transform3D(Basis(Vector3.UP, _road.heading_at(
+		LAYBY_APEX)), at + Vector3.UP * BIN_BASE), {"kind": "bin", "index": LAYBY_APEX})
+	var body := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var round := CylinderShape3D.new()
+	round.radius = 0.3
+	round.height = 0.98
+	shape.shape = round
+	shape.position = Vector3.UP * (0.49 - BIN_BASE)
+	body.add_child(shape)
+	bin.add_child(body)
+	var bag := _beside(LAYBY_APEX + 1, LAYBY_SIDE, 0.75)
+	_place(POLYHAVEN % ["trashbag", "trashbag"], "Litter", Transform3D(Basis(Vector3.UP, 0.7),
+		bag), {"kind": "litter", "asset": "trashbag", "index": LAYBY_APEX + 1})
+
+
+## The nearest sample to `index` with no rail or wall on `side` for 3 samples either way, so that
+## nothing on the verge stands in a barrier.
+func _clear_of_barriers(index: int, side: float) -> int:
+	var count := _points.size()
+	var flags: PackedByteArray = _barrier_sides[0 if side < 0.0 else 1]
+	for reach in range(0, 60):
+		for candidate: int in [posmod(index + reach, count), posmod(index - reach, count)]:
+			var clear: bool = not _near_hairpin(candidate, 6) and not _road.is_layby(candidate)
+			for k in range(-3, 4):
+				clear = clear and flags[posmod(candidate + k, count)] == 0
+			if clear:
+				return candidate
+	return index
+
+
+## A point `out` metres beyond the asphalt's edge on `side`, on the ground.
+func _beside(index: int, side: float, out: float) -> Vector3:
+	var at := _points[index] + (_frame(index)["right"] as Vector3) * side \
+		* (float(_road.half_widths[index]) + out)
+	at.y = _terrain.height_at(at.x, at.z)
+	return at
+
+
+func _place(path: String, label: String, pose: Transform3D, about: Dictionary) -> Node3D:
+	var model := (load(path) as PackedScene).instantiate() as Node3D
+	model.name = label
+	add_child(model)
+	model.global_transform = pose
+	about["node"] = model
+	about["at"] = pose.origin
+	roadside.append(about)
+	return model
+
+
+## `model` set down so that its lowest point touches the ground at `ground`.
+func _settle(model: Node3D, ground: float) -> void:
+	var lowest := INF
+	for found in model.find_children("*", "MeshInstance3D", true, false):
+		if found.is_queued_for_deletion():
+			continue
+		var mesh := found as MeshInstance3D
+		lowest = minf(lowest, (mesh.global_transform * mesh.get_aabb()).position.y)
+	if lowest < INF:
+		model.global_position.y += ground - lowest
 
 
 func _hairpin_signs() -> void:
@@ -401,10 +610,12 @@ func _mirrors() -> void:
 
 
 func _sign(kind: String, index: int, side: float, height: float, shape: String,
-		heading: float = NAN, offset: float = SHOULDER_POST) -> void:
+		heading: float = NAN, offset: float = SHOULDER_POST, lean: float = 0.0) -> void:
 	var at := _edge(index, side, -offset) if side != 0.0 else _points[index]
 	at.y = _terrain.height_at(at.x, at.z) if side != 0.0 else _points[index].y
 	var facing := Basis(Vector3.UP, _road.heading_at(index) if is_nan(heading) else heading)
+	if lean != 0.0:
+		facing = facing.rotated(facing.z.normalized(), lean)
 	var size: float = FACE_SIZE[shape]
 	if not _faces.has(kind):
 		var poses: Array[Transform3D] = []

@@ -1,0 +1,8 @@
+58c58
+< const FLOOR_STOCK: Array[Array] = [["CartonStack3", 0.55], ["BoardBundle090", 0.12],
+---
+> const FLOOR_STOCK: Array[Array] = [["CartonStack3", 0.05], ["BoardBundle090", 0.02],
+60c60
+< const UPPER_STOCK: Array[Array] = [["BoardBundle110", 0.25], ["BoardBundle090", 0.25],
+---
+> const UPPER_STOCK: Array[Array] = [["BoardBundle110", 0.05], ["BoardBundle090", 0.05],

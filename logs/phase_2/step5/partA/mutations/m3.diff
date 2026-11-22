@@ -1,0 +1,4 @@
+53c53
+< const SLOTS: Array[float] = [0.25, 0.75]
+---
+> const SLOTS: Array[float] = [0.22, 0.78]

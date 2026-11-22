@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/airfield.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mute/c7/game/features/environments/harbour_flats/airfield.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/airfield.gd	2026-11-21 20:37:04
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mute/c7/game/features/environments/harbour_flats/airfield.gd	2026-11-21 20:37:54
+@@ -400,7 +400,7 @@
+ 		entry[1] = move_toward(was, float(entry[2]), GATE_SPEED * delta)
+ 		var sliding := entry[0] as Node3D
+ 		sliding.call("moving_now", not is_equal_approx(was, float(entry[1])))
+-		sliding.call("set_open", float(entry[1]))
++		sliding.call("set_open", 0.0)
+ 
+ 
+ func _access(asphalt: Material, lamp_post: Callable) -> void:

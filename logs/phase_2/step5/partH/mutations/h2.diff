@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h2/game/features/environments/industrial_loop/yard_vehicles.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH/h2/game/features/environments/industrial_loop/yard_vehicles.gd	2026-11-17 19:28:39
+@@ -76,7 +76,7 @@
+ 	var docked: Array[Transform3D] = []
+ 	var chocks: Array[Transform3D] = []
+ 	for x in TRAILER_DOCKS:
+-		var at := Transform3D(Basis.IDENTITY, Vector3(x, GROUND, BUMPER_FACE + DOCK_GAP
++		var at := Transform3D(Basis(Vector3.UP, 0.06), Vector3(x, GROUND, BUMPER_FACE + DOCK_GAP
+ 			+ TRAILER_HALF))
+ 		docked.append(at)
+ 		_trailer("DockedTrailer", at, false)

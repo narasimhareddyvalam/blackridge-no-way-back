@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_warehouses.gd:54)
+PASS: W0: both warehouses rebuilt in the compound, the Phase 1 boxes gone
+PASS: W1: WarehouseWest where it stood, 33.35 x 23.00 m and 9.99 m high
+PASS: W2: WarehouseWest's panels jointed at the piers, never across a door, the widest 9.0 m (11 sealed joints)
+PASS: W3: WarehouseWest's parapet 1.00 m over its roof, capped all round
+PASS: W4: WarehouseWest's 6 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door, seal, two bumpers and signal
+PASS: W5: WarehouseWest's man door: 7 risers of 0.174 m, treads 0.280 m, a landing 1.50 m deep at the floor
+PASS: W5: WarehouseWest's stair railed both sides [0.89999770281266, 0.89999770281266] m over its nosings, its landing guarded 1.10 m
+PASS: W6: WarehouseWest's 4 downpipes from scuppers at its roof to the ground
+PASS: W8: WarehouseWest's 3 wall packs over its court, 5.5-8 m up, no shadows
+PASS: W8: WarehouseWest's dock light over each of its 6 doors, no shadows
+PASS: W7: WarehouseWest's walls, dock face, doors and landing solid (not: )
+PASS: W1: WarehouseEast where it stood, 35.43 x 23.00 m and 10.53 m high
+PASS: W2: WarehouseEast's panels jointed at the piers, never across a door, the widest 9.0 m (11 sealed joints)
+PASS: W3: WarehouseEast's parapet 1.00 m over its roof, capped all round
+PASS: W4: WarehouseEast's 7 docks on its north face, 2.74 x 3.05 m at a 1.22 m floor, 4 m apart, each with its door, seal, two bumpers and signal
+PASS: W5: WarehouseEast's man door: 7 risers of 0.174 m, treads 0.280 m, a landing 1.50 m deep at the floor
+PASS: W5: WarehouseEast's stair railed both sides [0.89999770281266, 0.89999770281266] m over its nosings, its landing guarded 1.10 m
+PASS: W6: WarehouseEast's 4 downpipes from scuppers at its roof to the ground
+PASS: W8: WarehouseEast's 4 wall packs over its court, 5.5-8 m up, no shadows
+PASS: W8: WarehouseEast's dock light over each of its 7 doors, no shadows
+PASS: W7: WarehouseEast's walls, dock face, doors and landing solid (not: )
+WAREHOUSES RESULT: 21/21 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

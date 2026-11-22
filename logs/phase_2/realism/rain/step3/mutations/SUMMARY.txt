@@ -1,0 +1,16 @@
+r1  slow drops fading above the ground (old life) test_lamp_rain_config.gd exit 1, 581/582 passed; 1 failed
+      FAIL: LampRainStreet/LampRain.lifetime = 1.7 (found 1.1)
+r2  the old slowest drop           test_lamp_rain_config.gd exit 1, 581/582 passed; 1 failed
+      FAIL: LampRainDock/LampRain process.initial_velocity_min = 4.0 (found 3.5)
+r3  the high floodlight rain leaning the old way test_lamp_rain_config.gd exit 1, 581/582 passed; 1 failed
+      FAIL: LampRainFloodHigh/LampRain process.direction = (0.08, -0.997, 0.0) (found (0.023, -0.997, 0.077))
+r4  the compound's rain from 4 m again test_gate_light.gd exit 1, 5/6 passed; 1 failed
+      FAIL: G6: the compound's four rains fall from just under their lights, leaning with the wind as all rain does (4 fou
+r5  the compound's rain in the old floodlight scene test_gate_light.gd exit 1, 5/6 passed; 1 failed
+      FAIL: G6: the compound's four rains fall from just under their lights, leaning with the wind as all rain does (0 fou
+r6  the yard floods' rain from the ground test_gate_light.gd exit 1, 5/6 passed; 1 failed
+      FAIL: G6: the compound's four rains fall from just under their lights, leaning with the wind as all rain does (4 fou
+r7  far drops as specks            test_lamp_rain_config.gd exit 1, 581/582 passed; 1 failed
+      FAIL: LampRainFloodlight/LampRain material far_pixels = 6.0 (found 0.0)
+r8  the old early fade             test_lamp_rain_config.gd exit 1, 581/582 passed; 1 failed
+      FAIL: LampRainPost/LampRain alpha_curve keys [(0.0, 0.1), (0.1, 0.8), (0.95, 0.8), (1.0, 0.0)] (found [(0.0, 0.1), (

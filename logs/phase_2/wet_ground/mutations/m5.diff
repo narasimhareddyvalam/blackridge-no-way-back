@@ -1,0 +1,4 @@
+82c82
+< const MIST_SCATTERING := 0.016
+---
+> const MIST_SCATTERING := 0.004

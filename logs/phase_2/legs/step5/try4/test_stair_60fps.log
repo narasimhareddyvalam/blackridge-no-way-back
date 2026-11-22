@@ -1,0 +1,48 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:927)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:155)
+       [6] _build (res://tests/test_stair.gd:637)
+       [7] _run (res://tests/test_stair.gd:111)
+PASS: Setup: Ethan out of the van on foot, his hips', ankles' and toes' bones found
+PASS: S12 up: on the flight he climbs as a man climbs a stair, in the captured climb (StairsUp in 100% of its frames, at least 90%)
+PASS: S1 up: Ethan walks the stair at a stair's pace, 0.317 m/s across the floor (against 0.317), never stalling (0.280 m/s at the slowest, 0.317 at the fastest), and gets to the landing (true, 1.30 m up)
+PASS: S2 up: nothing jumps: in any one frame his body rises or drops at most 0.005 m and his camera 0.005 (at most 0.02), his hips 0.014 (at most 0.020, a walk's)
+PASS: S3 up: each planted foot stands on its step: its sole at most 0.021 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 10 plants
+PASS: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 1, 2, 3, 4, 5, 6, 6] (wanted [1, 2, 3, 4, 5], the floor 0 and the landing 6), by foot [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+PASS: S5 up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most -0.001 m into one (at most 0.01)
+PASS: S6 up: his cadence on the stair is a stair's, 76 steps a minute (against 76 ± 10)
+PASS: S11 up: his legs never cross: each planted foot under its own hip, at most 0.013 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.174 m apart (at least 0.15)
+PASS: S1 down: Ethan walks the stair at a stair's pace, 0.483 m/s across the floor (against 0.487), never stalling (0.439 m/s at the slowest, 0.523 at the fastest), and gets to the lane (true, 0.02 m up)
+PASS: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.008 m and his camera 0.020 (at most 0.02), his hips 0.018 (at most 0.020, a walk's)
+PASS: S3 down: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 9 plants
+PASS: S4 down: one tread a step, his feet taking turns: the steps he plants on [5, 4, 3, 2, 1, 0, 0, 0, 0] (wanted [5, 4, 3, 2, 1], the floor 0 and the landing 6), by foot [0, 1, 0, 1, 0, 1, 0, 1, 0]
+FAIL: S5 down: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most 0.022 m into one (at most 0.01)
+PASS: S6 down: his cadence on the stair is a stair's, 120 steps a minute (against 117 ± 10)
+PASS: S11 down: his legs never cross: each planted foot under its own hip, at most 0.020 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.174 m apart (at least 0.15)
+PASS: S16 up the flight his knees bend at most to 71° (at least 58°, 270 frames)
+FAIL: S16 down the flight his knees bend at most to 71° (at least 75°, 179 frames)
+PASS: S14 walking across the flight his feet stay his own: the left at least 0.054 m to his left of the right (never crossing), his shins at least 0.126 m apart, each ankle at most 0.40 m from its own hip; 0 frames in the climb walking across (97 frames)
+PASS: S15 from the stair's top along the landing his feet stay his own: the left at least 0.137 m to his left of the right (never crossing), his shins at least 0.154 m apart, each ankle at most 0.42 m from its own hip; 0 frames in the climb walking across (151 frames)
+PASS: S12 running up: on the flight he climbs as a man climbs a stair, in the captured climb (StairsUp in 100% of its frames, at least 90%)
+PASS: S1 running up: Ethan walks the stair at a stair's pace, 0.833 m/s across the floor (against 0.833), never stalling (0.799 m/s at the slowest, 0.833 at the fastest), and gets to the landing (true, 1.30 m up)
+PASS: S2 running up: nothing jumps: in any one frame his body rises or drops at most 0.012 m and his camera 0.012 (at most 0.02), his hips 0.034 (at most 0.035, the captured running climb's own)
+PASS: S3 running up: each planted foot stands on its step: its sole at most 0.000 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 8 plants
+PASS: S4 running up: one tread a step, his feet taking turns: the steps he plants on [0, 1, 2, 3, 4, 5, 6, 6] (wanted [1, 2, 3, 4, 5], the floor 0 and the landing 6), by foot [0, 1, 0, 1, 0, 1, 0, 1]
+PASS: S5 running up: no foot goes through a step as it swings: his ankles, the balls of his feet and his toes at most -0.001 m into one (at most 0.01)
+PASS: S6 running up: his cadence on the stair is a stair's, 200 steps a minute (against 200 ± 10)
+PASS: S11 running up: his legs never cross: each planted foot under its own hip, at most 0.015 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.174 m apart (at least 0.15)
+PASS: S16 running up the flight his knees bend at most to 81° (at least 58°, 103 frames)
+PASS: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5] by foot [1, 0, 1, 0, 1]; no foot at most -0.001 m into a step, nothing jumping more than 0.017 m a frame, and he reaches the landing (1.30 m up)
+PASS: S9: up a 20° slope he walks along it without stepping up: his body, hips and camera rise at most 0.017 m a frame (at most 0.02), 0.60 m up at its top
+PASS: S7: onto a 0.15 m kerb his body steps up as before (0.140 m in one frame; on top true), but his camera and hips glide up, at most 0.015 and 0.015 m a frame (at most 0.025), the camera settled 0.000 m from its usual height 0.5 s on (the kerb's ground clear: true)
+PASS: S8: a wall 1 m behind him pulls his camera in at once (0.76 m from his head, then 0.76, at most 1.00); once the wall is gone it eases back out, at most 0.103 m a frame (at most 0.12), 3.20 m out within 0.63 s (free: 3.49 m)
+STAIR RESULT: 31/33 passed; 2 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

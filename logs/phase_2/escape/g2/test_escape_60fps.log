@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _start (res://tests/test_escape.gd:67)
+       [7] _run (res://tests/test_escape.gd:44)
+PASS: E1: docked, the turn: two guards walk toward the van's rear (2), one at the gate (true), all the patrol guard (true) with a lit torch (true); GET OUT AND RUN (GET OUT AND RUN)
+PASS: E2: staying in the van he is caught when they reach the cab (6.6 s), then he is in the van at door 3 again (true)
+FAIL: E3: E gets him out, the objective GET PAST THE PATROLS (GET OUT AND RUN)
+FAIL: E4: in a guard's cone 10 m off in the open he is caught after 3.02 s (1.0 s), not seen at 16 m (false)
+PASS: E5: behind the forklift a guard 15 m off does not catch him in 2 s (true); in the open beside it he is seen (true)
+PASS: E6: within 1.5 m he is caught at once, even behind a guard (1 frames)
+FAIL: E7: caught, all is as at the escape's start: in the van at door 3, the guards at their starts (false), the gate shut, the warning unsent (false)
+FAIL: E8: once he is out, one text from an unknown number names the cut in the fence (20.0 s, 1 sent: ); the objective REACH THE CUT IN THE FENCE (GET OUT AND RUN)
+FAIL: E9: the cut at x 138, z 140 lets him through on foot (false, at x 139.40), is too narrow for the van (true); the fence beside it closed (true)
+ESCAPE RESULT: 4/9 passed; 5 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

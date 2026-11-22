@@ -1,0 +1,16 @@
+first_drive_regression.gd:60:0
+test_headlights.gd:60:0
+test_ghat_road.gd:60:0
+test_oncoming_van.gd:60:0
+test_maya_call.gd:60:0
+test_save_rules.gd:60:0
+test_mission_two.gd:60:0
+test_sealing.gd:60:0
+test_dock_worker.gd:60:0
+test_roadside.gd:60:0
+test_rear_camera.gd:60:0
+test_shed_fitout.gd:60:0
+test_wiper_flick_config.gd:60:0
+test_exhaust_vapour_config.gd:60:0
+test_lamp_rain_state.gd:60:0
+test_night_dimming.gd:60:0

@@ -1,0 +1,79 @@
+Step 2e's mutations (scratchpad mutations_2e.py), each on an APFS clone of game/ with its own home,
+restored byte for byte after each. Each test must exit 1 on the check named for it. Loading runs
+also fail H2's stoop check, which waits for the author's two clips (#231); Mission 2 runs also fail
+the stage 2 'Continue' check, a regression the clones carried (stage 2 started at bay 9), fixed
+in game/ after they were made (suites/SUMMARY.txt, reruns).
+
+mutation_no_passage: exit 1; MISSION TWO RESULT: 52/54 passed; 2 failed; fails on its check: True
+    FAIL: Continue from Mission 2's third checkpoint names it (The Wrong Cargo · The container yard) and starts Mission 2 where its places stand today: Ethan in his van at the depot ba
+    FAIL: E4: under bay 9's door a passage as wide as its lift's pit reaches down to a 0.4 m sill, a kerb below it (1 walls in it; kerb true), so the lowered lift meets a van's floor (
+mutation_plate_flat: exit 1; LOADING RESULT: 15/17 passed; 2 failed; fails on its check: True
+    FAIL: H1: on the deck the hint offers the lift (E  Lower the lift); E lowers it to the van's floor (0.465 m against 0.465); its bridge plate rests on the van's rear sill (-0.071 m 
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside ["Idle"]
+mutation_plate_short: exit 1; LOADING RESULT: 15/17 passed; 2 failed; fails on its check: True
+    FAIL: H1: on the deck the hint offers the lift (E  Lower the lift); E lowers it to the van's floor (0.465 m against 0.465); its bridge plate rests on the van's rear sill (-0.071 m 
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside ["Idle"]
+mutation_no_bulkhead: exit 1; LOADING RESULT: 15/17 passed; 2 failed; fails on its check: True
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside ["Idle"]
+    FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (-0.058 m from it), between the wheel arches (0.002 m off the middle), and it goes with the 
+mutation_room_always: exit 1; LOADING RESULT: 15/17 passed; 2 failed; fails on its check: True
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside ["Idle"]
+    FAIL: H9: with the jack's back to the dock's front wall there is no room to stand behind its handle, so the hint does not offer it (E  Take the pallet jack) and E leaves it (held: 
+mutation_rear_takes_all: exit 1; LOADING RESULT: 15/17 passed; 2 failed; fails on its check: True
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside ["Idle"]
+    FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0278 m at the rear (against 0.0139) and 0.0018 m at the front (agai
+clone restored byte for byte after each
+mutation_no_toe_guard: exit 1; LOADING RESULT: 8/17 passed; 9 failed; fails on its check: True
+    FAIL: H9: pushed on to the lift's deck, the pallet stops at the deck's front against the bridge plate standing up as a toe guard, never over the edge (its front at z 20.140, the pl
+    FAIL: H1: by the pendant on the deck E lowers the lift (E  Take the pallet jack), the pallet riding it down to the van's floor (1.340 m against 0.465), and Ethan with it (0.001 m o
+    FAIL: H2: behind the handle again E takes the jack (E  Set the pallet down) and pushes the pallet into the van, walking in behind it over the bridge plate (his feet never below 1.3
+    FAIL: H2: under the van's low roof Ethan stoops (1.80 m tall, against 1.80 standing), his clips outside ["Idle"] and inside []
+    FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (3.339 m from it), between the wheel arches (-0.150 m off the middle), and it goes with the 
+    FAIL: H2: beside it in the hold E straps the load down to the floor rings (E  Take the pallet jack; 0 straps)
+    FAIL: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go of it (E  Set the pallet down)
+    FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0000 m at the rear (against 0.0386) and 0.0000 m at the front (agai
+    FAIL: H1: E at the pendant raises the lift again with the jack on it (1.30 m), the load left in the van
+mutation_no_entry: exit 1; LOADING RESULT: 10/17 passed; 7 failed; fails on its check: True
+    FAIL: H2: behind the handle again E takes the jack (E  Take the pallet jack) and pushes the pallet into the van, walking in behind it over the bridge plate (his feet never below 0.
+    FAIL: H2: under the van's low roof Ethan stoops (1.30 m tall, against 1.80 standing), his clips outside ["Idle"] and inside []
+    FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (1.534 m from it), between the wheel arches (-0.012 m off the middle), and it goes with the 
+    FAIL: H2: beside it in the hold E straps the load down to the floor rings (E  Push it in against the bulkhead first; 0 straps)
+    FAIL: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go of it (E  Set the pallet down)
+    FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0000 m at the rear (against 0.0252) and 0.0000 m at the front (agai
+    FAIL: H1: E at the pendant raises the lift again with the jack on it (0.47 m), the load left in the van
+mutation_doors_close_anywhere: exit 1; SEALING RESULT: 7/11 passed; 4 failed; fails on its check: True
+    FAIL: H4: the chock out, the objective asks to pull forward (PULL FORWARD); with the van's rear 1.66 m from the bumpers E at the doors (E  Close the rear doors) leaves them open (f
+    FAIL: H4: pulled forward until its rear is 2.67 m from the bumpers, E at the doors (E  Check the seal) closes them ((0.0, 0.0))
+    FAIL: H5: the doors shut, the objective says to wait for the seal (MISSION 2 IS BEING BUILT); the dock worker walks out to the doors (inf m from the hasp at the closest, never thro
+    FAIL: H5: at the sealed doors E (E  Get in the van) shows the check: the number 4182260 on the bolt, on the cap and on the run sheet's seal line, side by side (0 times in it)
+mutation_never_sealed: exit 1; SEALING RESULT: 6/11 passed; 5 failed; fails on its check: True
+    FAIL: H5: the doors shut, the objective says to wait for the seal (WAIT FOR THE SEAL); the dock worker walks out to the doors (0.46 m from the hasp at the closest, never through th
+    FAIL: H5: at the sealed doors E (E  Open the rear doors) shows the check: the number  on the bolt, on the cap and on the run sheet's seal line, side by side (0 times in it)
+    FAIL: H5: sealed, the doors no longer open: the hint at them is "E  Open the rear doors" and E leaves them shut
+    FAIL: H6: checked, "loaded" saves Mission 2's stage 1 (stage 0 in the file) and the objective moves on (CLOSE THE REAR DOORS)
+    FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middle) with the pallet strapped against the bulkhead in its hold (fa
+mutation_numbers_differ: exit 1; SEALING RESULT: 10/11 passed; 1 failed; fails on its check: True
+    FAIL: H5: at the sealed doors E (E  Check the seal) shows the check: the number 4182260 on the bolt, on the cap and on the run sheet's seal line, side by side (2 times in it)
+mutation_no_checkpoint: exit 1; SEALING RESULT: 9/11 passed; 2 failed; fails on its check: True
+    FAIL: H6: checked, "loaded" saves Mission 2's stage 1 (stage 0 in the file) and the objective moves on (MISSION 2 IS BEING BUILT)
+    FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middle) with the pallet strapped against the bulkhead in its hold (fa
+clone restored byte for byte after each
+mutation_reload_at_start: exit 1; SEALING RESULT: 10/11 passed; 1 failed; fails on its check: True
+    FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middle) with the pallet strapped against the bulkhead in its hold (tr
+mutation_loads_not_reset: exit 1; SEALING RESULT: 10/11 passed; 1 failed; fails on its check: True
+    FAIL: H6: started again from Mission 2's beginning, the pallet stands back on bay 9's staging spot, unstrapped (false), and the van is empty and unsealed (0 kg, sealed false)
+mutation_sealed_doors_open: exit 1; SEALING RESULT: 10/11 passed; 1 failed; fails on its check: True
+    FAIL: H5: sealed, the doors no longer open: the hint at them is "E  Open the rear doors" and E leaves them shut
+mutation_tall_guide_stops: exit 1; SEALING RESULT: 5/11 passed; 6 failed; fails on its check: True
+    FAIL: H4: the way out of the van is clear over bay 9's wheel guide (false) but not against the dock's wall (false)
+    FAIL: H5: the doors shut, the objective says to wait for the seal (WAIT FOR THE SEAL); the dock worker walks out to the doors (1.71 m from the hasp at the closest, never through th
+    FAIL: H5: at the sealed doors E (E  Open the rear doors) shows the check: the number  on the bolt, on the cap and on the run sheet's seal line, side by side (0 times in it)
+    FAIL: H5: sealed, the doors no longer open: the hint at them is "E  Open the rear doors" and E leaves them shut
+    FAIL: H6: checked, "loaded" saves Mission 2's stage 1 (stage 0 in the file) and the objective moves on (CLOSE THE REAR DOORS)
+    FAIL: H6: reloaded, the van stands in front of bay 9 (its rear 69.86 m from the bumpers, 19.75 m off the bay's middle) with the pallet strapped against the bulkhead in its hold (fa
+mutation_no_step_over: exit 0; SEALING RESULT: 11/11 passed; 0 failed; fails on its check: False
+clone restored byte for byte after each
+
+mutation_no_step_over survived: with the wheel guides' collision lowered to their 0.2 m rail, getting
+out of the van was already clear over them, so the step-over allowance added to _clear() was
+removed again; mutation_tall_guide_stops shows the guides' fix is what the check needs.

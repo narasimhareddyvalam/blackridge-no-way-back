@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf2/m2/game/features/vehicles/forklift/forklift_truck.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd	2026-11-19 12:17:45
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf2/m2/game/features/vehicles/forklift/forklift_truck.gd	2026-11-19 12:26:27
+@@ -624,7 +624,7 @@
+ ## turn's centre on the front axle's line: the inner wheel steered more; a wheel's front turned
+ ## away from the turn, as a rear wheel's is.
+ func _ackermann(steer: float) -> Dictionary:
+-	if absf(steer) < 0.0001:
++	if true:
+ 		return {"SteerWheelL": 0.0, "SteerWheelR": 0.0}
+ 	var out := WHEELBASE / tan(absf(steer))
+ 	var near := -atan(WHEELBASE / maxf(out - TRACK / 2.0, 0.001)) * signf(steer)

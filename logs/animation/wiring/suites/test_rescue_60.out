@@ -1,0 +1,1530 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_rescue.gd:44)
+PASS: R1: stage 4: Lily in the office (true), no man about (0), the van at the service gate (14.0 m), Maya there (true), FIND LILY (FIND LILY)
+PASS: R2: by her (E  Take Lily's hand) E takes her hand: she follows (true); TAKE LILY TO MAYA
+PASS: R3: led out (4.4 m), sprint held he walks at her pace (1.10 m/s), she at his side (0.60 m), her hand in his (0.08 m apart)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _run_gate_scene (res://features/missions/last_run/last_run.gd:326)
+       [2] _story (res://features/missions/last_run/last_run.gd:618)
+       [3] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _run_gate_scene (res://features/missions/last_run/last_run.gd:353)
+       [1] _story (res://features/missions/last_run/last_run.gd:618)
+       [2] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:392)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:362)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+PASS: R4: at Maya the scene plays (true), Adrian comes (true), draws (true), one shot (1), black (true), he is down (true), Lily with Maya (true), home (home)
+RESCUE RESULT: 4/4 passed; 0 failed
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:397)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:369)
+         [4] _story (res://features/missions/last_run/last_run.gd:620)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

@@ -4208,3 +4208,4915 @@ stage=1                     ; 0 its start, 1 loaded, 2 in the dark van, 3 the es
   - Mission 2's places and play (steps 2–8);
   - Mission 2's title shot, seen in a window;
   - the author's save and keyboard checks.
+
+## Revision 2026-11-08 (Phase 2, step 2a: the transfer shed's brief, written before any code)
+
+- **Status:** drafted by Claude Code at the author's word (#182–#183: "start make sure everything
+  is realistic do your research first how things work in real life and real life physics before
+  starting"). It changes nothing in the game, and is committed only with the author's OK, before
+  any of step 2's code. Values marked † are Claude Code's proposals from the research below, for
+  the author to accept or change.
+- **The methods carried over from the assignments (#182):** intent and measurable rules before
+  code, predictions written before each strip and judged by the author in the game (Assignments 5
+  and 6); tests first, by real key presses; GPU particles only where something real moves; the
+  GPU price measured with the Metal HUD, shown and hidden in blocks; a fresh-clone check at the end
+  of the step; every Claude reading of a frame a claim, not a check.
+
+### What real loading docks taught (the research)
+
+| Fact | Value | What it means here |
+| --- | --- | --- |
+| Standard dock height | about 1.2 m (44–55 in) | Today's warehouse docks stand 1.3 m high (`industrial_loop.gd`, the concrete blocks at the doors) |
+| A panel van's load floor | Iveco Daily about 0.68 m | 0.5–0.6 m below a standard dock |
+| A dock leveller's useful range | about ±0.1 m (edge-of-dock) to ±0.3 m (pit) | No leveller bridges a van at a standard dock |
+| How sites serve vans | a dock lift (a scissor platform, ground to about 1.5 m), a raised ramp for the van, or a low "van dock" | One of these is needed for the van to load at a dock at all |
+| Dock door | 2.7–3.0 m wide, about 3 m high | Fits the van (2.0 m wide, about 2.6 m tall with a medium roof) |
+| Dock bumpers | laminated rubber, 100–150 mm thick, 250 mm wide | They, not the driver, set where the van stops |
+| Dock signals | red/green lights outside for the driver, inside for the loader; a dock light on an arm lights the van's inside | Visible in the reverse camera and the mirrors |
+| Wheel chocks or a restraint | chocks are common, restraints safer | A chock at the rear wheel once the van stops |
+| Forklift, 2.5 t counterbalance | about 1.1 m wide, turning radius 2.0–2.35 m, 16–19 km/h; electric indoors (no exhaust), LPG outdoors | It brings the pallet to the dock edge; it cannot drive into a panel van |
+| Getting a pallet into a van | a hand pallet truck rolls it across the leveller or lift; a forklift only at the van's rear edge from the ground | The loader, not the forklift, puts the load inside |
+| Euro pallet | 1.2 × 0.8 m; the Daily takes it through the rear doors | The sealed load is one or two pallets |
+| Iveco Daily 35S payload | roughly 1.0–1.4 t; leaf-sprung rear axle | It sinks visibly as weight goes in. No published spring rate was found, so the sink is an estimate, labelled so |
+| Bolt seal (ISO 17712, high security) | two parts, bolt and cap, each with the same unique number; pushed shut by hand; removed only with bolt cutters | It needs a hasp on the van's rear doors; the number goes on the paperwork and is checked by "view, verify, tug, twist" |
+| Boom barrier | arm longer than the lane, typically 3–7 m; post about 1 m high; a guard booth beside it | The guard reads the run sheet, then lifts the arm |
+
+Sources: [SafeRack](https://saferack.com/posts/loading-dock-heights-by-truck-type/),
+[Blue Giant: dock height](https://www.bluegiant.com/architects/planning-and-design/dock-height/),
+[Blue Giant: leveller widths](https://www.bluegiant.com/architects/planning-and-design/leveler-width-and-length/),
+[Rite-Hite: levellers](https://www.ritehite.com/en/am/news/2022/blog/which-loading-dock-leveler-is-right-for-you),
+[Specifying a safe dock lift](https://continuingeducation.bnpmedia.com/courses/advance-lifts/specifying-a-safe-dock-lift/2),
+[Dockzilla](https://dockzilla.com/?p=6293), [MHI dock planning 101](https://mhi.org/downloads/industrygroups/lodem/dock_planning_101.pdf),
+[Bahrns: dock doors](https://www.bahrns.com/blog/?p=7843), [Projul: dock design](https://projul.com/blog/construction-loading-dock-design-installation-guide),
+[Rite-Hite: dock communication](https://www.ritehite.com/en/af/products/vehicle-restraints/communication-and-controls),
+[Hyster H2.5UT](https://www.lectura-specs.com/en/model/forklifts/lpg-forklifts-hyster/h2-5ut-11738474),
+[Mitsubishi FGC25N](https://www.lectura-specs.com/en/model/forklifts/lpg-forklifts-mitsubishi/fgc25n-11782084),
+[Iveco Daily dimensions](https://www.vanguide.co.uk/?p=1428), [Daily 2019 specs](https://www.carexpert.co.nz/iveco/daily/2019/exterior-and-dimensions),
+[Iveco: Daily suspension](https://www.iveco.com/africa-mideast-en/products/pages/power_daily_cab_gearbox_and_suspensions.aspx),
+[NZ Customs: seals](https://www.customs.govt.nz/media/crbdcszr/seals-for-sea-freight.pdf),
+[Seals.com: verifying seals](https://seals.com/maintain-a-robust-program-to-verify-and-inspect-seals/),
+[Wikipedia: security seal](https://en.wikipedia.com/wiki/Security_seal),
+[OPTraffic: barrier arm length](https://optraffic.com/blog/barrier-security-gate-arm-length-access-control/).
+Not found: a lighting level for yards and docks from EN 12464-2 (its table is paywalled); the
+Daily's rear spring rate.
+
+### Decisions for the author
+
+- **Decided (#184):** T1 a, the dock lift; T2, T3 and T4 as proposed. The author's words:
+  "a. A dock lift in one bay ... and t2-t4 everything are okay".
+
+- **T1, how the van meets the dock:**
+  - **a. A van bay with a dock lift (Claude Code's recommendation†):** the shed keeps its 1.3 m
+    docks, and one bay has a scissor lift platform in a pit, which sets itself to the van's floor.
+    It is what real sites fit for vans, and the platform moving down as the load goes in shows the
+    weight;
+  - b. a low "van dock" at about 0.7 m with an edge-of-dock leveller;
+  - c. no dock: the forklift loads at the van's rear edge from the yard, in the rain.
+- **T2, how the load goes in:** the electric forklift brings the pallet to the lift; the loader
+  rolls it into the van with a hand pallet truck† (real, and the only way into a panel van).
+- **T3, the seal:** a numbered ISO 17712 bolt seal through a hasp on the rear doors†, its number
+  read by the guard and written on the run sheet.
+- **T4, the load:** one Euro pallet†; its weight is step 3's (S4), so step 2 builds the van's sink
+  as a function of any weight.
+
+### The parts and their order (each approved on its own)
+
+- **2b, the spur, gate and booth:** a 6 m single-lane spur† north from the road to the shed; a
+  boom barrier (5 m arm†, red and white, lit), a guard booth (about 2.5 × 2 m†, lit window), a stop
+  line. The guard is a stand-in (D6), labelled so. The barrier lifts after the run sheet is
+  checked, never through the van.
+- **2c, the shed, the dock and the floodlights:** the north-west warehouse becomes the transfer
+  shed: its doors, the van bay (T1), bumpers, red/green dock lights, a dock light inside, painted
+  guide lines on a concrete apron, two LED floodlights on the wall† about 8 m up, aimed down. Each
+  floodlight is a lamp for B1, so its rain runs by Assignment 6's own rule. The puddles and rain
+  rings come from the wet asphalt the road uses.
+- **2d, backing onto the dock:** by real keys, in reverse, with the reverse camera and mirrors;
+  the bumpers stop the van physically (the van touches them, it does not pass through); at a stop
+  within 0.3 m of the bumpers, square to the door within 3°†, the dock light turns green and a chock
+  goes in. The van reverses at most 1.4 m/s† here, walking pace, as a driver does at a dock.
+- **2e, the load and the seal:** the forklift (electric, 2.5 t class, about 1.1 m wide) sets the
+  pallet on the lift; the lift and the van sink as weight goes in; the rear doors close; the seal
+  goes on with its number; the checkpoint "loaded" saves (stage 1).
+
+### Rules a test can measure (written before the code)
+
+| # | Rule | Test |
+| --- | --- | --- |
+| R1 | The barrier is down until the run sheet is checked; the van stops at the stop line; it never passes through the arm | `test_mission_two.gd`, by real keys |
+| R2 | The van stopped against the bumpers ends within 0.3 m of them and within 3° of square (Q3); no part of it passes through them | the same |
+| R3 | Reversing in the bay never exceeds 1.4 m/s | the same |
+| R4 | The lift platform meets the van's floor within 20 mm before the pallet moves | the same |
+| R5 | The van sinks by the load's weight over its rear spring estimate, and back when unloaded; the sink is labelled an estimate | the same |
+| R6 | The seal's number is the same on bolt, cap and run sheet; once on, the doors stay shut until it is cut | the same |
+| R7 | "Loaded" saves stage 1, and a reload restores the van at the dock, loaded and sealed | `test_mission_two.gd`, `test_save_rules.gd` |
+| R8 | Every existing suite passes, and Mission 1 is unchanged | every suite |
+
+### Predictions (before any code)
+
+- The van's real floor height in our model is measured in 2c; if it differs from 0.68 m, the lift
+  follows the model, and the difference is written here.
+- With the floodlights on, B1 adds up to two rain volumes at the shed; with Assignment 6's prices
+  (B1 0.67 ms for three volumes on screen), the shed costs about 0.5 ms† of GPU time over today's
+  scene, and stays within a 1.0 ms budget†. Measured in 2c with the Metal HUD.
+- The bay's frame strips (2d): frame by frame, the van's rear in the reverse camera, the green
+  light at the stop, the chock; predicted before capture, judged by the author.
+
+### What could go wrong, and the check that catches it
+
+1. The van catches on the bumpers and climbs them, or jitters: R2's test and a strip.
+2. The lift and the van floor disagree, and the pallet floats or sinks through: R4's test.
+3. The floodlights' shadows cost too much: the GPU price; shadows on the far light go first.
+4. The guard stand-in mistaken for Assignment 9's AI: labelled in code, tests and docs (D6).
+5. A save at the dock loads the van outside it: R7.
+
+### Not in this step
+
+- The inspection (step 3): the seal number and weight against the manifest.
+- Any story words (S1–S4); the guard's lines stay neutral placeholders, labelled so.
+
+## Revision 2026-11-08 (Phase 2, step 2b: the spur, the gate and the guard booth)
+
+- **Author:** "OKAY PROCEED" (#186), after the GDD check (#185); then "okay fix it" (#187) for the
+  struck man's ragdoll, which this step exposed.
+- **Built** (`game/features/environments/industrial_loop/transfer_shed.gd`, new; wired in
+  `industrial_loop.gd`):
+  - **the spur:** 6 m wide, on the depot yard's wet asphalt, from the valley road's north edge to the
+    shed's dock fronts; its mouth flares with 6 m corner radii so a van can turn in; a stop line and
+    STOP 2.5 m before the arm;
+  - **the road's guardrail opens at the spur's mouth,** each side ending in its terminal
+    (`ghat_dressing.gd`, a new `openings` argument);
+  - **the security fence:** 2.4 m chain-link (posts every 3 m, top rail, the mesh drawn by
+    `chain_link.gdshader`, new, 50 mm openings, 3 mm wire, its far haze filtered rather than
+    shimmering), three barbed strands on 45° arms 0.45 m long, angled out; it runs from the shed's
+    front corners to the gate line; colliders for the van and Ethan;
+  - **the guard booth** on the driver's side (the van is left-hand drive): 2.5 × 2.0 m on a plinth,
+    glazed all round at 1.05–2.25 m, lit inside (an omni light, no shadows), a sign "STOP - REPORT TO
+    GATEHOUSE";
+  - **the boom barrier:** a cabinet, a 6.4 m arm (longer than the 6 m lane, as the research says;
+    the brief's 5 m† was too short) with red and white retroreflective bands 0.4 m long, drawn by
+    the guardrails' `retroreflector.gdshader`; a rest post at its tip; it rises in 4 s. Its safety
+    loop keeps it up while any part of the van is under the arm, and it closes only once the van is
+    1 m clear;
+  - **a lighting column at the gate,** the street lamps' own, so B1's rain runs in its light (the
+    lamp rain's 14th volume, added after the others so their order is kept);
+  - **the gate is 15.4 m from the dock fronts,** the apron a van needs to turn and reverse (about
+    twice its length, from the research).
+- **Mission 2** (`the_wrong_cargo.gd`, `first_drive.gd`): the objectives "DRIVE TO THE TRANSFER
+  SHED", "STOP AT THE GATE" ("press E"), "WAIT AT THE GATE" and "DRIVE THROUGH THE GATE"; E at the
+  stop hands the run sheet to the guard instead of leaving the van; the guard is a stand-in, a 3 s
+  check, labelled so in the code (D6). No story words: S1–S3 stay open.
+- **Tests first** (`logs/phase_2/step2b/`):
+  - `before/`: the new gate checks fail on the old code, 7/8;
+  - `after/`: `test_mission_two.gd` 15/15, by real key presses: the barrier down at the start; the
+    van stopped against the arm 0.03 m short of its line; E hands over the run sheet; the barrier up
+    within 8 s; through the gate; down again behind it; the arm across the van in 0 of 1,539
+    physics frames while lower than fully up.
+- **Mutations, each exit 1:** the safety loop removed (the arm across the van in 85 frames); E not
+  routed to the gate (Ethan leaves the van); the ragdoll's old soft limits (an elbow at 161°).
+- **Found, and fixed at the author's word (#187):** `test_collision.gd` failed 42/44 with the shed
+  in the world.
+  - **Not contact:** the hit is at the bus stop. Any one part of the shed, even with every collider
+    removed, changed the struck man's tumble; an empty shed node did not. His ragdoll is chaotic, and
+    two checks sat at their edges.
+  - **A real flaw under it:** his hinge limits were soft (softness 0.3, bias 0.6), so an elbow set to
+    145° folded to 161° under the impact, past what a human elbow can. Now 0.9 and 0.9: the elbows
+    peak at 143°, the knees at 138°, inside their limits (`pedestrian.gd`).
+  - **A measuring step:** the lean check measured the seated and leaning reach in 0.1 m steps and
+    asked for a gain over 1.0 m; an exact 1.0 m in those steps failed. At 1 cm steps the gain is
+    1.01–1.06 m in every case tried. The step is now 1 cm; the expectation is unchanged.
+- **Test changes, with their reasons:** `test_lamp_rain_state.gd` counts 14 volumes, the gate lamp
+  added; `test_collision.gd` measures reach at 1 cm.
+- **Every suite passes** (`logs/phase_2/step2b/suites/SUMMARY.txt`): all 31 runs exit 0, no SCRIPT
+  or SHADER ERROR; the counts as the baseline's (`baseline/`), with Mission 2 at 15/15. Art 0
+  failures.
+- **Import** with the scratch home: exit 0, no errors or warnings (`import/`).
+- **Not done:** the gate's frame strip, with predictions first and the author's verdict (it opens a
+  game window); the GPU price, with the shed in 2c.
+
+## Revision 2026-11-08 (Phase 2, step 2b: the gate's first frame strip)
+
+- **Author:** "yes record it" (#188).
+- **How:** a scripted-input take on the real main scene, Mission 2's start save, the van set on
+  the spur 26 m before the gate and driven by the game's own actions (`tools/captures/
+  gate_take.gd`), on an isolated copy of `game/`, Movie Maker at 1280×800 and 30 fps, in a window,
+  run by Claude Code at the author's word. Frames 45, 120, 215, 300, 385, 444, 480 and 575 are kept
+  in `captures/transfer_shed/2b/`, with `events.txt` (every event and its frame), `godot.log` (no
+  SCRIPT or SHADER ERROR) and `strip.png`.
+- **Events:** at the spur on frame 12; braking for the line on 203; stopped 0.22 m before the stop
+  line on 215; E on 235; the barrier up on 444; in the yard on 588.
+- **Claude Code's predictions (written before the capture), and its reading (a claim, not a check):**
+  - 20 m out: the gate lamp's amber pool with rain in it, as predicted; the barrier's bands flaring
+    in the headlights, as predicted. **Not as predicted:** the booth's windows read as a flat beige
+    panel, a box rather than lit glass with a room behind it (one even glow, no depth); the fence is
+    barely there: its posts faint, the mesh a very faint haze, no barbed wire to be seen;
+  - stopped: STOP hidden under the bonnet and the arm just above it, as predicted;
+  - frame 385: the arm at 49°, about halfway, as predicted; frame 444: upright, as predicted;
+  - inside: the dock doors and the 1.3 m concrete docks in the headlights, the ground beside the
+    spur unpaved (2c), as predicted.
+- **The author's verdict:** to come, after the author's own look in the game.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the booth beside the driver, glazed and manned)
+
+- **Author:** "go with 3" (#193), the author's verdict on the first strip: option 3 of #192, r1 for
+  the booth and the fence with a stand-in guard at the desk; then "Move the booth (Recommended)"
+  (#194), asked because from the stop line the booth's window was about 4.8 m from Ethan's eye:
+  3.5 m ahead, and 2.6 m out from the van's side, too far to pass a sheet across.
+- **Written before any code.** Values marked † are Claude Code's proposals for the author to
+  check, from common practice at drive-up gatehouses and chain-link fences; no source was searched
+  for this revision.
+- **What the first strip showed, and why** (found in the code):
+  - the booth's windows are opaque panels in a glowing, unshaded material
+    (`transfer_shed.gd:297`), so the booth reads as a flat beige box, with no glass, nothing
+    behind it and nobody inside;
+  - the fence's mesh is drawn on a flat sheet. A round wire catches a lamp somewhere along its
+    length at almost any angle; a flat sheet reflects it only at the mirror angle, so the gate
+    lamp and the headlights hardly ever glint on it, and at a distance only its 11% coverage is
+    left. The barbed strands and the bottom wire are 6 mm boxes, under a pixel beyond about 10 m,
+    so they break up or vanish. The posts and rails share the depot's dark painted metal
+    (`343d43`), where real chain-link is galvanized grey.
+- **The booth moves beside the driver's window** †:
+  - its centre 1.9 m behind the stop line (z 59.4), level with the eye of a driver stopped at the
+    line (`EYE` sits 1.80 m behind the van's front), and its lane-side wall 1.0 m from the side of
+    a van in the middle of the lane (x −73.0);
+  - on a concrete island 0.15 m high, from the barrier cabinet to 1.0 m in front of the booth, its
+    kerb 0.25 m outside the booth's wall and painted safety yellow; three steel bollards, 0.15 m
+    across and 1.07 m high, safety yellow with a reflective band, at the island's nose and at the
+    booth's two lane-side corners, clear of the window. The bollards and the booth stop the van;
+    the kerb alone would not, as the van's box clears 0.15 m;
+  - the lane beside the island narrows from 6.0 m to 4.75 m: a van in the middle of the lane
+    passes 0.75 m from the kerb, its mirror about 0.5 m from the bollards;
+  - the booth stands on the island, so its floor is 0.30 m above the road, its sill 1.20 m and the
+    head of its windows 2.40 m;
+  - the fence along the gate line now runs from the west corner to the barrier cabinet, so the
+    booth stands just outside it on the road side, as many gatehouses do, with no gap where the
+    booth was;
+  - the stop line, STOP, the barrier and its safety loop, and the 3 s check stay as they are.
+- **The booth glazed** †: clear toughened glass in the same frames, see-through and reflecting
+  more at grazing angles, as glass does, in place of the glowing panels; the lane-side window
+  split by a mullion into a sliding window.
+- **The room inside** †, lined in light grey painted panels over a dark vinyl floor:
+  - a desk along the lane-side wall under the window, 0.74 m high, 0.6 m deep and 1.8 m long, with
+    a 24-inch monitor showing four dim camera views, a keyboard, a desk phone and an open logbook;
+  - an office chair facing the window;
+  - a 0.6 × 0.6 m LED panel in the ceiling. The booth's light keeps its colour and now casts
+    shadows, so it leaves the booth only through the glass; its energy is set so that the desk
+    reads as lit.
+- **The guard, a stand-in (D6):** a seated Mixamo man in dark work clothes, in the chair facing
+  the window, breathing in a looping seated idle. His head turns to Ethan's window when the van
+  stops at the line, down to the logbook while he checks the run sheet, and back to the lane once
+  the barrier is up (`LookAtModifier3D`, which 4.7.2 has, on `mixamorig:Head`; 0.6 s, within 70°
+  of his body) †. He has no perception, movement or collision and never leaves the booth; the
+  scene, the code and the tests name him a stand-in, which Assignment 9's technique replaces. The
+  sheet's passing is not animated.
+  - **Source:** Mixamo (C27), downloaded by the author with their Adobe account into
+    `source_assets/mixamo/`: one character who looks like neither Ethan (Ch33) nor the pedestrian
+    (Ch01), as C28 asks, with a seated idle, FBX Binary, With Skin, 30 fps.
+    `tools/art/convert_mixamo.py` converts it to `game/features/characters/guard/guard.glb`; the
+    art check gets a budget for it, and `SOURCES.md` credits Adobe Mixamo.
+- **The driver's window** †: E at the stop lowers the driver's window if it is up, because the
+  sheet goes through it, and raises it again once the barrier is up. The window key works as
+  before.
+- **The fence that catches the light** †:
+  - the chain-link shader lights each wire as a round wire, so the gate lamp and the headlights
+    glint along the wires as they do on real galvanized wire; the coverage stays as it is;
+  - the barbed strands and the bottom wire are drawn at least one pixel wide and fade as their
+    true width would (the "phone-wire" method), so they read as fine lines against the lamp;
+  - the posts, rails, barb arms and wires in galvanized grey (light, metallic, slightly rough) in
+    place of the depot's dark metal.
+- **Not in r1:** the shed's high windows, the same glowing panels (`industrial_loop.gd:395`), and
+  the dock face that turns white in the headlights: both are the shed's, in 2c. Rain on the
+  booth's glass. A guard who comes out, takes the sheet or hands it back. The GPU price of the
+  shadowed booth light, the glass and the guard is measured with 2c's, as 2b planned.
+- **Risk:** step 2b found that any new part of the shed changed the struck man's tumble in
+  `test_collision.gd`. r1 adds colliders (the island, the bollards); if that suite fails, it is
+  reported before anything is changed.
+- **Tests first** (`test_mission_two.gd`, by real key presses; run before the build, expected to
+  fail, and after):
+  - the booth's lane-side window is within 0.5 m of the driver's eye along the lane, and within
+    1.2 m of the van's side, when the van has stopped at the line;
+  - its windows are see-through: transparent, neither unshaded nor glowing;
+  - a desk, a chair and a lit monitor stand inside its walls, and its light casts shadows;
+  - the guard is a skinned character inside the booth, seated, facing the lane-side window within
+    20°, playing a looping idle, marked a stand-in, without collision, and in the same place from
+    the start of the gate to its end; within 1 s of the stop his head turns toward the driver's
+    window;
+  - E lowers the driver's window, and it is up again once the barrier is up;
+  - the van driven up the middle of the lane touches neither the kerb nor a bollard;
+  - the fence along the gate line meets the barrier cabinet with no gap over 0.1 m, and the booth
+    stands outside it;
+  - the barbed strands and the bottom wire use the thin-wire material, and both fence shaders
+    compile (no SHADER ERROR);
+  - **mutations,** each to exit 1: the booth in its old place; the glowing panels back; the guard
+    without his stand-in mark.
+- **Predictions for the second strip** (written before the build; the same take on the real game,
+  1280×800 at 30 fps, now looking left at the booth after E, as a driver would, so its kept frames
+  are numbered again):
+  - **on the approach, about 19 m out:** the booth left of the lane on its yellow-kerbed island, a
+    lit room behind glass: the ceiling panel, the monitor's blue-white glow and a seated figure
+    facing the lane; the bollards' bands flaring in the headlights; the fence's posts and top rail
+    as grey lines, its mesh glinting faintly where the gate lamp's light falls, and the barbed
+    strands as fine lines against the lamp's pool;
+  - **about 11 m out:** the guard readable as a man in dark clothes at his desk, a glint of the
+    gate lamp on the glass; the mesh beside the lamp catching its light in diagonal glints;
+  - **stopped:** the booth out of the windshield's view, beside the driver's window; the barrier
+    and the fence on both sides ahead;
+  - **looking left after E:** the window going down; the guard about 2.5 m away through it, lit
+    from above, his head turned to Ethan, then down to the logbook during the check;
+  - **the barrier rising, and through it:** as in the first strip;
+  - **inside the yard:** as in the first strip (the shed's windows and the dock face are 2c's).
+- **Baseline** (this run's start, before any change): every suite rerun, all 31 runs exit 0 with
+  step 2b's counts, no SCRIPT or SHADER ERROR, art 0 failures (`logs/phase_2/step2b_r1/baseline/`).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the guard from Rocketbox, before the build)
+
+- **Author:** "Use him, build r1 (Recommended)" (#198), after the render of Rocketbox's
+  `Security_Male_01` (#197); then "alright start." (#204), once the disk had room.
+- **The guard's source, in place of Mixamo:** Microsoft Rocketbox's `Security_Male_01` (MIT, C55),
+  a US-style security officer, with Rocketbox's seated idle `m_sit_chair_breathe_01` (382 frames).
+  The downloads (his FBX, nine TGA textures and the clip's FBX, 108 MB) go to
+  `source_assets/rocketbox/`, kept out of Git for their size as Mixamo's are; its tracked
+  `README.md` gives each file's address. `tools/art/convert_rocketbox.py` (new, Blender) makes
+  `game/features/characters/guard/guard.glb`:
+  - each clip's rest pose is its own first frame, so the clip is baked onto him bone by bone:
+    each bone turns as the clip turns it in the armature's space, on his own bone lengths (found
+    in the render, #197);
+  - his shoes stand at the model's origin; textures halved to 1024 pixels as WebP; Rocketbox's
+    specular maps dropped for one roughness per part (head 0.56, uniform 0.72, kit 0.5), as was
+    done for Mixamo's characters;
+  - one clip, `SitIdle-loop`.
+- **A counter and a drafting chair, in place of the desk and office chair** †: the clip seats him
+  with his hips 0.76 m above his shoes, a high seat, as gatehouses use so that a seated guard
+  sees out at the windows' height. So the counter's top sits just under the sill, 0.88 m above
+  the booth's floor, and the chair's seat about 0.64 m, on a gas column and a five-star base.
+- **His head** is turned by `LookAtModifier3D` on `Bip01 Head`. He watches his monitor; when the
+  van stops at the line he looks at Ethan's eye (the driving camera, given to the shed by the
+  app); while he checks the run sheet, at the logbook; once the barrier is up, at his monitor
+  again. Each target lies within a natural turn of his head, so the modifier's angle limit stays
+  off (the revision above said within 70°).
+- **Credits:** the in-game credits and `SOURCES.md` name Microsoft Rocketbox and carry its MIT
+  notice; `game/features/characters/ATTRIBUTION.md` describes the conversion.
+- **Tests:** as the revision above, with the guard's checks read from his skeleton: seated (his
+  hips within 0.25 m above the chair's seat), facing the window (his knees within 20° of it), and
+  his head toward Ethan's eye within 1 s of the stop (within 25°).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: built)
+
+- **Author:** "alright start." (#204).
+- **Built** (`transfer_shed.gd` and `chain_link.gdshader`; new: `thin_wire.gdshader`,
+  `tools/art/convert_rocketbox.py`, `game/features/characters/guard/`):
+  - the island (0.15 m of concrete, a safety-yellow kerb and nose) with three yellow bollards
+    banded in retroreflective sheeting, all solid; on it the booth, its centre 1.9 m behind the
+    stop line and its lane-side wall 1.0 m from the side of a van in the middle of the lane; the
+    fence along the gate line now runs to the barrier cabinet;
+  - clear glass in all four windows, the lane-side one split by a sliding window's mullion; grey
+    lining, a dark floor and a ceiling with a 0.6 m LED panel; the booth's light now casts
+    shadows (energy 1.5, range 4 m †);
+  - a counter 0.88 m high with a monitor showing four dim camera views, a keyboard, a phone and an
+    open logbook, and a drafting chair with a 0.64 m seat;
+  - the guard, `GuardStandIn` (marked `stand_in`), playing `SitIdle`; a `LookAtModifier3D` turns
+    his head to a target that moves from his monitor to Ethan's eye at the stop, to the logbook
+    during the check, and back once the barrier is up. The app hands the shed the driving camera
+    (`first_drive.gd`);
+  - E at the stop lowers the driver's window if it is up; it goes back up once the barrier is up;
+  - the fence's posts, rails and arms in galvanized steel (light grey, metallic 0.5, roughness
+    0.5 †); the chain-link lit as round wire, with a glint along each wire (zinc reflectance
+    0.5 †); the barbed strands and the bottom wire drawn as thin wire, at least a pixel wide;
+  - the credits name Microsoft Rocketbox with its MIT notice; `SOURCES.md` and
+    `game/features/characters/ATTRIBUTION.md` record the guard.
+- **Found while building:**
+  - Rocketbox's head bone points forward along its own +Y, and `LookAtModifier3D` turns about Y
+    unless told otherwise, so the head could not turn (46° off Ethan's eye). Its turning axis is
+    now the head's upward axis, chosen from its rest pose (0° off);
+  - the gate test drives the van up to the arm, 2.5 m past the stop line, so the window check
+    measures where Ethan's eye is when the van's front is at the line (0.10 m from the window);
+  - "the window goes back up" passed on the old code, because the window never went down; the
+    check now needs both.
+- **Tests first** (`logs/phase_2/step2b_r1/`): `before/`: Mission 2 15/28, the 13 new checks
+  failing; menus 19/20 (no Rocketbox credit); art 1 failure (no guard). `after/`: Mission 2 28/28,
+  menus 20/20, art 0 failures (the guard: 9,515 triangles, one clip, six 1,024-pixel textures, 80
+  bones, 1.5 MB).
+- **Mutations, each exit 1:** the booth back in its old place (26/28); the glowing panels back
+  (27/28); the guard without his stand-in mark (27/28). The script was restored byte for byte.
+- **Import** with the scratch home, before and after `configure_imports.py`: exit 0, no errors or
+  warnings (`import/`). The converter writes a byte-identical file on a second run.
+- **Every suite** (`suites/SUMMARY.txt`): 30 of 31 runs exit 0 with the baseline's counts, with
+  Mission 2 now 28/28; art 0 failures. **One fails: `test_hit_speeds.gd`, 11/12.** At 60 km/h the
+  struck man's knee or elbow passes its limit for 4 physics ticks (peak −106°) where the check
+  allows 3 (the baseline: 2 ticks, peak −42°); a rerun gives the same numbers (`hit_speeds_rerun/`).
+  As step 2b found, any new part of the shed changes his chaotic tumble; nothing at the crossing
+  changed. Reported to the author before anything is changed.
+- **Not done:** the second strip (it opens a game window; the take must look left at the booth
+  after E); the GPU price, with 2c's.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the struck man's limbs, before the change)
+
+- **Author:** "Fix his joints (Recommended)" (#205), after the hit at 60 km/h bent a knee or an
+  elbow past its limit for 4 physics ticks once the gate's new parts were in the world.
+- **Why the hinges give:** each knee and elbow is a `PhysicalBone3D` hinge with angular limits,
+  but under the van's impact the solver lets a limb through its limit for a few ticks (peak −106°
+  at 60 km/h); which tumble does it depends on everything else in the world, as step 2b found.
+- **The change** (`pedestrian.gd`) †: each lower leg and forearm gets a guard, run by the physics
+  engine on every tick before the scene reads the bodies. When the joint's bend has passed −5°
+  (the wrong way) or 150° (folded), it turns the limb back to that limit about the joint itself,
+  so the knee or elbow stays where it is, and takes away the turning speed that was carrying it
+  further. Inside the limits it does nothing, so the hinge and its limits behave as before.
+- **Test first** (`test_hit_speeds.gd`): a knee or an elbow may no longer pass −10° or 155° for a
+  single tick (it allowed 3 ticks past −30°), at 30, 45 and 60 km/h; everything else as before.
+  Expected to fail before the change. **Mutation:** the guard removed, which must exit 1.
+- **Then every suite again,** with `test_collision.gd` watched most, since it also reads his
+  limbs. If the guard makes him jitter or changes where he lies, it is reported, not kept.
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the struck man's limbs, changed)
+
+- **Author:** "Fix his joints (Recommended)" (#205), then "Accept 1.0 m or more (Recommended)"
+  (#206).
+- **Changed** (`pedestrian.gd`): each lower leg and forearm is a `LimbGuard`, a `PhysicalBone3D`
+  whose `_integrate_forces` keeps its joint's bend between −5° and 150° †, turning the limb back
+  about the joint and taking away the turning speed past the limit; inside the limits it does
+  nothing.
+- **Test first** (`test_hit_speeds.gd`, no tick past −10° or 155°, where it allowed 3 ticks past
+  −30°): 9/12 before (2, 1 and 4 ticks at 30, 45 and 60 km/h, `limbs_before/`); 12/12 after, each
+  speed peaking at −5° and 145° (`limbs_after/`). **Mutation:** the guard removed, 9/12, exit 1
+  (`mutation_no_limb_guard/`); the script restored byte for byte.
+- **Every suite again** (`suites_limbs/`): 30 of 31 as the baseline, with Mission 2 28/28 and the
+  hit at speed 12/12. `test_collision.gd` 43/44: its own limb checks improved (the worst bends
+  −5° and −5°, where they were −24° and −8°), but the changed tumble lands him 2.4 m ahead of
+  the bumper instead of 2.8 m, and the lean check, which wanted more than 1.0 m of road gained by
+  leaning, measured exactly 1.00 m (2.00 m leaning, 3.00 m seated, to the centimetre). Reported;
+  the author chose to accept 1.0 m or more (#206).
+- **Test change, with its reason:** `test_collision.gd`'s lean check now asks for a gain of at
+  least 1.0 m, rounded to the centimetre its search steps in: the cab, the bonnet and the lean are
+  unchanged, and only his landing spot moved. 44/44 (`lean_check/`).
+
+## Revision 2026-11-11 (Phase 2, step 2b r1: the second strip)
+
+- **Author:** "alright, tell me when its done" (#207).
+- **How:** as the first strip (an isolated copy of `game/`, Movie Maker at 1280×800 and 30 fps, in
+  a window, run by Claude Code at the author's word), with the take now looking left at the booth
+  8 frames after the stop and ahead again when the barrier starts to rise
+  (`tools/captures/gate_take.gd`). Eleven frames are kept in `captures/transfer_shed/2b_r1/` with
+  `events.txt`, `godot.log` (no SCRIPT or SHADER ERROR) and `strip.png`.
+- **Events:** stopped 0.22 m before the line on 215, as before; looking left on 223; E on 235; the
+  window fully down by the end of the check; looking ahead on 326 as the barrier starts; the
+  barrier up on 444; inside the yard on 588, with the window up again.
+- **Claude Code's reading against the predictions (a claim, not a check):**
+  - **the hand-over, as predicted:** through Ethan's window, the lit room with its counter,
+    monitor, phone and logbook, and the guard in his uniform and cap; his head turned to Ethan
+    (232), then down to the logbook while he checks (265, 300), the window going down between
+    them;
+  - **the guard is crowded:** at the view's full turn to the left he sits beside the van's
+    windscreen pillar, partly behind it, and at this size his face reads dark red (232);
+  - **the fence, not as predicted:** its chain-link reads as a dense, bright white speckle, like
+    snow, on both sides of the gate (45, 120, 215, 385, 444), not a faint mesh with glints: every
+    pixel its hashed alpha keeps carries a full wire's glint. The barbed strands are lost in it;
+  - **the booth on the approach:** its yellow kerb catches the headlights and the room shows as a
+    lit grey interior (45, 120), but the guard cannot be made out at 19 or 11 m;
+  - the barrier rising, and inside the yard: as in the first strip.
+- **The author's verdict:** to come.
+
+## Revision 2026-11-11 (Phase 2, step 2b r2: the fence's veil and the guard in the window, before the change)
+
+- **Author:** "Fix both (Recommended)" (#208), the verdict on the second strip: tone the fence's
+  glints down to a faint sheen that glints only near the lamp, keep the barbed wire as fine lines,
+  move the guard clear of the windscreen pillar and light his face properly; then a third strip.
+- **The fence** †: the chain-link is blended at its coverage instead of hashed. A hashed pixel is
+  either wire or nothing, so each one the hash kept carried a whole wire's glint, and the far
+  mesh became bright speckle; a blended pixel carries only the share of wire it holds, as a camera
+  averages a wire thinner than a pixel. Its zinc reflectance, set by `transfer_shed.gd`, drops
+  from 0.5 to 0.12, so it glints only where the lamp's or the headlights' light is strong. The
+  barbed strands and the bottom wire are unchanged.
+- **The guard** †: his seat moves from 0.45 m north of the booth's middle to 0.35 m south of it,
+  so that from Ethan's eye at the stop line his head lies about 97° left of straight ahead, in the
+  middle of the driver's side window, where it was 79°, against the windscreen pillar. The
+  logbook, the chair and the ceiling panel move with him; the monitor sits 0.75 m north of him on
+  the counter, turned to him, with the keyboard before it and the phone beyond.
+- **His face** †: the monitor gets its own glow, a small cool light (0.62, 0.72, 0.85), energy
+  0.35, reaching 1.2 m, without shadows, in front of the screen, so it lights his face from the
+  side as a screen does at night, where the overhead light alone left it under the cap's brim.
+- **The take** looks left by the full 1.3 rad the game's mouse look allows (it used 1.25).
+- **Tests first** (`test_mission_two.gd`):
+  - looking left from the driver's seat with the van's front at the stop line, the guard's head
+    lies between 85° and 120° left of straight ahead (it lay 79°);
+  - a light within 1.2 m of his head, in front of him and casting no shadow, lights his face;
+  - the chain-link is blended, not hashed, and glints at no more than 0.15 of a wire's light;
+  - every other check as before. **Mutation:** the guard back at his old seat, which must exit 1.
+- **Predictions for the third strip** (the same take, looking left by 1.3 rad):
+  - **on the approach (45, 120):** the fence a faint grey veil, brighter beside the gate lamp
+    with a few glints along the wires there, its posts and top rail as grey lines and the barbed
+    strands as fine lines against the lamp's pool; no white speckle;
+  - **looking left (232, 265, 300):** the guard in the middle of the side window, clear of the
+    pillar, his face lit from his left by the monitor's cool glow and readable as a face; then his
+    head down to the logbook as the window goes down;
+  - **the rest:** as in the second strip.
+
+## Revision 2026-11-11 (Phase 2, step 2b r2: built, and the third strip)
+
+- **Built** (`transfer_shed.gd`, `chain_link.gdshader`, `tools/captures/gate_take.gd`): the
+  chain-link blended at its coverage, its zinc reflectance 0.12 (set by the shed); the guard's
+  seat 0.35 m south of the booth's middle, the logbook, chair and ceiling panel with him, the
+  monitor 0.75 m north of him with the keyboard before it and the phone at the counter's north
+  end; the monitor's glow (`MonitorGlow`); the take looking left by 1.3 rad.
+- **Tests first** (`logs/phase_2/step2b_r2/`): `before/` 28/31, the three new checks failing (the
+  guard's head 82° left of straight ahead); `after/` 31/31 (101°). **Mutation:** the guard back at
+  his old seat, 29/31, exit 1 (82° again; the monitor, which follows him, also leaves the booth);
+  the script restored byte for byte.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0 with the baseline's counts, Mission 2
+  31/31, the hit at speed 12/12 and the collision 44/44; art 0 failures; no SCRIPT or SHADER ERROR.
+- **The third strip** (`captures/transfer_shed/2b_r2/`, the same take; the same events on the
+  same frames as the second). **Claude Code's reading against the predictions (a claim, not a
+  check):**
+  - **the fence, as predicted:** no white speckle anywhere; beside the gate lamp the chain-link is
+    a fine diamond mesh catching its warm light, with a post beside it (385, 444); far off it is a
+    veil faint enough to vanish at 19 m (45), as real chain-link does at night. The barbed strands
+    cannot be told apart at this size;
+  - **the guard, as predicted:** in the middle of the side window, clear of the pillar, his face
+    lit and readable under the cap, turned to Ethan (232), then down to the logbook as the window
+    goes down (265, 300); warm-toned, as under the booth's light;
+  - the rest as in the second strip.
+- **The author's verdict:** to come.
+
+## Revision 2026-11-11 (Phase 2, step 2c: the depot around the shed, written before any code)
+
+- **Status:** drafted by Claude Code at the author's word ("okay", #211), after the author asked
+  for the shed's surroundings to be a real depot with roads, with Ethan reversing onto the dock
+  (#209), and chose layout B (#210). It changes nothing in the game, and is committed only with
+  the author's OK, before any of step 2c's code. Values marked † are Claude Code's proposals from
+  the research below, for the author to accept or change. Step 2a's plan for the shed, its rules
+  R1–R8 and decisions T1–T4 stand; this revision adds the yard around them.
+
+### What real depots taught (the research)
+
+| Fact | Value | What it means here |
+| --- | --- | --- |
+| Truck court depth | 120–150 ft (37–46 m) for semi-trailers; or twice the longest vehicle plus 5–10 ft | The front yard is 15.4 m deep: enough for vans (2 × 5.53 m + 1.5 m), not for trailers, which is why the side yard is where trailers park |
+| Apron surface | concrete in front of the docks (asphalt softens and dents under trailer stands); never gravel | A 5 m concrete strip along the dock fronts, asphalt elsewhere, no unpaved ground inside the fence |
+| Door mix | dock-high doors (48–52 in) for trailers; grade-level or lift solutions for vans | Bays 1 and 2 stay dock-high (1.3 m); bay 3 is the van bay with its dock lift (T1) |
+| Wheel guides | raised steel, safety yellow, seen from the cab; e.g. 2.085 × 0.25 × 0.365 m a guide | A pair at each bay, bay 3's set for the van's track |
+| Traffic | one-way where it fits; counter-clockwise, so drivers back on their own side; signs and markings for lanes, entrances, exits and walkways | The van comes in, swings right into the side yard, and backs into bay 3 on the driver's (left) side |
+| Pedestrians | kept apart from vehicles by physical barriers, not paint alone; marked crossings | A marked walkway from the gate to the shed's door, railed where it runs beside the lane |
+| Parking | trucks apart from staff cars | Trailers in the side yard; the staff car park behind a kerb in its south-east corner |
+| Yard speed | usually posted 5 mph; about 3 mph approaching a dock | A 5 mph sign at the gate; 2a's reverse limit of 1.4 m/s (3.1 mph) at the bay |
+| Yard lights | poles of 25–35 ft (7.5–10.5 m) for industrial yards, spaced about 3–4 times their height; full cutoff | Two 10 m poles in the side yard, aimed down; with the shed's two wall floods |
+| Iveco Daily 35S, 3520 wheelbase | turning circle 12.1 m kerb to kerb, 12.7 m wall to wall | Our van's 3.50 m wheelbase: the front yard is just deep enough to turn in, the side yard more than enough |
+| The ground east of the shed | flat near the road, rising to the north-east (about 1.2–1.8 m at z 30; the game's own terrain) | The side yard is cut level, held by a retaining wall along its north edge |
+
+Sources: [Link Logistics: loading docks](https://www.linklogistics.com/news-insights/industrial-real-estate-101/what-is-a-loading-dock-a-guide-to-types-configurations-and-key-features/),
+[Projul: dock design](https://projul.com/blog/construction-loading-dock-design-guide/),
+[Industrial Spaces: fleet access](https://industrialspaces.net/learn/logistics-operations/fleet-access-considerations-warehouse-sites),
+[Nike DC standards: parking](https://gps.standards.nike.com/distribution-centers/space-types/parking),
+[Inbound Logistics: warehouse layout](https://inboundlogistics.com/articles/fine-tuning-your-warehouse-layout),
+[Trucknews: yard traffic](https://www.trucknews.com/business-management/manage-fleet-yard-traffic-in-name-of-safety-productivity/1003174734),
+[Rite-Hite: wheel guides](https://www.ritehite.com/en/am/news/2023/blog/why-wheel-guides),
+[Loading Systems: wheel guides](https://www.loading-systems.com/products/accessories/wheel-guides),
+[USPS PO-515: yard rules](https://about.usps.com/handbooks/po515/po515_ch3_002.htm),
+[Paragon Logistics: yard safety rules](https://paragonlogistics.tawk.help/article/yard-safety-rules),
+[BigRentz: speed limits](https://www.bigrentz.com/blog/forklift-speed-limits-osha-rules-and-best-practices-for-safe-operation),
+[LED Lighting Supply: logistics yard lighting](https://www.ledlightingsupply.com/commercial-lighting/led-logistics-yard-lighting),
+[JCLGL: pole lights](https://jclgl-led.com/blogs/led-parking-lot-lights/led-pole-lights-commercial-use),
+[Iveco Daily 35S spec sheet](https://s3-ap-southeast-2.amazonaws.com/imotor-cms/files_cms/Daily35SVanSpecSheetUpdate-Aug17.pdf),
+[Carexpert: Daily dimensions](https://www.carexpert.co.nz/iveco/daily/2019/exterior-and-dimensions).
+Most are vendor or consultant pages, not standards; their figures are rules of thumb.
+
+### The layout (B, #210), in the world's metres
+
+- **The yard:** the front yard (x −89 to −53, z 37.5 to 55) and the side yard (x −53 to −27,
+  z 30 to 55), paved in the road's wet asphalt, with its puddles and rain rings; a concrete strip
+  5 m deep along the dock fronts (z 39.9 to 45); a slot drain along the strip's yard edge †.
+- **The cut:** the side yard's ground is lowered to the yard's level, and a concrete retaining
+  wall along z 30 (x −53 to −27) holds the ground behind it, as high as that ground stands
+  (about 1.2–1.8 m); the fence runs along its top †.
+- **The fence:** the gate's galvanized chain-link, closing the yard: as today on the west and
+  along the gate line west of the barrier; from the barrier's rest post east along z 55 to x −27;
+  north along x −27 to z 30; west along the retaining wall to the shed's east wall.
+- **Markings:** yellow bay lines from the dock fronts 12 m out †; bay numbers 1–3 on the ground
+  and over the doors; a hatched keep-clear box in front of bay 3 †; white direction arrows (in:
+  north from the gate, then east; out: west to the gate) †; a zebra walkway from the gate to a
+  pedestrian door at the shed's west front corner, railed on its lane side †; the trailer and car
+  bays marked.
+- **Kerbs, bollards, signs:** yellow steel bollards at the shed's corners, between the dock doors
+  and at the office door †; a kerb round the staff car park †; signs with no company name (S4
+  stays open): "5 MPH" and "HI-VIS BEYOND THIS POINT" at the gate, "DOCK 1", "DOCK 2", "VAN BAY 3
+  · DOCK LIFT", "STAFF PARKING ONLY", "NO PARKING" at the hatched box †.
+- **Lights:** the shed's two LED wall floods about 8 m up (2a) and two 10 m poles in the side
+  yard at about (−46, 50.5) and (−31, 40), full cutoff, aimed down †; each is a lamp for B1, so
+  rain falls in its light. B1 rains in at most eight volumes at once (`MOST_ACTIVE`), so at the
+  shed the gate lamp, the floods, the poles and the nearest street lamps share that cap.
+- **The side yard's contents:** three marked trailer bays along its north half (2.6 × 14 m)
+  with two parked semi-trailers †; the staff car park, four bays (2.5 × 5 m) with two or three
+  cars †; the office, a single-storey annex of about 5 × 4.5 m at the shed's east front corner,
+  with a lit window and a door †; a skip against the retaining wall; stacked pallets †.
+- **The shed:** the flat beige high windows become glass, dark with a faint light inside † (the
+  flaw the gate's first strip found).
+
+### The parts and their order (each approved on its own)
+
+- **2c-1, the yard:** paving, the concrete strip, the drain, the cut and its retaining wall, the
+  fence moved out, kerbs, bollards, markings, signs, and the two pole lights with B1's rain.
+- **2c-2, the shed's front:** bays 1 and 2 as truck docks (rubber dock shelters †, levellers,
+  bumpers, red and green lights, wheel guides); bay 3 as the van bay (T1: a scissor dock lift in a
+  pit, its platform set to the van's floor †; bumpers; red and green lights outside and inside; a
+  dock light on an arm; wheel guides); the windows as glass; the wall floods; the office.
+- **2c-3, the parked things:** the trailers, cars, skip and pallets, from free CC0 or CC-BY models
+  with any logo removed and credited in `SOURCES.md`; two or three options of each, shown to the
+  author in a picture first.
+- **2d, backing into bay 3** (2a's plan): by real keys, in reverse, with the reverse camera and
+  the mirrors; the wheel guides and bumpers solid; at a stop within 0.3 m of the bumpers and 3° of
+  square, the outside light turns green and a chock goes in.
+- **2e, the load and the seal:** as 2a planned.
+
+### Rules a test can measure (written before the code)
+
+| # | Rule | Test |
+| --- | --- | --- |
+| D1 | No unpaved ground inside the fence: the yard's surface covers every point between the fence and the shed | `test_mission_two.gd`, sampling the yard |
+| D2 | The fence closes the yard: no gap over 0.1 m along its line but the gate's lane | the same, from the fence's colliders |
+| D3 | The side yard is level within 2 cm, and no tree, rock or prop stands inside the fence | the same, from the terrain and the forest |
+| D4 | The van, driven by real keys from the gate, swings into the side yard and backs into bay 3 without touching a kerb, bollard, trailer, car, wall or the fence | the same (2d) |
+| D5 | Each new light is a lamp for B1: the lamp rain's volume count grows by the lights added | `test_lamp_rain_state.gd`, `test_lamp_rain_config.gd` |
+| D6 | Where the walkway runs beside the lane, a rail stands between them | `test_mission_two.gd` |
+| D7 | 2a's R2 and R3 at bay 3: the bumpers stop the van within 0.3 m and 3° of square, the light turns green, a chock goes in, and reversing there never passes 1.4 m/s | the same (2d) |
+| D8 | Every existing suite passes, and Mission 1 is unchanged | every suite |
+| D9 | The depot's GPU price, measured with the Metal HUD as in Assignment 6, stays within 1.5 ms † over today's scene at the shed | `game/tests/gpu_price.gd`, `tools/tests/gpu_price.py` |
+
+### Predictions (before any code)
+
+- **Approaching the gate:** past the barrier, a paved and lit yard: yellow bay lines and numbers in
+  the headlights, the two poles' pools of light with rain in them, the trailers' rear doors in the
+  side yard, the office's lit window; the shed's high windows dark glass, not beige panels.
+- **Backing into bay 3 (2d's strip):** the reverse camera shows the wheel guides and the bumpers
+  closing; the light outside turns from red to green at the stop.
+- **GPU price:** two more shadowed lights and up to four more B1 volumes on screen: about 1.0 ms †
+  over today's scene at the shed, within D9's 1.5 ms.
+
+### What could go wrong, and the check that catches it
+
+1. New solid bodies change the struck man's tumble again (twice so far): his limbs are now held
+   by the guard (C56), but the lean check sits exactly at its 1.0 m; the hit and collision suites
+   catch it, and it is reported before anything is changed.
+2. Trees, rocks or props left inside the grown yard, or the cut leaving holes in the ground: D3,
+   and a strip.
+3. The van riding over a 0.15 m kerb, since its box clears 0.15 m: kerbs get colliders tall enough
+   to stop it, D4.
+4. The lights cost too much: D9; the poles' shadows go first.
+5. A model's licence that does not allow a sold game, or a logo left on: `SOURCES.md` and the
+   author's look at each option.
+
+### Not in this step
+
+- The load and the seal (2e), the inspection (step 3), any story words (S1–S4), any company name
+  on a sign (S4), and the guards' behaviour (Assignment 9).
+
+## Revision 2026-11-11 (Phase 2, step 2c-1: the yard, built)
+
+- **Built** (new `transfer_yard.gd`; `transfer_shed.gd`, `industrial_loop.gd`): the front and
+  side yards paved in the yard's wet asphalt; the concrete strip from the building front to
+  z 45, with its slot drain; the side yard cut level, the ground flattened to one grid point past
+  its east edge (x −26), behind its retaining walls; the fence out along z 55 to x −27, north to
+  z 30, and west along the wall's top; the bay lines 12 m out, the bay numbers on the ground, the
+  hatched "NO PARKING" box before bay 3; three arrows (in: north from the gate, then east along
+  the gate side; out: west to the gate along the docks' side, each on its right); the walkway's
+  zebra stripes with a solid yellow rail on the lane side; the trailer bays, four car bays and
+  the car park's kerb, solid to 0.6 m (risk 3); four bollards, at the shed's corners and between
+  the docks; signs on solid posts: "5 MPH" outside the gate beside the lane, "HI-VIS BEYOND THIS
+  POINT" on the fence west of the gate, "STAFF PARKING ONLY"; the two pole lights, each a lamp
+  for B1 (16 rain volumes, from 14).
+- **Where it differs from the brief:**
+  - **a second retaining wall, not foreseen:** the ground also rises east of the side yard, so
+    a wall steps down along x −26 from 1.64 m at the north corner to 0.45 m at z 46, where the
+    slope ends;
+  - **the north wall is 1.93 m** (the ground behind it 1.78 m, plus a 0.15 m cap), above the
+    1.2–1.8 m †; from x −53 to about −45 the ground behind it is the shed's flat plot, so there
+    it stands free. Behind both walls the ground climbs over one 2 m grid cell, a dip that the
+    wall's top hides from the van;
+  - **the poles are the road's street lamps** (the lamp about 6.4 m up), not 10 m poles †, at
+    the yard's edges out of the side yard's turning space: (−46, 54) by the south fence and
+    (−29, 40) by the east fence, where the brief had (−46, 50.5) and (−31, 40) †;
+  - **the marks, corrected in the build:** the first build had no out arrow, its north arrow ran
+    into bay 2's lines, the "5 MPH" sign stood in the right turn from the gate, and no sign post
+    was solid; three checks now hold them;
+  - **left for 2c-2:** the numbers and the "DOCK 1", "DOCK 2" and "VAN BAY 3 · DOCK LIFT" signs
+    over the doors, which come with the doors; the office, and the bollard at its door. The 1.3 m
+    dock blocks still have no collider; 2c-2 rebuilds them.
+- **Tests first** (`logs/phase_2/step2c1/`): `before/` Mission 2 31/36 (1,090 of 1,090 yard
+  points unpaved, a fence run inside the yard, 1.34 m of slope with 486 spots open to trees, no
+  rail, no marks), the lamp rain 12/13 (14 volumes for 16 lamps); `before_marks/` 36/39 (no out
+  arrow, no solid post, a sign in the drive); `after/` 39/39 and 13/13; import clean.
+- **Mutations** (`mutations/`, on an APFS clone, its file restored byte for byte after each): the
+  side yard unpaved, the old east fence, the flat area one grid point short (0.34 m of slope),
+  the forest let into the yard (486 spots), the rail hollow, no out arrow, the sign posts hollow,
+  the sign back in the drive, and no yard poles (the lamp rain's test): all nine exit 1, each on
+  its own check.
+- **Every suite** (`suites/SUMMARY.txt`): 30 of the 31 runs exit 0 with the baseline's counts
+  (Mission 2 now 39/39); art 0 failures; no SCRIPT or SHADER ERROR. **The collision suite fails,
+  43/44: the brief's predicted failure 1, reported before anything is changed.**
+- **The failing check** is "Leaning shows the road from 1.9 m past the bumper, where a harder hit
+  leaves him (2.9 m from the seat)". Its gain, 2.930 − 1.950 = 0.98 m, is 2 cm short of the
+  1.0 m accepted in 2b r1, a bar set at the exact value it measured then (1.000 m). What the runs
+  in `fall_sensitivity/` show (its `SUMMARY.txt`; a claim from them, not a check):
+  - the yard changes Mission 1's fall at the bus stop's crossing, far from the shed: he rests at
+    5.3 s, 2.0 m ahead of the bumper (3.7 s and 2.4 m before);
+  - no part of the yard does it alone, and nothing near him does: with the yard not built the old
+    fall returns; with one plain box built in its place, or buried 50 m under any of six places
+    on the map, the new fall returns. No further change tried (about 30: more boxes, boxes
+    added after the world is built, unused physics bodies, each group of the yard's colliders
+    taken out) moved the new fall. The engine's reason was not found;
+  - everything the player sees holds: the hood hides him from the seat (0 of 11 parts), leaning
+    shows him (9 of 11), he lies in the beams, the crack is in view; the other 43 checks pass;
+  - at the road under him, rather than at his hips 0.17 m above it, the gain is 1.07–1.08 m
+    (1.10–1.12 m in the old fall).
+- **The author's decision (#213, C57):** "Bar at 0.9 m (Recommended)": the check keeps
+  measuring at his hips and asks for at least 0.9 m, 8 cm below today's fall; Mission 1 is
+  unchanged. Built in `test_collision.gd`: 44/44 (`lean_bar/`). **Mutation:** Ethan leaning
+  30 cm instead of 42 cm, exit 1 (the gain 0.7 m, and 5 of 11 parts showing). The other 30
+  runs stand as in `suites/`: nothing in `game/` but this test changed since. **Not done:** the
+  strip and the GPU price (D9), both windowed runs, each with the author's OK; the commit,
+  with the author's OK.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised: the bigger depot, written before any code)
+
+- **Status:** the author's decisions #216–#223. The docks' shutters and shelters looked fake;
+  everything is to look real and bigger (#216); existing models are used, not built ones
+  (#217–#222); the shed is about 50 x 30 m, set back into the hill so lorries have room
+  (#219); a few trucks and cars are parked, and the lights and rain at and inside the docks are
+  realistic (#220); "yes proceed" (#223). This replaces step 2c's layout B for the shed and the
+  yard; the gate, the booth and the barrier (2b) stay as built. Research:
+  `docs/DEPOT_RESEARCH.md`. Models: the twelve in `source_assets/sketchfab/` (CC BY 4.0, each
+  with its README). Textures: Poly Haven (CC0). Values marked † are Claude Code's calls.
+- **The layout** (the world's metres; north is −z; drawn in
+  `captures/transfer_shed/2c_models/proposed_layout.png`):
+  - **the platform:** x −92 to −26, z −13 to 55, level at 0, cut into the hill and held by
+    concrete retaining walls as high as the ground behind them: about 11 m along the back
+    (z −13), and stepping down along the west (x −92) and east (x −26) sides to nothing towards
+    the gate;
+  - **the shed:** x −90 to −40, z −10 to 20 (50 x 30 m); eaves 9 m and a 5° gable roof, ridge
+    about 10.3 m †; box-profile metal cladding in light grey † (Poly Haven's Factory Wall, made
+    grey) over a 1.3 m concrete dock face; the roof in the world's corrugated iron; gutters and
+    downpipes along the front †;
+  - **its front (z 20), west to east:** the office (x −90 to −82, two storeys, lit windows, a
+    door at the yard's level) †; truck docks 1–8 at x −80, −76 … −52, each a 2.74 x 3.05 m
+    opening (9 x 10 ft) from the dock floor 1.3 m up, closed by Maxwell's sectional door; bay
+    9, the van bay with its dock lift (T1), at x −47.75; a drive-in door at the yard's level at
+    x −42.75 (Poly Haven's roller shutter, 3.7 x 2.9 m) †;
+  - **the yard:** an asphalt court 35 m deep (z 20 to 55) from x −92 to −26, with a 15 m
+    concrete apron in front of the docks and a slot drain at its edge †; bay lines 12 m out
+    and numbers for docks 1–9; the arrows as in 2c-1 (in: north from the gate, then east; out:
+    west to the gate); a zebra walkway along the west fence from the gate to the office,
+    railed on the court's side; five staff car bays beside it (x −88.4 to −83.4, z 42.4 to
+    54.6) behind a kerb; three trailer bays on the east (x −38.7 to −28.5, z 23 to 37); the
+    signs as built in 2c-1;
+  - **the fence:** the gate's chain-link along z 55, as built; along x −92 and x −26 from the
+    walls to z 55; and along the walls' tops †;
+  - **lights:** five yard lights on the road's street-lamp poles † at (−79, 53.8), (−58, 53.8)
+    and (−36, 53.8) along the south fence, (−89.6, 30) beside the walkway's rail and (−27.4, 30)
+    on the east side, clear of the car bays and the walkway, each a lamp for B1. The shed's
+    lights come in part 2.
+- **The parts (each approved on its own, tests first):**
+  - **Part 1 (approved, #223):** the platform and its walls, the shed's shell with its doors and
+    office, the yard re-laid, the five yard lights.
+  - **Part 2:** the docks at work: the seals, levellers and bumpers, a light over each dock, the
+    red and green lights, the inside of the shed by the docks lit and dry, and rain only
+    outside, in the light of every lamp at the depot.
+  - **Part 3:** the parked things: two tractor-trailers and a box truck at docks, the parked
+    trailers, staff cars, the dumpsters, a forklift, a pallet jack, pallets and cones.
+  - Then 2d (backing onto bay 9) and 2e (the load and the seal), as planned.
+- **Rules part 1's tests measure (`test_mission_two.gd` unless named):**
+
+| # | Rule |
+| --- | --- |
+| E1 | The platform is level within 2 cm at every metre inside it, and no tree stands on it |
+| E2 | Every cut is held: 0.5 m in front of each wall the ground is level, and 3 m behind it the ground is no higher than the wall's top |
+| E3 | The shed is a solid building from x −90 to −40 and z −10 to 20 (within 5 cm), its eaves 9 m up (within 10 cm); the old warehouse box and its dock blocks are gone |
+| E4 | Eight truck openings, 2.74 m wide and 3.05 m tall from 1.3 m up, centred at x −80 + 4n (within 2 cm), bay 9's at x −47.75 and the drive-in door's at x −42.75 at the yard's level; each is filled by a closed door |
+| E5 | The office's windows are lit from inside, and its door at the yard's level opens onto the walkway |
+| E6 | The yard is paved everywhere inside the fence, the fence and the walls close it but for the gate, the court is at least 35 m deep from the dock face to the fence, and a railed walkway runs from the gate to the office |
+| E7 | Bay lines for docks 1–9, the arrows, and the signs on solid posts, none in the drive |
+| E8 | Five yard lights, each a lamp for B1 (`test_lamp_rain_state.gd`: 19 rain volumes) |
+| E9 | Every suite passes, and Mission 1 is unchanged; if the struck man's fall moves again, it is reported before anything is changed (C57) |
+| E10 | The doors' game files keep within the art check's limits, and their authors are in the credits (`check_first_drive_art.py`, `test_menus.gd`) |
+
+- **Predictions (part 1, before any code):** past the barrier, a wide yard and a long grey shed
+  35 m ahead; eight closed sectional doors in a row over the concrete dock face, the van bay
+  and the drive-in door at the east end; the office's lit windows at the west end; the cut's
+  tall walls at the back and sides, darker than the shed; five pools of light with rain in
+  them. The shed's own lights come in part 2, so its front is lit only by the yard lights and
+  the headlights. The struck man's fall will probably move again, since part 1 adds solid
+  bodies while the world is built (C57's finding).
+- **What could go wrong, and the check:** terrain left in front of a wall or above it (E1, E2);
+  the old warehouse or its plots left behind (E3, E1); heavy door files (E10, the art check);
+  the fall moving (every suite, reported); the yard too dark to read (the stills).
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 1: built)
+
+- **Built** (new `depot_ground.gd`, `transfer_building.gd`; `transfer_yard.gd` rewritten;
+  `transfer_shed.gd`, `industrial_loop.gd`; new `tools/art/make_depot_textures.py` and
+  `tools/art/convert_depot_models.py`; task plan `docs/DEPOT_PLAN.md`): the platform level from
+  x −92 to −26 and z −13 to 55, held by 65 concrete cut walls (the back one 11 m, the sides
+  stepping down); the 50 x 30 m shed in grey box-profile cladding over the concrete dock face,
+  under its corrugated-iron gable roof with gutters and downpipes; the office's two lit storeys;
+  nine of Maxwell autodoors' sectional doors and Poly Haven's roller shutter as the drive-in
+  door; the yard paved round it with the 15 m apron, the bay lines and numbers 1–9, the hatched
+  box before bay 9, the 2c-1 arrows and signs, the railed walkway, five car bays behind their
+  kerb, three trailer bays; the fence along the gate, the platform's sides and the walls' tops;
+  five yard lights. The old warehouse box is gone; the world still draws its random numbers, so
+  nothing else moved.
+- **Where it differs from the plan:**
+  - **the trailer bays** stand beside the shed's east wall (z 4 to 18), not at z 23 to 37 †: there
+    they leave the court's east end clear for the van to pull forward before backing onto bay 9;
+  - **the dock door** is an 8 x 7 ft door at its source; its panel is stretched 1.04 times across
+    and 1.31 times up to fill the 9 x 10 ft opening, so its three windows sit a little low; its
+    overhead tracks and springs, inside the shed while it is shut, were dropped (5,346 triangles);
+  - **the drive-in shutter** reads as a dark opening at night: it is fully metallic, so it shows
+    only what it reflects. Part 2's light over each door is to light it;
+  - **the materials** were reused from the depot yard's Poly Haven set rather than fetched again
+    (the box-profile sheet made grey, `concrete_wall_006` for the dock face), and the cut walls use
+    the world's concrete.
+- **Tests first** (`logs/phase_2/step2c_p1/`): `task1_before/` Mission 2 39/41 (E1 10.52 m and
+  1,892 open spots; E2 no walls) → `task1_after/` 41/41; `task2_before/` 41/44 (E3–E5) →
+  `task2_after/` 44/44; `task3_before/` 44/45 (no doors), the menus 19/20 (no credit), the art
+  check 1 failure → `task3_after/` 45/45, 20/20, 0; `task4_before/` 40/46 (the yard, the fence, the
+  rail, the bays, the way in blocked) and the lamp rain 12/13 (16 volumes) → `task4_after/` 46/46
+  and 13/13 (19).
+- **Mutations** (`mutations/`, on an APFS clone, restored byte for byte after each): the platform
+  half flattened (E1, E2), the east walls missing (E2), the old warehouse back (E3), dock 3 moved
+  0.5 m (E4), the office dark (E5), bay 9's door missing (E4), the apron unpaved (E6), the east
+  fence missing (E6), a light removed (the lamp rain), a bollard in the van's way (the way in): all
+  ten exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0, with the baseline's counts but
+  Mission 2's (46/46) and the collision's (44/44 under C57's 0.9 m); art 0 failures; no SCRIPT or
+  SHADER ERROR. The struck man's fall did not move (5.3 s, 2.0 m, the same lean): C57's finding
+  that after the first extra body the fall stays put held again.
+- **The stills** (`captures/transfer_shed/2c_p1/`, `depot_part1_sheet.png`). **Claude Code's
+  reading against the predictions (a claim, not a check):** as predicted: the long grey shed 35 m
+  past the barrier, the row of white sectional doors over the dock face, the office's lit windows
+  at the west end, the cut walls stepping down the sides with the fence on their tops, rain in
+  the yard lights; the shed's front lit only by the yard lights and headlights. Not as predicted:
+  the drive-in door dark (above); the metal roof dark from above at night, as metal is.
+- **Not done:** part 2 (the docks at work, the shed's lights and inside, the rain), part 3 (the
+  parked things), the GPU price (D9); the commit, with the author's OK.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 2: the docks at work, before any code)
+
+- **Status:** at the author's word, "okay proceed" (#225). The docks of part 1, at work at night:
+  values marked † are Claude Code's calls. Models: Maxwell autodoors' foam seal and leveller, and
+  for the inside Kamran Mughal's forklift, FFeller's pallet jack and widthRider's pallet (all
+  CC BY 4.0), Poly Haven's cardboard boxes (CC0, from the depot yard's set).
+- **What it adds:**
+  - **at each dock (1–9):** Maxwell's black foam seal framing the door; two black rubber bumpers
+    on the dock face, their tops at the dock floor (1.3 m), standing 0.13 m proud †; a yellow edge
+    along the dock face's top †; an LED light over the door aimed down at the bay (neutral white,
+    no shadows) †; a red/green signal beside the door, red while the door is shut and green at an
+    open, ready dock †; Maxwell's leveller in the pit inside docks 1–8, its deck level with the
+    floor. Bay 9, the van bay, has no leveller: its dock lift comes with 2d (T1);
+  - **two docks open †:** dock 5 (empty, ready) and bay 9 (waiting for Ethan's van), their doors
+    raised, a dock light on an arm inside each, aimed out into the bay;
+  - **the inside by the docks:** LED high-bay lights in two rows under the roof, cool white †;
+    yellow lane lines on the floor; pallets with cartons staged inside the open docks, the
+    forklift by dock 5 and the pallet jack by bay 9 †. It stays dry: no rain falls inside, and the
+    drops stop on the roof's overhang and the seals' head pads;
+  - **the drive-in door:** a light over it, so the metal shutter shows;
+  - **the rain:** one long rain volume along the dock front (a new B1 scene, `lamp_rain_dock.tscn`,
+    46 x 1.2 m) † in place of one per dock light, so the depot's lamps (the five yard lights, the
+    gate lamp and the dock front) make seven volumes, all raining within B1's eight.
+- **Rules part 2's tests measure (`test_mission_two.gd` unless named):**
+
+| # | Rule |
+| --- | --- |
+| F1 | Each of the nine docks has a seal framing its door, on the wall's face |
+| F2 | Each dock has two solid bumpers on the dock face, their tops 1.3 m up (within 5 cm), 0.10–0.20 m proud, beside the door |
+| F3 | Docks 1–8 each have a leveller in the floor inside, its deck at 1.3 m (within 5 cm) |
+| F4 | A light over each of the ten doors, aimed down, lit |
+| F5 | A red/green signal beside each dock door: one lens lit, green at docks 5 and 9, red at the others |
+| F6 | Doors 5 and 9 are open, each with a lit arm light inside; the inside by the docks is lit (at least eight lights under the roof) and the forklift, pallet jack and pallets stand inside |
+| F7 | The dock front has a rain volume (`test_lamp_rain_config.gd`, `test_lamp_rain_state.gd`: 20 volumes); from the court every depot lamp's volume rains at once, and no volume's box reaches inside the shed |
+| F8 | Every suite passes (the struck man's fall reported if it moves); the new model files keep within the art check; their authors are in the credits |
+
+- **Predictions (before any code):** at night from the court, a row of lit docks: a pool of
+  white light under each door on the wet apron with rain falling through it, black seals with
+  their stripes, red signals at the shut doors and green at docks 5 and 9; through those two open
+  doors the lit inside, pallets and the forklift; the drive-in shutter grey under its light. The
+  GPU price grows with ten spot lights and sixteen inside; still within D9's 1.5 ms †.
+
+## Revision 2026-11-11 (Phase 2, step 2c revised, part 2: built)
+
+- **Built** (`transfer_building.gd`: the fittings, lights, signals, open doors, arm and bay
+  lights and lanes; new `dock_staging.gd`; new `game/effects/lamp_rain_dock.tscn`, placed by
+  `industrial_loop.gd` at the shed's `dock_rain_at`; `tools/art/convert_depot_models.py`
+  rewritten with seven jobs): at the nine docks, Maxwell autodoors' foam seals, 18 solid rubber
+  bumpers, the yellow dock edge, a red/green signal beside each door (green at docks 5 and 9) and
+  an LED light over each of the ten doors; Maxwell's leveller in docks 1–8; docks 5 and 9 open,
+  each door's panel raised into its tracks under the roof, with an arm light inside aimed out
+  into its bay; inside, ten LED high-bay lights, yellow aisle and staging lines, six
+  stretch-wrapped pallets holding 96 cartons, the forklift behind dock 5 with its forks down, the
+  pallet jack under bay 9's second load, five empty pallets stacked on the pier between dock 8
+  and bay 9; the dock front's rain (20 volumes in all).
+- **Where it differs from the plan:**
+  - **the bay lights** hang in rows at z 15 and 5 from x −78 to −46 (ten), not at z 16 and 9
+    from −82 to −42 †: a front row at z 16 that reaches the floor would also light the apron
+    outside the shut doors (the lights cast no shadows), and the back row lights the shed's back
+    half;
+  - **the dock front's rain** spans x −82.45 to −40.45 and z 20.5 to 21.7 (centred at
+    (−61.45, 4.6, 21.1), half-extents 21 x 0.1 x 0.6, 4,700 drops and 2,700 splashes at the door
+    scene's density), not 46 m centred at (−64, 4.6, 20.9) †: it covers the nine docks and the
+    drive-in door, and its drops start clear of the seals' head pads (0.46 m proud, up to 4.77 m)
+    and of the roof's overhang;
+  - **the pallets** are sized as the American 48 x 40 in pallet (1.219 x 1.016 x 0.15 m), since
+    Blackridge is an American town; the scan is a Euro pallet †;
+  - **a fourth prop job, `carton`:** Poly Haven's carton has 16,952 triangles, so 96 of them
+    would cost 1.6 million; it is reduced to 399 (textures at 512 pixels) and drawn as one
+    MultiMesh;
+  - **the forklift's** lettering, "SQUIRE" and "e-TL2", names no forklift maker a web search
+    found (2026-11-11); the pallet's blocks carry no EPAL or EUR stamp;
+  - **the dock door** was re-made by the rewritten script: 5,341 triangles (5,346), its unused
+    trim materials dropped, still without textures.
+- **Tests first** (`logs/phase_2/step2c_p2/`): `task1_before/` Mission 2 46/49 (F1–F3), art 2
+  failures → `task1_after/` 49/49, 0; `task2_before/` 49/51 (F4, F5) → `task2_after/` 51/51;
+  `task3_before/` 50/53 (E4's open doors, F6 twice), the menus 19/20, art 4 failures →
+  `task3_after/` 53/53, 20/20, art 0 (`task3_convert/`); `task4_before/` the lamp rain's config
+  364/365 and state 13/15 (19 volumes; 6 of the depot's in the court) → `task4_after/` 455/455
+  and 15/15. Two flaws in the new checks were fixed before any code: E4's open test shrank a box
+  of no thickness, which turns its depth inside out, so a shut door could pass as open; F6
+  counted pallets with a `[0-9]` pattern, which Godot's `match` does not support.
+- **Mutations** (`mutations/`, `mutations_summary.txt`; on an APFS clone, restored byte for byte
+  after each): the seals gone (F1), the bumpers not solid (F2), the levellers sunk 0.2 m (F3),
+  the dock lights aimed up (F4), every signal red (F5), dock 5 shut (E4, F6), the open panels
+  left in their doorways (E4), the arm lights off (F6), the bay lights dark (F6), the forklift in
+  the court (F6), the dock rain gone (the count, the court), the dock rain inside the shed (the
+  dry inside): all twelve exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 30 runs exit 0 with part 1's counts but Mission
+  2's (53/53) and the lamp rain's (455/455, 15/15); art 0 failures; no SCRIPT or SHADER ERROR.
+  **The struck man's fall moved (F8):** 3.7 s, his hips 2.4 m out, 10 of 11 parts seen when
+  Ethan leans (part 1: 5.3 s, 2.0 m, 9 of 11); both collision checks still pass. Probes
+  (`fall_probes/`, `fall_probes_summary.txt`): with the bumpers not solid, or the two open doors'
+  bodies back, or both, he falls as in part 1. So C57's finding that after the first extra body
+  the fall stays put does not hold: it flips between these two outcomes with the exact set of
+  bodies the world builds.
+- **The rain from the court:** before the docks all seven of the depot's volumes rain (the state
+  test's new check). Nearer the gate, B1's cap of eight leaves the east yard light's rain off
+  (`LampRainStreet18`, 39–52 m from the van at z 50–61), since two street lamps outside the gate
+  are nearer (a scratch probe; the cap is Assignment 6's and was not changed).
+- **The GPU price** (D9; `gpu_price/NOTE.txt`; new `game/tests/gpu_price_depot.gd`, read by
+  `tools/tests/gpu_price.py`): part 2's additions (162 nodes and the dock front's rain) cost
+  0.84 ms of GPU time a frame from the court (95% interval 0.80 to 0.89), within 1.5 ms †.
+  Hiding the whole shed cannot price it: that uncovers the hill and the forest behind it, which
+  cost the GPU more than the shed (median −1.02 ms over 22 cycles; three cycles held hitches).
+  Part 1's shell against the old warehouse box cannot be measured now. Apple M4, on battery
+  (15%), Low Power Mode off.
+- **The stills** (`captures/transfer_shed/2c_p2/`, with new views into docks 5 and 9).
+  **Claude Code's reading against the predictions (a claim, not a check):** as predicted: the row
+  of lit docks with the seals' black pads and grey stripes, a light over each door, red signals
+  at the shut doors and green beside docks 5 and 9; through the two open doors the lit inside,
+  the wrapped loads, the forklift's mast behind dock 5's loads and the pallet jack at bay 9, each
+  arm light at its door's edge; rain falling before the doors. Not as predicted: the drive-in
+  shutter still reads dark under its light (fully metallic, it shows what it reflects, and the
+  light aims down past its face); a bright band along the dock foot in views 2 to 3c, which
+  Claude Code first took for the dock rain's splashes. A probe
+  (`probe_dock_5_van_away_rain_on_then_hidden.png`) shows it is the van's headlights: the capture
+  leaves the van in the court facing the docks after the driver views; with the van away there
+  is no band, the dock rain on or hidden. The wrapped loads read white where those headlights
+  reach them.
+- **Committed** on `develop` at the author's word (#227), not pushed. **Not done:** 2d and 2e,
+  next; part 3 (the parked trucks, trailers and cars), set aside for the polish pass (#227).
+
+## Revision 2026-11-11 (Phase 2, step 2d: backing onto bay 9, written before any code)
+
+- **Status:** at the author's word (#227: "yes commit it and then start on bay 9"), the first
+  step toward a playable Mission 2 (#226). It changes nothing in the game. Values marked † are
+  Claude Code's proposals; U1–U3 below are the author's to decide.
+- **What real docks do (research, 2026-11-11), and what it changes in 2a's plan:**
+
+| Fact | What it means here |
+| --- | --- |
+| A dock's lights: outside green while a vehicle may back in or leave; once it is secured, the outside light turns red (do not pull away) and the inside one green (safe to load) | 2a said the light turns green at the stop: that is the inside light. Bay 9 shows green outside while Ethan backs in, and red once the van is docked and chocked |
+| Pit-mounted dock lifts are set in a pit in the ground or in a pit on top of a raised dock; inside the building, the dock door still closes; they serve vans, pickups and step vans | Bay 9's lift sits in the pit behind its door, where the other docks have levellers, and the van backs onto the dock face's bumpers like a truck |
+| Swing ("barn") doors are opened and hooked back before backing onto a dock; once docked they cannot open, and a driver who forgets has to pull out again | Ethan opens the van's rear doors before he backs in |
+| Chocks go under the rear wheels so a vehicle cannot roll while it is loaded (OSHA 1910.178(k)(1), for powered trucks boarding it) | A chock under a rear wheel once the van is docked |
+
+  Sources: [Rite-Hite: communication at the dock](https://www.ritehite.com/en/AM/Solutions/Solutions-by-Need/Loading-Dock-Safety-and-Security/FullTime-Communication-at-the-Dock),
+  [Manufacturing.net: dock light communication](https://www.manufacturing.net/safety/article/13195786/improve-loading-dock-safety-with-light-communication),
+  [Cisco-Eagle: Advance Lifts' dock lift guide](https://www.cisco-eagle.com/uploads/Advance-Lifts/Dock-Lift-Guide.pdf),
+  [Pentalift: interior pit-mounted lifts](https://www.pentalift.com/tag/product-handling/),
+  [Bond-or-Seals: dock lifts](https://bondorseals.com/more_info/dock_lifts/dock_lifts.htm),
+  [The Trucker: trailer doors](https://www.thetrucker.com/trucking-news/trucking-life/trailer-doors-present-a-danger-many-drivers-dont-think-about),
+  [Trucking Truth forum](https://www.truckingtruth.com/truckers-forum/Topic-17403/Page-3/got-my-first-service-failure-yesterday),
+  [OSHA interpretation, 1996](https://osha.gov/laws-regs/standardinterpretations/1996-02-09).
+- **2a's R3** ("reversing in the bay never exceeds 1.4 m/s") becomes a judgement, not a limit: a
+  real van has no governor, so a stop that arrives faster than 1.4 m/s (walking pace) is a hard
+  hit that does not count as docked.
+
+### The parts and their order (approved together; built and tested one after another)
+
+- **2d-1, bay 9's lift and lights:** a scissor lift in the pit behind bay 9's door, its platform
+  1.83 x 2.44 m (6 x 8 ft) †, resting flush with the dock floor, its edges striped yellow and
+  black, a bridge lip at its outer end, its push-button box on the wall beside the door †; an
+  inside red/green light beside the door †; two steel wheel guides on the apron to centre the
+  van †. The lift moves in 2e.
+- **2d-2, the van's rear doors and its hold:** the two rear doors cut from the Iveco body as
+  their own parts, hinged at the rear corners, opening to about 270° and hooked back against the
+  sides †; the hold behind them (its floor at the model's own height, near the Daily's 0.68 m;
+  lined sides; the bulkhead) †. On foot at the van's rear, E opens or closes them.
+- **2d-3, backing onto bay 9:** by real keys, in reverse, with the mirrors and the reverse
+  camera; the bumpers stop the van physically. At the stop the docking is judged: within 0.3 m of
+  the bumpers and 3° of square, arrived at 1.4 m/s or less, the doors open. Then a chock goes
+  under a rear wheel, and bay 9's lights turn: outside red, inside green. The objective follows
+  each stage.
+
+### Decisions for the author
+
+- **Decided (#228):** U1 a, U2 a, U3 a, each as Claude Code recommended.
+
+- **U1, who chocks the wheel:** a. Ethan, on foot: E at a rear wheel, as drivers do at many
+  docks (Claude Code's recommendation †); b. the dock worker, unseen: the chock appears.
+- **U2, the rear doors:** a. opened before backing in, so the van's model is cut and its hold
+  built (Claude Code's recommendation †); b. left shut until 2e.
+- **U3, a bad docking:** a. a retry: the light stays green, the objective says why (too fast,
+  not square, too far, the doors shut) and asks Ethan to pull forward and try again; nothing is
+  broken (Claude Code's recommendation †); b. a fail: back to the last checkpoint.
+
+### Rules a test can measure (written before the code; `test_mission_two.gd` unless named)
+
+| # | Rule |
+| --- | --- |
+| G1 | Bay 9's lift stands in the pit behind its door, its platform flush with the dock floor within 1 cm and inside the opening's width; nothing solid stands in the doorway above the dock floor |
+| G2 | Bay 9's outside light is green and its inside light red until the van is docked and chocked; then the outside light is red and the inside one green; the other docks' lights stay as part 2 set them |
+| G3 | On foot at the van's rear with the van stopped, E opens both rear doors to at least 250°, and E again closes them; they open neither while the van moves nor from anywhere else |
+| G4 | Driven by real keys from the court, the van backs onto bay 9 and stops against its bumpers: it never passes through them, and its rear ends within 0.3 m of them and within 3° of square |
+| G5 | A stop that misses G4's 0.3 m or 3°, arrives faster than 1.4 m/s, or has the doors shut is not a docking: bay 9 stays green and the objective names why and asks for another try (U3 a) |
+| G6 | Docked, E on foot at a rear wheel puts a chock under it (U1 a); while it is in, the van cannot drive off; then G2's lights turn |
+| G7 | Every existing suite passes; Mission 1's fall is reported if it moves |
+
+### Predictions (before any code)
+
+- In the reverse camera: the lit apron, the two wheel guides, the bumpers growing between the
+  seal's black pads; bay 9's outside light green until the chock goes in, then red, the inside
+  light green; through the open doors the hold lit by bay 9's arm light; the lift flush in the
+  floor behind the door.
+
+### What could go wrong, and the check that catches it
+
+1. The van's box climbs or jitters against the bumpers (the box starts 0.15 m up): G4's test and
+   a strip.
+2. The doors cut from the body leave holes or seams: stills from behind, in the debug light and
+   at night.
+3. The open doors, hooked back, foul the seal's pads or the piers between doors: G4's run and a
+   still.
+4. E's meanings clash (E also enters and leaves the van): G3 and G6 by real keys, on foot.
+5. The new solid bodies (the wheel guides, the doors) flip the struck man's fall again: every
+   suite, reported.
+
+### Not in this step
+
+- The lift's travel and the load (2e), the seal (2e), the inspection (step 3), story words
+  (S1–S4).
+
+## Revision 2026-11-11 (Phase 2, step 2d: backing onto bay 9, built)
+
+- **Built** (new `dock_lift.gd`, `van_bay.gd`, `game/tests/test_bay_nine.gd`,
+  `tools/captures/capture_bay_nine.gd`; `transfer_building.gd`, `transfer_yard.gd`,
+  `transfer_shed.gd`, the van's `freight_van.gd` and `van_presentation.gd`, Mission 2's
+  `the_wrong_cargo.gd`, the app's `first_drive.gd`; `tools/art/convert_iveco.py` and
+  `tools/art/make_depot_textures.py`): bay 9's scissor lift in a pit cut into the dock floor behind
+  its door, its deck flush, striped yellow and black, its bridge lip folded under, its push-button
+  box on the wall; bay 9's inside light, red until the van is docked and chocked; two yellow wheel
+  guides on the apron; a chock on a holder on the dock face. The van's two rear doors are their own
+  parts now and swing round to lie against its sides, the right one first. Mission 2, past the
+  gate, asks Ethan to open the rear doors, then to back onto bay 9; each stop at the bumpers is
+  judged, a miss names what was wrong and asks for another try, and a docking asks for the chock,
+  which Ethan sets in front of the driver's-side rear wheel on foot. Then the bay's lights turn
+  (red outside, green inside), the van cannot drive off, and the objective points at the load
+  (2e). E on foot routes to these actions before getting in; nothing changes in Mission 1.
+- **Where it differs from the brief:**
+  - **G4's centre line:** within 0.1 m, not 0.2 m †. Between the guides the van has only about
+    0.21 m either side, so a 0.2 m rule could hardly be missed; 0.1 m keeps the van's 1.62 m
+    door opening on the lift's 1.83 m platform for 2e;
+  - **the chock** is taken by E at the wheel and appears there; Ethan has no carrying animation;
+  - **a recover (R)** while chocked returns the chock to its holder, as the van leaves the bay;
+  - **the hold's floor** in the model stands 0.46 m up, a real Daily's about 0.68 m: 2e's lift
+    follows the model, as 2a's brief said it would.
+- **Tests first** (`logs/phase_2/step2d/`): `task1_before/` bay 9 0/5 (no lift, the pit filled,
+  no inside light, no guides, no chock) → `task1_after/` 5/5, Mission 2 still 53/53;
+  `task2_before/` 6/8 (no rear doors; behind the van E got Ethan in) → `task2_after/` 8/8;
+  `task3_before/` 9/15 (no judging, no chock) → `task3_after/` 19/19. Flaws in the new test,
+  fixed on the way: a missing door read as closed (−1°); Ethan pressing E at the wheel to get in
+  took the chock out instead, so "cannot drive off" first passed with nobody driving; a crooked
+  run steered to +5° from −5°. The art check's list of the van's parts gained the two rear doors
+  only after the conversion (it should have failed first), with a new check that each turns
+  about its own rear corner; a mutant of that check exits 1.
+- **Mutations** (`mutations/`, `mutations_summary.txt`; on three APFS clones, each with its own
+  home, restored byte for byte after each): the pit filled (G1), the lift sunk 5 cm (G1), the
+  inside light green at rest (G2), the guides gone, the doors opening only 180° (G3), the doors
+  opening from anywhere (G3), the speed, the doors, the short stop, the square and the centre
+  line each ignored (G5), the chock holding nothing (G6), the lights never turning (G2), the
+  chock reached from 5 m (G6): all fourteen exit 1, each on its own check.
+- **Every suite** (`suites/SUMMARY.txt`): all 31 runs exit 0 (the 30 before with part 2's counts,
+  and `test_bay_nine.gd` 19/19); the art check first failed on the van's parts list, then passed
+  with the rear doors in it (0 failures); no SCRIPT or SHADER ERROR. The struck man's fall did
+  not move (3.7 s, his hips 2.4 m out): the pit's slab pieces, the guides' stops and the doors left
+  his outcome as part 2 left it.
+- **The stills** (`captures/bay_nine/2d/`, `bay_nine_sheet.png`, from the new
+  `tools/captures/capture_bay_nine.gd`, which sets each state directly). **Claude Code's reading
+  against the predictions (a claim, not a check):** as predicted: the reverse camera shows the lit
+  apron, the yellow wheel guides and the bay with its parking guide lines; the rear doors lie
+  against the sides and the hold shows behind them, lit; docked, the van stands between the
+  guides with bay 9 green; the chock sits in front of the driver's-side rear wheel and the outside
+  light turns red; from inside, the lift's striped deck lies flush in the floor and the van's
+  open hold fills the doorway. Not judged here: how the chock and the lift read at a glance from
+  the driver's seat, which is the author's check in the game.
+- **Committed** on `develop` at the author's word (#229), not pushed. **Not done:** 2e, the load
+  and the seal, next.
+
+## Revision 2026-11-11 (Phase 2, step 2e: the load and the seal, written before any code)
+
+- **Status:** at the author's word (#229: "ok"), after 2d. It changes nothing in the game.
+  Values marked † are Claude Code's proposals; L1 and L2 below are the author's to decide. It
+  carries 2a's plan for 2e (T2–T4) and its rules R4–R7 into the bigger depot.
+- **What real docks do (research, 2026-11-11):**
+
+| Fact | What it means here |
+| --- | --- |
+| A dock attendant runs the lift from a pendant (up, down; often bridge plate up and down) and lays its hinged bridge plate onto the vehicle's floor; when not in use the plate is stored upright; wheels are chocked before anything rolls across; pallet jacks are the usual equipment on a dock lift | Bay 9's lift lowers from the dock floor to the van's, its bridge plate goes down onto the van's floor, and a pallet jack rolls the pallet in |
+| The shipper provides the high-security (ISO 17712 "H") bolt seal and records its number on the shipping papers; the driver checks it by "View, Verify, Tug, Twist": that it is whole, that its number matches the papers, and that it does not pull or turn loose | The seal's number is on Ethan's run sheet; the doors are sealed, and he checks it |
+| Swing doors close only once the van has pulled clear of the dock | Ethan takes the chock out, pulls forward, then closes the doors; the seal goes on after |
+| Pallets in vans are strapped to the floor's anchor points, tight against the bulkhead or a wall | The pallet goes forward against the bulkhead, two straps to the floor rings |
+| No published rate was found for how far a Daily's rear springs settle under load (as 2a found) | The van's sink is an estimate, labelled so: about 5 mm per 100 kg at the rear axle † |
+
+  Sources: [CTPAT seal security job aid](https://www.cummins.com/sites/default/files/2024-07/CTPAT-Job-Aid-Seal-Security-Procedures-October-2021.pdf),
+  [NZ Customs: transport operator checks](https://www.customs.govt.nz/media/g5fmmalj/ses-transport-operator-checks-1.pdf),
+  [Maersk seal policy](https://eascpcd.maersk.com/~/media_sc9/maersk/local-information/files/north-america/united-states-of-america/overview/maersk-seal-policy.pdf),
+  [Pentalift: hinged bridge plates](https://www.pentalift.com/what-hinged-bridge-plates-are-available-for-a-dock-lift/),
+  [Advance Lifts: specifying a safe dock lift](https://continuingeducation.bnpmedia.com/courses/advance-lifts/specifying-a-safe-dock-lift/4),
+  [etrailer: securing pallets in a van](https://www.etrailer.com/question-526938.html),
+  [Iveco: Daily suspension](https://www.iveco.com/africa-mideast-en/Products/Documents/2018/Daily-CAB-VAN-L1817602MASTER_ing-web.pdf).
+
+### The parts and their order (approved together; built and tested one after another)
+
+- **2e-1, the lift and the van's load:** the lift travels from the dock floor down to the van's
+  hold floor (0.46 m up in the model) in about 6 s †, its bridge plate swings down onto the van's
+  floor and back up; the pallet stands in the hold against the bulkhead, strapped to the floor
+  rings; the van's body settles at the rear by the load's weight (estimate above); the load's
+  weight is a stand-in of 520 kg †, labelled, until step 3 sets it (S4).
+- **2e-2, the loading (L1):** the staged pallet at bay 9, the one the pallet jack stands under,
+  goes into the van; bay 9 stays red outside and green inside until it is done.
+- **2e-3, the doors and the seal:** loaded, Ethan takes the chock out (bay 9 turns green outside,
+  as 2d does), pulls forward at least 2.5 m †, gets out and closes the rear doors; then the bolt
+  seal goes on (L2) and its check shows the seal's number beside the run sheet's seal line, the
+  same; "loaded" saves Mission 2's stage 1. Reloaded, the van stands in front of bay 9, loaded and
+  sealed, with Ethan in it.
+
+### Decisions for the author
+
+- **Decided (#230):** L1 c, Ethan loads it himself; L2 b, a dock worker seals it. So the parts
+  become (each built and tested in turn, the worker chosen by the author from renders, as the
+  guard was):
+  - **2e-1, onto the dock and the lift:** a steel pedestrian door in the shed's east wall beside
+    the drive-in lane, which E opens, and a stair with a handrail from the lane up to the dock
+    floor beside bay 9 †, since a driver walks onto the dock, never climbs its face; the lift
+    worked from its pendant by E: down to the van's floor with its bridge plate laid on it, up to
+    the dock floor with the plate stored, Ethan riding it (an attendant rides a dock lift) (H1);
+  - **2e-2, the pallet jack and the load:** E at the jack's handle takes it, raising the pallet
+    a few centimetres; W and S push and pull it, A and D steer, slower than walking; E sets the
+    load down. Ethan rolls the staged pallet onto the lift, rides down, pushes it into the hold,
+    sets it down, pulls the jack out, and straps the load (E); the van settles (H2, H3);
+  - **2e-3, the doors and the seal:** the chock out, the van pulled forward, the doors closed
+    (H4); a dock worker walks out, seals the doors and walks back; Ethan checks the seal (E), its
+    number beside the run sheet's; "loaded" saves stage 1 (H5, H6).
+
+- **L1, how the pallet gets into the van:**
+  - a. a short cut (Claude Code's recommendation †): the screen fades while the forklift's whine
+    and the pallet jack's clatter are heard, and comes back with the pallet strapped in the hold
+    and the lift up again, as games often skip routine work;
+  - b. the crew at work, seen: two dock workers, stand-ins from Rocketbox like the gate's guard,
+    one bringing the pallet on the forklift, one rolling it in on the pallet jack;
+  - c. Ethan rolls it in himself with the pallet jack, as drivers do on driver-assist loads: a
+    new on-foot action.
+- **L2, the seal:**
+  - a. Ethan puts on the shipper's bolt seal after closing the doors and checks it, its number
+    already on his run sheet (Claude Code's recommendation †): what drivers do with swing doors;
+  - b. a dock worker seals the doors while Ethan watches, then he checks it (needs a character).
+
+### Rules a test can measure (written before the code; `test_bay_nine.gd` unless named)
+
+| # | Rule |
+| --- | --- |
+| H1 | Before the pallet moves, the lift's deck meets the van's hold floor within 20 mm and the bridge plate rests on it (2a's R4); after loading the lift is back flush with the dock floor and the plate stored upright |
+| H2 | Loaded, the pallet stands inside the hold, on its floor, forward against the bulkhead, held by two straps; the van's body has settled at the rear by the estimate for its weight (2a's R5), and settles back when the load is gone |
+| H3 | Bay 9 stays red outside and green inside while loading; the objective then asks for the chock to come out, and taking it out turns bay 9 green outside |
+| H4 | The rear doors close only with the van's rear at least 2.5 m from the bumpers; closing them nearer, the objective says to pull forward first |
+| H5 | E at the closed doors puts the seal on; its number is the same on the bolt, the cap and the run sheet (2a's R6), and the check shows them side by side; sealed, the doors no longer open |
+| H6 | Sealed, "loaded" saves stage 1; reloaded, the van stands in front of bay 9 with the pallet in its hold, its doors shut and sealed, and Ethan in it (2a's R7; `test_save_rules.gd` too) |
+| H7 | Every existing suite passes; Mission 1's fall is reported if it moves |
+| H8 | On foot, Ethan reaches the dock floor from the yard only by the pedestrian door and the stair: the door opens with E, the stair climbs from the drive-in lane to the dock floor, and its rail keeps him from stepping off its open side |
+| H9 | The pallet jack moves only while Ethan holds it, at no more than his walking pace; the pallet rides on its forks, raised, and stays upright; set down, it rests on the floor it is on, the lift's deck or the hold's; neither passes through a wall, the pit's sides or the van's sides |
+
+### Predictions (before any code)
+
+- Through the open doors before the cut, the lift down at the van's floor with its plate across;
+  after it, the pallet strapped against the bulkhead and the van a little lower at the back; then,
+  closed, the doors with the seal's yellow bolt through the hasp, and the check's two numbers the
+  same.
+
+### What could go wrong, and the check that catches it
+
+1. The pallet floats or sinks through the hold's floor, or clips its walls: H2's test, a still.
+2. The lift's deck leaves a step at the van's floor: H1's 20 mm, a still.
+3. The van's settling shifts its collision box or its tyres off the ground: the sink is drawn
+   only, and the suites' driving tests catch any change in how it drives.
+4. The doors swing through the dock when closed too near it: H4.
+5. A reload at stage 1 starts outside the yard or unsealed: H6.
+
+### Not in this step
+
+- What the load is and weighs, its paperwork's words and the shipper's name (step 3, S1–S4); the
+  inspection (step 3); the drive to the container yard.
+
+## Revision 2026-11-11 (Phase 2, step 2e: the load and the seal, built; Ethan's two clips to come)
+
+- **Status:** built at the author's word (#230), with the author's decisions on the way: stoop
+  into the hold, to the bulkhead (#231), and Rocketbox's `Construction_Male_08` as the dock
+  worker (#232–#235, C58). **Not committed:** `test_loading.gd`'s check of Ethan's stoop waits
+  for the two Mixamo clips the author is downloading (#231). Values marked † are Claude Code's.
+- **2e-1, onto the dock and the lift (H1, H8):** the side door, the stair and its rails as briefed.
+  **Changed from the brief:** the lowered deck could not meet the van's floor through the dock
+  face's wall, so under bay 9's door a passage as wide as the lift's pit (1.87 m) reaches down to
+  a 0.4 m sill, a kerb below it with bay 9's two bumpers (`test_mission_two.gd`'s E4 and F2 changed
+  first). The bridge plate is 0.91 m (36 in, as dock lifts offer for reaching into a vehicle) and
+  comes to rest on the van's rear sill (0.660 m up, 2.74 m behind the bulkhead in the van's frame),
+  its edge 0.23 m past it over the floor; the old 0.55 m plate stopped short of the floor, which the
+  old check missed. The plate is solid on the van's layer, which the van's movement never reads:
+  upright it is a toe guard, down it is the way across.
+- **2e-2, the pallet jack and the load (H2, H9):**
+  - **The hold, measured:** rays cast inside the Iveco model found its floor 0.614 m up, its walls
+    0.867 m either side, the bulkhead's face at z −0.25 (not the −1.0 assumed before), the
+    headliner 2.15 m up (1.54 m of headroom: a low-roof Daily) and the rear wheel arches 0.294 m
+    tall from 0.62 m out between z 1.62 and 2.38. `van_hold.gd` builds them as solid boxes when
+    the rear doors first open, so Mission 1, whose doors never open, keeps its set of bodies.
+  - **Lined up** now means the jack and its load fit within the hold's width; the hold's own walls,
+    arches and bulkhead then guide them. The 8° and 0.25 m gate it replaces could not be met by a
+    pallet starting 0.41 m from the van's doors.
+  - **Ethan in the hold:** behind the jack he passes into the van's box and stoops within 0.5 m of
+    its rear (his collision 1.3 m tall, his eyes 1.05 m up, the camera's arm passing with him); he
+    plays `CrouchWalk` there and `Push` or `WalkBack` outside, once the author's clips are in. His
+    pushing steps climb small ledges, such as the plate's edge, as his walk does, trying half the
+    step height under a low roof.
+  - **The jack** is taken only where Ethan can stand behind its handle: a floor under that spot at
+    his level and room there for him. The pallet goes down in the hold only forward against the
+    bulkhead (within 0.1 m), and E beside it in the hold straps it (it stands 2.4 m in from the
+    doors, out of reach from them).
+  - **The van settles** by the load's weight shared between its axles by where it stands: 5 mm per
+    100 kg at each †, the estimate the brief gave for the rear: 14.0 mm at the rear and 12.3 mm at
+    the front for the pallet against the bulkhead.
+- **2e-3, the doors and the seal (H3–H6):** loaded and the lift up, the objective asks for the
+  chock to come out (H3), then to pull forward: the doors close only with the van's rear at least
+  2.5 m from the bumpers (H4). The dock worker (C58, `dock_worker.gd`) comes out of the side door,
+  walks along the dock face round the bollards and the wheel guides' ends to the doors, waits for
+  anyone in his way, puts the bolt seal through the doors' new hasp (a yellow bolt and barrel cap,
+  numbered 4182260 †) and walks back in. E at the doors shows the check: the bolt's, the cap's and
+  the run sheet's numbers side by side (H5); then the sealed doors no longer open, and "loaded"
+  saves stage 1 through the route's new `save_progress()`. Reloaded, the van stands in front of
+  bay 9, its rear 3.0 m from the bumpers, loaded, strapped, shut and sealed, with Ethan in it (H6).
+  A fresh start puts the pallet back on bay 9's staging spot and empties the van.
+  **Fixed on the way:** the wheel guides' collision stood 0.35 m tall over their 0.2 m rails: it
+  blocked both of the van's doors where the guides flare and trapped Ethan between them. It is now
+  the rails' 0.2 m, which still catches the van's body; Ethan steps over it, and the way out of the
+  van is clear above it. The seal check's sheet closed at once, because the run sheet's walk-away
+  rule measured from Mission 1's clipboard; each sheet now closes when Ethan walks away from where
+  it was shown. `test_cockpit.gd`'s count of the converted Iveco's triangles now skips the
+  game-built hasp and seal, which are primitive meshes, and keeps its 88,428.
+- **Known gaps:** the jack keeps its height, so its forks pass through the van's 4.6 cm sill strip
+  as it rolls in, under the pallet; the worker has no collision of his own and waits for Ethan
+  instead; nothing is drawn yet, so every look is unseen.
+- **Tests** (`logs/phase_2/step2e/`): `test_loading.gd` 1/5 → 16/17 over 2e-1 and 2e-2, each part
+  failing first; its one failure is Ethan's stoop, waiting for the two clips. The new
+  `test_sealing.gd` failed first (its setup called what did not exist), then 11/11. Mission 2
+  52/53 → 54/54 for bay 9's passage; the menus 19/20 → 20/20 for the dock worker's credit; the art
+  check failed first on the missing `dock_worker.glb`, then 0 failures. Not watched failing
+  first: E4's passage check, the fresh start and the way out over the guides, each written after
+  its code; their mutations below fail them.
+- **Mutations** (`mutations/`, `mutations_summary.txt`): seventeen, on three APFS clones each
+  with its own home: sixteen exit 1 on their own checks. The seventeenth showed that the way out
+  over the guides needed only their lower collision, so the allowance it removed was taken out.
+- **Every suite** (`suites/SUMMARY.txt`, 33 runs with `test_loading.gd` and `test_sealing.gd`,
+  then the art check): all exit 0 but `test_loading.gd` (the stoop); the run found two
+  regressions, both fixed and rerun: `test_cockpit.gd` hit a script error counting the new
+  primitive meshes (24/24 → 25/25), and Mission 2 started a stage 2 save at bay 9 (53/54 →
+  54/54). The struck man's fall did not move (hips 2.4 m out, 10 of 11 parts). `guard.glb` is
+  byte for byte as before after the converter's restructuring.
+- **Not done:** Ethan's two clips (the author's download, #231), their conversion and the stoop
+  check; the stills; the commit.
+
+## Revision 2026-11-12 (Phase 2, step 2e: Ethan's push and stop, built)
+
+- **Status:** built at the author's word (#240) on the plan of #239, from the three Mixamo clips
+  the author downloaded for Ch33 (#238–#239): Pushing and Push Stop are used; Crouch Walk
+  Forward is not (its arms are flung out and it walks at 1.69 m/s). **Not committed.** Values
+  marked † are Claude Code's.
+- **The clips** (`tools/art/convert_mixamo.py`, now able to rebuild Ethan alone, so the
+  pedestrian's file is untouched): `Push`, Pushing in place, looping, its feet at 0.377 m/s over
+  a 2.67 s stride; `PushStop`, Push Stop with its forward travel taken out at every sixth frame,
+  straight between (0.000 to 0.815 m, ending at 0.756 m), the same knots as `STOP_TRAVEL` in the
+  game. Ethan's six other clips, mesh and skin are byte for byte as before.
+- **His gait behind the jack** (new `game/features/characters/driver/push_gait.gd`; the driver
+  plays its clips and holds his hands, `pallet_jack.gd` moves the jack where his feet take it):
+  - **The pace of his feet:** Pushing played 1.5 times faster on the dock and the lift (0.566 m/s)
+    and at its own pace in the van's hold (0.377 m/s), the load getting going and slowing at
+    0.45 m/s² † (about 265 N to get 590 kg of load and jack going, Claude Code's estimate).
+  - **To arm's length:** he takes the jack 1.17 m behind it, close to its handle, so that he fits
+    on the lift's deck with it; as he gets going the jack runs out ahead of his feet to 1.50 m,
+    never faster than the load's own pace.
+  - **Both hands on the handle:** two-bone IK holds each wrist where Pushing's grip puts it,
+    5.5 cm below the palm, on its side of the loop. Found on the way: with its end bone extended,
+    Godot's `TwoBoneIK3D` left each hand a constant 15 cm from its target; with the wrist as the
+    end it lands on it.
+  - **Let go of, outside:** Push Stop picks up from the frame whose feet best match Pushing's
+    (matched frame by frame from the clips), at the pace his feet had; the load rolls on with his
+    last steps (0.03 to 0.8 m by where in his stride he is), his hands come off the handle over
+    Push Stop's frames 56–62, and he stands.
+  - **Let go of, in the hold:** Pushing plays on, easing, to the next frame with both his toes
+    down (its frames 11–36 or 55–72), and holds there, stooped, his hands on the handle. Push
+    Stop's last step would raise his head to 1.55 m, above the hold's 1.536 m roof.
+  - **Against something** (the toe guard, the bulkhead, a wall): the load stops dead; he finishes
+    his steps up to the handle, his arms bending: outside, Push Stop picks up late enough to end
+    at 1.17 m, so he still stands on the lift's deck; in the hold, at most 0.2 m nearer.
+  - **Pulling:** outside he steps in to the handle (his walk at half its pace) and walks back at
+    Walking Backwards' 0.529 m/s; in the hold he plays Pushing backward, stooped, out through the
+    doors, and outside stands and lets go when he stops.
+- **Changed beyond the plan (Claude Code's calls, for the author to check):**
+  - A and D steer the jack only as it rolls, 1.333 rad a metre, as the old 1.2 rad/s did at
+    0.9 m/s: turned on the spot, Ethan slid round it at 1.4–1.8 m/s without a step. While
+    steering his feet still slide sideways a little: Mixamo's clips have no side steps.
+  - E straps the load from up to 1.2 m behind its back (was 1.0 m): at arm's length he stands
+    1.14 m behind it at the bulkhead.
+  - While pushing, his pace is the same up and down a slope, and never more across the floor than
+    his feet went: over the lift's bridge plate he lost 14% up its slope and slid 27% too far off
+    its edge, and the jack moved with him.
+- **Tests:** `test_loading.gd` 16/21 → 21/21 (`logs/phase_2/step2e/push_before/`, then
+  `push_after7/`; again 21/21 on the final code, `push_final/`, after the planted knot was named
+  in `push_gait.gd`, which changed no behaviour and came after the mutations and suites). Its stoop check now asks for Pushing inside and out, his head under the roof
+  and the door, the van's pace, his feet (their slowest quarter's slip while they carry him),
+  his palms on the loop and his reach; four checks are new: the dock's pace, slow start, feet and
+  hands; the hold at the bulkhead; the pull back out; and the stop. The test now steers as it
+  pushes, measures the door from its sill and waits out each clip's blend at the clip's own pace;
+  the stop is tried on a straight push from the jack's staging spot after the loading. The art
+  check failed first (no `Push-loop`, `PushStop`), then 0 failures; its in-place bounds were
+  widened after the first conversion showed Pushing's hips swaying 0.14 m sideways (now 0.25 m at
+  most, 0.06 m at the end; with their travel the hips go 1.0 m and 0.82 m).
+- **Mutations** (`push_mutations/`, `mutations_summary.txt`): ten, on three APFS clones each with
+  its own home, all exit 1 on their own checks: the jack at a fixed 0.9 m/s, no hands on the
+  handle, no Push Stop, the van at the dock's rate, standing up in the hold, an instant start,
+  Push Stop without its travel, no running out to arm's length, sliding off the bridge plate,
+  and pulling out of the van upright.
+- **Every suite** (`push_suites/SUMMARY.txt`, the 33 runs, then the art check): all exit 0 with
+  the baseline's counts and `test_loading.gd` at 21/21; no SCRIPT or SHADER ERROR; the struck
+  man's fall did not move (hips 2.4 m out, 10 of 11 parts).
+- **Known gaps:** while steering, his feet slide sideways a little; for the first 0.3 s of a
+  push from the close stance, his palms sit up to 5 cm off the bar as he leans in; the jack's
+  tiller is part of its one mesh, so it does not turn as he steers; nothing is drawn yet, so
+  every look is unseen.
+- **Not done:** the stills (a game window, the author told first), and the author's OK to
+  commit step 2e.
+
+## Revision 2026-11-12 (Phase 2, step 2f: the depot at work, to a professional finish; written before any code)
+
+- **Status:** written before any code, at the author's word (#243), after the author watched the
+  stills' capture and was not satisfied (#242). **Waiting for the author's OK.** Values marked †
+  are Claude Code's proposals. Step 2e stays uncommitted until its part below is done.
+- **The bar:** "add realistic minor details to make it look realisitc and professional. do it as
+  if we are doing it in unreal" (#243). In this project that means a studio's way of working:
+  real references and standards first; existing scanned and physically based assets (Poly Haven
+  and ambientCG, CC0; Sketchfab, CC BY; Microsoft Rocketbox, MIT) placed and dressed rather than
+  boxes built in code; Godot's `Decal` nodes for wear, as Unreal's deferred decals; light fixtures
+  placed and rated as real ones; level of detail, `MultiMeshInstance3D` and visibility ranges to
+  keep the MacBook Air in budget; stills only from real play. Unchanged as ever: volumetric fog
+  off, AgX at exposure 1.3, the fog materials, `project.godot`, `game/shaders/`.
+- **Research** (sources in the prompt log, #243):
+  - **The pallet jack:** push rather than pull where possible, both hands on the handle, stand
+    behind it; forks raised about an inch; the handle steers once the lever is in neutral; wide
+    arcs, not sharp turns, with heavy loads; bend at the knees, not the waist; into tight spaces
+    load first. Mixamo has no cart-pushing clip; the usual way is a walk with the hands held to
+    the handle.
+  - **Floor marking:** OSHA requires warehouse aisles marked (1910.176) and sets yellow for
+    caution and red for fire equipment (1910.144); by convention yellow marks aisles and traffic
+    lanes, white equipment and fixtures, red and white the areas kept clear (extinguishers,
+    electrical panels, eyewash).
+  - **Light:** IES gives a shipping and receiving dock about 10 foot-candles (108 lux, range 5–20)
+    and staging about 30 (323 lux); OSHA's floor is 5.
+  - **Fire:** a Class A extinguisher within 75 ft (22.9 m) of travel, its handle 3–5 ft (0.9–1.5 m)
+    up on a bracket, signed.
+  - **Batteries:** an eyewash within 10 s (about 55 ft, 17 m) of forklift battery charging and
+    maintenance (ANSI Z358.1), neutralising kit for spilled electrolyte (1910.178(g)).
+  - **Docks at work:** staging lanes behind the doors, sized to the pallet and the outbound load,
+    marked on the floor; door signs give each door's number; a dock's control panel has open,
+    close and stop for the door, raise and lip for the leveller, engage and release for the
+    restraint, with red and green lights inside and out.
+  - **The slab:** saw-cut joints every 2–2.5 times its thickness, 12–15 ft (3.7–4.6 m) for a 6 in
+    slab, panels near square.
+  - **Forklifts:** a blue spot projected 3–5 m ahead of or behind the truck, with a backup alarm.
+- **The parts, in order † (each with its tests first, mutations, every suite, stills by real play
+  and the author's OK before the next):**
+  1. **Step 2e, the push finished:**
+     - **The handle tilts and steers:** the jack's tiller is cut from its one mesh (FFeller's
+       model, CC BY: the change credited) and pivots at its base: it tilts toward Ethan to where
+       his hands are, about 0.9–1.0 m up as he walks †, lower when stooped in the van, and turns
+       with A and D, the steering wheels under it turning too.
+     - **Upright once rolling:** Pushing's lean only for the first steps, as the load breaks
+       away, and up the bridge plate's slope; then he walks nearly upright behind it at about
+       0.9 m/s † on the dock (the Rhodes study pushed at 1 m/s), both hands on the handle, his
+       feet matched as now. In the hold, stooped as now at 0.38 m/s, his hands low on the
+       tilted handle.
+     - **Pulling:** Walking Backwards, upright, leaning back a little, the handle tilted toward
+       him; in the hold, Pushing backward, stooped, his hands low.
+     - **The rear doors** open only where their swing is clear.
+     - **The bright column of rain** at the shed's corner by the side door, found and fixed.
+     - **The stills again,** by real play only, from cameras that see him; then 2e's commit.
+  2. **Step 2f-1, the shed's fabric:** saw-cut joints every 4.5 m †, worn and patched concrete,
+     tyre marks along the lanes, oil under parked kit, scuffs at the dock edge, wet footprints
+     and puddles inside the open doors (decals); red sprinkler mains and branch lines with their
+     heads, cable trays, unit heaters and high-volume low-speed fans under the roof; even LED
+     high-bays to about 10 fc (108 lux) on the dock and 30 fc (323 lux) at staging †; each door's
+     number painted large above it, its control panel and its signal lights; posters, a notice
+     board and a time clock by the side door.
+  3. **Step 2f-2, the shed at work:** staging lanes marked behind the doors, freight staged in
+     them (wrapped cartons, drums, bagged goods, crates, appliance boxes) with shipping labels,
+     empties stacked; pallet racking with stock along the back wall, with end and column guards
+     and load signs; a checker's station at the dock (desk, computer, label printer, scanner on
+     its cradle, clipboards, the night's load board); painted walkways and crossings, 5 mph and
+     "forklifts operating" signs, extinguishers on columns within 22.9 m of any point, lit exit
+     signs, convex mirrors at aisle ends, a first-aid cabinet; a forklift charging station with
+     its eyewash and spill kit, a stretch-wrap stand, hand trucks, bins and a cardboard baler;
+     two people (Rocketbox, MIT): a forklift driver working a loop, his blue spot on the floor
+     and his alarm backing, who stops for Ethan, and a checker at bay 9 who scans the pallet;
+     sound: the forklift, its alarm, the fans, rain on the roof, a radio, the jack's wheels and
+     its pump.
+  4. **Step 2f-3, the yard** (the part set aside, #227, brought forward): trailers backed onto
+     other docks, trucks and cars parked, a yard truck.
+- **Decisions for the author:** the order above; the upright walk built from Ethan's Walking, or
+  a slower Mixamo walk the author downloads, if the first looks slow in the stills; the forklift
+  driver and the checker; a GPU budget for parts 2–4 of 1.5 ms more at the dock on the MacBook
+  Air †; the sealed load's look later (canon).
+- **Rules a test can measure (first drafts, each part's own written with it):** his palms within
+  4 cm of the loop with the tiller between upright and 80° †; the upright pace and his feet as
+  now; the doors never swing into anything; no rain volume overlapping a wall's top; every point
+  of the dock floor within 22.9 m of an extinguisher, each handle 0.9–1.5 m up; an exit sign over
+  each exit; walkways and Ethan's and the worker's routes clear (`test_loading.gd`,
+  `test_sealing.gd`); the forklift never within 2 m of Ethan; the fixtures' rated output giving
+  at least 108 lux on the dock by the lumen method; the GPU price measured in a window.
+- **Not in this step:** new mechanics, the story's sealed load, the other missions.
+
+## Revision 2026-11-12 (Phase 2, step 2f, part 1: the push finished, and Ethan smooth on foot (A), built)
+
+- **Status:** part 1 of step 2f built (#243–#244), then part A of the plan the author approved
+  after watching the real-play capture (#245: "not able to climb stairs smoothly, the scenes are
+  breaking. make sure everything is smooth as butter"; #246: "proceed with A,B,C"). Parts B (Ethan
+  opens the rear doors himself) and C (the job in order, and its capture) follow; then parts 2–4.
+  Not committed: step 2e, part 1 and A wait for the author's OK after C.
+- **The push finished (part 1):** the jack's tiller cut from FFeller's one mesh into Chassis,
+  Steering and Tiller (`tools/art/convert_depot_models.py`, the change credited), tilting toward
+  his hands as he walks and turning with A and D; upright behind it once it rolls, on his own
+  Walking; pulling upright outside the van, stooped in it; the rear doors open only where their
+  swing is clear (G3); the dock front's rain 3.5 m deep, no longer a thin column seen end-on.
+  Tests: `test_loading.gd` 22/22, `test_bay_nine.gd` 20/20, `test_lamp_rain_config.gd` 455/455,
+  `test_lamp_rain_state.gd` 16/16; eighteen mutations exit 1 on their own checks; all 33 suites
+  exit 0 (`logs/phase_2/step2f/part1/`).
+- **What the capture showed (#245), measured:** the stair stalled Ethan on its first tread for as
+  long as W was held (6 s in a run, up to 12 s in the capture) until his direction changed, then
+  took him up the other six risers in five jumps of 0.21–0.30 m, each in one frame, his camera
+  with him; the old stair check only asked that he got to the top. The "scenes breaking" were
+  the capture's own camera cuts and its pauses to save each picture; "the nothingness" was the
+  capture's setup, whose `recover()` shut the van's doors at bay 9, so the pallet met shut doors.
+- **A, as built:**
+  - **The stair** (`dock_access.gd`): its steps are drawn as before, but under them one hidden
+    incline along the nosings, from the floor a tread before the first riser to the landing's
+    edge (33.6°), as a studio builds a stair's collision; `stair()` describes it for his feet.
+  - **His stair steps** (`driver/stair_steps.gd`, with `feet_flat.gd` and `ankle_watch.gd`):
+    near the stair his walk keeps its rhythm, slowed going up to a stair's cadence and kept going
+    down (Di Giulio et al. 2019 measured about 76 steps a minute up and 117 down; his Walking's
+    own is 116), so he climbs at 0.355 m/s and descends at 0.542 m/s across the floor, his body
+    walking the incline exactly along it. His legs' two-bone IK sets each foot on a tread of its
+    own, one tread a step by turns, the ankle 2 cm clear of the riser ahead going up and of the one
+    behind going down; each foot is lifted as his walk lifts it, heel first, its first 8 mm
+    ignored so that a planted foot never creeps; its sole is turned level by landing, its heel
+    rising before it lifts; his hips are lowered to his standing foot's tread, a little more on
+    the flight, and ahead of a foot going down. Stopping on the stair, a foot in the air comes
+    down where it was going; setting off again, his walk starts where the foot behind lifts.
+  - **Single steps, such as kerbs:** his body still steps up at once, but his camera and model
+    glide after it (a critically damped spring, about a quarter second), and down a kerb too.
+  - **His camera:** it comes in at once when something stands between it and him, eases back out
+    once nothing does, and, where his walk is taking it behind something within 0.6 s, such as
+    the landing's rail on the way down, eases in before he gets there.
+- **Rules measured** (`game/tests/test_stair.gd`, in the running game, Ethan set at the stair's
+  foot and walking by the real W key): S1 a stair's pace up and down, never stalling; S2 nothing
+  (body, hips, camera) moving more than 0.02 m a frame; S3 each planted foot on its step (sole
+  within 0.03 m, toes not into a step); S4 one tread a step, by turns; S5 no foot through a step
+  as it swings; S6 a stair's cadence (76 ± 10 up, 117 ± 10 down); S7 onto a 0.15 m kerb, camera
+  and hips at most 0.025 m a frame; S8 the camera in at once and out again smoothly (at most
+  0.12 m a frame); S9 up a 20° slope without a step taken; S10 stopping halfway and going on, still
+  one tread a step.
+- **Results:** 1/15 before (`logs/phase_2/step2f/part1_a/before/`) → 17/17 (S9 and S10 were
+  added while building, each failing first on a real fault); fourteen mutations exit 1 on their
+  own checks (`part1_a/mutations/`); a fifteenth showed a rule (each foot forced one tread past
+  the other) that no case needed, so the rule was removed; every suite: 34 runs exit 0 with the
+  baseline's counts, the art check 0 failures (`part1_a/suites/SUMMARY.txt`); the headless import
+  exit 0, no errors.
+- **Seen:** a film in a window by Godot's Movie Maker (`captures/stair/a/stair_up_and_down.mp4`,
+  44 s, `tools/captures/capture_stair.gd`): from his own camera, then from the lane's side, up and
+  down; his feet land on the treads and his knees bend as a stair asks.
+- **Noted for part 2:** the drive-in lane's floor inside the shed reads as dirt, and the lane and
+  stair are dark.
+
+## Revision 2026-11-12 (Phase 2, step 2f, part 1: the rear doors by Ethan's hands (B) and the job in order (C), built)
+
+- **Status:** parts B and C of the plan the author approved (#246, #247: "okay proceed"), after
+  A. Not committed: step 2e, part 1 and A–C wait for the author's OK.
+- **B, as built** (`freight_van/rear_door_hands.gd`, with `driver.gd`'s `door_step()` and
+  `door_hand()`):
+  - **Opening,** as a driver works a Daily's 270-degree doors: E behind the van; Ethan walks to
+    the right door, his right palm held to its handle by IK before it moves (the handle's latch
+    heard as it frees); he pulls it open to 65° as he steps back by his own walk backward, leaning
+    in a little from his ankles where the bumper keeps him out of easy reach; walks round its free
+    edge, a little way out from it; pushes it on from its inner face, and it swings on by itself,
+    slowing on its hinges, until the stay on the van's side catches it with a knock and a bounce
+    of 1.6°; then the left door the same, by its edge, once the right is out of its way; then he
+    steps back. The van counts the doors open only once both are on their stays.
+  - **Closing,** the left first, for the right door laps over it: from just past the folded
+    door's free edge, out of its reach, he tugs it off its stay and sends it swinging back round,
+    walks it shut from its outer side and shoves it the last bit onto its latch, which clunks;
+    then the right, round the van's rear corner, wide of the folded door. Counted shut only once
+    both are latched; then the dock hand is called to seal them, as before.
+  - **His walking between stances** faces his way on a long walk and turns on the spot when he
+    gets there; on a short one he steps, slowly, facing as he will stand; he eases the last
+    centimetres into a stance as his hand goes to the door, never at a hop; his door walk steps
+    up a kerb, as bay 9's wheel guides ask; every stance is kept off the van's body, its corners
+    rounded, by his body's breadth.
+  - **While he is at it** the hint is empty and E does nothing else; putting the van back on the
+    road (`recover()`) or emptying it stops the job.
+  - **Sounds,** synthesized as the game's others are (`source_assets/audio/first_drive/
+    synthesize.py`; `docs/AUDIO.md`): `door_latch.wav` and `door_stay.wav`, played through the
+    van's `rear_door_sounded` signal; the other nineteen sounds rebuild byte for byte.
+- **B's rules measured** (`game/tests/test_rear_doors.gd`, in the running game, the van stopped
+  in the open court, Ethan by the real keys): R1 his palm on each door's grip before it moves and
+  while he pulls it, the right door first; R2 no door's slab within 0.27 m of his body's axis; R3
+  nothing jumps (a door at most 4° a frame, his body 0.05 m, his camera 0.08 m); R4 both doors on
+  their stays, counted open only then, within 18 s, and held there; R5 a pushed door swings on by
+  itself, slowing, caught with a bounce of at most 6°; R6 his walk forward or back at the pace he
+  goes, his feet not sliding; R8 closing, the left first, shut before the right leaves its stay,
+  his hand on each as it moves, counted shut only once both are, within 24 s (walking round to
+  each side for its stay); R9 each door's latch and stay heard. W held and E pressed mid-way
+  change nothing.
+- **B's results:** 6/14 before (`logs/phase_2/step2f/part1_b/before/`) → 16/16 (`after/`);
+  `test_bay_nine.gd` and `test_sealing.gd` now wait for him to finish by hand where they waited
+  2.5 or 3 s (their expectations unchanged: 20/20 and 11/11); thirteen mutations exit 1 on their
+  own checks (`part1_b/mutations/`); two more showed rules no case needed (turning before walking
+  off; waiting for a sent door to stop), which were removed.
+- **C, as built:**
+  - **The objective only ever goes on** (`the_wrong_cargo.gd`, with the jack's new `on_lift()`):
+    with the pallet set down on the lift's deck it says to lower the lift, and once the lift is
+    down to roll the pallet in, never back to "LOAD THE PALLET: Go in by the side door". Rule H10
+    in `test_loading.gd`: 22/23 before (`part1_c/before/`) → 23/23.
+  - **The capture of the whole job by real play** (`tools/captures/capture_loading.gd`): from the
+    van stopped in the open court, its doors shut, by the game's own keys only: out, the doors by
+    hand, back in, backed onto bay 9 to the bumpers (docked, 0.00 m), out, the wheel chocked, in
+    by the side door and up the stair, the jack taken, the pallet onto the lift, ridden down, into
+    the hold to the bulkhead, strapped, the jack pulled out, the lift raised, the empty jack put
+    back on the dock, the chock out, the van pulled forward, the doors closed by hand, and the dock
+    worker's seal. The window shows only Ethan's own camera; each still of him from beside comes
+    from a second camera rendering off the screen, saved in the background. No black screen but
+    the first, no van moved by script once it plays.
+  - **Seen:** the film by Movie Maker at 30 fps, `captures/loading/c/the_whole_job.mp4` (222 s);
+    33 stills from the real-time run, `captures/loading/c_realtime/` (four of the film run's own
+    stills had their hidden camera misplaced, inside the shed's wall or off in the world; they
+    were placed again and the job played again in real time).
+  - **The frame rate on the author's Mac** (the same job in real time, a 60 Hz screen, vsync on;
+    the frames a still was read back in left out): the court 55.9 a second (median 17.8 ms),
+    backing onto bay 9 47.2 (median 21.1 ms, 227 frames over 25 ms), the side door and the stair
+    59.5, the dock, the lift and the hold 59.7, closing the doors and the seal 57.0. Inside the
+    shed it holds 60; outside, looking across the yard at the dock front's lit rain, it falls
+    short, and there motion steps unevenly however smooth the animation.
+- **For the author:** whether to turn on Godot's physics interpolation (a project setting) and to
+  bring the yard's look within the frame's budget, so that outside too it holds 60.
+
+## Revision 2026-11-13 (Phase 2, step 2f, part 1: Ethan's legs crossing on the stair (#249), fixed)
+
+- **The author saw:** his legs cross as he climbs the stair (#249).
+- **Measured first** (`test_stair.gd`'s new rule S11, 17/19 before, `logs/phase_2/step2f/part1_d/
+  before/`): going up, each foot landed as the walk clip's own feet stand, 0.097 m to his left and
+  0.048 m to his right (`SIDES`), so his right foot came down 4.1 cm inside its hip and 14.5 cm from
+  the other, and from behind his right leg slanted across under him. Going down it was worse: the
+  feet were placed across his body as it faced when a foot lifted, and on the landing he turns round
+  with his feet pinned where they stood facing up, so his first step down put his left foot 0.21 m
+  to the right of its hip, his feet crossed by 0.10 m.
+- **Changed** (`driver/stair_steps.gd`, `driver.gd`): each foot lands under its own hip's joint,
+  0.103 m left and 0.071 m right of his body (measured: the joints at ±0.087 m about a pelvis 0.016 m
+  to his left); square across the flight, not across his turning body; a foot standing on the floor
+  or the landing turns with him round his body as he turns, as his walk's own feet do; his knees'
+  poles over each foot. His hips now follow a foot going down over 0.8 of its swing (0.6), so the
+  first step down from the landing, now from feet under his hips, stays within S2's 0.02 m a frame.
+- **Rule S11** (both ways): every foot planted on a tread within 0.03 m across of its own hip, his
+  left foot to the left of his right by at least 0.15 m.
+- **Results:** 19/19 (`part1_d/after/`); four mutations exit 1 on their own checks
+  (`part1_d/mutations/`); every suite, `bash logs/phase_2/step2f/part1_d/suites/run_suites.sh
+  <scratch>`: 36 runs exit 0, the art check 0 failures (`part1_d/suites/SUMMARY.txt`).
+- **Not yet seen:** the stair filmed again; a headless run draws nothing.
+
+## Revision 2026-11-13 (Phase 2, step 2f, part 1: the jack's handle in Ethan's body, and his open hands (#250), fixed)
+
+- **The author saw:** pushing the pallet, Ethan pushes into the handle's rod, which disappears and
+  comes back (#250, "focus on minor minute details").
+- **Seen in the film** (`captures/loading/c/the_whole_job.mp4`, frames at 78-84 s and 102-113 s):
+  leaning in on the dock, the handle stands upright and his chest and chin go into its top; in the
+  hold its rod runs into his hip; his hands lie open on the loop, fingers spread, as in Pushing's
+  clip of a man shoving a crate.
+- **Measured first** (rules H11 and H12 in `test_loading.gd`, 23/24 then 24/25 before,
+  `logs/phase_2/step2f/part1_e/before/`): the handle's rod and loop, measured on the model, came
+  0.159 m inside his upper chest taking the jack in the hold, stooped in it and pulling out, and
+  0.04-0.08 m into his face leaning in on the dock, stopping and getting going; his fingertips
+  stood 0.11 m off the loop. His body is his spine's bones as thick as his rest pose's mesh stands
+  in front of each (jacket 0.126-0.146 m, chin 0.138, face 0.133, thighs 0.10).
+- **Why:** in the hold the handle tilted to where his hands were assumed to be, 0.30 m ahead of his
+  feet, inside his chest (his chest stands out to 0.38 m stooped); on the dock he leaned into
+  Pushing's deep lean, head down to 1.2 m, while still close behind the handle.
+- **Changed:**
+  - `push_gait.gd`: stooped, the handle tilts to where his arms reach, 0.47 m ahead of his feet at
+    0.96 m (0.3, 0.95), so 21-32° in the hold.
+  - New `driver/handle_clear.gd`, before his hands' IK: where the handle would go into him, his
+    back straightens from the foot of his spine just enough to keep it 3 cm out, so close behind
+    the handle he leans in less and pushes with his arms, leaning deeper as it runs out; under the
+    hold's roof (1.536 m over its floor, `pallet_jack.gd`'s `HOLD_ROOF`) no higher than his hair
+    clears it. The jack gives it the handle each frame (`_handle_pieces()`,
+    `driver.keep_clear_of()`).
+  - New `driver/hand_grip.gd`, after his hands' IK: his fingers set straight as in his rest pose,
+    each hand turned the shortest way until the loop runs through it from thumb to little finger,
+    each finger curled 60°, 90° and 60° at its three joints and the thumb round the other side, by
+    how fully his hands are on the handle; the loop set 3 cm under his palm (`hold_handle()`'s
+    `bars`, `UNDER_PALM`), not through his hand.
+  - Tried and dropped: taking the jack at arm's length (no room on the lift's deck to stand there,
+    13 checks failed), and lifting his head at the neck (his head went into the hold's roof).
+- **Rules:** H11 the handle's rod and loop never inside him while he holds it, taking it,
+  pushing, in the hold, pulling out, stopping and getting going; H12 pushing on the dock and in the
+  hold every fingertip within 0.045 m of the loop's tube (a finger's thickness and the tube's).
+  The hands-on-the-handle checks now measure from the palm's centre 3 cm off the bar (before, a
+  gap of 0 put the bar through his hand).
+- **Results:** 25/25 (`part1_e/after/`): the handle at least 0.020 m outside him everywhere, his
+  fingertips at most 0.042 m from the loop on the dock and 0.027 m in the hold, the handle 21-32°
+  in the hold with his palms 0.30 m below the top of his head, his head under the roof; six
+  mutations exit 1 on their own checks (`part1_e/mutations/`); every suite,
+  `bash logs/phase_2/step2f/part1_e/suites/run_suites.sh <scratch>`: 36 runs exit 0, the art check
+  0 failures; the headless import exit 0, no errors, the new `.uid` sidecars.
+- **Not yet seen:** the push filmed again; a headless run draws nothing.
+
+## Revision 2026-11-13 (Phase 2, step 2f, part 1: the rear doors' hinges, the lift's pendant post and the rear camera (#252), built)
+
+- **The author saw** (watching the film, #252): the rear doors float, not attached; the pallet
+  makes the lift's controls' pole disappear; asked for the rear camera while reversing.
+- **The hinges** (`van_presentation.gd`, `_rear_hinges()`): each rear door turns about a pin
+  0.156 m out beyond its own edge, as a Daily's 270-degree doors need to fold flat against the
+  sides, but no hinge was drawn across that gap. Now two hinges a door, below and above the tail
+  lamp (0.52 and 1.65 m up): a black steel arm on the door from its edge round to the pin, a
+  bracket from the body's rear corner pillar to the pin, and the pin's barrel. The arms are left
+  out of the door's own extent, which Ethan's hands use. Rule R10 (`test_rear_doors.gd`): arm to
+  door edge and pin, bracket to pin and the body's surface, nothing open, shut and on the stay.
+- **The pendant post** (`dock_lift.gd`): it stood on the deck 0.15 m in from its edge at the
+  entry end, in the path of a pallet staged 0.55 m off the deck's middle, and had no collision, so
+  the load and Ethan passed through it. Now at the entry end's other corner, 0.05 m in from the
+  edge, solid on the lift's own layer, so a load or Ethan stops against it. The test and the
+  capture walk up to the pendant itself and behind the jack's handle where it was left, as a
+  player does, in place of fixed spots. Rule H13 (`test_loading.gd`): the load and Ethan never
+  inside it all job long, and the empty jack pushed straight at it stops short.
+- **The rear camera** (the author's choice, "Screen shows rear camera"): in reverse, with Ethan at
+  the wheel, the game's view is the van's reversing camera, high on its back (2.15 m) looking back
+  and down at 85°, with its low-light gain and its parking guides over the picture; out of
+  reverse the driver's view again; out of the van his own camera is left to its owner. The dash
+  screen's copy is not drawn meanwhile. Check in `test_dash_screen.gd`, by the game's gear key.
+- **Black frames in the film:** first put down to the laptop sleeping while it recorded, which
+  was wrong (corrected below, in step 2's revision): they came back with the Mac kept awake. Two
+  checks were added anyway (R11 in `test_rear_doors.gd`, H4's camera in `test_sealing.gd`): his
+  camera never in or within 0.15 m of a door while he works them; neither failed before.
+- **Results** (`logs/phase_2/step2f/part1_f/`): `test_rear_doors.gd` 16/17 → 18/18,
+  `test_loading.gd` 25/26 → 27/27, `test_dash_screen.gd` 15/16 → 16/16, `test_sealing.gd`
+  12/12; four mutations exit 1 on their own checks (the post's solid body at first survived, and
+  the straight push at it was added); every suite, `bash
+  logs/phase_2/step2f/part1_f/suites/run_suites.sh <scratch>`: 36 runs exit 0, the art check 0
+  failures (before the straight push, a test-only change, rerun alone 27/27).
+- **Not yet seen in a window.**
+
+## Revision 2026-11-13 (Phase 2, step 2f: step 2 of #253, the captured climb, the rebuilt stair and the heavy pull, built)
+
+- **The author's clips** (#253-#257, downloaded on Ch33 with their Adobe account, clone-copied into
+  `source_assets/mixamo/`): Running Up Stairs and Pull Heavy Object converted into Ethan
+  (`convert_mixamo.py`: `StairsUp` climbs in place, its forward travel and rise both taken out,
+  0.229 m up and 0.251 m along a step; `PullBack` 0.243 m/s). Descending Stairs is a crouch into a
+  squat over 13 frames, its feet never lower (rendered, `captures` not kept), so going down keeps
+  his walk with the stair stepping; Stand Up and Male Sitting Pose are for step 3.
+- **The stair rebuilt to fit the climb** (the author's choice, "Rebuild to fit"): 6 risers of
+  0.217 m on 0.25 m treads (`dock_access.gd`), within OSHA's stair limits (rise at most 0.24 m,
+  tread at least 0.24 m), the landing where it was.
+- **The climb** (`stair_steps.gd`): per-clip timing (`WALK_GAIT`, `CLIMB_GAIT`: 18 frames, strikes
+  5 and 14, lifts 12 and 2.5, 200 steps a minute); going up the flight he climbs in `StairsUp`,
+  walking at a stair's 76 steps a minute, running at its own (the author's choice, "Their own speed
+  when running"); the clip changes as a foot lands, from that foot's own landing (`_take_up()`);
+  each ankle at least 0.015 m onto its tread, its heel over the edge as a climber's is on treads
+  shorter than his shoe; never two feet on one tread; the ankle raised as the heel comes up so the
+  ball stays on the tread (`_heel_up()`); the swinging foot rises before it goes forward; walking,
+  the stair's own pace. His body rides the incline along the path a round-bottomed body takes
+  (`_riding()`, `on_incline()`: level until it meets the incline's foot, a little above it, over
+  its top edge in an arc), which ended a bounce over the top; his model is drawn from his feet's
+  line (`riding_above()`), not his body's, which ended a 0.27 m crouch at the first step; a man
+  running at the stair slows to his climbing pace by its foot (`pace_weight()`). His camera eases
+  in a little gentler ahead of an obstacle (`BOOM_IN` 8 to 7).
+- **The heavy pull** (the author's choice, "Heavy pull anyway", for the empty jack too): in the
+  hold he hauls the jack out in `PullBack` at its own pace, never Pushing played backward
+  (`push_gait.gd`: `HEAVE_SPEED`, `HEAVE_PLANTED`, `GRIP_HEAVING`); under the hold's roof, and by
+  the rear doorway under its lower header (`pallet_jack.gd`'s `REAR_DOOR`, `BY_THE_DOOR`), he bends
+  forward from the foot of his spine until his hair clears it, never into the handle
+  (`handle_clear.gd`'s duck).
+- **Rules:** `test_stair.gd` S12 (on the flight the captured climb), the running climb judged by
+  every rule (its hips against the capture's own 2.0 m/s, `RUN_HIPS`), S5 judged from 0.9 m before
+  the stair (the run clip's own toes dip into the flat floor at its start, outside the stair);
+  `test_loading.gd` H2 (the pull in the hold, under the roof and the door); the art check counts
+  ten clips and checks both new ones stay in place.
+- **Results** (`logs/phase_2/step2f/part2_clips/`): `test_stair.gd` 15/28 → 28/28,
+  `test_loading.gd` 26/27 → 27/27; ten of eleven mutations exit 1 on their checks (the rule
+  against a skipped tread survived and was removed); every suite, `bash
+  logs/phase_2/step2f/part2_clips/suites/run_suites.sh <scratch>`: 36 runs exit 0, the art check
+  0 failures after counting the new clips (it and the rule's removal each rerun alone).
+- **Known:** pushing into the van the handle now clears his neck by 0.002 m at the nearest (0.030
+  before), as he bends a little under the roof; the run clip's toes dip up to 0.036 m into the
+  floor as he breaks into a run.
+- **The black frames, found** (step 2's film, `captures/loading/step2/job.avi`, 213-215 s and
+  222-226 s, the Mac kept awake): closing the doors after pulling forward from the dock, his
+  camera, behind him, backed through bay 9's open door, which has no collision, into the dark
+  behind the dock's face, bay 9's red light at its edge. Reproduced in `test_sealing.gd` (behind
+  the dock's face in 160 of 1,136 frames, up to 0.56 m). Fixed: a wall only his camera meets
+  across each open dock door's opening, at bay 9 with the passage under it
+  (`transfer_building.gd`'s `_camera_wall()`, layer 8, which his camera's arm meets, `driver.gd`'s
+  `CAMERA_WALLS`); the jack's own checks ignore that layer (`pallet_jack.gd`'s `ALL_BUT_CAMERA`),
+  and so do `test_bay_nine.gd`'s and `test_mission_two.gd`'s checks that nothing solid stands in
+  an open doorway. After: 0 of 1,136 frames. Counting the walls only from the court side was tried
+  and dropped: a mutation showed no case needed it.
+
+
+## Revision 2026-11-13 (Phase 2, step 2f: the boxes, the shutter, the pull's head room (#258) and the hinges made in Blender (#259), built)
+
+- **The boxes in the way** (#258): Pallet5 waits in front of dock 8 now, out of the van bay's
+  approach (`dock_staging.gd`'s `LOADS`); `test_loading.gd` H14 checks nothing staged stands in
+  that approach.
+- **The walls seen through** (#258): Poly Haven's shutter file holds two narrow shutters side by
+  side, which left a gap in the drive-in door; the door is filled by the plain shutter alone,
+  scaled to its opening (`transfer_building.gd`, `SHUTTER_DEPTH`); `test_mission_two.gd` E4 checks
+  every point of each closed opening.
+- **The pull's head room** (#258): by the rear doorway he crouches at the knees as well as bending,
+  the ceiling taken from where his head is (`handle_clear.gd`'s `roof`, `driver.gd`'s
+  `_crouch_under_roof()`).
+- **The van:** no free van better than the Daily was found (the modern ones are paid Store models,
+  none listing working rear doors), so the Daily keeps its doors and gets real hinges (#259, the
+  author's "do it in blender it might be better").
+- **The hinges, made in Blender** (`tools/art/build_van_hinges.py`, headless Blender, into
+  `freight_van/art/van_hinges.glb`): the external strap hinge a 270-degree door hangs on, in black
+  painted steel, its origin at the pin: on the door, a strap 0.23 m long and 0.05 m tall bolted to
+  its outer face, round its edge to the middle knuckle; on the body, a plate bolted to the corner
+  pillar's rear face, two lugs to the upper and lower knuckles, and the capped pin through all
+  three (bevelled, 470 and 1,092 faces). Two a door, below the tail lamp at 0.52 m, on the black
+  corner above the bumper, and above it at 1.65 m, where the pillar stands 0.025 m further forward
+  (its own bracket, `HingeBracketUpper`). The door runs 0.43-2.01 m and the lamp 0.64-1.34 m.
+  `van_presentation.gd`'s `_rear_hinges()` hangs the arms on the doors and the brackets on the
+  body; the doors' extents leave the hinges out.
+- **Rules:** `test_rear_doors.gd` R10 also fails a hinge drawn as a plain box.
+- **Found by the first full run** (`logs/phase_2/step2f/part4_hinges/first_run/`): the art check
+  stopped on the hinge file, which had no UVs, and it read 16-bit index buffers as floats and
+  only each file's first mesh; `test_cockpit.gd`'s count of the Iveco's triangles took in the
+  hinges (24/25). Fixed: the hinges get UVs projected from each face (`box_uvs()`, 1 UV unit to
+  0.1 m, as a texture would want); the art check reads every mesh and 16-bit indices and counts
+  six van files (0 failures, the hinges 11,188 triangles); the cockpit count leaves out the
+  hinges, as the doors' extents do (25/25).
+- **Results:** R10 17/18 → 18/18 (`logs/phase_2/step2f/part3_fixes/before/`, `after/`); two
+  mutations exit 1 on R10 (`logs/phase_2/step2f/part4_hinges/mutations/`); every suite, `bash
+  logs/phase_2/step2f/part4_hinges/suites/run_suites.sh <scratch>`: 35 runs exit 0 with
+  their counts, the art check 0 failures (`part4_hinges/suites/SUMMARY.txt`).
+- **Stills** (`tools/captures/capture_hinges.gd`, windowed): `captures/hinges/blender/`: the rear
+  from four sides, shut and open, and each hinge close, shut and on its 270-degree stay
+  (`close_sheet.png`); in every open view both doors lie on their 270-degree stays, inner faces
+  out against the sides (the capture prints their turn).
+- **Known:** the lower hinges are black on the black corner and show little except close up, as
+  on the real van.
+
+## Revision 2026-11-13 (Phase 2, step 2f: the hinges compact and in the doors' finishes (#260-#261), built)
+
+- **The author** (#260, on the black strap hinges): "i dont want them to  be seen from outside the
+  van." The doors turn on a pin at the outer rear corner, the only place they fold 270 degrees
+  flat against the sides, so whatever holds the pin sits outside the corner, as on a real Daily,
+  Sprinter or Transit; a real Daily's hinges are small and short in each corner, not a long
+  strap across the door. The author chose (#261) "Compact, painted the van's white, so it blends
+  into the body".
+- **Made in Blender** (`tools/art/build_van_hinges.py`, rewritten): on the door a pad bolted at its
+  edge, reaching 0.03 m onto it (0.08 before), and a slim arm tapering from 0.026 to 0.014 m over
+  the pillar to a knuckle of 0.01 m radius; on the body a plate 0.036 m tall laid along the
+  pillar's face, two lugs and the capped pin; 0.039 m tall in all (0.09 before). The pillar's face
+  was found by casting rays onto the Iveco's body beside each pin: below the lamp it is nearly
+  flat 0.06 m in front of the pin; above it the body narrows toward the roof, its face starting
+  0.08 m in and slanting about 25 degrees, and the plate follows it.
+- **Each in the finish of the door where it sits:** sampled from the Iveco's Back_door textures
+  over the doors' outer skin by each hinge's pad. Above the lamp, the white paint (sRGB 0.91,
+  roughness 0.482, metalness 0.439); below it, at 0.52 m, the doors' foot is a black trim band
+  beside the black bumper corner (sRGB 0.18, roughness 0.49, not metallic), and the lower hinges
+  take that black: white hinges there showed plainly against it in the first stills. So each
+  arm has its own mesh (`HingeArm`, `HingeArmUpper`), as each bracket had.
+- **Rules:** `test_rear_doors.gd` R12: each hinge's arm reaches at most 0.035 m onto its door, each
+  part is at most 0.04 m tall, and each is in the finish of the door where it sits.
+- **Results:** R12 failed on the strap hinges (18/19: 0.08 m onto the door, 0.05 and 0.09 m tall,
+  black; `logs/phase_2/step2f/part5_white_hinges/before/`), then on the white lower hinges once
+  it asked for the trim (`before_trim/`), then 19/19 (`after/`); two mutations exit 1 on R12
+  (`part5_white_hinges/mutations/`); every suite, `bash
+  logs/phase_2/step2f/part5_white_hinges/suites/run_suites.sh <scratch>`: 35 runs exit 0 with
+  their counts, the art check 0 failures (`part5_white_hinges/suites/SUMMARY.txt`).
+- **Stills** (`captures/hinges/compact/`, `tools/captures/capture_hinges.gd`): from the corners the
+  lower hinges vanish into the trim and the upper ones read as part of the pillar; close up,
+  each shows as a small hinge in the van's own finish, shut and on its 270-degree stay.
+
+## Revision 2026-11-13 (Phase 2, step 3 of #253, part 1: bay 9's dock station and the lane's floor (#263-#265), built)
+
+- **The plan** (#263, the author's "okay"): bay 9's dock worker sits at a dock desk by the door
+  he works, seen from the yard, stands when the doors shut, takes a seal and his clipboard, walks
+  out by the dock stair, puts the bolt through the hasp, snaps the cap, tugs it, twists it and
+  checks its number against his log (C-TPAT's VVTT: view, verify, tug, twist), walks back and
+  sits down; in Rocketbox's own clips (the worker's skeleton: stand up and sit down from a chair,
+  seated idles, a documents check) over the Mixamo downloads (another skeleton; Male Sitting Pose
+  a still). Part 1 is the station, shown in stills before the worker.
+- **Where** (`dock_station.gd`, built by `transfer_building.gd`'s `_station()`): on the dock floor
+  in the corner east of bay 9's lift, along the edge rail. A first spot further in was rejected
+  from its own stills: its chair stood against bay 9's staged load and the jack, and the lift's
+  bridge plate, stored upright in the doorway (0.91 m), hid it from the yard. In the corner the
+  chair shows in the doorway's right side from the yard and the van's doors; from 1.7 m eyes at
+  the van's doors the sight line clears the plate's top (2.31 against 2.21 m) to a seated man.
+- **What:** Poly Haven's Metal Office Desk (2.0 x 0.95 m, top 0.788 m), its drawers toward the
+  lift; Red Fox's (Sketchfab `nokillnando`) Office Chair, CC BY 4.0, in its kneehole facing it,
+  its column 0.35 m out from the desk's front; Poly Haven's Clipboard (the seal log) and the
+  Stationery Supplies' pen cup on the desk, each set down by its own lowest point (the pen cup's
+  origin is 0.074 m above its foot). The desk and the chair are solid; the chair has its own
+  body, to move with it.
+- **The chair** (#264, "change the chair for me"; #265, "Office chair"): a swivel task chair on
+  castors, as dock desks have, which Poly Haven lacks; found on Sketchfab through Blender. Chosen
+  over a photo-scanned worn chair, whose close-up surfaces were lumpy with reflections baked in,
+  and an antique tub chair. Its import had no real scale, so it is sized by its seat: the
+  cushion's top 0.47 m up (task chairs adjust over about 0.41-0.52 m), which makes its five-star
+  base 0.69 x 0.66 m (real ones about 0.64-0.70 m) and the chair 0.89 m tall. Centred on its gas
+  lift; 9,450 triangles; textures halved to 1024 pixels (`convert_depot_models.py --
+  office_chair`); credited in the game ("THE DEPOT"), `SOURCES.md` and the depot's
+  `ATTRIBUTION.md`. The Plastic Monobloc Chair first used was removed from the game at the
+  author's word (#266).
+- **The lane's floor** (#264, "the mud floor"): the drive-in lane inside the shed had no floor,
+  and the hill's ground (its dirt shader) showed through. It is now a concrete slab in the shed's
+  own concrete, from the dock floor's edge to the east wall and on under the drive-in door, its
+  top flush with the yard's apron at 0.02 m (`transfer_building.gd`'s `_lane_floor()`).
+- **Rules:** new `test_dock_worker.gd`: W1 the station's models; W2 the desk and chair on the dock
+  floor and the log and pen cup on the desk top (within 5 mm); W3 the station clear of the load's
+  approach, the lift's pit, the rail (0.03 m), the wall and the way to the stair, with 0.6 m to
+  walk between it and bay 9's staged load; W4 the drawers toward the lift, the chair in the
+  kneehole facing the desk; W5 both solid; W6 the chair's back in sight through the doorway from
+  three points where Ethan stands behind the van. `test_mission_two.gd` E11: of 540 points over
+  the lane, every one on the shed's slab at the apron's height, drawn in its textured concrete;
+  E4 now measures the drive-in opening from that floor. `test_menus.gd` credits Red Fox.
+- **Results** (`logs/phase_2/step3/part1/`): E11 failed at all 540 points, then 55/55; W1 failed,
+  then W2 caught the pen cup 7.4 cm and the clipboard 3 mm into the desk, then 6/6; the menus
+  19/20, then 20/20; four mutations exit 1 on their own checks (a fifth spot, the station 2 m
+  south beside the load, first passed: W3 learned the load, and the room was measured per piece,
+  not by the pair's joint box, which had paired the chair's edge with the desk's end); every
+  suite, `bash logs/phase_2/step3/part1/suites/run_suites.sh <scratch>`: 36 runs exit 0 with
+  their counts, the art check 0 failures (`part1/suites/SUMMARY.txt`).
+- **Stills:** `captures/dock_station/part1/` (the first spots) and `part1_built/` (as built).
+
+## Revision 2026-11-13 (Phase 2, step 5 brought forward: the shed's racking, the forest highway's roadside, main street and the gas station (#267); written before any code)
+
+The author (#267) asked for the forest highway's roadside furniture, main street and the gas
+station's props, and for the transfer shed to look like a photo of a warehouse aisle: tall
+selective pallet racking with green uprights and yellow beams stacked with flat cardboard,
+yellow and white lane lines on grey concrete, rows of high-bay lights and white ducts under an
+open steel roof. Each part is built at the level of the van's hinges (#262): its real-world
+reference first, sizes from the standards and the models, finishes from their own textures,
+own close-up stills from where Ethan stands, tests first. Values marked † are Claude Code's from
+research, for the author to check. The order (the author's, #268): A (the shed, where Mission 2
+is), B (the highway), C (main street and the gas station), each shown in stills before the next.
+
+**What exists** (mapped 2026-11-13): the shed is a 50 x 30 m clear span (inner faces x -89.75 to
+-40.25, z -9.75 to 19.75), eaves 9 m, a 5° gable to 10.31 m, no columns, trusses, purlins or
+ducts; ten high-bay lights at 8.4 m in rows z 15 and 5; the dock floor at 1.3 m free behind the
+cross-aisle (lines at z 10 and 14) over x -82 to -44.76, z -9.75 to 10 (37 x 19.7 m). The forest
+highway (`ghat_road.gd`, 3,007 m, 4.5 m of two-way asphalt, no lane lines) has its guardrails and
+the hairpins' stone walls, delineators every 26 m off the valley, hairpin, chevron, grade,
+crossing and direction signs, one lay-by (the viewpoint at the fourth climbing hairpin, no bin),
+and the forest floor's branches from 3.5 m off the road. There is no main street, no shopfront
+and no gas station: the town is backdrop blocks from z 207.
+
+### Part A: the shed like the photo
+
+- **Racking** (selective pallet racking, teardrop style, as in the photo): frames 42 in (1.07 m)
+  deep for 48 in pallets with 3 in (76 mm) posts, beams 96 in (2.44 m) long with two pallets a
+  level (Interlake Mecalux's guide; SJF); uprights green, beams safety yellow-orange, as photo;
+  frames 20 ft (6.1 m) †, beams at 5 ft (1.52 m) steps †, so the floor and three beam levels;
+  diagonal and horizontal bracing, base plates anchored, back-to-back rows joined by row spacers
+  with a 6 in (0.15 m) flue †, wire mesh decks †. Rows run north-south, at right angles to the
+  dock face, so their aisles open onto the cross-aisle and the docks, the photo's view from the
+  staging lanes; double rows 2.29 m deep with aisles 3.4 m † (a counterbalance forklift's right
+  angle stack, from its maker's tables, to be found), about six rows in the 37 m.
+- **Rack safety, as real sites fit:** yellow row-end guards and post protectors at every aisle
+  end, location labels on the beams (aisle numbers on hanging boards, as the photo's "03", and
+  barcode labels per bay), load signs on the frames.
+- **Stock:** flat bundles of corrugated board on pallets, as the photo, wrapped pallets of the
+  cartons (`dock_staging.gd`), grey plastic totes, some empty bays; nothing named `Pallet<n>`
+  (`test_loading.gd` H14 counts those).
+- **Floor:** the photo's lines: a yellow aisle edge line at each row and a white pedestrian
+  walkway down the main aisle, 4 in (0.1 m) wide †.
+- **Roof:** what the photo shows under its deck: open-web long-span steel joists across the 30 m
+  span (no columns, as the shed was drawn) every 1.8 m †, a white-faced insulated liner, white
+  spiral ducts and red sprinkler mains below, and more high-bay LED lights in rows over the
+  aisles (the photo's rows), each kept above the racking's top by NFPA 13's 18 in (0.46 m) from
+  the sprinklers †.
+- **Made:** the racking, guards, decks and labels drawn in Blender by a script, at these sizes,
+  in the photo's colours (as the hinges were); the stock from Poly Haven and the depot's models;
+  drawn as multi-meshes so the shed stays within the frame's budget on the M4; its GPU price
+  measured as Assignment 6's were.
+- **Tests first:** the racking inside the free rectangle, its aisles at least 3.4 m †, clear of
+  the cross-aisle, the staging lanes, bay 9's work zone and every route Ethan, the jack and the
+  dock worker take (`test_loading.gd`, `test_mission_two.gd`, `test_dock_worker.gd`), solid on
+  the dock floor, the lights inside the shed and above the racking, under the roof's joists.
+
+### Part B: the forest highway's roadside
+
+- **Delineators** (reflector posts): the MUTCD's white posts with a reflector of at least 3 in
+  (75 mm) at about 4 ft (1.2 m) †, along the valley sections as well as the climbs, spaced on
+  curves by S = 3√(R − 50) ft (MUTCD 3F.04), on the outside of curves first.
+- **A weathered speed limit sign** (R2-1, SPEED LIMIT 45 †) at the valley's start, faded and
+  streaked, its post leaning a little; **a deer crossing sign** (W11-3, 30 in †) where the forest
+  meets the road; **mile markers** (green reference posts every mile, 1.61 km) along the loop.
+- **Fallen branches** on the verge and one partly onto the shoulder, never across a lane;
+  **litter** on the verge: a can, a bottle, a takeaway cup, a plastic bag, a tyre's tread;
+  **a bin at the lay-by** (a steel drum or a roadside bin on a post).
+- **Made:** signs added to the road sign atlas (`tools/make_road_signs.py`) in the MUTCD's
+  colours and shapes; branches and litter from Poly Haven or Sketchfab (CC0 or CC BY).
+- **Tests first:** every item off the asphalt and clear of the van's way, the guardrails and the
+  crossing; spacing as above; nothing within the crossing's scene that changes Mission 1's hit.
+
+### Part C: main street and the gas station (Act I)
+
+- **Where** (the author's choice, #268, "South valley road"): a new flat plot along the southern
+  valley road, about x 20, z 176, the town's backdrop buildings behind it: a forecourt about 25 x
+  20 m with its canopy, two pump islands, a kiosk and a short row of shopfronts beside it.
+- **The gas station:** fuel dispensers on raised islands with bollards, a canopy with lights, a
+  tall price sign (unbranded, prices for regular, plus and diesel †), an ice chest and a propane
+  cage by the kiosk, a newspaper box, a payphone, a bench, a bin, an air and water machine.
+- **The shopfronts:** two or three, closed at night, behind rolled-down shutters, with signs that
+  carry no real brand.
+- **Parked cars:** the 1980s sedan already fetched (`07_sedan_fairheaven`), and Poly Haven's
+  covered car.
+- **Tests first:** the plot level, clear of the roads and their barriers, the van able to drive
+  in and out round the islands, nothing on the asphalt.
+
+**Not changed:** the missions, their routes and timings, the van, Ethan, the crossing's scene.
+
+## Revision 2026-11-13 (Phase 2, step 5 brought forward, part A: the shed like the photo (#267-#269), built)
+
+- **The racking** (`racking.gd`, built by `transfer_building.gd`'s `_racking()`; parts by
+  `tools/art/build_racking.py`, textures by `tools/art/make_rack_textures.py`): teardrop
+  selective racking at its makers' sizes: 20 ft frames 42 in deep, 3 in posts slotted on a 2 in
+  step, base plates 4 x 6 in with anchors, zig-zag bracing; 96 in step beams at 60, 120 and
+  180 in with connector plates, wire decks on three channels; the photo's colours, sampled from
+  it by hue (uprights sRGB 0.27, 0.31, 0.28; beams 0.83, 0.66, 0.26). Six rows behind the
+  cross-aisle, at right angles to the dock face so their aisles open onto it (the photo's
+  view): one single row 0.15 m off the office's wall and five back to back with a 6 in flue,
+  seven bays each, their base plates 0.3 m off the back wall, aisles 12.5 ft between the loads'
+  faces (12-13 ft for a counterbalance forklift with 48 in pallets, Toyota's right-angle-stack
+  method). Yellow end guards at every row's end on the cross-aisle, a protector on every post
+  facing an aisle, navy boards 01-06 at the aisles' entrances, barcode location labels on every
+  aisle-facing beam (four labels, drawn), row spacers in the flues. Each row is one solid box.
+- **The stock:** 616 places on GMA 48 x 40 in pallets drawn board by board in the depot pallet's
+  wood, two to a bay a level, 0.10 m clear of the posts and 0.20 m apart; wrapped carton stacks
+  (two or three layers of 0.5 x 0.4 x 0.34 m cartons, their faces drawn in the depot carton's
+  sampled kraft) mostly on the floor level, bundles of flat board 0.6, 0.9 and 1.1 m tall with
+  two straps above, about 79% full, each pallet up to 1 cm and 1 degree off true; a seeded draw,
+  the same every run; nothing named as the mission's `Pallet<n>`.
+- **The floor:** yellow 4 in lines down both sides of every aisle and a white walkway down the
+  aisle by the rail.
+- **The roof** (`tools/art/build_shed_services.py`): 24 long-span open-web joists every 2.06 m
+  (6 ft 9 in) across the 29.5 m span, 1.2 m deep, white painted, their top chords under a white
+  liner along the deck's pitch; two white spiral duct runs 0.6 m across on their hangers, under
+  the joists over the cross-aisle and over the racks; two red 4 in sprinkler mains with grooved
+  couplings and pendent heads every 10 ft, 2.3 m and more over the stock (NFPA 13: 18 in).
+- **The lights:** the staging lanes' row of five kept; the row at z 5, which stood over the racks,
+  replaced by three linear LED high-bays down each of the six aisles, between the joists: the
+  joists' spacing was chosen so that every fixture stands at least 0.53 m from one (searched over
+  23-33 spaces). They reach 8.5 m, the floor being 7.1 m under them.
+- **Rules:** new `test_racking.gd` R0-R10: the rows' sizes and counts (R1), their place (R2), the
+  aisles and boards (R3), the guards (R4), solid rows and clear aisles (R5), under the lights and
+  NFPA 13's 18 in (R6), the stock (R7), the lines (R8), the joists, liner and lights (R9), the
+  ducts, mains and heads (R10). A headless run's renderer keeps no multi-mesh transforms, so the
+  racking hands out what it placed (`placements()`), checked against each multi-mesh's count.
+- **Results** (`logs/phase_2/step5/partA/`): R0 failed with nothing built, R7 with no stock, R8-R10
+  with no fit-out, then 11/11; the frame's depth and the wall's 0.3 m were first misjudged by the
+  checks themselves (the base plates stand 1.5 in past the posts, as real ones do; the row
+  spacing now proves the 42 in, and the rows start so that the plates keep the 0.3 m); eight
+  mutations exit 1 on their own checks (`mutations/SUMMARY.txt`); every suite, `bash
+  logs/phase_2/step5/partA/suites/run_suites.sh <scratch>`: 37 runs exit 0, the art check 0
+  failures.
+- **The GPU price** (`game/tests/gpu_price_depot.gd`'s new case RK, from the cross-aisle, read by
+  `tools/tests/gpu_price.py`): first 2.90 ms ± 4.1 with the Mac at 4% battery, throttled to 30
+  fps (not a measure); on power 1.79 ms (1.43-2.14), over the depot's 1.5 ms. Its parts: the
+  stretch film 0.18 ms, the frames and decks with their cut-outs 0.27 ms, the aisle lights 0.26
+  ms (± 0.52). Trimmed: the smallest parts (labels, spacers, chains, hangers, heads) not drawn
+  beyond 25-30 m, where they are under a pixel; the lights' reach 10.5 to 8.5 m: 1.65 ms
+  (1.60-1.70). Then the posts' slots drawn as what a real open-backed channel shows through them,
+  its dark inside, so the posts are solid, not cut out: **1.52 ms (1.43-1.61)**, at the budget;
+  57 frames a second in that view with the racking, 60 without.
+- **Known:** the ceiling stays dim, though the photo's is bright: its light bounces off the floor
+  and racks, which the game does not compute; it is not faked with glowing paint.
+- **Stills:** `captures/shed_racking/partA/` (`tools/captures/capture_racking.gd`): down aisle 03
+  from the staging lanes, across the rows, a row's end, from high and inside an aisle.
+
+## Revision 2026-11-13 (Phase 2: real light, the wet ground and the rain on it (#270-#278), built)
+
+- **The author** (#270): the light "is not realistic... not real light physics", nor the puddles
+  and the rain on the ground; (#271) "the wet road shader isnt realistic... do research and
+  proceed"; (#274) two photos of a rainy night as the target: a street under sodium lamps, the
+  whole road a dark mirror with long reflections of each lamp and lit rain in each cone, and a
+  loading dock, its wet concrete dark and glossy with puddles in its low spots.
+- **Research:** Lagarde's physically based wet surfaces ("Water drop 3b", 2013): diffuse
+  darkened by porosity, lerp(1, 0.2, porosity); a film's gloss raised by half; puddles water's
+  F0 0.02 (IOR 1.33), gloss 1, normals flat; his rain ripples ("Water drop 2b"): a ring data
+  texture in four layers that come in with the rain's strength. Real roads are crowned about 2%,
+  so water lies at their edges and in the wheel paths; slabs drain to their drains and hold water
+  in their joints. Ready-made shaders checked for licence: Rain Puddles V3 (GloriousGlider8, MIT;
+  its reflections from Marcel Bankmann's GodotSSRWater, MIT) usable; shadecore_dev's CC0 puddles
+  not safely (Zavie's Shadertoy ripples); gameidea's pack not redistributable.
+- **Measured first** (`game/tests/gpu_price_lighting.gd`, `captures/lighting/compare/`): shadows
+  from every light within 30 m 3.1-4.6 ms, ambient occlusion 0.1, screen-space bounced light
+  0.5-0.95, SDFGI 1.9-3.1; the road and the apron already under 60 fps (45 and 52) before them.
+  Shown unlabelled at first, which confused the author (#272); every comparison since carries
+  each picture's name, what it does and its cost. None of the six looked real to the author.
+- **Rain Puddles V3, tried as it comes** (#273, `game/experiments/rain_puddles_v3/`, excluded from
+  the export; `tools/captures/trial_rain_puddles_v3.gd`): reflections and ripples, but hard-edged
+  blobs over half the ground, dry ground between, not where water drains; 0.9-2.5 ms.
+- **The wet ground** (`wet_ground.gdshader`, replacing `wet_asphalt.gdshader` on the road and the
+  depot yard, and on the dock apron in Poly Haven's worn concrete floor): the whole surface
+  drenched (diffuse by porosity, asphalt 0.7, concrete 0.5; roughness 0.12 with the stones'
+  tops 0.32; the small bumps 82% drowned); puddles where water lies, through a damp margin: on the
+  road along its edges, in each lane's two wheel paths in stretches and in a few sunken patches
+  (the road's strip tells the shader each vertex's place across it and its half width, as vertex
+  colour), on the apron toward its slot drain (4 m), in its saw-cut joints every 15 ft and in
+  shallow dips; the puddles rippled (0.08, the author's D of the streaks' sheet, #277), with V3's
+  ring ripples on them (fainter on the film); reflections from V3's screen-space march combined in
+  (#277, "Combine them") and across the whole wet film, blurred by its roughness (#278, "Whole
+  wet surface"), given as the light the water returns with water's Fresnel, so a lamp's
+  reflection is not darkened like paint. Reading the screen moves the ground into Godot's
+  transparent pass, which ends Godot's own reflections on it: hence the film's own.
+- **The light in the rain** (#276, the only one kept of four night-look fixes tried,
+  `tools/captures/trial_night_look.gd`): each lamp's cone scatters four times its old light
+  (`lamp_mist.gdshader`'s scattering 0.004 to 0.016, `industrial_loop.gd`'s `MIST_SCATTERING`).
+  Not kept: reflections from specular 1.0 and probes (0.5-0.6 ms), glow (0.6-0.7 ms), darker fog
+  and ambient light (free). Of the streaks' steps (`trial_streaks.gd`): only the rippled puddles;
+  not the lamps like real ones (cone 75 degrees, reach 25 m, specular 1.0; 0.4-0.8 ms) nor the
+  rougher film (0.25).
+- **Credits:** the MIT notices of both sources are in the shader's header; the game's credits
+  ("THE WET GROUND"), `SOURCES.md`.
+- **Rules:** new `test_wet_ground.gd` G1-G5: the three grounds wet, porous as their materials,
+  their puddles rippled and reflecting, the film reflecting (G1); the shader's settings and
+  defaults (G2, read from its code: a headless run's renderer gives no defaults back); the road's
+  place across it (G3); the apron's drain and joints (G4); every lamp's cone four times its haze
+  (G5). `test_crossing.gd` names the new shader; `test_menus.gd` the two authors.
+- **Results** (`logs/phase_2/wet_ground/`): G 5/5, five mutations exit 1 on their own checks,
+  crossing 12/12, menus 19/20 then 20/20; every suite, `bash
+  logs/phase_2/wet_ground/suites/run_suites.sh <scratch>`: 38 runs exit 0 with their counts, the
+  art check 0 failures.
+- **Costs** (on power, the M4): the film's reflections 1.2-2.0 ms (the yard 54 to 48.5 fps, the
+  road 45.5 to 43.5), the puddles' 0.1-0.2, the rippled puddles and the haze nothing measurable.
+- **Known:** the town road stays darker than the author's street photo: that stretch has one
+  small lamp, which lights little round it for the road to mirror; the photo's long streaks also
+  come from glow and many lamps in a row, not kept or not there.
+
+## Revision 2026-11-13 (Phase 2, step 5 brought forward, part B: the forest highway's roadside (#267, #279), built)
+
+- **Delineators along the valley** (`ghat_dressing.gd`'s `_delineators()`, `_valley_step()`): white
+  posts with their reflectors on the verge, 200 ft (61 m) apart on straights, the MUTCD's rural
+  spacing, and S = 3 sqrt(R - 50) ft on curves (MUTCD 3F.04), never where a barrier stands nor in
+  a driveway, a plot's frontage (the world's flat plots, grown 2 m) or the shed's spur; 75 of
+  them. The climbs keep theirs every 26 m.
+- **Signs** (the road sign atlas, `tools/make_road_signs.py`, five cells added at its end so the
+  others keep theirs): a SPEED LIMIT 45 (R2-1, 24 x 30 in) at the loop's start, weathered
+  (faded, grime run down from its top, rust from its bolt holes, blended over it) and its post
+  leaning 4 degrees, and a clean one where the valley begins after the descent; two deer crossings
+  (W11-3, a 30 in diamond, a leaping deer); mile markers (D10-1, 10 x 36 in, white on green) at
+  the start and 1,609 m on. The first deer sign stood over the green guide sign 90 m from the start
+  in the first stills, and was moved 34 m past the speed limit.
+- **Branches and litter** (Poly Haven, CC0: Dry Branches Medium 01, and the new Can Rusted,
+  Plastic Bottle Gallon, Wine Bottles 01 (one bottle, on its side), Trashbag; the depot yard's
+  Old Tyre and Metal Trash Can): three branches on the verge, one just onto the asphalt's edge,
+  never more than 0.3 m into it; litter on the verges, none on the asphalt; each at the nearest
+  stretch of verge with no rail or wall on its side and away from hairpins and the lay-by (in
+  the first stills a branch lay in a hairpin's stone wall); a solid bin on the lay-by's open
+  side with a bag and a can beside it (the wall side would have cut 4 cm into its wall).
+- **Rules:** new `test_roadside.gd` K1-K4: the valley's delineators (K1), the speed limits (K2),
+  the deer signs and mile markers (K3), the branches, litter and bin, none in a rail or wall
+  (K4).
+- **Results** (`logs/phase_2/step5/partB/`): K4 caught the branch 0.53 m onto the asphalt and the
+  bag 0.24 m (moved out by their measured spread), then 4/4; `test_ghat_road.gd` 33/33; four
+  mutations exit 1 on their own checks (`mutations/SUMMARY.txt`); every suite (`suites/`).
+- **Stills** (`captures/roadside/partB/labelled_roadside.png`, `tools/captures/capture_roadside.gd`):
+  at night, lit by the van's own headlights 20 m back, from 6 m short of each item.
+- **Known:** the forest's trunks look pale where the headlights strike them.
+
+## Revision 2026-11-14 (the headlights (#280-#281), built)
+
+- **Found** (`tools/captures/trial_headlit_trunks.gd`, a probe in a game window): the headlights
+  alone whiten the trunks beside the road. At zero energy they go dark, and a plain 8% bark
+  still nearly whitens, because C44's low beam kept full strength out to 9 degrees each side.
+  Raising AgX's white point did not help.
+- **The measured low beam** (C60): `tools/make_low_beam_pattern.py` now draws the pattern from
+  UMTRI-2004-23's measured medians (`tools/data/umtri_2004_23_low_beam_medians.csv`, Table 4's
+  middle rows: the low beams of the 20 best-selling US cars of 2004, 45L-45R by 7U-5D). It
+  interpolates in log10 between the measured points, falls 0.06 decades a degree below 5D and
+  0.05 a degree above 7U. The brightest point is 22,740 cd at 1D 1R; 10 degrees to each side
+  gives about an eighth of it.
+- **The aim:** the low beams are 0.5 degrees down (`LOW_BEAM_TILT`, was 2 for both beams), so
+  the hot spot at 1D lands 38 m ahead from the lamps' 0.99 m, where the study's 0.66 m lamps put
+  it. High beams keep 2 degrees (`HIGH_BEAM_TILT`), set in `_aim_beam` with each switch.
+- **Haze in the rain:** each headlight carries a `Mist` box 40 m deep
+  (`freight_van/beam_mist.gdshader`, the street lamps' `lamp_mist.gdshader` with the beam's
+  pattern in place of its round cone), scattering as the lamps' (0.016). `_aim_beam` gives it
+  the beam's pattern, reach and strength; it hides with the lights.
+- **Not used:** the lit lens (not chosen); "Spatial Light Shaft" (CC0), tried first for the
+  haze, did not show from the driver's seat.
+- **Rules:** `test_headlights.gd` (C44's and C45's checks restated on the road in the aimed
+  lamp's angles):
+  - the road at the lane's centre gets at least 5% of its 10 m light at 40 m and under 2% at
+    55 m (was the pattern's 10% edge);
+  - 20 degrees to the side is at most a quarter of the centre at 1D, and 15D at most a tenth;
+  - new: the pattern matches the measured medians within 20% at eight test points;
+  - new: the hot spot lands within 10% of the study's 38 m;
+  - new: the mist follows each beam, is hidden with the lights off and scatters as the lamps'
+    air does;
+  - new: high beams keep their 2 degrees;
+  - new: the lamps shine the pattern as drawn. The first stills of the build showed the old
+    beam with a far stronger haze: Godot's imported copy of the PNG was still the one from
+    November 3, since a headless run does not re-import, and the tests had read the PNG
+    itself. The check compares the lamp's own texture with the PNG. Re-imported with
+    `Godot --headless --path game --import`.
+- **Results** (`logs/phase_2/headlights/`):
+  - before: 21/27 (six new checks fail); after: 28/28;
+  - six mutations exit 1 on their own checks, m6 a stale import (`mutations/SUMMARY.txt`);
+  - the trial's GPU price, on battery: haze 0.93 ms (+/- 0.24), lens -0.02 ms
+    (`trial/price.txt`).
+- **Stills:** the trial `captures/headlights/trial/labelled_headlights.png`; the trunks
+  `captures/headlit_trunks/trial/labelled_headlit_trunks.png`; the build, before and now,
+  `captures/headlights/built/before_and_now.png` (the roadside's stills again in `built/`).
+
+## Revision 2026-11-14 (the headlamps and the high beam (#282), built)
+
+- **The holes** (C61): lit, the headlamp's lens (`Headlights`, the clear cover and the lamp
+  parts behind it) was one flat white glow (`Build.luminous`), so the indicator in its outer
+  corner showed as a dark hole and the reflectors vanished. Measured from the lens mesh: the
+  low beam's projector lens at (0.708, 1.006), 24 mm in radius; the high beam's reflector bowl
+  at (0.792, 1.077), 65 mm, both in the mesh's own space, mirrored.
+- **Lit as real lamps:** `freight_van/headlamp_lens.gdshader` keeps the cover glass (the
+  model's own texture, metallic and roughness) and lights only what is on:
+  - low beams: the projector, its glow spreading 1.4 times its radius;
+  - high beams: the bowl too, brightest at its bulb, falling off toward its rim, each 15 mm
+    facet a little brighter or dimmer;
+  - lights off: nothing.
+  `VanPresentation.lit_lens()` and `light_lens()` set it on both vans.
+- **The measured high beam:** `tools/make_high_beam_pattern.py` now adds UMTRI-2001-19's
+  measured US high beam (`tools/data/umtri_2001_19_us_high_beam_medians.csv`, Table 6's
+  medians: the best-selling 2000 US cars, brightest 39,590 cd at H 1R) to the measured low
+  beam, which stays lit, drawn 0.5 degrees lower for its aim.
+  - The brightest point of the two is 41,981 cd, 1.846 times the low beam's, so
+    `HIGH_BEAM_ENERGY` is 1,200 (was 850).
+  - High beams are aimed level, as the high beams were measured (`HIGH_BEAM_TILT` 0, was 2
+    degrees down).
+  - The generators share `make_low_beam_pattern.py`'s reading and interpolation.
+- **The oncoming van:** its lamps take the van's aims and energies for each beam (it had 650
+  and 2 degrees down on both) and the same lit lens.
+- **Rules:** `test_headlights.gd` now has 32 checks. New or changed:
+  - the high beam matches the measured high beam plus the low beam within 20% at eight points;
+  - its energy over the low beam's matches their brightest points within 2%;
+  - high beams are aimed level;
+  - the high beams' light 1 degree above the horizon is over 3 times the low beam's, and 8
+    degrees down at least 97% of it (texture times energy);
+  - the lens: the projector lit on low, the bowl too on high, nothing off, and the cover clear;
+  - the oncoming van matches the player's on both beams;
+  - both patterns as drawn, not stale imports.
+- **Results** (`logs/phase_2/headlights/`):
+  - before: 27/32 (five checks fail); after: 32/32; `test_oncoming_van.gd` 21/21;
+  - eleven mutations exit 1 on their own checks (`mutations/SUMMARY.txt`);
+  - the high-beam PNG's import was stale until re-imported, which the extended check caught
+    (208 of 255).
+- **Stills:** `captures/headlights/r2/labelled_headlamps.png` (before, low, high, off: the
+  headlamp close, the driver's seat, the van from 7 m), by `tools/captures/capture_headlights.gd`.
+
+## Revision 2026-11-14 (the low beams' reach (#283), built)
+
+- **Asked:** "low beams shouldnt make that much road visible."
+- **Found** (`tools/captures/trial_low_reach.gd`, stills in `captures/headlights/reach_trial/`):
+  the road's brightness from the driver's seat every 10 m. The measured beam aimed 0.5 degrees
+  down lit the road at 40-50 m more than C45's beam did. The haze adds mostly near the van. The
+  aim decides the far road.
+- **The aim** (C62): UN Regulation 48, 6.2.6.1.2, sets the dipped beam's initial aim by the lamp's
+  lower edge. These lamps' edge is 0.91 m up (measured from the lens mesh to the road), where R48
+  allows -1.0% to -1.5% or, at the manufacturer's discretion, -1.5% to -2.0%. The cutoff is
+  aimed at -1.75%, the middle of the second, so `LOW_BEAM_TILT` is -1.25 (was -0.5). The
+  measured beam's own cutoff, the steepest fall at V, sits 0.25 degrees up.
+- **The high beam** keeps the low beam lit at that aim: `tools/make_high_beam_pattern.py`'s
+  `LOW_TILT` is -1.25. The two together are brightest at 40,135 cd, 1.765 times the low beam's,
+  so `HIGH_BEAM_ENERGY` is 1,147 (was 1,200).
+- **Rules** (`test_headlights.gd`, 32 checks):
+  - the aim check is now R48's: the cutoff's inclination lies within the band for the lens's
+    measured height (it was the hot spot landing where the study's lamps put it);
+  - C45's reach check is relaxed from 5% at 40 m and 2% at 55 m to 3% and 1%. C45's own beam
+    gave 0.3% at 40 m, and the author asked for less road than the 8% at 0.5 degrees. Now: 4%
+    and 0.4%.
+- **Results:** before: 29/32 (the R48 aim and the two high-beam checks fail); after: 32/32.
+- **Stills:** `captures/headlights/r3/labelled_low_reach.png` (C45's beam, last time, now low
+  and high, from outside, lights off).
+
+## Revision 2026-11-14 (the Pacific Northwest roadside trees (#280, #285), built)
+
+- **Asked:** different kinds of tree, more realistic; the author chose the Pacific Northwest and
+  real models near the road, then asked to finish everything without stopping (#285), so the
+  choices below are Claude Code's (C63), shown to the author afterwards.
+- **Found on Sketchfab** (CC BY):
+  - PlantCatalog's "Realistic HD" series has mountain hemlock (19,316 faces, the lightest), but
+    no western hemlock, Douglas fir or western red cedar;
+  - lolipop_1707's "Realistic fir trees pack" has young firs, with levels of detail;
+  - SirSonat's "Western Red Cedar *Inspired*" has a winter version.
+  - No usable red alder or bigleaf maple: the candidates were stylised (a purple alder), broken
+    scans or leafy.
+- **Kept** in `source_assets/sketchfab/14_mountain_hemlock`, `15_fir_pack` and
+  `16_western_red_cedar` (READMEs in Git).
+- **Converted** by `tools/art/convert_roadside_trees.py` into
+  `game/features/environments/industrial_loop/art/trees/`:
+  - the hemlock, 22 m;
+  - the cedar without its mushrooms, stood where they stood, 24 m and narrowed to 60% (its
+    modelled trunk was 2.1 m thick at breast height);
+  - four young firs, 4.6-9.7 m;
+  - each with a far version: a quarter of its foliage cards, grown 1.6 times, its wood decimated
+    to 15%;
+  - foliage alpha cut, textures as WebP.
+- **The red alders**, built by `tools/art/build_red_alder.py`:
+  - three trees, 13, 16 and 19 m (11,134-25,082 triangles), each a straight trunk into a narrow
+    rounded crown, upward limbs, branches and twigs;
+  - seed cones and catkins on 15% of the twig tips;
+  - bark grey from Poly Haven's Chinese Hackberry Bark (CC0, `tools/art/make_alder_bark.py`);
+  - far versions of trunk and limbs (1,128-1,464).
+- **Placed** (`roadside_forest.gd`):
+  - each tree in the first 8 m beyond the clearance takes a kind by a hash of its place (seed
+    284), so the forest's random sequence, and every tree's place, size and turn, are unchanged;
+  - the first 4 m: red alder 42%, young fir 33%, cedar 10%, hemlock 10%, mature fir 5%;
+  - 4-8 m: hemlock 30%, cedar 25%, mature fir 30%, alder 15%;
+  - their bark wet like the conifers'; their foliage in the needles' shader, with its wind;
+  - trunk colliders sized from each model's trunk at breast height and the tree's size;
+  - detailed within 20 m, far versions to 50 m (alders 90 m), then the code-built far conifer of
+    the nearest height; shadows from the far versions within 25 m.
+- **GPU price** (`tools/captures/capture_trees.gd` price, `logs/phase_2/trees/price/`, on
+  battery):
+  - 16 m band to 180 m: 50 ms; with far versions to 120 m: 17-22 ms;
+  - now: near 0.37 ms, far 0.98 ms, shadows 0.38 ms, about 1.7 ms in all (all together 3.1 ms,
+    0.3-5.9). The Mac ran on battery at about 26 frames a second either way, so this wants a
+    run on power.
+- **Rules:** new `test_roadside_trees.gd` T1-T8 (the kinds, where each grows, their heights,
+  trunks, the bare alders, the foliage's wind, at most 30,000 triangles a model, nothing moved:
+  11,819 trees, 6,622 saplings, 9,828 colliders, their centroid). Credits: "THE ROADSIDE TREES"
+  (`test_menus.gd` names PlantCatalog, lolipop_1707 and SirSonat).
+- **Results** (`logs/phase_2/trees/`):
+  - before: 2/5 (no kinds); after: 8/8;
+  - six mutations exit 1 (`mutations/SUMMARY.txt`); m5 first survived because it drew from
+    Godot's global generator, and was rewritten to draw from the forest's own;
+  - hit speeds 12/12, collision 44/44, the regression 64/64 after the change.
+- **The struck man's fall** (the body set, as the memory of 2026-11-11 warns): with the trees'
+  colliders sized to their trunks, the hit at 60 km/h flipped. With seed 280 he went up the
+  bonnet and over the cab, lying 2.4 m behind the bumper; with 281, 5.6 m behind. With 282
+  he lies 1.8 m ahead, but `test_oncoming_van.gd` then failed: its check that the hill hides
+  the oncoming van at its start casts a ray against every solid body, and a tree trunk, not the
+  hill, had been hiding it; with 282 a narrower trunk let it through. 283 failed that check too.
+  With 284 (kept) all three pass. Two of the five layouts put him over the cab at 60 km/h and
+  three left the oncoming van in sight, so both checks are fragile whatever the trees do: the
+  hit wants its own look (continuous collision on his body, or the cab's shape), and the
+  oncoming van's hiding wants the terrain alone (the ray against the ground's layer), not
+  another seed.
+- **Stills:** `captures/trees/labelled_trees.png`.
+- **Noticed, not changed:** the guide sign "BLACKRIDGE PASS 3/4 MI" shows its white legend
+  without its green board in the headlights (both are retroreflective on a real sign).
+
+## Revision 2026-11-14 (Phase 2, step 5 brought forward, part C: the gas station and main street (#267, #285), built)
+
+- **Where** (the author's choice, #268): a level plot south of the valley road, x -4 to 54, z 174
+  to 196 (`TownStation.PLOT`), between the road's edge (z about 171.5) and the town's backdrop
+  (z 197); the road runs straight there at z 168.6-170.3.
+- **Built** (`town_station.gd`, C64):
+  - **The canopy and islands:** a canopy 18 x 9 m, 4.6 m up (US canopies are 4.42-4.88 m clear),
+    white with a red band. Two islands 10 x 1.2 m, 0.15 m high, 4 m apart, their noses yellow;
+    four columns with STOP ENGINE / NO SMOKING labels; four dispensers (SavinienBerault's
+    unbranded pump); four bollards (168 mm, 1 m). Eight downlights, 15 each, no shadows.
+  - **The ground:** an asphalt forecourt, a concrete slab under the canopy, two concrete
+    driveways 8 m wide.
+  - **The store:** 13 x 7 m, 4 m high, painted plaster; its glass shows its lit inside
+    (`store_interior.png`); GROCERY on its fascia, OPEN 24 HOURS in its window; a warm spill
+    light at its front; a utility box at its side.
+  - **The sidewalk:** a 0.15 m kerb carrying a pedestal payphone (evan4129's scan), a newspaper
+    box, a steel-and-slat bench, Poly Haven's rusted trash can, an ice merchandiser (ICE), a
+    propane exchange cage of welded wire with eight Poly Haven cylinders, and the air and water
+    machine.
+  - **The price sign:** a pylon by the road, its cabinet facing along the road both ways: GAS,
+    then REGULAR 3.59, PLUS 3.89 and DIESEL 4.19 in red seven-segment digits with the 9/10 cent
+    (`town_signs.png`, `tools/art/make_town_signs.py`).
+  - **Main street:** three shops 7 m wide, 4.6 m high (brick, plaster), shut behind painted metal
+    shutters 4.6 x 3 m, with faded fascias (HARDWARE, LAUNDROMAT, BARBER) and a Poly Haven
+    security light each. Seven parking bays, with the sedan (`tools/art/convert_town_models.py`)
+    and Poly Haven's covered car.
+- **The forest kept** (`roadside_forest.gd`, `forest_floor.gd`): the plot's 60 trees, 19
+  saplings and its ferns and branches are left out after their random numbers are drawn, so no
+  other tree moves.
+  - Adding the plot to the forest's clearings had shifted every tree scattered after it (the
+    clearing is tested after the draw); that moved the trunk 11 m from the driver's eye that
+    hides the oncoming van at its start, and put the struck man over the cab at 60 km/h.
+  - Kept this way, every collider outside the plot keeps its x, z and radius (checked against the
+    world without the town; 14 beside the plot raised or lowered up to 0.36 m by its levelling).
+  - The oncoming van, the hit and collision pass with seed 284.
+- **Rules:** new `test_town.gd` N1-N8:
+  - the plot level and treeless;
+  - nothing within 1 m of the asphalt (measured at each body's corners from the asphalt's edge);
+  - the van fits: canopy at least 4.42 m, lane at least 3.5 m, its 2.3 x 2.2 x 5.6 m box driven
+    in, between the islands and out;
+  - the props counted, the shutters down;
+  - the downlights inside the canopy, pointing down, without shadows, and the signs and windows
+    glowing;
+  - no real brand;
+  - every piece solid.
+  `test_roadside_trees.gd` T8 re-pinned to the world with the town. Credits: "THE GAS STATION
+  AND MAIN STREET" (SavinienBerault, evan4129, Daniel Zhabotinsky).
+- **Results** (`logs/phase_2/town/`):
+  - before: 6/8 (no props, no lights); after: 8/8;
+  - six mutations exit 1 (`mutations/SUMMARY.txt`);
+  - GPU 0.36 ms (0.06-0.66), on battery (`price/price.txt`).
+- **Stills:** `captures/town/labelled_town.png`.
+- **Noticed, not changed:** the town backdrop's orange glow sprite hangs close behind the store,
+  seen from the forecourt as a large orange ball; it was made to be seen from far off.
+
+## Revision 2026-11-14 (Phase 2, step 3 of #253, part 2: the dock worker at his desk and his seal check (#263, #285), built)
+
+- **The plan** (step 3's, #263): he sits at his dock desk, stands when the doors shut, takes the
+  seal log, walks out by the dock stair, seals the doors with C-TPAT's view, verify, tug, twist,
+  and comes back to sit, in Rocketbox's own clips.
+- **The clips** (Microsoft Rocketbox, MIT; `source_assets/rocketbox/README.md`): sitting down to
+  a table and standing up from it, a seated idle at a table, checking a document and noting in
+  it, added to `tools/art/convert_rocketbox.py`.
+  - Rocketbox's "xyz" clips keep their root motion on the armature object (Bip01), not a bone, so
+    the converter baked only the pelvis's own place and the seated end of sitting down stood him
+    at standing height. It now takes the object's motion for SitDown, SitIdle-loop and StandUp
+    (`MOVING`).
+  - Measured on the model: seated, his hips 0.576 m up (the chair's cushion is at 0.47 m);
+    sitting down ends 0.126 m to his left and 0.672 m ahead; standing up ends 0.514 m to his
+    right and 0.165 m ahead.
+- **His round** (`dock_worker.gd`):
+  - seated at the desk, his hips 0.05 m behind the chair's column, facing the desk;
+  - sent: stands up, the chair rolling back 0.3 m, and takes the log (the desk's clipboard
+    hidden, Poly Haven's Clipboard in his left hand);
+  - walks behind the chair, between the desk and bay 9's staged load, to the stair's landing,
+    down the stair and out by the side door (`WORKER_DESK_WAY`, `WORKER_STAIR_WAY` in
+    `transfer_shed.gd`), then the old way to the doors;
+  - seals (Seal: the bolt, tug and twist), checks the number against his log (Check, 3 s) and
+    notes it (Note, 2.5 s);
+  - walks back, sits down, the chair drawn in under him, the log back on the desk.
+  - His walk is 1.4 m/s (was 1.35), the usual adult pace, so the longer round fits the doors'
+    60 s (back in 58.9 s).
+- **Rules:** `test_dock_worker.gd` W7-W11:
+  - seated at the start (W7) and again after (W11), his hips 0.03-0.2 m over the seat and
+    within 0.15 m of its middle, facing the desk;
+  - stands up and takes the log (W8);
+  - by the landing, the stair's foot and the side door, never into the van (W9);
+  - Seal, Check, Note in order, the seal put on in Seal (W10);
+  - back within 60 s (W11).
+- **Results** (`logs/phase_2/step3/part2/`): before, 6/12 (my first run never left the title
+  screen, which pauses the tree; then W8 read the wrong clip); after, 12/12; `test_sealing.gd`
+  13/13; six mutations exit 1; every suite (41 runs exit 0); the art check first failed on its
+  rule that the worker's file holds three clips, updated to his eight, then 0 failures.
+- **Stills:** `captures/dock_worker/part2/labelled_dock_worker.png`.
+- **Known:** at the doors he stands in bay 9's lift pit behind the bridge plate stored upright in
+  the doorway (step 2e-3's sealing spot), so the sealing is mostly hidden from the dock floor; the
+  clipboard's hold in his hand is set by eye, unchecked close up.
+
+## Revision 2026-11-14 (Phase 2, step 4 of #253: the loading done as it is done for real (#286, decision C65), built)
+
+- **The author's choice** (#286): all four proposals shown in
+  `captures/step4_proposals/labelled_step4.png`: hold to run the lift, pump the jack's handle,
+  strap the load by hand, a real pendant and beep.
+- **1. Hold to run the lift** (ANSI MH29.1's press-and-hold controls, `dock_lift.gd`,
+  `van_bay.gd`):
+  - the lift moves only while E is held at its pendant, at 0.14 m/s as before, and stops where it
+    is when E is let go; pressed again it carries on the way it was going ("Hold to lower the
+    lift", "Hold to raise the lift");
+  - it also stops when Ethan, E still held, walks off the deck and out of the pendant's reach,
+    the same rule that offers it (the mission now passes Ethan to `operate_lift`);
+  - the bridge plate still comes down at the bottom and stows before the lift rises.
+- **4. The pendant and its beep:** Pentalift's standard two-button pendant, UP and DOWN with
+  their labels and a red emergency stop on top, its buttons facing the deck its operator stands
+  on (the first still showed them facing the dock floor, so he faced the back of the box; H16 now checks
+  it, 32/33 before the turn, `pendant_red/`); a motion alarm, a piezo beep at 2.8 kHz, 0.3 s
+  on and 0.3 s off, looping from under the deck while the lift moves and only then.
+- **2. Pumping the jack** (Dayton's, Strongway's and U-Line's manuals: the lever at raise, 3 to 7
+  strokes; `pallet_jack.gd`, `push_gait.gd`, `driver.gd`):
+  - taken under a load, the jack leaves it on the floor and the hint offers "Pump the handle";
+    W and A/D do nothing until it is up;
+  - he takes it standing back at arm's length (1.45 m behind its middle) where there is room, as
+    operators pump, and close behind its handle where there is less than 0.1 m more (on the
+    lift's deck);
+  - each E is one stroke of 0.5 s: the handle lifted from where his hands hold it up toward
+    upright, at most 20°, and pulled back down, with the pump's knock; the forks rise at its end;
+    four full strokes lift the pallet 4 cm clear; shorter strokes (where the handle is nearly
+    upright already) lift less each, up to seven;
+  - after the last stroke the lever goes back to neutral for 0.4 s, E doing nothing meanwhile, so
+    a quick extra press does not open the lowering valve; then he steps in to the handle, in the
+    gait's own step-in, and pushes as before;
+  - setting the pallet down opens the lowering valve: it sinks over 1.2 s with the oil's hiss,
+    and only then is the next E offered.
+  - **What did not work first:** a stroke pulled down toward him from the pushing tilt swung the
+    loop into his hips (H11, -0.131 m), and starting the push from arm's length left his hands
+    off the loop as he leaned in (H12, 0.123 m); the stroke now goes up from his grip and he
+    steps in before pushing.
+- **3. Strapping by hand** (cargo securement guides; `van_hold.gd`, `pallet_jack.gd`):
+  - the hold's floor has lashing rings by each wall, folding D-rings in recessed plates, three a
+    side 0.64 m apart from just behind the bulkhead (z 0.05, 0.69, 1.33, x ±0.8): their exact
+    places on a 2014 Daily are not confirmed;
+  - for each of two straps the hint offers in turn "Hook the strap to the floor ring", "Throw
+    the strap over the load", "Hook it to the far ring" and "Ratchet the strap tight" four times;
+    the hooks clack into the rings and each pull of the ratchet clicks three times as its pawl
+    walks over the gear; the webbing's 5 cm of slack is taken up over the four pulls;
+  - the load counts as strapped only after the second strap's last pull; a reload at stage 1
+    finds both straps on and tight.
+- **Sounds:** five synthesized by `source_assets/audio/loading/synthesize.py`
+  (`game/features/audio/loading/`, listed in `docs/AUDIO.md`), on the Ambience bus.
+- **Rules,** `test_loading.gd`:
+  - H15 a short hold moves the lift a little and it stops when let go, the hint offering to carry
+    on; H16 the pendant's UP, DOWN and stop facing the deck, its beep looping while it moves and silent when
+    still; H17 walking off the deck with E held stops it;
+  - H18 taken, the pallet stays on the floor and W does not roll it; he stands back to pump; 3 to
+    7 strokes, each rocking the handle at least 15° and knocking, raise it step by step; then the
+    hint offers to set it down and he steps in; H19 the lowering valve lets it sink slowly with
+    the hiss, no other offer meanwhile;
+  - H20 the lashing rings; the strap steps in order; the hooks' clack and the ratchet's clicks;
+    strapped only after the last; two straps hooked in rings, tight, each with its ratchet;
+  - the test now counts a clip's settling from each segment's start, as its notes say: a push
+    starting again in the same clip had been counted as settled from its first frame.
+- **Results** (`logs/phase_2/step4/`): before, 25/30 (the lift); the beep before it looped, 29/30;
+  walking away before the fix, 7/31; pumping before, 17/33; strapping before, 32/33; after,
+  33/33; six mutations of the lift and pendant and nine of the jack and straps exit 1
+  (`lift/mutations/`, `jack_straps/mutations/`).
+- **The capture** (`tools/captures/capture_loading.gd`) holds E for the lift, pumps, waits for the
+  lowering and straps step by step, with new stills of the pendant, the stroke, the lowering and
+  each strap step.
+
+## Revision 2026-11-14 (#287, steps 1-3 of #289: the reversing camera, one stopping distance and the floor under load, built)
+
+- **The author's report** (#287): the parking guides float or pass through objects; the red line
+  must mark exactly where to stop at the dock and agree with the docking; parts of the van or the
+  dock seem to sink below the lift. **Found** (two read-only investigations, checked in the code):
+  - the guides were a fixed drawing in screen fractions (`parking_guides.gd`, from Phase 1),
+    never matched to the camera: about 1.9 times too wide, spreading where lines on the ground
+    meet at the horizon, drawn over everything;
+  - the camera floated 0.18 m behind the body's rear edge, tilted 16° down, so the bumper never
+    showed and the ground began 1.21 m behind it; the dock's bumpers left the picture below a gap
+    of 0.97 m;
+  - the red line lay about 2.1 m behind the van, while the bay docked within 0.3 m, and the lift's
+    0.91 m plate reached the sill only within 0.25 m;
+  - nothing sinks: the van keeps its height; close in, the plate stored upright at the dock's edge
+    fills the picture; under the 520 kg load the body drawn settled 1.4 cm while the hold, the
+    sill the plate aims at and the loaded pallet stayed on the van's unsettled frame.
+- **Step 1, the camera and its guides** (`van_presentation.gd`, `parking_guides.gd`):
+  - the camera on the roof's rear edge, where the Daily's sits in its third brake light, at
+    (0, 2.22, 2.84), 0.023 m behind the body's surface, tilted 45° down: the bumper along the
+    picture's bottom, the ground from 5 cm behind it;
+  - the guides worked out on the ground every frame: points every 0.25 m back to 3 m, found by
+    rays down to the ground, drawn where the camera showing the picture sees them (the game's
+    view in reverse and the dash screen alike); two lines the van's 2.0 m apart, red to 0.5 m,
+    yellow to 1 m, green to 3 m, with marks at 0.5, 1, 2 and 3 m; a piece the camera cannot see
+    behind something standing there is left out, and a line stops where the ground gives way to
+    something standing on it.
+- **Step 2, one stopping distance** (`parking_guides.gd`'s `STOP_LINE`, `van_bay.gd`):
+  - a red stop line across the van's width on the ground 0.10 m behind its bumper; the bay docks
+    within `STOP_LINE`, the same constant;
+  - the bay measures at its two bumpers (0.8 m either side of its centre line, read from
+    `transfer_building.gd`) and takes the nearer, as the line reaches the nearer one first when
+    the van is not square;
+  - 0.10 m keeps the plate resting at least 0.10 m (4 in) onto the van's floor, the overlap dock
+    plates are made for, even 3° from square, the most the bay allows (at 0.15 m, square, it was
+    only 0.095 m);
+  - the objective's "short of the bumpers" now says "Back in until the red line reaches them".
+- **Step 3, the floor under load** (`freight_van.gd`, `van_presentation.gd`, `dock_lift.gd`,
+  `pallet_jack.gd`, `van_bay.gd`): the hold's collision follows the body drawn; the sill and the
+  hold's floor (`sill()`, `floor_point()`) come from it; the lift keeps its plate resting on the
+  sill while the van settles; a load in the hold rides the body (`body()`).
+- **Rules:** new `test_rear_camera.gd` C1-C6 (the camera on the body; the bumper at the picture's
+  bottom on both screens; the guides on the ground, 2.0 m apart, parallel, marked; drawn where
+  their camera sees them; hidden behind a board; following a slope) and `test_docking.gd` K1-K5
+  (the stop line at the docking distance; backed in by keys and stopped at the line, straight and
+  turned 1.5°, it docks, stopped by the brake, not the bumpers; 0.1 m short, it does not; the
+  plate rests on the sill at every docked gap; loaded, the floor met is the floor drawn).
+  `test_dash_screen.gd`'s rear view now asks for a view looking back more than 0.6 (was 0.8,
+  the old 16° tilt); `test_bay_nine.gd`'s G4 docks within `DOCKED_WITHIN` (was 0.3).
+- **Results** (`logs/phase_2/docking/`): before, the rear camera 0/7, docking 0/4 and K5 4/5;
+  after, 7/7 and 5/5; `test_bay_nine.gd` 20/20, `test_dash_screen.gd` 16/16, `test_loading.gd`
+  33/33; ten mutations exit 1 (`mutations/SUMMARY.txt`; the first wall in C5 stood on the ground
+  the guides are found on, so a mutation that drew through things survived; C5 now uses a board
+  between the points found, and it fails).
+- **Stills:** `captures/docking/fixed/` (`tools/captures/capture_docking.gd`): the game's view
+  in reverse at 3, 1 and 0.3 m, at the line, touching and turned; the dash screen; the plate on
+  the sill along the deck and from the dock, empty and loaded; from the court.
+- **Known:** close in, the plate stored upright at the dock's edge fills the top of the rear
+  camera's picture, as the dock is built; the pallet jack keeps the deck's height, so in the
+  hold it stands about 1 cm above the floor once the van settles under the load it set down.
+
+## Revision 2026-11-15 (#287, steps 4-6 of #289: Ethan's legs, built)
+
+- **The author's report** (#287): his legs sometimes cross, look too short and change proportion as
+  he moves; find the cause in the rig, the clips, the IK, the blending or the scale.
+- **Found** (a read-only investigation, checked in the code): the rig and the clips are sound: no
+  bone changes length or scale in any clip, state or blend (thigh 0.41 m, shin 0.42 m, hips 0.94 m
+  up, height 1.78 m), every clip from the same skeleton, the IK unable to stretch a bone. The
+  causes are in the game's foot code and three clips:
+  - on and near the dock stair his feet were placed on the stair's own axis, and the stair took his
+    feet wherever he walked near it: walking across the flight or turning along the landing his
+    feet swapped sides (up to 0.23 m) and his shins touched, the climb playing as he stepped
+    sideways;
+  - the stair folded his knees to 33-53° (real stairs about 80-90°): the swinging foot took the
+    walk's own lift on top of its arc, climbing it rose to the next tread at once, and his hips
+    were lowered to the lower foot and 5 cm more;
+  - Pushing, Running and his walk back bring an ankle up to 0.03 m over his hips' middle line;
+  - for one frame as the crouch under the hold's roof began again, his legs reached for ankles
+    from before (a knee straight, an ankle 0.59 m out).
+  - Also noted, not changed: Ch33's trousers put the crotch 0.18 m below the hip joints, so the leg
+    looks shorter than its bones (the character's design); the climb is Mixamo's Running Up Stairs
+    slowed, a runner's knee drive (a walking climb clip would need the author's download).
+- **Step 4, his feet his own** (`stair_steps.gd`, `driver.gd`): off the flight, on the floor or the
+  landing, walking any way but along it (`ALONG`), the stair lets his feet go to his walk
+  (`leaving()`); a foot lifting aims where he is going, taking a new tread in turn only walking
+  along the flight; the climb plays only going up it; the crouch's ankle watcher forgets what it
+  saw whenever it stops.
+- **Step 5, his knees on the stair** (`stair_steps.gd`): a swinging foot follows its own arc alone;
+  climbing, it rises a riser and 3 cm, clear of the tread ahead, by 0.4 of its swing, the rest by
+  0.7, and goes on to land (`CLEAR_UP`, `UP_FIRST`, `UP_REST`); his hips' ground is set between
+  his feet's treads (`BETWEEN`), his legs' reach lowering it further if needed; no extra bend on
+  the flight (`STAIR_BEND` 0). Tried and not kept: his hips as high as his standing leg reaches
+  (he skipped treads going down) and an earlier drop going down (a foot clipped a nosing).
+- **Step 6, each foot on its own side** (new `stance.gd`): before his legs' IK, where a clip brings
+  an ankle nearer his hips' middle line than 0.045 m, his thigh turns out at the hip just enough;
+  off getting in and out of the van, whose steps pivot one foot round the other.
+- **Rules:** `test_stair.gd` S14 (across the flight) and S15 (from its top along the landing) his
+  feet his own (the left at least 0.05 m to his left, shins 0.09 m apart, each ankle within
+  0.5 m of its hip, no climb walking across), S16 his knees on the flight (at least 58° up, the
+  climb's own 63° allowing, and 68° down: this stair's 0.217 m risers are steeper than the
+  0.17-0.18 m of the studies, and the trailing foot must clear its own nosing; 75° was the first
+  target, 70° is what it reaches); `test_loading.gd` H21 (holding the jack each foot within its
+  leg's reach of its hip, 0.75 m, the push's lunge allowing, and never moving more than 0.08 m in
+  a frame) and H22 (pushing, stooped and pulling, each ankle at least 0.04 m on its own side);
+  `test_on_foot.gd`'s stance (walking and running, the same).
+- **Results** (`logs/phase_2/legs/`): before, S14 and S15 failed (feet swapped 0.203 and 0.153 m,
+  shins 0.007 and 0.001 m apart), S16 at 50° up and 34° down, H21 a foot 0.975 m in a frame, H22
+  and the stance -0.026 m; after, the stair 33/33 (knees 71° up, 70° down, 81° running up),
+  loading 35/35, on foot 50/50; every suite exit 0 but `test_loading.gd`'s H18 once under the
+  suites' load, which read the game's hint before its 0.2 s refresh (fixed in the test; three
+  copies at once 35/35, `suites/RERUN.txt`); seven mutations exit 1 (`mutations/SUMMARY.txt`; the first
+  version's turning of the side axis to his facing proved untested, both ways round, and was
+  removed).
+- **Stills:** `captures/legs/fixed/` (`tools/captures/capture_legs.gd`): up and down the stair,
+  across it, along the landing and running, each from beside, in front and behind; some views from
+  in front and beside are blocked by the stair's wall and the dock's edge.
+- **Unverified:** the look in motion beyond the stills; the stair's 70° going down, for the author's
+  eye.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253: the depot dressed, the rest; part D, the shed's floor, written before any code)
+
+- **Status:** written before any code, at the author's word (#292-#293: "skip my checks to last").
+  **Waiting for the author's OK.** Values marked † are Claude Code's proposals from the research
+  below, for the author to accept or change. The author's own checks (#287, step 4) move to the
+  end.
+- **What is left of step 2f's list** (mapped 2026-11-15). Already built: the racking, its stock,
+  guards, boards and aisle lines, the joists, liner, ducts, sprinkler mains and aisle lights (part
+  A); the dock signals outside and bay 9's inside, dock and arm lights, the staged loads, empties,
+  a parked forklift and a jack (`dock_staging.gd`); the dock desk (step 3). Not built: anything on
+  the floor itself, the heaters, fans, cable trays, door numbers, the dock doors' control panels,
+  the notice board, time clock and posters, the safety kit (extinguishers, exit signs, mirrors,
+  first aid, eyewash and spill kit), the work kit (charging station, wrap stand, hand trucks,
+  bins, baler), the walkway crossings and signs, the forklift driver and the checker, the shed's
+  sounds, and the yard's trailers, trucks and cars.
+- **The parts, in order †,** each with its tests first, mutations, every suite, stills from
+  where Ethan stands and the author's OK before the next:
+  - **D, the floor** (below);
+  - **E, overhead and on the walls:** unit heaters, high-volume low-speed fans clear of the
+    sprinklers, cable trays, each door's number large above it and its control panel, the notice
+    board, time clock and posters by the side door;
+  - **F, the safety and work kit:** as step 2f-2's list, extinguishers within 22.9 m of every
+    point of the dock floor, an exit sign over each exit;
+  - **G, the shed at work:** the forklift driver's loop with its blue spot and backup alarm,
+    stopping for Ethan, the checker at bay 9, and the sounds (forklift, alarm, fans, rain on the
+    roof, a radio);
+  - **H, the yard:** trailers backed onto other docks, trucks and cars parked, a yard truck (#227).
+
+### Part D: the shed's floor
+
+- **What exists:** the dock floor is one slab drawn in Poly Haven's `concrete_wall_006`, a wall
+  texture, tiled every 2.5 m, with no joints, wear or water; yellow lane lines at z 10 and 14 and
+  between the docks, the racking's aisle lines and walkway. The drive-in lane is the same.
+- **Research** (sources go in the prompt log with the build):
+  - **Joints:** ACI 302.1R and 360R space a slab's sawn contraction joints 24-36 times its
+    thickness, so 12-18 ft (3.7-5.5 m) for a 6 in slab, in panels no longer than 1.5 times their
+    width, lined up with the building's grid; sawn a quarter of the slab deep and about 1/8 in
+    (3 mm) wide, and, where hard forklift wheels cross them, filled flush with a semi-rigid
+    epoxy or polyurea, so they read as thin dark grey lines, not open cracks. A dock's commonest
+    defect is spalling along joints under wheel traffic, mended with grey epoxy patches.
+  - **The finish:** a warehouse floor is power-trowelled, smoother and shinier than a wall, and
+    burnished darker and glossier along the wheel paths.
+  - **Wear:** dark tyre marks along the forklift lanes and where trucks turn into aisles; rubber
+    scuffs and steel-wheel marks at each dock's leveller, where the edge angle is worn bright;
+    oil drips under a parked forklift (its drip spot); in rain, water blown in at an open door
+    and wet wheel tracks and footprints carried a few metres inside, drying as they go.
+- **Joint layout †:** joints between the docks, every 4.0 m in x (the docks' own spacing, inside
+  ACI's 3.7-5.5 m), and every 4.0 m in z from the dock face, so the panels are square; none
+  through the lift's pit or deck. In the drive-in lane, one joint along its middle.
+- **How it is drawn † (the author's choice; Claude Code recommends the first):**
+  1. **A floor map in the floor's own material (recommended):** a new shader beside
+     `wet_ground.gdshader` in `industrial_loop/` (not `game/shaders/`), drawing Poly Haven's
+     `concrete_floor_worn_001`, a floor texture already in the repo, as the base, and over it a
+     map of the dock floor drawn by a script (`tools/art/make_shed_floor.py`, as the textures'
+     scripts are): the joints, patches, burnished paths, tyre marks, scuffs, oil and the water's
+     reach, by world position. Nothing is projected, so nothing lands on Ethan, the jack, the
+     pallets or the van; one material, so it costs about what the slab costs now.
+  2. **Godot's `Decal` nodes**, as step 2f's brief first said: each mark a decal box. But every
+     moving thing here is on visual layer 1, which the van's lights need (`CHANGE-BRIEF.md` §5),
+     so decals would paint the soles of Ethan's shoes and the jack's wheels as they cross them;
+     keeping them off means changing those layers.
+- **Water at the doors †:** the wet reach a darker, glossier floor 2.0 m in from docks 5 and 9 and
+  the side door, then wet tracks fading out by 6 m; puddles only where the floor dips, at the
+  doors, not across the lanes; the wet film drawn as `wet_ground.gdshader` draws the apron's
+  (Lagarde's wet surfaces), with no ripples indoors.
+- **Rules a test can measure** (new `test_shed_floor.gd`, written first):
+  - **F1:** the dock floor and the lane use the new floor material; the slab's collision and
+    height are unchanged (the shapes and tops read before and after match).
+  - **F2:** every joint lies inside the dock floor or the lane, the spacings are 3.7-5.5 m both
+    ways, each panel's long side at most 1.5 times its short side, and no joint crosses the lift's
+    pit or deck.
+  - **F3:** tyre marks lie only on the forklift's ways (the cross-aisle between z 10 and 14 and
+    the racking's aisles), never on the white walkway or the staging lanes' loads.
+  - **F4:** oil lies only under the parked forklift's footprint (`dock_staging.gd`'s `FORKLIFT`).
+  - **F5:** scuffs lie only within 1.5 m of a dock's leveller or the lift's deck.
+  - **F6:** wetness lies only within 6 m of an open door and falls off inward.
+  - **F7:** the map is the script's: rebuilt, it comes out byte for byte the same.
+  - The marks are read from the map's own data (`marks()`), the way the racking hands out
+    `placements()`, since a headless run draws nothing.
+- **The GPU price †:** at most 0.3 ms more in the racking's view (RK) and at bay 9, on power, by
+  `game/tests/gpu_price_depot.gd` and the Metal HUD.
+- **Predictions:** the floor reads as a working dock from where Ethan stands, its joints visible
+  out to about 15 m and lost beyond; the wet reach at bay 9 shows the dock light's reflection;
+  the price about 0.1 ms; the most likely failure is the joints shimmering at a distance (caught
+  in the stills; the map's mipmaps are its cure).
+- **What could go wrong, and the check:** a mark under a load or the desk, where nothing would
+  wear (F3-F5); the floor's height or collision moved and the stair or jack tests failing (F1 and
+  every suite); the shader too dear (the GPU run); the floor too clean or too dirty (the author's
+  eye in the stills).
+- **Decisions for the author:** the order D-H; the floor map or decals; the 4.0 m joints; the
+  wet reach; the 0.3 ms budget.
+- **Not in this part:** anything standing on the floor (parts E-H), the yard's own concrete, new
+  mechanics.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253, part D: the shed's floor (#293-#294), built)
+
+- **The floor** (new `shed_floor.gd`, `shed_floor.gdshader`, both in `industrial_loop/`): the
+  dock floor's three slab pieces round the lift's pit (`DockFloor1`-`3`) and the drive-in lane
+  (`LaneFloor`) drawn in one shader material, Poly Haven's `concrete_floor_worn_001` (already in
+  the repo, CC0) projected from above, its edges from the side; the pit's own floor stays in the
+  wall concrete. Over it, four maps of 1,336 x 944 pixels (32 to a metre) the script paints when
+  the shed is built (about 32 ms), mipmapped: grime, gloss, wet and patch.
+- **Changed from the plan:**
+  - the map is painted by the game's own script at start rather than by a separate tool, so it
+    reads the racking's and the shed's constants and cannot fall out of step with them; F7 checks
+    that it comes out the same every time;
+  - the lane, 4.45 m wide, needs no joint along its middle (ACI's 5.5 m); it has the dock floor's
+    joints across it instead, in line with them;
+  - the x joints run every 4.0 m from -78 to -50 and the last panel to the lane is 5.3 m, so no
+    joint is 1.3 m from the edge; the z joints split the 29.5 m depth into seven 4.21 m panels;
+  - no separate puddles: the floor 0-2 m in from an open door is wet through (0.6-0.9), which is
+    standing water's darkening and gloss at this scale.
+- **The marks:** tyre marks and burnished paths along the cross-aisle (wheels 0.96 m apart, four
+  passes each), a 2 m turn into each of the six aisles and down it, the east aisle's kept off the
+  walkway; rubber scuffs in the metre before each of the eight levellers and the lift's deck; oil
+  under the parked forklift, today's drip and five older; sixteen epoxy repairs, each cut square
+  along its joint (0.2-0.5 x 0.08-0.16 m) where wheels cross, in the slab's own shade; rain in
+  from dock 5, bay 9 and the side door, the wheel tracks and the footprints to the stair drying
+  out by 6 m. Nothing under a load, the empty pallets, the desk, its chair or the stair.
+- **Found in the stills:** the floor first came out near black and glossy: Godot imports a
+  normal map as one, keeping only its x and y, so the shader read z as 0 and the floor faced
+  down; z is now rebuilt from x and y. The first patches were a fixed grey four times brighter
+  than this concrete and round, so they glowed as white blurs; now square, in the slab's shade.
+  The first scuffs were too faint (0.15-0.35); now 0.3-0.6.
+- **Rules:** new `test_shed_floor.gd` F0-F8, 18 checks: before any code 0/1 (no floor), then
+  18/18 (`logs/phase_2/step5/partD/before/`, `after/`). Thirteen mutations exit 1 on their own
+  checks (`mutations/SUMMARY.txt`, `mutations_partD.py`); on the way, d4 found the test's F3
+  message crashing when a mark did stray (fixed) and d8's first form was a parse error (redone).
+  `test_mission_two.gd` E11 asked the lane for a standard material's albedo texture; it now also
+  takes the floor's shader over its concrete texture (`_textured()`), and d13 (the lane
+  untextured) still fails it. Every suite on the final code, `bash
+  logs/phase_2/step5/partD/suites/run_suites.sh <scratch>`: 44 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`; the first run, before E11 was taught, in `suites/first_run/`).
+  The headless import exits 0 with the three new `.uid` sidecars, the real save folder unchanged.
+- **Not yet:** the GPU price (new cases FL and FB in `game/tests/gpu_price_depot.gd`, budget
+  0.3 ms in `tools/tests/gpu_price.py`): the author chose to price once, on power, after the
+  whole of Mission 2 is done (#296), not part by part. The stills were taken on battery.
+- **Stills:** `captures/shed_floor/partD/` and the floor before, `captures/shed_floor/before/`
+  (`tools/captures/capture_shed_floor.gd`): along the cross-aisle, the forklift, in from bay 9
+  and dock 5, before the levellers, down aisle 03, in from the side door, from high.
+- **Unverified:** the look in motion; the wet floor shows as darker, damp concrete but without
+  reflections (the shed has no screen-space reflections), and the footprints do not read one by
+  one; the oil is hidden under the forklift, as it would be.
+
+## Revision 2026-11-15 (Phase 2, step 5 of #253, part E: overhead and on the walls, written before any code)
+
+- **Status:** written before any code, at the author's word (#297). **Waiting for the author's OK.**
+  Values marked † are Claude Code's proposals from the research below. No GPU price for this part
+  (#296): its cases are added to `gpu_price_depot.gd` for the run after the whole mission.
+- **What exists** (mapped 2026-11-15): the joists, liner, two duct runs (z 11.5 and -3) and two
+  sprinkler mains with pendent heads every 10 ft (z 2 and -6.5), all over the racks; nothing over
+  the staging lanes or the cross-aisle but the duct and the staging row of lights. Each dock has
+  its outside light and signal; only bay 9 has an inside signal. The open docks' sectional doors
+  lift straight up the wall, 0.34 m inside it, to about 7.7 m. No door numbers, no control
+  stations, no heaters, fans or cable trays, nothing on the walls by the side door.
+- **Research** (sources go in the prompt log with the build):
+  - **Unit heaters:** a dock is heated by gas-fired propeller unit heaters hung from the roof
+    steel, usually 8-14 ft (2.4-4.3 m) up, aimed down and along the dock wall to wash the cold
+    doors, each with its flue out through the roof and its gas drop with a shut-off valve.
+  - **High-volume low-speed fans:** up to 24 ft (7.3 m) across; NFPA 13 (since 2013) wants each
+    centred roughly between four sprinklers, at least 3 ft (0.9 m) below their deflectors, and
+    shut down by the sprinkler waterflow alarm; OSHA wants blades guarded below 7 ft, so they hang
+    well above 10 ft (3 m). In winter they turn slowly, about 10-30 rpm, to push warm air down.
+  - **Sprinklers:** NFPA 13 covers the whole floor, not only the storage; ordinary hazard heads at
+    most 15 ft (4.6 m) apart and 130 ft² each.
+  - **Cable trays:** steel ladder tray 12-24 in wide along the walls, hung on threaded rod at most
+    every 8-12 ft (2.4-3.7 m), with drops down to each door's operator and control station.
+  - **Each dock door:** its number large on the wall beside it (18 in, 0.46 m, stencilled), a
+    door operator on the wall at the top of its track, and a control station about 60 in (1.5 m)
+    up beside the opening (NEMA 4X: door open, close and stop; leveller raise and lip; restraint
+    engage and release; red and green lights inside, as bay 9's).
+  - **By the employees' door:** a time clock with its card racks, about 4-5 ft (1.2-1.5 m) up,
+    and a notice board with the federal posters employers must display (OSHA's "Job Safety and
+    Health: It's the Law", the minimum wage, EEO "Know Your Rights", FMLA, USERRA, EPPA), drawn
+    as their layouts with their titles and no other text †.
+- **The parts †:**
+  1. **Unit heaters:** five along the dock wall, one between each pair of docks and one at bay 9
+     †, hung from the joists 2 m in from the wall (clear of the raised doors), 4.3 m above the dock
+     floor †, aimed 30° down toward the doors; each with its flue to the roof and its gas drop;
+     one more over the drive-in lane by the side door.
+  2. **Fans:** two 7.3 m (24 ft) fans over the staging lanes †, at z 15, hung from the joists,
+     their blades at least 3 m above the dock floor and 0.9 m below the sprinkler heads, turning
+     at 20 rpm †, clear of the racks, the lights and the duct.
+  3. **Sprinklers over the staging and the cross-aisle †:** a third main at z 15 with pendent heads
+     every 10 ft, as the two over the racks, so the fans sit between heads and the whole floor is
+     covered (NFPA 13). This adds to part A's services; the author may leave it out.
+  4. **Cable trays:** a 12 in ladder tray along the dock wall and the east wall at 6 m †, on rods
+     every 3 m, with a conduit drop to each operator and control station.
+  5. **At each dock (1-8 and bay 9):** its number beside the opening (0.46 m digits, 2.6 m up †,
+     never behind the raised door), its door operator, its control station at 1.5 m on the pier
+     beside the opening, and its inside red and green lights (bay 9's kept as now; the others red,
+     their doors shut). Bay 9 keeps its lift's pendant.
+  6. **By the side door, on the lane's east wall:** the time clock with its card racks and the
+     notice board with the posters, between the door and the stair, at the heights above, clear
+     of the door's swing and Ethan's way to the stair.
+- **Made †:** the heater, fan, tray, operator, control station, clock and board drawn in Blender by
+  a script at their makers' sizes (`tools/art/build_shed_fitout.py`, as the racking and the hinges
+  were), their labels, numbers and posters by a texture script (`tools/art/make_shed_signs.py`),
+  multi-meshes where repeated; or existing CC0/CC BY models from Poly Haven or Sketchfab where one
+  fits (Sketchfab needs Blender's add-on connected).
+- **Rules a test can measure** (new `test_shed_fitout.gd`, written first):
+  - **E1:** six heaters, each 2.4-4.3 m above its floor, aimed down, its flue reaching the roof,
+    clear of every door's raised panel and track, the racks and the lights.
+  - **E2:** two fans, each at most 7.3 m across, blades at least 3.05 m above the dock floor and
+    0.9 m below every sprinkler head, outside the racks' footprint, turning (their angle changes
+    between frames), clear of the joists, duct and lights.
+  - **E3:** sprinkler heads over the staging and the cross-aisle no more than 4.6 m apart (if the
+    author keeps part 3).
+  - **E4:** the trays along their walls, a rod at least every 3.7 m, clear of every door opening
+    and light.
+  - **E5:** docks 1-9 numbered in order, west to east, each number beside its opening and never
+    behind its raised door; a control station and inside lights at each, centred 1.2-1.6 m above
+    the dock floor, out of the opening and the leveller's way; bay 9's lights still follow the
+    docking (`test_bay_nine.gd`).
+  - **E6:** the clock and the board within 3 m of the side door, the clock's face 1.2-1.5 m up,
+    the posters' middles 1.2-1.7 m up, none in the door's swing or on Ethan's way to the stair
+    (`test_stair.gd`, `test_loading.gd`).
+  - **E7:** nothing new is solid where Ethan, the jack or the dock worker go (their tests, every
+    suite).
+- **Predictions:** the dock wall reads as a working dock's from the staging lanes, the numbers
+  readable from the cross-aisle; the fans' slow turn the one thing moving overhead; the most
+  likely failures are a heater or fan colliding with the joists or the raised doors (E1, E2) and
+  a number hidden by a raised door (E5).
+- **Decisions for the author:** five heaters plus one, or fewer; two fans or one, and turning or
+  still; the sprinklers over the staging (part 3), yes or no; posters with their titles only; made
+  in Blender by script or from existing models.
+- **Not in this part:** the safety and work kit (F), people and sounds (G), the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part E: overhead and on the walls (#297-#298), built)
+
+- **Built** (new `shed_fitout.gd`, built by `transfer_building.gd`'s `_fitout()`; parts by new
+  `tools/art/build_shed_fitout.py` into `art/fitout/shed_fitout.glb`, signs by new
+  `tools/art/make_shed_signs.py`; the sprinkler parts are part A's):
+  - **Heaters:** five gas unit heaters (0.76 x 0.66 x 0.60 m) along the dock wall at x -78, -70,
+    -62, -54 and -50 and one over the lane by the side door, hung level, their bottoms 13 ft
+    (3.97 m) above their floors, their louvers turning the air 30° down at the doors; each on two
+    rods from a strut across two joists, its flue to the roof, its gas drop with a shut-off from a
+    gas main run through the joists.
+  - **Fans:** two 20 ft (6.1 m) fans at x -74 and -58, z 15.55, blades 6 m above the dock floor,
+    each on a 3 m channel across two joists' bottom chords, turning at 15 rpm.
+  - **Sprinklers over the staging and the cross-aisle:** three mains at z 9.7, 13.6 and 17.5
+    (3.9 m apart, the last 2.25 m from the dock wall), pendent heads every 8 ft 9 in (112 ft²
+    each), phased so that each fan is centred between four heads, 1.44 m below the lowest.
+  - **Trays:** 12 in ladder tray 0.8 m off the dock wall and the east wall, 6 m above the dock
+    floor, in sections of about 3 m on trapezes and rods; conduit down to each control station
+    and across to the tray.
+  - **At each dock (1-9):** its number on a safety-yellow plate on the pier east of its door, 2.3
+    m up; its control station (door, leveler, restraint) at 1.45 m; its operator at the top of its
+    track; its inside red and green lights (`DockSignalInside1`-`8` new, red; bay 9's as before).
+  - **By the side door:** the time clock at 1.35 m with a card rack either side, and the notice
+    board with the six federal posters (titles only, `posters.png`).
+- **Changed from the plan:**
+  - the fans are 20 ft, not 24 ft: the staging row's lights hang every 8 m along z 15, so a
+    7.3 m fan cannot turn anywhere along it without passing under one (a fan's blades under a
+    lamp make it flicker); 6.1 m fans fit between the lights with 0.95 m to spare;
+  - the fans turn at 15 rpm, not 20 (still in the 10-30 rpm of a winter's destratifying speed);
+  - the heaters hang 2.75 m in from the dock wall, not 2 m, so their flues clear the new
+    sprinkler main at z 17.5;
+  - three sprinkler lines, not one, so that the last stands within half a spacing of the dock
+    wall and each head covers less than 130 ft² (NFPA 13, ordinary hazard);
+  - the dock numbers are painted plain, not stencilled (the stencil's bridges sliced the digits).
+- **Found on the way:**
+  - the test's E3 found the first sprinkler head on each line placed past the wall (`ceil` for
+    `floor`); fixed;
+  - in the stills, the control station's red STOP sat on the wrong row: the Blender script gave
+    faces their materials by counting, and the export's face order is not the build's; each part
+    now marks its own new faces. Then the buttons were mirrored against their legend: seen from
+    the front (-z), a part's right is -x; fixed in the script.
+- **Rules:** new `test_shed_fitout.gd` E0-E6, 23 checks: before any code 0/1, then 23/23
+  (`logs/phase_2/step5/partE/before/`, `after/`). Sixteen mutations exit 1 on their own checks
+  (`mutations/SUMMARY.txt`, `mutations_partE.py`). Every suite, `bash
+  logs/phase_2/step5/partE/suites/run_suites.sh <scratch>`: 45 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`). The headless import exits 0.
+- **Not yet:** the GPU price (new case FE in `game/tests/gpu_price_depot.gd`, budget 0.5 ms), with
+  the whole mission's (#296).
+- **Stills:** `captures/shed_fitout/partE/` (`tools/captures/capture_shed_fitout.gd`): the dock
+  wall from the staging lanes, a fan overhead, a control station, the side door's wall, the
+  staging lanes' overhead, the heater over the lane.
+- **Unverified:** the look in motion (the fans turning); the federal posters as titled layouts
+  only; the operator boxes are small and high and barely show.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part F: the safety and work kit, written before any code)
+
+- **Status:** written before any code, at the author's word (#299). **Waiting for the author's OK.**
+  Values marked † are Claude Code's proposals. No GPU price for this part (#296); its case is
+  added for the run after the mission.
+- **What exists** (mapped 2026-11-16): the shed's only door for people is the side door in the
+  east wall (the office's door opens outside, its walls shut it off from the shed); no
+  extinguisher, exit sign, emergency light, mirror, first-aid kit or eyewash anywhere; one parked
+  forklift (Kamran Mughal's model; whether it is electric or propane is not recorded) and one
+  pallet jack. **Found:** west of x -82 and north of the office (z -9.75 to 12), a 7.75 x 21.75 m
+  strip of the shed has no dock floor: it lies at the yard's 0.02 m, 1.28 m below the dock floor,
+  behind the single rack row.
+- **Research** (sources go in the prompt log with the build):
+  - **Exits:** IBC Table 1006.2.1 lets a storage (S-1) space have one exit only up to 29 people;
+    at the code's 500 ft² a person this shed's 16,000 ft² holds 32, so it needs two exits, as far
+    apart as practical. OSHA 1910.37(b): each exit marked by a lit EXIT sign, letters at least
+    6 in (0.15 m) high with 3/4 in strokes, and signs pointing the way wherever the exit is not in
+    sight; NFPA 101 wants emergency lights along the way out.
+  - **Extinguishers:** OSHA 1910.157(d)(2) and NFPA 10: a Class A extinguisher within 75 ft
+    (22.9 m) of travel from any point, on a hanger with its top no more than 5 ft (1.53 m) up and
+    its bottom at least 4 in (0.1 m) off the floor, a sign above it seen from the aisle.
+  - **Forklifts:** an electric truck charges at a charger on the wall in a marked, ventilated area
+    with no smoking, an eyewash within 10 s (about 55 ft, 17 m) unobstructed (ANSI Z358.1) and a
+    spill kit for electrolyte (1910.178(g)); a propane truck's spare cylinders sit in a locked cage
+    outside, never indoors.
+  - **Mirrors:** convex safety mirrors 18-36 in (0.46-0.91 m) across, high on the rack ends where
+    each aisle meets the cross-aisle, so a driver and a walker see each other.
+  - **First aid:** an ANSI Z308.1 class B cabinet where it can be reached quickly, usually by the
+    employees' door or the office.
+  - **Work kit:** a hand stretch-wrap dispenser by the staging lanes, two-wheel hand trucks by the
+    dock piers, grey bins, a vertical cardboard baler (about 1.8 x 1.5 x 0.9 m) with its bales.
+  - **Walkways:** a marked pedestrian crossing where the white walkway meets the cross-aisle, and
+    signs for forklift traffic and the speed limit (5 mph inside, a common site rule).
+- **The parts †:**
+  1. **The missing floor (found):** the dock floor extended over the strip west of x -82, as a
+     real shed's floor is one level, its joints and marks continued (part D's map widened); the
+     single rack row then stands 0.15 m off the new floor's west wall as now.
+  2. **A second exit †:** a steel door in the west wall at the cross-aisle's end (z 12, behind
+     the strip), outward-opening as exits are, with its lit EXIT sign; the side door gets its
+     sign too; directional EXIT signs at the cross-aisle's ends; battery emergency lights
+     ("bug-eyes") by both exits and over the dock.
+  3. **Extinguishers:** as few as cover every point of the dock floor and the lane within 22.9 m
+     of travel round the racks, the loads and the office (likely five or six), each on a wall or
+     a rack end at the cross-aisle, top 1.5 m up, its red sign above.
+  4. **Charging † (if the forklift is electric):** a charger on the office's east wall at the
+     cross-aisle's west end, a yellow-hatched area before it, NO SMOKING, the eyewash and the spill
+     kit within 17 m; **or, if propane:** a cylinder cage outside by the side door.
+  5. **Mirrors:** one on each rack row's end facing its aisle's mouth, 2.4 m up †, 0.6 m across.
+  6. **First aid** by the side door; **the work kit** by the staging lanes and bay 9; **the
+     crossing and signs** where the walkway meets the cross-aisle, and on the walls.
+- **Made †:** in Blender by script (`tools/art/build_shed_kit.py`), signs by
+  `make_shed_signs.py`, as part E.
+- **Rules a test can measure** (new `test_shed_kit.gd`, written first):
+  - **F1:** the dock floor covers the shed's whole inside at 1.3 m but the lane, the pit and the
+    office; part D's checks hold on the larger floor.
+  - **F2:** two exits for people, at least half the shed's diagonal apart (IBC's rule for two
+    exits, 1007.1.1: 0.5 x 58 m = 29 m unsprinklered, a third of it sprinklered), each with a lit
+    sign, letters at least 0.15 m high; every point of the floor within 76 m (250 ft) of travel of
+    an exit; an emergency light by each exit.
+  - **F3:** every point of the dock floor and the lane within 22.9 m of travel of an
+    extinguisher (a shortest path on a 0.5 m grid round the racks, the loads and the office), each
+    top at most 1.53 m up and bottom at least 0.1 m.
+  - **F4:** the charging area marked, the eyewash within 17 m of the charger in a straight,
+    unblocked line (or the propane cage outside, none indoors).
+  - **F5:** a mirror at every aisle's mouth, facing into the cross-aisle, 0.46-0.91 m across.
+  - **F6:** the first-aid cabinet within 5 m of the side door; the crossing on the walkway's line
+    across the cross-aisle; nothing new solid on Ethan's, the jack's or the dock worker's ways
+    (their tests, every suite).
+- **Decisions for the author:** electric or propane forklift; the second exit (yes, and where);
+  extending the floor over the strip.
+- **Not in this part:** the forklift driver and the checker, sounds (G), the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part F: the safety and work kit (#299-#300), built)
+
+- **Built** (new `shed_kit.gd`, built by `transfer_building.gd`'s `_kit()`; parts by new
+  `tools/art/build_shed_kit.py` into `art/fitout/shed_kit.glb`, which reuses
+  `build_shed_fitout.py`'s parts maker; part F's signs added to `make_shed_signs.py`):
+  - **The floor over the strip:** `DockFloor4`, x -89.75 to -82, z -9.75 to 12, at 1.3 m, in part
+    D's floor material, its joints at -86 and -82 (panels 3.75 and 4 m), the forklift's way into
+    the charging bay marked; `shed_floor.gd`'s map widened to x -89.75, `test_shed_floor.gd`
+    taught the strip (18/18).
+  - **Lights over the strip (not in the plan):** it had none, being unfloored; three linear
+    high-bays as the aisles' (`StripLight1`-`3`).
+  - **The west exit:** a steel door with its push bar in the west wall at z 3.5-4.45
+    (`WEST_EXIT`, its hole cut by `_back_and_sides()`), 51.5 m from the side door; outside, its
+    landing at the floor's height, a six-riser stair down to the yard and its rails.
+  - **Exit signs and emergency lights:** a lit EXIT sign over each exit and two double-faced signs
+    hung over the cross-aisle at x -70 and -58, each arrow toward the nearer exit; seven
+    battery emergency lights (by both exits inside, over the west exit outside, over the dock
+    wall, down the lane and the strip).
+  - **Extinguishers:** eight Class A on their hangers, tops 1.45 m above their floors, each with
+    its sign: the strip's west wall, the ends of rows 2, 4 and 6 at the cross-aisle, the piers by
+    docks 2 and 6, and the lane's east wall by the side door and at z 0; the farthest point of the
+    floor is 21.9 m of travel from one (75 ft is 22.9 m).
+  - **Charging:** the charger on the office's back wall in a hatched bay, NO SMOKING by it, the
+    eyewash on the west wall 5.3 m off in a clear line, the spill kit beside it.
+  - **Mirrors:** a 24 in convex mirror at each of the six aisles' mouths, 2.9 m up on the posts
+    opposite the aisle boards (the last aisle's at 2.95 m, above board 06).
+  - **First aid** by the side door (4.2 m from it); **the work kit** in the strip (a baler, two
+    bales, two bins, two hand trucks) and a stretch-wrap stand by dock 5's loads, each solid;
+    **the crossing** of five bars over the cross-aisle on the walkway's line, a CAUTION
+    FORKLIFT TRAFFIC sign at its start and two SPEED LIMIT 5 MPH signs.
+- **Changed from the plan:** eight extinguishers, not five or six, as the travel round the racks
+  and down the lane needs; mirrors 2.9 m up, not 2.4 m, to clear the aisle boards; the strip lit.
+- **Found on the way:** the test's line from the charger to the eyewash first started inside the
+  office's wall; it now runs from where one stands, 0.6 m before each.
+- **Rules:** new `test_shed_kit.gd` F0-F6, 17 checks, the travel measured as the shortest way
+  on a 0.5 m grid round the racks, the loads, the office, the desk, the forklift and the kit:
+  before any code 0/2, then 17/17 (`logs/phase_2/step5/partF/before/`, `after/`). Sixteen
+  mutations exit 1 on their own checks (`mutations/SUMMARY.txt`, `mutations_partF.py`); f5 first
+  survived, the light outside over the west exit standing in for the one inside, so F2 now counts
+  only lights inside. Every suite, `bash logs/phase_2/step5/partF/suites/run_suites.sh
+  <scratch>`: 46 runs exit 0, the art check 0 failures (`suites/SUMMARY.txt`; F2's tightening, a
+  test-only change, rerun alone 17/17). The headless import exits 0.
+- **Not yet:** the GPU price (new case FK, budget 0.4 ms), with the whole mission's (#296).
+- **Stills:** `captures/shed_kit/partF/` (`tools/captures/capture_shed_kit.gd`).
+- **Unverified:** the west exit cannot be used in play (its door stays shut, as the mission has
+  no use for it); the federal and safety signs' small print is drawn as bars.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part G: the shed at work, people and sound, written before any code)
+
+- **Status:** written before any code, at the author's word (#301). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. No GPU price for this part (#296).
+- **What exists** (mapped 2026-11-16): the parked forklift is Kamran Mughal's model as one mesh,
+  so its forks cannot lift; no one drives it. Bay 9's dock worker (Rocketbox `Construction_Male_08`)
+  sits at his desk and seals the van. Rocketbox's clips on hand: idle, walk, sitting in a chair,
+  sitting down and standing up at a table, checking and noting documents, trying a door. The shed
+  makes no sound of its own: the rain heard inside is the yard's.
+- **Research** (sources go in the prompt log with the build):
+  - **Forklift practice:** OSHA 1910.178(n): travel with the load low (forks 4-6 in up) and
+    tilted back; slow down and sound the horn at cross aisles and where the view is blocked;
+    yield to people on foot; look in the direction of travel; a common site limit of 5 mph
+    (2.2 m/s) inside, slower in aisles and turning. A blue warning spot is projected 3-5 m ahead
+    of (or behind, when reversing) the truck; a reversing alarm sounds while it backs, as a
+    tonal beeper about 1 kHz or the quieter broadband "white noise" alarm many sites now use.
+  - **Putaway:** a pallet is driven from a staging lane into an aisle, the truck squares up to
+    the rack, lifts to the beam's level, creeps in, lowers onto the beam, backs out with the
+    forks level and lowers them to travel height.
+  - **Sounds in a metal shed at night in heavy rain:** rain drumming on the steel roof louder than
+    any outside, heaters' fans and burners cycling on their thermostats, an electric forklift's
+    motor whine and hydraulic pump, its horn and alarm, the big fans' soft whoosh.
+- **The parts †:**
+  1. **The forklift made able to work:** its carriage and forks cut from its one mesh by script
+     (as the pallet jack's tiller was, #240), so they rise up its mast; the change credited (CC BY).
+  2. **A driver and his loop:** a Rocketbox warehouse worker † seated on it (the author picks the
+     avatar from renders, as for the guard and the dock worker; a Rocketbox seated clip with his
+     hands on the wheel †); a loop of about 90 s †: from its parking place to dock 5's staging lane,
+     a pallet of its own picked up (not one of the mission's), driven at 2.2 m/s on the cross-aisle
+     and slower in the aisle, put away on aisle 03's first beam, the forks lowered, back to park.
+     The blue spot ahead or behind as it goes, the alarm while it backs, a horn tap at each aisle
+     mouth; it stops and waits when Ethan is within 3 m of its path ahead †, and never comes
+     within 2 m of him. Its oil drip (part D) stays at its parking place.
+  3. **The checker †:** bay 9's dock worker scans each pallet as Ethan rolls it onto the lift (he
+     stands, walks to the lift's side, scans its label, walks back), or no checker: the author's
+     choice, as it adds a beat to Mission 2's loading.
+  4. **Sounds** (synthesized by a new `source_assets/audio/shed/synthesize.py`, on the Ambience
+     bus, each from its source): rain on the roof inside the shed (replacing the yard's rain
+     there); the heaters' fans and burners, cycling †; the fans' whoosh; the forklift's motor,
+     pump, horn and reversing alarm (tonal or broadband: the author's choice); a radio on the dock
+     desk playing low † (provisional, for ElevenLabs later, as `docs/AUDIO.md` records).
+- **Rules a test can measure** (new `test_shed_work.gd`, written first): the loop completes
+  within its time and puts its pallet on the beam within 0.05 m; the forks at travel height
+  (0.10-0.15 m) whenever it moves loaded; never faster than 2.2 m/s, slower in the aisle; the
+  blue spot 3-5 m ahead in its direction of travel; the alarm only while reversing; a horn at
+  each aisle mouth it passes; with Ethan placed in its way, it stops at least 2 m short and goes
+  on when he leaves; the mission's tests unchanged (every suite); the roof's rain louder inside
+  than the yard's rain there; each source playing from where it is.
+- **Decisions for the author:** the forklift's loop; the driver's look (renders to choose from);
+  the checker or not; tonal or broadband alarm; the radio.
+- **Not in this part:** the yard (H).
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part G: the shed at work, people and sound (#301-#303), built)
+
+- **The forklift** (new `game/features/vehicles/forklift/forklift_truck.gd`, built by
+  `dock_staging.gd` in place of the parked model; `transfer_shed.gd` hands it out as `forklift`
+  and the app gives it Ethan): Kamran Mughal's truck with its carriage cut free
+  (`convert_depot_models.py`'s `forklift()`, 88 loose parts in front of the mast's channels and no
+  higher than the backrest; the textures came out byte for byte the same), its node's origin at
+  the front axle so it turns on the spot about it as a three-wheel electric truck does. While the
+  camera is within 60 m it works in trips with a pallet of its own (`PutawayLoad`, drawn with its
+  own seed so no staged load or empty moved): from dock 6's lane to the empty floor place facing
+  aisle 03 at z 7.56 (found from the racking's own draw), and back. Its load 0.12 m up while it
+  travels, 2.2 m/s at most and 1.0 m/s in the aisle, its horn at the aisle's mouth, its blue spot
+  4 m ahead in its direction of travel, its broadband alarm while it backs; it slows so as to stop
+  2 m short of Ethan in its way and does not turn while he is within its swing.
+- **Its driver** (`Construction_Male_07`, the author's choice from Rocketbox's previews, #303;
+  `convert_rocketbox.py`'s `forklift_driver` job): seated on the cushion against its backrest in
+  Rocketbox's seated idle at a table, his wrists set 7 cm behind his grips on the wheel and his
+  feet on the plate by two `TwoBoneIK3D`, his head and neck turned 75° over his right shoulder as
+  he backs (new `look_travel.gd`).
+- **The scan** (#302, "Yes, he scans"): when a pallet is first set down on bay 9's lift
+  (`pallet_jack.gd`'s `on_lift()`, watched by `transfer_shed.gd`), the dock worker stands, walks
+  to his place off the deck's north-east corner, faces the pallet with a handheld scanner in his
+  right hand, reads it with its beep (`scanned`) and goes back to his desk. He now waits rather
+  than step onto the deck while the lift is not up: his chair's sitting-down place is 5 cm onto
+  its east rim.
+- **Sounds** (new `source_assets/audio/shed/synthesize.py`, ten WAVs in
+  `game/features/audio/shed/`, `docs/AUDIO.md`; new `shed_sounds.gd`): rain drumming on the roof
+  from four places under it; the yard's rain 14 dB lower under the roof (`driving_audio.gd`'s
+  `shelter`, fading in from the open doors over 4 m); each heater on its thermostat, 240 s on and
+  150 s off a third of a round apart, lighting with its ticks; the fans' swish; a small radio on
+  the dock desk playing low; the forklift's motor, pump, horn and alarm; the scanner's beep.
+- **Changed from the plan:** the putaway goes to a floor place, not the first beam: the model's
+  mast is 2.21 m tall with no inner stage, so lifting to the 60 in beam would carry the carriage
+  above the mast's top; and the mast does not tilt back, as it is not cut from the body (the load
+  rides level).
+- **Found on the way:** the driver's IK first seemed not to work: his bones read from outside a
+  skeleton update are the pose before the modifiers (as `test_on_foot.gd` found, #287), so his fit
+  is now measured on `skeleton_updated`. The test's first Ethan check stood him where the truck
+  was stopping anyway and read a turn on the spot as standing still. Three mutations survived
+  the first test (the top speed never reached, the aisle's own limit doubled in code, a wake-up
+  that only turns): the test now lets the first loaded run go free, puts Ethan in the second
+  trip's long run, and checks turning while parked; the doubled limit was removed.
+- **Rules:** new `test_shed_work.gd`, 25 checks over both trips: W0-W10 (the truck), S1-S5 (the
+  scan), R1-R5 (the sounds); before any code 0/1, then 25/25
+  (`logs/phase_2/step5/partG/before/`, `after/`). `test_menus.gd` learned the new avatar's
+  credit. Seventeen mutations exit 1 on their own checks (`mutations/SUMMARY.txt`,
+  `mutations_partG.py`, three at a time); every suite, `bash
+  logs/phase_2/step5/partG/suites/run_suites.sh <scratch>`: 47 runs exit 0, the art check 0
+  failures (`suites/SUMMARY.txt`). The headless import exits 0.
+- **Not yet:** the GPU price (the forklift's lights, the driver), with the whole mission's (#296).
+- **Stills:** `captures/shed_work/partG/` (`tools/captures/capture_shed_work.gd`, by the truck's
+  phases in real time).
+- **Unverified:** the look and sound in motion; the driver's hands on the wheel's upper rim at
+  his chest's height, where this model's wheel sits; his fingers are not closed round it.
+
+## Revision 2026-11-16 (Phase 2, step 5 of #253, part H: the yard at night, written before any code)
+
+- **Status:** written before any code, at the author's word (#304). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. No GPU price for this part on its own (#296),
+  though the yard is already the slowest view (47-57 fps), so every model is slimmed and drawn
+  near only.
+- **What exists** (mapped 2026-11-16): the yard's paving, apron, bay lines, arrows, the railed
+  walkway, five staff car bays (x -88.4 to -83.4, z 42.4 to 54.9) and three trailer bays beside
+  the shed's east wall (x -37.4, -33.6, -29.8, z 4 to 18), all empty. Fetched for this in
+  #221-#222 and not yet in the game (`source_assets/sketchfab/`, CC BY, each to be credited):
+  Brian Trepanier's 1980 long-nose sleeper tractor (201,782 faces), NLM's 45 ft dry van (637,301
+  faces, its box a little chunky), Daniel Zhabotinsky's small box truck (18,939 faces, its plates
+  to replace), YJ_'s pair of front-load dumpsters; the sedan (`07_sedan_fairheaven`) and Poly
+  Haven's covered car, already used in town. No yard truck (a terminal tractor) is on hand.
+- **Research** (sources go in the prompt log with the build):
+  - **Dropped trailers at docks:** at night a shed keeps trailers backed onto its doors to be
+    loaded in the morning: the tractor gone, the landing gear wound down onto steel pads, the
+    rear tandem chocked or held by the dock's vehicle restraint, the rear against the bumpers, the
+    dock door shut, the seal pressed round the trailer's rear. A dry van's floor stands about
+    48-52 in (1.22-1.32 m) up, matching a 1.3 m dock.
+  - **Parked trailers and tractors:** in the yard, trailers stand in marked bays on their landing
+    gear; a tractor parks bobtail (without a trailer) or coupled, its parking brake on.
+  - **The yard truck:** a terminal tractor (a "yard dog") shuttles trailers between docks and bays.
+  - **Staff cars:** a night shift's few cars in the staff bays: the dock worker's, the forklift
+    driver's, the guard's.
+  - **Bins:** front-load dumpsters stand on the paving by a wall, away from doors and exits.
+- **The parts †:**
+  1. **Trailers at docks 1, 2 and 3 †** (the far west end, clear of the van's way to bay 9 and of
+     dock 5's open door): each backed square onto the bumpers, its floor at the dock's height, its
+     landing gear down on pads, its rear tandem chocked, the dock's seal pressed round it, the door
+     shut behind it, the docks' outside lights red (a trailer at the door).
+  2. **The trailer bays:** one dropped trailer on its landing gear and pads † in the west bay, and
+     the 1980 tractor coupled to a second in the middle bay †, its lights off.
+  3. **The box truck** † parked in the east trailer bay, nose out, its plates replaced with
+     plain ones in the game's style.
+  4. **Staff cars:** the sedan and the covered car in two of the five staff bays †, nose in,
+     inside the lines.
+  5. **Dumpsters** † by the shed's west wall, clear of the new west exit's stair.
+  6. **A yard truck:** fetched from Sketchfab (CC BY or CC0, the author choosing from labelled
+     renders, Blender's add-on connected) and parked by the trailer bays; or left out.
+- **Made †:** each model slimmed in Blender by `convert_depot_models.py` (the trailer from 637k to
+  about 20k faces, the tractor to about 25k), its textures halved, a far copy or none beyond about
+  60 m; parked, they do not move.
+- **Rules a test can measure** (new `test_yard.gd`, written first): each docked trailer's rear
+  within 0.1 m of its bumpers and square to them (within 1°), its floor 1.22-1.32 m up, its
+  landing gear on the ground, a chock at a rear wheel, its door shut and its outside signal red;
+  each trailer, the tractor and the truck inside its bay's lines; the cars inside their bays' lines,
+  nose in; nothing in the gate lane, the van's way from the gate to bay 9 or its turning ground
+  before the docks (a measured corridor), or the west exit's stair; each parked vehicle solid;
+  the mission's tests unchanged (every suite: the van still backs onto bay 9 as before).
+- **Decisions for the author:** the docks for trailers (1-3 or others); what goes in the trailer
+  bays; the yard truck fetched or left out; which cars.
+- **Not in this part:** moving vehicles in the yard (the yard truck parked only), the GPU price.
+
+## Revision 2026-11-17 (Phase 2, step 5 of #253, part H: the yard at night (#304-#309), built)
+
+- **Built** (new `yard_vehicles.gd`, built by `transfer_shed.gd` as `YardVehicles`; the models by
+  `convert_depot_models.py`'s new jobs `trailer`, `tractor`, `box_truck` and `dumpsters`, credited
+  in the game's "THE YARD AT NIGHT"):
+  - **Docks 1-3:** NLM's dry van dropped and backed square onto each, its rear 0.02 m off the
+    bumpers, its sill 1.34 m up (the dock 1.3 m, within a leveller's 0.1 m), its landing gear down
+    on the paving, a yellow chock just ahead of its tandem's forward tyres; the docks' doors shut
+    and their outside signals red.
+  - **The trailer bays:** a dropped trailer in the west bay; a second in the middle bay with Brian
+    Trepanier's 1980 tractor coupled under it, the trailer's nose lowered onto the fifth wheel
+    (1.11 m; the kingpin plate 1.21 m when standing, so it pitches 0.58° about its rear axle), its
+    landing gear cranked up 0.28 m, the tractor's nose 5.7 m out past the bay's line as a coupled
+    rig's is; Daniel Zhabotinsky's box truck nose out in the east bay.
+  - **Staff cars:** the sedan and the covered car in bays 2 and 4, nose in, stopped 0.3 m short of
+    the kerb (over the bays' front line, as nose-in parking is).
+  - **Dumpsters:** YJ_'s pair against the shed's east wall, 0.15 m off it.
+  - Each solid (`VehicleBodies`, ten boxes), drawn within 90 m.
+- **The models:** the trailer slimmed first (637,301 faces to 20,000 triangles) and then its
+  landing gear cut by place (every face whose middle lies in the legs' span below 1.15 m); first
+  its loose parts were sorted before slimming, which ran over ten minutes and was stopped (#307);
+  this way it takes seven seconds. The tractor to 35,162 triangles; the box truck and the
+  dumpsters as they came, their textures halved.
+- **Changed from the plan:** the dumpsters by the east wall, not the west: beyond the west wall the
+  paving is 2 m wide and no refuse truck could reach them; the box truck keeps its maker's
+  made-up "LCT" plates, being no real plate; no yard truck (none on Sketchfab, #306).
+- **Rules:** new `test_yard.gd` Y0-Y8, 13 checks: without the vehicles 0/1 (a copy of the game
+  with `transfer_shed.gd` as committed, `logs/phase_2/step5/partH/before/`), then 13/13
+  (`after/`). On the way: the chock check first measured from the tandem in a straight line,
+  though the chock stands out beside the tyres (now along and across the trailer); the truck's
+  width counted its mirrors (its body is 2.28 m, the bay 2.6 m); the 5.0 m sedan filled its 5.0 m
+  bay to the millimetre, so the cars now park to the kerb. `test_menus.gd` learned the four
+  authors. Twelve mutations exit 1 on their own checks (`mutations/SUMMARY.txt`,
+  `mutations_partH.py`); every suite, `bash logs/phase_2/step5/partH/suites/run_suites.sh
+  <scratch>`: 48 runs exit 0, the art check 0 failures (`suites/SUMMARY.txt`). The headless
+  import exits 0. With part H, step 5 of #253 (the depot dressed, D-H) is built.
+- **Not yet:** the GPU price (new case YV, budget 0.6 ms), with the whole mission's (#296).
+- **Stills:** `captures/yard/partH/` (`tools/captures/capture_yard.gd`).
+- **Unverified:** the dock seals are not pressed round the trailers (the seal models are rigid).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 4: the container yard and the swap, written before any code)
+
+- **Status:** written before any code, at the author's word (#311). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. The GPU price comes with the whole mission's
+  (#296).
+- **What exists** (mapped 2026-11-18): Mission 2 runs to the seal at bay 9 (stage 0); after it,
+  the objective reads "MISSION 2 IS BEING BUILT, Next: the container yard". The yard as drawn
+  (x 64-136, z 132-158) holds nine Phase 1 boxes standing in for containers (10 x 2.8 x 3.2 m,
+  `CONTAINER_ROW`) behind a plain railing along z 158 (`FENCE_Z`, x -40 to 130). The valley road
+  runs along z 171-172 north of that railing; the warehouses at (60, 115) and (150, 112) stand
+  south of the yard.
+- **Research** (sources go in the prompt log with the build):
+  - **Containers (ISO 668):** a 20 ft box is 6.058 x 2.438 x 2.591 m, a 40 ft 12.192 x 2.438 x
+    2.591 m, a high cube 2.896 m tall; corrugated Corten steel sides, a door end with four locking
+    bars and their cam keepers, cast corner fittings at all eight corners; in a small depot
+    stacked two or three high in blocks, with lanes wide enough for a reach stacker (about 12 m)
+    and the boxes' doors toward the lanes.
+  - **The gate:** an unattended night gate is a cantilever sliding gate in chain-link and barbed
+    wire, opened from a keypad on a gooseneck pedestal at a driver's window height (about 1.1 m)
+    a few metres before it, with a stop line; a camera on a pole watches it; signs: NO
+    UNAUTHORIZED ENTRY, the yard's speed limit.
+  - **At night:** high-mast lights (15-30 m) over the stacks, pools of light and dark lanes.
+- **The parts †:**
+  1. **The yard's boundary:** the railing along z 158 replaced by a 2.4 m chain-link fence with
+     barbed wire, as the transfer shed's, round x 64-136, z 132-158, with a cantilever sliding gate
+     at x 100 † off the road along z 171 by a short entrance, its keypad on a pedestal 4 m before
+     it on the driver's side, a stop line, a camera on its pole and the signs.
+  2. **The stacks:** the nine Phase 1 boxes replaced by ISO containers drawn in Blender by script
+     at ISO 668's sizes (as the racking was), 20 ft and 40 ft, some high cube, in faded plain
+     colours with no shipping line's name; about four blocks two and three high †, the doors
+     toward the lanes, the lanes 12 m wide; two high-mast lights.
+  3. **The keypad (no new controls):** at the stop line, E: Ethan lowers his window, keys the code
+     from the run sheet (each key's beep), and the gate slides open; it closes behind the van.
+     The code's words, and who gave it, are drafted for the author's approval (S3).
+  4. **The swap (D3):** a marked bay inside where Ethan leaves the van and its sealed load; the
+     dark van (our Iveco in dark paint) parked by a stack. Out of his van and at the dark van's
+     door, E: he gets in, and the dark van is now the one he drives; his own van stays where it
+     stopped as a parked copy with its load, doors shut and sealed. One drivable van at a time,
+     with the two mirror cameras as now (D3).
+  5. **The mission:** stage 1 (sealed) leads to "DRIVE TO THE CONTAINER YARD", then the gate, the
+     bay, the swap; in the dark van, stage 2 is saved as Mission 2's third checkpoint ("The
+     container yard"), and the objective names the next place (the warehouse compound, step 5).
+- **Rules a test can measure** (written first, `test_mission_two.gd` and a new
+  `test_container_yard.gd`, by real key presses where the player acts):
+  - the fence closed round the yard but at the gate, 2.4 m high with its barbed wire;
+  - containers at ISO 668's sizes, stacked squarely (each on the one below or the ground, corner
+    on corner within 0.05 m), no stack over three high, lanes at least 12 m wide, nothing in the
+    van's way from the gate to the bay and to the dark van;
+  - the gate opens only after E at the keypad from the stop line, with the window down, and shuts
+    once the van is through;
+  - after the swap: one drivable van, the dark van; the parked copy within 1 cm of where the van
+    stopped (Q5), its doors shut and its seal number unchanged; two mirror cameras as before;
+  - stage 2 saved and reloaded at the dark van, the copy where it was left;
+  - every suite unchanged.
+- **Decisions for the author:** the gate at x 100 and the yard's layout; containers drawn by script
+  (or fetched from Sketchfab, with Blender's add-on connected); the keypad by E with the code on
+  the run sheet; the swap as above; the dark van's colour.
+- **Not in this step:** the warehouse compound (step 5), the escape (step 6), the inspection
+  (step 3, waiting for S4).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 4: the container yard and the swap (#311-#312), built)
+
+- **Built** (new `container_yard.gd`, built by `industrial_loop.gd` as `ContainerYard`; new
+  `chain_link_fence.gd`, the shed's fence as a helper; the containers by new
+  `tools/art/build_containers.py` into `art/container_yard/containers.glb`; `make_shed_signs.py`'s
+  `no_entry.png`; the van's paint in `van_presentation.gd`, `set_paint()`, `paint()`, `exterior()`,
+  `paint_model()`; the mission's stage 1 to 2 in `the_wrong_cargo.gd`; `app/first_drive.gd` gives
+  the mission the yard):
+  - **The boundary:** 2.4 m chain-link with three barbed strands on 45° arms round x 64-136,
+    z 132-158, but for a 6 m gate at x 97-103; the old railing stops short of the yard and the
+    nine Phase 1 boxes are gone (their clearing kept). The yard's plot (x 62-138, z 130-171, its
+    driveway to the road) is level and its trees left out without moving any other
+    (`cleared_after`).
+  - **The gate:** a cantilever leaf of 6 m with a 3 m tail, sliding west at 0.6 m/s on two roller
+    posts, solid while shut; its keypad on a gooseneck pedestal at (98, 162), 1.1 m up, by the
+    stop line at z 162.5; a camera on its pole inside; NO ENTRY and the speed limit on the fence.
+  - **The stacks:** 88 ISO 668 containers (20 ft, 40 ft, 30% of the 40s high cube) in two blocks
+    of seven rows, 2-3 high by a fixed draw, corner on corner, their doors toward the 16 m lane
+    (x 92-108), each stack solid; faded plain colours, no line's name. Two 18 m masts with two
+    lamps each (no shadows).
+  - **The keypad (E, no new control):** from the stop line, stopped, E: his window down, the code
+    keyed in (four beeps 0.35 s apart, the scanner's beep lower), then the gate opens in about
+    11 s with its motor's hum (the forklift's pump, lower); it shuts once the van is 2 m inside
+    (or has backed 6 m out), and his window goes up once it is open. The code, 4719, and the
+    objective's words are drafts for the author (S3).
+  - **The swap:** a marked bay (2.8 x 6.8 m) on the lane's west side, nose in; the dark van
+    (our Iveco, charcoal (0.20, 0.21, 0.22) on its panels) across the lane, nose to the gate.
+    With his van stopped square in the bay (within 15°), E at the dark van's driver's door: his
+    van stays where it stopped as a parked copy (its paint, its load moved into it, its seal),
+    solid; the van he drives is moved to the dark van's place, repainted, empty and unsealed; the
+    parked dark van is hidden. Stage 2 is saved; the objective names the warehouse compound.
+  - **The reload at stage 2:** his van put back in the bay with its load and seal, then the swap:
+    Ethan in the dark van.
+- **Changed from the plan:** the copy is put back in the bay's middle on a reload, not exactly
+  where it was left (the vans' places at a checkpoint are fixed by the design, save rules v2);
+  the lane is 16 m, not 12; the van keeps its three mirror cameras (the plan said two); the swap
+  moves the van he drives rather than making a second drivable one, so there is one van at all
+  times. Two tests learned the new step: `test_sealing.gd` H6 (after the seal the objective is
+  DRIVE TO THE CONTAINER YARD, no longer MISSION 2 IS BEING BUILT) and `test_mission_two.gd`
+  (Continue at the third checkpoint starts in the dark van at the yard, no longer at the depot);
+  `test_roadside_trees.gd` T8's baseline lost the yard's 81 trees and 28 saplings (every other
+  collider checked unchanged in x, z and radius, 22 within 4.7 m of the yard raised or lowered up
+  to 0.62 m by its levelling; `logs/phase_2/mission2_step4/trees/`).
+- **Rules:** new `test_container_yard.gd` C0-C7, 17 checks: without the yard 0/1 (b0, a copy of
+  the game with `_container_yard()` left out), then 17/17 (`logs/phase_2/mission2_step4/after/`).
+  On the way: the camera pole by the gate was not solid; the parked dark van's solid was a guess
+  (2 x 2.5 x 6 m) until it took his van's own box (2.0 x 2.091 x 5.533 m) when the mission
+  watches the van; a reload must leave the title by Continue (`_begin`), as the player does.
+  Twenty mutations exit 1 (`mutations/SUMMARY.txt`, `mutations_step4.py`; y13's first form still
+  moved the load by its name and was rewritten); every suite, `bash
+  logs/phase_2/mission2_step4/suites/run_suites.sh <scratch>`: 49 runs, 48 exit 0 and T8 as
+  above, then 8/8; after the dark van's fit `test_collision.gd` 44/44 and `test_hit_speeds.gd`
+  12/12 again, so Mission 1's fall keeps its outcome; the art check 0 failures. The headless
+  import exits 0.
+- **Not yet:** the GPU price (new case CY, budget 0.8 ms †), with the whole mission's (#296).
+- **Stills:** `captures/container_yard/step4/` (`tools/captures/capture_container_yard.gd`).
+- **Unverified:** the look in motion; from 20 m and more the lit chain-link reads as an almost
+  solid pale wall (the shed's fence shader, unchanged); whether 11 s at the gate feels long in
+  play; the keypad's and the gate's borrowed sounds.
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5: the warehouse compound, written before any code)
+
+- **Status:** written before any code, at the author's word (#314). **Waiting for the author's
+  OK.** Values marked † are Claude Code's proposals. The GPU price comes with the whole mission's
+  (#296); Q6 (60 FPS with the compound's lights and guards) is measured then.
+- **What exists** (mapped 2026-11-18): two Phase 1 warehouses, plain boxes 23 m deep with three
+  roll-up doors and a strip of windows on their north faces: at (150, 112), 33.4 m wide, and at
+  (250, 120), 35.4 m wide; forest between and round them; the valley road along z 171-172, 25-30
+  m north; the container yard's east fence at x 136, z 132-158, 2 m from the west warehouse's
+  corner. After the swap (step 4) Ethan drives the dark van and the objective names the
+  warehouse compound.
+- **Research** (sources go in the prompt log with the build):
+  - **A guarded warehouse at night:** a 2.4 m chain-link fence with barbed wire; one vehicle gate
+    shut at night beside a guard booth (a prefabricated steel booth with windows all round, a
+    counter, a light, the guard seated or at the window); the driver stops at the booth, shows
+    the paperwork, is told which door; a barrier arm or the gate opens; the yard lit by LED
+    floodlights on poles and wall packs over the doors; trailers dropped at doors, pallet stacks
+    and empty pallets against walls, dumpsters, a parked forklift.
+  - **The warehouses:** tilt-up concrete panels 9-12 m high, dock doors 2.7 x 3.0 m at 1.2 m
+    with levellers, bumpers and seals, a canopy or none, man doors with steps, a few roll-up
+    drive-in doors; inside a dock, the same as the transfer shed's (racks beyond).
+- **The parts †:**
+  1. **The boundary:** a 2.4 m chain-link fence with barbed wire (`chain_link_fence.gd`) round
+     both warehouses: x 128-274, z 92-146, stepped in to z 130 west of x 138 so it keeps clear of
+     the container yard; its trees left out without moving any other (`cleared_after`), its plot
+     level. The fence is drawn whole; step 6 cuts its gap.
+  2. **The gate and booth:** a driveway from the valley road at x 200 † south to a cantilever
+     gate (as the yard's) in the north fence; a steel guard booth on the driver's side before it,
+     lit, with a guard (a stand-in, labelled so, D6) seated at its window. Stop at the booth's
+     line; E hands the run sheet over as at the shed; he reads it, says which door (words drafted
+     for the author, S1/S3), and the gate slides open; it shuts behind the van.
+  3. **The warehouses:** both rebuilt to the realism bar in place of the Phase 1 boxes, drawn by
+     script as the shed's kit was: tilt-up panels with their joints, the roof's edge and
+     downpipes, dock doors with levellers, bumpers, seals, lights and signals on the north faces,
+     man doors with steps, wall packs; their places and sizes as today.
+  4. **The loading bay:** one dock door of the east warehouse open and lit, its inside one bay
+     deep (the dock floor, a leveller, a pallet or two, the racks' ends beyond in the dark), as
+     the shed's bay 9 is; the van backs onto it with the reverse camera, checked as at bay 9.
+  5. **The yard dressed:** pole floodlights and wall packs (shadows only on the nearest, failure
+     case 4), the part H trailers dropped at two other doors, pallet stacks, empty pallets, a
+     parked forklift, dumpsters; nothing in the van's way from the gate to the bay.
+  6. **The mission:** stage 2 leads to "DRIVE TO THE WAREHOUSE COMPOUND", then the booth, the
+     gate and the bay; docked, the guards' recognition is the escape's start (step 6), so for now
+     stage 3 is saved there ("The warehouse compound"), and the objective names the hill road.
+     Why the guards turn stays open (S1): this step shows nothing of it.
+- **Rules a test can measure** (written first, a new `test_compound.gd`, by real key presses
+  where the player acts):
+  - the fence closed round both warehouses but at its gate, 2.4 m with its barbed wire, clear of
+    the container yard's fence;
+  - the gate shut until E at the booth from its line, then open; shut behind the van;
+  - the warehouses where they stand today (each within 0.1 m), solid, their dock doors at 1.2 m;
+  - nothing in the van's way from the gate to the bay; the bay's dock check as bay 9's;
+  - stage 3 saved docked and reloaded there; the objective names the next place;
+  - every suite unchanged, Mission 1's fall and the oncoming van keeping their outcomes.
+- **Decisions for the author:** the layout (the fence, the gate at x 200, the bay in the east
+  warehouse); both warehouses rebuilt or the Phase 1 boxes dressed; the booth's guard (the shed's
+  model again or another); the words (S1/S3, drafts).
+- **Not in this step:** the patrols, the warning and the gap (step 6), the getaway (step 7).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part A: the compound's boundary, gate and booth (#315), built)
+
+- **Built** (new `compound.gd`, built by `industrial_loop.gd` as `WarehouseCompound`; new
+  `guard_booth.gd`, the shed's booth as a helper, the shed keeping its own copy; the guard by
+  `convert_rocketbox.py`'s new job `compound_guard` into
+  `game/features/characters/compound_guard/compound_guard.glb`; the mission's stage 2 to the
+  gate in `the_wrong_cargo.gd`; `app/first_drive.gd` gives the mission the compound and the
+  guard Ethan's eye):
+  - **The boundary:** 2.4 m chain-link with barbed wire along the outline (138, 146), (274, 146),
+    (274, 92), (128, 92), (128, 130), (138, 130), 394 m but for the 6 m gate at x 197-203; 2.0 m
+    from the container yard's fence at the nearest; paved inside; its plot and the driveway's
+    level, their trees left out without moving any other (`cleared_after`).
+  - **The gate and booth:** the driveway from the valley road (x 194.5-203) to a cantilever gate
+    as the yard's; the stop line 2.5 m before it; the booth's service window 2 m from the lane's
+    middle on the driver's side, on a kerbed island 0.15 m high with two yellow bollards (1.07
+    m) on the lane; the booth as the shed's, lit, its sign ALL VEHICLES STOP.
+  - **The guard:** Rocketbox's Security_Female_01 (MIT; the library's only other security
+    character, the shed's being Security_Male_01), seated with `f_sit_chair_breathe_01`, a
+    stand-in (D6), her head turning to the logbook while she checks, to Ethan's eye while he
+    waits at the line and to her screen otherwise. **Her pistol is left out** (its 547 faces cut
+    in the converter), as Mission 2 has no guns (C51); whether the compound's guards are armed is
+    a story question for the author.
+  - **The hand-over (E, no new control):** at the line, stopped, E: his window down, "You hand
+    the guard the run sheet."; she checks it for 3 s; the objective reads "DRIVE IN / The guard
+    says door 3, the east warehouse." (a draft, S1/S3), and the gate slides open (about 13 s from
+    E); it shuts once the van is 2 m inside, and the window goes up once it is open.
+  - **The objective at stage 2:** DRIVE TO THE WAREHOUSE COMPOUND, STOP AT THE BOOTH, WAIT AT THE
+    GATE, WAIT FOR THE GATE, DRIVE IN, then BACK ONTO DOOR 3 (part C makes it work).
+- **Rules:** new `test_compound.gd` K0-K5, 10 checks: without the compound 0/1
+  (`logs/phase_2/mission2_step5/partA/before/`), then 10/10 (`after/`); on the way the test read
+  the objective from the HUD, as `test_sealing.gd` does, because the mission sends it once at
+  load. Sixteen mutations exit 1 (`partA/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partA/suites/run_suites.sh <scratch>`: 50 runs, 49 exit 0 and
+  `test_roadside_trees.gd` T8 7/8, its baseline then lowered for the compound's 95 trees and 79
+  saplings (every other collider unchanged in x, z and radius, 55 within 4.4 m of the plots
+  raised or lowered up to 0.53 m; `partA/trees/`) → 8/8; `test_collision.gd` 44/44 and
+  `test_hit_speeds.gd` 12/12, so Mission 1's fall keeps its outcome; the art check 0 failures;
+  `test_menus.gd` 19/20 then 20/20 with her credit. The headless import exits 0.
+- **Stills:** `captures/compound/partA/` (`tools/captures/capture_compound.gd`); the first showed
+  the booth's sign wider than the booth and mirrored from behind, now shorter and one-sided.
+- **Unverified:** the look in motion; her head's turn in play; the 13 s at the gate in play.
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part B: the warehouses rebuilt (#315-#316), built)
+
+- **Built** (new `warehouse.gd`, built twice by `compound.gd`'s `build_warehouses()` as
+  `WarehouseWest` and `WarehouseEast`; `industrial_loop.gd` no longer draws the two Phase 1
+  boxes, `COMPOUND_WAREHOUSES`, but still makes their random draws and keeps their clearings, so
+  nothing else in the world moves; their heights kept in `warehouse_heights`):
+  - **Where and how high:** each on its Phase 1 footprint, 23 m deep: the west one 33.35 m wide
+    at (150, 112), 9.99 m high; the east one 35.43 m at (250, 120), 10.53 m.
+  - **Tilt-up concrete:** 0.2 m walls in Poly Haven's concrete (`concrete_wall_006`) painted
+    light grey over a darker 1.22 m dock face; two reveal lines; sealed vertical joints, each
+    panel as wide as it may be up to 9 m with its joint 0.3 m clear of every door (the widest
+    9.0 m); a parapet 1.0 m over the roof deck, capped all round with metal coping; three
+    rooftop units on curbs and a roof hatch.
+  - **Docks:** six on the west warehouse (x 141-161) and seven on the east (x 240-264), on their
+    north faces, 4 m apart, 2.74 x 3.05 m at a 1.22 m floor, each with the shed's overhead door
+    shut and solid, its foam seal, two bumpers whose tops meet the floor's height, its signal
+    (green, no truck at it), its number above it and its dock light, as the shed's; LED wall
+    packs 6.5 m up over every other pier, no shadows.
+  - **The man door:** near each warehouse's west corner, a steel door at the dock floor with its
+    frame and lever, a 1.5 x 1.5 m landing, a stair of seven 0.174 m risers and 0.28 m treads
+    down toward the docks (IBC 1011.5.2), handrails 0.9 m over the nosings on both sides (1014),
+    a 1.1 m guard round the landing's open edges (1015); beside it the fire department
+    connection's two inlets, its FDC sign and the key box.
+  - **Drains:** four scuppers through the parapet at the roof's level, two at the back and one
+    on each side, each with its downpipe to a splash block.
+  - **Not built:** drive-in doors (each would need a ramp about 10 m long up to the dock floor;
+    the plan did not ask for one).
+- **Rules:** new `test_warehouses.gd` W0-W8, 21 checks: without the warehouses 0/1
+  (`logs/phase_2/mission2_step5/partB/before/`), then 19/19, then the dock light over each door
+  (seen missing in the first stills, against the shed's) 19/21 → 21/21 (`after/`). Nineteen
+  mutations exit 1, each on its own check (`partB/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partB/suites/run_suites.sh <scratch>`: 51 runs exit 0 (the forest
+  8/8 unchanged, `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0
+  failures.
+- **Stills:** `captures/compound/partB/` (`tools/captures/capture_warehouses.gd`); the first
+  also showed the FDC sign too large and glowing, now a small white plate with red letters.
+- **Unverified:** the look in daylight is never seen (the game is at night); the walls read
+  nearly black between the lights; the door numbers on the walls are dark at night (part C paints
+  them on the court too).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 5, part C: the loading bay, the yard dressed, stage 3 (#317), built)
+
+- **Built** (`warehouse.gd`'s open dock, inside and court; new `dock_judge.gd`, bay 9's judgement
+  without its lift and chock; `compound.gd`'s door 3, judge and dressing; the mission's docking,
+  stage 3 and its reload in `the_wrong_cargo.gd`; `app/first_drive.gd` calls the mission's new
+  `restore_place()` after Continue recovers the van):
+  - **Door 3:** the east warehouse's third dock open, its door raised into its tracks as the
+    shed's open docks, a wall only the camera meets across it (layer 8), its outside signal green
+    until the van docks and red once it has.
+  - **Inside:** the floor at the dock's 1.22 m over the whole warehouse (no void behind any
+    door); at door 3 the shed's leveller, two pallets loaded as the shed's staged loads (three
+    layers of 2 x 3 cartons in stretch wrap), the ends of the first racks 7 m in (blue uprights,
+    orange beams) and a high bay light over the bay; beyond it dark.
+  - **The court:** each door's number painted on the court 4 m out, guide lines either side of
+    every east door, 8 m long, as the shed's.
+  - **The yard:** three LED floods on 9 m poles along the north fence, aimed 20 m into the court
+    (energy 40, 60 degrees: the first stills at 5 and 8 lit no pool on the ground, the light
+    falling with the square of distance), shadows only on the middle one; the shed's dry van
+    trailer dropped square at the west warehouse's docks 2 and 4, 0.02 m off the bumpers, on
+    its landing gear, a tandem chocked; two stacks of empty pallets by the west warehouse's east
+    wall; the forklift parked by the east one's west wall; the dumpsters behind the west one;
+    each solid, nothing in the van's way from the gate to door 3.
+  - **The docking:** judged as bay 9's (within the red stop line, 0.10 m, 3 degrees and 0.1 m of
+    door 3's centre, at walking pace, the rear doors open); a miss names what was wrong in bay
+    9's words ("the door's centre" for "the bay's centre"); OPEN THE REAR DOORS first if they
+    are shut. Docked: stage 3 saved ("The warehouse compound", the escape's start), and the
+    objective "MISSION 2 IS BEING BUILT / Next: the hill road."
+  - **The reload at stage 3:** his van in the yard's bay, sealed, the dark van docked at door 3
+    with its rear doors open (`restore_place()`, since recovering a van shuts its doors), the
+    compound's gate shut.
+- **Rules:** new `test_loading_bay.gd` L0-L5, 10 checks: without the open door 0/1
+  (`logs/phase_2/mission2_step5/partC/before/`), then 10/10 (`after/`), backing onto door 3 by
+  real key presses: short of the bumpers 0.58 m, then docked 0.003 m, 0.0 degrees, 0.00 m off.
+  Nineteen mutations exit 1, each on its own check (`partC/mutations/`); every suite, `bash
+  logs/phase_2/mission2_step5/partC/suites/run_suites.sh <scratch>`: 52 runs exit 0 (`test_mission_two.gd` 55/55, `test_save_rules.gd` 29/29, the forest 8/8, `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0 failures. The headless import exits 0.
+- **Not yet:** the GPU price (new case CP, budget 1.0 ms †), with the whole mission's (#296).
+- **Stills:** `captures/compound/partC/` (`tools/captures/capture_loading_bay.gd`); the first
+  showed single cartons on the bay's pallets, now loads as the shed's.
+- **Unverified:** a van's floor (0.6 m) at a 1.22 m truck dock is a real mismatch, left as it
+  is since nothing is unloaded here (step 6 begins at the docking); the floods' brightness
+  beside the container yard's masts (energy 6 at 18 m, likely dim for the same reason).
+- **With part C, step 5 is built.** Next: step 6 (the escape: the guards as stand-ins or
+  Assignment 9's technique, being caught and the retry, the anonymous warning, S3, the gap).
+
+## Revision 2026-11-18 (Phase 2, Mission 2's step 6: the escape, written before any code)
+
+- **Status:** written before any code, at the author's word (#318). **Waiting for the author's
+  choices.** Values marked † are Claude Code's proposals. Why the guards turn on Ethan stays open
+  (S1, C51): this step shows nothing of it; the anonymous warning's words are drafts (S3).
+- **What exists** (2026-11-18): stage 3 is saved with the dark van docked at the compound's door
+  3; the gate is shut behind it; Ethan's own van stands in the container yard's bay with the
+  sealed load, the yard's gate shut (its code, 4719, on his run sheet); the compound's fence is
+  2 m from the yard's along the alley at x 136-138, z 130-146.
+- **The escape (the design: "on foot: move past the patrols, helped by an anonymous warning,
+  through the gap in the fence and back to your van; if a guard catches Ethan, back to the
+  start of the escape")** †:
+  1. **The turn (no words, S1 open):** docked, the dock's light goes off inside; two guards
+     walk out of the bay toward the van's rear, a third out of the booth to the gate. The
+     objective: GET OUT AND RUN. In the van he is caught.
+  2. **The patrols:** two guards walking fixed rounds between the warehouses and along the
+     north fence with torches, a third standing at the gate. Each sees ahead in a cone (15 m,
+     50° to either side) where nothing solid stands between, lit or close: in sight for 1.0 s,
+     or within 1.5 m, Ethan is caught. **Stand-ins (D6),** labelled so in the code, the tests
+     and the docs; Assignment 9's technique (patrol, alert, search, chase) replaces their
+     behaviour, not their places.
+  3. **Caught:** the screen fades; everything returns to the escape's start (Q4): Ethan by the
+     docked van, the guards at their starts, the gate shut, the warning unsent.
+  4. **The warning (S3, secretly Maya):** his phone buzzes once he is out: an unknown number's
+     text on the dash's phone line, e.g. "Don't go for the gate. The fence by the containers is
+     cut. Wait for the torch to turn." (a draft); no sender is shown.
+  5. **The gap:** a cut in the compound's fence where it steps round the container yard (x 138,
+     z about 140), the chain-link peeled back from a post, 0.6 m wide at the ground: wide enough
+     for him, never for a van. Through it, the 2 m alley, then the yard.
+  6. **Back to his van:** into the yard by its gate on foot (the code from his run sheet at
+     the keypad) or a second cut in its fence (the author's choice, below); at his van, E: the
+     swap undone: his van drivable again in the bay with its load and seal, the dark van left
+     docked at door 3 as a parked copy; the objective: DRIVE OUT (step 7, the getaway).
+- **Rules a test can measure** (written first, a new `test_escape.gd`, by real key presses):
+  - docked, the guards come; staying in the van is caught; out of it the escape starts;
+  - a guard sees Ethan in its cone in the open within 15 m and catches him in 1.0 s; not behind
+    a trailer, a stack or a wall; caught within 1.5 m from any side;
+  - caught, everything is as at the escape's start (Ethan, each guard, the gate, the warning);
+  - the warning arrives once, after he is out, and names the cut;
+  - the cut lets Ethan through and stops the van; the rest of the fence stays closed;
+  - back at his van, one drivable van (his, white, loaded and sealed), the dark van parked at
+    door 3; every suite unchanged.
+- **Decisions for the author:** the guards as labelled stand-ins now, or wait for Assignment 9's
+  brief; the turn as above; the way into the yard (its gate by the code, or a second cut); the
+  patrol guards' models (the two Rocketbox security characters again, as the gate guards, or
+  other Rocketbox people in dark work clothes).
+- **Not in this step:** the getaway and the ending (step 7); any gun (C51).
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 1 of the audit: free exit from the shed and the container yard, written before any code)
+
+- **Status:** the author's "FIX ALL ONE BY ONE" (#322) covers the audit's list in order; this
+  is its first item, written before any code.
+- **Found (confirmed in the code, #321):** the transfer shed's barrier rises only after the run
+  sheet's check on the way in (`transfer_shed.gd:305-318`), and the container yard's gate opens
+  only by `key_in()` from its outside stop line (`container_yard.gd:201, :286`); neither has a
+  way out, so the van is shut in the shed after loading and in the yard after the swap. No test
+  drove out (each moved the van past the gate).
+- **Real practice:** an inductive free-exit loop in the paving a few metres inside a vehicle
+  gate opens it for a vehicle leaving; the gate or arm closes once the vehicle is clear beyond
+  it; a vehicle coming in still needs its credential (the guard, the code).
+- **The fix †:** a free-exit loop 6 m wide and 3.5 m deep, 1.5 m inside each gate's line, in
+  the lane: a vehicle over it facing out (within 45 degrees) raises the shed's barrier or opens
+  the yard's gate; the barrier comes down, or the gate slides shut, once the whole vehicle is
+  2 m beyond the gate's line (1 m at the shed, its `CLEAR_BEHIND`); facing in, the loop does
+  nothing. The objective, while the yard's gate opens for him, says WAIT FOR THE GATE.
+- **Rules a test can measure** (a new `test_free_exit.gd`, by real key presses): from inside, the
+  van driven out of the shed meets a raised arm, never the arm, and the arm comes down behind
+  it; from inside the yard the gate opens for the van once it stands on the loop and shuts
+  behind it once clear; a van over a loop facing in opens neither; every suite unchanged.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 1 of the audit: free exit from the shed and the container yard (#322), built)
+
+- **Built:** a free-exit loop in each lane, 1.5 m inside the gate's line, 3.5 m deep and as wide
+  as the lane (`transfer_shed.gd`'s `EXIT_LOOP`, `container_yard.gd`'s `EXIT_LOOP`); as a real
+  inductive loop it senses any of the van over it (nine points from its front to its rear),
+  and only facing out within 45 degrees. On it the shed's barrier rises and comes down once the
+  whole van is 1 m beyond its line; the yard's gate slides open and shuts once the van is 2 m
+  beyond, or once the van has backed 2 m off the loop into the yard again. While the yard's gate
+  opens for him the objective says WAIT FOR THE GATE (`the_wrong_cargo.gd`).
+- **Rules:** new `test_free_exit.gd` X1-X6, 6 checks, by real key presses: before the fix 2/6
+  (the two facing-in checks pass, the four driving out fail, the van shut in at both;
+  `logs/phase_2/realism/fix01_free_exit/before/`), then 6/6 (`after/`). On the way: the test's
+  driver first braked once the gate began to close behind it, and first read the arm before
+  it had come down; and two mutations survived (the facing rule flipped) because the facing-in
+  checks did not stand the van on the loop, so the loop now senses the whole van, as a real one
+  does, and the checks park the van squarely over it. Seven mutations exit 1
+  (`mutations/`); every suite, `bash logs/phase_2/realism/fix01_free_exit/suites/run_suites.sh
+  <scratch>`: 53 runs exit 0, the art check 0 failures.
+- **Unverified:** the look; the guard in the shed's booth does not watch a van leaving.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 2 of the audit: the forklift, written before any code)
+
+- **Status:** the audit's second item (#321-#323), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (measured from `source_assets/sketchfab/09_forklift`, 2026-11-19):** Kamran Mughal's
+  truck is a four-wheel counterbalance truck, not a three-wheeler: two drive wheels 0.64 m
+  across at the front (hubs at x ±0.515, z 0.195), two steer wheels 0.55 m at the back (z
+  -1.265), a 1.46 m wheelbase; its steering wheel is its own ring of parts, 0.26 m across, at
+  (0, 1.415, -0.405) on a column tilted 45 degrees (its axis along (0, -0.71, 0.71)), its
+  spinner knob on its left (+x); its mast's channels stand at z 0.37-0.53. Today the glb holds
+  only `Truck` and `Carriage`, so nothing rolls or steers, the steering wheel never turns, the
+  mast never tilts, and `forklift_truck.gd` turns the truck on the spot about its front axle,
+  which a four-wheel truck cannot do.
+- **Real practice:** a counterbalance truck steers with its rear wheels by a hydrostatic
+  steering unit; its heading turns at v·tan(δ)/L about a point on the front axle's line, the
+  two steer wheels set by Ackermann geometry, the inner one up to about 80 degrees † at full
+  lock; the driver slows to a crawl, spins the wheel by its knob with his left hand (about 2
+  turns to full lock, looked up: MIL-T-52843C) and keeps his right on the lift and tilt levers;
+  loads travel tilted back about 4 degrees †, levelled to set down; a 2.5 t electric truck lifts
+  at about 0.35 m/s loaded † and lowers at about 0.5 m/s †; reversing he twists in his seat, a
+  hand on the overhead guard's post; the blue spot is lit whenever a direction is selected.
+- **The parts †:**
+  - **2a, the model cut:** `convert_depot_models.py`'s `forklift` job cuts six parts more, each
+    with its origin at its own pivot: `SteeringWheel` (rim, spokes, hub and knob), `DriveWheelL`
+    and `DriveWheelR`, `SteerWheelL` and `SteerWheelR`, `Mast` (channels, crossheads, chains);
+    the `Carriage` rides the mast and tilts with it.
+  - **2b, the motion:** each turn of its rounds becomes an arc about a point on the front axle's
+    line 0.9 m from its middle (inner wheel 75 degrees, outer 46), filleted into the straight
+    legs; where it changes from backing to driving forward it stops, the arc taken backing; it
+    steers in before each arc and out after, the steering wheel at 2.25 turns from straight to
+    full lock, never faster than 1.5 turns a second; the steer wheels at their Ackermann angles,
+    every wheel rolling with the ground it covers; from a parked heading it sets off along an
+    arc toward its first leg, as a four-wheel truck must.
+  - **2c, the mast:** tilted back 4 degrees while it travels loaded, level to take or leave a
+    load; lifts at 0.35 m/s, lowers at 0.5 m/s.
+  - **2d, the driver:** his left hand on the knob, going round with the wheel; his right on the
+    levers while the forks move, on the wheel's rim otherwise; backing, his chest turned 30
+    degrees with his head; the blue spot lit whenever it drives or steers.
+- **Rules a test can measure** (a new `test_forklift.gd`, and `test_shed_work.gd` as it is):
+  the six parts exist, each turning about its own pivot; the heading turns at v·tan(δ)/L
+  within 5 percent and the front axle never slides sideways; each steer wheel within 1 degree
+  of its Ackermann angle, the inner never past 80; the steering wheel at δ's share of 2.25
+  turns, never faster than 1.5 turns a second; each wheel's turn its distance over its radius
+  within 3 percent; tilted back 3-5 degrees loaded on the move, level within half a degree at
+  take and leave; the lift's speeds; the left hand within 4 cm of the knob through a turn; the
+  spot lit whenever it drives or steers; the trips as before (W2's loads within 5 cm). W9's
+  hands move from ten and two to the knob and the rim or levers, a change written down here.
+
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 2 of the audit: the forklift (#323-#324), built)
+
+- **Built:**
+  - **2a, the model** (`convert_depot_models.py`'s `forklift` job): six parts cut free of the
+    body, each with its origin at its own pivot: `SteeringWheel` (123 loose parts; its centre at
+    (0.005, 1.415, -0.405) and its axis along (0, -0.7071, 0.7071), found from the rim itself),
+    `DriveWheelL` and `R` (on their axle at y 0.318, z 0.195, each in its tyre's middle plane),
+    `SteerWheelL` and `R` (y 0.277, z -1.266), `Mast` (its foot at (0, 0.32, 0.45)); the
+    `Carriage` rides the mast.
+  - **2b, the motion** (`forklift_truck.gd`): a four-wheel rear-steer truck: its heading turns
+    at v·tan(δ)/L (L 1.461 m) about a point on its front axle's line; every heading change of its
+    rounds is a turn planned from those kinematics, the steer wound in at the driver's pace (2.25
+    turns of the wheel to full lock, 1.5 turns a second at most), held and wound out, filleted so
+    it lands on the next leg's line; at a cusp (backing, then on) it swings round backing and
+    stops; from its parking place it backs out to a line along the cross-aisle and parks nose in
+    from it; its steering wheel turns with the steer, its steer wheels at their Ackermann
+    angles (the inner 75 degrees in its turns, 0.9 m about the front axle's middle), each wheel
+    rolling with the ground its hub covers; its blue spot lit whenever it moves.
+  - **2c, the mast:** tilted back 4 degrees with a load on the move, level to take or leave one;
+    lifting at 0.35 m/s, lowering at 0.5 m/s.
+  - **2d, the driver:** a spinner knob on the rim (the model had none), his left hand round it as
+    the wheel turns; his right on the control lever beside the seat, or backing on the overhead
+    guard's right rear post, his chest turned 30 degrees with his head (`look_travel.gd`, now
+    run before his arms' IK so his hands keep their holds).
+  - **The putaway (#324):** turning as a real four-wheel truck, it could not reach aisle 03's
+    floor place at right angles (a 3.81 m aisle against about 4.2 m needed for its turning
+    radius and a 1.2 m pallet); the author chose a floor stacking bay: FS-01, marked out in 50 mm
+    yellow tape at the north end of the clear strip east of the racking (its pallet's middle at
+    (-48.0, 9.1), `dock_staging.gd`), 3.24 m from the dock's edge, which the truck's rear sweeps
+    within 0.38 m of as it backs out. Its rounds now run along the cross-aisle, sounding its horn
+    where they cross aisle 05's mouth.
+- **Rules:** new `test_forklift.gd` F1-F10, 13 checks: before the cut 0/2
+  (`logs/phase_2/realism/fix02_forklift/a_before/`), then 13/13 (`d_after/`): no wheel scrubs
+  sideways (the worst 1.15 degrees) and the heading turns at v·tan(δ)/L within 0.3%; the inner
+  steer wheel 75 degrees at most; each wheel rolls its distance within 0.1%; the steering wheel
+  at the steer's share of its turns, 1.50 turns a second at most; the tilt and the lift's speeds;
+  the spot; nothing solid met; his hands within 8 cm of their holds. On the way it found: the
+  rack clip that moved the putaway, the dock's edge (the bay moved twice, x -46.5 to -48.0), a
+  step's speed reset that blinked the spot, turns sampled off their spacing (the wheel spun
+  1.73 turns a second), and the hands frozen while parked. `test_shed_work.gd` 25/25, changed
+  where the fix changed what it checks (each written in it): its floor place to FS-01, its
+  horn to aisle 05's mouth, W10's trigger to the cross-aisle's 3.7 m straight. Sixteen mutations
+  exit 1, each on its own check (`mutations/`); every suite, `bash
+  logs/phase_2/realism/fix02_forklift/suites/run_suites.sh <scratch>`: 54 runs exit 0
+  (`test_forklift.gd` 13/13, `test_shed_work.gd` 25/25, `test_shed_floor.gd` 18/18,
+  `test_collision.gd` 44/44, `test_hit_speeds.gd` 12/12), the art check 0 failures; the headless
+  import exits 0 (`import.log`).
+- **Stills:** `captures/forklift/fix02/` (`tools/captures/capture_forklift.gd`).
+- **Unverified:** the look in motion; the right hand's lever and post points by eye only; the
+  pallet jack and the dock worker are the audit's next items.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 3 of the audit: the pallet jack, written before any code)
+
+- **Status:** the audit's third item (#321-#325), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (measured from `source_assets/sketchfab/10_pallet_jack`, 2026-11-19):** FFeller's jack
+  has twin steer wheels 0.211 m across on the steering unit's axis (z 0.689 behind the middle),
+  two tandem load rollers 98 mm across and 127 mm wide under each fork (centres at z -0.572 and
+  -0.455, so the fixed axle's line at z -0.513, 1.202 m from the steer axis), each pair in a
+  bogie on a pin at (y 0.053, z -0.326), and a push rod in each fork from the frame to its bogie.
+  Its forks are drawn 35-115 mm off the floor and its load rollers 24 mm above it, while its
+  steer wheels touch it. Today the glb holds only `Chassis`, `Steering` and `Tiller`: the load
+  rises 40 mm while the forks stay put, the steering unit swings no more than 25 degrees and
+  the jack turns about its middle at 1.33 radians a metre, and no wheel turns.
+- **Real practice (spec sheets: Uline H-1043, Wesco CP3, Global Industrial's narrow-aisle jack,
+  RS's 2500 kg truck):** forks lowered at about 3 in (76 mm) and raised to 7-7.5 in (178-191 mm);
+  a 200-210 degree steering arc (about ±100-105 degrees); steer wheels about 200 mm, tandem load
+  rollers about 82 mm. Pumping raises the frame and forks; the steer wheels stay on the floor
+  under the pump and the load rollers stay on it under the fork tips, their bogies swung down by
+  the push rods. The rollers are its fixed axle: the jack turns about a point on their line, its
+  heading at v·sin(δ)/L, v the steer wheels' speed and δ the steering unit's angle, and with the
+  handle swung right round it pivots about the rollers' middle. The operator walks where the
+  handle points, so with it swung far he stands to the jack's side.
+- **The parts †:**
+  - **3a, the model cut:** `convert_depot_models.py`'s `pallet_jack` job cuts the frame's
+    moving parts free, each with its origin at its pivot: `SteerWheels` (in `Steering`, on its
+    axle at y 0.106), `BogieL` and `BogieR` (each fork's plates and its two rollers, on the
+    bogie pin), `RollerL1`, `RollerL2`, `RollerR1`, `RollerR2` (in their bogies, on their
+    axles), `PushRodL` and `PushRodR` (in `Chassis`).
+  - **3b, the lift:** lowered, the frame sits 24 mm lower than drawn, its rollers on the floor
+    and its forks' tops at 91 mm; each stroke raises the frame (the forks, the push rods, the
+    frame's back) toward its top, 76 mm up, the steering unit and steer wheels staying on the
+    floor and each bogie swinging about its pin so its rollers stay on it; the load starts
+    rising only when the forks reach its deck's underside (37 mm up, about two strokes) and is
+    40 mm clear at the fourth, as now; lowering, the forks come down to their lowered height
+    over the same 1.2 s, the load landing on the way.
+  - **3c, the steering:** A and D swing the steering unit and its handle about the pump's axis
+    up to ±105 degrees, at about 120 degrees a second †; the steer wheels roll along the
+    direction the unit faces; the jack's heading turns at v·sin(δ)/L about the rollers' line
+    (L 1.202 m), so with the handle swung right round it pivots about the rollers' middle;
+    Ethan walks along the handle's direction behind its end, his hands on its loop, standing to
+    the jack's side when it is swung far.
+  - **3d, the wheels:** the steer wheels roll the distance their axle covers along their
+    direction over their 0.106 m radius; each load roller rolls the distance its own centre
+    covers along the jack's heading over its 0.049 m radius (inner and outer apart in a turn).
+  - **The static jacks** (the yard's and the compound's dressing, if any use `pallet_jack.glb`)
+    stand lowered, rollers on the floor.
+- **Rules a test can measure** (a new `test_pallet_jack.gd`, and `test_loading.gd`,
+  `test_docking.gd`, `test_mission_two.gd` as they are): the new parts exist, each about its
+  own pivot; lowered, every roller and steer wheel within 5 mm of the floor and the forks'
+  tops at 91 mm; through a lift the forks rise with each stroke and the load only once they
+  meet it, 40 mm clear at the fourth, every roller and steer wheel staying within 5 mm of the
+  floor; lowered again, the forks back at 91 mm; the steering unit reaches 100-105 degrees and
+  no further, never faster than 120 degrees a second †; the heading turns at v·sin(δ)/L within 5
+  percent and the rollers' line never slides sideways; each wheel turns its distance over its
+  radius within 3 percent; Ethan's hands within 4 cm of the loop through a turn; loading into
+  the van as before (`test_loading.gd`'s rules unchanged; its driver's steering may change to
+  steer the new way, a change written into it).
+- **Not changed:** the four strokes, the 1.2 s lowering, the jack's speeds, its collision, the
+  hold, the lift's deck and every rule of H2 and H9.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 3 of the audit: the pallet jack (#326-#327), built)
+
+- **Built:**
+  - **3a, the model** (`convert_depot_models.py`'s `pallet_jack` job): seven parts more, each with
+    its origin on its own axle: `SteerWheels` (the twin wheels, hub and caps, in `Steering`, on
+    their axle at y 0.106), `RollerL1`, `RollerL2`, `RollerR1`, `RollerR2` (each roller and its
+    end caps, in `Chassis`) and `BogieL`, `BogieR` (each fork's bogie plates, axles and pin).
+    Changed from the plan: each bogie turns about its two rollers' middle, not about its pin. A
+    rigid tandem bogie turned about its pin lifts one roller off the floor while the other digs
+    in; turned about their middle, its pin rides up in the fork (within 7 mm) while both rollers
+    stay down. The push rods ride with the frame.
+  - **3b, the lift** (`pallet_jack.gd`'s `_frame()`, `_load_lift()`): lowered, the frame sits
+    24 mm under where it is drawn, its rollers on the floor and its forks' tops at 91 mm. Each
+    stroke raises the frame 19 mm, to 76 mm at the fourth. The load rises only once the forks
+    meet its deck (36 mm up) and is 40 mm clear at the fourth, as before. The steering unit,
+    steer wheels and rollers stay on the floor throughout, and lowering brings the forks back
+    down over the same 1.2 s.
+  - **3c, the steering** (`_steer()`, `_rolled()`): A and D swing the steering unit toward 105
+    degrees, at most 120 degrees a second, and let go it eases back straight (#326). The jack
+    turns about its load rollers' line at v·sin(δ)/L (L 1.202 m), taken at each step's middle
+    so the rollers never slide sideways; swung right round, it pivots about them.
+  - **3d, Ethan behind it (#327):** he keeps behind the handle, facing the way the steering unit
+    faces. With no sidestep in his clips, the handle swings only as fast as his walk can carry
+    him round: half his pace over his distance from the unit's axis. Standing, he shuffles round
+    no more than 10 degrees. When he himself is stopped for 0.15 s (backing into a wall), his
+    walk stops too, as it does when the jack is stopped, so he never walks on the spot. In
+    `driver.gd`'s `push_step()` he is no longer pressed down at 0.5 m/s while on the floor,
+    which had held him at the bridge plate's 25 mm edge as he backed out of the hold slowly.
+  - **3e, the wheels** (`_roll()`): the steer wheels roll the floor their axle covers along the
+    unit's facing over 0.106 m; each roller rolls its own centre's travel along the jack's
+    heading over 0.049 m.
+- **Rules:** new `test_pallet_jack.gd`, P1-P9, 11 checks: 0/9 before
+  (`logs/phase_2/realism/fix03_pallet_jack/a_before/`), then 11/11 (`d_after/`). Lowered, the
+  wheels and rollers are on the floor and the forks' tops at 91 mm. Pumped, the forks rise
+  [0.019, 0.038, 0.057, 0.076] m and the load [0, 0.002, 0.021, 0.040] m, the wheels staying
+  down and the bogies' pins in their forks. Standing, the swing reaches 10 degrees. Walking it,
+  the swing reaches 100-105 degrees, at most 120 degrees a second and within his walk round it
+  (0.98 of the limit). The heading turns at v·sin(δ)/L within 1.8% and the rollers' line slides
+  0.1% of the pivot's travel. Swung round, it pivots (60 degrees turned, the rollers' middle
+  moving 0.32 m against the handle's foot's 1.25 m). Every wheel rolls within 0.1%, and his
+  hands stay within 4 cm of the loop as it swings.
+  `test_loading.gd` 35/35, changed where the fix changed what it checks (each written in it):
+  - H18 reads the forks' steps, the load rising once they meet it;
+  - its driver swings the handle toward the heading it wants, in proportion to the error and
+    easing off as it closes (it used to hold a key for any error, which swung the new handle
+    to 105 degrees);
+  - its pull out of the hold steers the jack straight back, as a driver does.
+  Seventeen mutations exit 1, each on its own check (`mutations/`, `mutations_fix03.py`). Every suite, `bash
+  logs/phase_2/realism/fix03_pallet_jack/suites/run_suites.sh <scratch>`: 55 runs
+  exit 0 (`test_pallet_jack.gd` 11/11, `test_loading.gd` 35/35, `test_docking.gd` 5/5,
+  `test_mission_two.gd` 55/55, `test_bay_nine.gd` 20/20, `test_on_foot.gd` 50/50, `test_stair.gd`
+  33/33); the art check 1 failure (it expected the jack's old three parts), then 0 once taught
+  the new ones (`check_first_drive_art.py`); the headless import exits 0 (`import.log`).
+- **Stills:** `captures/pallet_jack/fix03/` (`tools/captures/capture_pallet_jack.gd`).
+- **Unverified:** the look in motion. Standing, he slides round the 10-degree shuffle with no
+  step until sidestep clips come (#327: Mixamo's Left and Right Strafe Walking, if the author
+  downloads them). The dock worker is the audit's next item.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit: the dock worker, written before any code)
+
+- **Status:** the audit's fourth item (#321-#328), written before any code. Values marked † are
+  Claude Code's estimates, not looked up.
+- **Found (`dock_worker.gd`):**
+  - He walks every leg at a flat 1.4 m/s in his one walk clip, the dock stair's six 0.217 m
+    risers included, his hands at his sides, the rail (1.07 m) untouched.
+  - He sets off and stops at full pace, and at each stop he snaps round to face the doors,
+    the load or his chair in one frame.
+  - His scanner's red window glows the whole time he carries it. He never points it at
+    anything: no pallet has a label, and the beep comes at 1.0 s with no light.
+  - The seal appears on the van's hasp at 3.1 s without passing through his hand, and he
+    "notes" in the log with no pen. He has eight clips: idle, walk, seal, sit down, sit,
+    stand up, check, note.
+- **Real practice:**
+  - On stairs people slow to a step a tread (Di Giulio et al. 2019, as for Ethan: about 76 steps
+    a minute up and 117 down), a hand on the rail going down (OSHA 1910.25 rails are for
+    holding).
+  - Walking starts and stops over a step or two, and a person turns on the spot in a step or
+    two before setting off.
+  - A handheld scanner's aiming light shows only while its trigger is held, a fraction of a
+    second, and is pointed at the label. A good read gives a beep and a green flash (Zebra's
+    and Honeywell's handheld guides †). Shipping labels are 4 x 6 in, on the pallet's face
+    toward the dock.
+  - A bolt seal is taken from a pouch, pushed through the hasp and snapped shut, and its number
+    is written in the seal log with a pen.
+- **The parts †:**
+  - **4a, the stair:** on the flight he takes one tread a step, at Di Giulio's pace, each foot
+    set on its tread by leg IK as Ethan's are (`stair_steps.gd`'s method, ported to his
+    Biped legs), his walk clip slowed to match. His hand on the rail's side holds the rail by
+    arm IK, sliding along it; off the flight it lets go.
+  - **4b, starting, stopping and turning:** he gets up to pace over about 0.6 s and slows to a
+    stop on the last metre. Where he must face a new way standing, he turns on the spot over
+    0.5-1 s, with Rocketbox's turn clips if fetched (4e), or else his idle with his feet
+    stepping round.
+  - **4c, the scanner:** dark until he aims. Facing the load, he raises it toward a 4 x 6 in
+    shipping label on the load's face toward the lift (one is added to each staged load, its
+    printing drawn by script). Then the red aiming line runs from the scanner's window to the
+    label for 0.4 s, and the beep comes with a green flash of 0.2 s.
+  - **4d, the seal and the pen:** at the van he takes the bolt seal (bolt and cap) from his vest
+    into his right hand and holds it until it goes through the hasp (3.1 s), so it is in his
+    hand, then on the van. For the note a pen is in his right hand, taken from his vest, while
+    the log is in his left.
+  - **4e, more clips (optional):** from the same Rocketbox library (MIT, as his others):
+    `m_walk_start`, `m_walk_stop`, `m_turn_left_90`/`_180`, `m_turn_right_90`/`_180` and
+    `m_documents_take`.
+- **Rules a test can measure** (`test_dock_worker.gd` extended, `test_sealing.gd` as it is):
+  - on the flight a step takes 0.5-0.8 s, one tread a step, each planted foot within 3 cm of
+    its tread's top;
+  - his rail-side hand within 5 cm of the rail all the way down;
+  - his pace rising from 0 to 1.4 m/s over no less than 0.4 s, and falling to 0 over the last
+    metre;
+  - no turn standing faster than 360 degrees a second;
+  - the scanner's window dark except for 0.3-0.5 s of aiming, its line ending within 5 cm of
+    the label, then a green flash with the beep;
+  - the seal in his hand until it is on the hasp;
+  - a pen in his hand whenever he notes.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit: the dock worker (#329), built)
+
+- **Built:**
+  - **4e, his clips:** seven more from Microsoft Rocketbox (MIT, `convert_rocketbox.py`'s
+    `dock_worker` job, listed in `source_assets/rocketbox/README.md`): `WalkStart`, `WalkStop`,
+    `TurnLeft90`, `TurnLeft180`, `TurnRight90`, `TurnRight180` and `TakeDocuments`. The turns are
+    baked in place and his body is turned over each clip's first two thirds.
+  - **4a, the stair** (new `worker_stair.gd`): on the flight he takes a tread a step at Di
+    Giulio's cadence, 117 steps a minute down and 76 up (0.49 and 0.32 m/s across the floor).
+    His walk runs at that rate, each foot is set on a tread of its own by two-bone leg IK, and
+    his body stays 3 cm under his lower foot's tread. His hand on the rail's side holds the rail's
+    top by arm IK, sliding along it: left going down, beside his shoulder; right going up, a
+    little ahead. It lets go at the rail's ends. The seal log is in his other hand: his right
+    going out, his left coming back. His way down the flight is moved 0.2 m toward the rail
+    (`transfer_shed.gd`'s `WORKER_STAIR_WAY`), and `dock_access.gd` gives the rail's top line
+    (`rail_top()`).
+  - **4b, getting going, stopping, turning** (`dock_worker.gd`): up to 1.4 m/s at 2.8 m/s² in
+    his walk start, and down to a stop over his last metre at 0.98 m/s² in his walk stop. He
+    rounds corners on a curve, aiming 0.4 m ahead along his way, and slows before a corner
+    (to half his pace at a right angle, a fifth doubling back). He turns on the spot to face the
+    doors, the load or his desk, and before setting off on a way more than 45 degrees off.
+    Under 40 degrees he turns in his idle over 0.35 s, more in the turn clips; never over
+    360 degrees a second, never a snap. Found and fixed on the way: a one-frame stop at every
+    waypoint, and his way at bay 9 cutting the wheel guides' ends (moved to the middle of the
+    0.5 m between the dock face and the guides).
+  - **4c, the scanner:** its window dark until he aims. Aiming, a red line runs 0.4 s from the
+    window to the shipping label facing him, then the beep comes with a green light's 0.2 s
+    flash (the beep now 1.2 s into the look). Every staged load has two 4 x 6 in labels
+    (`dock_staging.gd`'s `_label()`, `shipping_label.png` drawn by `make_shed_signs.py`, every
+    name and number invented): on its dock-side face and on its right, 600 mm up, as GS1
+    places them.
+  - **4d, the seal and the pen:** the bolt seal (bolt and yellow cap) is in his right hand from
+    his turn to the doors until it is on the hasp; a ballpoint is in his right hand as he notes.
+- **Rules:** `test_dock_worker.gd` W12-W18, 8 checks more: 12/18 before
+  (`logs/phase_2/realism/fix04_dock_worker/a_before/`), then 19/19 (`d_after/`).
+  - W12: a tread a step, his feet taking turns, each step 0.45-0.85 s, each planted foot on its
+    tread.
+  - W13: his rail hand on the rail (0.028 m and 0.000 m off down and up), the log in his other
+    hand.
+  - W14: his pace never changing faster than 3.85 m/s² (2.8).
+  - W15: no snap, at most 360 degrees a second standing.
+  - W16: the seal in his hand until it is on the hasp; the pen in his hand all the time he
+    notes.
+  - W17: the scanner dark until he aims; the line on the label (0.000 m) for 0.40 s; a 0.22 s
+    green flash with the beep.
+  - W18: off the stair, walking, his toes never more than 3 cm under the floor (0.016).
+  - His round now takes 69.7 s, so its time limit in `test_dock_worker.gd` (ROUND) and
+    `test_sealing.gd` (SEAL_ROUND) rises from 60 s to 90 s; each change is written in.
+  - Seventeen mutations exit 1 (`mutations/`, `mutations_fix04.py`). A stop-and-turn rule at
+    doubling-back corners was removed when its mutation survived: rounding corners already
+    covers it.
+  - Every suite, `bash logs/phase_2/realism/fix04_dock_worker/suites/run_suites.sh <scratch>`:
+    55 runs exit 0 (`test_dock_worker.gd` 19/19, `test_sealing.gd` 13/13,
+    `test_shed_work.gd` 25/25).
+  - The art check: 1 failure (it expected his eight old clips), then 0 once taught his
+    fifteen. The headless import exits 0 (`import.log`).
+- **Stills:** `captures/dock_worker/fix04/` (`tools/captures/capture_dock_worker_fix04.gd`):
+  down the stair with his hand on the rail, the seal in his hand at the hasp, noting (the pen
+  is out of frame), and aiming at a label.
+- **Found, not fixed:** in Rocketbox's stand-up clip his left toe dips 0.16 m under the dock
+  floor as he rises from the chair.
+- **Unverified:**
+  - The look in motion.
+  - The scanner is not raised toward the label: the line runs from it where his clip holds his
+    hand.
+  - The turns' feet slide a little as the body turns over the clip.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: seeing the dock hand seal (#333), written before any code)
+
+- **Found:**
+  - In play the van is already moved forward: the rear doors close only once its rear is 2.5 m
+    from the bumpers (`the_wrong_cargo.gd`'s `CLEAR_OF_DOCK`), and only then is the dock hand
+    called; the reload puts it 2.98 m out (`LOADED_AT`).
+  - But `test_dock_worker.gd` and the stills set the van against the bumpers, so he sealed in
+    a 0.15 m gap.
+  - Nothing keeps him from going out if the van backs onto the dock again before he seals.
+  - Ethan, who has just shut the doors, stands where the hand seals.
+  - From the cab or behind the van, the player sees none of his round.
+- **The parts †:**
+  - **4f, room behind the van:** the hand goes out to the doors only while the van's rear is at
+    least 2.5 m from the bumpers. If it is backed nearer before he seals, he waits at the side
+    door until it is clear again. The test and the stills set the van as play leaves it, 2.98 m
+    out (`LOADED_AT`).
+  - **4g, the cutscene:** when the doors shut and the hand is called, the player's control is
+    held, the HUD hidden (`set_cinematic`), and Ethan steps 1.2 m aside to the van's side to
+    stand clear. Fixed cameras cut as the hand reaches each part of his round:
+    1. at his desk, standing up and taking the log;
+    2. coming down the dock stair, his hand on the rail;
+    3. out of the side door;
+    4. behind the van, sealing the doors, close on the hasp, held through his check and note.
+
+    Then it cuts back to the player's own camera as he turns to walk back. E, Enter or Space
+    skips to the end; the hand carries on as he is. Its length is the author's choice: edited
+    (he is moved on along his own way while no camera sees him) or in real time.
+- **Rules a test can measure** (`test_dock_worker.gd`, `test_sealing.gd`):
+  - he never goes out while the van's rear is nearer than 2.5 m to the bumpers, and he stands
+    behind it with at least 0.5 m to spare;
+  - the cutscene starts when the hand is called and ends when he has noted, the player's
+    control held all the while;
+  - each camera sees him: he is in its view and nothing solid lies between;
+  - a skip ends it at once;
+  - Ethan stands clear of where the hand seals.
+
+## Revision 2026-11-19 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: the seal log as a scene (#337) and what the film showed (#338), written before the #338 code)
+
+- **Built for #337 (not committed):**
+  - The log he carries was drawn at 1/100 of its size (2 by 3 mm): the model's skeleton is
+    scaled 0.01, and the log, unlike the pen and seal, was not scaled back. It is now its true
+    size in either hand (W26).
+  - As he notes he turns from the doors (he wrote 0.02 m from them), raises the log before his
+    chest on his left palm, and ticks this van's row under the pen's tip, the row filled in the
+    page's own hand and ink with his initials (W25).
+  - The cutscene shows the page as he sees it, beside his eye, until his pen is off it and he has
+    looked the row over; the seal shot starts once he is past its lens (W19).
+- **Found in the film (#338):**
+  - His way out runs 0.25 m off bay 9's dock face: his body passes through its dock seal, a
+    bumper, the wheel guide stops and its camera wall (a probe of his whole round).
+  - At the hasp the log is still in his left hand, against his right; the pen stands 8 cm out
+    of the back of his hand, so his hand goes through the board to put its tip on the page; his
+    wrists are placed by IK but turned as the clip has them, so his forearms twist.
+  - Walking, the log hangs edge-on to the cameras, so his hands look empty.
+- **The parts (the author's "Yes, build it", #338):**
+  - **4h, his way:** kept 0.3 m clear of the dock face's seal, bumpers and wheel stops.
+  - **4i, the log on the rear step:** at the doors he crouches (Rocketbox `m_crouch_in`,
+    `m_crouch_idle`, `m_crouch_out`, MIT) and lays the log flat on the van's rear step (its top
+    0.538 m up in the van's frame, 18 cm deep), seals with both hands, checks the seal ("view,
+    verify, tug, twist", as the log's own header says) with his right hand on it, crouches to
+    take the log up, turns from the doors and ticks it.
+  - **4j, his hands:** turned at the hasp as hands holding a hasp and a bolt seal are, and the
+    pen held between thumb and fingers at their tips, his hand turned to write; wrists within a
+    human range; no hand inside the board.
+  - **4k, the log seen walking:** carried on his level walks before him at his waist, its face
+    up, as a checker walks to a job; in his right hand by its edge on the stair, his left on the
+    rail.
+- **Rules a test can measure** (`test_dock_worker.gd`): on his walks his body (0.25 m round)
+  meets nothing solid but floors and stairs, nor the dock seal (W27); while he seals the log lies
+  on the step, level, within 1 cm of its top, no hand within 2 cm of it, his hips 0.3 m lower as
+  he sets it down and takes it up (W28); checking, his right hand on the seal, tugging it out
+  and twisting (W29); his wrists within 60 degrees of his forearms at the hasp and writing, the
+  pen's tip at his fingertips and its shaft between his thumb and index finger (W30); walking on
+  the level, the log before him at his waist, never edge-on to the camera that shows him (W31).
+- **After:** the van's tail lamps as their own step (#338).
+
+## Revision 2026-11-20 (Phase 2, Mission 2's realism fixes, 4 of the audit, continued: #338-#342 built)
+
+- **His way (4h):** bay 9's wheel guides now start 1 m out from the dock face instead of 0.5 m
+  (the author's "Walkway, no step", #342), and he walks the walkway between them and the dock
+  face, his body clear of the dock seals' pads, the bollards and the chock, round the east guide's
+  end and in to the van. A high step over the guide (#340) was built and dropped: posed by leg IK
+  over a standing clip, it read wrong however short its steps (#341), and Rocketbox has no
+  step-over motion.
+- **At the van, all from one place (4i), 0.78 m out from the doors:** he crouches (Rocketbox's
+  crouch, his left foot a step ahead) and lays the log flat on the rear step, the whole of it on
+  the step's top (from under the doors to its rounded edge 0.25 m out; centred 0.13 m out past
+  it at first, it had seemed to lie on nothing, #341), its long side across it, 0.18 m right of
+  the hasp; rises half way (the rise held where his hips are 0.68 m up) and seals, his hands on
+  the hasp, both elbows bent; checks it (view, verify, tug, twist), his right hand on it; goes
+  back down (the rise run backwards), takes the log up, rises, brings it up before him and hands
+  it to his left hand, and ticks it where he stands, 0.48 m clear of the doors, turning to his
+  way back after. The converter bakes the crouch and the rise with their own motion, the rise
+  starting where the crouch ends.
+- **His hands (4j):** one IK and one hand turn an arm (`hand_turn.gd`), each hand turned as it
+  holds what it holds; the pen and the bolt seal placed in his fingers from his finger bones.
+- **Carried (4k, #341):** walking, the log hangs at his side from his hand by its edge, clear of
+  his leg, as a clipboard is carried; held up before him only to hand it across and to write. A
+  carry before him on his palm (#338) was dropped as unnatural.
+- **Found on the way:** at the hasp his arms had been locked straight (the hasp is 0.9 m over his
+  feet and the door clip leant him back); W26 had measured the log's size only at the end, W29's
+  tug and twist had counted his hand coming to the seal, and the test's floor ray had taken the
+  chair's seat for his floor; a stoop was tried and left out (nothing needed it); the tick's
+  hidden strokes and their one-axis scale had made a mesh distance read near zero (the test now
+  measures in the world and skips hidden meshes).
+- **Tested:** `test_dock_worker.gd` 32/32 and `test_sealing.gd` 15/15; every suite (55 runs and the
+  art check) exit 0 with no script or shader errors; 46 of 47 mutations exit 1, m29 surviving (his
+  way now passes 0.47 m clear of the staged load that the floor's ray height guarded against).
+
+## Revision 2026-11-20 (Phase 2, the van's tail lamps (#338, #343, #344), built)
+
+- **Found:** the tail lamps' lens (`TailLamps`, its texture shared with the windows) is a clear
+  cover over a red prism lens and, in each lamp's middle, a clear section with a chrome reflector.
+  With the engine on, one unshaded dull red covered the whole of it. Its spikes and gaps were our
+  converter's (`convert_iveco.py`, 2026-11-01): it cut the rear "indicators" off the top of the red
+  lens by height; the reversing lamp was a band of the lens cut by height too, lit flat white.
+- **Built (the author's "Yes, build it", #343, #344, after a reference picture of a real van's
+  lamp):** `tail_lamp.gdshader` (in the van's folder) with the lens's own texture and its masks
+  (`tools/art/make_tail_lamp_mask.py` → `art/iveco/tail_lamp_masks.png`: red lens; chrome
+  reflector). The red lens glows in its own colours, its prisms showing as with its cover off (the
+  author's choice of the Blender picture), the stop five times the tail (UN Regulation 7) and the
+  road glow in the same ratio; the clear section's reflector shows its facets and catches a little
+  of the red inside the housing, so it reads as part of the lamp (#344), flashes amber for its own
+  side's indicator and shines white in reverse; the cover nearly clear and glossy. The two cut
+  pieces wear the same lamp, so each is whole; the reversing band mesh is gone (the lamps' light on
+  the ground behind stays).
+- **Tested:** `test_tail_lamps.gd` (new) 6/6: the lamp and its two pieces one lamp material; the
+  masks on the lens's red faces and its reflector, not on the cover; the brake key held, the stop
+  at least five times the tail; the left indicator's key flashing the left lamp's clear section
+  only; reverse white in the clear sections; unlit with the engine off. `test_dash_screen.gd` 16/16
+  (its reversing check reads the lamps' reverse). Five mutations exit 1. Stills shown and kept
+  (`captures/tail_lamps/`).
+
+## Revision 2026-11-20 (Phase 2, #330: rain in the cab and the passenger wiper's water, built)
+
+- **Found (two window runs at the author's OK, stills in `captures/issue330/`):** docked at bay 9
+  the van's cab stands under the dock front's rain (z 20.5-24 m), and rain fell in the cab before
+  the middle seat. The converter cuts the moon roof's opening through the roof (`convert_iveco.py`)
+  and its glass is see-through, which a lamp rain's height-field collider never takes, so the
+  opening was a hole; the windshield had its own colliders (`van_particles.gd`), the moon roof
+  none. The passenger blade's line of water at its top turn drew as a column of pale flat tiles: 24
+  pieces 6-8 cm long and 1-1.3 cm wide, scattered over 48 cm and sliding sideways at 0.2-0.6 m/s.
+- **Built (the author's "A and B", #345):** A, `MoonRoofCollider` under the moon roof's glass
+  (`van_presentation.gd`), its top 3 mm over the glass, 0.3 m deep so no drop passes it in a tick,
+  taking every particle but the passenger blade's water, as the windshield's do: the rain lands and
+  splashes on the glass. B, the line a thin clear ridge where the blade turned
+  (`wiper_flick.tscn`, `PassengerLine`): 60 pieces (24), 2-3 mm wide and 1.2-1.8 cm long,
+  overlapping (scale 0.2-0.3, was 1-1.3), within 1 mm of the line (box x 0.001, was 0.004),
+  hardly moving (0.02-0.08 m/s, was 0.2-0.6), dimmer (alpha 0.55 → 0.45, was 0.95 → 0.8; `sky`
+  0.8, was 2; `scatter` 4, was 10; `min_pixels` 1, was 2). A1's peak becomes 1,124 particles
+  (1,052). Recorded in `CHANGE-BRIEF.md` revision 12.
+- **Tested:** `test_moon_roof_rain.gd` (new) 0/4 then 4/4: over the whole opening, its top within
+  10 mm of the glass and at least 0.2 m deep; it stops all 20 lamp volumes' rain and splashes;
+  not the passenger water; still over the opening with the van moved and turned.
+  `test_wiper_flick_config.gd` 441/451 then 451/451 (the ten new values). Six mutations exit 1.
+  Stills (`captures/issue330/fixed/`): no rain in the cab in six looks at the seats, the rain
+  landing on the moon roof's glass from above, the line thin and clear.
+- **Seen, not fixed:** rain seen straight up from the yard points every way (each streak faces
+  the camera's plane, so a drop falling at the eye takes its slant's noise for its direction).
+
+## Brief 2026-11-20 (Phase 2, the windshield's water as a real one (#346), planned, not built)
+
+The author's two photographs (context only, not filed): at night through unwiped glass, a heavy
+film of large merged drops, each bending the lights behind it into blobs; and blades mid-sweep,
+the glass ahead of the blade thick with water that smears the lamps into wavy streaks, a bright
+ridge of water along the blade's edge, the swept glass clear but wet, fresh drops landing on it at
+once. The glass is `windshield.gdshader` with `rain_drops.gdshaderinc` (the van's folder, not
+`game/shaders/`); it has drop layers, runners, a ridge at the blade, its dump at the turn, a wipe
+mask and the lamps' glare already. Values marked † are Claude Code's proposals.
+
+- **Step 0, the look now:** stills from the driver's eye on the street-lamp road at night, the
+  wipers off after 30 s of rain, and on fast mid-sweep (a new `tools/captures/capture_windshield.gd`,
+  one window run at the author's OK), kept as each step's "before".
+- **Step 1, the heavy film:** on unwiped glass the drops grow and merge into irregular blobs up to
+  the size at which `rain_physics.gd` starts a drop sliding at the glass's rake (then they run, as
+  the runners do now), covering most of the glass within about 20 s at rest in heavy rain†. Each
+  drop is a real lens: it shows a small inverted image of a wide patch of the scene behind it
+  (about 8°†), so a lamp behind the glass appears in every drop near it, the lights broken into
+  blobs; small drops show small images.
+- **Step 2, the lamps smeared ahead of the blade:** where the film is thick, the scene behind is
+  read along a short wavy vertical streak (five taps over 1-3% of the screen's height†), so lamps
+  become wavy columns, as in the second photograph; none on freshly wiped glass.
+- **Step 3, the ridge on the blade's edge:** the bow wave 6-12 mm wide† (14 mm now), lumpy, its
+  crest catching the lamps ahead (the glare points) as a bright wavy line, carried with the blade
+  and thrown at the turn, where A1's flick already fires.
+- **Step 4, the wiped glass clear but wet:** behind the blade a thin film that never dries in this
+  rain (the lights a little wavy, a shift of 0.3-0.5% of the screen†) and new drops landing at once
+  at the rain's rate, about 5-10% of the glass covered again within a fast stroke (0.91 s)†.
+- **Each step:** tests first (the shader's uniforms read back headless, and the glass's water state
+  from `van_presentation.gd`: coverage rising with time unwiped, falling at each sweep, the ridge
+  carried and dumped), then labelled stills beside step 0's, then the author's OK before the next.
+  The windshield's GPU price is measured with the mission's (#296).
+
+## Revision 2026-11-20 (Phase 2, the windshield's water, step 1 (#346), built)
+
+- **Step 0's stills (`captures/windshield/step0/`):** after 30 s unwiped, an even layer of small
+  dark-rimmed drops like fine specks, the lamps whole and sharp through it; the wiped glass's
+  wetness came back within about 2 s (`REWET_SECONDS`), so 30 s looked as 6 s.
+- **First built (the author's "Build step 1"):** a second, slower wipe map, the soak (8 s: 92% by
+  20 s, 53% by 6 s), wiped by the blades as the first is; blobs of up to three lobes growing with
+  it to the largest drop that holds still on the glass's rake (`RainPhysics.slide_radius`, 2.92 mm
+  at rest, less as the air pushes at speed); each a lens of 8 degrees from the driver's eye. Its
+  stills barely differed: a 6 mm drop 0.9 m from the eye is 3-4 pixels at 1280 x 800.
+- **Then (the author's "Patches + catch light"):** merged patches 1.5-3.5 cm wide but no taller
+  down the glass than a still drop is across (5.85 mm), since a patch's hold and its weight both
+  grow with its width; the world's lamps (107, spot and omni lights) handed to the van once by
+  `game/app/first_drive.gd`, and each frame the brightest eight seen through the glass and not
+  hidden (at most 16 rays) lit into the water within the lens's 4 degrees (5.6 cm on the glass);
+  at a fifth of the first gain, each drop catching by its own grain and each cluster's edge
+  ragged; the runners' lanes jittered more and their paths wander (the author's "Fix both flaws").
+- **Tested:** `test_windshield_water.gd` (new) 0/5, then 5/10, then 11/11: the shader's
+  uniforms; the slide radius holding below and sliding above; the blobs to it; the lens's 8
+  degrees; the soak a second wiped map filling over 8 s; the lamps handed over, none of the van's;
+  the brightest eight on the glass where each is seen, brightest first; none hidden (facing the
+  shed, 27 behind its walls); the catch's 5.6 cm; the patches' width and height. Nine mutations
+  exit 1. The grain, raggedness and wander are looks, checked by stills only
+  (`captures/windshield/step1/`, `step1b/` (too strong), `step1c/`, `step1d/`).
+- **Files:** `windshield.gdshader`, `van_presentation.gd`, `rain_physics.gd`,
+  `windshield_wipe_map.gd`, `game/app/first_drive.gd`, `tools/captures/capture_windshield.gd`.
+
+## Revision 2026-11-20 (Phase 2, the windshield's water, steps 2-4 (#346), built)
+
+- **Built (the author's "yes finish all the steps and show me"):** step 2, where the film is
+  thick (the soak) the scene behind is read along a short wavy streak down it, 2% of the screen's
+  height, each point seeing the light through a differently tilted piece of water (a mix of the
+  streak's mean and its brightest, `wet_glass_streaked` in `rain_drops.gdshaderinc`; the side
+  windows' `wet_glass` is unchanged), so lamps smear into wavy columns; none on wiped glass. Step
+  3, the ridge the blade pushes 9 mm wide (14 mm), lumpy as before, catching the lamps behind it
+  2.5 times as brightly as a drop; it shows only where a lamp is behind it. Step 4, behind the
+  blade a thin film bending the view 0.4% of the screen; fresh drops land on the swept glass at
+  once (the wet map's 2 s, unchanged).
+- **Tested:** `test_windshield_water.gd` 11/14 then 14/14: the four uniforms and their values
+  (smear 1-3%, ridge 6-12 mm and brighter than a drop, ripple 0.3-0.5%); five mutations exit 1.
+  The looks are checked by stills (`captures/windshield/step2/`), not by a headless test.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the guard booths (#348), built)
+
+- **Found (suppliers' photos beside our stills, `captures/audit/booths/before/`):** no door on any
+  side; frameless glass; a bare inside and outside; two copies of the booth (the shed's own and
+  `guard_booth.gd`). Then, from the author's looks: the window sliding with no hand on it; his head
+  fixed on one place; box props; and the handover allowed from 8.5 m before the arm to the arm
+  itself, Ethan's window 2.6 m past the guard's.
+- **Built (the author's "All five, one shared booth", "Yes, build it", "Yes, that", the props
+  chosen from a labelled sheet, "Stop at the window"):**
+  - one booth for both gates (`guard_booth.gd`; the shed's copy dropped);
+  - a half-glazed steel door (0.86 x 2.03 m) with frame, hinges, lever handles, kick plate and a
+    lamp; every pane in an aluminium frame; a fascia with a drip edge, gutter and downpipe;
+  - the service window a three-pane slider whose sash leaves 0.47 m clear where the stop line
+    puts Ethan's eye; the guard, seated facing it, leans in only as far as he needs, takes its
+    pull with his left hand (two-bone IK, `hand_turn.gd` now in `game/shared/components/`) and
+    slides it, the sash moving only under his hand, while he checks the sheet, and shut after;
+  - his gaze: his hand while sliding, the driver as it opens and as it shuts, else where his gate
+    has him look; his shoulders taking a third of a turn, his head held to a neck's 70 degrees;
+  - real models (Poly Haven CC0: outdoor aircon unit, box camera, wall clock, notepads, thermos,
+    first-aid case, the dock desk's pencil cup; Sketchfab CC BY: Dell P2314H monitor showing the
+    cameras, a keyboard and mouse, a corded phone, a walkie-talkie in its charger, a split aircon
+    head; the dock desk's task chair on a draughtsman's lift and foot ring), each sized as the
+    real thing and set by its own size; the counter before the open window kept clear;
+  - E at each gate only with Ethan's eye within 0.4 m of the opening, the objective saying to
+    pull up or back up level with the guard's window; "WAIT FOR THE BARRIER" while the arm rises.
+- **Tested:** `test_booths.gd` (new) 31/31 (B1-B16); `test_mission_two.gd` 61/61 (the window
+  open during the check and shut after, E refused at the arm, the windows level, the barrier's
+  wait); `test_compound.gd` 10/10; `test_menus.gd` 20/20 (the five new authors credited). Mutations
+  (`logs/phase_2/realism/booths/mutations*/`): all exit 1 but "no lean" (the chair in, he reaches
+  without it). Films and stills in `captures/audit/booths/`; the window line-up and the guard's
+  reach filmed from Ethan's seat (`film/gate_handover_from_seat.mp4`).
+- **Not built:** the run sheet itself passing from Ethan's hand to the guard's.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the gates (#349), built)
+
+- **Found (Wikimedia Commons photos beside our stills, `captures/audit/gates/before/`):** the
+  shed's barrier a plain box with a striped arm that stopped short of its rest post, no lamps; the
+  yard's and the compound's sliding gates one copied chain-link panel with no motor (only its
+  sound), no rack, rollers, guide, photocells or warning lamp.
+- **Built (the author's "ok", the models chosen from a labelled sheet: B1, S1, L1; F1, a fence
+  kit, has no sliding gate, so "Rebuild ours as a real one"):**
+  - `sliding_gate.gd` (new), shared by both sliding gates: a braced leaf with a counterweight
+    tail on two roller carriages on a footing (both under its rail shut and open), a toothed rack
+    on the bottom rail meeting the pinion of Maxwell autodoors' sliding gate motor on a plinth
+    inside the fence, guide rollers and a receiver post, photocells facing across the opening,
+    x4vier28's caged lamp on the inner guide post, clear of the leaf, flashing amber only while
+    it moves; its motor sound now at the motor;
+  - the shed's barrier on Maxwell autodoors' boom barrier cabinet (its own arm removed, sized so
+    its hub is at the arm's 0.9 m pivot), the arm turning at the hub and 6.8 m long (6.4) to a fork
+    post past the lane's far edge, red lamps along it (steady down, flashing moving, out up) and
+    the caged lamp on the cabinet flashing while it moves.
+- **Tested:** `test_gates.gd` (new) 0/6 then 18/18; `test_mission_two.gd` 61/61 (its cabinet-to-
+  fence check now measures the cabinet's own mesh), `test_container_yard.gd` 17/17,
+  `test_compound.gd` 10/10, `test_free_exit.gd` 6/6, `test_booths.gd` 31/31, `test_menus.gd`
+  20/20 (x4vier28 credited). Ten mutations exit 1 (`logs/phase_2/realism/gates/mutations*/`).
+  Stills `captures/audit/gates/after/`.
+- **Not done:** a film of the gates moving; the compound's gate is still dark at night but for
+  its lamp.
+
+## Revision 2026-11-20 (Phase 2, Mission 2's audit: the container yard (#351), built)
+
+- **Found (Commons photos beside our stills, `captures/audit/yard/before/`):** the boxes
+  well-shaped but plain flat colour with no markings or wear; the masts' lamps boxes lighting one
+  pool; no handling machine.
+- **Built (the author's "Markings and wear", "A reach stacker" (in the event a top-loader, as the
+  chosen Kalmar model proved only a spreader: "R3 top-loader"), "Real mast lights", "Build real
+  flood heads", "darken and grime it first"):**
+  - `container_paint.gdshader` (new, the yard's art folder) paints each box from its instance
+    data: its livery (sRGB colours made linear, a little deeper and more saturated), its ISO 6346
+    markings from `tools/art/make_container_markings.py` (a unique owner code, serial and check
+    digit per box; its size-type, 22G1, 42G1 or 45G1, and its ratings between the right door's
+    bars; its line's name along each side and its code at each side's top right; eight fictional
+    lines with their liveries, in Barlow Condensed, OFL), and its own wear (rain streaks from the
+    roof rail, a film of road dirt heavier toward the bottom, rust along the bottom rail and at
+    the corner castings, a grimy roof);
+  - jinjinjin's container top-loader (CC BY), its spreader drawn in to 20 ft, parked at the east
+    block's gate-side corner facing the stacks, solid; to make it room the last row of that
+    corner's two 20 ft stacks is left out (Claude Code's call);
+  - each high mast a head frame with four LED floods (0.55 x 0.42 m housings with fins, lit glass,
+    yokes), 4,000 K, aimed down the lane.
+- **Tested:** `test_yard_realism.gd` (new) 0/5 then 5/5 (the markings valid and unique, painted
+  from instance data, each box's own wear, the top-loader, the floods lighting the lane);
+  `test_container_yard.gd` 17/17; `test_menus.gd` 20/20 (jinjinjin and Barlow credited). Eight
+  mutations exit 1 (`logs/phase_2/realism/yard/mutations/`). Stills `captures/audit/yard/after/`.
+- **Not done:** a reach stacker (the author: "its okay for now"); taller stacks (not chosen).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the docks (#352), built)
+
+- **Found (Commons photos beside our stills, `captures/audit/docks/before/`):** seals, bumpers,
+  guides, wall lights and a striped leveller were there; but no door number outside (only inside,
+  over bays 8 and 9), one traffic light at bay 9 only (green, no red; none at the compound), no
+  signs, plain doors (no number, no hi-vis band), the seals flat grey-white blocks.
+- **Built (the author's "Traffic lights + signs", "Door numbers outside", "Door and lip
+  details", built rather than ready-made):** `dock_dressing.gd` (new), shared by the transfer
+  shed's 9 docks and the compound's 13 (`transfer_building.gd`, `warehouse.gd`):
+  - each door's number on a white plate 1 m over its opening, and painted 0.95 m up its panel,
+    under its windows; a hi-vis band of orange and white diagonal stripes (the retroreflector
+    shader) along its bottom; both on the door's model, so they rise with an open door;
+  - a hooded red-over-green traffic light (170 mm lenses under visors) beside each door, 2.4 m up,
+    with its yellow caution sign under it ("CAUTION BACK IN OR PULL OUT ON GREEN LIGHT ONLY"),
+    both on wall brackets standing them clear of the seals' pads (the wall between neighbouring
+    seals is 0.19 m); the shed's lit as before (green at a free open dock); the compound's red at
+    its shut docks and green at its open one, red once a van docks there;
+  - the seals' pads black matt rubber, their guide stripes yellow.
+  - The leveller's lip kept as it was: it already had its yellow-black edge.
+- **Tested:** `test_docks.gd` (new) 0/15 then 15/15 (per house: plates and painted numbers, bands,
+  lights, signs, seals). Ten mutations exit 1 (`logs/phase_2/realism/docks/mutations/`). Stills
+  `captures/audit/docks/after/`; the author: "looks right".
+- **Not done:** vehicle restraints or chocks, and the lip's chequer plate (not chosen).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the compound gate's light (#353), built)
+
+- **Found (Commons photos of gates at night beside our stills, `captures/audit/gate_light/before/`):**
+  no lamp at the compound's gate, only the booth's windows and small door lamp; the lane, stop
+  line and leaf dark, and no rain seen there (rain shows only in a lamp's light); the yard's three
+  floods 28 m and more away, facing in, with no rain in their light either.
+- **Built (the author's "LED flood pole", "Yes, same step" for the yard floods' rain, then, after
+  "the light isnt realistic. use already available asset for that light", "H2 finned LED
+  flood"):**
+  - a 7 m galvanised pole on its footing on the verge east of the driveway, outside the fence,
+    clear of the lane and the leaf's run, solid; a crossarm on top and on it two of The Street
+    Light Man's "LED Floodlight" (CC BY, `art/gates/led_flood/`, its yoke turned in Blender to
+    stand under the head), each turned and tilted on its yoke, one on the approach, the stop line
+    and the booth's window, one on the leaf; their LEDs lit behind clear glass; white as the
+    compound's floods, energy 4 (at 10 the chain-link glared white);
+  - floodlight rain (`lamp_rain_floodlight.tscn`) over the stop line and the opening, and 7.4 m
+    in front of each yard flood.
+- **Tested:** `test_gate_light.gd` (new) 0/5 then 5/5; `test_menus.gd` the credit 19/20 then
+  20/20; `test_lamp_rain_state.gd`'s count of volumes 20 to 24, its words naming the compound's
+  four (an existing expectation changed, as when the shed's lamps were added). Nine mutations exit 1
+  (`logs/phase_2/realism/gate_light/mutations/`). Stills `captures/audit/gate_light/after/`.
+- **Limits:** the chain-link reads a little milky under the flood (the fence shader, the author's
+  open question); in the floodlights the rain starts 4 m up, as at the site office.
+
+## Revision 2026-11-21 (Phase 2, the rain as real rain at night (#354), step 1 built)
+
+- **Found (sixteen sharper Commons photos of rain at night, six beside the same kind of view of
+  ours, `captures/audit/rain/before/` and `captures/audit/lookup/before/`):** short of the photos
+  everywhere: a few white specks under each lamp where the photos show dense lit cones of fine
+  streaks in a glow; little rain in the van's own beams; looking up, long streaks pointing every
+  way where real drops are dots and short dashes; many streaks broken into dashes; in the
+  floodlights the rain starting 4 m up, slow drops fading above the ground; splashes hard to see.
+  The author: "none of what you showed me looks realistic and the level i want?", then, shown
+  the target, "yeah lets do it for now, we will look at it later".
+- **Planned steps:** 1, each drop drawn as a camera sees it; 2, brightness and density in the
+  light; 3, rain from the light (floodlight volumes at the head, slow drops reaching the ground,
+  the compound's four volumes slanting with the rest); 4, rain in the headlights; 5, splashes.
+- **Step 1 built:** CHANGE-BRIEF revision 13. Tests: `test_lamp_rain_config.gd` 450/470 then
+  470/470; five mutations exit 1. The GPU price waits for the mission's end (the author: "lets
+  skip gpu cost for now, remember to do that tho").
+- **Known, for step 3:** the compound's four floodlight-rain volumes (#353) use the floodlight
+  scene's direction unturned, so their drops lean toward +z where all other rain leans toward +x.
+- **Step 2 built:** CHANGE-BRIEF revision 14: two and a half times the drops, lit more strongly
+  from behind, a slightly longer exposure, and drops within 2 m of the eye faded. Tests:
+  `test_lamp_rain_config.gd` 475/475; five mutations exit 1. Still to come: the floodlights' rain
+  is a low band near the ground (step 3).
+- **Step 3 built:** CHANGE-BRIEF revision 15: rain from the light (the compound's floods' rain
+  from under their heads in a new high-floodlight scene, leaning with the wind; slow drops reaching
+  the ground; far drops a sheen). Tests: `test_lamp_rain_config.gd` 582/582, `test_gate_light.gd`
+  6/6; eight mutations exit 1. Left for the author's look: the floodlights' rain from 20 m and
+  more still reads somewhat speckled; some near streaks look dotted (possibly MetalFX's 75%
+  upscaling of thin moving lines, §7's predicted failure 5; not yet checked at full scale).
+- **Step 4 built:** the rain in the van's headlights, which had been streaks painted on eight
+  planes riding with the van (`beam_rain.gdshader`, now deleted), little seen from the seat:
+  `game/effects/headlight_rain.tscn`, 22,000 real drops filling the air from 1 to 25 m ahead of
+  the van and 9 m across, falling in the world as the van drives through them along the wind's
+  slant (set each tick from the van's turn), drawn as a camera sees them, lit only by the lights
+  that reach them (on the world's layer, which the headlights light), so the low and the high
+  beams and an oncoming van's each light their own; they fall while any of those lamps is on
+  (`rain_backlit` for the oncoming van's); the van's body (`RainStop`, on the rain's own layer
+  64) and glass stop them. The shared shader gains a backward lobe (`back_scatter`: 1.0 in the
+  beams, 0.3 in the lamps' rain), as water throws light back toward its source, which is why
+  rain shows in a car's own headlights. Tests: `test_headlights.gd` (the beams' rain rewritten
+  for the drops: 29/32 then 32/32), `test_oncoming_van.gd` (reads `rain_backlit`: 20/21 then
+  21/21), `test_lamp_rain_config.gd` 588/588; eight mutations exit 1. Stills
+  `captures/audit/rain/step4/` (the seat, and the van's lamps from in front beside the photo).
+- **Step 5 built:** CHANGE-BRIEF revision 17: splashes of five crown-sized droplets catching the
+  lamp, brightest at the hit. Tests: `test_lamp_rain_config.gd` 546/588 then 588/588; five
+  mutations exit 1. The splashes are still modest on screen; the dock's lit apron gets no rain
+  (its volume is a 3.5 m strip along the wall).
+- **For the author's look at the end** (`captures/audit/rain/`, `captures/audit/lookup/`, steps
+  1-5 beside `before/` and the photos): the far floodlight rain's speckle; some near streaks look
+  dotted (possibly MetalFX's 75% upscaling); the dock apron's missing rain; the splashes; and the
+  GPU price of all of it (the counts rose about four times since step 1).
+
+## Revision 2026-11-21 (Phase 2, Mission 2's audit: the run sheet handover (#355), built)
+
+- **Found (Flickr photos of booth handovers, scratchpad; our stills, `captures/audit/booths/kit/`):**
+  at a real booth the driver reaches out and the attendant leans out to take the paper; ours
+  had no Ethan in the cab, no paper, and nothing passed: E, then 3 s, then the gate.
+- **Tried and taken out:** Ethan seated in the cab with his hands on the wheel (his own model,
+  two-bone IK, his head hidden from the cab camera); the author: "no lets skip hands i dont like
+  it." No hands or body in the cab.
+- **Built (the author's "Guard reaches for it", "Hands it back", "Rolls chair to window"):**
+  `guard_booth.gd`'s handover: once her window is open the sheet is held out of the driver's
+  window (the van's `window_hold`, its end 0.24 m past the glass); she leans over her counter (her
+  chair cannot roll nearer: her knees are already under it at the front wall), up to 57 degrees,
+  and takes its end in her left hand, her hand on it before it moves; reads it at her chest for
+  3 s, watching it; hands it back to the window and lets go; it goes back in (`sheet_back`). Both
+  gates (`transfer_shed.gd`, `compound.gd`) now end their check when the sheet is back, not after
+  a fixed 3 s, and offer E only when she can reach the van's window (`window_in_reach`, the van
+  within about 0.4 m of the booth); otherwise the objective says "Pull in closer to the booth: the
+  guard can't reach your window from there."
+- **Tested:** `test_handover.gd` (new) 0/2 then 10/10 at both gates; `test_mission_two.gd` and
+  `test_compound.gd` park tucked in by the booth and wait for the handover (61/61, 10/10, their
+  checks otherwise unchanged); booths 31/31, gates 18/18. Seven mutations exit 1
+  (`logs/phase_2/realism/handover/mutations/`). Stills `captures/audit/handover/film/` (from
+  Ethan's seat at the shed, from behind the van at the compound).
+
+## Revision 2026-11-21 (Phase 2, mission guidance as a professional game's (#356), step 1 built)
+
+- **Asked:** "the mission play (what the user needs to do isnt marked with dots or instructions
+  clearly.) i mean adding text on top left isnt professional"; then the map smooth and exact,
+  and "visually appealing ... it should match look and feel of the game"; after seven drawn
+  looks, "its not gta 6 level"; GTA VI's map looked up (press coverage: a rounded map at the
+  bottom left, roads with width, buildings in 3D, the route along the roads with a live
+  distance); the author chose "C Map with route", then "2 Frameless 3D".
+- **Built (step 1, the map and the layout):** `mission_map.gd`: its own small 3D world (a
+  SubViewport with its own World3D): the ground baked from four straight-down unshaded captures
+  of the district (`tools/captures/capture_map_base.gd`; `tools/art/bake_mission_map.py`, numpy
+  and scipy: 0.4 m a pixel over x -170..630, z -262.5..237.5, roads, yards and buildings told
+  apart and repainted dark slate, lighter yards, light roads with casing), every building a block
+  at its height (`industrial_loop.gd`'s `map_blocks`), lit by one far omni light; a camera 52
+  degrees down behind the player, the player 0.68 down the picture, 120 m back at the wheel and
+  60 m on foot; centred every frame exactly on the van or Ethan, turned smoothly with the van at
+  the wheel (not the driver's look) and with the camera on foot, Ethan's arrow the way he faces;
+  its edges faded into the screen (`map_fade.gdshader`, game/features). The objective beside it
+  in Barlow Condensed (OFL, copied to `driving_hud/fonts/`) over a soft round fade; the hints at
+  the bottom right; notices at the top centre. Mission 1's van guide keeps its marker.
+- **Tested:** `test_guidance.gd` (new) 0/1 then 9/9; six mutations exit 1
+  (`logs/phase_2/guidance/mutations/`). Stills `captures/audit/guidance/step1/`.
+- **To come:** step 2, the target's pin, world marker and distance, and the key prompt; step 3,
+  the route along the roads. Unpriced on the GPU (a second, small render) until the mission's end.
+
+## Revision 2026-11-21 (Phase 2, Mission 1's opening cutscene (#357), built)
+
+- **Asked:** "i dont think we have professional style gta 6 level cutscenes"; three looks shown
+  on real frames, the author chose "C Neo-noir"; storyboard take 1 ("make it more intereesting
+  and cinematic"), take 2 ("much better, i like it"); then "the scene to scene transition isnt
+  smooth, and the rain is falling into the ethan ... the game name should be full screen", and
+  "i dont want the game name in the opening" (C04: the game's title only after the final cut to
+  black; NIGHT FREIGHT is the mission's name, C35).
+- **Built:** `game/features/cinematics/` (new): `cutscene_director.gd` (shots eased from one
+  view to the next, field of view, per-shot lights, focus, exposure and gamma, a dip through
+  black at each cut, a shot ending on the player's own camera so the hand-off has no cut; the
+  HUD hidden and Ethan held while it plays; E, Enter or Space skips after 1 s), `film_look.gd`
+  (2.39 bars, cards, caption, the full-screen title, the skip hint), `film_grade.gdshader` (an
+  overlay grade: anamorphic streak, bloom, saturation 0.7, contrast 1.3, cool shadows; the
+  world's AgX 1.3 untouched). `game/features/missions/night_freight/opening_cutscene.gd`: eight
+  shots, 49 s (studio card; the lamp in the wet road; the hill road's hairpin from above,
+  BLACKRIDGE 23:41; the empty crossing; the empty shelter; Ethan's face; from the dark cab; NIGHT
+  FREIGHT full screen, then down to the player's camera), every place worked out from the world.
+  Played once on a new game (`first_drive.gd`'s `_play_opening`), music after it. The rain stops
+  on Ethan (`driver.gd`'s `RAIN_SHIELD`, a particle collider on the rain's layer), in play too.
+- **Tested:** `test_opening.gd` (new) 6/6; `test_on_foot.gd` 52/52 (skips the opening, a rain
+  check); `test_exhaust_vapour_state.gd` presses E once to skip the opening (4/10 then 10/10, its
+  checks unchanged). Seven mutations exit 1 (`logs/phase_2/opening/mutations/`). Filmed in the
+  game: `captures/audit/opening/film/`.
+- **Claude Code's calls:** the studio card's name (NRVALAM WORKS) and 23:41 are drafts for the
+  author's review.
+
+## Revision 2026-11-21 (Phase 2, mission guidance (#356), step 2 built; the opening on a restart, fixed)
+
+- **Asked (#358):** "start the guidance markers ... make sure everything is realistic as real
+  life"; the author handed over the choices (Claude Code's calls below).
+- **Built (step 2):** the objective's place in the world (`the_wrong_cargo.gd`'s
+  `objective_target`, keyed by the objective shown: the booth's window, the dock's bumpers, the
+  van's rear, the chock, the jack, the lift's pendant, the keypad, the marked bay, the dark van's
+  door, door 3; none while waiting; Mission 1's run sheet and route targets in the app):
+  `objective_marker.gd` (new), an amber diamond over the place with its distance, an arrow at the
+  screen's edge when it is off screen or behind, faded out as the player comes close (10-22 m at
+  the wheel, 1.5-4 m on foot); the map's pin (`mission_map.gd`'s `set_target`, `pin_at`), pulsing,
+  held inside the map's visible oval when the place lies beyond; the distance in amber beside the
+  objective (km over 1000 m); the key prompt (`driving_hud.gd`'s `prompt`), a keycap and its action
+  at the bottom centre whenever one key does something there ("E  Hand over the run sheet" at a
+  booth, "E  Key in the gate code" at the yard, every "E  ..." on foot), the other controls left
+  at the right. The hint's text is unchanged, so every test reading it is unchanged.
+- **Fixed:** the opening (#357) played again on every New drive (the pause menu, after the
+  ending), so `test_collision.gd` failed 42/44 in the opening's suite run, missed when it was
+  committed (`55e4069` said every suite passed; it was 65 of 66). Now a new game from the title
+  plays it and a restart goes straight to the office, as a game's restart skips its intro.
+- **Tested:** `test_guidance.gd` G10-G11 (new, 9/10 then 11/11); `test_opening.gd` O7 (new, 6/7
+  then 7/7); `test_collision.gd` 44/44. Mutations: seven for step 2
+  (`logs/phase_2/guidance/step2/mutations/`), p8 for the restart
+  (`logs/phase_2/opening/mutations/`), all exit 1. Every suite:
+  `logs/phase_2/guidance/step2/suites_rerun/` (66 runs exit 0, art check 0 failures). Stills
+  `captures/audit/guidance/step2/` (`tools/captures/capture_markers.gd`).
+- **Claude Code's calls:** the prompt at the bottom centre over a dark pill (where a game shows
+  what a key does); the marker's fade distances; the map pin held at the visible oval.
+- **To come:** step 3, the route along the roads.
+
+## Revision 2026-11-21 (the save rules, version 2: Mission 2's fifth checkpoint and its opening, #358)
+
+- **Changed, at the author's word to finish Mission 2 overnight and take its decisions (#358):**
+  The Wrong Cargo's `[cargo] stage` runs from 0 to **4** (was 0 to 3): 4 is his own van taken
+  back in the container yard's bay after the escape (step 6), where the getaway (step 7) resumes.
+  A file at stage 5 or more is kept aside as before. `[cargo]` may also hold `opening=true`, written
+  only by Mission 1's end with Mission 2's start, so that continuing plays Mission 2's opening, its
+  dispatcher's text and Maya's call (step 8) once; the opening played, the start is saved again
+  without it. Mission 2's end (step 7) saves Mission 2's start again until Mission 3 exists.
+- **Tests:** `test_save_rules.gd` keeps a stage 5 file aside (its old stage 4 case, which the
+  fifth checkpoint makes valid); `test_cargo_opening.gd` MO3, MO6, MO7; `test_getaway.gd` G4.
+
+## Revision 2026-11-21 (Phase 2, Mission 2's steps 3, 6, 7 and 8 built: Mission 2 playable to its end, #358)
+
+- **Asked (#358):** "find the best real life patrol guard. take all decisions for me and finish
+  off mission 2 over night". Every choice below is **Claude Code's call**, for the author's review;
+  every story word is a draft (C03 stays the author's to settle).
+- **The patrol guard:** "Security Guard - Rigged 3D Model" by qsardor57913 on Sketchfab (CC BY
+  4.0; 13,315 triangles, a Mixamo rig): a contract security officer's grey long-sleeved uniform
+  shirt with epaulettes and shoulder patches, tie, black trousers and a duty belt (handcuffs,
+  radio, torch holder), chosen over a bald man in black with a pistol (no gun, C51) and over
+  low-poly, cartoon and game-fan models. Ethan's own Mixamo clips (idle, walk 1.58 m/s, run
+  4.20 m/s) are baked onto it as turns from the T-pose (`tools/art/convert_patrol_guard.py`;
+  raw file and README in `source_assets/sketchfab/29_security_guard/`). A torch on his left
+  epaulette, as patrol officers clip them, lit lens and beam.
+- **Step 6, the escape (`escape.gd`, `patrol_guard.gd`, the stand-ins D6):** docked at door 3, two
+  guards walk out of the east warehouse's man door to the van, a third stands inside the gate
+  looking side to side; GET OUT AND RUN; staying in, he is caught when the first reaches the cab.
+  A guard sees 15 m, 50 degrees either side, where nothing solid (the world, or a van) stands
+  between; in sight 1.0 s without a break, or within 1.5 m, Ethan is caught: the screen fades and
+  all is as at the escape's start (in the van, the guards home, the warning unsent). Over a guard
+  who sees him, a mark fills white to red (`seen_marks.gd`). Out of the van 4 s, a text from an
+  unknown number: "Don't go for the gate. The fence by the containers is cut. Wait for the torch to
+  turn." (S3, secretly Maya; a draft); REACH THE CUT IN THE FENCE. The cut (`compound.gd`'s `_cut`):
+  0.8 m wide, 2 m high, at x 138, z 140, the chain-link peeled out into the alley, the rail and
+  barbed wire above it whole. Out through it, GET BACK TO YOUR VAN; on foot at the yard's keypad
+  E keys the code, the gate holds open 20 s (a sliding gate's timer) then shuts; TAKE YOUR VAN BACK;
+  E at its door undoes the swap: his van, white, loaded and sealed, drivable in the bay, the dark
+  van parked at door 3; stage 4 saved. A test bot wins it by keys (round the back of the east
+  warehouse, cover by the west one's trailer, through when the cut's guard walks away east).
+- **Step 7, the getaway and the ending:** DRIVE OUT, marked at road sample 990 where the hill road
+  begins; within 60 m PULL OVER; stopped within 12 m, Mission 1's own ending (the cab quiet, the
+  engine off, black, back to the title, no title card, C04); the save holds Mission 2's start.
+  "MISSION 2 IS BEING BUILT" is gone.
+- **Step 3, the inspection (S4):** after the seal check, READ THE BILL OF LADING; in the cab
+  "E  Read the bill of lading" shows it: 1 pallet of machine parts, 410 kg declared, the dock 9 scale
+  ticket stapled to it at 1,180 kg, a correction label over the shipper with VALE FREIGHT LT showing
+  at its edge, "DO NOT OPEN. DO NOT INSPECT CONTENTS."; Ethan notes the weight and that the van sits
+  low on its springs; the seal stays whole; the load is never seen. E in the cab now puts a paper
+  away before it would leave the van.
+- **Step 8, the opening, the job and Maya's call (S2, S3, S5):** continuing from Mission 1's end:
+  DAYS LATER, the depot in the rain, the new windshield (S5: replaced), THE WRONG CARGO full screen
+  (titles now shrink to fit the frame), down to the cab; then a text from NORTHLINE DISPATCH, K.
+  MARSH (S2: the job reaches him by text from a new dispatcher): the transfer at bay 9, sealed, "do
+  not open, do not inspect"; 80 m from the depot Maya calls: "Good. That's good, Ethan. Keep at it."
+  ... "Just take the work. Don't think about it too much." (S3; GAME_STORY's "subtly encourages him
+  to keep working").
+- **Tests changed, with their reasons:** `test_sealing.gd` H6 (the objective after the seal check is
+  now the inspection's); `test_compound.gd` K1 (the fence's length less the 0.8 m cut);
+  `test_loading_bay.gd` L4, L5 (docked, the objective is the escape's, no longer the placeholder's
+  "the hill road"); `test_save_rules.gd` (stage 5 the bad checkpoint); `test_exhaust_vapour_state.gd`
+  (skips Mission 1's opening).
+- **New tests:** `test_escape.gd` (13), `test_escape_route.gd` (1), `test_getaway.gd` (5),
+  `test_inspection.gd` (5), `test_cargo_opening.gd` (7), each red first. Mutations: escape 14,
+  getaway 5, inspection 4, opening 6, all exit 1 (`logs/phase_2/{escape,getaway,inspection,
+  cargo_opening}/mutations/`). Stills: `captures/audit/escape/a2/`,
+  `captures/audit/mission_two_end/`.
+- **Unverified:** how the guards' rounds feel in play (timing, fairness) and the look of their walk
+  at a distance; the cut's flap in the dark; the guards are stand-ins (Assignment 9 replaces their
+  behaviour); the GPU price waits for the mission's end on power (now).
+
+## Revision 2026-11-21 (Phase 2, Mission 3, Last Run: the brief, written before any code, #359-#360)
+
+- **Status:** written before any code, at the author's word: "move to mission 3. and finish
+  mission 3 and same rules" (#359) and "make sure everything stays realisitc like in real, keep
+  checking things to real life pictures and create everything" (#360). The author handed over
+  the choices (#358-#359): every choice below is **Claude Code's call**, every story word a draft,
+  every open narrative question (N01-N05, C03) answered only as a draft for the author's review.
+
+### The story so far and to come, plainly (for the joint review of Missions 2 and 3)
+
+- **Mission 1, Night Freight:** Ethan, a freight driver, drives the last run of the night in the
+  rain. On the hill road a man steps out; Ethan hits him and drives away. He believes no one saw.
+- **Mission 2, The Wrong Cargo (days later):** money is short and he wants routine, so he takes a
+  better-paid job from a new dispatcher (Northline Dispatch, by text). He loads a sealed pallet at
+  the transfer shed; the paperwork does not add up (410 kg declared, 1,180 kg weighed; "Vale
+  Freight" under a label; "do not inspect"). He leaves his van in a container yard and takes a
+  dark van to a guarded warehouse. Docked there, the guards turn on him (why is not yet said). An
+  unknown number texts him the way out (it is secretly Maya). He escapes through a cut in the
+  fence, takes his own van back and drives away. Maya, his younger sister, calls that night and
+  tells him to keep taking the work; he thinks she is just being supportive.
+- **What Ethan does not know yet:** Maya is married to Adrian Vale, who runs a freight syndicate
+  (Vale Freight) and uses ordinary jobs to move contraband; she has a five-year-old daughter,
+  Lily; Adrian has made Maya route Ethan's jobs; and Adrian plans to have Ethan killed.
+- **Mission 3, Last Run:**
+  1. **The docks:** a "final pickup" at the waterfront is an ambush. Ethan gets away, barely,
+     and finds an attacker's phone: its messages show his jobs were routed by "M." - Maya.
+  2. **The confrontation:** he faces Maya. She admits routing the jobs, that she is married to
+     Adrian Vale, that she has a daughter, and that Adrian has Lily. He cannot trust her and
+     leaves.
+  3. **The proof:** Maya leaves him her phone: a recording of Adrian offering Lily's freedom for
+     Ethan's death, Maya hesitating, then refusing; and the shipping records showing she changed
+     his routes, delayed the ambush and sent the warnings. He understands; he forgives her, and
+     says trust will take time. Adrian is taking Lily abroad tonight from the airfield.
+  4. **The last run:** Maya gives timing and a route change; Ethan cuts the convoy off on the
+     freight roads, gets into the airfield, gets past the guards, reaches Lily in the hangar and
+     gets her to Maya. Adrian draws a gun; Ethan kills him defending himself and Lily.
+  5. **Home:** Maya and Lily together; Ethan tells the police everything, the night on the hill
+     road too. Six months later, sunlight, a modest house, boxes by the door; Lily wants the drive
+     she was promised. They drive off. A black sedan across the street; a man photographs the
+     house. "Found them." "All three?" "Yes." "Don't approach them. Not yet." Cut to black; two
+     beats; only then the title, BLACKRIDGE: NO WAY BACK.
+
+### Where (the world, Claude Code's call)
+
+- **The harbour flats, east of the loop:** the loop's east end (610, 150) meets a new **east
+  road** through the 25 m rim (a flat corridor in the terrain, its clearings by `cleared_after` so
+  no tree moves) into a new coastal strip x 660-1050 on its own ground, at sea level:
+  - **the waterfront** (the design's docks): a container quay on the water, its edge with
+    bollards and fenders, stacks of containers, a mobile harbour crane, floodlit; a gate;
+  - **the coastal road** south along it, with the **freight road** through the terminal's back
+    lots as the shortcut (the convoy's choke point);
+  - **the airfield:** a short general-aviation strip with edge lights, a windsock, a hangar with
+    its apron and a business jet, a fenced perimeter with a keypad gate.
+  - the sea to the horizon as the water backdrop; nothing beyond is explorable.
+- **The family house (epilogue):** its own small daylight scene on the town's outskirts.
+- Every place, vehicle and person is built after real photographs (Commons and manufacturers'
+  pages, cited in each step), as Missions 1 and 2 were.
+
+### Who (Claude Code's calls; models found, labelled and shown in a sheet as the guard was)
+
+- **Maya** (late twenties to early thirties), **Lily** (five), **Adrian Vale** (forties, dark
+  coat), the **convoy's men and the airfield guards** (the patrol guard model, in dark clothes,
+  armed only in the guard encounter), **the watcher** (seen only through a windshield).
+
+### How it plays (the build order; each step tests first, mutations, every suite, a commit)
+
+1. **Missions in a row:** Mission 2's end saves Mission 3's start (save rules version 2 gains
+   `last_run` and its checkpoints, with the one-time opening flag as Mission 2's); the title shows
+   Mission 3's scene.
+2. **The east road and the harbour flats:** the road, the ground, the sea, the lights.
+3. **The waterfront and the ambush:** DRIVE TO THE WATERFRONT (the dispatcher's "last run"); at
+   berth 2 the trap closes (a cutscene: two SUVs' lights, men out, shots into the van); then play:
+   reverse and drive out through the gate before an SUV blocks it (fail: caught, back to the
+   berth); on the quay the dropped phone (E): the messages from "M.".
+4. **The confrontation and the proof (cutscenes):** Maya waiting at the depot in the rain;
+   subtitled; he leaves. Days later her phone in his van: the recording (subtitles over the phone's
+   screen), the records; the meeting at the viewpoint at first light; Adrian's plan.
+5. **The convoy:** Maya's call with its timing; the convoy (two black SUVs and a van) on the
+   coastal road; Ethan takes the freight road and stops his van across the choke point before it
+   arrives; the convoy stops (scripted, as the design recommends).
+6. **The airfield and the guard encounter (combat, the design's §8):** the gate by Maya's code;
+   one handgun (taken from the convoy's lead car), hitscan fire, a magazine and reload, health,
+   one guard type with patrol, alert, chase and attack (Assignment 9 replaces their behaviour, as
+   D6); caught or killed, back to the gate (a checkpoint).
+7. **Lily and Adrian:** Lily in the hangar's office; E takes her hand, she follows; out to Maya's
+   car. In the hangar Adrian draws; a cutscene: Ethan fires defending himself and Lily; no gore.
+8. **Home:** the reunion; the statement to the police (a card: Ethan told them everything,
+   including the hill road); six months later the house in sunlight, the drive, the watcher, black,
+   the title (C04, AGENTS' order kept).
+
+### Drafts for the open narrative questions (the author's to accept or change)
+
+- **N03 (the recording):** Maya recorded Adrian's call on her phone in her car; Ethan believes it
+  because its date and the records match the nights he drove (the bill 7731-046, the warning).
+- **N04 (Lily's safety):** Lily is kept in the hangar's office; Ethan leads her out to Maya, who
+  waits in her car at the airfield's gate, before Adrian's confrontation.
+- **N05 (accountability):** a card after the reunion: Ethan's statement to the police, the hill
+  road included; the legal outcome off-screen.
+- **N01, N02** stay open: the pedestrian's identity and how Adrian learned of the hit are not
+  shown in Mission 3.
+
+### Rules a test can measure (written first, per step)
+
+- Mission 2's end saves Mission 3's start; a reload at each Mission 3 checkpoint puts the world back.
+- The ambush: staying at the berth is caught; out through the gate in time escapes; the phone is
+  taken by E and its messages name "M.".
+- The convoy stops only if the van blocks the choke point before it arrives; late, it passes, and
+  the retry is at the junction.
+- Combat: a shot hits what the crosshair is on; a guard alerted by sight or a shot attacks;
+  health falls when hit and the retry is at the gate; reload refills from the reserve.
+- Lily follows once her hand is taken and stays within reach; Adrian's scene plays only with Lily
+  safe; the ending's order: reunion, statement, house, drive, watcher, black, title, no title before.
+
+### Not in this mission
+
+- Car chases with pursuit AI; police; more than one weapon; interiors beyond the hangar office.
+
+## Revision 2026-11-21 (Mission 3's step 1, missions in a row, built; the save rules gain `last_run`, #359)
+
+- **Built:** `game/features/missions/last_run/last_run.gd` (new): Mission 3, Last Run, its start at
+  the freight depot (where Mission 2 began), its objective DRIVE TO THE WATERFRONT, its checkpoints
+  saved as `[run] stage` (0 the depot; 1-3 named for the steps to come), and the same calls the app
+  makes on Mission 2 (`place_reached`, `place_next`, `recover`, `objective_target`,
+  `wants_interact`, `foot_action` ...), so the app now asks "a later mission" where it asked for
+  Mission 2. Mission 2's end saves Mission 3's start with its opening to play (`opening=true`).
+- **The save rules (version 2):** `mission` may be `last_run`, its `[run] stage` from 0 to 3; a
+  file at another stage is kept aside; Mission 2's end writes Mission 3's start, no longer its own.
+- **Tested:** `test_last_run.gd` (new) 1/3 then 3/3; `test_getaway.gd` G4 changed (the save now
+  holds Mission 3's start) 5/5. Four mutations exit 1 (`logs/phase_2/last_run/step1/mutations/`);
+  every suite (`logs/phase_2/last_run/step1/suites/`): 72 runs exit 0, art check 0 failures.
+
+## Revision 2026-11-21 (Mission 3's step 2, the east road and the harbour flats, built, #359-#360)
+
+- **Real references first (Commons):** Port Angeles, a small Pacific Northwest harbour (its
+  waterfront wide view; William R. Fairchild airport's runway behind chain-link with barbed wire
+  and an evergreen treeline); a Liebherr LHM 550 mobile harbour crane; Dublin's South Quays
+  container terminal at night (amber high-mast floods, reflections, red crane lights).
+- **Built:** `game/features/environments/harbour_flats/harbour_flats.gd` (new): the east road
+  from the loop's east end (609, 151.7) to the coastal road (x 726, z 312 to -282), the loop
+  road's asphalt and markings, 19 of the valley road's lamps every 40 m; the cut through the rim
+  (`hill_terrain.gd`'s `_cut`: the ground lowered to just under the road within 5 m and banks at
+  0.9 m a metre, never raised); the flats' land at road level behind concrete quay walls with a
+  kerb, the sea 2.6 m below their edge out to 4 km, its ripples drifting; the rim brought down to
+  the flats in an embankment from the terrain's own edge heights; the bluff and the cut's banks
+  wooded with the forest's own Pacific Northwest kinds; two pile beacons at the harbour mouth,
+  red right returning (IALA B), flashing every 4 s. The playable area's east wall opens for the
+  road; `industrial_loop.gd`'s `playable(at)` counts the flats and the cut.
+- **No tree moved:** the cut's trees cleared by `cleared_after`; `test_harbour_flats.gd` H8
+  fingerprints the 55,432 trees west of x 600 against their places before the cut. Changed with
+  their reasons: `test_roadside_trees.gd` T8 (32 trees, 14 saplings, 26 colliders fewer, the cut's;
+  the centroid moved as they predict), `test_lamp_rain_state.gd` (43 rain volumes, the flats' 19).
+- **Tested:** `test_harbour_flats.gd` (new) 0/1 then 8/8; seven of eight mutations exit 1, the
+  eighth (the cut as an ordinary clearing) survives because the forest places each tree by a hash
+  of its own place, so that moves none either (`logs/phase_2/last_run/step2/mutations/`); every
+  suite (`logs/phase_2/last_run/step2/suites/`): 70 of 72 runs exit 0 first, the two above changed
+  then 8/8 and 16/16 (`fix/`). Stills `captures/audit/harbour_flats/a3/`.
+- **Known gap:** the mission map's baked ground ends at x 630; the flats show black on it until
+  it is baked again (with the waterfront).
+
+## Revision 2026-11-21 (Mission 3's steps 3, 4 and 5 built: the waterfront and the ambush, the confrontation and the proof, the airfield and the convoy, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word ("finish mission 3 and same
+rules", #359; "keep checking things to real life pictures", #360), recorded as drafts for the
+joint review of Missions 2 and 3.
+
+- **Real references first (Commons):** Dublin's South Quays container terminal at night (amber
+  high-mast floods, stacks two to four high, reflections on the wet slab) and a Liebherr mobile
+  harbour crane for the waterfront; William R. Fairchild airport at Port Angeles (chain-link with
+  barbed wire, flat tarmac, an evergreen treeline) for the airfield; a Pilatus PC-12's published
+  size (16.28 m span, 14.40 m long, 4.26 m high) for the plane and the hangar's door.
+- **Step 3, the waterfront** (`game/features/environments/harbour_flats/waterfront.gd`, new): a
+  small container terminal east of the coastal road, an access road to its open gate and lit
+  gatehouse, a chain-link fence but on the quay; four blocks of the container yard's own boxes
+  (`container_yard.gd`'s new `stack`) leaving a lane to the quay; TGVMisterH's "Harbor crane"
+  (CC BY 4.0, its own glow removed) on the apron by berth 2, boom over the water; four 30 m masts
+  in sodium-coloured flood with rain falling from 9 m; bollards every 15 m, fenders, BERTH 2
+  painted at the edge.
+- **Step 3, the ambush** (`game/features/missions/last_run/ambush.gd`, new;
+  `game/features/vehicles/scripted_suv/scripted_suv.gd`, new): PARK AT BERTH 2; stopped there, a
+  cutscene: two black SUVs (David_Holiday's "Chevrolet Suburban 2015-Unmarked", CC BY 4.0,
+  repainted) light up between the stacks, three men in dark jackets (bumstrum's "guard", CC BY
+  4.0, given Ethan's Mixamo walk and idle at their real speeds, 1.738 and 4.943 m/s) come out with
+  pistols, one at the driver's window; shots, the windshield cracked, and the man's phone falls
+  into the cab as Ethan floors it. Then GET OUT OF THE TERMINAL: one SUV races to block the gate;
+  out first and he is away, there second and the escape starts again at the berth without the
+  cutscene. GET AWAY (150 m), then CHECK THE PHONE: M's messages, the number saved as MAYA;
+  stage 1 saved. The shots and the glass are synthesised (`source_assets/audio/last_run/`).
+  **Changed from the brief:** the phone is in the cab, dropped through the window, not on the
+  quay, so he never stops under fire to pick it up.
+- **Step 4, the confrontation and the proof** (`last_run.gd`, `story_scenes.gd`, new): Maya
+  (Rocketbox's Female_Adult_07, MIT) waits by her sedan at the depot; stopped by her, the
+  confrontation plays in the cutscenes' look (she routed his jobs; she is married to Adrian Vale;
+  their daughter Lily is five; Adrian has her; "Don't call me"), then TWO DAYS LATER; LISTEN TO THE
+  RECORDING: E shows her voice memo of Adrian's offer and her refusal, and her forwarded dispatch
+  records whose dates are the nights he drove (N03's draft as the brief had it); MEET MAYA AT THE
+  VIEWPOINT; the reconciliation (he forgives, trust will take longer; Adrian flies Lily out from
+  the airfield tonight); stage 2 saved. Lily (Female_Child_01, scaled to 1.12 m, a five-year-old's
+  height) is converted for step 7.
+- **Step 5, the airfield** (`harbour_flats/airfield.gd`, new): runway 09/27, 505 m by 18 m, white
+  edge lights at most 60 m apart, green thresholds, its numbers read from each approach; a
+  windsock; a taxiway to the apron, where helijah's "Pilatus PC 12/47" (CC BY 4.0, repainted white)
+  waits with its nav lights and a flashing beacon; a steel hangar 32 by 26 m with a 22 by 6.8 m
+  door opening (wider and higher than the plane), high-bay lights and a lit office in its corner;
+  chain-link round it with a keypad gate off an access road from the coastal road and a service
+  gate on the south side off a gravel freight track.
+- **Step 5, the convoy** (`last_run/convoy.gd`, new): INTERCEPT THE CONVOY to the coastal road;
+  two black SUVs ahead heading north and Maya calls (the timing, the plane put back, the service
+  gate's code 2417, "Bring her to me"); TAIL THE CONVOY 25-200 m back: closer than 25 m for 2 s,
+  or farther than 200 m, and he is back at the junction with the convoy ahead again; kept back,
+  the lead stops while its driver keys in, the gate opens and shuts behind both; THE SERVICE GATE;
+  E keys Maya's code, it opens, stage 3 saved, GET INTO THE HANGAR. **Changed from the brief:**
+  the brief had Ethan stop his van across a choke point before the convoy arrived, and "two black
+  SUVs and a van". GAME_STORY's Act V reads "Ethan follows a convoy toward the airfield ... Maya
+  provides timing, a route change, and access information", so the convoy is followed, Maya's
+  access is the service gate's code and her route change is the plane put back; two SUVs, no van.
+  The brief's rule "the convoy stops only if the van blocks the choke point" becomes the tail's
+  rule above. The handgun's source (the brief: the convoy's lead car) is decided in step 6.
+- **N04's draft, moved:** Maya waits at the service gate, not the main gate, since that is the
+  way in she gives him.
+- **Tests (first run red):** `test_waterfront.gd` 0/1 then 8/8; `test_ambush.gd` 0/1 then 5/5;
+  `test_proof.gd` failed before Maya existed, then 6/6; `test_airfield.gd` 4/5 on its first run
+  (the runway's numbers), then 5/5; `test_convoy.gd` failed before the convoy existed, then 4/4.
+  Mutations, all exit 1: waterfront six, ambush seven, proof five, convoy, airfield and HUD ten
+  (c1, the convoy left unseen, survived first, so C1 now checks the SUVs are visible; a leaf left
+  across an "open" gate survived, so C4 now checks the service gate's way is shut before the code
+  and clear after it).
+- **Found in the stills and fixed (tests first):** the airfield's gates were plain grey slabs; they
+  are now the compound's real sliding gate (`sliding_gate.gd`: a braced chain-link leaf on roller
+  carriages, rack and motor, a warning lamp flashing while it moves), sliding at its 0.6 m/s, the
+  convoy waiting until the gate stands open (C3 counts frames an SUV is in a gate not yet open: 0);
+  the SUVs' lamps cast light but their lenses stayed dark, so a tailing driver saw nothing ahead:
+  the tail lamps now glow red, upright on the rear corners, and the low beams' round projectors
+  glow inside their chrome rings, measured from the model (C1 requires both tail lamps lit;
+  mutation c9 exit 1); every phone call's subtitles sat on the objective at the screen's foot (in
+  Missions 1 and 2 too, since the objective was added): they now sit above it, following its
+  height (`driving_hud.gd`; `test_maya_call.gd`'s new check red 13/14, 1,960 frames over it, then
+  14/14; mutation s1 exit 1).
+- **Every suite** (`logs/phase_2/last_run/step5/suites_final2/`): 79 runs exit 0, art check 0
+  failures; then, after the SUV's lenses, every test that loads the SUV (`after_lenses/`).
+- **Stills:** `captures/audit/waterfront/a2/`, `ambush/a3/`, `proof/a1/`, `airfield/fixed/`,
+  `convoy/a1/` (before the fixes) and `convoy/a7/`.
+- **Changed with their reasons:** `test_gate_light.gd` G6 skips the harbour's rain volumes (east of
+  the compound, x > 300), which are not the compound's; `test_lamp_rain_state.gd` counts 50 volumes
+  (the waterfront's 2 access lamps and 4 masts, the airfield's access lamp); `test_maya_call.gd`
+  (the subtitles' place, above); `test_getaway.gd` G3 started 30 road samples back driving straight
+  along a curving road and scraped the hill road's barrier every run, getting past by luck; with the
+  airfield's bodies in the world the scrape stalled it at 0.2 m/s (with the airfield's build
+  switched off it still scraped, fell to 1.7 m/s and got through). G3 now runs up from 8 samples
+  back aimed at the end; Mission 2's mutation g2 (the mission ending at speed) still fails it (exit
+  1, "ended true"); `test_menus.gd` names the new credits (red 19/20, then 20/20).
+- **Credits:** THE HARBOUR (the crane, the Suburban, the PC-12), THE MEN AT THE HARBOUR (bumstrum),
+  MAYA AND LILY (Rocketbox); `ATTRIBUTION.md` files beside each model; raw files in
+  `source_assets/sketchfab/30_harbour_crane` to `33_pc12` with their READMEs.
+- **Known gaps:** the mission map's ground still ends at x 630 (the flats black on it); a texture
+  `weathered_plank_siding_diff_2k.jpg` is reported missing in every run since before Mission 3
+  (not from this work, not yet traced); the GPU price waits for the mission's end.
+
+## Revision 2026-11-22 (Mission 3's step 6 built: the guard encounter at the hangar, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358 "take all decisions for
+me", #359 "finish mission 3 and same rules"), recorded as drafts for the joint review.
+
+- **New controls (protected, decided under #358/#359, the author's OK still wanted):**
+  `project.godot` gains `fire` (left mouse), `aim` (right mouse) and `reload` (R). R keeps its
+  old meaning (`recover`) everywhere except while Ethan stands armed on the airfield, where it
+  reloads. Reverting is removing the three actions and the encounter's input.
+- **The pistol's source (the brief: the convoy's lead car):** Maya waits by her car at the
+  service gate and hands Ethan Adrian's pistol ("It was in the car"); her lines (`MAYA_GUN`,
+  drafts) tell him where Lily is, that three men are outside, and to leave the van.
+- **The encounter** (`last_run/hangar_encounter.gd`, new; GAME_DESIGN §8): three of Adrian's men
+  (`syndicate_man/armed_guard.gd`, new: bumstrum's model, a stand-in archetype as D6), one at the
+  hangar's door, one walking the apron round the plane, one along the hangar's east wall. They
+  patrol (standing at their posts 2.5 s first), see 25 m and 60 degrees either side with nothing
+  solid between, stop and turn for 0.5 s (alert), run to where he was seen or heard and search
+  5 s (chase), and in 18 m stand with both hands on the pistol and fire every 1.1 s (attack),
+  hitting from 55% near to 15% far, 15% less when he runs; each hit takes 20 of his 100. A shot
+  carries over the whole airfield (150 m), as outdoors. Two body rounds put a man down, or one to
+  the head; he falls (Mixamo's fall, no gore) and no round stops at him again.
+- **His handgun** (`weapons/pistol/handgun.gd`, new): 15 in the magazine and one spare of 15,
+  semi-automatic (0.25 s between pulls), out to 60 m along the crosshair (the camera's middle to
+  the first thing there, then from the muzzle to that point); empty, the trigger clicks; a reload
+  takes 2.2 s. Aiming, both his arms come up to a two-handed grip, his hands closed round it
+  (`weapons/pistol/aim_arms.gd`, new, shared with the men: TwoBoneIK3D plus Ethan's own
+  `hand_grip.gd`), the camera nearer, over his right shoulder, narrower (`driver.gd`). The HUD
+  shows the rounds, his health, a crosshair while aiming and a brief red wash when he is hit.
+- **Fail and retry:** at nothing, the screen fades and all begins again at the service gate, on
+  foot just inside it, the van outside, the gun full, every man at his post. Driving the van onto
+  the airfield past the gate, they hear it: the same.
+- **The checkpoint:** at the hangar office's door, no man after him, stage 4 is saved (Last Run's
+  places gain "The hangar"); FIND LILY (step 7).
+- **Fixed on the way:** a reload at stage 3 put the van back at the depot (`START`); it is now
+  at the service gate, the gate open at once. The office's door way was 2.3 m wide with a 0.5 m
+  gap beside it; it is now one 0.95 m door. The apron had no lights: two 10 m LED flood poles on
+  its hangar side and two wall packs over the hangar's door now light it (each light just in
+  front of its housing, which had shadowed its own beam).
+- **Tests (first run red):** `test_hangar.gd` H1-H9, 0/3 (the encounter missing) then 9/9.
+  Mutations (`logs/phase_2/last_run/step6/mutations/`): ten, all exit 1 (h8 survived first: the
+  app recovers the van to the checkpoint itself, so its line was redundant; replaced by the
+  checkpoint left at the depot, exit 1).
+- **Every suite** (`logs/phase_2/last_run/step6/suites/`): 79 of 80 runs exit 0 (art check 0
+  failures) first; `test_convoy.gd` C4 changed with its reason (after Maya's code the objective
+  is now MAYA, her handover, not GET INTO THE HANGAR), then 4/4 (`fix/`), with `test_menus.gd`
+  20/20 after the credits' wording.
+- **Stills** `captures/audit/hangar/a1/` (before the fixes) to `a4/`: Maya at the gate, her
+  pistol, aiming over the shoulder and from the side, a man shooting, a man down, the office door,
+  the apron lit.
+- **Known gaps:** the downed men's fall is the struck man's car-impact clip, a stand-in for a
+  fall of its own; the men walk straight lines (no navigation round the plane or the hangar);
+  the floods carry no rain volumes (lamp rain's count unchanged); unpriced on the GPU.
+
+## Revision 2026-11-22 (Mission 3's step 7 built: Lily and Adrian, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358, #359), drafts for the
+joint review.
+
+- **Lily** (`game/features/characters/lily/lily.gd`, new; Rocketbox's Female_Child_01, 1.12 m):
+  at stage 4 she waits in the hangar's office, FIND LILY; E by her takes her hand, TAKE LILY TO
+  MAYA. She walks on Ethan's own trail half a step behind him, out at his left where there is
+  room (behind him through the 0.95 m door), her right arm up by IK and her hand in his left
+  (Ethan's own one-hand IK, `grip`), their palms within 15 cm; he walks at a child's pace,
+  1.1 m/s, his clip slowed to match, and cannot run while he leads her (`driver.gd`'s
+  `lead_pace`); she quickens her steps to keep up.
+- **Adrian** (`game/features/characters/adrian/adrian.gd`, new): Rocketbox's Business_Male_03
+  (MIT; a charcoal suit, his forties; `tools/art/convert_rocketbox.py`'s `adrian` job) with
+  Rocketbox's angry idle, an agitated talk and a walk; he draws one-handed (his right arm by IK,
+  the men's pistol in his hand).
+- **The scene at the service gate** (`story_scenes.gd`'s `GATE_LINES`, `gate_confrontation`):
+  with Lily at Maya's side, Adrian walks through the gate behind Ethan; seven shots, about 35 s:
+  Maya sees him, his lines (the company, Maya's betrayal, "And you brought him into it"),
+  Ethan's ("Let them go home"), Maya to Lily ("Look at me. Only at me"); "She's my daughter";
+  he draws; Ethan raises his (`aim_arms.gd`) and fires once; black; then only Adrian's pistol on
+  the wet ground, fallen ahead of him, and his shoes behind it; "Take her to the car. Don't let
+  her look." N02 stays open: no word says how Adrian learned of the hit. GAME_STORY's "Adrian
+  attacks or draws a weapon; Ethan kills him while defending himself and protecting Lily" is kept
+  with N04's draft (Lily out to Maya first): she stands with Maya, Ethan between them and him.
+- **The men at stage 4:** any still on their feet are gone from the airfield; the men put down
+  stay where they fell (`hangar_encounter.gd`'s `stand_down`). A stage 4 reload keeps him armed.
+- **Fixed on the way:** the in-world lines (Maya's handover, the gate scene) now clear between
+  lines instead of staying up until the next.
+- **Tests (first run red):** `test_rescue.gd` R1-R4, 0/1 then 4/4 (R3: led out 4.4 m with sprint
+  held, 1.10 m/s, she 0.60 m at his side, their palms within 0.15 m; R4: one shot, black, Adrian
+  down, Lily with Maya). Mutations (`logs/phase_2/last_run/step7/mutations/`): eight, all exit 1.
+- **Every suite** (`logs/phase_2/last_run/step7/suites/`): 81 runs exit 0, art check 0
+  failures; then `test_menus.gd` 20/20 with Adrian credited (red 19/20 first).
+- **Stills:** `captures/audit/rescue/a1/` (before) and `a7/`: Lily in the office, her hand in his
+  from the side and behind, Adrian coming, Adrian, Ethan, Maya and Lily, the draw (wide and
+  close), after.
+- **Known gaps:** Lily and Adrian walk straight lines (no navigation); Adrian's fall is not shown
+  (a cut on the shot), by choice as well as for want of a fall clip of his rig's.
+
+## Revision 2026-11-22 (Mission 3's step 8 built: home, the watcher, black, the title; Mission 3 playable to its end, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word (#358, #359), drafts for the
+joint review, except the final cinematic's lines and messages, which are GAME_STORY's, word for
+word.
+
+- **The reunion** (`story_scenes.gd`'s `REUNION_LINES`, `reunion`): after the gate scene Ethan
+  walks to Maya and Lily; Lily asks to go home; Maya and Ethan speak about the past ("You gave up so
+  much for me ... I never knew how to carry that"; "It was never yours to carry"), and he says he
+  will tell the police everything, the hill road too, as patrol-car lights, blue and red, come up
+  the freight track flashing in turn. GAME_STORY's "Ethan and Maya speak openly about the past" and
+  "cooperate with the investigation into the collision, admitting that he fled" kept.
+- **N05's draft, as a card:** HE TOLD THEM EVERYTHING / THAT NIGHT. THE HILL ROAD INCLUDED. The
+  legal outcome stays off-screen. Then a beat of black and SIX MONTHS LATER / BLACKRIDGE.
+- **The epilogue** (`last_run/epilogue.gd`, new): the family home on a late afternoon in sunlight,
+  a world of its own drawn over the screen (a SubViewport), so the night's environment, fog, AgX
+  grade, lamps and rain are left untouched: a sky and a low warm sun, strielecki's "Suburban House
+  V2" (CC BY 4.0), lawn, a concrete drive and the street, cedars, firs, hemlocks and alders round
+  it (one mesh each), moving boxes by the porch, Ethan's van in the drive. As GAME_STORY writes
+  it: Maya, "You don't have to look after me anymore, Ethan"; Ethan, "This time, it's not about
+  looking after you. It's about being a family."; Lily, "Uncle Ethan! You promised we'd go for a
+  drive!"; they walk to the van, it leaves down the road with the drive's own music; the camera
+  stays on the empty driveway, the music fades; the frame finds the black sedan across the street
+  (the town's Fairheaven repainted black); through its windshield a man in the driver's seat
+  (bumstrum's model, seated by Mixamo's sitting pose), his phone held up in both hands before his
+  face, the glass's daylight glare over him: his face is never seen; the phone's four messages,
+  word for word ("Found them." "All three?" "Yes." "Don't approach them. Not yet."); he lowers it,
+  the engine starts and he drives away; absolute black held 2.2 s; only then BLACKRIDGE: NO WAY
+  BACK; then the title screen. The night's engines, rain and music are muted while it plays.
+- **The save after the end:** left at Last Run's last checkpoint (stage 4); Continue replays the
+  finale. Claude Code's call; a "finished" state is the author's to choose.
+- **Changed with its reason:** `cutscene_director.gd`'s `all_texts` now records every line a card
+  shows, not only its first (its own doc says "every word the cutscene puts on screen"); the
+  opening, cargo-opening and getaway tests read it unchanged and pass.
+- **Fixed on the way:** two card shots in a row hid the second card (the first's fade-out ended
+  after it); a beat of black now separates them.
+- **Tests (first run red):** `test_ending.gd` E1-E5, 0/2 then 5/5 (the reunion and its card, the
+  epilogue's sunlight and no rain, the story's words, the messages in order, the title 2.2 s after
+  the black and never before, the title screen and the sound back). Mutations
+  (`logs/phase_2/last_run/step8/mutations/`): nine, all exit 1. Credits: THE FAMILY HOME
+  (strielecki; menus red 19/20, then 20/20).
+- **Every suite** (`logs/phase_2/last_run/step8/suites/`): 82 runs exit 0, art check 0 failures.
+- **Stills:** `captures/audit/ending/a1/` (before the fixes) and `a4/`: the reunion, Maya, Ethan,
+  the police lights, both cards, the home, Maya and Ethan, the family line, Lily's promise, the
+  keys, the drive, the empty driveway, across the street, the watcher, the messages, away, black,
+  the title.
+- **Known gaps:** voices wait for the author's pass (subtitles only); the van and the sedan glide
+  (no wheel turn) and the family walk in straight lines; the sedan's driver is lit only by a faint
+  fill; the downed men and Adrian are not shown being taken away; GPU price waits.

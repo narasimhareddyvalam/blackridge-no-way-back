@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb5/w5/game/features/environments/industrial_loop/guard_booth.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 20:09:52
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb5/w5/game/features/environments/industrial_loop/guard_booth.gd	2026-11-20 20:13:52
+@@ -581,7 +581,7 @@
+ 		elif named.contains("sticky"):
+ 			mesh.position = STICKY_ON_PAD
+ 	_place(pads, Vector3(0.72, top, -0.64), "counter")
+-	_place(_prop(THERMOS, "Thermos"), Vector3(1.08, top, 0.3), "counter")
++	_place(_prop(THERMOS, "Thermos"), Vector3(1.08, top, -0.1), "counter")
+ 	var cup := _prop(STATIONERY, "PencilCup")
+ 	for mesh: MeshInstance3D in cup.find_children("*", "MeshInstance3D", true, false):
+ 		mesh.visible = String(mesh.name) == "stationery_supplies_pencilcup"

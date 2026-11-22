@@ -1,0 +1,8 @@
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+RLA      0.797     0.722 to   0.872        -  an option, no budget           45.0, 45.1
+RFR      0.024    -0.052 to   0.099        -  an option, no budget           45.1, 45.2
+RPR     -0.001    -0.089 to   0.087        -  an option, no budget           45.3, 45.1
+VLA      0.420     0.365 to   0.476        -  an option, no budget           45.0, 45.4
+VFR      0.009    -0.078 to   0.096        -  an option, no budget           45.2, 45.2
+VPR      0.006    -0.063 to   0.076        -  an option, no budget           45.0, 44.9

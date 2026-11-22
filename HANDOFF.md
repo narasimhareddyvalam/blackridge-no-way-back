@@ -1,5 +1,822 @@
 # HANDOFF.md
 
+**This run (2026-11-22, #359-#360: Mission 3's step 8; Mission 3 playable to its end):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 8 built ...)".
+  Files: `game/features/missions/last_run/epilogue.gd` (new), `art/house/` and `art/ATTRIBUTION.md`
+  (new), `last_run.gd` (the reunion, police lights, the epilogue), `story_scenes.gd` (reunion,
+  cards), `game/app/first_drive.gd` (`_ending_begins`, `_game_finished`), `cutscene_director.gd`
+  (`all_texts`), `front_menu.gd` (the house's credit), the syndicate man's `Sit` clip
+  (`tools/art/convert_patrol_guard.py`), `tools/captures/capture_ending.gd` (new).
+- **Results (exact):** `test_ending.gd` 0/2 red, then 5/5; mutations (`python3 -I
+  logs/phase_2/last_run/step8/mutations/mutations_step8.py <scratch> <out>`): nine, all exit 1;
+  suites (`bash logs/phase_2/last_run/step8/suites/run_suites.sh <scratch>`): 82 runs exit 0,
+  art check 0 failures.
+  Stills `captures/audit/ending/a4/`. Committed on `develop` (not pushed).
+- **Mission 3 now plays from Mission 2's end to the title:** the waterfront and the ambush, the
+  depot, the recording, the viewpoint, the convoy, the airfield's encounter, Lily, Adrian, the
+  reunion, six months later, the watcher, black, the title.
+- **For the author's joint review of Missions 2 and 3:** every Mission 3 word but the final
+  cinematic's (drafts); the new controls (fire, aim, reload: a protected change); the models
+  (crane, Suburban, bumstrum's men, PC-12, Maya, Lily, Adrian, the house); step 5 as a tail (the
+  brief had a choke point); the pistol from Maya; the save after the end.
+- **Next:** the author's look and play of Missions 2 and 3 together (#359); voices; the GPU price
+  on power; the map's ground east of x 630; the missing `weathered_plank_siding_diff_2k.jpg`.
+
+**This run (2026-11-22, #359-#360: Mission 3's step 7, Lily and Adrian):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 7 built ...)".
+  Files: `game/features/characters/lily/lily.gd`, `game/features/characters/adrian/` (new: the
+  model, `adrian.gd`), `last_run.gd`, `story_scenes.gd` (the gate scene), `hangar_encounter.gd`
+  (`stand_down`), `driver.gd` (`lead_pace`, `left_hand`), `front_menu.gd` and
+  `game/features/characters/ATTRIBUTION.md` (Adrian), `tools/art/convert_rocketbox.py`,
+  `tools/captures/capture_rescue.gd` (new), `source_assets/rocketbox/README.md`.
+- **Results (exact):** `test_rescue.gd` 0/1 red, then 4/4; mutations (`python3 -I
+  logs/phase_2/last_run/step7/mutations/mutations_step7.py <scratch> <out>`): eight, all exit 1;
+  suites (`bash logs/phase_2/last_run/step7/suites/run_suites.sh <scratch>`): 81 runs exit 0, art
+  check 0 failures; `test_menus.gd` 20/20 after Adrian's credit. Stills
+  `captures/audit/rescue/a7/`. Committed on `develop` (not pushed).
+- **Claude Code's calls for the review:** Adrian's model; every gate-scene word; Lily on his
+  trail; his child's pace; the scene's cut on the shot and the pistol on the ground after it.
+- **Next:** step 8 (the reunion, the statement card, six months later the family home in
+  sunlight, the watcher, black, the title; house: strielecki's "Suburban House V2", CC BY,
+  exported to `game/features/missions/last_run/art/house/`, not yet committed).
+
+**This run (2026-11-22, #359-#360: Mission 3's step 6, the guard encounter at the hangar):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 6 built ...)".
+  Files: `game/project.godot` (`fire`, `aim`, `reload`: a protected change, decided under
+  #358/#359, flagged for the author), `game/features/weapons/pistol/` (`handgun.gd`,
+  `aim_arms.gd` new), `game/features/characters/syndicate_man/` (`armed_guard.gd` new, the model
+  with `Fall`), `game/features/missions/last_run/` (`hangar_encounter.gd` new, `last_run.gd`),
+  `driver.gd` (aiming), `driving_hud.gd` (rounds, health, crosshair), `airfield.gd` (office door,
+  apron lights, `open_service_now`), `game/app/first_drive.gd`, `front_menu.gd`,
+  `tools/art/convert_patrol_guard.py`, `tools/captures/capture_hangar.gd` (new).
+- **Results (exact):** `test_hangar.gd` 0/3 red, then 9/9; mutations (`python3 -I
+  logs/phase_2/last_run/step6/mutations/mutations_step6.py <scratch> <out>`): ten, all exit 1;
+  suites (`bash logs/phase_2/last_run/step6/suites/run_suites.sh <scratch>`): 79 of 80 exit 0,
+  art check 0 failures, `test_convoy.gd` 3/4 there (C4's objective now MAYA), changed, then 4/4;
+  `test_menus.gd` 20/20. Stills `captures/audit/hangar/a4/`. Committed on `develop` (not pushed).
+- **Claude Code's calls for the review:** the controls; Maya handing over Adrian's pistol at the
+  service gate; the men's numbers (sight 25 m, 60 degrees, 18 m to shoot, 20 a hit, two body
+  rounds); the van heard on the airfield; the stand-in fall; Adrian as Rocketbox's
+  Business_Male_03 (a charcoal suit, his forties), chosen for step 7.
+- **Next:** step 7 (Lily in the office, her hand taken, out to Maya; Adrian at the gate, his
+  draw, Ethan's shot, no gore), step 8 (home, the watcher, black, the title).
+
+**This run (2026-11-21 into 11-22, #359-#360: Mission 3's steps 3, 4 and 5):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Mission 3's steps 3, 4 and 5
+  built ...)". Files: `game/features/environments/harbour_flats/` (`waterfront.gd`,
+  `airfield.gd` new, `harbour_flats.gd`, `art/` with the crane, the Suburban and the PC-12),
+  `container_yard.gd` (`stack`), `industrial_loop.gd`, `game/features/missions/last_run/`
+  (`ambush.gd`, `convoy.gd`, `story_scenes.gd` new; `last_run.gd`),
+  `game/features/vehicles/scripted_suv/` (new), `game/features/characters/` (`syndicate_man/`,
+  `maya/`, `lily/` new; `patrol_guard.gd` CLIP_SPEED), `game/features/weapons/pistol/` (new),
+  `game/features/audio/last_run/` (new), `game/app/first_drive.gd`, `front_menu.gd` (credits),
+  `tools/art/convert_patrol_guard.py`, `convert_rocketbox.py`,
+  `tools/assets/drop_sourceless_textures.py` (new), `tools/captures/capture_waterfront.gd`,
+  `capture_ambush.gd`, `capture_proof.gd`, `capture_airfield.gd`; tests below.
+- **Results (exact):** `test_waterfront.gd` 8/8, `test_ambush.gd` 5/5, `test_proof.gd` 6/6,
+  `test_airfield.gd` 5/5, `test_convoy.gd` 4/4 (each red first); `test_maya_call.gd` 14/14 (its
+  subtitle check red 13/14 first). Mutations (`python3 -I
+  logs/phase_2/last_run/<step3a|step3b|step4|step5>/mutations/mutations_*.py <scratch> <out>`):
+  28, all exit 1 (two survived first, c1 and the leaf across the gate; C1 and C4 strengthened,
+  then exit 1). Changed with reasons: `test_gate_light.gd` G6, `test_lamp_rain_state.gd` (50
+  volumes), `test_getaway.gd` G3 (its run-up; Mission 2's g2 mutation still exit 1),
+  `test_menus.gd` (credits, red 19/20 then 20/20). Suites: `bash
+  logs/phase_2/last_run/step5/suites_final2/run_suites.sh <scratch>`: 79 runs exit 0, art check 0
+  failures; after it only the SUV's lenses and `test_convoy.gd` changed, so every test loading
+  the SUV reran (`logs/phase_2/last_run/step5/after_lenses/`): convoy 4/4, ambush 5/5,
+  waterfront 8/8, proof 6/6, last run 3/3. Stills: `captures/audit/waterfront/a2/`,
+  `ambush/a3/`, `proof/a1/`, `airfield/fixed/`, `convoy/a1/` (before) and `convoy/a7/` (the gate
+  and lamps fixed). Committed on `develop` (not pushed).
+- **Claude Code's calls for the joint review (#359-#360):** every Mission 3 word (the phone's
+  messages, the confrontation, the recording, the reconciliation, Maya's call); the waterfront's
+  and airfield's layout; the models (crane, Suburban, bumstrum's guard as the men, PC-12, Maya,
+  Lily); the phone dropped into the cab; step 5 as a tail to the service gate (the brief had a
+  choke point; GAME_STORY says he follows the convoy); N04's Maya at the service gate.
+- **Next:** step 6 (the hangar's guard encounter: one handgun, hitscan, magazine and reload,
+  health, guards that patrol, alert, chase and attack; its fire, aim and reload keys are a new
+  control and need the author's OK, so drafted and flagged); step 7 (Lily and Adrian); step 8
+  (home, the watcher, black, the title). Still waiting: the map's baked ground east of x 630, the
+  missing `weathered_plank_siding_diff_2k.jpg` (in every run since before Mission 3), the GPU
+  price on power.
+
+**This run (2026-11-21 into the night, #358: Mission 2 finished, steps 3, 6, 7 and 8):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's steps 3, 6, 7
+  and 8 built: Mission 2 playable to its end, #358)" and the save rules' revision before it. Files:
+  `game/features/characters/patrol_guard/` (new: the model, `patrol_guard.gd`),
+  `game/features/missions/the_wrong_cargo/` (`escape.gd`, `opening_cutscene.gd` new;
+  `the_wrong_cargo.gd`), `compound.gd` (the cut), `container_yard.gd` (`at_keypad`,
+  `at_left_door`, `key_in(on_foot)`, `unswap`, `restore_unswapped`), `driving_hud.gd` (text card,
+  seen marks), `seen_marks.gd` (new), `film_look.gd` (titles fit), `game/app/first_drive.gd`,
+  `night_freight/first_drive.gd` (the opening flag), `front_menu.gd` and `ATTRIBUTION.md` (the
+  guard's credit), `tools/art/convert_patrol_guard.py`, `tools/captures/capture_escape.gd`,
+  `capture_mission_two_end.gd` (new); tests below.
+- **Results (exact):** `test_escape.gd` 13/13, `test_escape_route.gd` 1/1, `test_getaway.gd` 5/5,
+  `test_inspection.gd` 5/5, `test_cargo_opening.gd` 7/7 (each red first). Mutations (`python3 -I
+  logs/phase_2/<escape|getaway|inspection|cargo_opening>/mutations/mutations_*.py <scratch> <out>`):
+  29, all exit 1. Suites: `bash logs/phase_2/mission_two_end/suites/run_suites.sh <scratch>`: 71
+  runs exit 0, art check 0 failures; after it the full title's fit: `test_opening.gd` 7/7,
+  `test_cargo_opening.gd` 7/7, `test_menus.gd` 20/20 (`logs/phase_2/mission_two_end/after_title/`).
+  Committed on `develop` (not pushed).
+- **Claude Code's calls for the author's review (#358):** the guard model; the guards' rounds,
+  sight (15 m, 50 degrees, 1.0 s, 1.5 m) and the seen mark; the cut's place and size; the yard's
+  gate held 20 s on foot; S2 (NORTHLINE DISPATCH, K. MARSH, by text), S3 (the warning's and Maya's
+  words), S4 (410 kg against 1,180 kg, VALE FREIGHT under a label, the load never seen), S5 (the
+  windshield replaced); the ending at sample 990 as Mission 1's.
+- **Next:** the author's morning look (stills open); guidance step 3 (the route line); the GPU
+  price on power now the mission is whole; Mission 3's brief.
+
+**This run (2026-11-21, guidance step 2, #358; the opening's restart fixed):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance (#356),
+  step 2 built; the opening on a restart, fixed)". Files: `objective_marker.gd` (new),
+  `mission_map.gd`, `driving_hud.gd`, `the_wrong_cargo.gd` (`objective_target`,
+  `interact_label`), `game/app/first_drive.gd` (`_aim_marker`, `_new_drive`), `test_guidance.gd`,
+  `test_opening.gd`, `tools/captures/capture_markers.gd` (new).
+- **Correction:** the opening's commit (`55e4069`) said every suite passed; `test_collision.gd`
+  had failed 42/44 there. Fixed here; now 44/44.
+- **Results (exact):** `LOG_DIR=logs/phase_2/guidance/step2/precommit scripts/run-test.sh
+  test_guidance.gd 60 300` exit 0, 11/11; `test_opening.gd` 7/7, `test_collision.gd` 44/44,
+  `test_on_foot.gd` 52/52 (`logs/phase_2/opening/restart/green/`). Mutations: `python3 -I
+  logs/phase_2/guidance/step2/mutations/mutations_step2.py <scratch> <out>` seven exit 1; p8 exit
+  1. Suites: `bash logs/phase_2/guidance/step2/suites_rerun/run_suites.sh <scratch>`: 66 runs
+  exit 0, art check 0 failures. Committed on `develop` (not pushed).
+- **In progress (not in this commit):** Mission 2's step 6, the escape: `escape.gd`, the patrol
+  guard (`game/features/characters/patrol_guard/`, `tools/art/convert_patrol_guard.py`), the cut
+  in `compound.gd`, `test_escape.gd` (9/9 so far).
+
+**This run (2026-11-21, Mission 1's opening cutscene, #357; overnight run #358 begun):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 1's opening
+  cutscene (#357), built)". Files: `game/features/cinematics/` (new: `cutscene_director.gd`,
+  `film_look.gd`, `film_grade.gdshader`), `game/features/missions/night_freight/opening_cutscene.gd`
+  (new), `game/app/first_drive.gd`, `driver.gd` (`RAIN_SHIELD`), `game/tests/test_opening.gd`
+  (new), `test_on_foot.gd`, `test_exhaust_vapour_state.gd` (one E press to skip the opening),
+  `tools/captures/capture_opening_board.gd`, `capture_opening_film.gd` (new).
+- **Results (exact):** `test_opening.gd` 6/6; mutations (`python3 -I
+  logs/phase_2/opening/mutations/mutations_opening.py <scratch> <out>`): seven exit 1. Suites
+  (`bash logs/phase_2/opening/suites/run_suites.sh <scratch>`): 65 of 66 runs exit 0, art check 0
+  failures; `test_exhaust_vapour_state.gd` 4/10 there (its E presses went to the opening), then
+  `LOG_DIR=logs/phase_2/opening/fix scripts/run-test.sh test_exhaust_vapour_state.gd 60` exit 0,
+  10/10. Committed on `develop` (not pushed).
+- **Next:** guidance step 2 (the target's marker, map pin, distance and key prompt; `G10`, `G11`
+  in `test_guidance.gd` written first, red), then the rest of Mission 2 overnight (#358).
+
+**This run (2026-11-21, mission guidance, step 1, #356; cutscenes looked at, #357):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, mission guidance as a
+  professional game's (#356), step 1 built)". Files: `game/features/ui/driving_hud/`
+  (`mission_map.gd` new, `map_fade.gdshader` new, `art/mission_map_ground.png` and `.json` new,
+  `fonts/` new, `driving_hud.gd`, `van_guide.gd`), `game/app/first_drive.gd`,
+  `industrial_loop.gd` (`map_roads`, `map_places`, `map_fences`, `map_blocks`),
+  `driver.gd` (`facing_yaw`), `tools/art/bake_mission_map.py` (new),
+  `tools/captures/capture_map_base.gd`, `capture_guidance.gd`, `capture_storyboard.gd` (new),
+  `game/tests/test_guidance.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/guidance/g13 scripts/run-test.sh test_guidance.gd
+  60 300` exit 0, 9/9; `test_mirrors.gd` 13/13 (`g12`). Mutations (`python3 -I
+  logs/phase_2/guidance/mutations/mutations_guidance.py <scratch> <out>`): six exit 1. Suites:
+  `bash logs/phase_2/guidance/suites/run_suites.sh <scratch>`: 65 runs exit 0, no script or
+  shader errors, art check 0 failures. Committed on `develop` (not pushed).
+- **Cutscenes (#357):** a survey found one real cutscene (the seal round) and no film look, no
+  camera paths and no cutscene framework; three looks shown on real frames; the author chose
+  "C Neo-noir". Nothing built yet.
+- **Next:** a cutscene plan in the neo-noir look (which scenes, shot lists, the tooling), shown
+  to the author first; guidance steps 2-3 after.
+
+**This run (2026-11-21, Mission 2's audit, the run sheet handover, #355):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  run sheet handover (#355), built)". Files: `guard_booth.gd`, `transfer_shed.gd`, `compound.gd`,
+  `the_wrong_cargo.gd` (the pull-in hint), `freight_van.gd` (`window_hold`),
+  `game/tests/test_handover.gd` (new), `test_mission_two.gd`, `test_compound.gd`,
+  `tools/captures/capture_handover.gd` (new). The seated Ethan tried first was removed (the
+  author did not like hands in the cab).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/handover/h11 scripts/run-test.sh
+  test_handover.gd 60 300` exit 0, 10/10; `test_mission_two.gd` 61/61 and `test_compound.gd`
+  10/10 (`handover/g10`). Mutations (`python3 -I
+  logs/phase_2/realism/handover/mutations/mutations_handover.py <scratch> <out>`): seven exit 1.
+  Suites: `bash logs/phase_2/realism/handover/suites/run_suites.sh <scratch>`: 64 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** Mission 2's step 6 (the escape: the patrol guards' looks still to choose, walking
+  clips needed); then step 7; then a Mission 3 brief.
+- **Unverified:** whether her 57-degree lean reads as natural in play (the author: "okay looks
+  good" on the stills).
+
+**This run (2026-11-21, the rain as real rain at night, step 5, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 17. Files: the six `game/effects/lamp_rain_*.tscn`,
+  `game/tests/test_lamp_rain_config.gd`, `tools/captures/capture_rain_views.gd` (two close views
+  of the lit ground).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step5/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 588/588. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step5/mutations/mutations_rain_step5.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step5/suites/run_suites.sh <scratch>`: 63 runs exit 0 (the laptop slept mid-run; none timed out),
+  no script or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop`
+  (not pushed).
+- **The rain's five steps are done.** For the author's look: see the brief's last line under the
+  #354 revision. The GPU price waits for the mission's end (the author's word).
+- **Next on the list:** the run sheet handover at the booths; then Mission 2's steps 6 and 7; then
+  a Mission 3 brief.
+
+**This run (2026-11-21, the rain as real rain at night, step 4, #354):**
+- **Built:** see `docs/PHASE_BRIEF.md`'s step 4 line under "Revision 2026-11-21 (Phase 2, the
+  rain as real rain at night (#354), step 1 built)" and `CHANGE-BRIEF.md` revision 16. Files:
+  `game/effects/headlight_rain.tscn` (new), `scatter_particle.gdshader` (`back_scatter`), the six
+  lamp-rain scenes, `van_presentation.gd` (`_headlight_rain`, `RainStop`, `rain_backlit`),
+  `beam_rain.gdshader` deleted, `game/tests/test_headlights.gd`, `test_oncoming_van.gd`,
+  `test_lamp_rain_config.gd`, `tools/captures/capture_rain_views.gd` (a view from in front).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step4/g5 scripts/run-test.sh` on
+  `test_headlights.gd` 32/32, `test_oncoming_van.gd` 21/21, `test_lamp_rain_config.gd` 588/588,
+  `test_gate_light.gd` 6/6, all exit 0. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step4/mutations/mutations_rain_step4.py <scratch> <out>`): eight exit
+  1 (see its SUMMARY's note). Suites: `bash logs/phase_2/realism/rain/step4/suites/run_suites.sh
+  <scratch>`: 63 runs exit 0, no script or shader errors, art check 0 failures
+  (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 5, splashes. The author looks at the end; the GPU price at the mission's end
+  (22,000 more drops while the lamps are on).
+
+**This run (2026-11-21, the rain as real rain at night, step 3, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 15. Files: `game/effects/scatter_particle.gdshader`
+  (`far_pixels`, `far_sheen`), the five `lamp_rain_*.tscn`, `lamp_rain_flood_high.tscn` (new),
+  `lamp_rain.gd` (`FLOOD_HIGH`), `compound.gd` (rain heights), `industrial_loop.gd`,
+  `game/tests/test_lamp_rain_config.gd`, `test_gate_light.gd` (G6).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step3/g2 scripts/run-test.sh` on
+  `test_lamp_rain_config.gd` 582/582, `test_gate_light.gd` 6/6, `test_lamp_rain_state.gd` 16/16,
+  all exit 0. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step3/mutations/mutations_rain_step3.py <scratch> <out>`): eight exit
+  1. Suites: `bash logs/phase_2/realism/rain/step3/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 4, rain in the van's headlights; 5, splashes. The author looks at the end; the
+  GPU price at the mission's end.
+- **Unverified:** the speckle of far floodlight rain and dotted near streaks (see the brief).
+
+**This run (2026-11-21, the rain as real rain at night, step 2, #354):**
+- **Built:** `CHANGE-BRIEF.md` revision 14. Files: `game/effects/scatter_particle.gdshader`
+  (`near_fade`), the five `game/effects/lamp_rain_*.tscn`, `game/tests/test_lamp_rain_config.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/step2/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 475/475. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step2/mutations/mutations_rain_step2.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step2/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 3, rain from the light (the floodlight volumes at their heads, slow drops
+  reaching the ground, the compound's four volumes slanting with the rest); 4 headlights;
+  5 splashes. The author looks at the end; the GPU price at the mission's end.
+
+**This run (2026-11-21, the rain as real rain at night, step 1, #354):**
+- **Built:** see `CHANGE-BRIEF.md` revision 13 and `docs/PHASE_BRIEF.md`, "Revision 2026-11-21
+  (Phase 2, the rain as real rain at night (#354), step 1 built)". Files:
+  `game/effects/scatter_particle.gdshader`, the five `game/effects/lamp_rain_*.tscn`,
+  `game/tests/test_lamp_rain_config.gd`, `tools/captures/capture_lookup.gd` and
+  `capture_rain_views.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/rain/g1 scripts/run-test.sh
+  test_lamp_rain_config.gd 60` exit 0, 470/470. Mutations (`python3 -I
+  logs/phase_2/realism/rain/step1/mutations/mutations_rain_step1.py <scratch> <out>`): five exit 1.
+  Suites: `bash logs/phase_2/realism/rain/step1/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** step 2, brightness and density in the light; then 3 (rain from the light, and the
+  compound's four volumes' slant), 4 (headlights), 5 (splashes). The author looks at the end.
+- **Unverified:** the GPU price (deferred to the mission's end at the author's word).
+
+**This run (2026-11-21, Mission 2's audit, the compound gate's light, #353):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  compound gate's light (#353), built)". Files: `compound.gd`, `industrial_loop.gd`,
+  `art/gates/led_flood/` (new), `art/gates/ATTRIBUTION.md`,
+  `source_assets/sketchfab/28_led_flood/README.md`, `front_menu.gd` (credits),
+  `game/tests/test_gate_light.gd` (new), `test_menus.gd`, `test_lamp_rain_state.gd`,
+  `tools/captures/capture_gate_light.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/gate_light/g3 scripts/run-test.sh
+  test_gate_light.gd 60` exit 0, 5/5; `test_menus.gd` 20/20; `test_lamp_rain_state.gd` 16/16;
+  `test_compound.gd` 10/10. Mutations (`python3 -I
+  logs/phase_2/realism/gate_light/mutations/mutations_gate_light.py <scratch> <out>`): nine exit 1
+  (l9 through `scripts/run-test.sh` in a clone). Suites: `bash
+  logs/phase_2/realism/gate_light/suites/run_suites.sh <scratch>`: 63 runs exit 0, no script or shader errors, art check 0
+  failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Blender:** the export is in the default scene's collection `LEDFloodExport`; earlier imports
+  are still in that scene.
+- **Next:** the rain seen looking straight up, the run sheet handover; then steps 6 and 7, then a
+  Mission 3 brief.
+- **Unverified:** the floods have not been seen in motion from the van at the gate.
+
+**This run (2026-11-21, Mission 2's audit, the docks, #352):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's audit: the
+  docks (#352), built)". Files: `dock_dressing.gd` (new), `transfer_building.gd`, `warehouse.gd`,
+  `game/tests/test_docks.gd` (new), `tools/captures/capture_docks.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/docks/g2 scripts/run-test.sh test_docks.gd
+  60` exit 0, 15/15; mutations (`python3 -I
+  logs/phase_2/realism/docks/mutations/mutations_docks.py <scratch> <out>`): ten exit 1. Suites:
+  `bash logs/phase_2/realism/docks/suites/run_suites.sh <scratch>`: 62 runs exit 0, no script
+  or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** the compound gate's light at night, the look-up rain, the run sheet handover; then
+  steps 6 and 7, then a Mission 3 brief.
+- **Unverified:** the number plates are too small to read from the far end of the shed's row
+  (clear in the close stills).
+
+**This run (2026-11-20, Mission 2's audit, the container yard, #351):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  container yard (#351), built)". Files: `container_yard.gd`, `art/container_yard/`
+  (`container_paint.gdshader`, `container_codes.png`, `container_panels.png`,
+  `container_lines.png`, `container_marks.json`, `top_loader/` with its `ATTRIBUTION.md`),
+  `tools/art/make_container_markings.py`, `source_assets/fonts/barlow_condensed/` (font and
+  OFL), `source_assets/sketchfab/27_container_loader/README.md`, `front_menu.gd` (credits),
+  `game/tests/test_yard_realism.gd` (new), `test_menus.gd`, `tools/captures/capture_yard.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/yard/g5 scripts/run-test.sh
+  test_yard_realism.gd 60` exit 0, 5/5; mutations (`python3 -I
+  logs/phase_2/realism/yard/mutations/mutations_yard.py <scratch> <out>`): eight exit 1. Suites:
+  `bash logs/phase_2/realism/yard/suites/run_suites.sh <scratch>`: 61 runs exit 0, no script or
+  shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Also:** the overnight run (#350) was called off by the author before any code changed.
+- **Next:** the docks; then the compound gate's light, the look-up rain, the handover; then
+  steps 6 and 7.
+
+**This run (2026-11-20, Mission 2's audit, the gates, #349):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  gates (#349), built)". Files: `sliding_gate.gd` (new), `container_yard.gd`, `compound.gd`,
+  `transfer_shed.gd`, `front_menu.gd` (credits), `art/gates/` (new: three Sketchfab models,
+  `ATTRIBUTION.md`), `source_assets/sketchfab/24_..26_` READMEs, `game/tests/test_gates.gd`
+  (new), `test_mission_two.gd`, `test_menus.gd`, `tools/captures/capture_gates.gd` (new).
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/gates/g4 scripts/run-test.sh test_gates.gd
+  60` exit 0, 18/18; the rest as in the brief. Mutations (`python3 -I
+  logs/phase_2/realism/gates/mutations/mutations_gates.py <scratch> <out>`): ten exit 1. Suites:
+  `bash logs/phase_2/realism/gates/suites/run_suites.sh <scratch>`: 60 runs exit 0, no script or
+  shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop` (not pushed).
+- **Next:** the audit's container yard, then the docks, the rest; then step 6.
+- **Unverified:** the gates moving have not been filmed.
+
+**This run (2026-11-20, Mission 2's audit, the guard booths, #348):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-20 (Phase 2, Mission 2's audit: the
+  guard booths (#348), built)". Files: `guard_booth.gd`, `guard_lean.gd` (new),
+  `game/shared/components/hand_turn.gd` (moved from the dock worker's folder),
+  `transfer_shed.gd`, `compound.gd`, `the_wrong_cargo.gd`, `front_menu.gd` (credits),
+  `art/booth/` (new: Poly Haven and Sketchfab models, `POLYHAVEN.md`, `ATTRIBUTION.md`),
+  `tools/assets/guard_booth_assets.json`, `source_assets/sketchfab/19_..23_` READMEs,
+  `game/tests/test_booths.gd` (new), `test_mission_two.gd`, `test_menus.gd`,
+  `tools/captures/capture_booths.gd`, `film_booth_window.gd`, `film_gate_handover.gd`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/booths/green14 scripts/run-test.sh
+  test_booths.gd 60` exit 0, 31/31; `test_mission_two.gd` 61/61; `test_compound.gd` 10/10;
+  `test_menus.gd` 20/20 (`booths/green15`). Mutations: `booths/mutations*/` all exit 1 but r4.
+  Suites: `bash logs/phase_2/realism/booths/suites/run_suites.sh <scratch>`: 59 runs exit 0, no
+  script or shader errors, art check 0 failures (`suites/SUMMARY.txt`; the gate test's logs carry
+  the known missing plank texture). Committed on `develop` (not pushed).
+- **Blender:** the MCP add-on updated to 2.0 (`uvx mcp-for-blender install-addon`, the author's
+  OK); libraries are switched per scene, so imports go in Blender's default scene.
+- **Next:** the audit's gates, then the container yard, the docks, the rest; then step 6.
+- **Unverified:** the run sheet does not visibly pass between them (not built).
+
+**This run (2026-11-20, #330: rain in the cab and the passenger wiper's water, #345; the
+windshield's water planned, #346):**
+- **Found** (two window runs at the author's OK, `tools/captures/capture_330.gd`, stills in
+  `captures/issue330/`): docked at bay 9 the cab stands under the dock front's rain; the moon
+  roof's opening (cut by `convert_iveco.py`) has see-through glass, which a lamp rain's height-field
+  collider never takes, so rain fell onto the seats. The passenger blade's line of water drew as
+  pale flat tiles. Seen, not fixed: rain seen straight up points every way.
+- **Built:** `MoonRoofCollider` under the glass (`van_presentation.gd`, `_moon_roof()`); the
+  `PassengerLine` as a thin clear ridge (`game/effects/wiper_flick.tscn`, ten settings,
+  `CHANGE-BRIEF.md` revision 12); new `game/tests/test_moon_roof_rain.gd`; new values in
+  `game/tests/test_wiper_flick_config.gd`. Records: `docs/PHASE_BRIEF.md` (the #330 revision and
+  the windshield's brief), the prompt log #345-#346.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/issue330/red scripts/run-test.sh
+  test_moon_roof_rain.gd 60` exit 1, 0/4 (before the fix); `.../green` exit 0, 4/4.
+  `test_wiper_flick_config.gd` 441/451 (red), 451/451 (green); `test_wiper_flick_state.gd` 27/27,
+  `test_lamp_rain_state.gd` 16/16. Mutations (`python3 -I
+  logs/phase_2/realism/issue330/mutations/mutations_330.py <scratch> <out>`): six, all exit 1.
+  Suites: `bash logs/phase_2/realism/issue330/suites/run_suites.sh <scratch>`: 57 runs exit 0,
+  no script or shader errors, art check 0 failures (`suites/SUMMARY.txt`); the logs' missing
+  `weathered_plank_siding_diff_2k.jpg` error was in the tail lamps' run too. Stills committed: the
+  ones the records cite; the rest of `captures/issue330/` (222 MB) stays local, untracked.
+- **Committed:** #330 on `develop` (not pushed). Step 0's capture (`capture_windshield.gd`) is
+  written, not committed, not yet run.
+- **Then the windshield's water, step 1 (#346):** step 0's stills (`captures/windshield/step0/`);
+  the soak (a second wipe map, 8 s), blobs to the slide radius, merged patches, the world's lamps
+  handed to the van by the app and the brightest eight caught in the water near them
+  (`windshield.gdshader`, `van_presentation.gd`, `rain_physics.gd`, `windshield_wipe_map.gd`,
+  `game/app/first_drive.gd`); `LOG_DIR=logs/phase_2/realism/windshield/step1e scripts/run-test.sh
+  test_windshield_water.gd 60` exit 0, 11/11; nine mutations exit 1
+  (`logs/phase_2/realism/windshield/mutations/`); suites
+  (`bash logs/phase_2/realism/windshield/suites/run_suites.sh <scratch>`): 58 runs exit 0, no
+  script or shader errors, art check 0 failures (`suites/SUMMARY.txt`). Committed on `develop`
+  (not pushed), with `1_unwiped_ahead.png` and `2_sweep_04.png` of each stills pass; the other
+  frames stay local, untracked.
+- **Then steps 2-4 (#347, "yes finish all the steps and show me"):** the thick film smears the
+  lamps down it (`wet_glass_streaked`, `rain_drops.gdshaderinc`), the ridge 9 mm and brighter, a
+  thin film behind the blade; `test_windshield_water.gd` 14/14; five mutations exit 1
+  (`windshield/mutations_step2/`); suites
+  (`bash logs/phase_2/realism/windshield/suites_step2/run_suites.sh <scratch>`): 58 runs exit 0,
+  no script or shader errors, art check 0 failures. The author liked the stills and asked to
+  commit; committed on `develop` (not pushed).
+- **New standing rule (#347):** before any work, look up real photos on the internet and compare
+  my stills with them side by side; this windshield's depth is the baseline.
+- **Next:** the rest of Mission 2's audit (booths, gates, container yard, docks, others), then
+  step 6 (patrol guards, renders first). Seen, not fixed: rain seen straight up points every way.
+- **Unverified:** the windshield's water in motion (stills only).
+- **Unverified:** the stills are single frames; the author's own look comes last.
+
+**This run (2026-11-19/20, fix 4 of the Mission 2 audit, the dock worker, #333-#343; not committed):**
+- **Built:** the seal cutscene (`seal_cutscene.gd`); the seal log at its true size in his hands
+  (it had been 1/100: the skeleton's scale, #337), its page and this van's row (BR 048, the seal's
+  number, R.M.) and the tick drawn under his pen as he notes, shown as he sees it; at the van, all
+  from one place 0.78 m out: he crouches (Rocketbox `m_crouch_in`/`m_crouch_out`, fetched, MIT)
+  and lays the log wholly on the rear step, half rises and seals (hands on the hasp, elbows bent),
+  checks it (tug, twist), crouches again, takes it up, hands it to his left hand and ticks it;
+  walking, the log hangs at his side by its edge; bay 9's wheel guides start 1 m out from the dock
+  face (`transfer_yard.gd`, the author's "Walkway, no step", #342) and his way runs between, clear
+  of the seals, bollards and chock. One IK and one hand turn an arm (`hand_turn.gd`).
+- **Dropped on the way:** a high step over the guide (#340, #341: leg IK over a standing clip read
+  wrong), a carry before him on his palm (#341), a stoop (nothing needed it).
+- **Files:** `dock_worker.gd`, `hand_turn.gd` (new), `worker_stair.gd` (new), `dock_worker.glb`
+  (17 clips), `seal_cutscene.gd` (new), `first_drive.gd`, `driver.gd`, `transfer_shed.gd`,
+  `transfer_yard.gd`, `dock_access.gd`, `dock_staging.gd`, `driving_hud.gd`, `test_dock_worker.gd`,
+  `test_sealing.gd`, `tools/art/convert_rocketbox.py`, `tools/art/make_shed_signs.py`
+  (`seal_log_page.png`, `shipping_label.png`), `tools/tests/check_first_drive_art.py`,
+  `source_assets/rocketbox/` (crouch clips, README), `tools/captures/film_seal_cutscene.gd`,
+  `tools/captures/capture_dock_worker_fix04.gd`; and, for the next step, `tools/art/make_tail_lamp_mask.py`.
+- **Results (exact):** `LOG_DIR=logs/phase_2/realism/fix04_dock_worker/k_try2 scripts/run-test.sh
+  test_dock_worker.gd 60 700` exit 0, 32/32; `test_sealing.gd` the same way exit 0, 15/15. Every
+  suite (`bash logs/phase_2/realism/fix04_dock_worker/suites/run_suites.sh <scratch>`): 55 runs exit
+  0 with no script or shader errors, the art check 0 failures (`suites/SUMMARY.txt`, run before
+  the last two small changes, which both tests above cover). Mutations
+  (`python3 -I logs/phase_2/realism/fix04_dock_worker/mutations/mutations_fix04.py <scratch> <out>`):
+  47 in `mutations/run342/`, m30, m45 and m46 rerun in `run342b/`; 46 exit 1. m29 (the floor taken
+  from a metre up) survives: his way now passes 0.47 m clear of the staged load it guarded.
+- **Unverified:** the look of the final round has not been filmed (the author: "Later"); the
+  film in `captures/seal_cutscene/` predates the walkway. The author's own look comes last.
+- **Committed:** fix 4 as `eda1036` on `develop` (not pushed).
+- **Then the tail lamps (#343, #344, built, not committed):** `tail_lamp.gdshader` (van's folder)
+  with the lens's own texture and its masks (`tools/art/make_tail_lamp_mask.py` →
+  `freight_van/art/iveco/tail_lamp_masks.png`): the red prism lens glowing in its own colours (stop
+  5x tail, UN R7), the clear section's chrome reflector catching the red, amber for its own side's
+  indicator, white in reverse; the converter's two cut pieces wear the same lamp (no gaps); the
+  reversing band mesh dropped (`van_presentation.gd`); `test_dash_screen.gd`'s reversing check reads
+  the lamps. `LOG_DIR=logs/phase_2/realism/tail_lamps/after4 scripts/run-test.sh test_tail_lamps.gd
+  60 300` exit 0, 6/6; five mutations exit 1 (`tail_lamps/mutations/`); stills
+  `captures/tail_lamps/` (the author: "Right, run suites + commit"); every suite rerun (see
+  `tail_lamps/suites/SUMMARY.txt`).
+- **Next:** #330, the rain the author saw "inside the cabin" and the passenger wiper's water
+  (being found: so far no lamp rain volume reaches over the van's cab or the shed's floor; the
+  author's image came from a stills camera at bay 9), then the rest of the audit, step 6.
+
+
+**Last run:** Phase 2, step 2f part 1 (#243–#246), 2026-11-12, on the author's second Claude account:
+step 2e's push finished (#243–#244), then, after the author watched the real-play capture and found
+the stair jerky (#245), part A of the plan they approved with B and C (#246): Ethan smooth on foot.
+**The push finished:** the jack's tiller cut from its mesh (Chassis, Steering, Tiller), tilting to
+his hands and turning with A and D; upright behind it once rolling; pulling upright outside the van;
+the rear doors open only where their swing is clear (G3); the dock front's rain 3.5 m deep.
+**A:** under the dock stair's drawn steps, one hidden incline along its nosings (`dock_access.gd`,
+`stair()`); near it Ethan's stair steps (`driver/stair_steps.gd`, `feet_flat.gd`, `ankle_watch.gd`):
+his walk slowed to 76 steps a minute up and kept at its 116 down (Di Giulio et al. 2019: about 76
+and 117), each foot set on its own tread by leg IK, one tread a step, heel lifting as his walk's,
+hips lowered to the standing foot, the foot behind first after a stop; kerbs and single steps glide
+his camera and model up and down over about a quarter second; his camera comes in at once, eases
+back out, and eases in ahead of a rail his walk takes it behind (`driver.gd`). Measured first: the
+old stair stalled him on its first tread up to 12 s, then jumped him 0.21–0.30 m a frame. Design
+and results: `docs/PHASE_BRIEF.md`'s last revision; tasks in `docs/DEPOT_PLAN.md` (part 1,
+continued). **Tests:** part 1's: `test_loading.gd` 22/22, `test_bay_nine.gd` 20/20, rain 455/455 and
+16/16, eighteen mutations, the 33 suites (`logs/phase_2/step2f/part1/`). A's:
+`LOG_DIR=logs/phase_2/step2f/part1_a/after scripts/run-test.sh test_stair.gd 60 300`, 1/15
+(`part1_a/before/`) → 17/17, exit 0; fourteen mutations exit 1 on their own checks
+(`part1_a/mutations/`, `mutations_part1_a.py` beside them; a fifteenth found an untested rule, which
+was removed); every suite by `bash logs/phase_2/step2f/part1_a/suites/run_suites.sh <scratch>`
+(three APFS workers, each run by `scripts/run-test.sh`): 34 runs exit 0 with the baseline's counts,
+`test_stair.gd` 17/17, the art check 0 failures (`part1_a/suites/SUMMARY.txt`);
+`HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import`: exit 0, no errors, the
+new `.uid` sidecars, the real save folder unchanged. **Film:** `captures/stair/a/stair_up_and_down.mp4`
+(44 s, Movie Maker, `tools/captures/capture_stair.gd`) and stills 01–04; the two raw AVIs beside them
+(107 and 111 MB) are not for Git. **Changed (A):** `dock_access.gd`, `driver.gd`, new `stair_steps.gd`,
+`feet_flat.gd`, `ankle_watch.gd` (and their `.uid`), `app/first_drive.gd` (gives Ethan the stair),
+new `test_stair.gd`, new `tools/captures/capture_stair.gd`, the brief, the plan, the prompt log
+(#245–#246), this note; with step 2e and part 1, **not committed**. **Rely on:** `develop` is 11
+commits ahead of `origin/develop`, unpushed until A6 is graded; `stair_steps.gd`'s `STRIKES`,
+`LIFTS`, `SIDES`, `ANKLE_UP`, `TOE_REACH` were measured from Ethan's Walking (31 frames) and must be
+measured again if that clip changes; `test_stair.gd` takes about two minutes. **Unverified:** the
+look in motion beyond the film; the lane's floor reads as dirt and the lane is dark (part 2).
+**Then #249, 2026-11-13:** his legs crossed on the stair; each foot now lands under its own hip
+(`stair_steps.gd`'s `SIDES` 0.103/−0.071, square to the flight, `_turn_with()` on the level; knee
+poles over the feet in `driver.gd`); `test_stair.gd` 17/19 → 19/19 (S11), four mutations exit 1,
+36 suite runs exit 0 (`logs/phase_2/step2f/part1_d/`); not yet filmed again. **Then #250:** the jack's handle went into his chest and face and his hands lay open on it;
+new `driver/handle_clear.gd` (his back straightened clear of the handle, under the hold's roof) and
+`driver/hand_grip.gd` (hands turned and closed round the loop), `push_gait.gd`'s `GRIP_STOOPED`
+(0.47, 0.96), `pallet_jack.gd` gives the handle and its bars; `test_loading.gd` 23/24 → 25/25 (H11,
+H12), six mutations exit 1, 36 suite runs exit 0 (`logs/phase_2/step2f/part1_e/`); not filmed. **Then #252-#253:** the rear doors' hinges (`_rear_hinges()`), the lift's pendant post moved to the
+entry's far corner and made solid (`dock_lift.gd`), the rear camera as the view in reverse
+(`_rear_view()`, `_follow_gear()`); R10, R11, H13, the dash check; 36 suite runs exit 0
+(`logs/phase_2/step2f/part1_f/`). Five new Mixamo clips clone-copied into `source_assets/mixamo/`
+(not yet converted): Running Up Stairs, Descending Stairs, Pull Heavy Object, Stand Up, Male
+Sitting Pose; next, step 2 of #253 (the clips), then the seated sealer, the van's loading, the
+depot. **Step 2 of #253 built (#254-#257, not committed):** the captured climb (`StairsUp`), the stair
+rebuilt to 6 risers of 0.217 m on 0.25 m treads, the heavy pull in the hold (`PullBack`) with a
+bend under the roof; `test_stair.gd` 28/28, `test_loading.gd` 27/27, 36 suite runs exit 0, art 0
+failures (`logs/phase_2/step2f/part2_clips/`; `docs/PHASE_BRIEF.md`'s last revision). Descending
+Stairs.fbx is a crouch; going down keeps the walk gait. The film's black frames were his camera backing through bay 9's open door (not the laptop's sleep): camera-only walls in the open dock doors (`_camera_wall()`, layer 8), `test_sealing.gd` 12/13 → 13/13. Films: `captures/stair/step2/stair.mp4`, `captures/loading/step2/the_whole_job.mp4` (made before the camera walls). Next: step 3, the dock worker seated by
+the dock door (Stand Up, Male Sitting Pose, retargeted from Ch33 to Rocketbox). **Then #258-#259 (not committed):** Pallet5 moved to dock 8 (H14); the drive-in door filled by the plain shutter alone (E4); the pull's crouch under the door header; the rear doors' hinges made in Blender (`tools/art/build_van_hinges.py` into `freight_van/art/van_hinges.glb`, strap arm on the door, plate, lugs and capped pin on the body, at 0.52 and 1.65 m), R10 17/18 → 18/18, two mutations exit 1, the art check and `test_cockpit.gd` taught the new file, every suite in `logs/phase_2/step2f/part4_hinges/` (brief's last revision); stills in `captures/hinges/blender/` (`tools/captures/capture_hinges.gd`, windowed). **Then #260-#261:** the author did not want the hinges seen from outside; remade compact (a 0.03 m pad on the door, 0.039 m tall) in the finish of the door where each sits, the white paint above the lamp, the black trim below (R12, 19/19, two mutations exit 1, `logs/phase_2/step2f/part5_white_hinges/`; stills `captures/hinges/compact/`). The whole job's film still predates the camera walls. **Then step 3 of #253, part 1 (#263-#265, not committed):** bay 9's dock station (`dock_station.gd`): Poly Haven's Metal Office Desk along the edge rail east of the lift, Red Fox's Office Chair (Sketchfab, CC BY, `13_office_chair`, credited) in its kneehole, the seal log and pen cup on the desk; the drive-in lane floored in the shed's concrete at the apron's 0.02 m (`_lane_floor()`); new `test_dock_worker.gd` W1-W6 (6/6), Mission 2's E11 (55/55), the menus' credit (20/20), four mutations exit 1, suites in `logs/phase_2/step3/part1/`; stills `captures/dock_station/part1_built/`. The unused Plastic Monobloc Chair was removed (#266). Next: the worker seated (Rocketbox chair clips to fetch). **Then #266-#269 (not committed):** the plastic chair removed; the plan for step 5 brought forward written into the brief (#267; the author chose main street on the south valley road and the order shed, highway, town, #268); **part A built**: the shed's racking, stock, floor lines, joists, liner, ducts, sprinkler mains and aisle lights (`racking.gd`, `build_racking.py`, `build_shed_services.py`, `make_rack_textures.py`; `transfer_building.gd`'s staging row kept, its z 5 row moved onto the aisles), `test_racking.gd` 11/11, eight mutations exit 1, 37 suite runs exit 0 (`logs/phase_2/step5/partA/`), GPU price 1.52 ms (1.43-1.61) on power (`gpu_price/`), stills `captures/shed_racking/partA/`. Next: the author's look at part A, then part B (the forest highway), then C (main street). The dock worker's seating (step 3, part 2) waits behind them. **Then #270-#278 (not committed):** real light and the wet ground, toward the author's two photos of a rainy night: lighting options measured and shown labelled (`captures/lighting/compare/`; none kept); Rain Puddles V3 tried as it comes (`game/experiments/rain_puddles_v3/`); the new `wet_ground.gdshader` on the road, the depot yard and the dock apron (Lagarde's wet surfaces, drainage-placed puddles rippled at 0.08, V3's ripples and reflections combined, MIT, credited; the whole wet film reflecting, 1.2-2.0 ms), the road's strip carrying its place across as vertex colour, the lamps' cones four times their haze (`MIST_SCATTERING`); `test_wet_ground.gd` 5/5, five mutations exit 1, 38 suite runs exit 0 (`logs/phase_2/wet_ground/`). Not kept by the author: specular 1.0 and probes, glow, darker fog, lamps like real ones, a rougher film. Stills: `captures/wet_ground/` (trials) and `final/`. **Then #279:** committed as `641ba57` on `develop` (films left out), not pushed; **part B built (not committed):** the forest highway's roadside in `ghat_dressing.gd` (valley delineators at the MUTCD's spacings, a weathered leaning SPEED LIMIT 45 and a clean one, two deer crossings, mile markers 0 and 1, three branches, litter, the lay-by's bin), five sign cells in `make_road_signs.py`, Poly Haven litter (`tools/assets/roadside_assets.json`); `test_roadside.gd` 4/4, four mutations exit 1, suites in `logs/phase_2/step5/partB/`; stills `captures/roadside/partB/`. **Then #280-#281 (built, not committed):** the pale trunks traced to the low beam (full to 9 degrees each side); the author chose, from labelled stills, the measured US low beam (UMTRI-2004-23 medians in `tools/data/`, drawn by `tools/make_low_beam_pattern.py`, aimed 0.5 degrees down; high beams keep 2) and haze in the rain (`freight_van/beam_mist.gdshader`, a `Mist` box on each headlight, about 0.9 ms of GPU time); `test_headlights.gd` 28/28, six mutations exit 1, suites in `logs/phase_2/headlights/suites/`; stills `captures/headlights/`. **Rely on:** after changing an imported PNG, run `Godot --headless --path game --import`, because a test run does not re-import (the headlights test now catches a stale pattern). **Then #282 (built, not committed):** the headlamps lit as real ones (`freight_van/headlamp_lens.gdshader`: the clear cover, the projector on low, the reflector too on high), the measured US high beam with the low beam on (UMTRI-2001-19, `tools/data/`), aimed level, and the oncoming van given the same; **then #283:** the low beams aimed as UN R48 allows (cutoff -1.75%, `LOW_BEAM_TILT` -1.25), so the high beam's energy is 1,147 (decision C62); `test_headlights.gd` 32/32, eleven mutations exit 1, suites in `logs/phase_2/headlights/suites/`; stills `captures/headlights/r2/`. **Then #285:** committed as `2afcb81`; the Pacific Northwest roadside trees built (C63, not yet committed): `tools/art/convert_roadside_trees.py`, `tools/art/build_red_alder.py`, `tools/art/make_alder_bark.py`, `art/trees/`, `roadside_forest.gd`'s kinds; `test_roadside_trees.gd` 8/8, six mutations exit 1, suites in `logs/phase_2/trees/suites/`; GPU about 1.7 ms on battery (wants a run on power); stills `captures/trees/`. The asset fetcher now sends a generic client name. **Then:** trees committed as `52f4390`; part C built (C64, not yet committed): `town_station.gd` (the gas station and main street), `tools/art/convert_town_models.py`, `tools/art/make_town_signs.py`, `art/town/`; the forest leaves the plot's trees out without moving others (`cleared_after`); `test_town.gd` 8/8, six mutations exit 1, suites in `logs/phase_2/town/suites/`; stills `captures/town/`. **Rely on:** a new clearing added to the forest's `clearings` reshuffles every later tree (and so the struck man's fall and the oncoming van's start); pass it as `cleared_after` instead. **Then:** town committed (`c8ee987`); step 3 part 2 built (not yet committed): `dock_worker.gd` seated at the desk and his round by the stair with VVTT, five Rocketbox clips (`convert_rocketbox.py`'s `MOVING` bakes the xyz clips' root motion), `transfer_shed.gd`'s desk and stair ways; `test_dock_worker.gd` 12/12, `test_sealing.gd` 13/13, mutations exit 1, suites in `logs/phase_2/step3/part2/suites/`. **Rely on:** tests must leave the title screen (`_resume`) or the paused tree stops animations and walks. Next: step 4 (the van's loading and the lift, researched). **Then #286:** the dock worker committed (`282ac7f`); step 4's proposals shown (`captures/step4_proposals/labelled_step4.png`) and all four chosen; **built (C65, not yet committed):** the lift runs only while E is held at its pendant and stops when E is let go or Ethan leaves (`dock_lift.gd`'s `hold()`, `resume()`; `van_bay.gd`'s `operate_lift(holder)`, `_at_controls()`), the pendant's UP, DOWN and red stop and a looping 2.8 kHz beep; the jack pumped up a stroke per E from arm's length, the lever's 0.4 s at neutral, the step-in (`push_gait.gd`'s `step_in()`, `driver.gd`'s `push_step_in()`), the 1.2 s lowering; strapping by hand to the hold's new floor rings (`van_hold.gd`'s `_rings()`, `pallet_jack.gd`'s `strap()` returns true when done); five synthesized sounds (`source_assets/audio/loading/synthesize.py`, `game/features/audio/loading/`, `docs/AUDIO.md`), on the Ambience bus. **Tests:** `LOG_DIR=logs/phase_2/step4/after scripts/run-test.sh test_loading.gd 60 600` 25/30 (`before/`) → 33/33 (H15-H20), fifteen mutations exit 1 (`lift/mutations/`, `jack_straps/mutations/`), suites by `bash logs/phase_2/step4/suites/run_suites.sh <scratch>` (`suites/SUMMARY.txt`). **Rely on:** the beep loops only by its import (`lift_beep.wav.import`'s `loop_mode=2`); rerunning the synth keeps the imports; `test_loading.gd` counts a clip's settling from each segment's start. **Unverified:** the stroke, the step-in and the straps in motion beyond the stills (`captures/loading/step4/`); the rings' places on a real Daily; the beep's and the jack's loudness. Step 4's strap stills were not filmed (the author interrupted the filming; its restart was refused) and the author put #287 first (#288). **Then #287-#290:** the docking: the rear camera on the roof's edge tilted 45° (`van_presentation.gd` `REVERSE_CAMERA`/`REVERSE_TURN`), the guides worked out on the ground every frame (`parking_guides.gd`, `van` set by `_parking_guides()`), the red stop line `STOP_LINE` 0.10 m that `van_bay.gd`'s `DOCKED_WITHIN` reads, measured at its two bumpers; the hold, the sill (`sill()`, `floor_point()`, `body()`), the plate (`dock_lift.gd` keeps it on the live sill) and a loaded pallet following the body under load; the legs: the stair lets his feet go off the flight walking across (`stair_steps.gd` `leaving()`), feet aim where he goes, the climb only going up, the swing on its own arc, climbing in two stages, hips between his feet (`BETWEEN`), no `STAIR_BEND`, the crouch's watcher forgetting (`driver.gd`), each foot on its own side (new `stance.gd`). **Tests:** new `test_rear_camera.gd` 7/7 and `test_docking.gd` 5/5 (`LOG_DIR=logs/phase_2/docking/... scripts/run-test.sh <test> 60 600`), `test_stair.gd` 33/33, `test_loading.gd` 35/35, `test_on_foot.gd` 50/50, `test_bay_nine.gd` 20/20, `test_dash_screen.gd` 16/16; ten docking and seven legs mutations exit 1; suites in `logs/phase_2/docking/suites/` and `logs/phase_2/legs/suites/`. Stills `captures/docking/fixed/`, `captures/legs/fixed/`. **Rely on:** guides and the stop line are tested from `segments()`; `test_dash_screen.gd` asks the rear view to look back more than 0.6 (was 0.8); `test_bay_nine.gd` G4 uses `DOCKED_WITHIN`. **Unverified:** the look in motion; the stair's 70° knees going down; Ethan's jack keeps the deck's height in the settled van (about 1 cm). **Then #291:** step 4 and #287 committed together as `866fbab` on `develop` (they share files), not pushed. **Then #292-#294:** the author's checks moved to the end; step 5 of #253, part D, the shed's floor, built and committed on `develop` (#297, not pushed): new `shed_floor.gd` and `shed_floor.gdshader` in `industrial_loop/` (sawn joints, tyre marks, scuffs, oil, epoxy repairs and the wet reach painted into the floor's own material over Poly Haven's worn floor concrete), `transfer_building.gd` (the slab pieces `DockFloor1`-`3`, `PitFloor`, `LaneFloor` in it), `test_mission_two.gd` E11 taught the shader (`_textured()`), the GPU cases FL and FB (`gpu_price_depot.gd`, `gpu_price.py`). **Tests:** `LOG_DIR=logs/phase_2/step5/partD/after scripts/run-test.sh test_shed_floor.gd 60 300` 0/1 → 18/18; thirteen mutations exit 1 (`logs/phase_2/step5/partD/mutations/`); suites by `bash logs/phase_2/step5/partD/suites/run_suites.sh <scratch>` (`suites/SUMMARY.txt`); the headless import exit 0 (`import/`). **Rely on:** Godot imports a normal map with x and y only, so a shader sampling one must rebuild z; the floor's map follows `racking.gd`'s rows and `dock_staging.gd`'s places through constants mirrored in `shed_floor.gd`, and `test_shed_floor.gd` fails if they part. **Unverified:** the GPU price, which the author put after the whole of Mission 2 (#296: one windowed run on power then, not one per part); the look in motion; stills `captures/shed_floor/partD/` beside `before/`. **Then #297-#298:** part D committed (`37c37bf`); part E, overhead and on the walls, built and committed on `develop` (#299, not pushed): new `shed_fitout.gd` (six unit heaters with rods, struts, flues and gas; two 20 ft fans turning at 15 rpm; three sprinkler mains over the staging and the cross-aisle; ladder trays; each dock's number, control station, operator and conduit; the side door's time clock, card racks and notice board with six posters), `transfer_building.gd` (`_fitout()`, `DockSignalInside1`-`8`), new `tools/art/build_shed_fitout.py` (`art/fitout/shed_fitout.glb`) and `tools/art/make_shed_signs.py` (its five PNGs), GPU case FE. **Tests:** `LOG_DIR=logs/phase_2/step5/partE/after scripts/run-test.sh test_shed_fitout.gd 60 300` 0/1 → 23/23; sixteen mutations exit 1 (`logs/phase_2/step5/partE/mutations/`); `bash logs/phase_2/step5/partE/suites/run_suites.sh <scratch>`: 45 runs exit 0, art 0 failures. **Rely on:** in a Blender script, give faces their materials from each new part's own vertices (`link_faces`), never by counting faces: the export's order is not the build's; a wall part seen from its front (-z) has its right at -x. **Unverified:** the GPU price (after the mission, #296); the fans in motion; stills `captures/shed_fitout/partE/`. **Then #299-#300:** part E committed (`100a085`); part F, the safety and work kit, built and committed on `develop` (#301, not pushed): new `shed_kit.gd` (the strip's lights, the west exit with its door, landing and stair outside, lit EXIT signs, emergency lights, eight extinguishers with signs, the charging bay with eyewash and spill kit, six aisle mirrors, first aid, the baler, bales, bins, hand trucks, wrap stand, the walkway crossing and traffic signs), `transfer_building.gd` (`DockFloor4` over the strip, `WEST_EXIT` cut in the west wall, `_kit()`), `shed_floor.gd` (the strip), new `tools/art/build_shed_kit.py` (`art/fitout/shed_kit.glb`), `make_shed_signs.py`'s safety signs, GPU case FK. **Tests:** `LOG_DIR=logs/phase_2/step5/partF/after scripts/run-test.sh test_shed_kit.gd 60 400` 0/2 → 17/17; `test_shed_floor.gd` 18/18 on the wider floor; sixteen mutations exit 1 (`logs/phase_2/step5/partF/mutations/`); `bash logs/phase_2/step5/partF/suites/run_suites.sh <scratch>`: 46 runs exit 0, art 0 failures. **Rely on:** `test_shed_kit.gd` measures travel on a 0.5 m grid round what is solid; a new solid in the shed must be added to `shed_kit.gd`'s `solids()` or the test's blocked list to be counted. **Unverified:** the GPU price (after the mission); stills `captures/shed_kit/partF/`. **Then #301-#303:** part F committed (`ef2b50b`); part G, the shed at work, built and committed on `develop` (#304, not pushed): new `game/features/vehicles/forklift/forklift_truck.gd` and `look_travel.gd` (the working forklift, its driver, his IK and his look back), `dock_staging.gd` (the truck and its `PutawayLoad`), `convert_depot_models.py` (the carriage cut; `forklift.glb`), `convert_rocketbox.py`'s `forklift_driver` job (`game/features/characters/forklift_driver/`, `source_assets/rocketbox/Construction_Male_07/`), `dock_worker.gd` (`go_scan`, `scanned`, `lift`), `transfer_shed.gd` (`forklift`, the scan's trigger), new `shed_sounds.gd` and `source_assets/audio/shed/synthesize.py` (ten WAVs), `driving_audio.gd` (`shelter`), `app/first_drive.gd`, the credits (`front_menu.gd`, `test_menus.gd`), `docs/AUDIO.md`, the attributions. **Tests:** `LOG_DIR=logs/phase_2/step5/partG/after scripts/run-test.sh test_shed_work.gd 60 1200` 0/1 → 25/25 (about six minutes: two trips); seventeen mutations exit 1 (`logs/phase_2/step5/partG/mutations/`); `bash logs/phase_2/step5/partG/suites/run_suites.sh <scratch>`: 47 runs exit 0, art 0 failures. **Rely on:** a skeleton's bones read outside `skeleton_updated` are the pose before its modifiers; the forklift works only while the camera is within 60 m (tests that read it at the start find it parked); new looping WAVs need `loop_mode=2` in their imports. **Unverified:** the GPU price (after the mission); the look and sound in motion; the driver's hands high on the wheel; stills `captures/shed_work/partG/`. **Then #304-#309:** part G committed (`1553577`); part H, the yard at night, built and committed on `develop` (#310, not pushed): new `yard_vehicles.gd` (trailers at docks 1-3, a dropped trailer and the coupled 1980 tractor in the trailer bays, the box truck, the sedan and the covered car, the dumpsters by the east wall, each solid), `transfer_shed.gd` (`YardVehicles`), `convert_depot_models.py`'s jobs `trailer`, `tractor`, `box_truck`, `dumpsters` (`art/depot/`), the credits ("THE YARD AT NIGHT", `test_menus.gd`), GPU case YV. **Tests:** `LOG_DIR=logs/phase_2/step5/partH/after scripts/run-test.sh test_yard.gd 60 300` 0/1 → 13/13; twelve mutations exit 1 (`logs/phase_2/step5/partH/mutations/`); `bash logs/phase_2/step5/partH/suites/run_suites.sh <scratch>`: 48 runs exit 0, art 0 failures. **Rely on:** slim a heavy model before cutting parts from it, and cut by place, not by loose parts (the trailer took minutes the other way and seven seconds this way). **Unverified:** the GPU price of D-H (after the mission, #296); stills `captures/yard/partH/`. With H, step 5 of #253 is built; next: the rest of Mission 2. **Then #310-#312:** part H committed (`d6cf6e7`); Mission 2's step 4, the container yard and the swap, built (not committed): new `industrial_loop/container_yard.gd` (`ContainerYard`: the fence, the cantilever gate and its keypad, 88 ISO containers, two masts, the bay, the dark van, `key_in()`, `in_bay()`, `swap()`, `restore_swapped()`), new `chain_link_fence.gd`, new `tools/art/build_containers.py` (`art/container_yard/containers.glb`), `make_shed_signs.py`'s `no_entry.png`, `industrial_loop.gd` (`CONTAINER_YARD_PLOT` flat and `cleared_after`, the nine Phase 1 boxes and the railing east of x 60 gone), `van_presentation.gd` (`set_paint()`, `paint()`, `exterior()`, `paint_model()`), `the_wrong_cargo.gd` (stage 1 to the yard, the keypad by E, the swap saving stage 2, `DARK_VAN`), `app/first_drive.gd` (`cargo.yard`), GPU case CY (0.8 ms †). **Tests:** `LOG_DIR=logs/phase_2/mission2_step4/after scripts/run-test.sh test_container_yard.gd 60 400` 0/1 (b0) → 17/17; twenty mutations exit 1 (`logs/phase_2/mission2_step4/mutations/`); `bash logs/phase_2/mission2_step4/suites/run_suites.sh <scratch>`: 49 runs, 48 exit 0 and `test_roadside_trees.gd` T8 7/8, its baseline then lowered for the yard's 81 trees and 28 saplings (every other collider unchanged, `trees/`) → 8/8; `test_collision.gd` 44/44 and `test_hit_speeds.gd` 12/12 after the last change; art 0 failures; the headless import exit 0. `test_sealing.gd` H6 and `test_mission_two.gd`'s Continue now expect step 4's objective and the dark van at stage 2. **Rely on:** a test reloading a save must leave the title by `_begin` (Continue), since `_resume` leaves the van at the title's place; the yard's parked dark van takes the van's own box only once the mission `watch()`es it. **Unverified:** the GPU price (after the mission); the far fence reads as a pale wall; stills `captures/container_yard/step4/`. Committed on `develop` (#313), not pushed. Next: steps 3 (S4), 5 (S1), 6-8. **Then #314-#315:** step 5 planned (the brief's revision "written before any code") and chosen: both warehouses rebuilt, another guard, built as written; **part A built (not committed):** new `industrial_loop/compound.gd` (`WarehouseCompound`: the stepped fence round both warehouses, the paving, the driveway, the cantilever gate, the stop line, the booth's kerbed island and bollards, `hand_run_sheet()`, `vehicle_at_booth()`, `vehicle_through()`, `DOOR` 3), new `guard_booth.gd` (the shed's booth as a helper; the shed keeps its copy), `convert_rocketbox.py`'s job `compound_guard` (Security_Female_01 seated, her pistol cut by `drop_parts()`; `game/features/characters/compound_guard/`; sources in `source_assets/rocketbox/Security_Female_01/`, gitignored, listed in its README), `industrial_loop.gd` (`COMPOUND_PLOT`, `COMPOUND_DRIVE_PLOT`, `_compound()`), `the_wrong_cargo.gd` (`compound`, `_to_the_compound()`, E at the booth), `app/first_drive.gd`, the credits (`front_menu.gd`, `test_menus.gd`), `test_roadside_trees.gd` T8's baseline. **Tests:** `LOG_DIR=logs/phase_2/mission2_step5/partA/after scripts/run-test.sh test_compound.gd 60 300` 0/1 → 10/10; sixteen mutations exit 1 (`partA/mutations/`); `bash logs/phase_2/mission2_step5/partA/suites/run_suites.sh <scratch>`: 50 runs, 49 exit 0 and T8 7/8 → 8/8 after its baseline (`partA/trees/`), collision 44/44, hit speeds 12/12, art 0 failures; `test_menus.gd` 20/20. **Rely on:** a test reading the objective must read the HUD's `_objective` and `_detail` labels: the mission emits `objective_changed` only when it changes, before a test can connect. **Unverified:** stills `captures/compound/partA/`; her pistol left out pending the author's word. Committed on `develop` (#316), not pushed. Next: part B (both warehouses rebuilt, heights kept: 9.99 m and 10.53 m) and part C. **Then part B built (not committed):** new `industrial_loop/warehouse.gd` (a tilt-up concrete warehouse: walls with the dock face, joints, reveals, parapet and coping, roof deck and units, docks with the shed's door and seal models, bumpers, signals, numbers, dock lights, wall packs, the man door's landing, stair, rails and guard, the FDC and key box, scuppers and downpipes; `dock_openings()`, `panel_joints()`, `handrail_heights()`), `compound.gd` (`build_warehouses()`, `DOCK_XS`, `MAN_DOOR_XS`), `industrial_loop.gd` (`COMPOUND_WAREHOUSES` not drawn, their draws and clearings kept; `warehouse_heights`). **Tests:** `LOG_DIR=logs/phase_2/mission2_step5/partB/after scripts/run-test.sh test_warehouses.gd 60 300` 0/1 → 21/21; nineteen mutations exit 1 (`partB/mutations/`); `bash logs/phase_2/mission2_step5/partB/suites/run_suites.sh <scratch>`: 51 runs exit 0, art 0 failures. **Rely on:** skipping a Phase 1 building's drawing must keep its `_random` draws and its clearing, or every later random placement and the forest move. **Unverified:** stills `captures/compound/partB/`. Committed on `develop` (#317), not pushed. Next: part C (door 3 open and lit inside, the court marked, the yard dressed, the dock judged, stage 3). **Then part C built (not committed):** `warehouse.gd` (`open_dock()`, `set_docked()`, `open_bumpers()`, `_raise()`, `_court()`, `_inside()`: the open door in its tracks with a camera wall, the floor at 1.22 m over the whole inside, the leveller, two pallet loads by `dock_staging.gd`'s `_cartons()`, rack ends, a high bay light; numbers and guide lines on the court), new `dock_judge.gd` (bay 9's judgement alone), `compound.gd` (`OPEN_DOCK`, `judge`, `door_house()`, `_dress()`: floods, trailers, pallet stacks, forklift, dumpsters), `the_wrong_cargo.gd` (`AT_DOOR_THREE`, `_judged()`, `restore_place()`, the misses at door 3, stage 3), `app/first_drive.gd` (`restore_place()` after Continue's recover), GPU case CP (1.0 ms †). **Tests:** `LOG_DIR=logs/phase_2/mission2_step5/partC/after scripts/run-test.sh test_loading_bay.gd 60 450` 0/1 → 10/10 (about three minutes); nineteen mutations exit 1 (`partC/mutations/`); `bash logs/phase_2/mission2_step5/partC/suites/run_suites.sh <scratch>`: 52 runs exit 0, art 0 failures. **Rely on:** `freight_van.gd`'s `recover()` shuts the rear doors, so a place that needs them open restores them after (`restore_place()`); a Godot light's energy falls with the square of distance, so a flood 20 m off needs about fifty times a dock light's (energy 40 against 3). **Unverified:** stills `captures/compound/partC/`; the van's 0.6 m floor at a 1.22 m dock. With part C, step 5 is built. Committed on `develop` (#318), not pushed. Next: step 6 (the escape), planned before any code. **Then #320-#321:** none of Rocketbox's men suit the patrols (step 6 waits for another source); a realism audit of Mission 2 shown. **Known bug (confirmed, not fixed):** `container_yard.gd` opens its gate only by `key_in()` from the outside stop line, and at stage 2 the mission offers E only at the compound, so the dark van cannot leave the yard after the swap; `test_container_yard.gd` and `test_loading_bay.gd` move the van past the gate and miss it. A real yard has a free-exit loop. **Then #322 ("FIX ALL ONE BY ONE"), fix 1 built (not committed):** the shed's barrier had no way out either; a free-exit loop inside each (`transfer_shed.gd` and `container_yard.gd`'s `EXIT_LOOP`, `_on_exit_loop()`, `_exiting`; `container_yard.gd`'s `exiting()`; WAIT FOR THE GATE in `the_wrong_cargo.gd`). **Tests:** `LOG_DIR=logs/phase_2/realism/fix01_free_exit/after scripts/run-test.sh test_free_exit.gd 60 320` 2/6 → 6/6; seven mutations exit 1; `bash logs/phase_2/realism/fix01_free_exit/suites/run_suites.sh <scratch>`: 53 runs exit 0. **Rely on:** the forklift model has four wheels (two drive at the front, 0.64 m; two steer at the back, 0.55 m; wheelbase 1.46 m), its steering wheel a separate ring of parts 0.26 m across at (0, 1.415, -0.405) on an axis (0, -0.71, 0.71), its mast channels at z 0.37-0.53 (scratch inspection of `09_forklift`); `forklift_truck.gd` drives it as a three-wheeler pivoting on its front axle. Committed on `develop` (#323), not pushed. Next: fix 2, the forklift. **Then #323-#324, fix 2 built (not committed):** the forklift as the four-wheel rear-steer truck it is: `convert_depot_models.py`'s `forklift` job cuts `SteeringWheel`, `DriveWheelL`/`R`, `SteerWheelL`/`R` and `Mast` free, each with its origin at its pivot, the `Carriage` on the mast (`forklift.glb`, 7786 triangles in 8 parts); `forklift_truck.gd` plans each turn from v·tan(δ)/L (L 1.461 m), the steer wound at 1.5 turns a second at most to 2.25 turns at lock, filleted into the legs, cusps swung backing, setting off by a bisected arc; Ackermann steer wheels (the inner 75 degrees), every wheel rolling, the mast tilted back 4 degrees loaded, lift 0.35 m/s and lowering 0.5 m/s, the spot lit whenever it moves; a spinner knob added, his left hand on it, his right on the lever or (backing) the overhead guard's post, his chest turned 30 degrees (`look_travel.gd`, now before the arms' IK); the putaway into floor bay FS-01 (`dock_staging.gd`'s `_floor_bay()`, the author's choice #324: aisle 03 is 3.81 m, a right-angle stack needs about 4.2 m), the rounds along the cross-aisle with the horn at aisle 05's mouth. **Tests:** `LOG_DIR=logs/phase_2/realism/fix02_forklift/d_after scripts/run-test.sh test_forklift.gd 60 900` 0/2 (`a_before/`) → 13/13; `test_shed_work.gd` 25/25 (its floor place, horn place and W10's trigger changed, each written in it); sixteen mutations exit 1 (`mutations/`, `mutations_fix02.py`); `bash logs/phase_2/realism/fix02_forklift/suites/run_suites.sh <scratch>`: 54 runs exit 0, art 0 failures; the headless import exit 0. **Rely on:** the truck's API `steer()`, `steer_wheels()`, `steering_turns()`, `tilt()`, `rolled()`, `knob_point()`, `grips()`, `chest_turned()`; turns are sampled at each turn's own spacing (sampling them at the legs' spacing spun the wheel 1.73 turns a second); FS-01's middle at (-48.0, 9.1), 3.24 m from the dock's edge. **Unverified:** the look in motion; the right hand's lever and post points set by eye; stills `captures/forklift/fix02/` (`tools/captures/capture_forklift.gd`, windowed). Next: fix 3, the pallet jack. **Then #325 (fix 2 committed, `230ba34`) and #326-#327, fix 3 built (not committed):** bay 9's pallet jack as a real one: `convert_depot_models.py`'s `pallet_jack` job cuts `SteerWheels` (in `Steering`), `RollerL1`/`L2`/`R1`/`R2` and `BogieL`/`R` (in `Chassis`), each bogie about its rollers' middle (`pallet_jack.glb`, 10 parts); `pallet_jack.gd`: lowered 24 mm (forks' tops 91 mm), the frame rising 76 mm over four strokes, the load once the forks meet it (36 mm) and 40 mm clear at the fourth, wheels and rollers on the floor (`_frame()`, `_load_lift()`); A and D swing the steering unit to 105 degrees at 120 degrees a second, easing back when let go (#326), no faster than half his pace carries him round and only 10 degrees standing (#327, no sidestep clips); it turns about its rollers' line at v·sin(δ)/L (`_rolled()`); every wheel rolls (`_roll()`); Ethan's walk stops when he is stopped 0.15 s; `driver.gd`'s `push_step()` no longer presses him down on the floor (it held him at the bridge plate's edge). **Tests:** `LOG_DIR=logs/phase_2/realism/fix03_pallet_jack/d_after scripts/run-test.sh test_pallet_jack.gd 60 700` 0/9 (`a_before/`) → 11/11; `test_loading.gd` 35/35 (H18 reads the forks; its driver steers the swinging handle in proportion, easing off, and steers the pull out; each written in it); seventeen mutations exit 1 (`mutations/`); `bash logs/phase_2/realism/fix03_pallet_jack/suites/run_suites.sh <scratch>`: 55 runs exit 0; `python3 -I tools/tests/check_first_drive_art.py` 0 failures after it was taught the jack's new parts. **Rely on:** a test driving the jack must steer its handle as a driver does, not hold A or D for any error; the rig's `_pace` and `_reach` give the swing's limit. **Unverified:** the look in motion; standing he slides round the 10-degree shuffle without stepping; stills `captures/pallet_jack/fix03/` (`tools/captures/capture_pallet_jack.gd`, windowed). Next: fix 4, the dock worker. **Then #328 (fix 3 committed, `f5fb63b`) and #329, fix 4 built (not committed):** bay 9's dock worker: seven more Rocketbox clips (walk start and stop, four turns, taking documents; `convert_rocketbox.py`); new `dock_worker/worker_stair.gd` (a tread a step at 117 and 76 steps a minute, legs' IK onto the treads, his rail-side hand on the rail by arm IK, his body 3 cm under his lower tread); `dock_worker.gd` (pace up at 2.8 m/s², down over his last metre, corners rounded with a 0.4 m lookahead and slowed for, turns on the spot by clip, the log in his right hand going out and his left coming back, the bolt seal and a pen in his right hand, the scanner dark but for a 0.4 s red line to a shipping label and a 0.2 s green flash at the beep, `use_stair()`, `aim_end()`); `dock_access.gd`'s `rail_top()`; `dock_staging.gd`'s two shipping labels on every load (`shipping_label.png`, `make_shed_signs.py`); `transfer_shed.gd`'s worker ways moved (0.2 m toward the stair's rail, and between the dock face and the wheel guides). **Tests:** `LOG_DIR=logs/phase_2/realism/fix04_dock_worker/d_after scripts/run-test.sh test_dock_worker.gd 60 400` 12/18 (`a_before/`) → 19/19; `test_sealing.gd` 13/13 (its window 90 s, written in); seventeen mutations exit 1; `bash logs/phase_2/realism/fix04_dock_worker/suites/run_suites.sh <scratch>`: 55 runs exit 0; the art check 0 failures after it was taught his fifteen clips. **Rely on:** bones read in `_physics_process` are before the IK; read posed bones in `skeleton_updated`; his round takes about 70 s. **Unverified:** the look in motion; the scanner not raised; Rocketbox's stand-up clip dips his left toe 0.16 m under the floor (found, not fixed). Stills `captures/dock_worker/fix04/` (`tools/captures/capture_dock_worker_fix04.gd`). **Then #330:** the author found the passenger wiper's water unrealistic and rain inside the cabin looking up (from the stills run's window); to be reproduced and planned. **Then B and C, approved (#247, "okay proceed"), 2026-11-12 to 13:** B, the rear doors by Ethan's
+hands (`freight_van/rear_door_hands.gd`; `driver.gd`'s `handling`, `door_step()`, `door_hand()`,
+a lean for reach; `freight_van.gd`'s `open_rear_doors()`, `close_rear_doors()`,
+`rear_doors_busy()`, `rear_door_hold()`, `rear_door_angles()`, signal `rear_door_sounded`; the
+mission and the app call them and ignore E while he works): right door by its handle pulled to 65°,
+walked round, pushed on to its stay; the left by its edge; closing the left first, tugged off its
+stay from past its edge, walked shut onto its latch; sounds `door_latch.wav` and `door_stay.wav`
+added to `synthesize.py` (the other nineteen byte for byte), `docs/AUDIO.md`. C: the objective
+only goes on (`the_wrong_cargo.gd`, the jack's `on_lift()`); `tools/captures/capture_loading.gd`
+rewritten to play the whole job by real play from the court, stills from a hidden SubViewport
+camera, `frames` argument logs frame times. **Tests:** `LOG_DIR=logs/phase_2/step2f/part1_b/after
+scripts/run-test.sh test_rear_doors.gd 60 300` 6/14 (`part1_b/before/`) → 16/16; thirteen
+mutations exit 1 (`part1_b/mutations/`, two untested rules removed); `test_bay_nine.gd` 20/20 and
+`test_sealing.gd` 11/11 now wait for the job (`DOORS_BY_HAND`); `test_loading.gd` 22/23
+(`part1_c/before/`) → 23/23 (H10); C's two mutations exit 1 (`part1_c/mutations/`); every suite,
+`bash logs/phase_2/step2f/part1_c/suites/run_suites.sh <scratch>`: 36 runs exit 0, art 0 failures
+(`part1_c/suites/SUMMARY.txt`; H10's last tightening, a test-only change, rerun alone 23/23).
+**Film:** `captures/loading/c/the_whole_job.mp4` (222 s, Movie Maker); stills
+`captures/loading/c_realtime/` (33, real time); the raw `captures/loading/c/job.avi` (622 MB) is
+not for Git. **Frame rate, real time, 60 Hz, vsync on:** court 55.9 fps, backing onto bay 9 47.2,
+stair 59.5, dock and hold 59.7, closing and seal 57.0 (`logs/phase_2/step2f/part1_c/capture/
+realtime.log`). **Next:** the author's look at the film and OK to commit step 2e, part 1 and A–C
+(label "(agent)", no co-author trailer, no push); whether to turn on physics interpolation (a
+`project.godot` change, the author's OK) and bring the yard within budget; then parts 2–4 from
+the models' shortlist (Blender's add-on must be connected to fetch the Sketchfab ones).
+
+**Before it:** Phase 2, step 2e finished: Ethan's push and stop (#236–#240), 2026-11-12, on the
+author's second Claude account. The author downloaded Mixamo's Pushing, Push Stop and Crouch Walk
+Forward for Ch33 (#238); Claude Code moved them, at their word, from the author's Downloads into
+`source_assets/mixamo/` (#239), measured them frame by frame and rendered five stills with the jack;
+the author approved the plan (#240, C59). Converted with `tools/art/convert_mixamo.py -- ethan`
+(Ethan alone): `Push` in place and `PushStop` with its travel taken out at knots every six frames;
+his six other clips, mesh and skin are byte for byte as before and `pedestrian.glb` is untouched;
+Crouch Walk Forward is not used. His new gait (`push_gait.gd`) plays them at the pace the load goes:
+Pushing 1.5 times faster on the dock and the lift (0.566 m/s), its own 0.377 m/s in the hold, a slow
+start (0.45 m/s²); the jack runs out from 1.17 m to arm's length (1.50 m); both wrists held on the
+handle's loop by two-bone IK; let go of outside, Push Stop from the step he is on, the load rolling
+on, then he stands and lets go; in the hold he holds Pushing's own planted frames, stooped; against
+something he finishes his steps up to the handle; pulling, he steps in and walks back outside, and
+plays Pushing backward in the hold. **Changed beyond the plan, for the author to check:** A and D
+steer only as the jack rolls; the strap's reach is 1.2 m (was 1.0 m); while pushing, his pace is the
+same on slopes and never more across the floor than his step. Design and results:
+`docs/PHASE_BRIEF.md`'s last revision ("step 2e: Ethan's push and stop, built"); tasks at the end of
+`docs/DEPOT_PLAN.md`. **Tests** (`logs/phase_2/step2e/`):
+`LOG_DIR=logs/phase_2/step2e/push_after7 scripts/run-test.sh test_loading.gd 60 450`, 16/21
+(`push_before/`) → 21/21, exit 0, and again 21/21 on the final code (`push_final/`), after a last
+rename that changed no behaviour and came after the mutations and suites;
+`python3 tools/tests/check_first_drive_art.py`, 1 failure → 0; ten mutations exit 1 on their own
+checks (`push_mutations/mutations_summary.txt`, its script beside it); every suite, each as
+`LOG_DIR=logs/phase_2/step2e/push_suites scripts/run-test.sh <test>.gd <fps> 450` for the 33 runs,
+then the art check (`push_suites/SUMMARY.txt`, `run_suites.sh` beside it): all exit 0 with the
+baseline's counts, `test_loading.gd` 21/21; no SCRIPT or SHADER ERROR; the struck man's fall did not
+move (hips 2.4 m out). `HOME="$PWD/.scratch-home" Godot --headless --editor --path game --import`:
+exit 0, no errors, the new `push_gait.gd.uid`, the real save folder unchanged. **Changed:**
+`tools/art/convert_mixamo.py`, `ethan.glb`, new `driver/push_gait.gd` (and its `.uid`), `driver.gd`,
+`pallet_jack.gd`, `test_loading.gd`, `check_first_drive_art.py`, `source_assets/mixamo/README.md`
+(the three new FBX files there are ignored by Git), `SOURCES.md`, `characters/ATTRIBUTION.md`,
+`docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`, `docs/DESIGN_DECISIONS.md` (C59), the prompt log
+(#236–#240), this note; with step 2e's first run below, **not committed**. **Rely on:** `develop` is
+11 commits ahead of `origin/develop`, unpushed until A6 is graded; `STOP_TRAVEL` in `push_gait.gd`
+must match the knots the converter prints, or his feet slide in the stop; `test_loading.gd` takes
+about five minutes (450 s timeout). **Unverified:** every look (nothing drawn yet): his lean, his
+grip, the stop, the hold; his feet slide sideways a little while steering; his palms sit up to 5 cm
+off the bar in a push's first 0.3 s from the close stance. **Next:** the stills (a game window: tell
+the author first), then the author's OK to commit step 2e.
+
+**Before that:** Phase 2, step 2e built (#230–#235), 2026-11-11, on the author's second Claude
+account: the load and the seal at bay 9, so Mission 2 plays from the gate to its "loaded"
+checkpoint. Ethan goes in by the shed's side door and up the stair, works the lift from its
+pendant (its 0.91 m bridge plate resting on the van's rear sill, through a passage cut under bay
+9's door to a 0.4 m sill), rolls the pallet on with the dock's pallet jack, rides down, pushes it
+into the van's measured hold stooping behind it (#231) against the bulkhead, straps it and pulls
+the jack out, the van settling on both axles; then the chock out, a pull forward of 2.5 m, the
+doors shut, Rocketbox's `Construction_Male_08` (C58) walking out to seal them, Ethan's check of
+the seal's number against the run sheet's, and stage 1 saved; a reload puts the van in front of
+bay 9, loaded and sealed. Design and results: the last revision of `docs/PHASE_BRIEF.md` ("step
+2e: the load and the seal, built"); tasks at the end of `docs/DEPOT_PLAN.md`. **Tests**
+(`logs/phase_2/step2e/`): `test_loading.gd` 1/5 → 16/17 (its one failure, Ethan's stoop, waits
+for the clips); the new `test_sealing.gd` → 11/11; Mission 2 54/54, bay 9 19/19, the menus 20/20,
+the art check 0 failures; sixteen of seventeen mutations exit 1 on their own checks, the
+seventeenth removed an allowance that proved unneeded (`mutations_summary.txt`). Every suite,
+each as `LOG_DIR=logs/phase_2/step2e/suites scripts/run-test.sh <test>.gd <fps> 450` for the 33
+runs (the 31 before, `test_loading.gd` and `test_sealing.gd` at 60), then
+`python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): all exit 0 but
+`test_loading.gd`, after two regressions the run found were fixed and rerun (`test_cockpit.gd`
+25/25, Mission 2 54/54); no SCRIPT or SHADER ERROR; the struck man's fall did not move (2.4 m).
+`guard.glb` is byte for byte as before. **Changed:** `transfer_building.gd`, `dock_lift.gd`,
+`dock_staging.gd`, `transfer_shed.gd`, `transfer_yard.gd` (the guides' collision 0.2 m),
+`van_bay.gd`, new `dock_access.gd` and `pallet_jack.gd`, new `van_hold.gd`, `freight_van.gd`,
+`van_presentation.gd`, `driver.gd`, `the_wrong_cargo.gd`, `night_freight/first_drive.gd`
+(`save_progress()`), `app/first_drive.gd`, `front_menu.gd` (credits), new
+`characters/dock_worker/` (`dock_worker.gd`, `dock_worker.glb` and its textures),
+`characters/ATTRIBUTION.md`, `tools/art/convert_rocketbox.py` (two jobs),
+`check_first_drive_art.py`, new `test_loading.gd` and `test_sealing.gd`, `test_mission_two.gd`,
+`test_bay_nine.gd`, `test_cockpit.gd`, `test_menus.gd`, `SOURCES.md`,
+`source_assets/rocketbox/README.md`, `docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`,
+`docs/DESIGN_DECISIONS.md` (C58), the prompt log (#230–#235), this note. **Not committed.**
+**Rely on:** `develop` is 11 commits ahead of `origin/develop`, unpushed until A6 is graded; the
+van's hold is built when its rear doors first open, so Mission 1 never has it; `test_loading.gd`
+takes about four minutes and `test_sealing.gd` about three (450 s timeouts); the scratch suite
+runner lists both. **Unverified:** every look (nothing drawn yet): the plate, the passage, Ethan
+stooped in the hold, the worker's walk and reach, the seal; the jack's forks pass through the
+van's 4.6 cm sill strip under the pallet. **Next:** the author's two Mixamo clips for Ch33,
+"Crouched Walking" and "Pushing" (#231), into `source_assets/mixamo/`; then convert them
+(`tools/art/convert_mixamo.py`, as `CrouchWalk` and `Push`), `test_loading.gd` to 17/17, the
+stills (a game window opens: tell the author first), and the author's OK to commit.
+
+**Earlier:** Phase 2, step 2d built (#227–#229), 2026-11-11, on the author's second Claude
+account: backing onto bay 9, the first step toward a playable Mission 2 (#226). Bay 9's dock
+lift in a pit behind its door (new `dock_lift.gd`), its inside light, two wheel guides and a
+chock on the dock face; the van's rear doors cut from the Iveco body (`tools/art/convert_iveco.py`)
+and swung by E on foot; each stop at the bumpers judged (new `van_bay.gd`), a miss named and
+retried on the spot (U3 a), a docking chocked by Ethan on foot (U1 a), then the bay's lights
+turn and the van cannot drive off. Design and results: the last two revisions of
+`docs/PHASE_BRIEF.md` (rules G1–G7; "step 2d: built"); tasks at the end of
+`docs/DEPOT_PLAN.md`. **Tests** (`logs/phase_2/step2d/`): the new `test_bay_nine.gd` 0/5 → 19/19
+over three tasks, each failing first; fourteen mutations exit 1, each on its own check
+(`mutations_summary.txt`). Every suite, each as
+`LOG_DIR=logs/phase_2/step2d/suites scripts/run-test.sh <test>.gd <fps> 450` for the 31 runs
+(the 30 before and `test_bay_nine.gd` at 60), then `python3 tools/tests/check_first_drive_art.py`
+(`suites/SUMMARY.txt`): all 31 exit 0 with the baseline's counts; the art check failed once on
+the van's parts list, then passed with the rear doors in it; no SCRIPT or SHADER ERROR; the
+struck man's fall did not move (3.7 s). Stills: `captures/bay_nine/2d/` (`bay_nine_sheet.png`), from
+the new `tools/captures/capture_bay_nine.gd`. **Changed:** see the revision; committed on `develop`
+at the author's word (#229). **Rely on:** `develop` is 11 commits ahead of `origin/develop`, unpushed until
+A6 is graded; on foot in Mission 2, E at the van's rear or at its rear wheel acts before getting
+in; `test_bay_nine.gd` takes about four minutes (run it with a 450 s timeout).
+**Unverified:** the look of the doors, the lift, the guides and the chock in a window; whether
+players read the retry messages; the hold floor's 0.46 m against a real Daily's 0.68 m. **Next:**
+2e, the load and the seal: its research and brief first, then the author's OK (#229).
+
+**Earlier still:** Phase 2, step 2c revised, part 2 built (#225–#227), 2026-11-11, on the author's
+second Claude account: the docks at work. Seals, 18 solid bumpers, the dock edge, a light over
+each of the ten doors and red/green signals at the nine docks; levellers in docks 1–8; docks 5
+and 9 open, their panels raised into tracks, an arm light inside each; inside, ten high-bay
+lights, lanes, six wrapped pallets of 96 cartons, the forklift, the pallet jack and a stack of
+empties (new `dock_staging.gd`); the dock front's rain (new `game/effects/lamp_rain_dock.tscn`,
+20 volumes). Its design and results are the last two revisions of `docs/PHASE_BRIEF.md` (rules
+F1–F8, then "part 2: built"); its tasks end `docs/DEPOT_PLAN.md`. **Tests**
+(`logs/phase_2/step2c_p2/`): Mission 2 46/49 → 53/53 over three tasks, each failing first; the
+lamp rain's config 364/365 → 455/455 and state 13/15 → 15/15; the menus 19/20 → 20/20; art
+4 → 0 failures; twelve mutations exit 1, each on its own check (`mutations_summary.txt`); import
+clean. Every suite, each as `LOG_DIR=logs/phase_2/step2c_p2/suites scripts/run-test.sh
+<test>.gd <fps> 300` for the 30 runs, then `python3 tools/tests/check_first_drive_art.py`
+(`suites/SUMMARY.txt`): all exit 0 with part 1's counts but Mission 2's and the lamp rain's; no
+SCRIPT or SHADER ERROR. **The struck man's fall moved** (3.7 s, 2.4 m; part 1 5.3 s, 2.0 m),
+both collision checks passing; `fall_probes_summary.txt` shows it flips between the two with the
+exact set of bodies. GPU price (`gpu_price/NOTE.txt`): part 2's additions 0.84 ms (0.80–0.89),
+within D9's 1.5 ms, from `MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 HOME="$PWD/.scratch-home" godot
+--path game --resolution 1280x800 --script res://tests/gpu_price_depot.gd -- --only=P2
+--cycles=40` and `python3 tools/tests/gpu_price.py <log>` (its output for A6's logs unchanged).
+Stills: `captures/transfer_shed/2c_p2/` from `tools/captures/capture_depot.gd` (two new views).
+**Changed:** `transfer_building.gd`, new `dock_staging.gd`, `transfer_shed.gd`,
+`industrial_loop.gd`, `lamp_rain.gd`, new `lamp_rain_dock.tscn`,
+`industrial_loop/art/depot/` (`dock_door.glb` re-made, new `dock_seal.glb`, `dock_leveller.glb`,
+`forklift.glb`, `pallet_jack.glb`, `pallet.glb`, `carton.glb` and their extracted textures,
+`ATTRIBUTION.md`), `tools/art/convert_depot_models.py`, `front_menu.gd` (credits),
+`test_mission_two.gd`, `test_lamp_rain_config.gd`, `test_lamp_rain_state.gd`, `test_menus.gd`,
+new `gpu_price_depot.gd`, `tools/tests/gpu_price.py`, `check_first_drive_art.py`,
+`capture_depot.gd`, `SOURCES.md`, three `source_assets/sketchfab/<model>/README.md`,
+`docs/PHASE_BRIEF.md`, `docs/DEPOT_PLAN.md`, the prompt log (#225–#227), this note; committed
+on `develop` at the author's word (#227). **Rely on:** `develop` is 10 commits ahead of
+`origin/develop`, unpushed until A6 is graded; the bumpers are solid but nothing inside the shed
+is; the capture script leaves the van in the court with its headlights on the docks, which
+lights views 2 to 3c. **Unverified:** the look in motion and from the van backing in; the
+drive-in shutter, still dark; the east yard light's rain, off near the gate under B1's cap of
+eight. **Next:** step 2d, backing onto bay 9, toward a playable Mission 2 (#227); part 3 (the
+parked trucks, trailers and cars) waits for the polish pass.
+
+**Before those:** Phase 2, step 2c revised, part 1 built (#223), 2026-11-11, on the author's second
+Claude account: the bigger depot's platform cut into the hill behind 65 concrete walls (11 m at
+the back), the 50 x 30 m shed (`transfer_building.gd`) in grey box-profile cladding over a 1.3 m
+concrete dock face, the office's two lit storeys, nine of Maxwell autodoors' dock doors and Poly
+Haven's roller shutter as the drive-in door, the yard re-laid (`transfer_yard.gd` rewritten), the
+fence along the platform's edges and the walls' tops, five yard lights. The design and the plan
+are the last two revisions of `docs/PHASE_BRIEF.md` (rules E1–E10) and `docs/DEPOT_PLAN.md`.
+**Tests** (`logs/phase_2/step2c_p1/`): Mission 2 39/41 → 46/46 over four tasks, each failing
+first; the lamp rain 12/13 → 13/13 (19 volumes); the menus 19/20 → 20/20; art 1 → 0 failures; ten
+mutations exit 1, each on its own check (`mutations_summary.txt`); import clean. Every suite, each
+as `LOG_DIR=logs/phase_2/step2c_p1/suites scripts/run-test.sh <test>.gd <fps> 300` for the 31
+runs, then `python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): all exit 0 with
+the baseline's counts but Mission 2's and the collision's (44/44 under C57); no SCRIPT or SHADER
+ERROR; the struck man's fall unchanged. Stills: `captures/transfer_shed/2c_p1/`
+(`depot_part1_sheet.png`, opened for the author), from `tools/captures/capture_depot.gd`.
+**Changed:** new `depot_ground.gd`, `transfer_building.gd` (and their `.uid`),
+`industrial_loop/art/depot/` (`cladding_grey_diff_2k.jpg`, `dock_door.glb`, `ATTRIBUTION.md`),
+`tools/art/make_depot_textures.py`, `tools/art/convert_depot_models.py`, `docs/DEPOT_PLAN.md`,
+`docs/DEPOT_RESEARCH.md`; `transfer_yard.gd` (rewritten), `transfer_shed.gd`, `industrial_loop.gd`,
+`front_menu.gd` (credits), `test_mission_two.gd`, `test_lamp_rain_state.gd`, `test_menus.gd`,
+`check_first_drive_art.py`, `tools/captures/capture_depot.gd`, `SOURCES.md`, `docs/PHASE_BRIEF.md`,
+the prompt log (#215–#224), twelve `source_assets/sketchfab/<model>/README.md`, this note;
+committed on `develop` at the author's word (#224). **Rely on:** `develop` is 9 commits ahead of
+`origin/develop`,
+unpushed until A6 is graded; the twelve Sketchfab models in `source_assets/sketchfab/` (out of
+Git, each README in Git); the Blender MCP add-on keeps its Sketchfab switch per scene;
+`tools/assets/fetch_polyhaven.py` puts the project's name in its User-Agent, so this run did not
+use it (flagged to the author). **Next:** part 2, with the author's OK: the docks
+at work (seals, levellers, bumpers, a light over each door, red and green lights, the inside by
+the docks lit and dry, rain in every lamp's light), each step approved. **Unverified:** the GPU
+price (D9); the drive-in shutter, dark until part 2's lights; how the walls read from the hill.
+
+**Long before:** Phase 2, step 2c-1 built (#212), 2026-11-11, on the author's second Claude account:
+the depot's yard for layout B (new `transfer_yard.gd`): the front and side yards paved, the
+concrete strip and its drain, the side yard cut level behind two retaining walls (the east one
+not foreseen by the brief), the fence moved out to x −27 and along the wall's top, bay lines and
+numbers, the hatched box, three arrows, the railed walkway, trailer and car bays, the car park's
+kerb, four bollards, three signs on solid posts, and two pole lights with B1's rain (16
+volumes). Its revision is the last in `docs/PHASE_BRIEF.md`. **Tests**
+(`logs/phase_2/step2c1/`): `test_mission_two.gd` 31/36 before, 36/39 before the marks were
+corrected, 39/39 after; `test_lamp_rain_state.gd` 12/13 → 13/13; nine mutations exit 1, each on
+its own check (`mutations_summary.txt`); import clean. Every suite, each as
+`LOG_DIR=logs/phase_2/step2c1/suites scripts/run-test.sh <test>.gd <fps> 300` for the 31 runs,
+then `python3 tools/tests/check_first_drive_art.py` (`suites/SUMMARY.txt`): 30 exit 0 with the
+baseline's counts (Mission 2 now 39/39), art 0 failures, no SCRIPT or SHADER ERROR, but
+**`test_collision.gd` 43/44**: the lean check's gain is 0.98 m against its 1.0 m, identical on
+reruns (`collision_rerun/`, `collision_marks/`). It is the brief's predicted failure 1: the yard
+changes Mission 1's fall (2.0 m out, not 2.4 m); `fall_sensitivity/SUMMARY.txt` shows that any
+extra body built into the world does it, and that nothing tried since moves the new fall.
+Reported to the author before anything was changed. **Then, at the author's word (#213,
+C57):** the lean check asks for at least 0.9 m, still at his hips: `test_collision.gd` 44/44
+(`lean_bar/`); Ethan leaning 30 cm instead of 42, exit 1. Nothing else in `game/` changed
+after `suites/`, so **every suite passes.** **Changed:** new `transfer_yard.gd` and its
+`.uid`, `transfer_shed.gd`, `industrial_loop.gd`, `test_mission_two.gd`,
+`test_lamp_rain_state.gd`, `test_collision.gd`, `docs/PHASE_BRIEF.md`,
+`docs/DESIGN_DECISIONS.md` (C57), the prompt log (#212–#214), this note, the logs; committed
+on `develop` at the author's word (#214). **Rely on:** `develop` is 8 commits ahead of
+`origin/develop`, unpushed until A6 is graded; 2c-1's baseline is `logs/phase_2/step2b_r2/suites/`. **Next:** the yard's strip (a
+game window), with the author's OK; then 2c-2. Rerun every suite after each
+depot step: the struck man's fall can move again. **Unverified:** every look: the paint, the walls and the dip
+behind them, the poles' pools and their rain, the signs; the GPU price (D9). **Then** (#215–#216,
+not committed): six stills of the yard from new `tools/captures/capture_depot.gd` in a game
+window, in `captures/transfer_shed/2c1/` (bay 3's "3" overlaps "NO PARKING"; the yard is dark at
+night); the author does not like the docks' shutters and shelters and wants everything more
+real and bigger, so `docs/DEPOT_RESEARCH.md` holds research on real docks and on free models
+(CC0/CC-BY). **Then** (#217–#221): the mix approved (free models, no own builds, #221); the
+shed becomes about 50 x 30 m with eight truck docks and the van bay, set back into the hill
+behind retaining walls (about 10.5 m), the yard 35 m deep, with parked trucks and cars and
+realistic lights and rain at and inside the docks (#219–#220,
+`captures/transfer_shed/2c_models/proposed_layout.png`); twelve CC BY Sketchfab models chosen
+(`chosen_models.png`) and fetched through the Blender MCP add-on (#222) into
+`source_assets/sketchfab/<model>/` (the .glb out of Git, a README each in Git), at real sizes.
+No brief or code yet.
+
+**Longer before:** Phase 2, step 2b r1 built (#195–#204), 2026-11-11, on the author's second Claude
+account: the booth beside the driver's window on a kerbed island with three bollards, glazed, with
+its counter, monitor, logbook, drafting chair and Rocketbox's seated guard (C55), whose head turns
+to Ethan at the stop; E lowers the driver's window for the hand-over; the fence in galvanized steel
+with glinting chain-link and thin barbed wire; the credits carry Rocketbox's MIT notice. Its
+revisions are the last three in `docs/PHASE_BRIEF.md`. **Tests** (`logs/phase_2/step2b_r1/`):
+`test_mission_two.gd` 15/28 before, 28/28 after; `test_menus.gd` 19/20 → 20/20; art 1 → 0
+failures; three mutations exit 1; import clean. Every suite rerun after the build, each as
+`LOG_DIR=logs/phase_2/step2b_r1/suites scripts/run-test.sh <test>.gd <fps> 300` for step 2b's 31
+runs, then the art check: 30 exit 0 with the baseline's counts, but `test_hit_speeds.gd` 11/12 (at
+60 km/h a knee or elbow of the struck man passed its limit for 4 ticks, peak −106°), identical on
+a rerun: the shed's new bodies changed his chaotic tumble. **Then, at the author's word (#205–#206,
+C56):** a `LimbGuard` on each lower leg and forearm (`pedestrian.gd`) keeps every knee and elbow
+between −5° and 150°; `test_hit_speeds.gd` made strict (no tick past −10° or 155°): 9/12 before,
+12/12 after, the guard removed exit 1; `test_collision.gd`'s lean check now asks for at least 1.0 m
+gained by leaning (it measured exactly 1.00 m once the tumble changed). **Every suite passes:** all
+31 runs in `suites_limbs/` exit 0 with the baseline's counts (Mission 2 28/28, the hit at speed
+12/12) except the collision test, which passes 44/44 after the lean change (`lean_check/`);
+nothing else changed between them. **Changed:** `pedestrian.gd`, `test_hit_speeds.gd`,
+`test_collision.gd`, `transfer_shed.gd`,
+`chain_link.gdshader`, new `thin_wire.gdshader`, `first_drive.gd`, `front_menu.gd`, the tests
+`test_mission_two.gd` and `test_menus.gd`, `tools/tests/check_first_drive_art.py`, new
+`tools/art/convert_rocketbox.py` and `game/features/characters/guard/`,
+`source_assets/rocketbox/README.md` and `LICENSE.md`, `.gitignore`, `SOURCES.md`,
+`game/features/characters/ATTRIBUTION.md`, `docs/DESIGN_DECISIONS.md` (C55, C56), the prompt log,
+this note. Nothing committed. **Rely on:** `develop` is 5 commits ahead of `origin/develop`, unpushed
+until A6 is graded (#201); the guard's downloads sit in `source_assets/rocketbox/`, out of Git, and
+its README says how to fetch them again. **Then the second strip** (#207, `captures/transfer_shed/2b_r1/`, the take looking left after
+the stop): the hand-over as predicted; the fence's chain-link a white speckle like snow. **Then
+r2** (#208): the chain-link blended with a 0.12 glint, the guard moved clear of the windscreen
+pillar (101°), his monitor's glow on his face; Mission 2 28/31 → 31/31; every suite passes
+(`logs/phase_2/step2b_r2/suites/`); the third strip (`captures/transfer_shed/2b_r2/`): no
+speckle, the guard readable. **Then** (#209–#210): the third strip kept;
+the author chose layout B for the depot around the shed (the yard 26 m east into a side yard
+with parked trailers, a staff car park apart, an office, a skip and two pole lights; Ethan
+backs into bay 3, the van bay with its dock lift), drawn over the real ground from research on
+truck courts, aprons, wheel guides, one-way yards and pedestrian separation; and this work
+committed on `develop` (`684f8d3`), not pushed. **Then step 2c's brief** (#211–#212), the
+last revision in `docs/PHASE_BRIEF.md`: the depot's yard for layout B from research, parts
+2c-1 to 2c-3, 2d and 2e, rules D1–D9, committed alone before any code. **Next:** 2c-1, the
+yard, tests first; its baseline is `logs/phase_2/step2b_r2/suites/`, run on the code
+committed in `684f8d3`. **Unverified:** every look: the glass, the room's light (energy 1.5 †), the fence's
+glints, the guard through the window; the GPU price of the shadowed booth light.
+
+**Longest before:** Phase 2, step 2b r1's brief (#192–#194), 2026-11-11, in a session on the author's
+second Claude account. The author's verdict on the gate's first strip (`0c87333`, #188) is option
+3: r1 for the booth and the fence, with a stand-in guard at the desk (#193); and the booth moves
+beside the driver's window, onto a kerbed island before the barrier (#194). The r1 revision is the
+last in `docs/PHASE_BRIEF.md`, written before any code, with its tests and the second strip's
+predictions. **Tests:** every suite rerun as the baseline, each as
+`LOG_DIR=logs/phase_2/step2b_r1/baseline scripts/run-test.sh <test>.gd <fps> 300` for the 31 runs
+in step 2b's list, then `python3 tools/tests/check_first_drive_art.py`: all exit 0 with step 2b's
+counts, no SCRIPT or SHADER ERROR, art 0 failures (`logs/phase_2/step2b_r1/baseline/SUMMARY.txt`;
+the engine's exit lines vary between 1 and 2 per log, as before). **Changed:** only
+`docs/PHASE_BRIEF.md`, the prompt log (#192–#194) and this note; nothing in `game/`; nothing
+committed. **Rely on:** `develop` is 5 commits ahead of `origin/develop` (`8ddceca` to `0c87333`),
+unpushed until the author says. **Next:** the author's OK to build r1 and the guard's Mixamo file
+in `source_assets/mixamo/`; then the build, tests first; then the second strip (a game window).
+**Unverified:** every look in the r1 revision; the † values are proposals.
+
+**Older:** Phase 2, steps 2a and 2b (#182–#187), 2026-11-08: the transfer shed's brief from
+research (`b4f6574`), then the spur, fence, guard booth, barrier and gate lamp, tests first, and
+the struck man's ragdoll made firm; see the step 2b revision at the end of `docs/PHASE_BRIEF.md`.
+Every suite passes (`logs/phase_2/step2b/suites/SUMMARY.txt`, 31 runs, exit 0), Mission 2 15/15.
+**Next:** the gate's frame strip (a game window opens; predictions first, then the author's
+verdict), then 2c, the shed, the dock lift and the floodlights, each approved first.
+
+**Assignment 6 is submitted** on Canvas by the author (#181, 2026-11-08): the ZIP of `a6`
+(`0216d23`), `SUBMISSION.md` with the SHA, and the note with the tag and film links.
+**After `a6` (#180):** `main` brought up to `a6` by pull request #1, merged by the author as
+`f968a49` (a merge commit; `main`'s files identical to `a6`'s, none deleted; `develop`, `a5` and
+`a6` unchanged). This note and prompt-log #180 are local commits after the submission.
+
 **Last run:** the submission (#177–#179), 2026-11-08: the film's link, the prompt log back in Git,
 the fresh-clone check of the tagged commit (every count as recorded), then `a6` and the push of
 `develop`; its section is below. **Next, the author's:** Canvas, with the files in
@@ -3436,3 +4253,55 @@ has the engine's "resources still in use at exit" line, as at the Assignment 5 b
   instanced trees.
 - The look when driving: wind sway, LOD switching at 90 m, and collisions with trunks.
 - The author's verdict on the forest road stills, and on the window fog under Forward+.
+
+## 2026-11-22 — Assignment 7 finished while the author was away (#405-#406; Claude Code)
+
+- **Asked:** #405, finish the shock, then Step 7, all four clips submitted; #406, the Brutalist
+  film, every requirement, decide realistically, commit ("i am going away for sometime").
+  Taken as: finish and commit on `develop`. Not taken as leave to push, tag, upload or submit, or
+  to write the author's observations, verdicts or FRICTIONAL notes.
+- **Done, in commit order:**
+  - `bf69b24` the shock remade: 105 frames, hands by IK on the wheel's rim, seated at a bent-arm
+    reach, the shot widened.
+  - `107af78` Step 7 strip r0 and Claude Code's reading (`TUNING.md`).
+  - `8be9bdb` the reload read-back (now on the mocap clip) and edges.
+  - `8f618ee` r1: the cut 53 → 62 (Claude Code's decision, prediction written first);
+    `c486789` strip r1 and the comparison; `2f91bc5` PIN2 re-pinned, as predicted.
+  - `516c7f2` every earlier suite after r1.
+  - `1379953`, `31cfa00`, `a692249`, `e8ea889`: TEST-REPORT, the brief's revision, SOURCES,
+    README, SUBMISSION, FRICTIONAL.
+  - `1e7765e` the film's capture scripts; `92f7810` the film; `1ae4e90` the `.uid` sidecars.
+- **Tests, run through `scripts/run-test.sh` at 60 fps, real results:**
+  - shock: read-back 9/9, state 3/3 (with the hold off, the grip check fails at 0.137 m), PIN4 3/3;
+  - reload: read-back 12/12, edges 21/21 (17/22 first, a test fault), pins 3/3, hangar 9/9;
+  - the pair after r1: rig read-back 14/14, states 8/8, edges 48/48, pins 3/3 (PIN2 failed as
+    predicted before its re-pin); ring read-back 15/15, structure 13/13;
+  - every earlier suite: 81/81 exit 0, no SCRIPT or SHADER ERROR, art check 0 failures
+    (`logs/animation/final_suites`).
+- **The film:** `youtube/claude-liam-blackridge-animation-gamedev/`.
+  - `./art godot-gamedev --check`: PASS. GATE T: PASS. Gate V: 0 BLOCKER, 0 MAJOR.
+  - Three frame-level QC passes (`_qc/VISUAL-QC.md`).
+  - Master: `exports/landscape/Blackridge-Frame-by-Frame-4K.mp4`, 3840×2160, 439.9 s, SHA-256
+    `f2626893f942e25f58a3282c8ec3a324fab406a83a117a2af190c799ccb51040`. Not in Git.
+  - Open it with `open "/Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/youtube/claude-liam-blackridge-animation-gamedev/exports/landscape/Blackridge-Frame-by-Frame-4K.mp4"`.
+- **The next run may rely on:**
+  - `game/` unchanged since `1e7765e`, the film's revision;
+  - every count above recorded in `TEST-REPORT.md`.
+- **Open, the author's:**
+  1. Watch the film; upload it to OneDrive; put the link in `README.md` and `SUBMISSION.md`.
+  2. Play EnterVan at normal speed and at `--time-scale 0.25`: the verdict on r1 (keep, revert,
+     revise). The handout's observation-driven revision must come from what you see
+     (`TUNING.md`).
+  3. The human checks (`TEST-REPORT.md`, "HUMAN CHECKS"): the ring's seam over five wraps, the
+     ring on the dash at night, the phases reading in play, the reload and the shock in play.
+  4. Your CLAUDE.md corrections (for example `rifle_carry.gd` and `push_gait.gd` as the driver's
+     helpers; the importer key and the ring's process mode now confirmed), committed apart from
+     the agent's draft.
+  5. Your own notes in `FRICTIONAL.md`; check `SUBMISSION.md`'s drafted summary.
+  6. Decide on the four Poly Haven `.import` files the empty-cache import rewrites (uncommitted).
+  7. Then the OK to push `develop`, open the PR to `main`, tag `a7`, run the fresh-clone check,
+     and submit the ZIP on Canvas.
+- **Unverified:**
+  - the motion reading and the seam: no headless run shows them;
+  - how the film plays on another screen or after OneDrive re-encodes it;
+  - the foot lift at clip 53 in r1, which this camera cannot show.

@@ -10,6 +10,9 @@ const EXTERIOR_ART = preload("art/iveco/iveco_exterior.glb")
 const CAB_ART = preload("art/iveco/iveco_cab.glb")
 const SCREEN = preload("cockpit_screen.gdshader")
 const IVECO_PLACE := Vector3(0.0, 0.16, 0.5)
+## The Iveco's painted panels, by their materials' names in `iveco_exterior.glb`.
+const PAINTED: Array[String] = ["Body_exterior_1", "Body_exterior_2", "Lateral_door", "Front_door",
+	"Back_door"]
 const SCREEN_GAP := 0.0015
 const CLUSTER_SCREEN := Vector3(-0.4844, 1.4665, -1.3466)
 const CLUSTER_SIZE := Vector2(0.432, 0.139)
@@ -52,15 +55,31 @@ const TYRE_RADIUS := 0.359
 const WHEEL_SPOTS: Array[Vector3] = [Vector3(-0.872, 0, -1.507), Vector3(0.872, 0, -1.507),
 	Vector3(-0.872, 0, 1.997), Vector3(0.872, 0, 1.997)]
 const HEADLIGHT := Vector3(0.64, 1.15, -2.31)
-const REVERSE_LENS := Vector2(0.92, 1.08)
 const REVERSE_LAMP := Vector3(0.86, 1.0, 2.84)
 const REVERSE_ENERGY := 6.0
 const REVERSE_RANGE := 14.0
 const REVERSE_GAIN := 3.0
-const TAIL_GLOW := Vector2(0.25, 1.0)
+## The reversing camera on the roof's rear edge, where the Daily's sits in its third brake
+## light, tilted 45° down so its bumper shows along the picture's bottom (#287).
+const REVERSE_CAMERA := Vector3(0, 2.22, 2.84)
+const REVERSE_TURN := Vector3(-PI / 4.0, PI, 0)
+const REVERSE_FIELD := 85.0
+## The tail lamps (#343, #344), drawn as a real van's by `tail_lamp.gdshader` with the lens's own
+## texture and its masks (`tools/art/make_tail_lamp_mask.py`): a clear glossy cover over a red
+## prism lens and a clear section with a chrome reflector; the red lens glowing a lamp's deep red
+## (near 630 nm) through its prisms, the stop five times the tail, as UN Regulation 7 asks of a
+## stop lamp over a rear position lamp (at least 5:1), and the red they throw on the road behind in
+## the same ratio; the indicator amber and the reversing lamp white in the clear section. The two
+## pieces the converter once cut from the top of the red lens by height (`RearIndicatorLeft`,
+## `...Right`) wear the same lamp, so it is whole.
+const TAIL_LAMP := preload("res://features/vehicles/freight_van/tail_lamp.gdshader")
+const TAIL_MASKS := preload("res://features/vehicles/freight_van/art/iveco/tail_lamp_masks.png")
+const TAIL_LENS := 0.35
+const STOP_LENS := 1.75
+const REAR_INDICATORS: Array[String] = ["RearIndicatorLeft", "RearIndicatorRight"]
+const TAIL_GLOW := Vector2(0.2, 1.0)
 const TAIL_GLOW_RANGE := 5.0
-const INDICATORS: Array[String] = ["FrontIndicatorLeft", "RearIndicatorLeft",
-	"FrontIndicatorRight", "RearIndicatorRight"]
+const INDICATORS: Array[String] = ["FrontIndicatorLeft", "FrontIndicatorRight"]
 const TILT_RATE := 10.0
 const SETTLE := 60.0
 const BLADE_FLIP := 0.14
@@ -86,18 +105,28 @@ const DROP_MARGIN := 0.02
 const DUMP_SECONDS := 0.7
 const MOON_ROOF := Rect2(-0.52, -0.8, 1.04, 0.44)
 const MOON_ROOF_HEIGHT := 2.226
+## The lamps' rain lands on the moon roof's glass (#330): a collider under it, its top face just
+## over the glass and deep enough that no drop passes it in a tick, as the windshield's are.
+const MOON_ROOF_SKIN := 0.003
+const MOON_ROOF_STOP_DEPTH := 0.3
+const MOON_ROOF_STOP_MARGIN := 0.02
 const ROOF_TOP := 2.231
 const ROOF_FRAME := Vector3(0.05, 2.18, 2.228)
 const ROOF_SEAL := 0.02
 const ROOF_SLOPE := Vector2(0.0, -0.05)
 const ROOF_AIR := 0.8
 const LOOK_UP := 1.05
-const BEAM_RAIN = preload("beam_rain.gdshader")
-const RAIN_LAYERS: Array[float] = [3.0, 4.5, 6.5, 9.0, 12.5, 17.0, 23.0, 31.0]
+const HEADLIGHT_RAIN = preload("res://effects/headlight_rain.tscn")
+const BEAM_MIST = preload("beam_mist.gdshader")
+const HEADLAMP_LENS = preload("headlamp_lens.gdshader")
 const LAMP_FRONT := -2.31
 const RAIN_SLANT := 0.08
-const LOW_BEAM_RAIN := Vector2(5.0, 0.65)
-const HIGH_BEAM_RAIN := Vector2(16.0, 0.9)
+## The wind's slant the rain falls along, in the world, as the lamps' rain does.
+const RAIN_FALL := Vector3(RAIN_SLANT, -0.997, 0.0)
+## The beams' rain draws on the world's layer, where the headlights light it, and on a layer of
+## its own (value 64, used by nothing else) that only the van's `RainStop` collides with, so the
+## wiper's and the spill's water on the glass, on the world's layer, are not stopped by it.
+const RAIN_STOP_LAYER := 64
 const WINDSHIELD_AIR := 0.85
 const SIDE_AIR := 0.9
 const SIDE_AIR_DIRECTION := Vector2(-0.989, 0.148)
@@ -108,12 +137,43 @@ const HIGH_BEAM = preload("art/high_beam_pattern.png")
 const LOW_BEAM_RANGE := 70.0
 const HIGH_BEAM_RANGE := 260.0
 const LOW_BEAM_ENERGY := 650.0
-const HIGH_BEAM_ENERGY := 850.0
+const HIGH_BEAM_ENERGY := 1147.0
+const LOW_BEAM_TILT := -1.25
+const HIGH_BEAM_TILT := 0.0
+const BEAM_MIST_DEPTH := 40.0
+const BEAM_MIST_SCATTERING := 0.016
 const WipeMap = preload("windshield_wipe_map.gd")
 const Wiper = preload("wiper.gd")
 const VanParticles = preload("van_particles.gd")
 const WIPE_MAP_SIZE := Vector2i(512, 256)
+## The heavy film (#346): unwiped glass soaks over tens of seconds (a second wipe map), its drops
+## merging into blobs up to the largest that holds still; each blob a lens showing an inverted
+## image of BLOB_PATCH_HALF either side of the driver's line of sight.
+const SOAK_SECONDS := 8.0
+const BLOB_PATCH_HALF := 4.0
+## Merged patches, wide but no taller down the glass than a still drop is across; and the catch
+## light: the brightest CATCH_MOST of the world's lamps seen through the glass, not hidden (at most
+## CATCH_RAYS rays a frame), lit into the water near each.
+const PATCH_WIDTH := Vector2(0.015, 0.035)
+const CATCH_MOST := 8
+const CATCH_RAYS := 16
+const CATCH_FALLOFF := 15.0
+const CATCH_SEEN_NEAR := 0.6
+## Steps 2-4 (#346): a thick film smears the lamps down it (of the screen's height); the ridge the
+## blade pushes, catching the lamps more brightly than a drop; the thin film behind the blade
+## bending the view (of the screen).
+const SMEAR_REACH := 0.02
+const RIDGE_WIDTH := 0.009
+const RIDGE_CATCH := 2.5
+const WIPED_RIPPLE := 0.004
 const DOOR_SWING := 0.541
+const REAR_SWING := PI * 1.5
+const REAR_DOOR_SECONDS := 2.4
+const HINGE_HEIGHTS: Array[float] = [0.52, 1.65]
+## The rear doors' strap hinges, built in Blender by `tools/art/build_van_hinges.py` (#259).
+const HINGES = preload("art/van_hinges.glb")
+const SWING_SAMPLES := 9
+const SINK_PER_KG := 0.00005
 const GLARE_FALLOFF := 40.0
 const GLARE_RATE := 12.0
 const OFF_GLASS := Vector2(9.0, 9.0)
@@ -146,6 +206,8 @@ const COWL := 0.1
 const HEAD_WATCH := 1.0
 
 var driving_camera: Camera3D
+var rear_camera: Camera3D
+var _rear_guides: CanvasLayer
 var navigation: Control
 var night_dimming: Node
 var mirrors: Array[SubViewport] = []
@@ -178,20 +240,24 @@ var _windows: Array[MeshInstance3D] = []
 var _window_drop: Array[float] = []
 var cabin_lamp: OmniLight3D
 var _dome_lens := StandardMaterial3D.new()
+var _paint := Color.WHITE
 var _dome_level := 0.0
 var _window_glass: Array[ShaderMaterial] = []
 var _window_lowered: Array[float] = [0.0, 0.0]
 var _headlights: Array[SpotLight3D] = []
 var _front_lenses: Array[MeshInstance3D] = []
-var _rear_lamps: Array[MeshInstance3D] = []
-var _reverse_lenses: MeshInstance3D
 var _reverse_lights: Array[SpotLight3D] = []
 var _indicators: Array[MeshInstance3D] = []
 var _tires: Array[Node3D] = []
 var _glass: ShaderMaterial
+var lamps: Array[Light3D] = []
+var _lamp_ray := PhysicsRayQueryParameters3D.new()
 var _high_beams_shown: bool = false
-var _rain_layers: Array[MeshInstance3D] = []
-var _beam_rain_material: ShaderMaterial
+## The rain in the beams (the rain, step 4, #354): drops in the air ahead of the van, falling in
+## the world, lit by whatever light reaches them (`game/effects/headlight_rain.tscn`).
+var headlight_rain: GPUParticles3D
+## How strongly an oncoming van's beams light the rain in front of this one (0 when none do).
+var rain_backlit: float = 0.0
 var _water: float = 0.6
 var _windshield_water := RainPhysics.new()
 var _side_water := RainPhysics.new()
@@ -204,6 +270,9 @@ var _body := Node3D.new()
 var _cabin := Node3D.new()
 var _door: Node3D
 var _door_glass := Node3D.new()
+var _rear_doors: Array[Node3D] = []
+var _bolt_seal: Node3D
+var _rear_open: float = 0.0
 var _powered_screens: Array[MeshInstance3D] = []
 var _dark_screens: Array[MeshInstance3D] = []
 var _powered_views: Array[SubViewport] = []
@@ -230,10 +299,8 @@ var _glare_ray := PhysicsRayQueryParameters3D.new()
 var _trim := Build.material(Color("141c22"), 0.86)
 var _seal := Build.material(Color("0b0d0f"), 0.55)
 var _amber := Build.luminous(Color("ff9e30"), 1.2)
-var _red := Build.luminous(Color("e1442e"))
-var _tail := Build.luminous(Color("68251e"))
-var _lens_on := Build.luminous(Color("e9ebdc"), 2.0)
-var _lens_reversing := Build.luminous(Color("f4f1e6"), 2.5)
+var _lamp: ShaderMaterial
+var _lens_on := ShaderMaterial.new()
 
 
 func configure(van: CharacterBody3D) -> void:
@@ -244,10 +311,11 @@ func configure(van: CharacterBody3D) -> void:
 	_ground_ray.exclude = [van.get_rid()]
 	_ground_ray.collision_mask = van.collision_mask
 	_glare_ray.collision_mask = 1
+	_lamp_ray.collision_mask = 1
 	add_child(_body)
 	add_child(_cabin)
 	_exterior()
-	_beam_rain()
+	_headlight_rain()
 	_interior()
 	_camera()
 	_displays()
@@ -283,17 +351,54 @@ func _front_shell() -> void:
 	_front.global_transform = global_transform
 
 
+## The van's paint (Mission 2's dark van, step 4, #312): `colour` multiplied into its painted
+## panels' materials, white as delivered.
+func set_paint(colour: Color) -> void:
+	_paint = colour
+	paint_model(_body.get_node("Iveco") as Node3D, colour)
+
+
+func paint() -> Color:
+	return _paint
+
+
+## The exterior model as drawn, where a parked copy of the van stands.
+func exterior() -> Node3D:
+	return _body.get_node("Iveco") as Node3D
+
+
+## `colour` multiplied into the painted panels of an Iveco exterior `model` (`iveco_exterior.glb`).
+static func paint_model(model: Node3D, colour: Color) -> void:
+	for found in model.find_children("*", "MeshInstance3D", true, false):
+		var mesh := found as MeshInstance3D
+		for index in range(mesh.mesh.get_surface_count()):
+			var made := mesh.mesh.surface_get_material(index) as BaseMaterial3D
+			if made == null or not PAINTED.has(made.resource_name):
+				continue
+			var paint := made.duplicate() as BaseMaterial3D
+			paint.albedo_color = made.albedo_color * colour
+			mesh.set_surface_override_material(index, paint)
+
+
 func _exterior() -> void:
 	var outside := EXTERIOR_ART.instantiate() as Node3D
 	outside.name = "Iveco"
 	outside.position = IVECO_PLACE
 	_body.add_child(outside)
 	_door = outside.get_node("DriverDoor") as Node3D
+	_rear_doors.assign([outside.get_node("RearDoorLeft"), outside.get_node("RearDoorRight")])
+	_hasp()
+	_rear_hinges(outside)
 	_turn_passenger_mirror(outside)
 	var headlights := outside.get_node("Headlights") as MeshInstance3D
 	var tail_lamps := outside.get_node("TailLamps") as MeshInstance3D
 	_front_lenses.append(headlights)
-	_rear_lamps.append(tail_lamps)
+	_lamp = _tail_lamp(tail_lamps)
+	tail_lamps.material_override = _lamp
+	for label in REAR_INDICATORS:
+		var piece := outside.get_node(label) as MeshInstance3D
+		piece.material_override = _lamp
+		piece.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	for label in INDICATORS:
 		_indicators.append(outside.get_node(label) as MeshInstance3D)
 	for lens: MeshInstance3D in _indicators + [headlights, tail_lamps,
@@ -302,17 +407,17 @@ func _exterior() -> void:
 	for side in [-1, 1]:
 		var headlight := SpotLight3D.new()
 		headlight.position = Vector3(side * HEADLIGHT.x, HEADLIGHT.y, HEADLIGHT.z)
-		headlight.rotation_degrees.x = -2.0
 		headlight.light_color = Color("fff0db")
 		headlight.spot_angle = 35.0
 		headlight.spot_angle_attenuation = 0.2
 		headlight.spot_attenuation = 1.0
 		headlight.shadow_enabled = true
+		_beam_mist(headlight)
 		_aim_beam(headlight, false)
 		headlight.light_cull_mask = 1
 		_body.add_child(headlight)
 		_headlights.append(headlight)
-	_reversing_lamps(tail_lamps)
+	_reversing_lamps()
 	_tail_glow_lights()
 	for label in TYRES:
 		_tires.append(outside.get_node(label) as Node3D)
@@ -390,18 +495,57 @@ func _displays() -> void:
 	_powered_screens.append(_map_screen)
 	_dark_screens.append(_blank_screen(MAP_SCREEN, MAP_SIZE, MAP_TURN))
 	_powered_views.append_array([instruments, gps])
-	reverse_view = _camera_view(Vector3(0, 2.15, 3.0), Vector3(-0.28, PI, 0), REVERSE_PIXELS,
-		85.0)
+	reverse_view = _camera_view(REVERSE_CAMERA, REVERSE_TURN, REVERSE_PIXELS, REVERSE_FIELD)
 	reverse_view.get_camera_3d().cull_mask = 7
-	reverse_view.add_child(ParkingGuides.new())
+	reverse_view.add_child(_parking_guides())
 	var low_light := CameraAttributesPractical.new()
 	low_light.exposure_multiplier = REVERSE_GAIN
 	mirror_cameras[mirror_cameras.size() - 1].attributes = low_light
+	_rear_view(low_light)
 	reverse_screen = _dash_screen(reverse_view, MAP_SCREEN, MAP_SIZE, MAP_TURN, false,
 		2.0 * SCREEN_GAP)
 	_lcd(reverse_screen)
 	reverse_screen.visible = false
 	_screen_glass()
+
+
+## The reversing camera as the game's own view while the van is in reverse (#252): the same
+## camera, high on the van's back looking back and down past the bumper, with the same lens and
+## low-light gain, its parking guides drawn over the picture, as a driver watches it reversing.
+func _rear_view(low_light: CameraAttributes) -> void:
+	rear_camera = Camera3D.new()
+	rear_camera.name = "RearCamera"
+	rear_camera.position = REVERSE_CAMERA
+	rear_camera.rotation = REVERSE_TURN
+	rear_camera.fov = REVERSE_FIELD
+	rear_camera.cull_mask = 7
+	rear_camera.near = 0.1
+	rear_camera.far = driving_camera.far
+	rear_camera.attributes = low_light
+	add_child(rear_camera)
+	_rear_guides = CanvasLayer.new()
+	_rear_guides.name = "RearCameraGuides"
+	_rear_guides.layer = -1
+	_rear_guides.add_child(_parking_guides())
+	_rear_guides.visible = false
+	add_child(_rear_guides)
+
+
+func _parking_guides() -> Control:
+	var guides := ParkingGuides.new()
+	guides.van = vehicle
+	return guides
+
+
+## In reverse, with the driver at the wheel, the game's view is the rear camera; out of it, his
+## own view again. Out of the van his own camera is someone else's to choose.
+func _follow_gear() -> void:
+	var reversing: bool = vehicle.gear < 0 and vehicle.occupied
+	if reversing and driving_camera.current:
+		rear_camera.make_current()
+	elif not reversing and rear_camera.current and vehicle.occupied:
+		driving_camera.make_current()
+	_rear_guides.visible = rear_camera.current
 
 
 func _lcd(screen: MeshInstance3D) -> void:
@@ -565,6 +709,15 @@ func _windows_and_wipers() -> void:
 	_glass.shader = GLASS
 	_glass.set_shader_parameter("glass_size", WipeMap.GLASS_SIZE)
 	_glass.set_shader_parameter("wipe_mask", _wipe_map())
+	_glass.set_shader_parameter("soak_mask", _wipe_map(SOAK_SECONDS, "WindshieldSoakMap"))
+	_glass.set_shader_parameter("blob_most", _blob_most(0.0))
+	_glass.set_shader_parameter("blob_lens", tan(deg_to_rad(BLOB_PATCH_HALF))
+		/ (2.0 * tan(deg_to_rad(driving_camera.fov * 0.5))))
+	_glass.set_shader_parameter("patch_width", PATCH_WIDTH)
+	_glass.set_shader_parameter("smear_reach", SMEAR_REACH)
+	_glass.set_shader_parameter("ridge_width", RIDGE_WIDTH)
+	_glass.set_shader_parameter("ridge_catch", RIDGE_CATCH)
+	_glass.set_shader_parameter("wiped_ripple", WIPED_RIPPLE)
 	_glass.set_shader_parameter("drop_radii", RainPhysics.RADII)
 	_glass.set_shader_parameter("crack_point", NO_CRACK)
 	_glass.set_shader_parameter("crack_seed", 0.0)
@@ -699,54 +852,35 @@ func _local(node: Node3D) -> Transform3D:
 	return global_transform.affine_inverse() * node.global_transform
 
 
-func _beam_rain() -> void:
-	_beam_rain_material = ShaderMaterial.new()
-	_beam_rain_material.shader = BEAM_RAIN
-	_beam_rain_material.set_shader_parameter("slant", RAIN_SLANT)
-	var holder := Node3D.new()
-	holder.name = "BeamRain"
-	add_child(holder)
-	var spread := tan(deg_to_rad(_headlights[0].spot_angle))
-	for index in range(RAIN_LAYERS.size()):
-		var ahead: float = RAIN_LAYERS[index]
-		var quad := QuadMesh.new()
-		quad.size = Vector2(2.0 * (ahead + 0.5) * spread + 1.8, minf(2.6 + ahead * 0.3, 9.0))
-		var layer := Build.instance(holder, Vector3(0.0, quad.size.y * 0.5 - 0.2,
-			LAMP_FRONT - ahead), quad, _beam_rain_material)
-		layer.layers = 4
-		layer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		layer.set_instance_shader_parameter("seed", 11.0 * index + 3.0)
-		_rain_layers.append(layer)
+## The rain in the beams: its drops fill the air from just ahead of the van to 25 m out and fall in
+## the world as the van drives through them; the van's body and glass stop them (`RainStop`, on
+## the rain's own layer only, RAIN_STOP_LAYER). Lit by the lights themselves, so the low and the high beams each
+## light their own, and so does an oncoming van's.
+func _headlight_rain() -> void:
+	headlight_rain = HEADLIGHT_RAIN.instantiate() as GPUParticles3D
+	headlight_rain.process_material = headlight_rain.process_material.duplicate()
+	headlight_rain.position = Vector3(0.0, 0.0, LAMP_FRONT)
+	add_child(headlight_rain)
+	var shape := vehicle.get_node("CollisionShape3D") as CollisionShape3D
+	var stop := GPUParticlesCollisionBox3D.new()
+	stop.name = "RainStop"
+	stop.size = (shape.shape as BoxShape3D).size
+	stop.position = shape.position
+	stop.cull_mask = RAIN_STOP_LAYER
+	add_child(stop)
 
 
+## The beams' rain falls while the lamps, or an oncoming van's, are on, along the wind's slant in
+## the world however the van is turned.
 func _light_the_rain() -> void:
 	var lit: bool = vehicle.headlights_on
-	var backlit := _oncoming_rain()
-	for layer in _rain_layers:
-		layer.visible = lit or backlit > 0.0
-	if not lit and backlit <= 0.0:
-		return
-	_beam_rain_material.set_shader_parameter("beams", 1.0 if lit else 0.0)
-	_beam_rain_material.set_shader_parameter("oncoming", backlit)
-	if backlit > 0.0:
-		var lamps: Array = oncoming.get("lamps")
-		_beam_rain_material.set_shader_parameter("oncoming_pattern", lamps[0].light_projector)
-		_beam_rain_material.set_shader_parameter("oncoming_reach", lamps[0].spot_range)
-		_beam_rain_material.set_shader_parameter("oncoming_left",
-			Projection(lamps[0].global_transform.affine_inverse()))
-		_beam_rain_material.set_shader_parameter("oncoming_right",
-			Projection(lamps[1].global_transform.affine_inverse()))
-	var lamp := _headlights[0]
-	var strength := HIGH_BEAM_RAIN if vehicle.high_beams else LOW_BEAM_RAIN
-	_beam_rain_material.set_shader_parameter("glow", strength.x)
-	_beam_rain_material.set_shader_parameter("density", strength.y)
-	_beam_rain_material.set_shader_parameter("pattern", lamp.light_projector)
-	_beam_rain_material.set_shader_parameter("reach", lamp.spot_range)
-	_beam_rain_material.set_shader_parameter("tan_half", tan(deg_to_rad(lamp.spot_angle)))
-	_beam_rain_material.set_shader_parameter("lamp_left",
-		Projection(_headlights[0].global_transform.affine_inverse()))
-	_beam_rain_material.set_shader_parameter("lamp_right",
-		Projection(_headlights[1].global_transform.affine_inverse()))
+	rain_backlit = _oncoming_rain()
+	var falling := lit or rain_backlit > 0.0
+	if headlight_rain.emitting != falling:
+		headlight_rain.emitting = falling
+	if falling:
+		(headlight_rain.process_material as ParticleProcessMaterial).direction = \
+			headlight_rain.global_basis.inverse() * RAIN_FALL.normalized()
 
 
 func _oncoming_rain() -> float:
@@ -785,6 +919,53 @@ func _update_glare(delta: float) -> void:
 	_glass.set_shader_parameter("glare_power", _glare)
 
 
+func _catch_lamps() -> void:
+	var eye := driving_camera.global_position
+	var seen: Array[Array] = []
+	for lamp in lamps:
+		if not is_instance_valid(lamp) or not lamp.is_visible_in_tree() \
+				or lamp.light_energy <= 0.0:
+			continue
+		var at := _on_windshield(eye, lamp.global_position)
+		if at == OFF_GLASS:
+			continue
+		var to_eye := eye - lamp.global_position
+		var facing := 1.0
+		if lamp is SpotLight3D:
+			facing = 0.25 + 0.75 * maxf(0.0, (-lamp.global_basis.z).dot(to_eye.normalized()))
+		seen.append([lamp.light_energy * facing / (1.0 + pow(to_eye.length() / CATCH_FALLOFF,
+			2.0)), at, lamp])
+	seen.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+	var points := PackedVector4Array()
+	var colours := PackedVector4Array()
+	var rays := 0
+	for entry in seen:
+		if points.size() >= CATCH_MOST or rays >= CATCH_RAYS:
+			break
+		rays += 1
+		var lamp := entry[2] as Light3D
+		if _blocked(eye, lamp.global_position):
+			continue
+		var at: Vector2 = entry[1]
+		points.append(Vector4(at.x, at.y, entry[0], 0.0))
+		colours.append(Vector4(lamp.light_color.r, lamp.light_color.g, lamp.light_color.b, 1.0))
+	while points.size() < CATCH_MOST:
+		points.append(Vector4(OFF_GLASS.x, OFF_GLASS.y, 0.0, 0.0))
+		colours.append(Vector4.ZERO)
+	_glass.set_shader_parameter("catch_points", points)
+	_glass.set_shader_parameter("catch_colours", colours)
+	_glass.set_shader_parameter("catch_reach", tan(deg_to_rad(BLOB_PATCH_HALF))
+		* eye.distance_to(_windshield.global_position))
+
+
+func _blocked(eye: Vector3, target: Vector3) -> bool:
+	_lamp_ray.from = eye
+	_lamp_ray.to = target
+	_lamp_ray.exclude = [vehicle.get_rid()]
+	var hit := get_world_3d().direct_space_state.intersect_ray(_lamp_ray)
+	return not hit.is_empty() and (hit.position as Vector3).distance_to(target) > CATCH_SEEN_NEAR
+
+
 func _on_windshield(eye: Vector3, target: Vector3) -> Vector2:
 	var pane := _windshield.global_transform
 	var normal := pane.basis.z.normalized()
@@ -809,33 +990,18 @@ func _hidden(eye: Vector3, target: Vector3) -> bool:
 	return not get_world_3d().direct_space_state.intersect_ray(_glare_ray).is_empty()
 
 
-func _reversing_lamps(tail: MeshInstance3D) -> void:
-	var arrays := tail.mesh.surface_get_arrays(0)
-	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
-	var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
-	var order: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
-	if order.is_empty():
-		order = PackedInt32Array(range(vertices.size()))
-	var frame := (tail.get_parent() as Node3D).transform * tail.transform
-	var tool := SurfaceTool.new()
-	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for corner in range(0, order.size(), 3):
-		var middle := (vertices[order[corner]] + vertices[order[corner + 1]]
-			+ vertices[order[corner + 2]]) / 3.0
-		var height := (frame * middle).y
-		if height < REVERSE_LENS.x or height > REVERSE_LENS.y:
-			continue
-		for point in range(corner, corner + 3):
-			tool.set_normal(normals[order[point]])
-			tool.add_vertex(vertices[order[point]] + normals[order[point]] * 0.0015)
-	_reverse_lenses = MeshInstance3D.new()
-	_reverse_lenses.name = "ReversingLenses"
-	_reverse_lenses.mesh = tool.commit()
-	_reverse_lenses.material_override = _lens_reversing
-	_reverse_lenses.transform = frame
-	_reverse_lenses.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_reverse_lenses.visible = false
-	_body.add_child(_reverse_lenses)
+## The tail lamps' lamp: the lens's own texture and its masks, drawn by `tail_lamp.gdshader`.
+func _tail_lamp(lamps: MeshInstance3D) -> ShaderMaterial:
+	var lamp := ShaderMaterial.new()
+	lamp.shader = TAIL_LAMP
+	lamp.set_shader_parameter("lens",
+		(lamps.mesh.surface_get_material(0) as BaseMaterial3D).albedo_texture)
+	lamp.set_shader_parameter("masks", TAIL_MASKS)
+	return lamp
+
+
+## The reversing lamps' light on the ground behind; they shine in the tail lamps' clear sections.
+func _reversing_lamps() -> void:
 	for side in [-1, 1]:
 		var lamp := SpotLight3D.new()
 		lamp.position = Vector3(side * REVERSE_LAMP.x, REVERSE_LAMP.y, REVERSE_LAMP.z)
@@ -1050,6 +1216,56 @@ func _aim_beam(headlight: SpotLight3D, high: bool) -> void:
 	headlight.light_projector = HIGH_BEAM if high else LOW_BEAM
 	headlight.spot_range = HIGH_BEAM_RANGE if high else LOW_BEAM_RANGE
 	headlight.light_energy = HIGH_BEAM_ENERGY if high else LOW_BEAM_ENERGY
+	headlight.rotation_degrees.x = HIGH_BEAM_TILT if high else LOW_BEAM_TILT
+	var air := (headlight.get_node("Mist") as MeshInstance3D).material_override as ShaderMaterial
+	var colour := headlight.light_color.srgb_to_linear() * headlight.light_energy
+	air.set_shader_parameter("light_colour", Vector3(colour.r, colour.g, colour.b))
+	air.set_shader_parameter("pattern", headlight.light_projector)
+	air.set_shader_parameter("light_range", headlight.spot_range)
+
+
+static func lit_lens(lens: MeshInstance3D) -> ShaderMaterial:
+	var glass := lens.mesh.surface_get_material(0) as BaseMaterial3D
+	var lit := ShaderMaterial.new()
+	lit.shader = HEADLAMP_LENS
+	if glass != null:
+		lit.set_shader_parameter("glass_texture", glass.albedo_texture)
+		lit.set_shader_parameter("glass_colour", glass.albedo_color)
+		lit.set_shader_parameter("glass_metallic", glass.metallic)
+		lit.set_shader_parameter("glass_roughness", glass.roughness)
+	lens.material_override = lit
+	return lit
+
+
+static func light_lens(lit: ShaderMaterial, low: bool, high: bool) -> void:
+	lit.set_shader_parameter("low_lit", 1.0 if low else 0.0)
+	lit.set_shader_parameter("high_lit", 1.0 if high else 0.0)
+
+
+func _light_lens(lens: MeshInstance3D, low: bool, high: bool) -> void:
+	if lens.material_override != _lens_on:
+		_lens_on = lit_lens(lens)
+	light_lens(_lens_on, low, high)
+
+
+func _beam_mist(headlight: SpotLight3D) -> void:
+	var radius := BEAM_MIST_DEPTH * tan(deg_to_rad(headlight.spot_angle))
+	var air := ShaderMaterial.new()
+	air.shader = BEAM_MIST
+	air.set_shader_parameter("half_size", Vector3(radius, radius, BEAM_MIST_DEPTH * 0.5))
+	air.set_shader_parameter("tan_half", tan(deg_to_rad(headlight.spot_angle)))
+	air.set_shader_parameter("light_decay", headlight.spot_attenuation)
+	air.set_shader_parameter("scattering", BEAM_MIST_SCATTERING)
+	air.set_shader_parameter("fade_begin", 1.0e6)
+	var box := BoxMesh.new()
+	box.size = Vector3(radius * 2.0, radius * 2.0, BEAM_MIST_DEPTH)
+	var mist := MeshInstance3D.new()
+	mist.name = "Mist"
+	mist.mesh = box
+	mist.material_override = air
+	mist.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mist.position = Vector3(0.0, 0.0, -BEAM_MIST_DEPTH * 0.5)
+	headlight.add_child(mist)
 
 
 func _moon_roof() -> void:
@@ -1065,6 +1281,14 @@ func _moon_roof() -> void:
 	glass.name = "MoonRoofGlass"
 	glass.rotation.x = -PI / 2
 	glass.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var stop := GPUParticlesCollisionBox3D.new()
+	stop.name = "MoonRoofCollider"
+	stop.size = Vector3(MOON_ROOF.size.x + MOON_ROOF_STOP_MARGIN, MOON_ROOF_STOP_DEPTH,
+		MOON_ROOF.size.y + MOON_ROOF_STOP_MARGIN)
+	stop.position = Vector3(centre.x, MOON_ROOF_HEIGHT + MOON_ROOF_SKIN
+		- MOON_ROOF_STOP_DEPTH * 0.5, centre.y)
+	stop.cull_mask = 0xFFFFFFFF ^ VanParticles.PASSENGER_LAYER
+	_cabin.add_child(stop)
 	var rain := ShaderMaterial.new()
 	rain.shader = SIDE_RAIN
 	rain.set_shader_parameter("seed", 29.0)
@@ -1118,9 +1342,15 @@ func _blade_water(swing: float, delta: float) -> void:
 	_glass.set_shader_parameter("wiper_cycles", vehicle.wiper_cycles())
 
 
-func _wipe_map() -> Texture2D:
+func _blob_most(moving: float) -> float:
+	return RainPhysics.slide_radius(Vector2(0.0, -cos(WINDSHIELD_RAKE)),
+		Vector2(0.0, WINDSHIELD_AIR * moving))
+
+
+func _wipe_map(seconds: float = WipeMap.REWET_SECONDS,
+		label: String = "WindshieldWipeMap") -> Texture2D:
 	var viewport := SubViewport.new()
-	viewport.name = "WindshieldWipeMap"
+	viewport.name = label
 	viewport.size = WIPE_MAP_SIZE
 	viewport.disable_3d = true
 	viewport.use_hdr_2d = true
@@ -1129,6 +1359,7 @@ func _wipe_map() -> Texture2D:
 	add_child(viewport)
 	var painter := WipeMap.new()
 	painter.vehicle = vehicle
+	painter.rewet_seconds = seconds
 	painter.map_size = Vector2(WIPE_MAP_SIZE)
 	viewport.add_child(painter)
 	return viewport.get_texture()
@@ -1152,8 +1383,10 @@ func _follow_ground(delta: float) -> void:
 		_ground_ray.to = vehicle.to_global(spot + Vector3.DOWN * 2.0)
 		var hit := space.intersect_ray(_ground_ray)
 		ground.append(vehicle.to_local(hit.position).y if not hit.is_empty() else _ground_rest)
-	var front := (ground[0] + ground[1]) * 0.5
-	var rear := (ground[2] + ground[3]) * 0.5
+	var sink := float(vehicle.load_kg) * SINK_PER_KG
+	var share := _rear_share()
+	var front := (ground[0] + ground[1]) * 0.5 - sink * (1.0 - share)
+	var rear: float = (ground[2] + ground[3]) * 0.5 - sink * share
 	var target := Vector3(atan2(front - rear, WHEEL_SPOTS[2].z - WHEEL_SPOTS[0].z),
 		(front + rear) * 0.5 - _ground_rest,
 		atan2((ground[1] + ground[3]) * 0.5 - (ground[0] + ground[2]) * 0.5,
@@ -1161,6 +1394,15 @@ func _follow_ground(delta: float) -> void:
 	_tilt = _tilt.lerp(target, 1.0 - exp(-delta * TILT_RATE))
 	transform = Transform3D(Basis.from_euler(Vector3(_tilt.x + _rock, 0.0, _tilt.z)),
 		Vector3(0.0, _tilt.y, 0.0))
+	var hold := vehicle.get_node_or_null("Hold") as Node3D
+	if hold != null:
+		hold.transform = transform
+
+
+## How much of the load's weight the rear axle carries, by where the load stands between the
+## axles (step 2e): all of it over the rear axle, none over the front.
+func _rear_share() -> float:
+	return (float(vehicle.load_z) - WHEEL_SPOTS[0].z) / (WHEEL_SPOTS[2].z - WHEEL_SPOTS[0].z)
 
 
 func settle() -> void:
@@ -1255,6 +1497,135 @@ func clear_crack() -> void:
 	_glass.set_shader_parameter("crack_amount", 0.0)
 
 
+## A steel hasp across the rear doors where they meet, just under the handle, each half on its
+## own door, and the shipper's bolt seal through it once the van is sealed (step 2e-3): a yellow
+## coated steel bolt and its barrel cap, as ISO 17712 high-security seals are made.
+func _hasp() -> void:
+	var steel := Build.material(Color(0.42, 0.43, 0.45), 0.4)
+	steel.metallic = 0.8
+	var point: Vector3 = vehicle.call("seal_point")
+	var across := vehicle.global_basis.x.normalized()
+	var back := vehicle.global_basis.z.normalized()
+	for index in range(2):
+		var door := _rear_doors[index]
+		var side := -1.0 if index == 0 else 1.0
+		var at := door.to_local(point + across * side * 0.03 - back * 0.012)
+		Build.box(door, at, Vector3(0.05, 0.07, 0.008), steel).name = "Hasp"
+	_bolt_seal = Node3D.new()
+	_bolt_seal.name = "BoltSeal"
+	_rear_doors[1].add_child(_bolt_seal)
+	_bolt_seal.position = _rear_doors[1].to_local(point)
+	var yellow := Build.material(Color(0.95, 0.78, 0.05), 0.45)
+	var bolt := Build.cylinder(_bolt_seal, Vector3.ZERO, 0.004, 0.085, yellow)
+	bolt.rotation.z = PI / 2.0
+	var cap := Build.cylinder(_bolt_seal, Vector3(0.05, 0.0, 0.0), 0.0095, 0.03, yellow)
+	cap.rotation.z = PI / 2.0
+	Build.box(_bolt_seal, Vector3(-0.045, -0.018, 0.0), Vector3(0.008, 0.035, 0.026), yellow)
+	_bolt_seal.visible = false
+
+
+## The rear doors' hinges, two a door above and below its tail lamp, as a Daily's 270-degree
+## doors hang (#252): each door turns about a pin out beyond its own edge, so that it can fold
+## flat against the side, and a compact arm on the door runs from its edge round to the pin,
+## where a bracket on the body's rear corner holds the pin's barrel; each in the finish of the
+## door where it sits, the white paint above, the black trim below (#261, `build_van_hinges.py`).
+func _rear_hinges(art: Node3D) -> void:
+	var made := HINGES.instantiate() as Node3D
+	for index in range(_rear_doors.size()):
+		var door := _rear_doors[index]
+		var side := "L" if index == 0 else "R"
+		for hinge in range(HINGE_HEIGHTS.size()):
+			var height := HINGE_HEIGHTS[hinge]
+			var level := "Upper" if hinge > 0 else ""
+			var bracket_mesh := (made.get_node("HingeBracket%s%s" % [level, side])
+				as MeshInstance3D).mesh
+			var arm := MeshInstance3D.new()
+			arm.mesh = (made.get_node("HingeArm%s%s" % [level, side]) as MeshInstance3D).mesh
+			arm.name = "HingeArm%d" % hinge
+			arm.position = Vector3(0.0, height - door.position.y, 0.0)
+			door.add_child(arm)
+			var bracket := MeshInstance3D.new()
+			bracket.mesh = bracket_mesh
+			bracket.name = "HingeBracket%d_%d" % [index, hinge]
+			bracket.position = Vector3(door.position.x, height, door.position.z)
+			art.add_child(bracket)
+	made.free()
+
+
+## Whether both rear doors have room to swing their 270 degrees round to the van's sides,
+## sampled every 30 degrees along each one's arc: nothing of the world's in the way, such as a
+## wall, a post or the dock, the van's own bodies left out.
+func rear_swing_clear() -> bool:
+	var space := get_world_3d().direct_space_state
+	var query := PhysicsShapeQueryParameters3D.new()
+	var box := BoxShape3D.new()
+	query.shape = box
+	query.collision_mask = 1
+	var own: Array[RID] = [vehicle.get_rid()]
+	for body in vehicle.find_children("*", "CollisionObject3D", true, false):
+		own.append((body as CollisionObject3D).get_rid())
+	query.exclude = own
+	for index in range(_rear_doors.size()):
+		var door := _rear_doors[index]
+		var extent := _door_extent(door)
+		box.size = (extent.size - Vector3(0.04, 0.04, 0.0)).max(Vector3.ONE * 0.01)
+		var way := 1.0 if index == 1 else -1.0
+		for step in range(1, SWING_SAMPLES + 1):
+			var angle := way * REAR_SWING * step / SWING_SAMPLES
+			query.transform = door.get_parent().global_transform * Transform3D(
+				Basis(Vector3.UP, angle), door.position) * Transform3D(Basis.IDENTITY,
+				extent.get_center())
+			if not space.intersect_shape(query, 1).is_empty():
+				return false
+	return true
+
+
+## Rear door `index` (0 left, 1 right), hinged at its origin, for Ethan's hands on it.
+func rear_door(index: int) -> Node3D:
+	return _rear_doors[index]
+
+
+## Rear door `index`'s extent in its own frame.
+func rear_door_extent(index: int) -> AABB:
+	return _door_extent(_rear_doors[index])
+
+
+func _door_extent(door: Node3D) -> AABB:
+	var into := door.global_transform.affine_inverse()
+	var extent := AABB()
+	var first := true
+	var meshes := door.find_children("*", "MeshInstance3D", true, false)
+	if door is MeshInstance3D:
+		meshes.append(door)
+	for found in meshes:
+		var mesh := found as MeshInstance3D
+		if mesh.name.begins_with("Hinge"):
+			continue
+		var part: AABB = into * mesh.global_transform * mesh.get_aabb()
+		extent = part if first else extent.merge(part)
+		first = false
+	return extent
+
+
+## The rear doors swing round to lie against the sides, the right one first, then the left,
+## as a driver opens a Daily's: each about 270 degrees on its long hinges.
+func _swing_rear_doors(delta: float) -> void:
+	_bolt_seal.visible = bool(vehicle.get("sealed"))
+	var by_hand: Array[float] = vehicle.call("rear_door_angles")
+	if not by_hand.is_empty():
+		_rear_doors[0].rotation.y = -by_hand[0]
+		_rear_doors[1].rotation.y = by_hand[1]
+		_rear_open = 1.0 if by_hand[0] >= REAR_SWING - 0.01 and by_hand[1] >= REAR_SWING - 0.01 \
+			else 0.0
+		return
+	_rear_open = move_toward(_rear_open, 1.0 if vehicle.rear_doors_open else 0.0,
+		delta / REAR_DOOR_SECONDS)
+	_rear_doors[1].rotation.y = REAR_SWING * smoothstep(0.0, 1.0, clampf(_rear_open * 2.0, 0.0,
+		1.0))
+	_rear_doors[0].rotation.y = -REAR_SWING * smoothstep(0.0, 1.0, clampf(_rear_open * 2.0 - 1.0,
+		0.0, 1.0))
+
+
 func update_vehicle(delta: float) -> void:
 	_rock_speed += (-ROCK_STIFFNESS * _rock - ROCK_DAMPING * _rock_speed) * delta
 	_rock += _rock_speed * delta
@@ -1284,6 +1655,7 @@ func update_vehicle(delta: float) -> void:
 				"lowered", lowered)
 	_door.rotation.y = -vehicle.driver_door * DOOR_SWING
 	_door_glass.rotation.y = _door.rotation.y
+	_swing_rear_doors(delta)
 	_light_the_cab(delta)
 	if vehicle.engine_on != _screens_on:
 		_power_screens(vehicle.engine_on)
@@ -1299,21 +1671,22 @@ func update_vehicle(delta: float) -> void:
 			_aim_beam(headlight, _high_beams_shown)
 	_light_the_rain()
 	for lens in _front_lenses:
-		lens.material_override = _lens_on if vehicle.headlights_on else null
+		_light_lens(lens, vehicle.headlights_on, vehicle.headlights_on and vehicle.high_beams)
 	var reversing: bool = vehicle.gear < 0 and vehicle.engine_on
-	_reverse_lenses.visible = reversing
+	_lamp.set_shader_parameter("reverse", 1.0 if reversing else 0.0)
 	for lamp in _reverse_lights:
 		lamp.visible = reversing
-	for lamp in _rear_lamps:
-		lamp.material_override = (_red if vehicle.braking else _tail) if vehicle.engine_on else null
+	_lamp.set_shader_parameter("red", (STOP_LENS if vehicle.braking else TAIL_LENS)
+		if vehicle.engine_on else 0.0)
 	for glow in _tail_glow:
 		glow.visible = vehicle.engine_on
 		glow.light_energy = TAIL_GLOW.y if vehicle.braking else TAIL_GLOW.x
 	for index in range(_indicators.size()):
-		var side := -1 if index < 2 else 1
+		var side := -1 if index == 0 else 1
 		var lit: bool = vehicle.indicator_lit and (
 			vehicle.hazards_on or vehicle.indicator == side)
 		_indicators[index].material_override = _amber if lit else null
+		_lamp.set_shader_parameter("amber_left" if side < 0 else "amber_right", 1.0 if lit else 0.0)
 	for index in range(_tires.size()):
 		_tires[index].rotation.y = vehicle.steering * 0.4 if index % 2 == 0 else 0.0
 		_tires[index].rotation.x -= vehicle.actual_speed * delta / TYRE_RADIUS
@@ -1337,6 +1710,10 @@ func update_vehicle(delta: float) -> void:
 		Vector2.ZERO)
 	_roof_water.step(delta, ROOF_SLOPE, Vector2(0.0, -ROOF_AIR * moving), Vector2.ZERO)
 	_glass.set_shader_parameter("speed", moving)
+	var most := _blob_most(moving)
+	_glass.set_shader_parameter("blob_most", most)
+	_glass.set_shader_parameter("patch_height", most * 2.0)
+	_catch_lamps()
 	_glass.set_shader_parameter("drop_travel", _windshield_water.travel)
 	_glass.set_shader_parameter("drop_speed", _windshield_water.speed)
 	_glass.set_shader_parameter("runner_speed", _windshield_water.runner_speed)
@@ -1359,6 +1736,7 @@ func update_vehicle(delta: float) -> void:
 	roof.set_shader_parameter("runner_travel", _roof_water.runner_travel)
 	roof.set_shader_parameter("runner_speed", _roof_water.runner_speed)
 	reverse_screen.visible = vehicle.gear < 0 and _screens_on
+	_follow_gear()
 	for index in range(mirror_cameras.size()):
 		mirror_cameras[index].global_transform = _mirror_frames[index].global_transform \
 			* mirror_poses[index]
@@ -1372,7 +1750,7 @@ func update_vehicle(delta: float) -> void:
 			_mirror_clock[index] = maxf(_mirror_clock[index] - 1.0 / MIRROR_RATES[index], 0.0)
 			mirrors[index].render_target_update_mode = SubViewport.UPDATE_ONCE
 			mirror_updates[index] += 1
-	if vehicle.gear >= 0:
+	if vehicle.gear >= 0 or rear_camera.current:
 		_reverse_clock = 0.0
 		return
 	_reverse_clock += delta

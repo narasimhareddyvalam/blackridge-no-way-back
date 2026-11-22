@@ -1,6 +1,13 @@
 extends Control
 
 const SIZE := Vector2(768, 400)
+## The ringing phone (Assignment 7, CHANGE-BRIEF.md §1-3): the sheet, sliced as the brief says,
+## and its clip, a resource; drawn on the call card where its caller's circle sits.
+const RING_SHEET = preload("art/ring/phone_ring.png")
+const RING_CLIPS = preload("res://animations/phone_ring.tres")
+const RING_GRID := Vector2i(6, 1)
+const RING_SCALE := 0.75
+const RING_AT := Vector2(40, 38)
 const RAIL := 72.0
 const MAP := Rect2(72, 0, 696, 400)
 const VAN_AT := Vector2(0.62, 0.76)
@@ -66,8 +73,10 @@ var _start := 0
 var _depot_at := Vector2.ZERO
 var _since_draw: float = 0.0
 var _wrong_for: float = 0.0
-var _clock: float = 0.0
 var _fonts := {}
+## The ringing phone's sprite and its player: this script is their one authority.
+var ring_icon: Sprite2D
+var ring_player: AnimationPlayer
 
 
 func _ready() -> void:
@@ -76,6 +85,22 @@ func _ready() -> void:
 		font.font_names = PackedStringArray(["SF Pro Text", "SF Pro", "Helvetica Neue", "Arial"])
 		font.font_weight = weight
 		_fonts[weight] = font
+	ring_icon = Sprite2D.new()
+	ring_icon.name = "RingIcon"
+	ring_icon.texture = RING_SHEET
+	ring_icon.hframes = RING_GRID.x
+	ring_icon.vframes = RING_GRID.y
+	ring_icon.frame = 0
+	ring_icon.scale = Vector2.ONE * RING_SCALE
+	ring_icon.position = MAP.position + Vector2(MARGIN, 112) + RING_AT
+	ring_icon.modulate = INK
+	ring_icon.visible = false
+	add_child(ring_icon)
+	ring_player = AnimationPlayer.new()
+	ring_player.name = "RingPlayer"
+	ring_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_IDLE
+	ring_player.add_animation_library("", RING_CLIPS)
+	add_child(ring_player)
 
 
 func follow(road: RefCounted, depot: Vector3, start: Vector3) -> void:
@@ -128,13 +153,26 @@ func end_call() -> void:
 
 
 func _process(delta: float) -> void:
-	_clock += delta
+	_drive_ring()
 	_since_draw += delta
 	if _since_draw < REDRAW or not is_instance_valid(vehicle) or _flat.is_empty():
 		return
 	_track(_since_draw)
 	_since_draw = 0.0
 	queue_redraw()
+
+
+## The ring's one authority: the handset plays its cycle while a call rings or answers itself
+## (`call_state`, `call_seconds`), on the call card's disc, and is stopped and hidden otherwise.
+func _drive_ring() -> void:
+	var ringing := caller != "" and call_state in ["ringing", "auto"] and call_seconds < 0.0 \
+		and is_instance_valid(vehicle) and route_index >= 0
+	if ringing and not ring_player.is_playing():
+		ring_icon.visible = true
+		ring_player.play("ring")
+	elif not ringing and (ring_player.is_playing() or ring_icon.visible):
+		ring_player.stop()
+		ring_icon.visible = false
 
 
 func _track(delta: float) -> void:
@@ -296,9 +334,9 @@ func _draw_call_card() -> void:
 		_text(at + Vector2(48, 30), "Missed call · " + caller.capitalize(), 16, INK, 600)
 		return
 	_card(Rect2(at, Vector2(CARD_WIDTH, 76)))
-	var pulse := 1.0 + 0.12 * sin(_clock * 8.0) if call_seconds < 0.0 else 1.0
-	draw_circle(at + Vector2(40, 38), 24.0 * pulse, Color("3a4a5c"))
-	_centred(at + Vector2(40, 46), caller.substr(0, 1), 22, INK, 600)
+	draw_circle(at + RING_AT, 24.0, Color("3a4a5c"))
+	if not ring_icon.visible:
+		_centred(at + Vector2(40, 46), caller.substr(0, 1), 22, INK, 600)
 	_text(at + Vector2(76, 34), caller.capitalize(), 21, INK, 700)
 	if call_seconds >= 0.0:
 		_text(at + Vector2(76, 58), "Hands-free · %02d:%02d" % [int(call_seconds) / 60,

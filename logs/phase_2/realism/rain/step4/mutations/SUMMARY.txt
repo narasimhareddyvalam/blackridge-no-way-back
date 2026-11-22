@@ -1,0 +1,42 @@
+h1  the beams' rain moving with the van test_headlights.gd exit 1, 26/32 passed; 6 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: Rain falls through the beams: world-space drops 20 m and more ahead of the van, drawn as a camera sees them an
+      FAIL: No rain falls in the dark with the lights off
+h2  rain only 12 m out             test_headlights.gd exit 1, 27/32 passed; 5 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: Rain falls through the beams: world-space drops 20 m and more ahead of the van, drawn as a camera sees them an
+h3  the rain off the layer the headlights light test_headlights.gd exit 1, 27/32 passed; 5 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: Rain falls through the beams: world-space drops 20 m and more ahead of the van, drawn as a camera sees them an
+h4  rain falling in the dark       test_headlights.gd exit 1, 27/32 passed; 5 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: No rain falls in the dark with the lights off
+h5  no rain stop on the van        test_headlights.gd exit 1, 27/32 passed; 5 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: The van's body and glass stop the rain it drives into
+h6  no light thrown back toward the lamps test_headlights.gd exit 1, 27/32 passed; 5 failed
+      FAIL: High beams are UMTRI-2001-19's measured US high beam with the low beam still lit, within 20% ((1.0, 0.0) 0/0 c
+      FAIL: High beams are as much brighter as the measured lamps: 0 cd at their brightest against the low beam's 1, energ
+      FAIL: The low beam is UMTRI-2004-23's measured US low beam, within 20% at its test points ((1.0, -1.0) 1/0 cd, (0.0,
+      FAIL: The low beams are aimed as UN Regulation 48 allows lamps 0.91 m up: the cutoff 2.19% down (1.25 degrees below 
+      FAIL: Rain falls through the beams: world-space drops 20 m and more ahead of the van, drawn as a camera sees them an
+h7  the lamps' rain throwing nothing back test_lamp_rain_config.gd exit 1, 587/588 passed; 1 failed
+      FAIL: LampRainPost/LampRain material back_scatter = 0.3 (found 0.0)
+h8  an oncoming van's beams not lighting the rain test_oncoming_van.gd exit 1, 20/21 passed; 1 failed
+      FAIL: Its beams light the rain in front of the player (0.0)
+Note: h1-h6 also fail four headlight-photometry checks in the mutation clone only, because the clone holds game/ alone and those checks read measured-lamp tables outside it; each mutation fails the beams' rain check it targets.

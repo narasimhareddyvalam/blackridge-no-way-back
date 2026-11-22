@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b7/game/features/missions/last_run/last_run.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/last_run.gd	2026-11-21 19:50:48
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b7/game/features/missions/last_run/last_run.gd	2026-11-21 19:55:23
+@@ -144,7 +144,6 @@
+ 		ambush = null
+ 	var config := start_progress()
+ 	config.set_value("run", "stage", stage)
+-	checkpoint_reached.emit(config)
+ 	_update_objective()
+ 	return PHONE_NOTE
+ 

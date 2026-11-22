@@ -1,0 +1,111 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_animation_edges.gd:44)
+FAIL: EDGE frame 0-1, W (boarding at frame -): ignored: moved 0.370 m, boarding ran on to frame 2.5, seated true
+FAIL: EDGE frame 0-1, E (boarding at frame -): ignored: moved 0.370 m, boarding ran on to frame 2.5, seated true
+PASS: EDGE frame 0-1, R (boarding at frame -): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 0-1, Esc (boarding at frame -): paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 2.0; seated true
+PASS: EDGE frame 0, W (boarding at frame 0.0): ignored: moved 0.000 m, boarding ran on to frame 9.0, seated true
+PASS: EDGE frame 0, E (boarding at frame 0.0): ignored: moved 0.000 m, boarding ran on to frame 9.0, seated true
+PASS: EDGE frame 0, R (boarding at frame 0.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 0, Esc (boarding at frame 0.0): paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 2.0; seated true
+PASS: EDGE frame 0+1, W (boarding at frame 1.0): ignored: moved 0.000 m, boarding ran on to frame 10.5, seated true
+PASS: EDGE frame 0+1, E (boarding at frame 1.0): ignored: moved 0.000 m, boarding ran on to frame 10.5, seated true
+PASS: EDGE frame 0+1, R (boarding at frame 1.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 0+1, Esc (boarding at frame 1.0): paused: frozen at frame 1.5, door 0.000 for 30 ticks true; resumed true at frame 3.5; seated true
+PASS: EDGE frame 32-1, W (boarding at frame 31.0): ignored: moved 0.000 m, boarding ran on to frame 40.5, seated true
+PASS: EDGE frame 32-1, E (boarding at frame 31.0): ignored: moved 0.000 m, boarding ran on to frame 40.5, seated true
+PASS: EDGE frame 32-1, R (boarding at frame 31.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 32-1, Esc (boarding at frame 31.0): paused: frozen at frame 31.5, door 0.000 for 30 ticks true; resumed true at frame 33.5; seated true
+PASS: EDGE frame 32, W (boarding at frame 32.0): ignored: moved 0.000 m, boarding ran on to frame 41.5, seated true
+PASS: EDGE frame 32, E (boarding at frame 32.0): ignored: moved 0.000 m, boarding ran on to frame 41.5, seated true
+PASS: EDGE frame 32, R (boarding at frame 32.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 32, Esc (boarding at frame 32.0): paused: frozen at frame 32.5, door 0.003 for 30 ticks true; resumed true at frame 34.5; seated true
+PASS: EDGE frame 32+1, W (boarding at frame 33.0): ignored: moved 0.000 m, boarding ran on to frame 42.5, seated true
+PASS: EDGE frame 32+1, E (boarding at frame 33.0): ignored: moved 0.000 m, boarding ran on to frame 42.5, seated true
+PASS: EDGE frame 32+1, R (boarding at frame 33.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 32+1, Esc (boarding at frame 33.0): paused: frozen at frame 33.5, door 0.025 for 30 ticks true; resumed true at frame 35.5; seated true
+PASS: EDGE frame 48-1, W (boarding at frame 47.0): ignored: moved 0.000 m, boarding ran on to frame 56.5, seated true
+PASS: EDGE frame 48-1, E (boarding at frame 47.0): ignored: moved 0.000 m, boarding ran on to frame 56.5, seated true
+PASS: EDGE frame 48-1, R (boarding at frame 47.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 48-1, Esc (boarding at frame 47.0): paused: frozen at frame 47.5, door 0.997 for 30 ticks true; resumed true at frame 49.5; seated true
+PASS: EDGE frame 48, W (boarding at frame 48.0): ignored: moved 0.000 m, boarding ran on to frame 57.5, seated true
+PASS: EDGE frame 48, E (boarding at frame 48.0): ignored: moved 0.000 m, boarding ran on to frame 57.5, seated true
+PASS: EDGE frame 48, R (boarding at frame 48.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 48, Esc (boarding at frame 48.0): paused: frozen at frame 48.5, door 1.000 for 30 ticks true; resumed true at frame 50.5; seated true
+PASS: EDGE frame 48+1, W (boarding at frame 49.0): ignored: moved 0.000 m, boarding ran on to frame 58.5, seated true
+PASS: EDGE frame 48+1, E (boarding at frame 49.0): ignored: moved 0.000 m, boarding ran on to frame 58.5, seated true
+PASS: EDGE frame 48+1, R (boarding at frame 49.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 48+1, Esc (boarding at frame 49.0): paused: frozen at frame 49.5, door 1.000 for 30 ticks true; resumed true at frame 51.5; seated true
+FAIL: EDGE frame 60-1, W (boarding at frame 59.0): ignored: moved 0.000 m, boarding ran on to frame 6.5, seated true
+FAIL: EDGE frame 60-1, E (boarding at frame 59.0): ignored: moved 0.000 m, boarding ran on to frame 6.5, seated true
+PASS: EDGE frame 60-1, R (boarding at frame 59.0): recovered: seated true, boarding over true, door 0.00
+FAIL: EDGE frame 60-1, Esc (boarding at frame 59.0): paused: frozen at frame 59.5, door 1.000 for 30 ticks false; resumed true at frame 1.5; seated true
+FAIL: EDGE frame 60, W (boarding at frame 60.0): ignored: moved 0.000 m, boarding ran on to frame 7.5, seated true
+FAIL: EDGE frame 60, E (boarding at frame 60.0): ignored: moved 0.000 m, boarding ran on to frame 7.5, seated true
+PASS: EDGE frame 60, R (boarding at frame 60.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 60, Esc (boarding at frame 60.0): paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 1.5; seated true
+FAIL: EDGE frame 60+1, W (boarding at frame 61.0): ignored: moved 0.000 m, boarding ran on to frame 8.5, seated true
+FAIL: EDGE frame 60+1, E (boarding at frame 61.0): ignored: moved 0.140 m, boarding ran on to frame 79.0, seated false
+PASS: EDGE frame 60+1, R (boarding at frame 61.0): recovered: seated true, boarding over true, door 0.00
+PASS: EDGE frame 60+1, Esc (boarding at frame 61.0): paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 1.5; seated true
+TABLE: boundary offset interrupt | state at the input, clip frame | result
+TABLE: frame 0-1, W | boarding, - | ignored: moved 0.370 m, boarding ran on to frame 2.5, seated true
+TABLE: frame 0-1, E | boarding, - | ignored: moved 0.370 m, boarding ran on to frame 2.5, seated true
+TABLE: frame 0-1, R | boarding, - | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 0-1, Esc | boarding, - | paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 2.0; seated true
+TABLE: frame 0, W | boarding, 0.0 | ignored: moved 0.000 m, boarding ran on to frame 9.0, seated true
+TABLE: frame 0, E | boarding, 0.0 | ignored: moved 0.000 m, boarding ran on to frame 9.0, seated true
+TABLE: frame 0, R | boarding, 0.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 0, Esc | boarding, 0.0 | paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 2.0; seated true
+TABLE: frame 0+1, W | boarding, 1.0 | ignored: moved 0.000 m, boarding ran on to frame 10.5, seated true
+TABLE: frame 0+1, E | boarding, 1.0 | ignored: moved 0.000 m, boarding ran on to frame 10.5, seated true
+TABLE: frame 0+1, R | boarding, 1.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 0+1, Esc | boarding, 1.0 | paused: frozen at frame 1.5, door 0.000 for 30 ticks true; resumed true at frame 3.5; seated true
+TABLE: frame 32-1, W | boarding, 31.0 | ignored: moved 0.000 m, boarding ran on to frame 40.5, seated true
+TABLE: frame 32-1, E | boarding, 31.0 | ignored: moved 0.000 m, boarding ran on to frame 40.5, seated true
+TABLE: frame 32-1, R | boarding, 31.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 32-1, Esc | boarding, 31.0 | paused: frozen at frame 31.5, door 0.000 for 30 ticks true; resumed true at frame 33.5; seated true
+TABLE: frame 32, W | boarding, 32.0 | ignored: moved 0.000 m, boarding ran on to frame 41.5, seated true
+TABLE: frame 32, E | boarding, 32.0 | ignored: moved 0.000 m, boarding ran on to frame 41.5, seated true
+TABLE: frame 32, R | boarding, 32.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 32, Esc | boarding, 32.0 | paused: frozen at frame 32.5, door 0.003 for 30 ticks true; resumed true at frame 34.5; seated true
+TABLE: frame 32+1, W | boarding, 33.0 | ignored: moved 0.000 m, boarding ran on to frame 42.5, seated true
+TABLE: frame 32+1, E | boarding, 33.0 | ignored: moved 0.000 m, boarding ran on to frame 42.5, seated true
+TABLE: frame 32+1, R | boarding, 33.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 32+1, Esc | boarding, 33.0 | paused: frozen at frame 33.5, door 0.025 for 30 ticks true; resumed true at frame 35.5; seated true
+TABLE: frame 48-1, W | boarding, 47.0 | ignored: moved 0.000 m, boarding ran on to frame 56.5, seated true
+TABLE: frame 48-1, E | boarding, 47.0 | ignored: moved 0.000 m, boarding ran on to frame 56.5, seated true
+TABLE: frame 48-1, R | boarding, 47.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 48-1, Esc | boarding, 47.0 | paused: frozen at frame 47.5, door 0.997 for 30 ticks true; resumed true at frame 49.5; seated true
+TABLE: frame 48, W | boarding, 48.0 | ignored: moved 0.000 m, boarding ran on to frame 57.5, seated true
+TABLE: frame 48, E | boarding, 48.0 | ignored: moved 0.000 m, boarding ran on to frame 57.5, seated true
+TABLE: frame 48, R | boarding, 48.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 48, Esc | boarding, 48.0 | paused: frozen at frame 48.5, door 1.000 for 30 ticks true; resumed true at frame 50.5; seated true
+TABLE: frame 48+1, W | boarding, 49.0 | ignored: moved 0.000 m, boarding ran on to frame 58.5, seated true
+TABLE: frame 48+1, E | boarding, 49.0 | ignored: moved 0.000 m, boarding ran on to frame 58.5, seated true
+TABLE: frame 48+1, R | boarding, 49.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 48+1, Esc | boarding, 49.0 | paused: frozen at frame 49.5, door 1.000 for 30 ticks true; resumed true at frame 51.5; seated true
+TABLE: frame 60-1, W | boarding, 59.0 | ignored: moved 0.000 m, boarding ran on to frame 6.5, seated true
+TABLE: frame 60-1, E | boarding, 59.0 | ignored: moved 0.000 m, boarding ran on to frame 6.5, seated true
+TABLE: frame 60-1, R | boarding, 59.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 60-1, Esc | boarding, 59.0 | paused: frozen at frame 59.5, door 1.000 for 30 ticks false; resumed true at frame 1.5; seated true
+TABLE: frame 60, W | boarding, 60.0 | ignored: moved 0.000 m, boarding ran on to frame 7.5, seated true
+TABLE: frame 60, E | boarding, 60.0 | ignored: moved 0.000 m, boarding ran on to frame 7.5, seated true
+TABLE: frame 60, R | boarding, 60.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 60, Esc | boarding, 60.0 | paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 1.5; seated true
+TABLE: frame 60+1, W | boarding, 61.0 | ignored: moved 0.000 m, boarding ran on to frame 8.5, seated true
+TABLE: frame 60+1, E | boarding, 61.0 | ignored: moved 0.140 m, boarding ran on to frame 79.0, seated false
+TABLE: frame 60+1, R | boarding, 61.0 | recovered: seated true, boarding over true, door 0.00
+TABLE: frame 60+1, Esc | boarding, 61.0 | paused: frozen at frame 0.0, door 0.000 for 30 ticks true; resumed true at frame 1.5; seated true
+ANIMATION EDGES RESULT: 39/48 passed; 9 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

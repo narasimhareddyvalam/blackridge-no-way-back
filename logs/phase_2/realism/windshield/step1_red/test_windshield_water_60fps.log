@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_windshield_water.gd:40)
+FAIL: W1: the windshield's shader takes the soak and its blobs (missing ["soak_mask", "blob_most", "blob_lens"])
+FAIL: W2: on the glass's rake a still drop holds just below 0.00 mm and slides just above it (between 2 and 8 mm)
+FAIL: W3: the blobs grow to that size and no further (0.00 mm), then run
+FAIL: W4: each blob shows an inverted image of 8 degrees of the scene behind it from the driver's eye (lens 0.0000 of the screen, wanted 0.0464)
+FAIL: W5: the soak is a second wipe map that the blades wipe as they do the first, filling over 0.0 s: at least 90% by 20 s, no more than 60% by 6 s
+WINDSHIELD WATER RESULT: 0/5 passed; 5 failed
+WARNING: 35 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

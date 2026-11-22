@@ -1,0 +1,160 @@
+14:38:30 | INFO: Data are loaded, start creating Blender stuff
+14:38:30 | INFO: Blender create Mesh node Garage_doors_N240118:______3_lambert2_0
+14:38:30 | INFO: Blender create Mesh node Garage_doors_N240118:______3_lambert2_0.001
+14:38:30 | INFO: Blender create Mesh node pCube4_lambert4_0
+14:38:30 | INFO: Blender create Mesh node pCube5_lambert4_0
+14:38:30 | INFO: Blender create Mesh node pCube6_lambert4_0
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert1_0
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pPlane1_blinn1_0
+14:38:30 | INFO: Blender create Mesh node pPlane2_blinn1_0
+14:38:30 | INFO: glTF import finished in 0.15s
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+14:38:30 | INFO: Starting glTF 2.0 export
+14:38:30 | INFO: Extracting primitive: Garage_doors_N240118:______3_lambert2_0
+14:38:30 | INFO: Primitives created: 3
+14:38:30 | INFO: Finished glTF 2.0 export in 0.00924372673034668 s
+
+CONVERTED dock_door: 5341 triangles, 2.74 x 0.11 x 3.05 m, 3 materials, images [(1024, 1024)], 355.4 kB
+14:38:30 | INFO: Data are loaded, start creating Blender stuff
+14:38:30 | INFO: Blender create Mesh node pCube1_lambert2_0.001
+14:38:30 | INFO: Blender create Mesh node pCube2_lambert3_0
+14:38:30 | INFO: Blender create Mesh node pCube3_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube3_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube4_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube4_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube5_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube5_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube6_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube6_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert5_0.001
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert6_0.001
+14:38:30 | INFO: Blender create Mesh node pCube8_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube8_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube9_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube9_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube10_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube10_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube11_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube11_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube12_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube12_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube13_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube13_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube14_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube14_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube15_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube15_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube16_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube16_lambert6_0
+14:38:30 | INFO: glTF import finished in 0.01s
+14:38:30 | INFO: Starting glTF 2.0 export
+14:38:30 | INFO: Extracting primitive: pCube1_lambert2_0.001
+14:38:30 | INFO: Primitives created: 4
+14:38:30 | INFO: Finished glTF 2.0 export in 0.003554105758666992 s
+
+CONVERTED dock_seal: 556 triangles, 3.81 x 0.46 x 3.62 m, 4 materials, images [], 40.6 kB
+14:38:30 | INFO: Data are loaded, start creating Blender stuff
+14:38:30 | INFO: Blender create Mesh node pCube1_lambert2_0
+14:38:30 | INFO: Blender create Mesh node pCube2_lambert2_0
+14:38:30 | INFO: Blender create Mesh node pCube3_lambert2_0
+14:38:30 | INFO: Blender create Mesh node pCube4_lambert2_0
+14:38:30 | INFO: Blender create Mesh node pCube6_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube7_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube8_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube9_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube10_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube11_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube12_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube13_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube14_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube15_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube16_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube17_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube18_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube19_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube20_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube21_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube22_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube23_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube24_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube25_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube26_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube27_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube28_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube29_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube30_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube31_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube32_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube33_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube34_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube35_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube36_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube37_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube38_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube39_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube40_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube41_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube42_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube43_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube44_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube45_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube46_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube47_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube48_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube49_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube50_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube51_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube52_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube53_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube54_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube55_lambert1_0
+14:38:30 | INFO: Blender create Mesh node pCube55_lambert4_0
+14:38:30 | INFO: Blender create Mesh node pCube55_lambert5_0
+14:38:30 | INFO: Blender create Mesh node pCube55_lambert6_0
+14:38:30 | INFO: Blender create Mesh node pCube58_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube59_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube60_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube61_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube62_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube63_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube64_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube65_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube66_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube67_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube68_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube69_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube71_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube72_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube73_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube74_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube75_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube76_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube77_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube78_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube79_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube80_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube81_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube82_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCube83_lambert2_0
+14:38:30 | INFO: Blender create Mesh node pCylinder1_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder5_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder6_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder9_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder10_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder11_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pCylinder12_lambert3_0
+14:38:30 | INFO: Blender create Mesh node pGear1_lambert7_0
+14:38:30 | INFO: Blender create Mesh node pGear2_lambert7_0
+14:38:30 | INFO: glTF import finished in 0.03s
+14:38:30 | INFO: Starting glTF 2.0 export
+14:38:30 | INFO: Extracting primitive: pCube1_lambert2_0
+14:38:30 | INFO: Primitives created: 7
+14:38:30 | INFO: Finished glTF 2.0 export in 0.009948015213012695 s
+
+CONVERTED dock_leveller: 9187 triangles, 2.47 x 2.54 x 0.69 m, 7 materials, images [(512, 128), (512, 256)], 481.2 kB
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

@@ -1,0 +1,4 @@
+60c60
+< const LIMITS := [["limit_45_weathered", 8, 1.0, true], ["limit_45", 995, 1.0, false]]
+---
+> const LIMITS := [["limit_45_weathered", 30, 1.0, true], ["limit_45", 995, 1.0, false]]

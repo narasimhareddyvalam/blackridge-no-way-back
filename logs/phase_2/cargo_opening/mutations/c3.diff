@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/opening_cutscene.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c3/game/features/missions/the_wrong_cargo/opening_cutscene.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/opening_cutscene.gd	2026-11-21 18:23:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c3/game/features/missions/the_wrong_cargo/opening_cutscene.gd	2026-11-21 18:24:34
+@@ -8,7 +8,7 @@
+ ## sweeping down to the cab. Each cut dips through black; each place is worked out from the van.
+ 
+ const CARD := ["DAYS LATER", "BLACKRIDGE FREIGHT DEPOT"]
+-const TITLE := ["THE WRONG CARGO", "MISSION TWO"]
++const TITLE := ["BLACKRIDGE: NO WAY BACK", "THE WRONG CARGO"]
+ 
+ 
+ static func _look(eye: Vector3, at: Vector3) -> Transform3D:

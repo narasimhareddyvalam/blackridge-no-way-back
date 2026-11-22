@@ -2,8 +2,15 @@ extends Node3D
 
 const Driver = preload("res://features/characters/driver/driver.gd")
 const Audio = preload("res://features/audio/first_drive/driving_audio.gd")
+const ShedSounds = preload("res://features/environments/industrial_loop/shed_sounds.gd")
 const Mission = preload("res://features/missions/night_freight/first_drive.gd")
 const WrongCargo = preload("res://features/missions/the_wrong_cargo/the_wrong_cargo.gd")
+const SealCutscene = preload("res://features/missions/the_wrong_cargo/seal_cutscene.gd")
+const CutsceneDirector = preload("res://features/cinematics/cutscene_director.gd")
+const Opening = preload("res://features/missions/night_freight/opening_cutscene.gd")
+const Escape = preload("res://features/missions/the_wrong_cargo/escape.gd")
+const CargoOpening = preload("res://features/missions/the_wrong_cargo/opening_cutscene.gd")
+const LastRun = preload("res://features/missions/last_run/last_run.gd")
 const DriveLessons = preload("res://features/ui/driving_hud/drive_lessons.gd")
 const SaveFile = preload("res://shared/save/save_file.gd")
 const Presentation = preload("res://features/vehicles/freight_van/van_presentation.gd")
@@ -20,12 +27,16 @@ const VIEWPOINT_NEAR := 40.0
 const STUCK_HINT := 3.0
 const BOARD_SPOT := Vector3(-2.02, 0.0, -0.51)
 const BOARD_RANGE := 4.5
-const DOOR_GRAB := 1.05
-const REACH_FROM := 0.75
+## EnterVan's frame rate (ethan.glb.import); the boarding moments are its phase table's frames
+## (CHANGE-BRIEF.md §4).
+const CLIP_FPS := 30.0
+const DOOR_GRAB := 32.0 / CLIP_FPS
+const REACH_FROM := 22.0 / CLIP_FPS
 const GRIP_ELBOW := Vector3(-1.85, 0.85, -0.95)
-const DOOR_OPENED := 1.6
-const CUT := 1.75
+const DOOR_OPENED := 48.0 / CLIP_FPS
+const CUT := 62.0 / CLIP_FPS
 const FADE_OUT := 0.25
+const CAUGHT_FADE := 0.5
 const FADE_IN := 0.5
 const IGNITION_DELAY := 0.6
 const EXIT_FROM := 2.6
@@ -35,6 +46,19 @@ const PASSENGER_EXIT := Vector3(1.85, 0.2, -0.72)
 const EXIT_DOOR := 2.26
 const PUSH := Vector2(3.55, 4.35)
 const SLAM := 0.2
+## The shock's shot (C67): its length (inside the 4 s hold), its camera from and to in the van's
+## space (off the front-left, a little above his eyes so it sees over the dash to his hands on
+## the wheel, pushing in a little), the wheel's rim.
+const SHOCK_SECONDS := 3.5
+const SHOCK_FROM := Vector3(-1.05, 1.72, -3.4)
+const SHOCK_TO := Vector3(-0.95, 1.70, -3.15)
+## The share of the wheel's half-width where the rim's tube is held.
+const SHOCK_RIM_SHARE := 0.9
+## Where the shot looks: this far below his eye, between his face and his hands on the wheel.
+const SHOCK_LOOK_DROP := 0.46
+## The dash's glow on his face and hands in the shot (instrument lights at night, cool and dim),
+## in the van's space, in front of him at the instruments' height.
+const SHOCK_GLOW := Vector3(-0.45, 1.42, -1.25)
 const REACH_DOOR := 0.3
 const IMPACT_SPEED := 9.0
 const ENDING_HOLD := 9.0
@@ -52,7 +76,13 @@ const MONTHS: Array[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
 @onready var world: Node3D = $IndustrialLoop
 var driver: CharacterBody3D
 var cargo: Node
+## Mission 3, Last Run (#359): driven through the same calls as Mission 2.
+var run: Node
 var title_camera: Camera3D
+## The dock hand's round to seal the van, shown as a cutscene (#333).
+var seal_cutscene: Node
+## Plays the story's cutscenes in the film look (#357): Mission 1's opening on a fresh start.
+var cutscene: Node
 var _audio: Node
 var _on_title: bool = false
 var _changing: bool = false
@@ -71,6 +101,7 @@ var _signed: bool = false
 var _sheet_token: int = 0
 var _lessons := DriveLessons.new()
 var _walk_from := Vector3.ZERO
+var _document_at := Vector3.ZERO
 var _odometer: float = 0.0
 var _stuck_for: float = 0.0
 var _call_done: bool = false
@@ -98,6 +129,7 @@ func _ready() -> void:
 	route.checkpoint_save_failed.connect(_checkpoint_save_failed)
 	route.drive_completed.connect(_drive_completed)
 	route.struck.connect(_struck)
+	route.came_to_rest.connect(_shock)
 	route.phone_call.ringing.connect(_call_ringing)
 	route.phone_call.missed.connect(_call_missed)
 	route.phone_call.connected.connect(_call_connected)
@@ -110,6 +142,62 @@ func _ready() -> void:
 	cargo.name = "TheWrongCargo"
 	add_child(cargo)
 	cargo.objective_changed.connect(_route_objective)
+	cargo.seal_checked.connect(_show_seal_check)
+	cargo.paper_shown.connect(_show_seal_check)
+	cargo.checkpoint_reached.connect(route.save_progress)
+	cargo.escape_caught.connect(_caught_escaping)
+	cargo.drive_completed.connect(_drive_completed)
+	cargo.road_end = world.road_points[WrongCargo.END_SAMPLE]
+	cargo.text_received.connect(hud.show_text_message)
+	cargo.shed = world.transfer_shed
+	cargo.yard = world.container_yard
+	cargo.compound = world.compound
+	cargo.driver = driver
+	run = LastRun.new()
+	run.name = "LastRun"
+	add_child(run)
+	run.objective_changed.connect(_route_objective)
+	run.checkpoint_reached.connect(route.save_progress)
+	run.driver = driver
+	run.waterfront = world.harbour_flats.waterfront
+	run.airfield = world.harbour_flats.airfield
+	run.convoy_spotted.connect(_spotted_tailing)
+	run.call_now.connect(func(lines: Array) -> void:
+		if not route.phone_call.active:
+			route.phone_call.start("MAYA", lines))
+	run.ambush_caught.connect(_caught_in_ambush)
+	run.paper_shown.connect(_show_seal_check)
+	run.line_spoken.connect(hud.show_subtitle)
+	run.lines_cleared.connect(hud.clear_subtitle)
+	run.text_received.connect(hud.show_text_message)
+	run.stand_ethan.connect(_stand_ethan)
+	run.seat_ethan.connect(_seat_ethan)
+	run.hangar_lost.connect(_lost_in_hangar)
+	run.ending_started.connect(_ending_begins)
+	run.game_finished.connect(_game_finished)
+	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
+	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
+	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
+	var stairs: Array[Dictionary] = [(world.transfer_shed.get("side_door") as Node).call("stair")]
+	driver.set("stairs", stairs)
+	world.transfer_shed.set("driver_eye", van.get_node("VanPresentation").driving_camera)
+	world.compound.set("driver_eye", van.get_node("VanPresentation").driving_camera)
+	var lamps: Array[Light3D] = []
+	for light in world.find_children("*", "Light3D", true, false):
+		if light is SpotLight3D or light is OmniLight3D:
+			lamps.append(light)
+	van.get_node("VanPresentation").set("lamps", lamps)
+	seal_cutscene = SealCutscene.new()
+	seal_cutscene.name = "SealCutscene"
+	add_child(seal_cutscene)
+	seal_cutscene.call("setup", hud, driver, van, world.transfer_shed)
+	cutscene = CutsceneDirector.new()
+	cutscene.name = "CutsceneDirector"
+	add_child(cutscene)
+	run.play_cutscene = func(shots: Array) -> void:
+		cutscene.call("play", shots, hud, driver, van.get_camera())
+	run.cutscene_playing = func() -> bool: return bool(cutscene.get("playing"))
+	cutscene.connect("finished", _opening_done)
 	route.configure(van)
 	_pick_mission()
 	_warn_about_progress()
@@ -117,6 +205,7 @@ func _ready() -> void:
 	_navigation().follow(world.road, Mission.TARGETS[Mission.TARGETS.size() - 1],
 		Mission.START.origin)
 	hud.van_guide.road = world.road_points
+	hud.mission_map.set_world(world.map_roads(), world.map_blocks())
 	hud.van_guide.office = world.office_transform
 	hud.resume_requested.connect(_begin)
 	hud.pause_requested.connect(_toggle_pause)
@@ -187,14 +276,18 @@ func _back_to_title() -> void:
 
 func _pick_mission() -> void:
 	_mission = route
+	cargo.active = false
+	run.active = false
 	if route.handed_on != null:
-		_mission = cargo
-		cargo.configure(van, route.handed_on)
+		var later: String = route.handed_on.get_value("save", "mission", "")
+		_mission = run if later == LastRun.MISSION else cargo
+		_mission.active = true
+		_mission.configure(van, route.handed_on)
 	hud.set_mission(_mission.NAME)
 
 
 func _has_progress() -> bool:
-	return _mission == cargo or route.stage > 0 or route.fleeing
+	return _mission != route or route.stage > 0 or route.fleeing
 
 
 func _reset_session() -> void:
@@ -228,12 +321,42 @@ func _begin() -> void:
 		_begun = true
 		_leave_title()
 		van.recover(_mission.recovery_pose)
+		if _mission.has_method("restore_place"):
+			_mission.call("restore_place")
 		van.foot_on_brake = _mission.fleeing
 		if _has_progress():
 			_continue_in_van()
+			if _mission == cargo and cargo.opening_pending:
+				_play_cargo_opening.call_deferred()
 		else:
 			_begin_on_foot()
+			_play_opening.call_deferred()
 	_resume()
+
+
+## Mission 1's opening cutscene, on a fresh start of Night Freight (#357): only rain under it,
+## the music coming in once play is given back.
+func _play_opening() -> void:
+	if _mission != route or _has_progress() or cutscene == null:
+		return
+	_audio.silence_music()
+	cutscene.call("play", Opening.shots(world, van, driver), hud, driver, driver.get_camera())
+
+
+func _opening_done(_skipped: bool) -> void:
+	if _mission == cargo and cargo.opening_pending:
+		cargo.opening_played()
+		hud.show_text_message(WrongCargo.DISPATCHER, WrongCargo.DISPATCH)
+		return
+	if _mission == route and not van.occupied:
+		_audio.play_music()
+
+
+## Mission 2's opening (step 8), once, when its start is continued from Mission 1's end.
+func _play_cargo_opening() -> void:
+	if cutscene == null or bool(cutscene.get("playing")):
+		return
+	cutscene.call("play", CargoOpening.shots(van), hud, driver, van.get_camera())
 
 
 func _continue_in_van() -> void:
@@ -250,7 +373,10 @@ func _resume() -> void:
 	_set_paused(false)
 
 
+## A new drive: from the title a new game, with its opening; in play (the pause menu, or after
+## the ending) a restart, straight back to the office as a game's restart skips its intro.
 func _new_drive() -> void:
+	var new_game := _on_title
 	_begun = true
 	_leave_title()
 	_ending_token += 1
@@ -261,6 +387,8 @@ func _new_drive() -> void:
 	_restart()
 	_audio.play_music()
 	_begin_on_foot()
+	if new_game:
+		_play_opening()
 
 
 func _struck(speed: float) -> void:
@@ -271,6 +399,60 @@ func _struck(speed: float) -> void:
 	presentation.jolt(strength)
 	presentation.watch_head(route.pedestrian.head_body(), strength)
 	presentation.look_target_node = route.pedestrian.hips_body()
+
+
+## Ethan's shock after the hit (C67, Assignment 7's fourth clip): as the van comes to rest, a shot
+## from outside its front-left, at the windshield's height, looking in through the crack at him in
+## the driver's seat (Shock, his hands closing on the wheel), for SHOCK_SECONDS inside the hold;
+## then the cab's view. It plays once: continuing from the hit's checkpoint starts after it.
+func _shock() -> void:
+	var presentation := van.get_node("VanPresentation")
+	var eye := van.to_global(presentation.get("EYE") as Vector3)
+	var rim := _wheel_rim(presentation.get("_wheel") as MeshInstance3D, eye)
+	driver.call("play_seated", van, eye, rim)
+	var at := eye + Vector3.DOWN * SHOCK_LOOK_DROP
+	var shots := [{"name": "shock", "seconds": SHOCK_SECONDS, "fov": Vector2(37.0, 33.0),
+		"from": _shock_view(van.to_global(SHOCK_FROM), at),
+		"to": _shock_view(van.to_global(SHOCK_TO), at),
+		"lights": [{"colour": Color(0.62, 0.74, 1.0), "energy": 1.6, "range": 1.4,
+			"at": van.to_global(SHOCK_GLOW)}]}]
+	cutscene.call("play", shots, hud, driver, van.get_camera())
+	await cutscene.finished
+	driver.call("end_seated")
+
+
+## Where his hands hold the steering wheel (left, right), at ten to two: the wheel's middle, its
+## disc's facing (its mesh's thinnest axis, toward his eye) and its radius from its mesh; each a
+## point on the rim's tube, where his palm closes (driver.gd puts his wrist behind it).
+func _wheel_rim(wheel: MeshInstance3D, eye: Vector3) -> Array[Vector3]:
+	var box := wheel.get_aabb()
+	var centre := wheel.global_transform * box.get_center()
+	var sizes := PackedFloat32Array([box.size.x, box.size.y, box.size.z])
+	var thin := 0
+	var wide := 0
+	for axis in range(3):
+		if sizes[axis] < sizes[thin]:
+			thin = axis
+		if sizes[axis] > sizes[wide]:
+			wide = axis
+	var unit := [Vector3.RIGHT, Vector3.UP, Vector3.BACK]
+	var facing: Vector3 = (wheel.global_basis.orthonormalized() * (unit[thin] as Vector3)).normalized()
+	if facing.dot(eye - centre) < 0.0:
+		facing = -facing
+	var radius: float = 0.5 * sizes[wide] * wheel.global_basis.get_scale()[wide] * SHOCK_RIM_SHARE
+	var across := van.global_basis.x.normalized()
+	across = (across - facing * across.dot(facing)).normalized()
+	var up := facing.cross(across).normalized()
+	if up.y < 0.0:
+		up = -up
+	var rim: Array[Vector3] = []
+	for side: float in [-1.0, 1.0]:
+		rim.append(centre + (up * 0.5 + across * 0.866 * side) * radius)
+	return rim
+
+
+func _shock_view(eye: Vector3, at: Vector3) -> Transform3D:
+	return Transform3D(Basis.looking_at(at - eye, Vector3.UP), eye)
 
 
 func _call_ringing(caller: String) -> void:
@@ -351,6 +533,7 @@ func _begin_on_foot() -> void:
 func _sign_run_sheet() -> void:
 	_sheet_token += 1
 	var token := _sheet_token
+	_document_at = world.run_sheet_spot
 	hud.show_document(Mission.RUN_SHEET)
 	await get_tree().create_timer(SIGN_DELAY, false).timeout
 	if token != _sheet_token:
@@ -359,6 +542,18 @@ func _sign_run_sheet() -> void:
 	_signed = true
 	_walk_from = driver.global_position
 	hud.set_objective("GET IN THE VAN", "Walk to the driver's door, on the left, and press E.")
+	await get_tree().create_timer(SHEET_HOLD, false).timeout
+	if token == _sheet_token:
+		_close_run_sheet()
+
+
+## Mission 2's seal check (step 2e-3): the bolt's, the cap's and the run sheet's numbers side by
+## side on a sheet, put away with E or after a while, as the run sheet is.
+func _show_seal_check(words: String) -> void:
+	_sheet_token += 1
+	var token := _sheet_token
+	_document_at = driver.global_position
+	hud.show_document(words)
 	await get_tree().create_timer(SHEET_HOLD, false).timeout
 	if token == _sheet_token:
 		_close_run_sheet()
@@ -418,8 +613,8 @@ func _continue_place() -> String:
 
 
 func _last_place() -> String:
-	if _mission == cargo:
-		return cargo.place_reached()
+	if _mission != route:
+		return _mission.place_reached()
 	if route.fleeing:
 		return "Where the van stopped"
 	if route.stage == 0:
@@ -435,8 +630,8 @@ func _last_saved() -> String:
 
 
 func _next_checkpoint() -> String:
-	if _mission == cargo:
-		return cargo.place_next()
+	if _mission != route:
+		return _mission.place_next()
 	return _sentence(Mission.DIRECTIONS[mini(route.stage, Mission.DIRECTIONS.size() - 1)])
 
 
@@ -485,6 +680,99 @@ func _recover() -> void:
 	hud.notify("Van recovered to the last safe checkpoint")
 
 
+## Caught in the escape (Mission 2's step 6): the screen fades and all is as at its start, Ethan
+## in the van at door 3, the guards where they came from, the warning unsent.
+func _caught_escaping() -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	hud.clear_text_message()
+	_enter_van()
+	van.start_engine()
+	cargo.recover()
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("Caught. The guards walked you back to the van.")
+
+
+## Ethan out of the van for a scene (Mission 3's step 4): standing at `at`, facing `toward`.
+func _stand_ethan(at: Vector3, toward: Vector3) -> void:
+	_cancel_boarding()
+	van.occupied = false
+	driver.set_active(true)
+	driver.global_position = _on_ground(at)
+	driver.velocity = Vector3.ZERO
+	var facing := toward - at
+	facing.y = 0.0
+	driver.face(facing.normalized())
+
+
+## Back in the van after a scene.
+func _seat_ethan() -> void:
+	_enter_van()
+
+
+## Seen by the convoy, or lost it (Mission 3's step 5): back at the junction, the convoy ahead.
+func _spotted_tailing(lost: bool) -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	_enter_van()
+	run.call("retry_tail")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("You lost them." if lost else "They saw you. Stay further back.")
+
+
+## Down in the hangar's encounter, or the van heard on the airfield (Mission 3's step 6): the
+## screen fades, Ethan on foot just inside the service gate, the van outside, every man at his post.
+func _lost_in_hangar(heard: bool) -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	run.call("retry_hangar")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("They heard the van. Leave it outside the gate." if heard
+		else "You went down. Back at the gate.")
+
+
+## The game's ending begins (Mission 3's step 8): play stops; the cutscenes and the epilogue run.
+func _ending_begins() -> void:
+	_ending = true
+	van.held = true
+
+
+## The game's end, after the title (Mission 3's step 8): the title screen, as after Mission 1's
+## quiet ending; the save left at Last Run's last checkpoint.
+func _game_finished() -> void:
+	hud.fade(1.0, 0.01)
+	_back_to_title()
+	hud.reveal(TITLE_FADE_IN)
+
+
+## Whether Ethan stands armed on the airfield (Mission 3's step 6): R reloads there.
+func _armed_on_foot() -> bool:
+	return _mission == run and run.encounter != null and bool(run.encounter.call(
+		"armed_on_foot"))
+
+
+## His pistol's rounds, his health and the crosshair while he is armed on foot.
+func _show_combat() -> void:
+	if not _armed_on_foot():
+		hud.hide_combat()
+		return
+	var gun: Node = run.encounter.get("handgun")
+	hud.show_combat(int(gun.get("magazine")), int(gun.get("reserve")), float(run.encounter.get(
+		"health")), bool(driver.get("aiming")), bool(gun.get("reloading")))
+
+
+## Caught in the ambush (Mission 3's step 3): the screen fades, the van is back in berth 2 and the
+## escape begins again, the cutscene not played twice.
+func _caught_in_ambush() -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	_enter_van()
+	van.start_engine()
+	run.call("retry_ambush")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("They boxed you in at the gate.")
+
+
 func _toggle_vsync() -> void:
 	var off := DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_DISABLED
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if off
@@ -495,7 +783,12 @@ func _toggle_vsync() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or _ending or _ended:
 		return
-	if event.is_action_pressed("recover"):
+	if seal_cutscene != null and bool(seal_cutscene.get("playing")):
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			seal_cutscene.call("skip")
+			get_viewport().set_input_as_handled()
+		return
+	if event.is_action_pressed("recover") and not _armed_on_foot():
 		_recover()
 	elif event.is_action_pressed("vsync_debug"):
 		_toggle_vsync()
@@ -503,16 +796,30 @@ func _unhandled_input(event: InputEvent) -> void:
 		if van.occupied and route.phone_call.can_answer():
 			route.phone_call.answer()
 	elif event.is_action_pressed("interact") and not _boarding:
+		if van.occupied and hud.document_visible() and _mission != route:
+			_close_run_sheet()
+			return
+		if van.occupied and _mission != route and _mission.wants_interact():
+			var note: String = _mission.interact()
+			if not note.is_empty():
+				hud.notify(note)
+			return
 		if van.occupied and (route.fleeing or van.held):
 			return
 		if van.occupied:
 			_exit_van()
 		elif hud.document_visible():
-			if _signed:
+			if _signed or _mission != route:
 				_close_run_sheet()
 		elif _needs_sheet() and driver.global_position.distance_to(world.run_sheet_spot) \
 				< SHEET_RANGE:
 			_sign_run_sheet()
+		elif van.rear_doors_busy():
+			return
+		elif not _foot_task().is_empty():
+			var said: String = _mission.do_foot_action(driver.global_position)
+			if not said.is_empty():
+				hud.notify(said)
 		elif driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			if _needs_sheet():
 				hud.notify("Sign the run sheet at the office first.")
@@ -594,6 +901,11 @@ func _board_van() -> void:
 	hud.set_hint("")
 	_boarding_token += 1
 	var token := _boarding_token
+	if bool(driver.call("rifle_out")):
+		driver.call("stow_rifle")
+		await Signal(driver, "rifle_stowed")
+		if token != _boarding_token:
+			return
 	driver.walk_to(_path_to(_on_ground(van.to_global(BOARD_SPOT))))
 	while driver.walking():
 		await get_tree().physics_frame
@@ -608,7 +920,7 @@ func _board_van() -> void:
 		await get_tree().process_frame
 		if token != _boarding_token:
 			return
-	await hud.fade(1.0, FADE_OUT).finished
+	await hud.fade(1.0, FADE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_STOP).finished
 	if token != _boarding_token:
 		return
 	driver.grip(Vector3.ZERO, Vector3.ZERO, 0.0)
@@ -651,7 +963,13 @@ func _on_ground(point: Vector3) -> Vector3:
 
 
 func _process(delta: float) -> void:
+	_show_combat()
 	_guide_to_van()
+	_follow_on_map(delta)
+	_aim_marker()
+	_mark_watchers()
+	if _mission == cargo and cargo.call_due() and not route.phone_call.active:
+		route.phone_call.start("MAYA", WrongCargo.MAYA_CHECK_IN)
 	if route.phone_call.talking:
 		_navigation().call_seconds = route.phone_call.elapsed
 	_hint_time += delta
@@ -659,12 +977,58 @@ func _process(delta: float) -> void:
 		return
 	_hint_time = 0.0
 	var ground := Vector2(van.global_position.x, van.global_position.z)
-	if van.global_position.y < -5 or not world.playable_area.has_point(ground):
+	if van.global_position.y < -5 or not world.playable(ground):
 		_recover()
-	if hud.document_visible() and driver.global_position.distance_to(world.run_sheet_spot) \
-			> SHEET_WALK_AWAY + SHEET_RANGE and _signed:
+	if hud.document_visible() and driver.global_position.distance_to(_document_at) \
+			> SHEET_WALK_AWAY + SHEET_RANGE and (_signed or _mission != route):
 		_close_run_sheet()
 	hud.set_hint(_hint(0.2))
+
+
+## The mission map follows the player: the van while he drives, Ethan on foot (#356).
+func _follow_on_map(delta: float) -> void:
+	var on_foot: bool = not van.occupied and driver.active
+	if on_foot:
+		var camera := get_viewport().get_camera_3d()
+		var view := -camera.global_basis.z if camera != null else Vector3.FORWARD
+		hud.mission_map.follow(driver.global_position, atan2(view.x, view.z),
+			driver.facing_yaw(), true, delta)
+		return
+	var forward := -van.global_basis.z
+	var yaw := atan2(forward.x, forward.z)
+	hud.mission_map.follow(van.global_position, yaw, yaw, false, delta)
+
+
+## The objective's place (#358): its marker, its pin on the map and its distance, from the van
+## or from Ethan on foot.
+func _aim_marker() -> void:
+	var on_foot: bool = not van.occupied and driver.active
+	var from: Vector3 = driver.global_position if on_foot else van.global_position
+	hud.set_target(_objective_point(on_foot), from, get_viewport().get_camera_3d(), on_foot)
+
+
+## Over each guard seeing Ethan in the escape, how near he is to being caught (#358).
+func _mark_watchers() -> void:
+	var escape := cargo.get("escape") as Node if _mission == cargo else null
+	if escape == null:
+		hud.seen_marks.show_marks([], null)
+		return
+	var marks := []
+	for guard: Node3D in escape.get("guards"):
+		marks.append([guard.global_position, float(guard.get("sight")) / Escape.CATCH_AFTER])
+	hud.seen_marks.show_marks(marks, get_viewport().get_camera_3d())
+
+
+func _objective_point(on_foot: bool) -> Vector3:
+	if _boarding or _ending or _ended or hud.document_visible():
+		return Vector3.INF
+	if _mission != route:
+		return _mission.objective_target()
+	if _needs_sheet():
+		return world.run_sheet_at
+	if on_foot or route.fleeing or van.scripted or route.stage >= Mission.TARGETS.size():
+		return Vector3.INF
+	return Mission.TARGETS[route.stage] + Vector3.UP * 1.5
 
 
 func _guide_to_van() -> void:
@@ -683,6 +1047,11 @@ func _hint(delta: float) -> String:
 			if driver.global_position.distance_to(world.run_sheet_spot) < SHEET_RANGE:
 				return "E  Sign the run sheet"
 			return ""
+		var task := _foot_task()
+		if not task.is_empty():
+			return "E  " + task
+		if van.rear_doors_busy():
+			return ""
 		if driver.global_position.distance_to(van.global_position) < BOARD_RANGE:
 			return "E  Get in the van"
 		if driver.global_position.distance_to(_walk_from) > WALK_LESSON:
@@ -690,12 +1059,20 @@ func _hint(delta: float) -> String:
 		_lessons.offer("walk")
 		return _lessons.tick(delta)
 	_lessons.learn("walk")
+	if _mission != route and _mission.wants_interact():
+		return "E  " + _mission.interact_label()
 	if route.phone_call.can_answer() and not route.phone_call.answers_itself():
 		return "T  Answer the call"
 	if not van.engine_on or van.scripted or van.held or route.fleeing:
 		return ""
 	_teach_driving(delta)
 	return _lessons.tick(delta)
+
+
+func _foot_task() -> String:
+	if _mission == route or not driver.active or van.occupied or van.rear_doors_busy():
+		return ""
+	return _mission.foot_action(driver.global_position)
 
 
 func _teach_driving(delta: float) -> void:

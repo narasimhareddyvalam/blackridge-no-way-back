@@ -1,0 +1,18 @@
+f1  no cut through the rim         test_harbour_flats.gd exit 1, 6/8 passed; 2 failed
+      FAIL: H1: the east road from the loop's east end to the coastal road: 115 m, solid under every lane (0 holes), clear
+      FAIL: H3: the cut through the rim has sloped banks (steepest 0.02 m a metre), the road's ground at 19.50 m
+f2  the cut's banks walls          test_harbour_flats.gd exit 1, 6/8 passed; 2 failed
+      FAIL: H1: the east road from the loop's east end to the coastal road: 115 m, solid under every lane (0 holes), clear
+      FAIL: H3: the cut through the rim has sloped banks (steepest 7.87 m a metre), the road's ground at -0.12 m
+f3  no embankment                  test_harbour_flats.gd exit 1, 6/8 passed; 2 failed
+      FAIL: H1: the east road from the loop's east end to the coastal road: 115 m, solid under every lane (42 holes), clea
+      FAIL: H5: the rim comes down to the flats with no gap along x 655-670 (120 gaps)
+f4  the east wall left shut        test_harbour_flats.gd exit 1, 7/8 passed; 1 failed
+      FAIL: H1: the east road from the loop's east end to the coastal road: 115 m, solid under every lane (0 holes), clear
+f5  the cut cleared as an ordinary clearing test_harbour_flats.gd exit 0, 8/8 passed; 0 failed
+f6  the flats not playable         test_harbour_flats.gd exit 1, 7/8 passed; 1 failed
+      FAIL: H6: the east road and the flats are playable (false, false), the open sea not (false)
+f7  the sea at the quay's edge     test_harbour_flats.gd exit 1, 7/8 passed; 1 failed
+      FAIL: H4: the sea east of the quay, 0.2 m below its edge, reaching 4000 m
+f8  lamps 80 m apart               test_harbour_flats.gd exit 1, 7/8 passed; 1 failed
+      FAIL: H7: 11 lamps light both roads, lit (true), the widest gap 74 m

@@ -1,5 +1,6 @@
 extends Node
 
+const SHELTER_DB := 14.0
 const ROOT := "res://features/audio/first_drive/"
 const MUSIC_DB := -13.0
 const CALL_DUCK := -13.0
@@ -31,8 +32,13 @@ var _call_connect: AudioStreamPlayer
 var _call_end: AudioStreamPlayer
 var _breathing: AudioStreamPlayer
 var _tick: AudioStreamPlayer
+var _door_latch: AudioStreamPlayer
+var _door_stay: AudioStreamPlayer
 var _engine_level: float = 1.0
 var _hush: float = 1.0
+## How sheltered a place is from the rain, 0 outside to 1 under a roof (the transfer shed's,
+## `shed_sounds.gd`, #302): the yard's rain falls away by SHELTER_DB at the camera under one.
+var shelter := Callable()
 var _breath: float = 0.0
 var _ticks_left: int = 0
 var _tick_wait: float = 0.0
@@ -62,12 +68,24 @@ func configure(van: CharacterBody3D) -> void:
 	_breathing = _player("breathing", "Vehicle", BREATH_DB, true)
 	_breathing.stop()
 	_tick = _player("engine_tick", "Vehicle", -18)
+	_door_latch = _player("door_latch", "Vehicle", -6)
+	_door_stay = _player("door_stay", "Vehicle", -8)
 	_rng.seed = 7
 	vehicle.indicator_clicked.connect(_indicator)
 	vehicle.switch_operated.connect(func() -> void: _click.play())
 	vehicle.wiper_swept.connect(func() -> void: _wiper.play())
 	vehicle.window_operated.connect(func() -> void: _window.play())
 	vehicle.collided.connect(_impact)
+	vehicle.rear_door_sounded.connect(_door_sound)
+
+
+## The rear doors as Ethan works them: the latch's clunk as one shuts, softer as its handle frees
+## it; the stay's knock as it catches one folded back, softer as he tugs one off it.
+func _door_sound(kind: String) -> void:
+	var latch := kind == "latch" or kind == "release"
+	var player := _door_latch if latch else _door_stay
+	player.volume_db = -6.0 if kind == "latch" else (-8.0 if kind == "stay" else -16.0)
+	player.play()
 
 
 func _player(
@@ -100,7 +118,11 @@ func _process(delta: float) -> void:
 	_engine.pitch_scale = (0.78 + speed * 1.05) * lerpf(0.6, 1.0, _engine_level)
 	_engine.volume_db = -18.0 + speed * 5.0 + opening * 3.0 \
 		+ linear_to_db(maxf(_engine_level, 0.0001)) + hush
-	_rain.volume_db = lerpf(-24.0, -7.0, opening) + hush
+	var covered := 0.0
+	var listener := get_viewport().get_camera_3d()
+	if shelter.is_valid() and listener != null:
+		covered = float(shelter.call(listener.global_position))
+	_rain.volume_db = lerpf(-24.0, -7.0, opening) + hush - SHELTER_DB * covered
 	_cabin_rain.volume_db = lerpf(-6.0, -28.0, opening) + hush
 	_tires.volume_db = linear_to_db(maxf(0.0001, speed * 0.45)) + hush
 	_skid.volume_db = (SKID_DB + linear_to_db(clampf(absf(vehicle.speed) / SKID_FULL, 0.05, 1.0))

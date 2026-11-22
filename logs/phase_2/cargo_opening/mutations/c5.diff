@@ -1,0 +1,11 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c5/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 18:23:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutco/c5/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 18:24:46
+@@ -557,7 +557,6 @@
+ func opening_played() -> void:
+ 	opening_pending = false
+ 	call_pending = true
+-	checkpoint_reached.emit(start_progress())
+ 
+ 
+ ## Whether Maya should call now: the opening played and the van CALL_AFTER from the depot.

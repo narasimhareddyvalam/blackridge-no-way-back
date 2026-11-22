@@ -1,0 +1,52 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:927)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:155)
+       [6] _build (res://tests/test_loading.gd:1135)
+       [7] _run (res://tests/test_loading.gd:171)
+PASS: Setup: the van docked at bay 9 and chocked
+PASS: H8: the shed's side door, beside the drive-in lane, keeps Ethan out while shut (true); the hint offers it (E  Open the door) and E swings it open (95°)
+PASS: H8: inside, the stair climbs from the drive-in lane to the dock floor, Ethan's feet 1.30 m up at its top, and its rail keeps him from stepping off its open side (true)
+PASS: H17: with E held Ethan starts the lift (0.028 m), then walks off its deck (1.04 m from its middle): it stops (0.0000 m in the next second, 0.093 m down) and falls silent (true), E still held
+PASS: H15: held a moment, the lift moves 0.047 m and stops when let go (0.0000 m in the next second); the hint offers to carry on (E  Hold to lower the lift)
+PASS: H16: its pendant has UP, DOWN and a red emergency stop (["PendantUp", "PendantDown", "PendantStop"]), and its beep loops on while it moves (true), silent when still (true)
+PASS: H1: on the deck the hint offers the lift (E  Hold to lower the lift); E lowers it to the van's floor (0.465 m against 0.465); its bridge plate rests on the van's rear sill (0.000 m off it) and reaches 0.23 m past it over the floor, its edge 0.095 m above the floor; Ethan rides it (his feet 0.47 m)
+PASS: H1: E again raises it flush with the dock floor (1.300 m), its plate stored upright (its edge 2.21 m up), Ethan with it (1.30 m)
+PASS: H14: the way onto bay 9's lift is clear, its own pallet the only load staged there (in the way: none)
+FAIL: H18: taken, the jack leaves the pallet on the floor (0.040 m) and the hint offers to pump it (E  Set the pallet down), W not rolling it (0.270 m); 0 strokes of E (3 to 7), each rocking the handle 0° and knocking (0), raise it step by step [], then the hint offers to set it down (E  Set the pallet down)
+PASS: H9: behind its handle the hint offers the jack (E  Take the pallet jack); E takes it, and pumped, its forks raise the pallet above them 0.040 m off the floor
+FAIL: H9: pushed on to the lift's deck, the pallet stops at the deck's front against the bridge plate standing up as a toe guard, never over the edge (its front at z 18.162, the plate at 19.740)
+FAIL: H2: on the dock Ethan leans in to get the load going (["PushStop", "", "Idle", "Push"]), then walks nearly upright behind it (leaning inf° at most), the jack at the pace of his feet, 0.379 m/s, his planted feet slipping at most 0.035 m/s, the load getting going slowly (0.107 m in its first 0.3 s), the handle tilted down to his hands (inf° to -inf°), his palms at most 0.003 m off its loop
+FAIL: H19: E opens the lowering valve: the pallet sinks slowly (0.040 m up, 0.000 m after 0.4 s), the oil hissing back (false), no other offer meanwhile (E  Let go of the jack), and rests (0.000 m) within 1.6 s, then the hint offers to let go (E  Let go of the jack)
+FAIL: H9: E sets the pallet down on the lift's deck (0.000 m above it, 0.389 m off its middle) and E again lets go of the jack
+FAIL: H1: by the pendant on the deck E lowers the lift (E  Hold to lower the lift), the pallet riding it down to the van's floor (0.997 m against 0.465), and Ethan with it (0.304 m off the deck)
+FAIL: H2: behind the handle again E takes the jack (E  Take the pallet jack) and pushes the pallet into the van, walking in behind it over the bridge plate (his feet never below 1.299 m, the deck at 0.997; -4.35 m into the hold)
+FAIL: H2: under the van's low roof Ethan stoops (1.80 m tall, against 1.80 standing) in Pushing's own lean, his clips outside ["Idle", "Push", "PushStop", ""] and inside [], his head at most -inf m above the hold's floor under its 1.536 m roof and -inf m above the sill under its 1.45 m rear door; in the hold the jack goes at Pushing's own pace, 0.000 m/s, his planted feet slipping at most inf m/s, his hands at most inf m off the handle, at arm's length (-inf m behind the jack), the handle tilted down (<null>°) so his palms stay at least -inf m below the top of his head
+FAIL: H2: against the bulkhead the load stops and Ethan stays stooped on planted feet (Idle held, false; his toes at most 0.020 m up), his hands on the handle (0.401 m off it, 0.88 m below the top of his head), his head 2.629 m up under the roof
+FAIL: H2: E sets the pallet down in the hold on its floor, forward against the bulkhead (5.347 m from it), between the wheel arches (-0.389 m off the middle), and it goes with the van
+FAIL: H2: beside it in the hold E straps the load down to the floor rings (E  Take the pallet jack; 0 straps)
+FAIL: H10: from the take to the strap the objective only goes on, never back to LOAD THE PALLET: lowering the lift while the pallet waits on its deck, then, the lift down, rolling it in (["ROLL THE PALLET IN", "LOWER THE LIFT", "ROLL THE PALLET IN", "LOWER THE LIFT", "ROLL THE PALLET IN"]; with the lift down: LOWER THE LIFT)
+FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (false), never Pushing played backward (false), and walks backward upright once out (["Idle", "WalkBack", "Walk"]), his planted feet slipping at most 0.047 m/s, his hands on the handle (at most 0.010 m off it), his head under the roof and the door (-inf and -inf m)
+PASS: H2: pulled back out, the jack leaves the van (true), Ethan stands up again on the deck (1.80 m) and E lets go of it (E  Let go of the jack)
+FAIL: H2: the van settles under the 520 kg by the estimate, shared between its axles by where the load stands: 0.0000 m at the rear (against 0.0535) and 0.0000 m at the front (against -0.0275)
+FAIL: H1: E at the pendant raises the lift again with the jack on it (1.30 m), the load left in the van
+PASS: H2: W let go on the dock as he walks behind it (["Push", "Walk", "Idle"]), the load rolls on 0.72 m with his last step, his planted feet slipping at most 0.019 m/s; then he stands (Idle), his hands on the handle (0.033 m off it)
+PASS: H2: W let go while he leans in to get it going (["Push", "PushStop", "", "Idle"]), the push ends in Push Stop from the step he is on, the load rolling on 0.31 m, his planted feet slipping at most 0.027 m/s; then he stands (Idle) and lets go of the handle (his hands 0.55 m off it)
+PASS: H9: with the jack's back to the dock's front wall there is no room to stand behind its handle, so the hint does not offer it () and E leaves it (held: false)
+PASS: H13: the empty jack pushed straight at the pendant post, its forks lined up 0.20 m across it, stops against it and does not pass through (taken: true; its forks at the nearest 0.002 m from it)
+PASS: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs all the time he holds it, taking it, pushing, stooped in the van, pulling out, stopping and getting it going (at the nearest dock 0.030 m (Head-HeadTop_End), taking it 0.029 m (Head-HeadTop_End), van 0.067 m (LeftUpLeg-LeftLeg), pull 0.110 m (Spine1-Spine2), stop 0.030 m (Head-HeadTop_End), breakaway 0.030 m (Head-HeadTop_End))
+PASS: H13: nothing goes through the lift's pendant post: the load stays outside it (at the nearest 0.661 m) and so does Ethan (0.103 m)
+FAIL: H12: his hands hold the handle, not rest on it: pushing on the dock and in the van every fingertip is wrapped round the loop, at most 0.045 m from its tube's middle, a finger's thickness and the tube's (open, they stood 0.11 m off it; on the dock 0.840, in the van 0.786)
+LOADING RESULT: 17/33 passed; 16 failed
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

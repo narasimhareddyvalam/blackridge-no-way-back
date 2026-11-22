@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/ambush.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b3/game/features/missions/last_run/ambush.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/last_run/ambush.gd	2026-11-21 19:53:20
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutb/b3/game/features/missions/last_run/ambush.gd	2026-11-21 19:55:01
+@@ -27,7 +27,7 @@
+ const BLOCK_ROUTE: Array[Vector3] = [Vector3(906.0, 0.0, 250.0), Vector3(872.0, 0.0, 213.0),
+ 	Vector3(848.0, 0.0, 204.0), Vector3(843.6, 0.0, 200.0)]
+ const BLOCK_AT := Transform3D(Basis(Vector3.UP, PI), Vector3(843.6, 0.0, 200.0))
+-const BLOCK_SPEED := 7.0
++const BLOCK_SPEED := 0.0
+ const BLOCK_DELAY := 1.0
+ const RETRY_DELAY := 3.0
+ const CAUGHT_AFTER := 1.5

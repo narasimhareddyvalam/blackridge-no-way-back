@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_kit.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutF/f13/game/features/environments/industrial_loop/shed_kit.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_kit.gd	2026-11-16 11:04:11
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutF/f13/game/features/environments/industrial_loop/shed_kit.gd	2026-11-16 11:06:47
+@@ -41,7 +41,7 @@
+ const OFF_WALL := 0.08
+ const SIGN_SIZE := Vector2(0.2, 0.25)
+ const MIRROR_DIAMETER := 24 * 0.0254
+-const MIRROR_UP := 2.9
++const MIRROR_UP := 3.5
+ const MIRROR_OUT := 0.35
+ const RACK_END := 8.24
+ const CHARGER := Vector3(-86.5, FLOOR + 1.1, OFFICE_BACK)

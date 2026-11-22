@@ -1,0 +1,18 @@
+mutation_ankle_on_the_riser_line: exit 1; STAIR RESULT: 23/28 passed; 5 failed; fails on its check: True; script error: False
+    FAIL: S3 up: each planted foot stands on its step: its sole at most 0.217 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 10 plants
+    FAIL: S4 up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 0, 0, 1, 2, 3, 4, 6, 6] (wanted [1, 2, 3, 4, 5], the floor 0 and the landing 6), by foot [0, 1, 0, 1, 0, 1, 0, 1, 0,
+    FAIL: S3 running up: each planted foot stands on its step: its sole at most 0.217 m off the step under it (at most 0.03), its toes at most -0.019 m into a step (at most 0.01), over 8 plants
+    FAIL: S4 running up: one tread a step, his feet taking turns: the steps he plants on [0, 0, 1, 2, 3, 4, 6, 6] (wanted [1, 2, 3, 4, 5], the floor 0 and the landing 6), by foot [0, 1, 0, 1, 0, 1, 0, 1]
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4] by foot [0, 1, 0, 1]; no 
+mutation_bounce_over_the_top: exit 1; STAIR RESULT: 23/28 passed; 5 failed; fails on its check: False; script error: False
+    FAIL: S2 up: nothing jumps: in any one frame his body rises or drops at most 0.027 m and his camera 0.027 (at most 0.02), his hips 0.013 (at most 0.020, a walk's)
+    FAIL: S2 down: nothing jumps: in any one frame his body rises or drops at most 0.021 m and his camera 0.021 (at most 0.02), his hips 0.018 (at most 0.020, a walk's)
+    FAIL: S2 running up: nothing jumps: in any one frame his body rises or drops at most 0.028 m and his camera 0.030 (at most 0.02), his hips 0.034 (at most 0.035, the captured running climb's own)
+    FAIL: S10: W let go halfway up (true) and pressed again a second on, his feet still take one tread a step, by turns (a foot settling where it stands is no step): [1, 2, 3, 4, 5] by foot [1, 0, 1, 0, 1
+    FAIL: S9: up a 20° slope he walks along it without stepping up: his body, hips and camera rise at most 1.205 m a frame (at most 0.02), 157.92 m up at its top
+mutation_pushed_back_out: exit 1; LOADING RESULT: 25/27 passed; 2 failed; fails on its check: True; script error: False
+    FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (false), never Pushing played backward (true), and walks backward upright once out (["Push", "WalkBack"]), hi
+    FAIL: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs all the time he holds it, taking it, pushing, stooped in the van, pulling out, stoppin
+mutation_the_doorway_forgotten: exit 1; LOADING RESULT: 26/27 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (true), never Pushing played backward (false), and walks backward upright once out (["PullBack", "WalkBack"])
+clone restored byte for byte after each

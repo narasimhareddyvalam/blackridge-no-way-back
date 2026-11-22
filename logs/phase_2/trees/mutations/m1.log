@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: T1 the roadside has its real kinds: { "red_alder": 0, "young_fir": 0, "mountain_hemlock": 0, "western_red_cedar": 0 } and 0 mature Douglas firs
+FAIL: T2 alders and young firs take the open edge (0% of the first 4 m), hemlock and cedar the band behind (0% of the species there)
+FAIL: T3 each kind within its real height (red_alder inf-0.0 m, young_fir inf-0.0 m, mountain_hemlock inf-0.0 m, western_red_cedar inf-0.0 m)
+FAIL: T4 every roadside tree in the collision area has its trunk's collider, as thick as its model's trunk (0 checked, 0 missing, 0 the wrong size)
+PASS: T5 the alders are bare, with their seed cones and catkins (3 trees, materials ["AlderBark", "AlderCatkin", "AlderCone"])
+PASS: T6 every alpha-cut surface sways in the needles' wind (6 of 6)
+PASS: T7 no model over 30000 triangles (red_alder 11134, red_alder 17398, red_alder 25082, young_fir 12969, young_fir 9872, young_fir 11786, young_fir 7844, mountain_hemlock 19316, western_red_cedar 28282)
+PASS: T8 nothing moved: 11819 trees, 6622 saplings, 9828 colliders, centroid (243.899, 32.39941, -24.23578)
+ROADSIDE TREES RESULT: 4/8 passed; 4 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

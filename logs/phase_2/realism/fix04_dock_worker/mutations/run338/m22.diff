@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m22/game/features/missions/the_wrong_cargo/seal_cutscene.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-19 19:57:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut338/m22/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-19 20:20:56
+@@ -85,7 +85,7 @@
+ 	_along = false
+ 	_before = get_viewport().get_camera_3d()
+ 	_hud.call("set_cinematic", true)
+-	_driver.set("held", true)
++	_driver.set("held", false)
+ 	if not bool(_van.get("occupied")):
+ 		var spot := _van.to_global(CLEAR_SPOT)
+ 		spot.y = _driver.global_position.y

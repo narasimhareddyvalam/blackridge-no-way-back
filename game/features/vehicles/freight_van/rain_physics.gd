@@ -44,6 +44,20 @@ static func drop_velocity(radius: float, down: Vector2, air: Vector2) -> Vector2
 	return force.normalized() * excess / (SLIDE_RESISTANCE * radius)
 
 
+## The largest drop that holds still on glass pushed by gravity along it (down) and the air
+## over it: any larger and it slides (#346).
+static func slide_radius(down: Vector2, air: Vector2 = Vector2.ZERO) -> float:
+	var low := 0.0001
+	var high := 0.02
+	for step in range(30):
+		var middle := (low + high) * 0.5
+		if drop_velocity(middle, down, air) == Vector2.ZERO:
+			low = middle
+		else:
+			high = middle
+	return low
+
+
 static func film_velocity(down: Vector2, air: Vector2) -> Vector2:
 	var drain := down * WATER_DENSITY * GRAVITY * FILM_THICKNESS * FILM_THICKNESS \
 		/ (3.0 * WATER_VISCOSITY)

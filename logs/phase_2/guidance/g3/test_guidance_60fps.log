@@ -1,0 +1,93 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1004)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_guidance.gd:36)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+PASS: G1: a mission map while playing, none on the title screen
+PASS: G2: it is round, at the bottom left ([P: (26.0, 582.0), S: (192.0, 192.0)] in (1280.0, 800.0))
+PASS: G3: driving, it is centred on the van and turned with the view (focus (-28.0, -0.125, 93.0), van (-28.0, -0.149805, 93.0); heading 0.00, view 0.00)
+PASS: G4: its roads and buildings drawn (4 roads, 5 places)
+PASS: G5: the objective beside the map, not in the top-left corner (title at (244.0, 708.0))
+PASS: G6: the control hints at the bottom right ([P: (1251.0, 751.0), S: (1.0, 21.0)])
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+PASS: G7: none of it in a cinematic or the pause menu (cinematic true, menu true)
+GUIDANCE RESULT: 7/7 passed; 0 failed
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://features/ui/driving_hud/mission_map.gd:98)
+WARNING: 29 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

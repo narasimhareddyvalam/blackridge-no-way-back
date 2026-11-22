@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH3/m4/game/features/vehicles/freight_van/van_presentation.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/freight_van/van_presentation.gd	2026-11-14 12:26:49
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutH3/m4/game/features/vehicles/freight_van/van_presentation.gd	2026-11-14 12:28:05
+@@ -117,7 +117,7 @@
+ const LOW_BEAM_TILT := -1.25
+ const HIGH_BEAM_TILT := 0.0
+ const BEAM_MIST_DEPTH := 40.0
+-const BEAM_MIST_SCATTERING := 0.016
++const BEAM_MIST_SCATTERING := 0.032
+ const WipeMap = preload("windshield_wipe_map.gd")
+ const Wiper = preload("wiper.gd")
+ const VanParticles = preload("van_particles.gd")

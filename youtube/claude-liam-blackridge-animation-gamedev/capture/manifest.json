@@ -1,0 +1,124 @@
+{
+  "game_revision": "1e7765e",
+  "takes": [
+    {
+      "take": "ring_play",
+      "file": "capture/takes/ring_play/ring_dash.mp4",
+      "sha256": "95ecb78093a7148dff080e901ba3639be81e485eccbffad7e7a9c526f6c8e63a",
+      "duration_s": 5.033,
+      "script": "tools/captures/capture_a7_clips.gd",
+      "kind": "scripted input on the real main scene",
+      "what": "movie frames 62-212: Maya's call ringing, inside the dash zoom",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "ring_play",
+      "file": "capture/takes/ring_play/boarding.mp4",
+      "sha256": "12b1cc960300de08117774f24b84592f38f232208256ee2b429508eff7b889cc",
+      "duration_s": 7.267,
+      "script": "tools/captures/capture_a7_clips.gd",
+      "kind": "scripted input on the real main scene",
+      "what": "movie frames 420-638: stopped, E at the driver's door, EnterVan, seated",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "interrupt_startup",
+      "file": "capture/takes/interrupt_startup/interrupt_startup.mp4",
+      "sha256": "64a094272d3a5dc020c03c9558b73eefd88fde8963e9d955b805cd9ca36d6762",
+      "duration_s": 3.967,
+      "script": "tools/captures/capture_enter_van_interrupt.gd -- startup",
+      "kind": "fixture (Ethan placed at the door), then real input",
+      "what": "movie frames 35-: E at 45, W held at clip 16",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "interrupt_active",
+      "file": "capture/takes/interrupt_active/interrupt_active.mp4",
+      "sha256": "bdc12d647d141d20a5150135161c1977ded4754650c473813b6487a3a00506de",
+      "duration_s": 5.833,
+      "script": "tools/captures/capture_enter_van_interrupt.gd -- active",
+      "kind": "fixture (Ethan placed at the door), then real input",
+      "what": "movie frames 35-: E at 45, Esc at clip 40, resumed after 40 frames",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "interrupt_recovery",
+      "file": "capture/takes/interrupt_recovery/interrupt_recovery.mp4",
+      "sha256": "88a4963cb066f048ceebbbb1a5ff5019c99e6f1e6ecebb249a0b03ebf9a8baa9",
+      "duration_s": 4.967,
+      "script": "tools/captures/capture_enter_van_interrupt.gd -- recovery",
+      "kind": "fixture (Ethan placed at the door), then real input",
+      "what": "movie frames 35-: E at 45, R at clip 56",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "reload",
+      "file": "capture/takes/reload/reload.mp4",
+      "sha256": "f821af42dfba2e09d81ed5f34dac3f3ee4e385d02333c77e8e70131770cab700",
+      "duration_s": 4.567,
+      "script": "tools/captures/capture_reload_strip.gd",
+      "kind": "fixture (Mission 3 checkpoint, armed by arm(), placed), then real input (aim, R)",
+      "what": "movie frames 270-: R at 285, RifleReload 0-99 at 287-386",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    },
+    {
+      "take": "shock",
+      "file": "capture/takes/shock/shock.mp4",
+      "sha256": "a67077901d1524db0375570ff1d7e78ec1a7fbcd190626221a009687ac40b61c",
+      "duration_s": 3.5,
+      "script": "tools/captures/capture_shock_shot.gd",
+      "kind": "fixture (the van placed on the hill road and held), the app's own _shock()",
+      "what": "movie frames 20-124: the shot only (Shock frames 0-104)",
+      "game_revision": "1e7765e",
+      "recorder": "Godot 4.7.2 Movie Maker, --write-movie AVI, --fixed-fps 30, 1280x800; cut and encoded H.264 CRF 16 with ffmpeg"
+    }
+  ],
+  "stills": [
+    {
+      "file": "capture/takes/reload/stills/reload_f30.png",
+      "sha256": "7a7caf6a6cee661a93d8a456d7e54e8410b599e052765bc86d4297f22578f919"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/dash.png",
+      "sha256": "cf7fb9615b177e6e122e8718b645f1443c92a6cef481d8524e06680a31a88d44"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f0.png",
+      "sha256": "61eb8ebb2d6e02a0a4388c4d73baeead7fd1db0467a4ecd48e217f4405aa4b21"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f1.png",
+      "sha256": "1ea45feb9326ecafae7e789ecb38a0e103b49704d5788aa2d2a75cbb5c49894a"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f2.png",
+      "sha256": "76e68cecfd385bce0ee3eab20ebc41808fb4d54086678ee0eb0377e2787f3663"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f3.png",
+      "sha256": "544684fbe9f24512823767d24f9635c01a3b45359e6256d3332f2a0ed12aa45a"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f4.png",
+      "sha256": "5a82b57d9c6fe3c31907449dd248beabd4014dc7ac013668af13c01ff64c63cd"
+    },
+    {
+      "file": "capture/takes/ring_play/stills/ring_f5.png",
+      "sha256": "63e62421938cf65ac4dcd5020c54ffa45e3e121c276393d62b39de405a4fac4a"
+    },
+    {
+      "file": "capture/takes/shock/stills/shock_f58.png",
+      "sha256": "98991fdb5c6a5b511e8f5cf5dabdd9aaca8e9032c98360f1bb8c36d964ff5c08"
+    },
+    {
+      "file": "capture/sheet/phone_ring_on_dark.png",
+      "sha256": "b96d0104e2fb0cc2793c676bd8293c70c6e5f4b465ded16f82621538e4c38615"
+    }
+  ]
+}

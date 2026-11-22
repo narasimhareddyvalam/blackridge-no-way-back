@@ -1,0 +1,23 @@
+s1  the soak as quick as the wet   test_windshield_water.gd exit 1, 10/11 passed; 1 failed
+      FAIL: W5: the soak is a second wipe map that the blades wipe as they do the first, filling over 0.0 s: at least 90% 
+s2  blobs not by the drops' hold   test_windshield_water.gd exit 1, 9/11 passed; 2 failed
+      FAIL: W3: the blobs grow to that size and no further (4.00 mm), then run
+      FAIL: W10: patches (0.015, 0.035) m wide, no taller down the glass than a still drop is across (5.85 mm)
+s3  a lens of 2 degrees            test_windshield_water.gd exit 1, 9/11 passed; 2 failed
+      FAIL: W4: each blob shows an inverted image of 8 degrees of the scene behind it from the driver's eye (lens 0.0116 o
+      FAIL: W9: a drop catches a lamp within its lens's 4 degrees: 1.4 cm on the glass (wanted 5.6)
+s4  no lamps handed to the van     test_windshield_water.gd exit 1, 8/11 passed; 3 failed
+      FAIL: W7: the world's lamps are handed to the van, none of its own (0)
+      FAIL: W8: facing the yard's lamps, the brightest on the glass (0, at most 8) are drawn where each lamp is seen throu
+      FAIL: W11: facing the shed, none of the 0 lamps caught is hidden from the driver's eye, though 0 lamps on the glass 
+s5  hidden lamps caught too        test_windshield_water.gd exit 1, 10/11 passed; 1 failed
+      FAIL: W11: facing the shed, none of the 8 lamps caught is hidden from the driver's eye, though 27 lamps on the glass
+s6  dimmest lamps first            test_windshield_water.gd exit 1, 10/11 passed; 1 failed
+      FAIL: W8: facing the yard's lamps, the brightest on the glass (2, at most 8) are drawn where each lamp is seen throu
+s7  lamps off the glass caught     test_windshield_water.gd exit 1, 9/11 passed; 2 failed
+      FAIL: W8: facing the yard's lamps, the brightest on the glass (8, at most 8) are drawn where each lamp is seen throu
+      FAIL: W11: facing the shed, none of the 8 lamps caught is hidden from the driver's eye, though 27 lamps on the glass
+s8  patches twice as tall          test_windshield_water.gd exit 1, 10/11 passed; 1 failed
+      FAIL: W10: patches (0.015, 0.035) m wide, no taller down the glass than a still drop is across (11.70 mm)
+s9  the soak never wiped           test_windshield_water.gd exit 1, 10/11 passed; 1 failed
+      FAIL: W5: the soak is a second wipe map that the blades wipe as they do the first, filling over 8.0 s: at least 90% 

@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:964)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:169)
+       [6] _run (res://tests/test_shed_fitout.gd:90)
+PASS: E0: the shed has its fit-out (Building/ShedFitout) handing out its placements
+PASS: E1: 6 gas unit heaters, each hung 2.4-4.3 m (8-14 ft) above its floor
+PASS: E1: each heater hung level, its louvers turning the air down at least 17° and toward the doors it heats
+PASS: E1: each heater's flue rises from its top to the roof (6 flues)
+PASS: E1: every heater clear of the raised doors, the racks and the lights
+PASS: E2: 2 fans, 6.10 m across (at most 24 ft), the blades at least 10 ft above the dock floor
+PASS: E2: the blades at least 3 ft below every sprinkler head over them (least 1.44 m)
+PASS: E2: each fan centred between four sprinkler heads
+PASS: E2: each fan clear of the racks, the duct, the raised doors, the lights over it and the heaters' rods and flues
+PASS: E2: each fan hung from a channel across two joists' bottom chords
+PASS: E2: the fans turn slowly, as in winter (half a second turned them less than a radian)
+PASS: E3: 3 sprinkler lines over the staging lanes and the cross-aisle, heads at most 15 ft apart (along 2.67 m, across 3.90 m)
+PASS: E3: each head covers at most 130 ft² (111.9 ft²), the last line within half a spacing of the dock wall
+PASS: E4: ladder tray along the dock wall and the east wall, above the doors (14 dock, 10 east)
+PASS: E4: the trays on rods at most 12 ft apart (widest 2.90 m)
+PASS: E4: the trays clear of the fans and the lights
+PASS: E5: docks 1-9 numbered in order, west to east (9 numbers)
+PASS: E5: each number on the pier beside its own door, 1.8-3.0 m up, never behind its raised door
+PASS: E5: a control station by each door, centred 1.2-1.6 m above the dock floor, out of its opening (9)
+PASS: E5: inside red and green lights by every door, red at the eight shut docks
+PASS: E6: the time clock, its card racks and the notice board within 3 m of the side door, beside it, not in it
+PASS: E6: the clock's face 1.2-1.5 m up and the posters' middles 1.2-1.7 m up
+PASS: E6: all on the east wall, out of Ethan's way, the board holding the 6 federal posters
+SHED FITOUT RESULT: 23/23 passed; 0 failed
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

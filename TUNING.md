@@ -579,3 +579,169 @@ these changes, first reverse their patch
   `view-reverse_camera` variant
 - **Commits:** the r1 change with its strips and the verdict, `1c8447b`; r0 is `4f73f98`, and
   its strips `2b9e327`.
+
+---
+
+# Assignment 7: EnterVan tuning record
+
+The committing action is EnterVan (`CHANGE-BRIEF.md` §4, §9). Each revision follows the
+handout's Step 7 loop:
+
+1. A strip is captured with Movie Maker.
+2. The author plays, at normal speed and at `--time-scale 0.25`, and says what they saw.
+3. Claude Code reads the boundary frames against the per-frame log and proposes one change, to
+   the phase table or one key's transition, with a prediction.
+4. The author approves. Claude Code makes only that change and the read-back's expected values.
+5. The author recaptures into `r<N+1>`, Claude Code compares it with the prediction, and the
+   author gives the verdict in the running game.
+
+At least one revision must come from what the author saw in play, not from the reading below.
+
+**About the strips:**
+- They are fixture captures in the running game: Mission 1's start at the depot at night, the
+  van where it stands, the run sheet treated as signed, and Ethan placed at the driver's door
+  (`BOARD_SPOT`) facing it, seen from his own camera.
+- `E` is pressed by real input (`interact`) after capture frame 10.
+- Script: `tools/captures/capture_enter_van_strip.gd`. Movie Maker, 1280×800, `--fixed-fps 30`.
+- Only the frames read are kept, in `captures/enter_van/r<N>/`.
+- The per-frame log, with the clip's frame, the door and the boarding flag for every capture
+  frame, is `logs/animation/step7/enter_van_r<N>.log`.
+
+## r0: the brief as built (2026-11-22)
+
+**Captured** by Claude Code (#405: "continue to finish up the work").
+
+**Frames kept:**
+- The brief's §9 list: 10, 32, 42, 58, 63, 70.
+- The frames where the clip's own boundaries actually fall: 12, 34, 44, 60, 65, 73.
+
+**Claude Code's first reading.** This is evidence from the capture and the log. Neither is play,
+and none of it is the author's observation.
+
+| Capture | EnterVan frame (log) | Door (log) | What the frame shows |
+| :-- | :-- | :-- | :-- |
+| 10 | (Idle) | 0 | E pressed: Ethan stands at the van's side by the driver's door, his back to the camera |
+| 12 | 0 | 0 | the clip has begun (it holds frame 0 for one frame: the walk to `BOARD_SPOT` takes one physics step) |
+| 34 | 22 | 0 | he has stepped forward to the door, his left hand coming up toward the handle (`REACH_FROM`) |
+| 44 | 32 | 0 | his hand at the handle, the door still shut (`DOOR_GRAB`) |
+| 60 | 48 | 0.99 | the door fully open, his hand on its edge; both feet still on the ground (`DOOR_OPENED`) |
+| 65 | 53 | 1.0 | the cut begins (`CUT`); he still stands outside in the opening, no foot lifted |
+| 70 | 58 | 1.0 | the fade most of the way to black, he is still visible |
+| 73 | (seated) | 0 | the cab view, seated, the fade coming back up |
+
+**Where the motion and the table disagree:**
+1. **§9's frame numbers are two frames early.** §9 assumed EnterVan frame N falls on capture
+   frame 10 + N. In the log it falls on 12 + N:
+   - one frame for the input to reach the app;
+   - one frame for `_board_van`'s walk to `BOARD_SPOT`, which is a single physics step when he
+     already stands there.
+
+   So §9's frames 32, 42, 58, 63 and 70 show clip frames 20, 30, 46, 51 and 58, not 22, 32, 48,
+   53 and 60. The motion itself is on time; only §9's capture numbers are off.
+2. **§1 and §4 say he "climbs in"; the strip never shows it.** §4's recovery row reads "door
+   fully open, his foot lifting". At 48 (capture 60) and at the cut, 53 (capture 65), both feet
+   are on the ground. The cut hides him before his weight moves to the step. The player sees the
+   handle and the door, then black. This is the reading most likely to matter in play.
+3. **The door runs one frame behind his hand.** In the log, the door's value on each frame is
+   the smoothstep of the previous clip frame. For example, capture 46 logs clip 34 but door
+   0.011, which is the value for clip 33. `_board_van` reads `clip_time()` when `process_frame`
+   resumes it, which is before his `AnimationPlayer` advances on that frame. §6's "largest
+   disagreement 0 s" is therefore 1/30 s in fact.
+
+**Candidate changes** (for after the author has played; one only, and the author's observation
+picks it):
+- **For (2):** move `CUT` later in the table, to the frame where his foot reaches the step, so
+  the player sees him start to climb before the fade. The frame needs reading in play; the
+  scratch probe of the clip past 53 did not hold the pose.
+- **For (1):** correct §9's capture frames to 12 + N. This is a documentation fix, not a tuning
+  change.
+- **For (3):** none proposed. One frame at 30 fps is below what the eye separates. It is
+  recorded for the clocks question.
+
+**The author's observation in play:** _waiting for the author (normal speed and 0.25×)._
+
+## r1: the cut moved after the climb (Claude Code's decision, 2026-11-22)
+
+**Why, and whose decision.** This revision is Claude Code's decision, made under the author's
+delegation while they were away (#406: "take decisions for me realistic"). It comes from Claude
+Code's reading of r0, disagreement (2), and does not come from the author's play. **It is not the
+handout's observation-driven revision**, which stays open for the author: they play r1, and either
+keep it, revert it, or revise from what they see.
+
+**What was looked at first.** A scratch capture in the real game, with `CUT` set to 150 in the
+working tree for the run only and then restored, showed the clip past the cut. Frames kept in
+Claude Code's scratch folder, not in the repository.
+- EnterVan carries root motion: from 53 he lifts his right foot to the step.
+- At 58 he is on the step, rising into the opening.
+- At 63 his body is in the cab behind the door.
+- From about 68 he is seated, his head seen through the side window.
+- Nothing passes through the door or the cab: the door hides the climb as a real door would.
+
+**The change (one, to the phase table):** the cut moves from frame 53 to 62. `CUT` 53/30 →
+62/30 s in `first_drive.gd`. Recovery becomes frames 48-68 and he is seated at 69 (62 plus the
+0.25 s fade, 7.5 frames). Nothing else changes: not the clip, not the door, not the hand.
+Following the change:
+- the rig read-back's expected `CUT` becomes 62;
+- the edge test's last boundary becomes 69 (seated);
+- PIN2's seat time moves from 2.017 s to 2.317 s. That is a behaviour change the change predicts,
+  re-pinned in its own commit.
+
+**Claude Code's prediction for r1** (capture frame = 12 + clip frame, as in r0):
+- capture 10-60 as r0, frame for frame (clip 0-48 unchanged);
+- capture 65 (clip 53): no fade; he lifts his right foot toward the step, the door fully open;
+- capture 70 (clip 58): his foot on the step, his body rising into the door opening, no fade;
+- capture 74 (clip 62): the fade begins; his body is going in behind the door;
+- capture 78 (clip 66): most of the way to black, his shape in the cab;
+- capture 82 (clip 70): seated, the cab view coming back up (the log's `occupied` turns true
+  between clip 69 and 70);
+- the per-frame log: `door` 1.0 from clip 49 to the cut, `boarding` true to clip 69.
+
+**r1 captured** (`captures/enter_van/r1/`, `logs/animation/step7/enter_van_r1.log`; frames 10,
+12, 34, 44, 60, 65, 70, 74, 78, 81 and 82 kept).
+
+**Claude Code's comparison with its prediction** (a reading of the strip, not a check):
+
+| Capture (clip) | Predicted | Seen in r1 | Matches |
+| :-- | :-- | :-- | :-- |
+| 10-60 (to 48) | as r0 | the same poses on the same frames; the log identical to r0's to clip 48 | yes |
+| 65 (53) | no fade; his right foot lifting to the step | no fade; he turns into the opening, his near shoulder at the door's edge; his legs are in the door's shadow, so a lifted foot cannot be told from this camera | partly |
+| 70 (58) | on the step, rising into the opening, no fade | half his body behind the door, risen into the opening, no fade | yes |
+| 74 (62) | the fade begins, going in behind the door | the fade begun; only his shoulder and arm still outside the door | yes |
+| 78 (66) | most of the way to black, his shape in the cab | nearly black; his shape faint behind the door glass | yes |
+| 82 (70) | seated, the cab view coming up; `occupied` true between 69 and 70 | the cab view, dark, fading up; the log: `occupied` false at clip 69, true on the next frame | yes |
+
+The phases now end on the action: startup (to 31) is the step and the reach, active (32-47) the
+handle and the door's swing, recovery (48-68) the climb in behind the door. In r0 the recovery
+ended standing at the open door.
+
+**Re-pinned after the strip:** PIN2's seat time, 2.017 s → 2.333 s, measured as predicted (the
+pin samples on the physics tick, 1/60 s after 62/30 + 0.25 s, as it did before), its own commit.
+
+**The author's verdict on r1** (2026-11-22, #417, after watching the film and playing, verbatim):
+"the rig ethan entering animation was good as well, can be improved will work on it next."
+r1 stays in the game. The author names further improvement as their next piece of work; what to
+improve, and the observation-driven revision the handout asks for, come from them.
+
+## Claude against the author (Assignment 7)
+
+Each of Claude Code's strip readings beside the author's words. Where the author has not spoken
+to a reading, the table says so; nothing is inferred.
+
+| Claude Code's reading | The author's words (#417) | Agree? |
+| :-- | :-- | :-- |
+| r0 (1): §9's capture frames run two early; EnterVan's frame N falls on capture 12 + N | Not addressed by the author | — |
+| r0 (2): at the old cut, frame 53, both feet are still on the ground, so "climbs in" is never seen; the change for r1: the cut to 62 | "the rig ethan entering animation was good as well, can be improved will work on it next." r1 kept | Agrees with r1; more to improve, the author's next work |
+| r0 (3): the door runs one frame behind his hand (1/30 s) | Not addressed by the author | — |
+| r1 comparison: five of six predictions seen; the foot lift at clip 53 not readable from this camera | The same words: "good as well, can be improved" | Agrees; what to improve is not yet named |
+
+**Disagreements named:** none on a strip reading, so far.
+
+The author did overrule Claude Code's own judgement of the renders that came before the strips.
+These were films and stills of the third and fourth clips, which Claude Code had presented as
+right:
+- **#386:** the hand-keyed reload, "hes not even holding gun realistically".
+- **#398-#402:** five corrections of the rifle hold.
+- **#404:** the shock's hands not on the wheel, and the fear not reading.
+
+Each was fixed and then accepted: "the gun reloading animations looks good after lot of
+iterations… the shocked animation is real what i wanted it to be" (#417).

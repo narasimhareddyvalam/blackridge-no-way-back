@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/waterfront.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutw/w2/game/features/environments/harbour_flats/waterfront.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/waterfront.gd	2026-11-21 19:45:08
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutw/w2/game/features/environments/harbour_flats/waterfront.gd	2026-11-21 19:46:37
+@@ -181,7 +181,7 @@
+ 	crane = CRANE.instantiate() as Node3D
+ 	crane.name = "HarbourCrane"
+ 	add_child(crane)
+-	crane.rotation.y = PI / 2.0
++	crane.rotation.y = -PI / 2.0
+ 	crane.position = Vector3.UP * SLAB_TOP
+ 	var house := _part(crane, "Crane_Installations_Mat")
+ 	var middle := house.get_center() if house.size != Vector3.ZERO else Vector3.ZERO

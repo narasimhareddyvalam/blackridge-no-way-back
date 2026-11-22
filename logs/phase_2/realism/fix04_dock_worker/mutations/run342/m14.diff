@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m14/game/features/characters/dock_worker/dock_worker.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/characters/dock_worker/dock_worker.gd	2026-11-19 20:56:42
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m14/game/features/characters/dock_worker/dock_worker.gd	2026-11-20 12:49:20
+@@ -929,7 +929,7 @@
+ func _aim(on: bool) -> void:
+ 	if _window == null:
+ 		return
+-	_window.material_override = _window_lit if on else _window_dark
++	_window.material_override = _window_lit
+ 	_aim_line.visible = on and _aim_label != null
+ 	if not _aim_line.visible:
+ 		return

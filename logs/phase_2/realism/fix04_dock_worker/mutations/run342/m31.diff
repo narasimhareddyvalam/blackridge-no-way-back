@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m31/game/features/missions/the_wrong_cargo/seal_cutscene.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-19 19:57:56
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut342/m31/game/features/missions/the_wrong_cargo/seal_cutscene.gd	2026-11-20 12:50:56
+@@ -15,7 +15,7 @@
+ ## Each shot: its name and the camera's place in the world (in the van's frame for the last).
+ const DESK_EYE := Vector3(-44.4, 2.9, 16.6)
+ const STAIR_EYE := Vector3(-41.0, 2.2, 13.4)
+-const DOOR_EYE := Vector3(-37.8, 1.7, 19.4)
++const DOOR_EYE := Vector3(-38.3, 1.6, 17.5)
+ const APRON_EYE := Vector3(-37.0, 2.4, 23.0)
+ const DOORS_EYE := Vector3(1.85, 1.6, 4.5)
+ ## The seal shot, in the van's frame: 0.9 m behind its doors, a little to one side.

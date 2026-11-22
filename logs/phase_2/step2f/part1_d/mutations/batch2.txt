@@ -1,0 +1,3 @@
+mutation_feet_across_his_body: exit 1; STAIR RESULT: 18/19 passed; 1 failed; fails on its check: True; script error: False
+    FAIL: S11 down: his legs never cross: each planted foot under its own hip, at most 0.213 m to one side of it (at most 0.03), his left foot always to the left of his right, at least 0.020 m apart (at l
+clone restored byte for byte after each

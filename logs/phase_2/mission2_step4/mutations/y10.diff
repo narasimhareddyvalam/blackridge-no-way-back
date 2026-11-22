@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y10/game/features/environments/industrial_loop/container_yard.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:49:32
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mut4/y10/game/features/environments/industrial_loop/container_yard.gd	2026-11-18 11:50:45
+@@ -183,7 +183,7 @@
+ 	if not is_instance_valid(vehicle):
+ 		return false
+ 	var front := vehicle.to_global(_front)
+-	return absf(front.z - STOP_Z) < STOP_WITHIN and absf(front.x - GATE_X) < GATE_WIDE / 2.0
++	return absf(front.z - STOP_Z) < 50.0 and absf(front.x - GATE_X) < GATE_WIDE / 2.0
+ 
+ 
+ ## Whether the whole van is inside the yard, past the gate.

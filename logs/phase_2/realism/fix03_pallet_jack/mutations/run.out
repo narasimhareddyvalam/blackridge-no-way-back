@@ -1,0 +1,48 @@
+m1  the forks stay down            test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P3: each stroke raises the forks [-0.000, -0.000, -0.000, -0.000] m, the load [0.000, 0.002, 0.021, 0.040] m o
+      FAIL: P9: set down, the load rests on the floor (0.000 m) and the wheels stayed on it (0.0760 m off)
+m2  the load rises at once         test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P3: each stroke raises the forks [0.019, 0.038, 0.057, 0.076] m, the load [0.010, 0.020, 0.030, 0.040] m only 
+m3  the frame as drawn             test_pallet_jack.gd exit 1, 8/11 passed; 3 failed
+      FAIL: P2: standing lowered, its steer wheels and load rollers on the floor (the farthest 0.0000 m off) and its forks
+      FAIL: P3: each stroke raises the forks [0.043, 0.062, 0.081, 0.100] m, the load [0.000, 0.002, 0.021, 0.040] m only 
+      FAIL: P2: set down, lowered, its steer wheels and load rollers on the floor (the farthest 0.0000 m off) and its fork
+m4  the rollers ride the forks     test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P3: each stroke raises the forks [0.019, 0.038, 0.057, 0.076] m, the load [0.000, 0.002, 0.021, 0.040] m only 
+      FAIL: P9: set down, the load rests on the floor (0.000 m) and the wheels stayed on it (0.0760 m off)
+m5  the old 25 degree swing        test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P8: A held as he walks it swings the steering unit to 25.0° (100-105°), at most 25.0°, at most 14° a second (1
+      FAIL: P8: swung right round, it pivots about its rollers' middle: turned 0°, the middle moving 0.00 m while the hand
+m6  the handle swung too fast      test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P4: standing, A swings the steering unit 10.0° (10), at most 240° a second (120), and let go it comes back str
+m7  turning twice as tight         test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P5: its heading turns at v·sin(δ)/L about its rollers' line (39.4° in all against 19.7°, within 100.0%), the l
+      FAIL: P8: swung right round, it pivots about its rollers' middle: turned 99°, the middle moving 0.95 m while the han
+m8  the unit rolling along the heading test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P5: its heading turns at v·sin(δ)/L about its rollers' line (19.7° in all against 18.8°, within 5.7%), the lin
+      FAIL: P8: swung right round, it pivots about its rollers' middle: turned 0°, the middle moving 0.00 m while the hand
+m9  the wheels not rolling         test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P6: every wheel and roller rolls its distance over its radius (within 100.0%: SteerWheels 1.656 m off in 1.66 
+m10  the rollers at the steer wheels' radius test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P6: every wheel and roller rolls its distance over its radius (within 53.6%: SteerWheels 0.000 m off in 1.66 m
+m11  standing swings all the way    test_pallet_jack.gd exit 1, 9/11 passed; 2 failed
+      FAIL: P4: standing, A swings the steering unit 105.0° (10), at most 120° a second (120), and let go it comes back st
+      FAIL: P8: A held as he walks it swings the steering unit to 100.1° (100-105°), at most 105.0°, at most 120° a second
+m12  the swing not held to his walk test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P8: swung right round, it pivots about its rollers' middle: turned 0°, the middle moving 0.00 m while the hand
+m13  the handle not easing back     test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P4: standing, A swings the steering unit 10.0° (10), at most 120° a second (120), and let go it comes back str
+m14  the bogies not turning         test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P3: each stroke raises the forks [0.019, 0.038, 0.057, 0.076] m, the load [0.000, 0.002, 0.021, 0.040] m only 
+m15  his walk not stopped when he is test_loading.gd exit 1, 34/35 passed; 1 failed
+      FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (true), never Pushing pla
+m16  pressed down on the floor as before test_loading.gd exit 1, 28/35 passed; 7 failed
+      FAIL: H2: pulling the jack back out, Ethan hauls it in the captured heavy pull in the hold (true), never Pushing pla
+      FAIL: H2: pulled back out, the jack leaves the van (false), Ethan stands up again on the deck (1.30 m) and E lets go
+      FAIL: H1: E at the pendant raises the lift again with the jack on it (0.46 m), the load left in the van
+      FAIL: H2: W let go on the dock as he walks behind it (["Walk", "Idle"]), the load rolls on 0.05 m with his last step
+      FAIL: H2: W let go while he leans in to get it going (["Walk", "Idle"]), the push ends in Push Stop from the step he
+      FAIL: H13: the empty jack pushed straight at the pendant post, its forks lined up 0.20 m across it, stops against it
+      FAIL: H11: the jack's handle never goes into Ethan: its rod and loop stay outside his jacket, chin, face and legs al
+m17  the jack dragged after him sideways test_pallet_jack.gd exit 1, 10/11 passed; 1 failed
+      FAIL: P8: swung right round, it pivots about its rollers' middle: turned 50°, the middle moving 1.69 m while the han

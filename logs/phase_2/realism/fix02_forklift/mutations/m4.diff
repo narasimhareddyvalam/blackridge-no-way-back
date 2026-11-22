@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf2/m4/game/features/vehicles/forklift/forklift_truck.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd	2026-11-19 12:17:45
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutf2/m4/game/features/vehicles/forklift/forklift_truck.gd	2026-11-19 12:26:49
+@@ -651,7 +651,7 @@
+ 			var moved: Vector3 = hub - _hubs[label]
+ 			var ahead := (global_basis * Basis(Vector3.UP, yaw)).z
+ 			var radius := STEER_RADIUS if label.begins_with("Steer") else DRIVE_RADIUS
+-			_rolled[label] = float(_rolled[label]) + moved.dot(ahead) / radius
++			_rolled[label] = float(_rolled[label])
+ 		_hubs[label] = hub
+ 		part.basis = Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, float(_rolled[label]))
+ 	var mast := _parts.get("Mast") as Node3D

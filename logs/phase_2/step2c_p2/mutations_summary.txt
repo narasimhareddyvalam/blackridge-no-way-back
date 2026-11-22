@@ -1,0 +1,27 @@
+mutation_seals_gone: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F1: each dock has a seal framing its door on the wall's face (wrong: 1, 2, 3, 4, 5, 6, 7, 8, 9)
+mutation_bumpers_soft: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F2: two solid bumpers under each door, tops at 1.3 m and 0.10-0.20 m proud (18 bumpers; wrong: 1, 2, 3, 4, 5, 6, 7, 8, 9)
+mutation_leveller_sunk: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F3: docks 1-8 each have a leveller inside, its deck at 1.3 m, and bay 9 none (wrong: 1, 2, 3, 4, 5, 6, 7, 8)
+mutation_dock_lights_up: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F4: a lit light over each of the ten doors, aimed down (10 lights; wrong at x -80.00, -76.00, -72.00, -68.00, -64.00, -60.00, -56.00, -52.00, -47.75, -42.
+mutation_signals_all_red: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F5: a red/green signal beside each dock door, green at docks 5 and 9 and red at the others (wrong: 5, 9)
+mutation_dock_5_shut: exit 1; MISSION TWO RESULT: 51/53 passed; 2 failed; fails on its check: True; script errors 0
+    FAIL: E4: a closed, solid door fills each opening but docks 5 and 9, which stand open (wrong: DockDoor5 not open)
+    FAIL: F6: docks 5 and 9 stand open, a lit arm light inside each aimed out into its bay (wrong: 5)
+mutation_panel_left_down: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: E4: a closed, solid door fills each opening but docks 5 and 9, which stand open (wrong: DockDoor5 not open, DockDoor9 not open)
+mutation_arm_light_off: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F6: docks 5 and 9 stand open, a lit arm light inside each aimed out into its bay (wrong: 5, 9)
+mutation_bay_lights_dark: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F6: the inside by the docks is lit (0 lights under the roof) with the forklift, the pallet jack and 11 pallets (missing: )
+mutation_forklift_in_the_court: exit 1; MISSION TWO RESULT: 52/53 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: F6: the inside by the docks is lit (10 lights under the roof) with the forklift, the pallet jack and 11 pallets (missing: Forklift)
+mutation_dock_rain_gone: exit 1; LAMP RAIN STATE RESULT: 13/15 passed; 2 failed; fails on its check: True; script errors 0
+    FAIL: Every lamp has a rain volume: 8 street lamps, the depot's 3 wall lights, the floodlight, the door lamp, the transfer shed's gate lamp, its yard's 5 lights
+    FAIL: In the court before the docks, the transfer shed's 7 volumes (its gate lamp, its yard's 5 lights and its dock front) all rain at once, within B1's 8 (Lamp
+mutation_dock_rain_inside: exit 1; LAMP RAIN STATE RESULT: 14/15 passed; 1 failed; fails on its check: True; script errors 0
+    FAIL: No rain volume's box reaches inside the transfer shed (LampRainDock19)
+clone restored byte for byte after each

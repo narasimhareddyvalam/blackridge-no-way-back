@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g3/game/features/vehicles/forklift/forklift_truck.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/vehicles/forklift/forklift_truck.gd	2026-11-16 14:59:24
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutG/g3/game/features/vehicles/forklift/forklift_truck.gd	2026-11-16 15:00:25
+@@ -241,7 +241,7 @@
+ 			_go("to_stage", STAGE, false, CREEP), {"do": "take"}, _raise(TRAVEL_LIFT),
+ 			_go("from_stage", LANE, true, REVERSE_SPEED), {"do": "horn"},
+ 			_go("to_mouth", MOUTH, false, TOP_SPEED), {"do": "horn"},
+-			_turn(PI), _go("down_aisle", AISLE_TURN, false, AISLE_SPEED), _turn(PI / 2.0),
++			_turn(PI), _go("down_aisle", AISLE_TURN, false, TOP_SPEED), _turn(PI / 2.0),
+ 			_go("to_slot", SLOT, false, CREEP), _raise(0.0), {"do": "leave", "at": "slot"},
+ 			_go("from_slot", AISLE_TURN, true, CREEP), _turn(0.0),
+ 			_go("up_aisle", MOUTH, false, AISLE_SPEED), {"do": "horn"},

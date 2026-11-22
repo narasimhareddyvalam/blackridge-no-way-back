@@ -1,0 +1,38 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _start (res://tests/test_cargo_opening.gd:98)
+       [7] _run (res://tests/test_cargo_opening.gd:38)
+PASS: MO1: continuing from Mission 1's end plays Mission 2's opening, titled THE WRONG CARGO, not the game's title (DAYS LATER THE WRONG CARGO)
+PASS: MO2: days later the windshield is new, no crack (<null>)
+PASS: MO3: E skips it into the van at the depot; the save no longer asks for it (false); a text from the new dispatcher brings the job, sealed (BR 048: transfer tonight. Load at the transfer shed, bay 9; your run sheet is in the cab. Sealed consignment: do not open, do not inspect. Rate as agreed.)
+PASS: MO4: driving off from the depot, Maya calls (true)
+PASS: MO5: she keeps him at the work ( | MAYA: Hey. You're out again? | ETHAN: New dispatcher. Better money. | MAYA: Good. That's good, Ethan. Keep at it. | ETHAN: You sound tired. | MAYA: I'm fine. Just take the work. Don't think about it too much. | ETHAN: Sunday still on? | MAYA: We'll see. Drive safe. | )
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _start (res://tests/test_cargo_opening.gd:98)
+       [7] _run (res://tests/test_cargo_opening.gd:77)
+       [8] _free (res://tests/test_cargo_opening.gd:110)
+PASS: MO6: a plain Mission 2 start has no opening (false) and no call (false)
+PASS: MO7: Mission 1's end saves Mission 2's start with its opening to play
+CARGO OPENING RESULT: 7/7 passed; 0 failed
+WARNING: 32 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

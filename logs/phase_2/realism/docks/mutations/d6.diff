@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/dock_dressing.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutd/d6/game/features/environments/industrial_loop/dock_dressing.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/dock_dressing.gd	2026-11-21 09:56:40
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutd/d6/game/features/environments/industrial_loop/dock_dressing.gd	2026-11-21 10:05:23
+@@ -92,7 +92,7 @@
+ 		var visor := Build.box(holder, Vector3(0.0, y + LENS_RADIUS + 0.008, HOUSING.z / 2.0
+ 			+ 0.06), Vector3(LENS_RADIUS * 2.3, 0.01, 0.12), body)
+ 		visor.rotation.x = -0.18
+-		visor.name = "Visor%d" % index
++		visor.name = "Shade%d" % index
+ 		index += 1
+ 	return holder
+ 

@@ -1,0 +1,16 @@
+y1  one serial for every box       test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y1: every box marked as ISO 6346 has it: owner code, serial and a check digit that checks, its size-type code 
+y2  a wrong check digit            test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y1: every box marked as ISO 6346 has it: owner code, serial and a check digit that checks, its size-type code 
+y3  40 ft boxes called 20 ft       test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y1: every box marked as ISO 6346 has it: owner code, serial and a check digit that checks, its size-type code 
+y4  the old flat paint             test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y2: the boxes' paint draws each one's markings on its doors and its line's name and code on its sides, from it
+y5  every box worn alike           test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y3: each box weathered its own way (1 wear patterns among 82 boxes)
+y6  no room made: the two stacks kept test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y4: a container top-loader (a real model) parked on the paving by the stacks, its spreader drawn in to 20 ft, 
+y7  two floods a mast              test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y5: each high mast carries 4 flood heads at its top, each with its light, and they light the lane ({ 0: 2, 1: 
+y8  floods aimed off the lane      test_yard_realism.gd exit 1, 4/5 passed; 1 failed
+      FAIL: Y5: each high mast carries 4 flood heads at its top, each with its light, and they light the lane ({ 0: 4, 1: 

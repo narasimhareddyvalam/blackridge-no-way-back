@@ -1,0 +1,38 @@
+GPU price from the Metal Performance HUD's per-frame GPU time, Apple M4 (MacBook Air)
+GPU PRICE: window (1280.0, 800.0), vsync 1, MetalFX scale 0.75, 60 lights
+HUD lines 520, frames 25404
+
+fx  view               cycles  frames  frames   shown ms  hidden ms  price ms   95% +/-  state
+                                shown  hidden
+SSH S                      14     460     586     20.877     17.822     3.056     0.068  0 particles; lights 60
+SAO S                      14     571     579     17.943     17.825     0.118     0.043  0 particles; lights 60
+SIL S                      14     556     558     18.418     17.879     0.533     0.054  0 particles; lights 60
+SGI S                      14     665     789     19.961     18.015     1.911     0.215  0 particles; lights 60
+SLT S                      14     454     586     21.269     17.807     3.458     0.100  0 particles; lights 60
+ASH A                      14     428     521     23.584     19.021     4.563     0.053  0 particles; lights 60
+AAO A                      14     523     517     19.240     19.136     0.104     0.049  0 particles; lights 60
+AIL A                      14     487     504     20.727     20.064     0.670     0.123  0 particles; lights 60
+AGI A                      14     618     686     23.587     20.532     3.059     0.333  0 particles; lights 60
+ALT A                      14     374     469     26.637     20.981     5.654     0.113  0 particles; lights 60
+RSH R                      14     452     445     22.203     22.251    -0.054     0.474  0 particles; lights 60
+RAO R                      14     451     447     22.423     22.311     0.109     0.206  0 particles; lights 60
+RIL R                      14     440     452     23.378     22.439     0.946     0.183  0 particles; lights 60
+RGI R                      14     569     640     25.416     22.282     3.133     0.228  0 particles; lights 60
+RLT R                      14     429     450     23.911     22.832     1.080     0.191  0 particles; lights 60
+
+fx    price ms         95% interval   budget  against it                     frames/s shown, hidden
+SSH      3.056     2.988 to   3.124        -  an option, no budget           46.0, 58.6
+SAO      0.118     0.075 to   0.161        -  an option, no budget           57.8, 58.7
+SIL      0.533     0.480 to   0.587        -  an option, no budget           55.9, 58.2
+SGI      1.911     1.696 to   2.126        -  an option, no budget           50.5, 57.6
+SLT      3.458     3.358 to   3.558        -  an option, no budget           46.1, 58.7
+ASH      4.563     4.510 to   4.616        -  an option, no budget           42.6, 52.4
+AAO      0.104     0.055 to   0.153        -  an option, no budget           52.6, 52.3
+AIL      0.670     0.547 to   0.793        -  an option, no budget           49.7, 50.2
+AGI      3.059     2.726 to   3.393        -  an option, no budget           43.5, 48.5
+ALT      5.654     5.541 to   5.767        -  an option, no budget           38.2, 46.7
+RSH     -0.054    -0.527 to   0.420        -  an option, no budget           44.8, 44.7
+RAO      0.109    -0.097 to   0.315        -  an option, no budget           45.0, 45.1
+RIL      0.946     0.763 to   1.128        -  an option, no budget           44.6, 45.5
+RGI      3.133     2.906 to   3.361        -  an option, no budget           40.2, 45.3
+RLT      1.080     0.889 to   1.270        -  an option, no budget           43.5, 45.1

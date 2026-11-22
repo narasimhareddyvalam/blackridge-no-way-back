@@ -8,7 +8,8 @@ committed files into `game/features/vehicles/freight_van/art/iveco/`:
   reflectors and the bulkhead window), the lamp lenses (`Headlights`, `TailLamps`, and the
   indicators `FrontIndicatorLeft`, `FrontIndicatorRight`, `RearIndicatorLeft` and
   `RearIndicatorRight`), the `Windshield` glass, both front doors with their windows
-  (`DriverDoor/DriverWindow`, `PassengerDoor/PassengerWindow`) and the wheels
+  (`DriverDoor/DriverWindow`, `PassengerDoor/PassengerWindow`), both rear doors
+  (`RearDoorLeft`, which carries the rear plate, and `RearDoorRight`) and the wheels
   (`WheelFrontLeft`, `WheelFrontRight`, `WheelRearLeft`, `WheelRearRight`);
 - `iveco_cab.glb`: the cab interior (`Cab`) and the `SteeringWheel`.
 
@@ -26,7 +27,10 @@ The conversion:
   door, which had none;
 - splits out the parts that move, each with its own origin: the doors swing about their
   hinges (local Y), the wheels turn about their centres (local X), and the steering wheel
-  turns about its column (local Z, which points up the column at the driver);
+  turns about its column (local Z, which points up the column at the driver). The rear doors
+  open to 270 degrees and lie against the sides, as a Daily's do on their long hinges, so each
+  turns about a point at the body's outer rear corner, just behind its door's outer face
+  (step 2d, docs/PHASE_BRIEF.md);
 - splits the lamp lenses from the clear glass, so the game can light them. The top of each
   tail lamp is its indicator;
 - cuts the moon roof's opening through the roof and the headliner over the front seats
@@ -78,6 +82,9 @@ STEERING_DEPTH = 0.03
 STEERING_REACH = 0.2
 DOORS = {"DriverDoor": ("Front_door_L", "DriverWindow"),
          "PassengerDoor": ("Front_door_R", "PassengerWindow")}
+REAR_DOORS = {"RearDoorLeft": ("Back_door_1", -1), "RearDoorRight": ("Back_door_2", 1)}
+BODY_SIDE = "Body_exterior_Body exterior 1_0"
+SWING_GAP = 0.01
 NAME_LETTERS = {"Body_exterior_1": [(0.284, 0.951, 0.365, 0.967),
                                     (0.725, 0.946, 0.801, 0.979)],
                 "Back_door": [(0.636, 0.376, 0.737, 0.405)]}
@@ -325,6 +332,20 @@ def doors(objects, hinges):
         window.parent = door
         window.matrix_parent_inverse = Matrix.Identity(4)
         window.matrix_basis = Matrix.Identity(4)
+        made.append(door)
+    return made
+
+
+def rear_doors(objects, plate):
+    side_of_body = float(np.abs(points(objects[BODY_SIDE])[:, 0]).max())
+    made = []
+    for name, (prefix, side) in REAR_DOORS.items():
+        pieces = [o for key, o in objects.items() if key.startswith(prefix + "_")]
+        door = join(pieces + ([plate] if side < 0 else []), name)
+        corners = points(door)
+        pivot = Vector((side * side_of_body, corners[:, 1].min() - SWING_GAP,
+                        corners[:, 2].mean()))
+        place_origin(door, Matrix.Translation(pivot))
         made.append(door)
     return made
 
@@ -599,16 +620,17 @@ def main():
     wheel_parts = wheels(objects.pop("Wheel_Wheel_0"))
     steering = steering_wheel(objects["Interior_Interior_0"])
     hinged = doors(objects, hinges)
+    rear = rear_doors(objects, plate)
     paint_textures(front_plate)
     bpy.data.objects.remove(front_plate)
     rest = [o for name, o in objects.items()
-            if not name.startswith("Front_door_") and name != "Wheel_Wheel_0"]
+            if not name.startswith(("Front_door_", "Back_door_")) and name != "Wheel_Wheel_0"]
     cab = [o for o in rest if all(m.name in CAB_MATERIALS for m in o.data.materials if m)]
-    body = join([o for o in rest if o not in cab and o is not glass] + [plate], "Body")
+    body = join([o for o in rest if o not in cab and o is not glass], "Body")
     cab = join(cab, "Cab")
     print(f"Moon roof: cut {cut_roof(body)} roof faces and {cut_roof(cab)} headliner faces")
     shrink_textures()
-    export([body, glass, windshield] + lenses + hinged + wheel_parts, "iveco_exterior")
+    export([body, glass, windshield] + lenses + hinged + rear + wheel_parts, "iveco_exterior")
     export([cab, steering], "iveco_cab")
 
 

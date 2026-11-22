@@ -1,0 +1,13 @@
+c1  Mission 1's end asks for no opening test_cargo_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: MO7: Mission 1's end saves Mission 2's start with its opening to play
+c2  the opening on every Mission 2 start test_cargo_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: MO6: a plain Mission 2 start has no opening (true) and no call (false)
+c3  the game's title in it         test_cargo_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: MO1: continuing from Mission 1's end plays Mission 2's opening, titled THE WRONG CARGO, not the game's title (
+c4  no dispatch                    test_cargo_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: MO3: E skips it into the van at the depot; the save no longer asks for it (false); a text from the new dispatc
+c5  the save still asks for it     test_cargo_opening.gd exit 1, 6/7 passed; 1 failed
+      FAIL: MO3: E skips it into the van at the depot; the save no longer asks for it (true); a text from the new dispatch
+c6  Maya never calls               test_cargo_opening.gd exit 1, 5/7 passed; 2 failed
+      FAIL: MO4: driving off from the depot, Maya calls (false)
+      FAIL: MO5: she keeps him at the work ()

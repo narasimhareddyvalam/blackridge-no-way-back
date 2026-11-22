@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1029)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:172)
+       [6] _run (res://tests/test_wipers.gd:36)
+PASS: Two wipers are built (2)
+PASS: Each wiper has a pivot cap, spring cover, arm and hook, and a blade with spoiler, rubber lip, end caps and adapter
+PASS: The blades are about 2 cm wide (2.0 and 2.0 cm)
+PASS: The driver's blade is longer than the passenger's (65 and 53 cm)
+PASS: Every wiper part sits outside the glass
+PASS: The wiped area on the glass matches where the blades lie (worst 0.0 mm)
+PASS: The windshield takes the blade's motion, the dumped water and the wiper layout (missing: )
+PASS: New drops land in new places after each wipe (three resting layers reseeded)
+PASS: Wiped glass stays clear long enough to see (re-wets over 2.0 s parked, 0.67 s at 72 km/h)
+PASS: The glass follows each blade's swing (fastest 4.0 rad/s)
+PASS: Water is dumped where the blades turn at the top, then breaks up (0.18 after 1.2 s)
+PASS: Parked wipers push no water
+WIPERS RESULT: 12/12 passed; 0 failed
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

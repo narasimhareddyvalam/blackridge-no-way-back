@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d9/game/features/environments/industrial_loop/shed_floor.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:51:25
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutD/d9/game/features/environments/industrial_loop/shed_floor.gd	2026-11-15 10:53:01
+@@ -80,7 +80,7 @@
+ func paint() -> void:
+ 	_marks.clear()
+ 	_brushes.clear()
+-	_draw.seed = SEED
++	_draw.randomize()
+ 	var size := Vector2i(roundi(MAP.size.x * PER_METRE), roundi(MAP.size.y * PER_METRE))
+ 	_images.clear()
+ 	for index in range(4):

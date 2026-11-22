@@ -1,0 +1,12 @@
+r1  the sash moving before her hand is on it test_booths.gd exit 0, 19/19 passed; 0 failed
+r2  her hand left where the pull was test_booths.gd exit 1, 17/19 passed; 2 failed
+      FAIL: B7 (shed): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pull (5
+      FAIL: B7 (compound): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pul
+r3  her chair not pulled in        test_booths.gd exit 1, 18/19 passed; 1 failed
+      FAIL: B10 (compound): her chair in as a person pulls hers in, so she leans only 33 degrees to reach, her toes 0.26 m
+r4  no lean                        test_booths.gd exit 0, 19/19 passed; 0 failed
+r5  her elbow thrown up            test_booths.gd exit 0, 19/19 passed; 0 failed
+r6  her hand not turned to the pull test_booths.gd exit 1, 16/19 passed; 3 failed
+      FAIL: B7 (shed): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pull (5
+      FAIL: B7 (compound): the sash moves only under her left hand: over 150 moving ticks her grip never 3 cm from its pul
+      FAIL: B8 (compound): sliding it her elbow bends 87-117 degrees and her wrist turns 63 degrees at most

@@ -1,0 +1,27 @@
+c1  the convoy unseen              test_convoy.gd exit 0, 4/4 passed; 0 failed
+c2  never spotted however close    test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C2: too close (12 m) they see him after 8.0 s; back at the junction (false), tailing again (TAIL THE CONVOY)
+c3  the gate left open behind them test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C3: tailed 60 m back, the convoy keys through the gate (true), which shuts behind it (false); THE SERVICE GATE
+c4  the service gate deaf to the code test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C4: at the service gate (E  Key in Maya's code) E keys the code, it opens (false), stage 3 saved, GET INTO THE
+c5  runway lights 120 m apart      test_airfield.gd exit 1, 4/5 passed; 1 failed
+      FAIL: F1: the runway 505 m by 18 m, solid, 12 white edge lights at most 101 m apart, 8 green threshold lights, its n
+c6  a door too narrow for the plane test_airfield.gd exit 1, 4/5 passed; 1 failed
+      FAIL: F3: the hangar's door 12.0 m wide and 6.8 m high (a PC-12 is 16.28 by 4.26), 6 high-bay lights, an office with
+c1  the convoy unseen              test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C1: INTERCEPT THE CONVOY (INTERCEPT THE CONVOY); at the coastal road two black SUVs ahead heading north (false
+
+
+c7  the convoy through a gate still sliding test_convoy.gd exit 0, 4/4 passed; 0 failed
+c8  the gate never shut behind them test_airfield.gd exit 0, 5/5 passed; 0 failed
+s1  subtitles left over the objective test_maya_call.gd exit 1, 13/14 passed; 1 failed
+      FAIL: Her subtitles sit clear of the objective beneath them (1960 frames over it)
+c7  the gate leaf left across the way test_convoy.gd exit 0, 4/4 passed; 0 failed
+c8  the gate stuck shut            test_convoy.gd exit 1, 2/4 passed; 2 failed
+      FAIL: C3: tailed 60 m back, the convoy keys through the gate (false), only once it stands open (0 frames in it shut)
+      FAIL: C4: at the service gate () E keys the code, it opens (false), stage 2 saved, TAIL THE CONVOY
+c7  the gate leaf left across the way test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C4: at the service gate (E  Key in Maya's code), shut (true), E keys the code, it slides open (true) and the w
+c9  the SUVs' tail lamps never lit test_convoy.gd exit 1, 3/4 passed; 1 failed
+      FAIL: C1: INTERCEPT THE CONVOY (INTERCEPT THE CONVOY); at the coastal road two black SUVs ahead heading north (false
