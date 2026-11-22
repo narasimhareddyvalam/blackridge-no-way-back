@@ -1,0 +1,3 @@
+g2  ends at speed                  test_getaway.gd exit 1, 3/5 passed; 2 failed
+      FAIL: G3: driving past it at speed does not end the mission (passed true, ended true)
+      FAIL: G4: stopped there, the mission ends as Mission 1's: the HUD gone (true), the engine off (false); the save hold

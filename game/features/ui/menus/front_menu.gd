@@ -556,6 +556,17 @@ func _credits_text() -> String:
 	_section(lines, "THE COMPOUND'S PATROLS", "\"Security Guard - Rigged 3D Model\" by qsardor57913 "
 		+ "(Sketchfab: qsardor57913), licensed CC BY 4.0: the patrol guards, given the walk and idle "
 		+ "of Ethan's own Mixamo clips.")
+	_section(lines, "THE HARBOUR", "\"Harbor crane\" by TGVMisterH, licensed CC BY 4.0: the "
+		+ "terminal's mobile harbour crane at berth 2, its own glow removed. \"Chevrolet Suburban "
+		+ "2015-Unmarked\" by David_Holiday, licensed CC BY 4.0: the black SUVs, repainted. "
+		+ "\"Pilatus PC 12/47\" by helijah, licensed CC BY 4.0: the plane at the airfield, "
+		+ "repainted. Blackridge is not affiliated with Chevrolet, Liebherr or Pilatus.")
+	_section(lines, "THE MEN AT THE HARBOUR", "\"guard\" by bumstrum, licensed CC BY 4.0: the men "
+		+ "waiting at berth 2 and their pistols, given the walk and idle of Ethan's own Mixamo "
+		+ "clips.")
+	_section(lines, "MAYA AND LILY", "Maya is Female_Adult_07 and Lily is Female_Child_01, from "
+		+ "the Microsoft Rocketbox avatar library, with its idles, its talk and its walk, released "
+		+ "under the MIT license above.")
 	_section(lines, "THE CONTAINER YARD", "\"CONTAINER LOADER\" by jinjinjin (Sketchfab: "
 		+ "thejinjinjin), licensed CC BY 4.0: the yard's top-loader, its spreader drawn in. The "
 		+ "boxes' markings are set in Barlow Condensed by The Barlow Project Authors, released "

@@ -604,6 +604,73 @@ func _containers() -> void:
 		add_child(many)
 
 
+## Containers stacked elsewhere, as this yard's are (Mission 3's waterfront, #359): `stacks` holds
+## [kind, the bottom box's place (its middle on the ground), how many high], each box painted as
+## this yard's, its marking strip and wear drawn from `seed`, each stack solid in `body`. Returns
+## the stacks' footprints.
+func stack(parent: Node3D, body: StaticBody3D, stacks: Array, seed: int) -> Array[Rect2]:
+	var parts := PARTS.instantiate() as Node3D
+	var meshes := {}
+	for found in parts.find_children("*", "MeshInstance3D", true, false):
+		meshes[String(found.name)] = (found as MeshInstance3D).mesh
+	parts.free()
+	var marks: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MARKS))
+	var strips: Array = marks["strips"]
+	var lines: Array = marks["lines"]
+	var wear := RandomNumberGenerator.new()
+	wear.seed = seed
+	var placed := {}
+	var footprints: Array[Rect2] = []
+	var count := 0
+	for entry: Array in stacks:
+		var kind := String(entry[0])
+		var base: Transform3D = entry[1]
+		var high := int(entry[2])
+		var size: Vector3 = SIZES[kind]
+		for level in range(high):
+			var strip: Dictionary = strips[(count * 7 + seed) % strips.size()]
+			var livery: Array = (lines[int(strip["line"])] as Dictionary)["livery"]
+			var shade := 1.0 + wear.randf_range(-LIVERY_JITTER, LIVERY_JITTER)
+			var colour := Color(float(livery[0]) * shade, float(livery[1]) * shade,
+				float(livery[2]) * shade)
+			var custom := Color(float((count * 7 + seed) % strips.size()), float(strip["line"]),
+				wear.randf(), 0.0)
+			if not placed.has(kind):
+				placed[kind] = []
+			(placed[kind] as Array).append([base.translated(Vector3.UP * size.y * level), colour,
+				custom])
+			count += 1
+		var shape := BoxShape3D.new()
+		shape.size = Vector3(size.x, size.y * high, size.z)
+		var collision := CollisionShape3D.new()
+		collision.shape = shape
+		collision.transform = Transform3D(base.basis, base.origin
+			+ Vector3.UP * size.y * high / 2.0)
+		body.add_child(collision)
+		var corners := [base * Vector3(-size.x / 2.0, 0.0, -size.z / 2.0),
+			base * Vector3(size.x / 2.0, 0.0, size.z / 2.0)]
+		var foot := Rect2(Vector2(corners[0].x, corners[0].z), Vector2.ZERO).expand(
+			Vector2(corners[1].x, corners[1].z))
+		footprints.append(foot.abs())
+	for kind: String in placed:
+		var multi := MultiMesh.new()
+		multi.transform_format = MultiMesh.TRANSFORM_3D
+		multi.use_colors = true
+		multi.use_custom_data = true
+		multi.mesh = _painted(meshes[kind] as Mesh, kind)
+		multi.instance_count = (placed[kind] as Array).size()
+		for index in range(multi.instance_count):
+			var item: Array = placed[kind][index]
+			multi.set_instance_transform(index, item[0])
+			multi.set_instance_color(index, item[1])
+			multi.set_instance_custom_data(index, item[2])
+		var many := MultiMeshInstance3D.new()
+		many.name = kind + "s"
+		many.multimesh = multi
+		parent.add_child(many)
+	return footprints
+
+
 func _top_loader() -> void:
 	var loader := Node3D.new()
 	loader.name = "TopLoader"

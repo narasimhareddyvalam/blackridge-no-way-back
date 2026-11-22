@@ -8879,3 +8879,101 @@ mask and the lamps' glare already. Values marked † are Claude Code's proposals
   then 8/8 and 16/16 (`fix/`). Stills `captures/audit/harbour_flats/a3/`.
 - **Known gap:** the mission map's baked ground ends at x 630; the flats show black on it until
   it is baked again (with the waterfront).
+
+## Revision 2026-11-21 (Mission 3's steps 3, 4 and 5 built: the waterfront and the ambush, the confrontation and the proof, the airfield and the convoy, #359-#360)
+
+Every choice and word below is Claude Code's, at the author's word ("finish mission 3 and same
+rules", #359; "keep checking things to real life pictures", #360), recorded as drafts for the
+joint review of Missions 2 and 3.
+
+- **Real references first (Commons):** Dublin's South Quays container terminal at night (amber
+  high-mast floods, stacks two to four high, reflections on the wet slab) and a Liebherr mobile
+  harbour crane for the waterfront; William R. Fairchild airport at Port Angeles (chain-link with
+  barbed wire, flat tarmac, an evergreen treeline) for the airfield; a Pilatus PC-12's published
+  size (16.28 m span, 14.40 m long, 4.26 m high) for the plane and the hangar's door.
+- **Step 3, the waterfront** (`game/features/environments/harbour_flats/waterfront.gd`, new): a
+  small container terminal east of the coastal road, an access road to its open gate and lit
+  gatehouse, a chain-link fence but on the quay; four blocks of the container yard's own boxes
+  (`container_yard.gd`'s new `stack`) leaving a lane to the quay; TGVMisterH's "Harbor crane"
+  (CC BY 4.0, its own glow removed) on the apron by berth 2, boom over the water; four 30 m masts
+  in sodium-coloured flood with rain falling from 9 m; bollards every 15 m, fenders, BERTH 2
+  painted at the edge.
+- **Step 3, the ambush** (`game/features/missions/last_run/ambush.gd`, new;
+  `game/features/vehicles/scripted_suv/scripted_suv.gd`, new): PARK AT BERTH 2; stopped there, a
+  cutscene: two black SUVs (David_Holiday's "Chevrolet Suburban 2015-Unmarked", CC BY 4.0,
+  repainted) light up between the stacks, three men in dark jackets (bumstrum's "guard", CC BY
+  4.0, given Ethan's Mixamo walk and idle at their real speeds, 1.738 and 4.943 m/s) come out with
+  pistols, one at the driver's window; shots, the windshield cracked, and the man's phone falls
+  into the cab as Ethan floors it. Then GET OUT OF THE TERMINAL: one SUV races to block the gate;
+  out first and he is away, there second and the escape starts again at the berth without the
+  cutscene. GET AWAY (150 m), then CHECK THE PHONE: M's messages, the number saved as MAYA;
+  stage 1 saved. The shots and the glass are synthesised (`source_assets/audio/last_run/`).
+  **Changed from the brief:** the phone is in the cab, dropped through the window, not on the
+  quay, so he never stops under fire to pick it up.
+- **Step 4, the confrontation and the proof** (`last_run.gd`, `story_scenes.gd`, new): Maya
+  (Rocketbox's Female_Adult_07, MIT) waits by her sedan at the depot; stopped by her, the
+  confrontation plays in the cutscenes' look (she routed his jobs; she is married to Adrian Vale;
+  their daughter Lily is five; Adrian has her; "Don't call me"), then TWO DAYS LATER; LISTEN TO THE
+  RECORDING: E shows her voice memo of Adrian's offer and her refusal, and her forwarded dispatch
+  records whose dates are the nights he drove (N03's draft as the brief had it); MEET MAYA AT THE
+  VIEWPOINT; the reconciliation (he forgives, trust will take longer; Adrian flies Lily out from
+  the airfield tonight); stage 2 saved. Lily (Female_Child_01, scaled to 1.12 m, a five-year-old's
+  height) is converted for step 7.
+- **Step 5, the airfield** (`harbour_flats/airfield.gd`, new): runway 09/27, 505 m by 18 m, white
+  edge lights at most 60 m apart, green thresholds, its numbers read from each approach; a
+  windsock; a taxiway to the apron, where helijah's "Pilatus PC 12/47" (CC BY 4.0, repainted white)
+  waits with its nav lights and a flashing beacon; a steel hangar 32 by 26 m with a 22 by 6.8 m
+  door opening (wider and higher than the plane), high-bay lights and a lit office in its corner;
+  chain-link round it with a keypad gate off an access road from the coastal road and a service
+  gate on the south side off a gravel freight track.
+- **Step 5, the convoy** (`last_run/convoy.gd`, new): INTERCEPT THE CONVOY to the coastal road;
+  two black SUVs ahead heading north and Maya calls (the timing, the plane put back, the service
+  gate's code 2417, "Bring her to me"); TAIL THE CONVOY 25-200 m back: closer than 25 m for 2 s,
+  or farther than 200 m, and he is back at the junction with the convoy ahead again; kept back,
+  the lead stops while its driver keys in, the gate opens and shuts behind both; THE SERVICE GATE;
+  E keys Maya's code, it opens, stage 3 saved, GET INTO THE HANGAR. **Changed from the brief:**
+  the brief had Ethan stop his van across a choke point before the convoy arrived, and "two black
+  SUVs and a van". GAME_STORY's Act V reads "Ethan follows a convoy toward the airfield ... Maya
+  provides timing, a route change, and access information", so the convoy is followed, Maya's
+  access is the service gate's code and her route change is the plane put back; two SUVs, no van.
+  The brief's rule "the convoy stops only if the van blocks the choke point" becomes the tail's
+  rule above. The handgun's source (the brief: the convoy's lead car) is decided in step 6.
+- **N04's draft, moved:** Maya waits at the service gate, not the main gate, since that is the
+  way in she gives him.
+- **Tests (first run red):** `test_waterfront.gd` 0/1 then 8/8; `test_ambush.gd` 0/1 then 5/5;
+  `test_proof.gd` failed before Maya existed, then 6/6; `test_airfield.gd` 4/5 on its first run
+  (the runway's numbers), then 5/5; `test_convoy.gd` failed before the convoy existed, then 4/4.
+  Mutations, all exit 1: waterfront six, ambush seven, proof five, convoy, airfield and HUD ten
+  (c1, the convoy left unseen, survived first, so C1 now checks the SUVs are visible; a leaf left
+  across an "open" gate survived, so C4 now checks the service gate's way is shut before the code
+  and clear after it).
+- **Found in the stills and fixed (tests first):** the airfield's gates were plain grey slabs; they
+  are now the compound's real sliding gate (`sliding_gate.gd`: a braced chain-link leaf on roller
+  carriages, rack and motor, a warning lamp flashing while it moves), sliding at its 0.6 m/s, the
+  convoy waiting until the gate stands open (C3 counts frames an SUV is in a gate not yet open: 0);
+  the SUVs' lamps cast light but their lenses stayed dark, so a tailing driver saw nothing ahead:
+  the tail lamps now glow red, upright on the rear corners, and the low beams' round projectors
+  glow inside their chrome rings, measured from the model (C1 requires both tail lamps lit;
+  mutation c9 exit 1); every phone call's subtitles sat on the objective at the screen's foot (in
+  Missions 1 and 2 too, since the objective was added): they now sit above it, following its
+  height (`driving_hud.gd`; `test_maya_call.gd`'s new check red 13/14, 1,960 frames over it, then
+  14/14; mutation s1 exit 1).
+- **Every suite** (`logs/phase_2/last_run/step5/suites_final2/`): 79 runs exit 0, art check 0
+  failures; then, after the SUV's lenses, every test that loads the SUV (`after_lenses/`).
+- **Stills:** `captures/audit/waterfront/a2/`, `ambush/a3/`, `proof/a1/`, `airfield/fixed/`,
+  `convoy/a1/` (before the fixes) and `convoy/a7/`.
+- **Changed with their reasons:** `test_gate_light.gd` G6 skips the harbour's rain volumes (east of
+  the compound, x > 300), which are not the compound's; `test_lamp_rain_state.gd` counts 50 volumes
+  (the waterfront's 2 access lamps and 4 masts, the airfield's access lamp); `test_maya_call.gd`
+  (the subtitles' place, above); `test_getaway.gd` G3 started 30 road samples back driving straight
+  along a curving road and scraped the hill road's barrier every run, getting past by luck; with the
+  airfield's bodies in the world the scrape stalled it at 0.2 m/s (with the airfield's build
+  switched off it still scraped, fell to 1.7 m/s and got through). G3 now runs up from 8 samples
+  back aimed at the end; Mission 2's mutation g2 (the mission ending at speed) still fails it (exit
+  1, "ended true"); `test_menus.gd` names the new credits (red 19/20, then 20/20).
+- **Credits:** THE HARBOUR (the crane, the Suburban, the PC-12), THE MEN AT THE HARBOUR (bumstrum),
+  MAYA AND LILY (Rocketbox); `ATTRIBUTION.md` files beside each model; raw files in
+  `source_assets/sketchfab/30_harbour_crane` to `33_pc12` with their READMEs.
+- **Known gaps:** the mission map's ground still ends at x 630 (the flats black on it); a texture
+  `weathered_plank_siding_diff_2k.jpg` is reported missing in every run since before Mission 3
+  (not from this work, not yet traced); the GPU price waits for the mission's end.

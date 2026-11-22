@@ -1,0 +1,49 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_ambush.gd:44)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] place (res://features/vehicles/scripted_suv/scripted_suv.gd:79)
+       [1] _begin_escape (res://features/missions/last_run/ambush.gd:211)
+       [2] _physics_process (res://features/missions/last_run/ambush.gd:157)
+PASS: A1: at berth 2 the trap closes in a cutscene (true): two black Suburbans light up (true, true), three men with pistols (true, true), shots crack the windshield (0.45), a phone falls into the cab (true)
+PASS: A2a: after it, GET OUT OF THE TERMINAL (GET OUT OF THE TERMINAL)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] place (res://features/vehicles/scripted_suv/scripted_suv.gd:79)
+       [1] retry (res://features/missions/last_run/ambush.gd:129)
+       [2] retry_ambush (res://features/missions/last_run/last_run.gd:104)
+       [3] _caught_in_ambush (res://app/first_drive.gd:619)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] place (res://features/vehicles/scripted_suv/scripted_suv.gd:79)
+       [1] retry (res://features/missions/last_run/ambush.gd:130)
+       [2] retry_ambush (res://features/missions/last_run/last_run.gd:104)
+       [3] _caught_in_ambush (res://app/first_drive.gd:619)
+PASS: A2: staying, the SUV blocks the gate (true) and he is caught (18.5 s); back at the berth (true), no cutscene again, the escape on (GET OUT OF THE TERMINAL)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] place (res://features/vehicles/scripted_suv/scripted_suv.gd:79)
+       [1] _begin_escape (res://features/missions/last_run/ambush.gd:211)
+       [2] _physics_process (res://features/missions/last_run/ambush.gd:161)
+PASS: A3: through the gate before the SUV, he gets away (true), GET AWAY (GET AWAY)
+PASS: A4: away, CHECK THE PHONE (CHECK THE PHONE, E  Check the phone); E shows the messages from M, Maya's number (A PHONE, NOT YOURS. ITS SCREEN STILL ON. |  | M  (360) 555-0148 |  | M  23:52  BR 048 takes the waterfront job. Berth 2, 01:40. He'll come alone. |    23:55  He trusts the dispatcher? | M  23:58  He trusts me. |  | (360) 555-0148: the number saved in your phone as MAYA.); stage 1 saved
+AMBUSH RESULT: 5/5 passed; 0 failed
+WARNING: 31 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

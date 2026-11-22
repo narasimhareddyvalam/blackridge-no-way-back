@@ -9,6 +9,8 @@ extends Node3D
 ## heights at its edge, so no gap shows. Later steps build the waterfront and the airfield on it.
 
 const Build = preload("res://shared/components/mesh_builder.gd")
+const Waterfront = preload("waterfront.gd")
+const Airfield = preload("airfield.gd")
 const ROAD_PLACE_SCALE := 8.0
 ## The east road, from the loop's east end to the coastal road, and the coastal road.
 const EAST_ROAD: Array[Vector3] = [Vector3(609.0, 0.0, 151.7), Vector3(726.0, 0.0, 151.7)]
@@ -51,6 +53,10 @@ const LAMP_OUT := ROAD_HALF + 1.6
 const AREA := Rect2(630.0, -300.0, 670.0, 620.0)
 
 var sea: MeshInstance3D
+## The container terminal on the flats (Mission 3's step 3).
+var waterfront: Node3D
+## The airfield on the flats (Mission 3's step 5).
+var airfield: Node3D
 var sea_reach := SEA_REACH
 var lamps: Array[Node3D] = []
 var area := AREA
@@ -237,6 +243,24 @@ func _sea() -> void:
 	sea.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(sea)
 	sea.position = Vector3(OUTLINE[1].x, SEA_LEVEL, 0.0)
+
+
+## The waterfront's container terminal (`waterfront.gd`), built once the world's yards are.
+func build_waterfront(slab: Material, asphalt: Material, concrete: Material, metal: Material,
+		yard: Node3D, rain: Node, lamp_post: Callable) -> void:
+	waterfront = Waterfront.new()
+	waterfront.name = "Waterfront"
+	add_child(waterfront)
+	waterfront.build(slab, asphalt, concrete, metal, yard, rain, lamp_post)
+
+
+## The airfield (`airfield.gd`), its hangar and its PC-12.
+func build_airfield(asphalt: Material, slab: Material, cladding: Material, metal: Material,
+		concrete: Material, lamp_post: Callable) -> void:
+	airfield = Airfield.new()
+	airfield.name = "Airfield"
+	add_child(airfield)
+	airfield.build(asphalt, slab, cladding, metal, concrete, lamp_post)
 
 
 ## The bluff wooded as the rim above it, from the forest's own kinds (`forest.meshes_of`): every

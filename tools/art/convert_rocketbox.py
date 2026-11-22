@@ -15,6 +15,7 @@ Run from the repository root (a job's name after "--" converts that one alone):
 It reads source_assets/rocketbox/ (its README.md lists the files) and writes
 game/features/characters/guard/guard.glb and game/features/characters/dock_worker/dock_worker.glb.
 What it changes:
+- a child's skeleton (Rocketbox names its bones "Bip02") is renamed to the clips' "Bip01";
 - each clip is baked onto the character bone by bone. A clip's rest pose is its own first
   frame, so each bone takes the turn the clip gives it in the armature's space, on the
   character's own bone lengths, and the pelvis also takes the clip's place; in SitDown,
@@ -101,6 +102,31 @@ JOBS = {
         "names": ("ForkliftDriver", "ForkliftDriverBody"),
         "target": pathlib.Path(
             "game/features/characters/forklift_driver/forklift_driver.glb"),
+    },
+    "maya": {
+        "character": SOURCE / "Female_Adult_07",
+        "fbx": "Female_Adult_07.fbx",
+        "prefix": "f007",
+        "clips": [("Idle-loop", CLIPS / "f_idle_nervous_01.max.fbx"),
+                  ("TalkSad-loop", CLIPS / "f_gestic_talk_sad_01.max.fbx"),
+                  ("TalkStressed-loop", CLIPS / "f_gestic_talk_femalestressed_01.max.fbx"),
+                  ("Walk-loop", CLIPS / "f_walk_neutral_01.max.fbx")],
+        "roughness": {"head": 0.5, "body": 0.72, "opacity": 0.6},
+        "turn": False,
+        "names": ("Maya", "MayaBody"),
+        "target": pathlib.Path("game/features/characters/maya/maya.glb"),
+    },
+    "lily": {
+        "character": SOURCE / "Female_Child_01",
+        "fbx": "Female_Child_01.fbx",
+        "prefix": "cf001",
+        "clips": [("Idle-loop", CLIPS / "f_idle_breathe_01.max.fbx"),
+                  ("Walk-loop", CLIPS / "f_walk_neutral_01.max.fbx")],
+        "roughness": {"head": 0.5, "body": 0.72},
+        "turn": False,
+        "height": 1.12,
+        "names": ("Lily", "LilyBody"),
+        "target": pathlib.Path("game/features/characters/lily/lily.glb"),
     },
     "compound_guard": {
         "character": SOURCE / "Security_Female_01",
@@ -197,6 +223,17 @@ def lowest_point(meshes):
     return low
 
 
+def highest_point(meshes):
+    depsgraph = bpy.context.evaluated_depsgraph_get()
+    high = -math.inf
+    for item in meshes:
+        evaluated = item.evaluated_get(depsgraph)
+        mesh = evaluated.to_mesh()
+        high = max(high, max((evaluated.matrix_world @ v.co).z for v in mesh.vertices))
+        evaluated.to_mesh_clear()
+    return high
+
+
 def stand(character, meshes, frame, turn_to_front):
     bpy.context.scene.frame_set(frame)
     if turn_to_front:
@@ -250,16 +287,24 @@ def clean_materials(meshes, job):
             colour.image = bpy.data.images.load(
                 str(textures / f"{job['prefix']}_{part}_color.tga"))
             tree.links.new(colour.outputs["Color"], shader.inputs["Base Color"])
-            normal = tree.nodes.new("ShaderNodeTexImage")
-            normal.image = bpy.data.images.load(
-                str(textures / f"{job['prefix']}_{part}_normal.tga"))
-            normal.image.colorspace_settings.name = "Non-Color"
-            bend = tree.nodes.new("ShaderNodeNormalMap")
-            tree.links.new(normal.outputs["Color"], bend.inputs["Color"])
-            tree.links.new(bend.outputs["Normal"], shader.inputs["Normal"])
+            images = [colour.image]
+            normal_file = textures / f"{job['prefix']}_{part}_normal.tga"
+            if normal_file.exists():
+                normal = tree.nodes.new("ShaderNodeTexImage")
+                normal.image = bpy.data.images.load(str(normal_file))
+                normal.image.colorspace_settings.name = "Non-Color"
+                bend = tree.nodes.new("ShaderNodeNormalMap")
+                tree.links.new(normal.outputs["Color"], bend.inputs["Color"])
+                tree.links.new(bend.outputs["Normal"], shader.inputs["Normal"])
+                images.append(normal.image)
+            if part == "opacity":
+                tree.links.new(colour.outputs["Alpha"], shader.inputs["Alpha"])
+                material.blend_method = "CLIP"
+                if hasattr(material, "alpha_threshold"):
+                    material.alpha_threshold = 0.5
             shader.inputs["Roughness"].default_value = job["roughness"][part]
             shader.inputs["Metallic"].default_value = 0.0
-            for image in (colour.image, normal.image):
+            for image in images:
                 while image.size[0] > MAX_TEXTURE:
                     image.scale(image.size[0] // 2, image.size[1] // 2)
 
@@ -292,6 +337,13 @@ def convert(job):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     character, objects = import_fbx(job["character"] / "Export" / job["fbx"])
     meshes = [o for o in objects if o.type == "MESH"]
+    for bone in character.data.bones:
+        if bone.name.startswith("Bip02 "):
+            bone.name = "Bip01 " + bone.name[6:]
+    for item in meshes:
+        for group in item.vertex_groups:
+            if group.name.startswith("Bip02 "):
+                group.name = "Bip01 " + group.name[6:]
     baked = []
     ends = {}
     for name, path in job["clips"]:
@@ -307,6 +359,13 @@ def convert(job):
     drop_parts(meshes, job)
     character.animation_data.action = baked[0]
     stand(character, meshes, int(baked[0].frame_start), job["turn"])
+    if job.get("height"):
+        tall = highest_point(meshes) - lowest_point(meshes)
+        scale = job["height"] / tall
+        character.matrix_world = Matrix.Diagonal((scale, scale, scale, 1.0)) \
+            @ character.matrix_world
+        bpy.context.view_layer.update()
+        print(f"  scaled {scale:.3f} from {tall:.2f} m to {job['height']} m")
     clean_materials(meshes, job)
     for action in baked:
         push_track(character, action)

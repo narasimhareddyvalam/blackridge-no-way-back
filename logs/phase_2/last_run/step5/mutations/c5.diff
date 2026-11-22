@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/airfield.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutc/c5/game/features/environments/harbour_flats/airfield.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/environments/harbour_flats/airfield.gd	2026-11-21 20:17:04
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutc/c5/game/features/environments/harbour_flats/airfield.gd	2026-11-21 20:18:33
+@@ -19,7 +19,7 @@
+ const RUNWAY_FROM := Vector3(775.0, 0.0, -250.0)
+ const RUNWAY_TO := Vector3(1280.0, 0.0, -250.0)
+ const RUNWAY_WIDTH := 18.0
+-const EDGE_EVERY := 60.0
++const EDGE_EVERY := 120.0
+ const APRON := Rect2(905.0, -178.0, 110.0, 48.0)
+ const TAXIWAY: Array[Vector3] = [Vector3(940.0, 0.0, -178.0), Vector3(940.0, 0.0, -241.0)]
+ const TAXI_WIDTH := 10.5

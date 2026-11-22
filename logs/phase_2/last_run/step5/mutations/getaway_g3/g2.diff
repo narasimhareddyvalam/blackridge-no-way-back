@@ -1,0 +1,12 @@
+diff -ru -x . /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/g2/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd
+--- /Users/narasimhareddyvalam/Desktop/Blackridge_No_Way_Back/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 19:14:09
++++ /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/mutg/g2/game/features/missions/the_wrong_cargo/the_wrong_cargo.gd	2026-11-21 20:25:00
+@@ -584,7 +584,7 @@
+ ## play), and the end as Mission 1's, a quiet beat in the cab with no title (C04).
+ func _check_end() -> void:
+ 	if _completed or not bool(vehicle.get("occupied")) or _to_the_end() > END_STOP \
+-			or absf(float(vehicle.get("speed"))) > STOPPED:
++			or false:
+ 		return
+ 	_completed = true
+ 	var next := LastRun.start_progress()

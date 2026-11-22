@@ -62,6 +62,11 @@ func _run() -> void:
 	await _frames(20)
 	_check(_objective().begins_with("PULL OVER"), "G2: near the hill road, PULL OVER (%s)"
 		% _objective())
+	var run_up := points[SAMPLE + 8]
+	var aim := Vector3(end.x - run_up.x, 0.0, end.z - run_up.z).normalized()
+	_van.call("recover", Transform3D(Basis.looking_at(aim, Vector3.UP), run_up + Vector3.UP
+		* 0.1))
+	await _frames(10)
 	Input.action_press("accelerate")
 	var passed := false
 	var ended_at_speed := false

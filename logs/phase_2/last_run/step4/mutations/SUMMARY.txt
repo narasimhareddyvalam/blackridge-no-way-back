@@ -1,0 +1,15 @@
+p1  Maya not at the depot          test_proof.gd exit 1, 5/6 passed; 1 failed
+      FAIL: P1: DRIVE TO THE DEPOT (DRIVE TO THE DEPOT), Maya waiting there by her car (false)
+p2  no confrontation               test_proof.gd exit 1, 1/6 passed; 5 failed
+      FAIL: P2: stopped by her, the confrontation: her routing, Adrian Vale, Lily, five ()
+      FAIL: P3a: days later, in the cab, LISTEN TO THE RECORDING (DRIVE TO THE DEPOT)
+      FAIL: P3: E plays it: Adrian's offer, Maya's refusal, the records of her changed routes and her warnings ()
+      FAIL: P4: MEET MAYA AT THE VIEWPOINT (DRIVE TO THE DEPOT), Maya there
+      FAIL: P5: at the viewpoint the reconciliation (); stage 1 saved; INTERCEPT THE CONVOY (DRIVE TO THE DEPOT)
+p3  the recording without her refusal test_proof.gd exit 1, 5/6 passed; 1 failed
+      FAIL: P3: E plays it: Adrian's offer, Maya's refusal, the records of her changed routes and her warnings (MAYA'S PHO
+p4  no meeting at the viewpoint    test_proof.gd exit 1, 4/6 passed; 2 failed
+      FAIL: P4: MEET MAYA AT THE VIEWPOINT (DRIVE TO THE DEPOT), Maya there
+      FAIL: P5: at the viewpoint the reconciliation (); stage 1 saved; INTERCEPT THE CONVOY (DRIVE TO THE DEPOT)
+p5  stage 2 not saved              test_proof.gd exit 1, 5/6 passed; 1 failed
+      FAIL: P5: at the viewpoint the reconciliation ( | MAYA: I'm not asking you to forgive me. | MAYA: I thought about it

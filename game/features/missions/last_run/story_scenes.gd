@@ -1,0 +1,124 @@
+extends RefCounted
+## Mission 3's story scenes (step 4, docs/PHASE_BRIEF.md, 2026-11-21, #359-#360; GAME_STORY's Acts
+## III-IV), in the cutscenes' neo-noir look (#357): the confrontation at the depot, the recording,
+## and the reconciliation at the viewpoint. Each is its shots (worked out from where Maya and Ethan
+## stand) and its lines, [seconds from the start, speaker, words, seconds shown]. Every word is a
+## draft by Claude Code at the author's word (#359), for the author's review; N03 (how the recording
+## is made and believed) is answered as a draft: Maya recorded Adrian's call herself, and the
+## records match the nights Ethan drove.
+
+const CONFRONTATION_LINES: Array = [
+	[2.0, "ETHAN", "Whose phone was that, Maya? Your number's in it.", 3.6],
+	[6.0, "MAYA", "I routed your jobs. Every one of them.", 3.0],
+	[9.5, "ETHAN", "They tried to kill me tonight.", 2.5],
+	[12.5, "MAYA", "I know. I'm married, Ethan. To Adrian Vale.", 3.4],
+	[16.4, "ETHAN", "Vale. Vale Freight.", 2.0],
+	[18.8, "MAYA", "We have a daughter. Lily. She's five.", 3.0],
+	[22.2, "ETHAN", "Five years. And you never said a word.", 3.0],
+	[25.6, "MAYA", "He has her. If I don't do what he says...", 3.2],
+	[29.2, "ETHAN", "So you chose. Her over me.", 2.6],
+	[32.2, "MAYA", "That's not what this is. Please. Listen to it. Then decide.", 3.6],
+	[36.4, "ETHAN", "I raised you, Maya.", 2.4],
+	[39.2, "ETHAN", "Don't call me.", 2.0],
+]
+const RECONCILIATION_LINES: Array = [
+	[2.0, "MAYA", "I'm not asking you to forgive me.", 2.8],
+	[5.2, "MAYA", "I thought about it. For a second, I thought about saying yes.", 3.4],
+	[9.0, "ETHAN", "I heard.", 1.6],
+	[11.0, "ETHAN", "I heard you say no, too.", 2.4],
+	[13.8, "ETHAN", "I forgive you, Maya. Trusting you again will take longer.", 3.6],
+	[17.8, "MAYA", "That's fair.", 1.6],
+	[19.8, "MAYA", "He knows I turned. He's taking Lily tonight. A private plane, from the "
+		+ "airfield.", 4.0],
+	[24.4, "ETHAN", "Then we bring her home.", 2.4],
+	[27.2, "MAYA", "Bring her home. And come home yourself.", 3.0],
+]
+## The recording and the records on Maya's phone (step 4; N03's draft).
+const RECORDING := "MAYA'S PHONE  ·  VOICE MEMO  ·  19 NOV 23:14  ·  1:52\n\n" \
+	+ "ADRIAN: Bring him to berth 2. One more run. Lily comes home after.\n" \
+	+ "MAYA: You said she'd come home last time.\n" \
+	+ "ADRIAN: This time it's him or her. Choose.\n" \
+	+ "MAYA: ...\n" \
+	+ "MAYA: No.\n" \
+	+ "ADRIAN: You'd pick your brother over your own daughter?\n" \
+	+ "MAYA: I won't buy her life with his. And I won't leave her with you.\n\n" \
+	+ "VALE FREIGHT DISPATCH, FORWARDED TO HERSELF\n" \
+	+ "18 NOV 23:58  BR 048's route changed off the compound run (by M. VALE)\n" \
+	+ "21 NOV 00:40  patrol warning sent to BR 048 from a prepaid number (paid by M. VALE)\n" \
+	+ "21 NOV 01:05  berth 2 pickup put back two hours (by M. VALE)\n\n" \
+	+ "The dates are the nights you drove."
+const RECORDING_NOTE := "She said no. And she kept getting you out."
+const MAYA_TEXT := "The viewpoint on the hill road. Please. I'll be there."
+const KEY := Color(1.0, 0.78, 0.55)
+const RIM := Color(0.55, 0.7, 1.0)
+
+
+static func _look(eye: Vector3, at: Vector3) -> Transform3D:
+	return Transform3D(Basis.looking_at(at - eye, Vector3.UP), eye)
+
+
+## The confrontation (about 44 s and a card), Maya standing at `maya_at` facing `ethan_at`.
+static func confrontation(maya_at: Vector3, ethan_at: Vector3, van_at: Vector3) -> Array:
+	var face_m := maya_at + Vector3.UP * 1.6
+	var face_e := ethan_at + Vector3.UP * 1.65
+	var across := (ethan_at - maya_at).normalized()
+	var side := across.cross(Vector3.UP)
+	return [
+		{"name": "confrontation_wide", "seconds": 6.0, "fov": Vector2(38.0, 34.0),
+			"exposure": 1.4, "gamma": 0.75, "from": _look(van_at + side * 9.0 + Vector3(0.0, 3.0,
+			0.0) - across * 4.0, maya_at.lerp(van_at, 0.5) + Vector3.UP),
+			"to": _look(van_at + side * 7.5 + Vector3(0.0, 2.4, 0.0) - across * 3.0,
+			maya_at.lerp(van_at, 0.5) + Vector3.UP)},
+		{"name": "confrontation_ethan", "seconds": 7.0, "fov": Vector2(30.0, 28.0),
+			"exposure": 1.3, "gamma": 0.8, "lights": [{"at": face_e - across * 0.9 + side * 0.6,
+			"colour": KEY, "energy": 1.0, "range": 3.0}],
+			"from": _look(face_m - across * 0.6 + side * 0.45, face_e),
+			"to": _look(face_m - across * 0.5 + side * 0.4, face_e)},
+		{"name": "confrontation_maya", "seconds": 10.0, "fov": Vector2(28.0, 26.0),
+			"exposure": 1.3, "gamma": 0.8, "lights": [{"at": face_m + across * 0.9 - side * 0.6,
+			"colour": KEY, "energy": 1.0, "range": 3.0}, {"at": face_m - across * 0.7
+			+ Vector3.UP * 0.4, "colour": RIM, "energy": 2.0, "range": 3.0}],
+			"from": _look(face_e + across * 0.6 - side * 0.45, face_m),
+			"to": _look(face_e + across * 0.5 - side * 0.4, face_m)},
+		{"name": "confrontation_two", "seconds": 12.0, "fov": Vector2(34.0, 32.0),
+			"exposure": 1.35, "gamma": 0.78,
+			"from": _look(maya_at.lerp(ethan_at, 0.5) + side * 4.5 + Vector3.UP * 1.5,
+			maya_at.lerp(ethan_at, 0.5) + Vector3.UP * 1.4),
+			"to": _look(maya_at.lerp(ethan_at, 0.5) + side * 4.0 + Vector3.UP * 1.45,
+			maya_at.lerp(ethan_at, 0.5) + Vector3.UP * 1.4)},
+		{"name": "confrontation_leave", "seconds": 7.0, "fov": Vector2(40.0, 36.0),
+			"exposure": 1.4, "gamma": 0.75, "from": _look(maya_at - across * 3.0 + Vector3.UP * 1.7,
+			ethan_at + Vector3.UP * 1.2), "to": _look(maya_at - across * 3.5 + Vector3.UP * 1.9,
+			van_at + Vector3.UP * 1.2)},
+		{"name": "confrontation_days", "seconds": 4.0, "black": true,
+			"card": ["TWO DAYS LATER", "BLACKRIDGE"], "from": _look(van_at + Vector3.UP * 4.0,
+			van_at), "to": _look(van_at + Vector3.UP * 4.0, van_at)},
+	]
+
+
+## The reconciliation at the viewpoint (about 34 s), the valley's lights below.
+static func reconciliation(maya_at: Vector3, ethan_at: Vector3, valley: Vector3) -> Array:
+	var face_m := maya_at + Vector3.UP * 1.6
+	var face_e := ethan_at + Vector3.UP * 1.65
+	var across := (ethan_at - maya_at).normalized()
+	var side := across.cross(Vector3.UP)
+	return [
+		{"name": "reconciliation_wide", "seconds": 6.0, "fov": Vector2(44.0, 40.0),
+			"exposure": 1.5, "gamma": 0.72, "from": _look(maya_at.lerp(ethan_at, 0.5) - side * 9.0
+			+ Vector3.UP * 2.5, valley), "to": _look(maya_at.lerp(ethan_at, 0.5) - side * 8.0
+			+ Vector3.UP * 2.2, maya_at.lerp(ethan_at, 0.5) + Vector3.UP)},
+		{"name": "reconciliation_maya", "seconds": 9.0, "fov": Vector2(28.0, 26.0),
+			"exposure": 1.3, "gamma": 0.8, "lights": [{"at": face_m + across * 0.9 - side * 0.6,
+			"colour": KEY, "energy": 0.9, "range": 3.0}],
+			"from": _look(face_e + across * 0.6 - side * 0.4, face_m),
+			"to": _look(face_e + across * 0.5 - side * 0.35, face_m)},
+		{"name": "reconciliation_ethan", "seconds": 8.0, "fov": Vector2(28.0, 26.0),
+			"exposure": 1.3, "gamma": 0.8, "lights": [{"at": face_e - across * 0.9 + side * 0.6,
+			"colour": KEY, "energy": 0.9, "range": 3.0}],
+			"from": _look(face_m - across * 0.6 + side * 0.4, face_e),
+			"to": _look(face_m - across * 0.5 + side * 0.35, face_e)},
+		{"name": "reconciliation_two", "seconds": 11.0, "fov": Vector2(36.0, 34.0),
+			"exposure": 1.4, "gamma": 0.76, "from": _look(maya_at.lerp(ethan_at, 0.5) + side * 5.0
+			+ Vector3.UP * 1.5, maya_at.lerp(ethan_at, 0.5) + Vector3.UP * 1.4),
+			"to": _look(maya_at.lerp(ethan_at, 0.5) + side * 6.5 + Vector3.UP * 2.2, valley)},
+	]

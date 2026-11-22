@@ -14,7 +14,7 @@ extends Node3D
 const MODEL = preload("patrol_guard.glb")
 const WALK_SPEED := 1.4
 ## The walk clip's own ground speed (convert_patrol_guard.py), so his feet do not slide.
-const CLIP_SPEED := 1.578
+const CLIP_SPEED := 1.738
 const EYE := 1.62
 const SIGHT := 15.0
 const HALF_ANGLE := deg_to_rad(50.0)

@@ -1,0 +1,17 @@
+b1  no cutscene for the trap       test_ambush.gd exit 1, 4/5 passed; 1 failed
+      FAIL: A1: at berth 2 the trap closes in a cutscene (false): two black Suburbans light up (true, true), three men wit
+b2  the shots leave the glass whole test_ambush.gd exit 1, 4/5 passed; 1 failed
+      FAIL: A1: at berth 2 the trap closes in a cutscene (true): two black Suburbans light up (true, true), three men with
+b3  the gate never blocked         test_ambush.gd exit 1, 4/5 passed; 1 failed
+      FAIL: A2: staying, the SUV blocks the gate (false) and he is caught (40.0 s); back at the berth (true), no cutscene 
+b4  the retry plays the trap again test_ambush.gd exit 1, 2/5 passed; 3 failed
+      FAIL: A2: staying, the SUV blocks the gate (true) and he is caught (18.5 s); back at the berth (true), no cutscene a
+      FAIL: A3: through the gate before the SUV, he gets away (false), GET AWAY (GET OUT OF THE TERMINAL)
+      FAIL: A4: away, CHECK THE PHONE (GET OUT OF THE TERMINAL, V  Wipers: fast, off, slow); E shows the messages from M, 
+b5  never away                     test_ambush.gd exit 1, 3/5 passed; 2 failed
+      FAIL: A3: through the gate before the SUV, he gets away (false), GET AWAY (GET OUT OF THE TERMINAL)
+      FAIL: A4: away, CHECK THE PHONE (GET OUT OF THE TERMINAL, V  Wipers: fast, off, slow); E shows the messages from M, 
+b6  the phone not shown            test_ambush.gd exit 1, 4/5 passed; 1 failed
+      FAIL: A4: away, CHECK THE PHONE (CHECK THE PHONE, E  Check the phone); E shows the messages from M, Maya's number ()
+b7  stage 1 not saved              test_ambush.gd exit 1, 4/5 passed; 1 failed
+      FAIL: A4: away, CHECK THE PHONE (CHECK THE PHONE, E  Check the phone); E shows the messages from M, Maya's number (A

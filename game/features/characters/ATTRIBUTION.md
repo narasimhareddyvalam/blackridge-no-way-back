@@ -143,3 +143,44 @@ word to choose the best real-life patrol guard (#358):
   as turns from the T-pose, the walk and run in place (`Idle`, `Walk`, `Run`).
 - **Materials:** one roughness (0.78), nothing metallic, textures halved to 1024 pixels as WebP.
 - **In the game:** `patrol_guard.gd`, a stand-in (D6) with a torch on his left epaulette.
+
+## The men at the harbour (Mission 3's step 3, #359)
+
+- **Model:** "guard" by bumstrum, https://sketchfab.com/3d-models/9f146fae6af1482ab6bff56ed5677c28
+  (fetched 2026-11-21 through the Blender MCP add-on's Sketchfab import,
+  `source_assets/sketchfab/32_syndicate_man/`).
+- **Licence:** CC BY 4.0 (Sketchfab's "CC Attribution"); the in-game credits name the author
+  ("THE MEN AT THE HARBOUR").
+
+### Changes
+
+Claude Code converted it with `tools/art/convert_patrol_guard.py` (its `syndicate_man` job) on
+2026-11-21, at the author's word to finish Mission 3 (#359):
+
+- **The rig:** its bones mapped to Ethan's Mixamo names (the `BUMSTRUM` map), its A-pose limbs
+  aligned before baking, scaled to 1.80 m with his shoes at the origin.
+- **The clips:** Ethan's own Mixamo idle, walk and run, the hips scaled by height, so he walks at
+  1.738 m/s and runs at 4.943 m/s as the patrol guards do.
+- **His pistol:** written apart (`game/features/weapons/pistol/pistol.glb`, 0.034 by 0.136 by
+  0.180 m, a compact handgun's size) and scaled with him.
+- **Materials:** textures halved to 1024 pixels as WebP.
+
+## Maya and Lily (Mission 3's step 4, #359)
+
+- **Models:** Female_Adult_07 (Maya) and Female_Child_01 (Lily) from the Microsoft Rocketbox
+  avatar library, with its clips f_idle_nervous_01, f_gestic_talk_sad_01,
+  f_gestic_talk_femalestressed_01, f_idle_breathe_01 and f_walk_neutral_01
+  (`source_assets/rocketbox/`).
+- **Licence:** MIT, Copyright (c) 2020 Microsoft (`source_assets/rocketbox/LICENSE.md`); the
+  in-game credits name both ("MAYA AND LILY").
+
+### Changes
+
+Claude Code converted them with `tools/art/convert_rocketbox.py` (its `maya` and `lily` jobs) on
+2026-11-21:
+
+- **Maya:** 8,308 triangles; her see-through part (`f007_opacity`) alpha-blended; normal maps
+  kept.
+- **Lily:** scaled from 1.43 m to 1.12 m, a five-year-old's height; her Bip02 bones renamed
+  Bip01 for the clips; 7,102 triangles.
+- **Materials:** textures halved to 1024 pixels as WebP.

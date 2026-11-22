@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_opening.gd:39)
+PASS: O1: a new game plays the opening in the film look: black bars, the HUD and map hidden, its own camera, Ethan's keys held (still true)
+PASS: O2: its shots in the storyboard's order over 49.0 s (["studio", "lamp_in_the_water", "hill_road", "crossing", "empty_shelter", "ethan", "van_waits", "title"]), the studio card, BLACKRIDGE and NIGHT FREIGHT shown, never the game's title (["NRVALAM WORKS", "BLACKRIDGE", "NIGHT FREIGHT"])
+PASS: O3: E skips it at once and gives play back as it starts: the player's camera, no bars, the HUD, Ethan free, SIGN THE RUN SHEET (was on shot 1; playing false, bars false, held false, objective SIGN THE RUN SHEET)
+PASS: O6: every cut dips through black (black at the cuts { 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0 }), each shot clear between, and the title fills the screen on black (true)
+PASS: O4: played through (49.1 s), it ends on the player's own camera behind Ethan (0.00 m off) and gives him back
+PASS: O7: New drive in play starts at the office at once, no opening (playing false, objective shown true)
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1060)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _not_on_resume (res://tests/test_opening.gd:171)
+PASS: O5: a saved game resumed does not play the opening
+OPENING RESULT: 7/7 passed; 0 failed
+WARNING: 29 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

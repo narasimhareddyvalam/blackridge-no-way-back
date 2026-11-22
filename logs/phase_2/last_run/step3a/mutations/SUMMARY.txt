@@ -1,0 +1,12 @@
+w1  no fence                       test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W2: the terminal fenced in chain-link (0 m), shut along its west side (0 of 3 points) but open at the gate (tr
+w2  the crane's boom inland        test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W4: the mobile harbour crane on the apron (x 982), its boom out over the water to x 990, 41 m high, solid at i
+w3  masts 15 m tall                test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W5: 4 high masts, their warm floods 25 m up or more (false), rain in each one's light (4)
+w4  bollards 40 m apart            test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W6: 4 mooring bollards along the quay's edge (true), at most 40 m apart, 4 fenders on its wall
+w5  berth 2 inland                 test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W7: berth 2 marked at the quay's edge ((955.0, 0.0, 232.0)), a clear lane from the gate to it (41 of 41)
+w6  the objective never turns to the berth test_waterfront.gd exit 1, 7/8 passed; 1 failed
+      FAIL: W8: the objective sends the van to the gate (true), then inside to berth 2 (DRIVE TO THE WATERFRONT)

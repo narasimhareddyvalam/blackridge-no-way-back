@@ -781,6 +781,10 @@ func _harbour_flats() -> void:
 	add_child(harbour_flats)
 	harbour_flats.call("build", terrain, _road_asphalt, _ground, _concrete, _lamp_post)
 	harbour_flats.call("plant", forest, terrain)
+	harbour_flats.call("build_waterfront", _yard_surface, _road_asphalt, _concrete, _metal,
+		container_yard, lamp_rain, _lamp_post)
+	harbour_flats.call("build_airfield", _road_asphalt, _yard_surface,
+		_wall_material(Color("8e9496")), _metal, _concrete, _lamp_post)
 
 
 ## Whether `at` (x, z) is somewhere the van may be: the valley and hills, or the harbour flats and

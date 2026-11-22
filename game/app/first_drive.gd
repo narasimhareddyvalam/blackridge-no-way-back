@@ -142,6 +142,19 @@ func _ready() -> void:
 	run.objective_changed.connect(_route_objective)
 	run.checkpoint_reached.connect(route.save_progress)
 	run.driver = driver
+	run.waterfront = world.harbour_flats.waterfront
+	run.airfield = world.harbour_flats.airfield
+	run.convoy_spotted.connect(_spotted_tailing)
+	run.call_now.connect(func(lines: Array) -> void:
+		if not route.phone_call.active:
+			route.phone_call.start("MAYA", lines))
+	run.ambush_caught.connect(_caught_in_ambush)
+	run.paper_shown.connect(_show_seal_check)
+	run.line_spoken.connect(hud.show_subtitle)
+	run.lines_cleared.connect(hud.clear_subtitle)
+	run.text_received.connect(hud.show_text_message)
+	run.stand_ethan.connect(_stand_ethan)
+	run.seat_ethan.connect(_seat_ethan)
 	(world.transfer_shed.get("pallet_jack") as Node).set("driver", driver)
 	(world.transfer_shed.get("forklift") as Node).set("walker", driver)
 	_audio.set("shelter", func(at: Vector3) -> float: return ShedSounds.shelter(at))
@@ -161,6 +174,9 @@ func _ready() -> void:
 	cutscene = CutsceneDirector.new()
 	cutscene.name = "CutsceneDirector"
 	add_child(cutscene)
+	run.play_cutscene = func(shots: Array) -> void:
+		cutscene.call("play", shots, hud, driver, van.get_camera())
+	run.cutscene_playing = func() -> bool: return bool(cutscene.get("playing"))
 	cutscene.connect("finished", _opening_done)
 	route.configure(van)
 	_pick_mission()
@@ -601,6 +617,45 @@ func _caught_escaping() -> void:
 	cargo.recover()
 	hud.fade(0.0, CAUGHT_FADE * 1.5)
 	hud.notify("Caught. The guards walked you back to the van.")
+
+
+## Ethan out of the van for a scene (Mission 3's step 4): standing at `at`, facing `toward`.
+func _stand_ethan(at: Vector3, toward: Vector3) -> void:
+	_cancel_boarding()
+	van.occupied = false
+	driver.set_active(true)
+	driver.global_position = _on_ground(at)
+	driver.velocity = Vector3.ZERO
+	var facing := toward - at
+	facing.y = 0.0
+	driver.face(facing.normalized())
+
+
+## Back in the van after a scene.
+func _seat_ethan() -> void:
+	_enter_van()
+
+
+## Seen by the convoy, or lost it (Mission 3's step 5): back at the junction, the convoy ahead.
+func _spotted_tailing(lost: bool) -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	_enter_van()
+	run.call("retry_tail")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("You lost them." if lost else "They saw you. Stay further back.")
+
+
+## Caught in the ambush (Mission 3's step 3): the screen fades, the van is back in berth 2 and the
+## escape begins again, the cutscene not played twice.
+func _caught_in_ambush() -> void:
+	await hud.fade(1.0, CAUGHT_FADE).finished
+	_cancel_boarding()
+	_enter_van()
+	van.start_engine()
+	run.call("retry_ambush")
+	hud.fade(0.0, CAUGHT_FADE * 1.5)
+	hud.notify("They boxed you in at the gate.")
 
 
 func _toggle_vsync() -> void:

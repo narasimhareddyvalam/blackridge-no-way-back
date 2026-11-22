@@ -18,6 +18,9 @@ const LETTERING = preload("fonts/BarlowCondensed-SemiBold.ttf")
 ## with the map's.
 const OBJECTIVE_LEFT := 392.0
 const OBJECTIVE_FOOT := 30.0
+const SUBTITLE_FOOT := 82.0
+const SUBTITLE_HEIGHT := 68.0
+const SUBTITLE_GAP := 12.0
 const HINT_MARGIN := 28.0
 ## A soft dark fade behind the map and the objective, round from the screen's bottom-left corner,
 ## so they read over a bright dashboard.
@@ -56,6 +59,7 @@ var _cinematic: bool = false
 var _notice_timer: float = 0.0
 var _fade: ColorRect
 var _subtitles: PanelContainer
+var _subtitle_holder: CenterContainer
 var _speaker: Label
 var _words: Label
 var _document: PanelContainer
@@ -289,10 +293,11 @@ func _label(words: String, size: int, color: Color = Color("e2e5df")) -> Label:
 func _build_subtitles(root: Control) -> void:
 	var holder := CenterContainer.new()
 	holder.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	holder.offset_top = -150.0
-	holder.offset_bottom = -82.0
+	holder.offset_top = -SUBTITLE_FOOT - SUBTITLE_HEIGHT
+	holder.offset_bottom = -SUBTITLE_FOOT
 	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(holder)
+	_subtitle_holder = holder
 	_subtitles = PanelContainer.new()
 	_subtitles.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var panel := StyleBoxFlat.new()
@@ -451,6 +456,8 @@ func _process(delta: float) -> void:
 		_notice_timer -= delta
 		if _notice_timer <= 0:
 			_notice.text = ""
+	if _subtitles.visible:
+		_place_subtitles()
 
 
 func show_title(place: String, saved: String) -> void:
@@ -539,6 +546,16 @@ func show_subtitle(speaker: String, words: String) -> void:
 	_speaker.text = speaker
 	_words.text = words
 	_subtitles.visible = true
+	_place_subtitles()
+
+
+## Above the objective when it shows (its height follows its lines), at the foot when it does not.
+func _place_subtitles() -> void:
+	var foot := SUBTITLE_FOOT
+	if _heading.is_visible_in_tree():
+		foot = maxf(foot, OBJECTIVE_FOOT + _heading.size.y + SUBTITLE_GAP)
+	_subtitle_holder.offset_bottom = -foot
+	_subtitle_holder.offset_top = -foot - SUBTITLE_HEIGHT
 
 
 func clear_subtitle() -> void:

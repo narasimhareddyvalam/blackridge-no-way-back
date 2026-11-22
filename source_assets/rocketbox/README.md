@@ -88,3 +88,14 @@ copyright and licence notice go with the files. The in-game credits and `SOURCES
 - **Kept out of Git:** the downloads in this folder (`.gitignore`), 159 MB with the TGA textures.
 - **Committed:** this README, `LICENSE.md`, and the converted `guard.glb` and `dock_worker.glb`
   with their textures.
+
+## Maya and Lily (Mission 3's step 4, #359)
+
+Downloaded 2026-11-21 by Claude Code at the author's word to finish Mission 3 (#359), from the
+same library: `Female_Adult_07/` (Maya, in her late twenties to early thirties) and
+`Female_Child_01/` (Lily, five), with the clips `f_idle_nervous_01`, `f_gestic_talk_sad_01`,
+`f_gestic_talk_femalestressed_01`, `f_idle_breathe_01` and `f_walk_neutral_01` in `Animations/`.
+`tools/art/convert_rocketbox.py`'s `maya` and `lily` jobs write
+`game/features/characters/maya/maya.glb` and `game/features/characters/lily/lily.glb` (Lily
+scaled to 1.12 m and her Bip02 bones renamed Bip01; `game/features/characters/ATTRIBUTION.md`).
+- **Committed:** the two converted models and their textures; the downloads stay out of Git.

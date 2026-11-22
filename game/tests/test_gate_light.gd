@@ -6,6 +6,8 @@ extends SceneTree
 ## in its light, raining when the camera is at the stop line; and rain in the light of each of the
 ## compound's yard floods.
 
+## The compound ends at x 274; the waterfront's masts further east have rain of their own (#359).
+const COMPOUND_EAST := 300.0
 const GATE := Vector3(200.0, 0.0, 146.0)
 const LED_FLOOD := "res://features/environments/industrial_loop/art/gates/led_flood/led_flood.glb"
 const NEAR_GATE := 9.0
@@ -193,10 +195,10 @@ func _from_the_light(compound: Node3D, rain: Node3D) -> void:
 	var found := 0
 	for index in range(volumes.size()):
 		var volume := volumes[index] as Node3D
-		if not String(volume.name).begins_with("LampRainFloodHigh"):
+		var at := volume.global_position
+		if not String(volume.name).begins_with("LampRainFloodHigh") or at.x > COMPOUND_EAST:
 			continue
 		found += 1
-		var at := volume.global_position
 		var head := Vector3.ZERO
 		for candidate in heads:
 			if head == Vector3.ZERO or Vector2(candidate.x - at.x, candidate.z - at.z).length() \

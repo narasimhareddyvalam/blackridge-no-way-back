@@ -1,5 +1,43 @@
 # HANDOFF.md
 
+**This run (2026-11-21 into 11-22, #359-#360: Mission 3's steps 3, 4 and 5):**
+- **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Mission 3's steps 3, 4 and 5
+  built ...)". Files: `game/features/environments/harbour_flats/` (`waterfront.gd`,
+  `airfield.gd` new, `harbour_flats.gd`, `art/` with the crane, the Suburban and the PC-12),
+  `container_yard.gd` (`stack`), `industrial_loop.gd`, `game/features/missions/last_run/`
+  (`ambush.gd`, `convoy.gd`, `story_scenes.gd` new; `last_run.gd`),
+  `game/features/vehicles/scripted_suv/` (new), `game/features/characters/` (`syndicate_man/`,
+  `maya/`, `lily/` new; `patrol_guard.gd` CLIP_SPEED), `game/features/weapons/pistol/` (new),
+  `game/features/audio/last_run/` (new), `game/app/first_drive.gd`, `front_menu.gd` (credits),
+  `tools/art/convert_patrol_guard.py`, `convert_rocketbox.py`,
+  `tools/assets/drop_sourceless_textures.py` (new), `tools/captures/capture_waterfront.gd`,
+  `capture_ambush.gd`, `capture_proof.gd`, `capture_airfield.gd`; tests below.
+- **Results (exact):** `test_waterfront.gd` 8/8, `test_ambush.gd` 5/5, `test_proof.gd` 6/6,
+  `test_airfield.gd` 5/5, `test_convoy.gd` 4/4 (each red first); `test_maya_call.gd` 14/14 (its
+  subtitle check red 13/14 first). Mutations (`python3 -I
+  logs/phase_2/last_run/<step3a|step3b|step4|step5>/mutations/mutations_*.py <scratch> <out>`):
+  28, all exit 1 (two survived first, c1 and the leaf across the gate; C1 and C4 strengthened,
+  then exit 1). Changed with reasons: `test_gate_light.gd` G6, `test_lamp_rain_state.gd` (50
+  volumes), `test_getaway.gd` G3 (its run-up; Mission 2's g2 mutation still exit 1),
+  `test_menus.gd` (credits, red 19/20 then 20/20). Suites: `bash
+  logs/phase_2/last_run/step5/suites_final2/run_suites.sh <scratch>`: 79 runs exit 0, art check 0
+  failures; after it only the SUV's lenses and `test_convoy.gd` changed, so every test loading
+  the SUV reran (`logs/phase_2/last_run/step5/after_lenses/`): convoy 4/4, ambush 5/5,
+  waterfront 8/8, proof 6/6, last run 3/3. Stills: `captures/audit/waterfront/a2/`,
+  `ambush/a3/`, `proof/a1/`, `airfield/fixed/`, `convoy/a1/` (before) and `convoy/a7/` (the gate
+  and lamps fixed). Committed on `develop` (not pushed).
+- **Claude Code's calls for the joint review (#359-#360):** every Mission 3 word (the phone's
+  messages, the confrontation, the recording, the reconciliation, Maya's call); the waterfront's
+  and airfield's layout; the models (crane, Suburban, bumstrum's guard as the men, PC-12, Maya,
+  Lily); the phone dropped into the cab; step 5 as a tail to the service gate (the brief had a
+  choke point; GAME_STORY says he follows the convoy); N04's Maya at the service gate.
+- **Next:** step 6 (the hangar's guard encounter: one handgun, hitscan, magazine and reload,
+  health, guards that patrol, alert, chase and attack; its fire, aim and reload keys are a new
+  control and need the author's OK, so drafted and flagged); step 7 (Lily and Adrian); step 8
+  (home, the watcher, black, the title). Still waiting: the map's baked ground east of x 630, the
+  missing `weathered_plank_siding_diff_2k.jpg` (in every run since before Mission 3), the GPU
+  price on power.
+
 **This run (2026-11-21 into the night, #358: Mission 2 finished, steps 3, 6, 7 and 8):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-21 (Phase 2, Mission 2's steps 3, 6, 7
   and 8 built: Mission 2 playable to its end, #358)" and the save rules' revision before it. Files:

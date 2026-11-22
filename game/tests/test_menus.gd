@@ -13,7 +13,8 @@ const CREDITED: Array[String] = ["NRVALAM WORKS", "Max", "CC BY 4.0", "Mixamo", 
 	"Kamran Mughal", "FFeller", "widthRider", "Red Fox (Sketchfab: nokillnando)", "GloriousGlider8",
 	"Marcel Bankmann", "PlantCatalog", "lolipop_1707", "SirSonat", "SavinienBerault", "evan4129",
 	"Daniel Zhabotinsky", "GregorJan", "Melon Polygons", "dudecon", "barism09", "Rylae Shylna", "x4vier28", "jinjinjin", "Barlow",
-	"The Street Light Man",
+	"The Street Light Man", "qsardor57913", "TGVMisterH", "David_Holiday", "bumstrum", "helijah",
+	"Female_Adult_07", "Female_Child_01",
 	"Godot Engine", "MIT"]
 
 var _checks: int = 0
