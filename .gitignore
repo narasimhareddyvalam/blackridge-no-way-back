@@ -55,3 +55,8 @@ __pycache__/
 
 # The scratch home that scripts/run-test.sh gives Godot, so tests never touch the real save.
 /.scratch-home/
+
+# Raw Movie Maker takes and encoded videos under captures/ stay on disk and out of GitHub
+# (the handout: no MP4s or files over 25 MB in GitHub). Videos already tracked stay tracked.
+/captures/**/*.avi
+/captures/**/*.mp4

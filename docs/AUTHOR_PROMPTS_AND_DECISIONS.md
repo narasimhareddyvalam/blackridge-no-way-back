@@ -5517,6 +5517,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
        tag, upload or submit, nor to write the author's own observations, verdicts or
        FRICTIONAL entries: those stay open for the author.
 
+407. **Open the film**
+     - **Prompt** (verbatim, after the report that Assignment 7 was finished): "open the film"
+     - **Done:** `Blackridge-Frame-by-Frame-4K.mp4` opened in the default player.
+
+408. **What are the 30k files in the working tree?**
+     - **Prompt** (verbatim): "there are still 30k files in the working tree whats that?"
+     - **Answered:** Git's working tree held 856 files (untracked captures, 65 deleted Mission 3
+       screenshots, 4 rewritten Poly Haven `.import` files, the prompt log); the large number is
+       likely the 103 unpushed commits (14,758 files since the last push, 8 November).
+
+409. **A clean working tree, without losing work**
+     - **Prompt** (verbatim): "i want workingtree to be clean, what should we do?? make sure to not
+       lose any assignment work or our game work till now"
+     - **Proposed:** restore the 65 deleted screenshots from Git; keep the 23 large videos on disk
+       and ignore `*.avi` and `*.mp4` under `captures/`; commit the rest; commit the 4 `.import`
+       files as Godot writes them; commit the prompt log. Nothing deleted, nothing pushed.
+
+410. **What are the 65 screenshots?**
+     - **Prompt** (verbatim): "what are those 65 screenshots?"
+     - **Answered:** the final committed rounds of Mission 3's audit screenshots (airfield, ambush,
+       convoy, ending, hangar, proof, rescue, waterfront; `e48bb2b`, `6a6a01a`, `1cbfb0e`,
+       `5ff34f1`), whose folders were deleted from disk; the earlier rounds remain.
+
+411. **Go ahead, safely**
+     - **Prompt** (verbatim): "okay make sure you use safe commands, and dont do anything that will
+       lose our work please."
+     - **Done:** the plan of #409 with additive commands only (`git restore` of the deleted paths,
+       `.gitignore` rules, explicit `git add`, commits); no delete, reset, clean or push.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
