@@ -14,7 +14,7 @@ const FRAMES := 164
 const CLIP := "EnterVan"
 const APP := "res://app/first_drive.gd"
 ## The phase table's frames the boarding sequence reads (CHANGE-BRIEF.md §4), at 30 fps.
-const MOMENTS := {"REACH_FROM": 22, "DOOR_GRAB": 32, "DOOR_OPENED": 48, "CUT": 53}
+const MOMENTS := {"REACH_FROM": 22, "DOOR_GRAB": 32, "DOOR_OPENED": 48, "CUT": 62}
 
 var _checks: int = 0
 var _failures: int = 0

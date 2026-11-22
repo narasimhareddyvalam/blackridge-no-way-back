@@ -660,5 +660,38 @@ picks it):
 
 **The author's observation in play:** _waiting for the author (normal speed and 0.25×)._
 
-**The change, Claude Code's prediction, r1 and the verdict:** _to follow the author's
-observation._
+## r1: the cut moved after the climb (Claude Code's decision, 2026-11-22)
+
+**Why, and whose decision.** This revision is Claude Code's decision, made under the author's
+delegation while they were away (#406: "take decisions for me realistic"). It comes from Claude
+Code's reading of r0, disagreement (2), and does not come from the author's play. **It is not the
+handout's observation-driven revision**, which stays open for the author: they play r1, and either
+keep it, revert it, or revise from what they see.
+
+**What was looked at first.** A scratch capture in the real game, with `CUT` set to 150 in the
+working tree for the run only and then restored, showed the clip past the cut. Frames kept in
+Claude Code's scratch folder, not in the repository.
+- EnterVan carries root motion: from 53 he lifts his right foot to the step.
+- At 58 he is on the step, rising into the opening.
+- At 63 his body is in the cab behind the door.
+- From about 68 he is seated, his head seen through the side window.
+- Nothing passes through the door or the cab: the door hides the climb as a real door would.
+
+**The change (one, to the phase table):** the cut moves from frame 53 to 62. `CUT` 53/30 →
+62/30 s in `first_drive.gd`. Recovery becomes frames 48-68 and he is seated at 69 (62 plus the
+0.25 s fade, 7.5 frames). Nothing else changes: not the clip, not the door, not the hand.
+Following the change:
+- the rig read-back's expected `CUT` becomes 62;
+- the edge test's last boundary becomes 69 (seated);
+- PIN2's seat time moves from 2.017 s to 2.317 s. That is a behaviour change the change predicts,
+  re-pinned in its own commit.
+
+**Claude Code's prediction for r1** (capture frame = 12 + clip frame, as in r0):
+- capture 10-60 as r0, frame for frame (clip 0-48 unchanged);
+- capture 65 (clip 53): no fade; he lifts his right foot toward the step, the door fully open;
+- capture 70 (clip 58): his foot on the step, his body rising into the door opening, no fade;
+- capture 74 (clip 62): the fade begins; his body is going in behind the door;
+- capture 78 (clip 66): most of the way to black, his shape in the cab;
+- capture 82 (clip 70): seated, the cab view coming back up (the log's `occupied` turns true
+  between clip 69 and 70);
+- the per-frame log: `door` 1.0 from clip 49 to the cut, `boarding` true to clip 69.

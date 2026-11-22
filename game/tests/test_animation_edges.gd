@@ -1,6 +1,7 @@
 extends SceneTree
 ## Assignment 7's edge tests (CHANGE-BRIEF.md §4): EnterVan at every phase boundary of the table,
-## frames 0 (startup), 32 (active), 48 (recovery) and 60 (seated), with an input arriving one clip
+## frames 0 (startup), 32 (active), 48 (recovery) and 69 (seated; 60 before TUNING.md's r1
+## moved the cut from 53 to 62), with an input arriving one clip
 ## frame before the boundary, on it, and one frame after, each through real input
 ## (`Input.parse_input_event`), and the brief's rule for each interrupt asserted:
 ##   W (a move key, held) and E: ignored; Ethan does not move, the clip runs on, he ends seated;
@@ -9,13 +10,13 @@ extends SceneTree
 ## Before frame 0 there is no clip frame: the input arrives after E while he steps to the door,
 ## EnterVan not yet begun. An input after the boarding has ended (seated) meets the van's state
 ## instead, and the test asserts that one: W drives the van, E gets him out, R recovers, Esc
-## pauses. Which rule applies is the phase table's: before frame 60 boarding's, after it the van's
-## (on frame 60, where he sits, the state the game shows a tick later). The clip's frame is its time x 30, read on the process tick (its own clock); the input
+## pauses. Which rule applies is the phase table's: before frame 69 boarding's, after it the van's
+## (on frame 69, where he sits, the state the game shows a tick later). The clip's frame is its time x 30, read on the process tick (its own clock); the input
 ## is posted on that tick and handled at the start of the next, before the clip advances.
 
 const FPS := 30.0
 const TICK := 1.0 / 60.0
-const BOUNDARIES := [0, 32, 48, 60]
+const BOUNDARIES := [0, 32, 48, 69]
 const INTERRUPTS := ["W", "E", "R", "Esc"]
 
 var _checks: int = 0
@@ -93,7 +94,7 @@ func _trial(boundary: int, offset: int, interrupt: String) -> void:
 				_post("interact", true)
 			await process_frame
 			var handled := _state()
-			if at > 60.0 + 0.01:
+			if at > 69.0 + 0.01:
 				handled = "seated"
 			if interrupt == "E":
 				_post("interact", false)
