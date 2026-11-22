@@ -5291,6 +5291,10 @@ tag `a5`. Pictures the author approved or rejected are filed in
        and the seated shock (our bone keys on Ethan, a cutscene shot through the windshield); the
        HUD reload sprite left out (not asked for); `DESIGN_DECISIONS.md` gains the shot.
 
+384. **Pins for the two new clips approved**
+     - **Prompt** (verbatim, after the brief's revision `a95441a`): "approved, go ahead with the
+       pins"
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
