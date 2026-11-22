@@ -410,12 +410,20 @@ def hips_drift(document, binary, animation):
 if (ETHAN / 'ethan.glb').exists():
     document, binary = gltf_parts(ETHAN / 'ethan.glb')
     animations = {animation['name']: animation for animation in document.get('animations', [])}
-    check(sorted(animations) == ['EnterVan', 'ExitVan', 'Idle-loop', 'PullBack-loop', 'Push-loop',
-                                 'PushStop', 'Run-loop', 'StairsUp-loop', 'Walk-loop',
-                                 'WalkBack-loop'],
+    earlier = ['EnterVan', 'ExitVan', 'Idle-loop', 'PullBack-loop', 'Push-loop', 'PushStop',
+               'Run-loop', 'StairsUp-loop', 'Walk-loop', 'WalkBack-loop']
+    ## Assignment 7 (#389-#403): the pistol clips (kept, unused since C68), the rifle's nineteen
+    ## and the seated pose under the shock, their loop modes set in ethan.glb.import.
+    assignment_7 = ['PistolAim', 'PistolIdle', 'PistolReload', 'RifleAim', 'RifleAimDown',
+                    'RifleAway', 'RifleFire', 'RifleGrab', 'RifleHit', 'RifleIdleA', 'RifleIdleB',
+                    'RifleReload', 'RifleRun', 'RifleRunBack', 'RifleStrafe', 'RifleStrafe2',
+                    'RifleStrafeLeft', 'RifleStrafeRight', 'RifleTurnLeft', 'RifleTurnRight',
+                    'RifleWalk', 'RifleWalkBack', 'Sit']
+    check(sorted(animations) == sorted(earlier + assignment_7),
           'ethan/ethan.glb carries his ten clips: the idle, walk, walk back and run, looping, '
           'the van\'s way in and out, Mixamo\'s Pushing, looping, and Push Stop (#240), and its '
-          'Running Up Stairs and Pull Heavy Object, looping (#254-#257)')
+          'Running Up Stairs and Pull Heavy Object, looping (#254-#257); and Assignment 7\'s '
+          'twenty-three (the pistol\'s three, the rifle\'s nineteen, the seated pose)')
     for name in ('Walk-loop', 'Push-loop', 'PushStop', 'StairsUp-loop', 'PullBack-loop'):
         if name in animations:
             most, end = hips_drift(document, binary, animations[name])
