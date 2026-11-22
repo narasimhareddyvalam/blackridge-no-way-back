@@ -5639,6 +5639,43 @@ tag `a5`. Pictures the author approved or rejected are filed in
        ZIP of the `a7` revision (a `git archive` of the tag) and `SUBMISSION.md`, with the film by
        link. Flagged: the tracked files total about 3.4 GB, so the ZIP will be large.
 
+426. **Submit the codebase or not?**
+     - **Prompt** (verbatim): "no theres no zip in the folder so should we submit the codebase or not"
+     - **Answered and done:** yes, a source ZIP of the tagged revision. With the film link committed,
+       `a7` was tagged on `develop`'s `fb6aa82` (as `a6` was on develop; merging PR #2 gives `main`
+       the same files) and pushed; `blackridge-no-way-back-a7-fb6aa82.zip` made with `git archive`
+       (3.0 GB, 22,062 files, no video, no `.godot` cache, tested); the SHA filled into the Desktop
+       copies of `SUBMISSION.md` and `CANVAS-NOTE.txt`.
+
+427. **Which files go to Canvas?**
+     - **Prompt** (verbatim): "what all files should i submit in canvas?"
+     - **Answered:** the ZIP and `SUBMISSION.md` uploaded, `CANVAS-NOTE.txt` pasted as the comment;
+       the film by link, not uploaded.
+
+428. **Is SUBMISSION.md up to date?**
+     - **Prompt** (verbatim): "submission.md is updated right? with film link, sha all those required
+       things?"
+     - **Answered:** yes (tag, SHA, film link and hash, routes, owners, sheet source); flagged two
+       lines: the limitation about the four `.import` files (since committed) and Claude Code's
+       drafting note in the summary. The disk was full (the ZIP and the fresh clone of `a7`), and
+       the fresh-clone check stopped.
+
+429. **Those two lines are fine**
+     - **Prompt** (verbatim): "no those two things are fine."
+     - **Done:** `SUBMISSION.md` left as the author has it.
+
+430. **The film's direct link**
+     - **Prompt** (verbatim): "https://northeastern-my.sharepoint.com/:v:/g/personal/valam_n_northeastern_edu/IQBmIL13qC1hSK29O0OFL2fTAWnN5-wj4oeEy-1OH0fE0YA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=eTfdsC --> this is the new link"
+     - **Done:** in the Desktop copies of `SUBMISSION.md` and `CANVAS-NOTE.txt`; the repository at
+       `a7` keeps the folder link, which holds the same file.
+
+431. **Delete the scratch files and the ZIP**
+     - **Prompt** (verbatim): "yes delete the scratch files and the zip as well"
+     - **Done:** Claude Code's scratch folder emptied (suite clones, the failed `a7` clone, raw
+       captures; every kept result is in the repository or on GitHub): free space 1.2 GB → 13 GB;
+       the ZIP deleted from `~/Desktop/A7-submission/` (rebuilt exactly by
+       `git archive --format=zip --prefix=blackridge-no-way-back-a7/ a7`).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
