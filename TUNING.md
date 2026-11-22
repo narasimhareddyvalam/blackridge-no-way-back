@@ -695,3 +695,27 @@ Following the change:
 - capture 82 (clip 70): seated, the cab view coming back up (the log's `occupied` turns true
   between clip 69 and 70);
 - the per-frame log: `door` 1.0 from clip 49 to the cut, `boarding` true to clip 69.
+
+**r1 captured** (`captures/enter_van/r1/`, `logs/animation/step7/enter_van_r1.log`; frames 10,
+12, 34, 44, 60, 65, 70, 74, 78, 81 and 82 kept).
+
+**Claude Code's comparison with its prediction** (a reading of the strip, not a check):
+
+| Capture (clip) | Predicted | Seen in r1 | Matches |
+| :-- | :-- | :-- | :-- |
+| 10-60 (to 48) | as r0 | the same poses on the same frames; the log identical to r0's to clip 48 | yes |
+| 65 (53) | no fade; his right foot lifting to the step | no fade; he turns into the opening, his near shoulder at the door's edge; his legs are in the door's shadow, so a lifted foot cannot be told from this camera | partly |
+| 70 (58) | on the step, rising into the opening, no fade | half his body behind the door, risen into the opening, no fade | yes |
+| 74 (62) | the fade begins, going in behind the door | the fade begun; only his shoulder and arm still outside the door | yes |
+| 78 (66) | most of the way to black, his shape in the cab | nearly black; his shape faint behind the door glass | yes |
+| 82 (70) | seated, the cab view coming up; `occupied` true between 69 and 70 | the cab view, dark, fading up; the log: `occupied` false at clip 69, true on the next frame | yes |
+
+The phases now end on the action: startup (to 31) is the step and the reach, active (32-47) the
+handle and the door's swing, recovery (48-68) the climb in behind the door. In r0 the recovery
+ended standing at the open door.
+
+**Re-pinned after the strip:** PIN2's seat time, 2.017 s → 2.333 s, measured as predicted (the
+pin samples on the physics tick, 1/60 s after 62/30 + 0.25 s, as it did before), its own commit.
+
+**The author's verdict on r1:** _waiting for the author: play the boarding at normal speed and
+at `--time-scale 0.25`; keep, revert or revise._
