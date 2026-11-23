@@ -5781,6 +5781,12 @@ tag `a5`. Pictures the author approved or rejected are filed in
        checkpoint saves, joined into one video per mission with labelled joins; and "Keep them" for
        the screenshots.
 
+     - **Dry runs (headless):** both automated players are broken in today's game. Mission 2's
+       never completes the stop at the shed's gate ("STOP AT THE GATE" stays). Mission 3's drives
+       into the landslide that closes the valley road east of the depot (at road sample 1326, by
+       design since Phase 1: "The way to the depot is over the hill"); its routes were written
+       while the author was away (#359) and never completed a run.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
