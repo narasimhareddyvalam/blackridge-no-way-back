@@ -42,6 +42,13 @@ const ROUND_THE_LOAD: Array[Vector3] = [Vector3(-46.3, 0.0, 15.0), Vector3(-47.2
 const PAST_THE_GUARD := Vector2(-47.75, 20.6)
 const TO_THE_BULKHEAD := Vector2(-47.75, 22.9)
 const BEHIND_THE_HANDLE := 0.3
+## The van's centre line past the compound's booth: 0.4 m from its service face (its side) plus
+## half the van's width, as test_handover.gd parks it.
+const BOOTH_LINE := 1.4
+## His van backed straight out of its bay to here (z) before it turns round for the yard's gate.
+const BACK_OUT_TO := 146.0
+## Turned to face east, it backs west to here (x) to have room to turn on round to the gate.
+const ROOM_X := 97.3
 const TRAVEL := 8.0
 const STROKE := 0.6
 const LOWERED := 1.6
@@ -58,7 +65,7 @@ const ROUND: Array[Vector3] = [Vector3(269.5, 0.0, 135.0), Vector3(270.6, 0.0, 1
 const TO_THE_CUT: Array[Vector3] = [Vector3(157.0, 0.0, 138.4), Vector3(139.6, 0.0, 139.9),
 	Vector3(136.6, 0.0, 140.0)]
 const TO_THE_KEYPAD: Array[Vector3] = [Vector3(137.5, 0.0, 145.0), Vector3(138.0, 0.0, 163.5),
-	Vector3(104.0, 0.0, 164.0), Vector3(98.4, 0.0, 163.0)]
+	Vector3(104.0, 0.0, 164.0), Vector3(98.3, 0.0, 162.8)]
 const END_SAMPLE := 990
 ## The gate at the transfer shed: a full-lock right turn from the spur, begun at TURN_FROM, squares
 ## the van to the lane; it then tucks in along TUCK_X (its side 0.4 m from the booth, 0.15 m clear
@@ -203,8 +210,8 @@ func _opening() -> void:
 
 ## Up the spur to the shed's gate, stopped level with the guard's window, the sheet handed over.
 func _shed() -> void:
-	await kit.drive_points([Vector3(-60.0, 0.0, 72.0), Vector3(TURN_FROM, 0.0, 72.0)] as Array[Vector3],
-		1.5, false)
+	await kit.drive_points([Vector3(-60.0, 0.0, 72.0), Vector3(TURN_FROM, 0.0, 72.0)]
+		as Array[Vector3], 1.5, false)
 	var turned := 0
 	while rad_to_deg(van.global_rotation.y) > 2.0 and turned < 900:
 		turned += 1
@@ -387,22 +394,37 @@ func _yard() -> void:
 ## Out of the yard, east to the warehouse compound, the run sheet through the booth's window.
 func _compound() -> void:
 	if van.global_position.z < 160.0:
-		await kit.drive_points([Vector3(104.5, 0.0, 150.0), Vector3(101.0, 0.0, 155.0),
-			Vector3(100.0, 0.0, 158.0)] as Array[Vector3], 3.0, true)
+		await kit.drive_points([Vector3(104.3, 0.0, 145.5), Vector3(101.6, 0.0, 149.0),
+			Vector3(100.4, 0.0, 151.5), Vector3(100.3, 0.0, 153.8)] as Array[Vector3], 2.5, true)
 		await kit.until(func() -> bool: return bool(yard.call("gate_open")), 20.0)
-		await kit.drive_points([Vector3(100.0, 0.0, 166.0), Vector3(104.0, 0.0, 171.0),
-			Vector3(112.0, 0.0, 172.0)] as Array[Vector3], 4.0, false)
+		await kit.seconds(0.5)
+		_log("the yard's gate open (%s): van %s facing %s, exiting %s" % [yard.call("gate_open"),
+			van.global_position.snapped(Vector3.ONE * 0.01), (-van.global_basis.z).snapped(
+			Vector3.ONE * 0.01), yard.call("exiting")])
+		await kit.drive_points([Vector3(100.2, 0.0, 156.0), Vector3(100.2, 0.0, 162.0),
+			Vector3(101.0, 0.0, 167.0), Vector3(104.0, 0.0, 171.0), Vector3(112.0, 0.0, 172.0)]
+			as Array[Vector3], 3.5, false)
 	kit.set("_last_index", kit.nearest_anywhere(van.global_position))
 	await kit.drive_road(1257, 12.0, 5.0, 200.0)
 	_log("at the compound's turn")
-	await kit.drive_points([Vector3(193.0, 0.0, 172.0), Vector3(199.0, 0.0, 167.0),
-		Vector3(199.4, 0.0, 160.0)] as Array[Vector3], 4.0, false)
-	while not bool(compound.call("vehicle_at_window")):
+	var booth := compound.get("booth") as Node3D
+	var out := booth.global_basis.x
+	out.y = 0.0
+	var line_x := ((booth.call("opening_centre") as Vector3) + out.normalized() * BOOTH_LINE).x
+	_log("the booth's line x %.2f" % line_x)
+	await kit.drive_points([Vector3(193.0, 0.0, 172.0), Vector3(line_x - 0.4, 0.0, 168.0),
+		Vector3(line_x, 0.0, 163.0)] as Array[Vector3], 3.0, false)
+	var ticks := 0
+	while not bool(compound.call("vehicle_at_window")) and ticks < 60 * 60:
+		ticks += 1
 		var gap: float = compound.call("window_gap")
+		if ticks % 120 == 0:
+			_log("to the booth: gap %.2f at %s speed %.2f" % [gap, van.global_position.snapped(
+				Vector3.ONE * 0.01), float(van.get("speed"))])
 		if absf(float(van.get("speed"))) < 0.05 and absf(gap) <= 0.4:
 			break
-		kit.steer_for(Vector3(199.4, 0.0, van.global_position.z - 8.0),
-			clampf(gap * 0.8, 0.0, 3.0) if gap > 0.0 else 0.0)
+		kit.steer_for(Vector3(line_x, 0.0, van.global_position.z - 3.0),
+			clampf(gap * 0.6, 0.6, 2.0) if gap > 0.15 else 0.0)
 		if gap <= 0.15:
 			Input.action_release("accelerate")
 			Input.action_press("brake")
@@ -463,36 +485,74 @@ func _escape() -> void:
 	_log("through the cut (outside %s)" % escape.get("outside"))
 	await kit.seconds(1.0)
 	await _walk_keys(TO_THE_KEYPAD, true)
+	_log("at the keypad on foot: Ethan %s, at it %s, offered '%s'" % [_flat(
+		driver.global_position).snapped(Vector3.ONE * 0.01), yard.call("at_keypad",
+		driver.global_position), cargo.call("foot_action", driver.global_position)])
 	await kit.press("interact")
 	await kit.until(func() -> bool: return bool(yard.call("gate_open")), 15.0)
+	_log("the yard's gate from outside: open %s, opening %.2f" % [yard.call("gate_open"),
+		yard.call("gate_opening")])
 	var left := yard.call("left_van") as Node3D
 	var door := _flat(left.to_global(Vector3(-1.6, 0.0, -1.3)))
 	await _walk_keys([Vector3(100.0, 0.0, 156.0), Vector3(92.8, 0.0, 145.0), door], true)
 	await kit.press("interact")
 	await kit.until(func() -> bool: return bool(van.get("occupied")), 10.0)
-	_log("his van back")
+	_log("his van back (gate open %s, Ethan %s, %.2f m from the door, in it %s)" % [
+		yard.call("gate_open"), _flat(driver.global_position).snapped(Vector3.ONE * 0.01),
+		_flat(driver.global_position).distance_to(door), van.get("occupied")])
 
 
 ## Out of the yard and west along the valley road past the depot to where the hill road begins.
 func _getaway() -> void:
 	await kit.seconds(1.0)
 	await _gear(-1)
-	await kit.drive_points([Vector3(95.5, 0.0, 145.0)] as Array[Vector3], -2.5, true)
+	_log("in the bay at %s facing %s" % [_here(), _facing()])
+	var waited := 0.0
+	while van.global_position.z < BACK_OUT_TO and waited < 20.0:
+		kit.release()
+		Input.action_press("accelerate", 0.4)
+		if absf(float(van.get("speed"))) > 2.0:
+			Input.action_release("accelerate")
+		await physics_frame
+		waited += 1.0 / 60.0
+	await kit.stop()
+	_log("backed out to %s facing %s" % [_here(), _facing()])
 	await _gear(1)
-	await kit.drive_points([Vector3(99.0, 0.0, 152.0), Vector3(100.0, 0.0, 158.0)]
-		as Array[Vector3], 3.0, true)
+	await _turn_until(Vector3.RIGHT, false, 0.4)
+	await kit.stop()
+	_log("facing east at %s facing %s" % [_here(), _facing()])
+	await _gear(-1)
+	waited = 0.0
+	while van.global_position.x > ROOM_X and waited < 20.0:
+		kit.release()
+		Input.action_press("accelerate", 0.4)
+		if absf(float(van.get("speed"))) > 2.0:
+			Input.action_release("accelerate")
+		await physics_frame
+		waited += 1.0 / 60.0
+	await kit.stop()
+	await _gear(1)
+	await _turn_until(Vector3.BACK, false, 0.4)
+	await kit.stop()
+	_log("turned round at %s facing %s" % [_here(), _facing()])
+	await kit.drive_points([Vector3(van.global_position.x, 0.0, van.global_position.z + 2.0),
+		Vector3(101.5, 0.0, 150.5), Vector3(100.4, 0.0, 152.5), Vector3(100.3, 0.0, 154.0)]
+		as Array[Vector3], 2.5, true)
+	_log("at the yard's gate %s facing %s, exiting %s" % [_here(), _facing(),
+		yard.call("exiting")])
 	await kit.until(func() -> bool: return bool(yard.call("gate_open")), 20.0)
 	await kit.drive_points([Vector3(100.0, 0.0, 166.0), Vector3(96.0, 0.0, 169.5),
 		Vector3(88.0, 0.0, 169.8)] as Array[Vector3], 4.0, false)
 	await _drive_road_back(END_SAMPLE + 12, 12.0)
-	_log("near the hill road")
+	_log("near the hill road at %s (sample %d)" % [van.global_position.snapped(Vector3.ONE * 0.1),
+		kit.nearest_anywhere(van.global_position)])
 	var road: PackedVector3Array = kit.road
 	var end := road[END_SAMPLE]
 	await kit.drive_points([_lane_back(END_SAMPLE + 4), _lane_back(END_SAMPLE)] as Array[Vector3],
 		4.0, true)
 	await kit.until(func() -> bool: return bool(app.get("_on_title")), 60.0)
 	await kit.seconds(4.0)
-	_log("the title (end %s)" % end)
+	_log("the title (%s, end %s)" % [app.get("_on_title"), end])
 
 
 ## Drives with the wheel hard over (left, or right) until the van faces `facing`.
@@ -536,6 +596,9 @@ func _drive_road_back(to: int, cruise: float) -> void:
 		await physics_frame
 		waited += 1.0 / 60.0
 		here = kit.nearest(van.global_position, here, 12)
+		if Engine.get_physics_frames() % 1200 == 0:
+			_log("west on the loop: sample %d at %s speed %.1f" % [here,
+				van.global_position.snapped(Vector3.ONE * 0.1), float(van.get("speed"))])
 		var speed := float(van.get("speed"))
 		var look := clampi(int(3 + absf(speed) * 0.55), 3, 10)
 		var a := maxi(here - 1, 2)
@@ -772,3 +835,11 @@ func _swing_back(centre_x: float, bumpers: float) -> void:
 	var line := Vector3(centre_x, 0.0, van.global_position.z + 6.0)
 	await kit.drive_points([line] as Array[Vector3], 2.0, true)
 	_log("lined up at %s" % van.global_position.snapped(Vector3.ONE * 0.1))
+
+
+func _here() -> Vector3:
+	return van.global_position.snapped(Vector3.ONE * 0.1)
+
+
+func _facing() -> Vector3:
+	return (-van.global_basis.z).snapped(Vector3.ONE * 0.01)

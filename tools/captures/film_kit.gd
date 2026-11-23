@@ -380,8 +380,7 @@ func fight_men(men: Array, reach: float = 32.0, between: float = 0.45) -> bool:
 	var head_point := best.global_position + Vector3.UP * 1.62
 	driver.call("aim_toward", head_point)
 	_next_shot -= 1.0 / Engine.physics_ticks_per_second
-	if _next_shot <= 0.0 and float((driver.get("_aim_arms") as Node).get("influence")
-			if driver.get("_aim_arms") != null else 0.0) > 0.9:
+	if _next_shot <= 0.0 and _ready_to_fire():
 		_next_shot = between
 		var event := InputEventAction.new()
 		event.action = "fire"
@@ -392,3 +391,13 @@ func fight_men(men: Array, reach: float = 32.0, between: float = 0.45) -> bool:
 		up.pressed = false
 		Input.parse_input_event(up)
 	return true
+
+
+## Whether a round would leave the gun now: the rifle (Mission 3 since the rifle revision) up on
+## its aim, or the pistol's arms settled on the target.
+func _ready_to_fire() -> bool:
+	var rifle := driver.get("_rifle") as Node
+	if rifle != null and bool(rifle.call("armed")):
+		return bool(driver.call("can_fire"))
+	var arms := driver.get("_aim_arms") as Node
+	return arms != null and float(arms.get("influence")) > 0.9

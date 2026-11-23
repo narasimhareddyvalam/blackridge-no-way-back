@@ -13,11 +13,12 @@ const SAVES := {
 	2: "[save]\nversion=2\nmission=\"the_wrong_cargo\"\n\n[cargo]\nstage=0\nopening=true\n",
 	3: "[save]\nversion=2\nmission=\"last_run\"\n\n[run]\nstage=0\nopening=true\n",
 }
+## Where the escape stops on the east road home, 175 m from the waterfront's gate (over 150).
+const AWAY_X := 672.0
 
 var kit: Kit
 var app: Node3D
 var _run_node: Node
-
 
 func _seated() -> bool:
 	return bool(kit.van.get("occupied")) and bool(kit.van.get("engine_on"))
@@ -31,11 +32,6 @@ func _convoy_running() -> bool:
 func _armed() -> bool:
 	var encounter := _run_node.get("encounter") as Node
 	return bool((encounter.get("handgun") as Node).get("armed"))
-
-
-func _epilogue_over() -> bool:
-	var epilogue: Variant = _run_node.get("epilogue")
-	return epilogue != null and not bool((epilogue as Node).get("playing"))
 
 
 func _initialize() -> void:
@@ -52,9 +48,11 @@ func _run() -> void:
 	var progress := OS.get_user_data_dir().path_join("film_mission_%d.cfg" % mission)
 	if FileAccess.file_exists(progress):
 		DirAccess.remove_absolute(progress)
+	var from_convoy := mission == 3 and args.size() > 1 and args[1] == "convoy"
 	if SAVES.has(mission):
 		var file := FileAccess.open(progress, FileAccess.WRITE)
-		file.store_string(SAVES[mission])
+		file.store_string(SAVES[mission].replace("stage=0", "stage=2") if from_convoy
+			else SAVES[mission])
 		file.close()
 	app = (load("res://app/first_drive.tscn") as PackedScene).instantiate() as Node3D
 	app.get_node("DrivingTrial").checkpoint_path = progress
@@ -69,7 +67,10 @@ func _run() -> void:
 		2:
 			await _mission_two()
 		3:
-			await _mission_three()
+			if from_convoy:
+				await _from_convoy()
+			else:
+				await _mission_three()
 	_log("done")
 	quit(0)
 
@@ -117,8 +118,8 @@ func _watch_mission_one() -> void:
 		_log("encounter %s oncoming %s pedestrian %s off-centre %.1f locked %s" % [
 			route.get("_encounter_done"), (on as Node3D).global_position.snapped(
 			Vector3.ONE * 0.1) if is_instance_valid(on) else "none", (walker as Node3D)
-			.global_position.snapped(Vector3.ONE * 0.1) if is_instance_valid(walker) else "none", kit.van.global_position.distance_to(
-			kit.road[here]), kit.van.get("locked")])
+			.global_position.snapped(Vector3.ONE * 0.1) if is_instance_valid(walker) else "none",
+			kit.van.global_position.distance_to(kit.road[here]), kit.van.get("locked")])
 		_log("pos %s sample %d stage %d fleeing %s speed %.1f held %s %s" % [
 			kit.van.global_position.snapped(Vector3.ONE * 0.1), kit.nearest_anywhere(
 			kit.van.global_position), int(route.get("stage")), route.get("fleeing"),
@@ -140,8 +141,10 @@ func _mission_three() -> void:
 	_log("start: %s" % kit.objective())
 	await kit.seconds(1.5)
 	await _over_the_hill_east()
-	await kit.drive_points([ Vector3(690.0, 0.0, 153.4),
-		Vector3(722.0, 0.0, 156.0), Vector3(724.4, 0.0, 180.0), Vector3(730.0, 0.0, 200.9), Vector3(830.0, 0.0, 200.6), Vector3(848.0, 0.0, 200.5), Vector3(880.0, 0.0, 215.0), Vector3(940.0, 0.0, 226.0),
+	await kit.drive_points([Vector3(690.0, 0.0, 153.4),
+		Vector3(722.0, 0.0, 156.0), Vector3(724.4, 0.0, 180.0), Vector3(730.0, 0.0, 200.9),
+		Vector3(830.0, 0.0, 200.6), Vector3(848.0, 0.0, 200.5), Vector3(880.0, 0.0, 215.0),
+		Vector3(940.0, 0.0, 226.0),
 		Vector3(975.0, 0.0, 222.0), Vector3(990.0, 0.0, 227.0), Vector3(992.0, 0.0, 233.0)]
 		as Array[Vector3], 11.0, true)
 	_log("at berth 2: %s" % kit.objective())
@@ -151,21 +154,23 @@ func _mission_three() -> void:
 	var ambush := run.get("ambush") as Node
 	for attempt in range(4):
 		await kit.drive_points([Vector3(990.0, 0.0, 244.0), Vector3(972.0, 0.0, 247.0),
-			Vector3(935.0, 0.0, 238.0), Vector3(880.0, 0.0, 214.0), Vector3(852.0, 0.0, 200.2), Vector3(830.0, 0.0, 199.4), Vector3(745.0, 0.0, 198.4), Vector3(729.0, 0.0, 190.0),
-			Vector3(727.6, 0.0, 150.0), Vector3(727.6, 0.0, 96.0)] as Array[Vector3], 14.0, true)
+			Vector3(935.0, 0.0, 238.0), Vector3(880.0, 0.0, 214.0), Vector3(852.0, 0.0, 200.2),
+			Vector3(830.0, 0.0, 199.4), Vector3(745.0, 0.0, 198.4), Vector3(729.0, 0.0, 190.0),
+			Vector3(727.6, 0.0, 142.0)] as Array[Vector3], 14.0, false)
+		await kit.drive_points([Vector3(726.0, 0.0, 147.0), Vector3(720.0, 0.0, 150.1),
+			Vector3(700.0, 0.0, 150.1), Vector3(AWAY_X, 0.0, 150.1)] as Array[Vector3], 6.0, true)
 		if ambush == null or not is_instance_valid(ambush) or bool(ambush.get("escaped")):
 			break
 		_log("caught at the gate, again (%d)" % attempt)
 		await kit.until(func() -> bool: return String(ambush.get("phase")) == "escape", 20.0)
-	_log("away: %s" % kit.objective())
+	_log("away at %s: %s" % [_at(), kit.objective()])
+	await kit.until(func() -> bool: return kit.objective() == "CHECK THE PHONE", 10.0)
+	await kit.stop()
 	await kit.press("interact")
-	await kit.seconds(7.0)
+	await kit.seconds(4.0)
 	await kit.press("interact")
 	_log("phone read: %s" % kit.objective())
 	await kit.seconds(2.0)
-	await kit.drive_points([Vector3(735.0, 0.0, 100.0), Vector3(742.0, 0.0, 118.0),
-		Vector3(731.0, 0.0, 135.0), Vector3(723.0, 0.0, 150.0), Vector3(700.0, 0.0, 150.0),
-		Vector3(615.0, 0.0, 150.0)] as Array[Vector3], 12.0, false)
 	var depot_road := kit.nearest_anywhere(Vector3(-16.0, 0.0, 100.0))
 	await _over_the_hill_west(depot_road - 6)
 	var meeting: Vector3 = run.get("depot_meeting")
@@ -176,8 +181,9 @@ func _mission_three() -> void:
 	await kit.until(func() -> bool: return bool(kit.van.get("occupied")), 10.0)
 	await kit.seconds(2.0)
 	_log("confrontation over: %s" % kit.objective())
+	await kit.until(func() -> bool: return kit.objective() == "LISTEN TO THE RECORDING", 10.0)
 	await kit.press("interact")
-	await kit.seconds(12.0)
+	await kit.seconds(5.0)
 	await kit.press("interact")
 	await kit.seconds(3.0)
 	_log("recording heard: %s" % kit.objective())
@@ -191,18 +197,27 @@ func _mission_three() -> void:
 	await kit.until(func() -> bool: return bool(kit.van.get("occupied")), 10.0)
 	await kit.seconds(2.0)
 	_log("reconciled: %s" % kit.objective())
-	await kit.drive_road_back(4, 14.0)
-	await kit.drive_points([Vector3(600.0, 0.0, 150.0), Vector3(690.0, 0.0, 153.4),
-		Vector3(712.0, 0.0, 153.4)] as Array[Vector3], 11.0, false)
+	await _convoy_onward(run, field)
+
+
+## From the viewpoint (Last Run's stage 2) to the end: over the hill, the convoy, the service gate,
+## the hangar and home. Also played alone from a stage 2 save (`-- 3 convoy`), to check it.
+func _convoy_onward(run: Node, field: Node3D) -> void:
+	await _round_east()
+	_log("over the hill, east again: %s" % kit.objective())
+	await kit.drive_points([Vector3(690.0, 0.0, 153.4), Vector3(712.0, 0.0, 153.4)]
+		as Array[Vector3], 11.0, false)
 	await _tail(run, field)
 	_log("convoy in: %s" % kit.objective())
 	await kit.drive_points([Vector3(735.0, 0.0, -100.0), Vector3(742.0, 0.0, -84.0),
 		Vector3(729.0, 0.0, -68.0), Vector3(727.6, 0.0, -46.0), Vector3(740.0, 0.0, -41.0),
 		Vector3(984.0, 0.0, -41.0), Vector3(990.0, 0.0, -48.0), Vector3(990.0, 0.0, -66.0)]
-		as Array[Vector3], 10.0, true)
-	_log("at the service gate: %s" % kit.objective())
+		as Array[Vector3], 10.0, false)
+	await kit.drive_points([Vector3(990.0, 0.0, -73.5)] as Array[Vector3], 3.0, true)
+	_log("at the service gate %s: %s" % [_at(), kit.objective()])
 	await kit.press("interact")
-	await kit.seconds(3.0)
+	await kit.until(func() -> bool: return kit.objective() == "MAYA", 6.0)
+	await kit.seconds(1.0)
 	_log("code keyed: %s" % kit.objective())
 	await _hangar(run, field)
 	await _home(run, field)
@@ -216,22 +231,36 @@ func _over_the_hill_east() -> void:
 	await kit.drive_points([Vector3(-33.0, 0.0, 100.0), Vector3(-42.0, 0.0, 92.0),
 		Vector3(-45.0, 0.0, 82.0), kit.lane_point(1050, -1.0), kit.lane_point(1044, -1.0)]
 		as Array[Vector3], 5.0, false)
+	await _round_east()
+	_log("over the hill, east: %s" % kit.objective())
+
+
+## The loop driven backward over the hill to its join, then round the join onto the east road.
+func _round_east() -> void:
 	await kit.drive_road_back(2, 14.0, 4.5, 900.0)
 	var round: Array[Vector3] = []
-	for index in range(1502, 1471, -3):
+	for index in range(1502, 1480, -3):
 		round.append(kit.lane_point(index, -1.0))
 	await kit.drive_points(round, 12.0, false)
-	_log("over the hill, east: %s" % kit.objective())
+	await kit.drive_points([kit.lane_point(1477, -1.0), Vector3(608.6, 0.0, 148.6),
+		Vector3(611.0, 0.0, 152.4), Vector3(617.0, 0.0, 153.4)] as Array[Vector3], 5.0, false)
 
 
 ## Back from the east side to the depot over the hill: round the join forward, then the loop driven
 ## forward to `to`, as Mission 1 drives it.
 func _over_the_hill_west(to: int) -> void:
+	await kit.drive_points([Vector3(640.0, 0.0, 150.1), Vector3(617.0, 0.0, 150.2)]
+		as Array[Vector3], 10.0, false)
+	await kit.drive_points([Vector3(614.5, 0.0, 150.2), kit.lane_point(1474), kit.lane_point(1476),
+		kit.lane_point(1479)] as Array[Vector3], 4.5, false)
+	_log("onto the loop at %s" % _at())
 	var round: Array[Vector3] = []
-	for index in range(1474, 1502, 3):
+	for index in range(1482, 1502, 3):
 		round.append(kit.lane_point(index))
 	round.append(kit.lane_point(1))
 	await kit.drive_points(round, 12.0, false)
+	_log("round the join at %s (sample %d)" % [_at(), kit.nearest_anywhere(
+		kit.van.global_position)])
 	await kit.drive_road(to, 14.0, 4.5, 900.0)
 	_log("over the hill, west: %s" % kit.objective())
 
@@ -300,12 +329,35 @@ func _home(run: Node, field: Node3D) -> void:
 	await kit.seconds(1.0)
 	var door: Vector3 = field.get("office_door")
 	var maya := run.get("maya") as Node3D
-	await kit.walk_keys([door + Vector3(0.0, 0.0, -1.2), Vector3(971.0, 0.0, -112.0),
+	await kit.walk_keys([door + Vector3(0.0, 0.0, 0.7), door + Vector3(0.0, 0.0, -1.2),
+		Vector3(971.0, 0.0, -112.0),
 		Vector3(968.0, 0.0, -124.0), Vector3(970.0, 0.0, -131.0), Vector3(987.0, 0.0, -131.0),
 		Vector3(989.0, 0.0, -110.0), Vector3(990.0, 0.0, -84.0), maya.global_position
 		+ Vector3(1.5, 0.0, -2.0)] as Array[Vector3], false, Callable(), 300.0)
 	_log("at Maya: %s" % kit.objective())
 	_run_node = run
-	await kit.until(_epilogue_over, 400.0)
-	await kit.until(func() -> bool: return bool(app.get("_on_title")), 20.0)
+	var seen := String(run.get("story"))
+	var waited := 0.0
+	while not bool(app.get("_on_title")) and waited < 900.0:
+		await kit.seconds(0.5)
+		waited += 0.5
+		if String(run.get("story")) != seen:
+			seen = String(run.get("story"))
+			_log("the ending: %s (%s)" % [seen, kit.objective()])
+	_log("the title screen (%s)" % app.get("_on_title"))
 	await kit.seconds(4.0)
+
+
+## Last Run from its stage 2 save, at the viewpoint: the title, then the convoy onward.
+func _from_convoy() -> void:
+	var run := app.get("run") as Node
+	var field := app.get_node("IndustrialLoop").get("harbour_flats").get("airfield") as Node3D
+	await kit.key(KEY_ENTER)
+	await kit.until(_seated, 20.0)
+	await kit.seconds(1.5)
+	_log("start (stage 2) at %s: %s" % [_at(), kit.objective()])
+	await _convoy_onward(run, field)
+
+
+func _at() -> Vector3:
+	return kit.van.global_position.snapped(Vector3.ONE * 0.1)
