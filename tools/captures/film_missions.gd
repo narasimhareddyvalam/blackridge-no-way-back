@@ -139,14 +139,9 @@ func _mission_three() -> void:
 	await kit.until(_seated, 20.0)
 	_log("start: %s" % kit.objective())
 	await kit.seconds(1.5)
-	var east := kit.nearest_anywhere(Vector3(609.0, 0.0, 151.7))
-	await kit.drive_points([Vector3(-33.0, 0.0, 100.0), Vector3(-42.0, 0.0, 92.0),
-		Vector3(-45.0, 0.0, 80.0), kit.lane_point(1052), kit.lane_point(1060)] as Array[Vector3],
-		5.0, false)
-	await kit.drive_road(mini(east, kit.road.size() - 3), 14.0)
-	await kit.drive_points([Vector3(615.0, 0.0, 153.4), Vector3(690.0, 0.0, 153.4),
-		Vector3(722.0, 0.0, 156.0), Vector3(724.4, 0.0, 180.0), Vector3(730.0, 0.0, 201.6),
-		Vector3(835.0, 0.0, 201.6), Vector3(880.0, 0.0, 215.0), Vector3(940.0, 0.0, 226.0),
+	await _over_the_hill_east()
+	await kit.drive_points([ Vector3(690.0, 0.0, 153.4),
+		Vector3(722.0, 0.0, 156.0), Vector3(724.4, 0.0, 180.0), Vector3(730.0, 0.0, 200.9), Vector3(830.0, 0.0, 200.6), Vector3(848.0, 0.0, 200.5), Vector3(880.0, 0.0, 215.0), Vector3(940.0, 0.0, 226.0),
 		Vector3(975.0, 0.0, 222.0), Vector3(990.0, 0.0, 227.0), Vector3(992.0, 0.0, 233.0)]
 		as Array[Vector3], 11.0, true)
 	_log("at berth 2: %s" % kit.objective())
@@ -156,8 +151,7 @@ func _mission_three() -> void:
 	var ambush := run.get("ambush") as Node
 	for attempt in range(4):
 		await kit.drive_points([Vector3(990.0, 0.0, 244.0), Vector3(972.0, 0.0, 247.0),
-			Vector3(935.0, 0.0, 238.0), Vector3(880.0, 0.0, 214.0), Vector3(848.0, 0.0, 202.0),
-			Vector3(830.0, 0.0, 198.4), Vector3(745.0, 0.0, 198.4), Vector3(729.0, 0.0, 190.0),
+			Vector3(935.0, 0.0, 238.0), Vector3(880.0, 0.0, 214.0), Vector3(852.0, 0.0, 200.2), Vector3(830.0, 0.0, 199.4), Vector3(745.0, 0.0, 198.4), Vector3(729.0, 0.0, 190.0),
 			Vector3(727.6, 0.0, 150.0), Vector3(727.6, 0.0, 96.0)] as Array[Vector3], 14.0, true)
 		if ambush == null or not is_instance_valid(ambush) or bool(ambush.get("escaped")):
 			break
@@ -173,7 +167,7 @@ func _mission_three() -> void:
 		Vector3(731.0, 0.0, 135.0), Vector3(723.0, 0.0, 150.0), Vector3(700.0, 0.0, 150.0),
 		Vector3(615.0, 0.0, 150.0)] as Array[Vector3], 12.0, false)
 	var depot_road := kit.nearest_anywhere(Vector3(-16.0, 0.0, 100.0))
-	await kit.drive_road_back(depot_road + 6, 14.0)
+	await _over_the_hill_west(depot_road - 6)
 	var meeting: Vector3 = run.get("depot_meeting")
 	await kit.drive_points([meeting + Vector3(-6.0, 0.0, -4.0)] as Array[Vector3], 5.0, true)
 	_log("at the depot: %s" % kit.objective())
@@ -212,6 +206,34 @@ func _mission_three() -> void:
 	_log("code keyed: %s" % kit.objective())
 	await _hangar(run, field)
 	await _home(run, field)
+
+
+## The valley road east of the depot is closed by the landslide (road sample 1326; "The way to the
+## depot is over the hill", PHASE_BRIEF.md), so every trip between the depot and the east side goes
+## over the hill road, the loop driven backward from the depot to its join (sample 0), then round
+## the join to the coastal road at sample 1472.
+func _over_the_hill_east() -> void:
+	await kit.drive_points([Vector3(-33.0, 0.0, 100.0), Vector3(-42.0, 0.0, 92.0),
+		Vector3(-45.0, 0.0, 82.0), kit.lane_point(1050, -1.0), kit.lane_point(1044, -1.0)]
+		as Array[Vector3], 5.0, false)
+	await kit.drive_road_back(2, 14.0, 4.5, 900.0)
+	var round: Array[Vector3] = []
+	for index in range(1502, 1471, -3):
+		round.append(kit.lane_point(index, -1.0))
+	await kit.drive_points(round, 12.0, false)
+	_log("over the hill, east: %s" % kit.objective())
+
+
+## Back from the east side to the depot over the hill: round the join forward, then the loop driven
+## forward to `to`, as Mission 1 drives it.
+func _over_the_hill_west(to: int) -> void:
+	var round: Array[Vector3] = []
+	for index in range(1474, 1502, 3):
+		round.append(kit.lane_point(index))
+	round.append(kit.lane_point(1))
+	await kit.drive_points(round, 12.0, false)
+	await kit.drive_road(to, 14.0, 4.5, 900.0)
+	_log("over the hill, west: %s" % kit.objective())
 
 
 ## TAIL THE CONVOY: up the coastal road about 60 m behind the second SUV, slowing as it slows,

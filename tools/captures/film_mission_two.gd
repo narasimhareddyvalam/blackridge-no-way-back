@@ -60,6 +60,14 @@ const TO_THE_CUT: Array[Vector3] = [Vector3(157.0, 0.0, 138.4), Vector3(139.6, 0
 const TO_THE_KEYPAD: Array[Vector3] = [Vector3(137.5, 0.0, 145.0), Vector3(138.0, 0.0, 163.5),
 	Vector3(104.0, 0.0, 164.0), Vector3(98.4, 0.0, 163.0)]
 const END_SAMPLE := 990
+## The gate at the transfer shed: a full-lock right turn from the spur, begun at TURN_FROM, squares
+## the van to the lane; it then tucks in along TUCK_X (its side 0.4 m from the booth, 0.15 m clear
+## of the island's kerb) so the guard can reach the driver's window.
+const TURN_FROM := -66.8
+const TUCK_X := -71.62
+## Out through the shed's gate the van keeps to OUT_X, clear of the booth's island (its kerb at
+## x -72.75), straightened before the island's end at z 54.6.
+const OUT_X := -70.6
 
 var kit: Kit
 var app: Node3D
@@ -195,37 +203,44 @@ func _opening() -> void:
 
 ## Up the spur to the shed's gate, stopped level with the guard's window, the sheet handed over.
 func _shed() -> void:
-	await kit.drive_points([Vector3(-60.0, 0.0, 71.3), Vector3(-66.5, 0.0, 70.0),
-		Vector3(LANE_X + 0.3, 0.0, 66.0), Vector3(LANE_X + 0.2, 0.0, 64.5)] as Array[Vector3], 4.0,
-		false)
+	await kit.drive_points([Vector3(-60.0, 0.0, 72.0), Vector3(TURN_FROM, 0.0, 72.0)] as Array[Vector3],
+		1.5, false)
+	var turned := 0
+	while rad_to_deg(van.global_rotation.y) > 2.0 and turned < 900:
+		turned += 1
+		Input.action_release("steer_left")
+		Input.action_press("steer_right", 1.0)
+		var speed := float(van.get("speed"))
+		Input.action_release("brake")
+		Input.action_release("accelerate")
+		if speed < 1.2:
+			Input.action_press("accelerate", 0.3)
+		elif speed > 1.6:
+			Input.action_press("brake", 0.3)
+		await physics_frame
+	Input.action_release("steer_right")
+	_log("in the lane at %s heading %.1f" % [van.global_position.snapped(Vector3.ONE * 0.01),
+		rad_to_deg(van.global_rotation.y)])
 	var tick := 0
-	while not bool(shed.call("vehicle_at_window")) and tick < 1800:
+	while tick < 1800:
 		var gap: float = shed.call("window_gap")
 		tick += 1
-		if tick % 60 == 0:
-			_log("window: van %s gap %.2f speed %.2f near %s reach %s" % [
-				van.global_position.snapped(Vector3.ONE * 0.01), gap, float(van.get("speed")),
-				shed.call("vehicle_near"), shed.call("window_in_reach")])
-			var hit := van.get_last_slide_collision()
-			_log("  held %s gear %s throttle %.2f brake? %s hit %s" % [van.get("held"),
-				van.get("gear"), float(van.get("throttle")), van.get("braking"),
-				(hit.get_collider() as Node).get_path() if hit != null and hit.get_collider()
-				is Node else "none"])
-		if absf(float(van.get("speed"))) < 0.05 and absf(gap) <= 0.4:
+		if absf(float(van.get("speed"))) < 0.05 and absf(gap) <= 0.3:
 			break
-		var aim := Vector3(LANE_X - 0.35, 0.0, van.global_position.z - 8.0)
-		kit.steer_for(aim, clampf(gap * 0.8, 0.0, 3.0) if gap > 0.0 else 0.0)
-		if gap <= 0.15:
+		var aim := Vector3(TUCK_X, 0.0, van.global_position.z - 2.5)
+		kit.steer_for(aim, clampf(gap * 0.6, 0.6, 1.2) if gap > 0.3 else 0.0)
+		if gap <= 0.3:
 			Input.action_release("accelerate")
 			Input.action_press("brake")
 		await physics_frame
 	await kit.stop()
 	await kit.seconds(1.0)
-	_log("at the window (%s)" % shed.call("vehicle_at_window"))
+	_log("at the window (%s, reach %s, gap %.2f, x %.2f)" % [shed.call("vehicle_at_window"),
+		shed.call("window_in_reach"), shed.call("window_gap"), van.global_position.x])
 	await kit.press("interact")
-	await kit.until(func() -> bool: return bool(shed.call("barrier_open")), 20.0)
+	await kit.until(func() -> bool: return bool(shed.call("barrier_open")), 25.0)
 	await kit.seconds(1.0)
-	_log("barrier up")
+	_log("barrier up (%s)" % shed.call("barrier_open"))
 
 
 ## Round the yard to the court before bay 9, facing out, the rear doors opened, backed on, chocked.
@@ -308,10 +323,11 @@ func _seal() -> void:
 	await _walk_van([AT_THE_DOOR])
 	await kit.get_in()
 	var bay := shed.get("bay_nine") as Node
+	await _gear(1)
 	Input.action_press("accelerate", 0.4)
 	await kit.until(func() -> bool: return float(bay.call("clearance")) > 2.9, 10.0)
 	await kit.stop()
-	_log("pulled forward")
+	_log("pulled forward (clearance %.2f m)" % float(bay.call("clearance")))
 	await kit.get_out()
 	await _walk_van(TO_THE_REAR)
 	await kit.press("interact")
@@ -336,8 +352,9 @@ func _seal() -> void:
 ## Out of the shed, down the spur and round to the container yard; the code; the bay; the swap.
 func _yard() -> void:
 	await kit.drive_points([Vector3(BAY, 0.0, 36.0), Vector3(-55.0, 0.0, 42.0),
-		Vector3(LANE_X, 0.0, 46.0), Vector3(LANE_X, 0.0, 62.0), Vector3(-73.0, 0.0, 70.0)]
-		as Array[Vector3], 4.0, false)
+		Vector3(-64.0, 0.0, 44.0), Vector3(-69.6, 0.0, 46.8), Vector3(OUT_X, 0.0, 50.5),
+		Vector3(OUT_X, 0.0, 62.0), Vector3(-71.5, 0.0, 66.5), Vector3(-73.0, 0.0, 70.0)]
+		as Array[Vector3], 3.0, false)
 	kit.set("_last_index", kit.nearest_anywhere(van.global_position))
 	await kit.drive_road(1195, 12.0, 5.0, 300.0)
 	_log("on the valley road")
@@ -354,11 +371,17 @@ func _yard() -> void:
 	_log("in the bay (%s)" % yard.call("in_bay"))
 	await kit.get_out()
 	var door := Vector3(105.6, 0.0, 141.3)
-	await _walk_keys([Vector3(93.0, 0.0, 143.5), Vector3(100.0, 0.0, 144.0), door])
+	await _walk_keys([Vector3(93.0, 0.0, 143.5), Vector3(100.0, 0.0, 144.5),
+		Vector3(103.0, 0.0, 144.8), Vector3(106.7, 0.0, 144.3), Vector3(106.7, 0.0, 141.6), door])
+	_log("at the dark van's door: Ethan %s, %.2f m from it, at_dark_door %s" % [
+		driver.global_position.snapped(Vector3.ONE * 0.01), _flat(driver.global_position)
+		.distance_to(_flat(door)), yard.call("at_dark_door", driver.global_position)])
 	await kit.press("interact")
-	await kit.seconds(2.0)
+	await kit.seconds(1.5)
+	_log("the vans swapped: %s" % _objective())
+	await kit.get_in()
 	await kit.until(func() -> bool: return bool(van.get("occupied")), 10.0)
-	_log("the dark van taken")
+	_log("the dark van taken (in it: %s)" % van.get("occupied"))
 
 
 ## Out of the yard, east to the warehouse compound, the run sheet through the booth's window.
