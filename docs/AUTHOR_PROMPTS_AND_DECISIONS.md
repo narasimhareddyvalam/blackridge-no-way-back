@@ -5804,6 +5804,27 @@ tag `a5`. Pictures the author approved or rejected are filed in
        "GTA V, Euro Truck Simulator 2"; the pitch in the Blackridge repository, `pitch/`, tag `a8`
        ("Blackridge repo (Recommended)"); why this project: "Mostly learning".
 
+451. **The missions in full**
+     - **Prompt** (verbatim): "make sure the mission 2 and mission 3 you are giivng me fully, so that
+       i can test and make sure it works accurately."
+     - **Taken as:** each mission recorded whole and uncut (this replaces #449's cut drives).
+     - **Found and fixed in the game, each with a failing test first:** the harbour flats' seam at
+       x 657 stopped the van driving east (`23cc4cf`, `test_flats_seam.gd`); Mission 3's hidden
+       convoy SUVs were solid on the coastal road and stopped a van escaping south (`007d62c`,
+       `test_hidden_suv.gd`). Everything else was the automated players' own routes and timing
+       (`ccefdc1`, `f40781b`, `b7ece7e`).
+
+452. **Tell me when the videos are done**
+     - **Prompts** (verbatim): "tell me when the videos are done" (three times); "alright whats
+       happening"; "how lon".
+     - **Answered:** several hours at least; recording takes as long as each mission plays, and
+       needs a window open on the Mac, asked for first.
+
+453. **Recording now**
+     - **Asked:** the author chose "Yes, I'll plug in (Recommended)": Mission 2, then Mission 3,
+       recorded uncut in a Movie Maker window; and "Yes, delete the raw .avi (Recommended)": each
+       temporary .avi in the session's scratch folder deleted once its .mp4 is made and checked.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
