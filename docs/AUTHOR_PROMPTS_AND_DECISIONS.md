@@ -5762,6 +5762,13 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** a pull request `develop` → `main` with the records written after PR #2 (prompt log
        and HANDOFF only), merged with a merge commit at the author's word.
 
+447. **What's next?**
+     - **Prompt** (verbatim): "whats next"
+     - **Answered:** from `ROADMAP.md` and the open items: the next course assignment when its handout
+       arrives; the author's playtest of Missions 2 and 3; the EnterVan improvement (#417); the
+       Dec 3 milestone (M1 polished, clean-clone rehearsal); the one priced GPU run (#296); then
+       Assignment 10 by 2026-12-20.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
