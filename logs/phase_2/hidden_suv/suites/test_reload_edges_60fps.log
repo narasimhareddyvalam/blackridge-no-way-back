@@ -1,0 +1,59 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Resource file not found: res://features/environments/industrial_loop/polyhaven/models/textures/weathered_plank_siding/weathered_plank_siding_diff_2k.jpg (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:325)
+   GDScript backtrace (most recent call first):
+       [0] _textured (res://features/environments/industrial_loop/town_station.gd:569)
+       [1] _bench (res://features/environments/industrial_loop/town_station.gd:293)
+       [2] _street_furniture (res://features/environments/industrial_loop/town_station.gd:267)
+       [3] build (res://features/environments/industrial_loop/town_station.gd:107)
+       [4] _town (res://features/environments/industrial_loop/industrial_loop.gd:1062)
+       [5] _ready (res://features/environments/industrial_loop/industrial_loop.gd:182)
+       [6] _run (res://tests/test_reload_edges.gd:47)
+ERROR: Array is in read-only state.
+   at: clear (core/variant/array.cpp:125)
+   GDScript backtrace (most recent call first):
+       [0] _talk (res://features/missions/last_run/last_run.gd:470)
+       [1] _story (res://features/missions/last_run/last_run.gd:622)
+       [2] _physics_process (res://features/missions/last_run/last_run.gd:778)
+ERROR: The object does not have any 'meta' values with the key 'guard'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] pull (res://features/weapons/pistol/handgun.gd:100)
+       [1] _fire (res://features/missions/last_run/hangar_encounter.gd:208)
+       [2] _unhandled_input (res://features/missions/last_run/hangar_encounter.gd:192)
+PASS: RELOAD EDGE fire+R at frame -1 (-1 of 0), before R: the round fires (1), then R starts the reload (true)
+PASS: RELOAD EDGE fire+R at frame 0 (+0 of 0) (clip 0.0, reloading true): no round (0), the reload not restarted (time left 3.283 then 3.233 s)
+PASS: RELOAD EDGE Esc at frame 0 (+0 of 0): the clip (0.5) and the time left (3.267 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 1 (+1 of 0) (clip 1.0, reloading true): no round (0), the reload not restarted (time left 3.250 then 3.200 s)
+PASS: RELOAD EDGE Esc at frame 1 (+1 of 0): the clip (1.5) and the time left (3.233 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 29 (-1 of 30) (clip 29.0, reloading true): no round (0), the reload not restarted (time left 2.317 then 2.267 s)
+PASS: RELOAD EDGE Esc at frame 29 (-1 of 30): the clip (29.5) and the time left (2.300 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 30 (+0 of 30) (clip 30.0, reloading true): no round (0), the reload not restarted (time left 2.283 then 2.233 s)
+PASS: RELOAD EDGE Esc at frame 30 (+0 of 30): the clip (30.5) and the time left (2.267 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 31 (+1 of 30) (clip 31.0, reloading true): no round (0), the reload not restarted (time left 2.250 then 2.200 s)
+PASS: RELOAD EDGE Esc at frame 31 (+1 of 30): the clip (31.5) and the time left (2.233 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 47 (-1 of 48) (clip 47.5, reloading true): no round (0), the reload not restarted (time left 1.700 then 1.650 s)
+PASS: RELOAD EDGE Esc at frame 47 (-1 of 48): the clip (48.0) and the time left (1.683 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 48 (+0 of 48) (clip 48.5, reloading true): no round (0), the reload not restarted (time left 1.667 then 1.617 s)
+PASS: RELOAD EDGE Esc at frame 48 (+0 of 48): the clip (49.0) and the time left (1.650 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 49 (+1 of 48) (clip 49.5, reloading true): no round (0), the reload not restarted (time left 1.633 then 1.583 s)
+PASS: RELOAD EDGE Esc at frame 49 (+1 of 48): the clip (50.0) and the time left (1.617 s) held for 20 ticks paused (true), and go on after Esc (true)
+PASS: RELOAD EDGE fire+R at frame 98 (-1 of 99) (clip 98.5, reloading true): no round (0), the reload not restarted (time left 0.000 then -0.017 s)
+PASS: RELOAD EDGE Esc at frame 98 (-1 of 99): the clip (-1.0) and the time left (-0.017 s) held for 20 ticks paused (true), and go on after Esc (true)
+ERROR: The object does not have any 'meta' values with the key 'guard'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] pull (res://features/weapons/pistol/handgun.gd:100)
+       [1] _fire (res://features/missions/last_run/hangar_encounter.gd:208)
+       [2] _unhandled_input (res://features/missions/last_run/hangar_encounter.gd:192)
+PASS: RELOAD EDGE R then fire at frame 99 (+0 of 99): the reload ended at the clip's frame 98.5 (its last, 99, within a tick), the magazine full (30); R starts nothing (false) and the round fires (1)
+ERROR: The object does not have any 'meta' values with the key 'guard'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] pull (res://features/weapons/pistol/handgun.gd:100)
+       [1] _fire (res://features/missions/last_run/hangar_encounter.gd:208)
+       [2] _unhandled_input (res://features/missions/last_run/hangar_encounter.gd:192)
+PASS: RELOAD EDGE R then fire at frame 100 (+1 of 99): the reload ended at the clip's frame 98.5 (its last, 99, within a tick), the magazine full (30); R starts nothing (false) and the round fires (1)
+RELOAD EDGES RESULT: 21/21 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

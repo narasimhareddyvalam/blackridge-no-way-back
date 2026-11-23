@@ -6,7 +6,7 @@ extends AnimatableBody3D
 ## beams, as the van's) and tail lamps light when `set_lights` says, their lenses glowing where a
 ## 2015 Suburban's are (measured from the model: the low beams' round projectors beside the
 ## grille, turned back with the nose; the tail lamps upright on the rear corners). The node faces its -Z, as Godot's
-## vehicles do.
+## vehicles do. Hidden, it is not solid (the convoy waits hidden on the coastal road, #448).
 
 const MODEL = preload("res://features/environments/harbour_flats/art/suburban/suburban.glb")
 const SIZE := Vector3(2.04, 1.89, 5.7)
@@ -33,6 +33,7 @@ var _headlights: Array[SpotLight3D] = []
 var _tails: Array[OmniLight3D] = []
 var _tail_glass: StandardMaterial3D
 var _head_glass: StandardMaterial3D
+var _collision: CollisionShape3D
 
 
 func _ready() -> void:
@@ -42,10 +43,12 @@ func _ready() -> void:
 	add_child(model)
 	var shape := BoxShape3D.new()
 	shape.size = SIZE
-	var collision := CollisionShape3D.new()
-	collision.shape = shape
-	collision.position = Vector3(0.0, SIZE.y / 2.0, 0.0)
-	add_child(collision)
+	_collision = CollisionShape3D.new()
+	_collision.shape = shape
+	_collision.position = Vector3(0.0, SIZE.y / 2.0, 0.0)
+	_collision.disabled = not is_visible_in_tree()
+	add_child(_collision)
+	visibility_changed.connect(_on_visibility_changed)
 	for side in [-1.0, 1.0]:
 		var beam := SpotLight3D.new()
 		beam.light_color = Color(1.0, 0.95, 0.86)
@@ -126,6 +129,10 @@ func drive(points: Array[Vector3], metres_per_second: float) -> void:
 
 func arrived() -> bool:
 	return route.is_empty() or _leg >= route.size()
+
+
+func _on_visibility_changed() -> void:
+	_collision.set_deferred("disabled", not is_visible_in_tree())
 
 
 ## Stands it at `at` at once (a reset's).
