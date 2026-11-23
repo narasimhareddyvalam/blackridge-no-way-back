@@ -5787,6 +5787,23 @@ tag `a5`. Pictures the author approved or rejected are filed in
        design since Phase 1: "The way to the depot is over the hill"); its routes were written
        while the author was away (#359) and never completed a run.
 
+449. **Go ahead with the videos; the long drives cut**
+     - **Asked:** the author chose "Yes, work through it (Recommended)" and "Cut them
+       (Recommended)": the first drive over the hill shown in full, later repeats cut with a
+       labelled card.
+
+450. **No bugs; caffeine; Assignment 8 with the videos**
+     - **Prompt** (verbatim, with the Assignment 8 handout pasted: the final project pitch, a 2-4
+       minute Brutalist film, `pitch/` and tag `a8`): "make sure there are no bugs though. also
+       turn on caffeine mode till you are done by then. also i got an idea, why cant we finish an
+       assignment? - [the handout] . can we use those videos for brutalist?"
+     - **Done:** `caffeinate -dims` started, on until the work is done. Answered: yes, the mission
+       videos are real captured play and can show what exists, labelled as scripted-input captures
+       with their revision; the seven answers are the author's.
+     - **Asked:** target role: "i want to be game developer"; comparables the author has played:
+       "GTA V, Euro Truck Simulator 2"; the pitch in the Blackridge repository, `pitch/`, tag `a8`
+       ("Blackridge repo (Recommended)"); why this project: "Mostly learning".
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
