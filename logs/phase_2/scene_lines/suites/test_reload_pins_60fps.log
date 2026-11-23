@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: PIN5: R reloads (true) for 3.317 s (RELOAD_SECONDS 3.3), then the magazine is full from the spare (true: 30 and 12)
+PASS: PIN5: while it reloads, the trigger fires nothing (0 shots) and R again does not restart it (true, 3.317 s in all)
+PASS: PIN6: armed, his own player plays Idle standing and RifleWalk walking while he aims
+RELOAD PINS RESULT: 3/3 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

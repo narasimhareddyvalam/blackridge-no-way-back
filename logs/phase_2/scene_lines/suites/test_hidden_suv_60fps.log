@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: S1 hidden, the van drives through where it waits (reached z 100.0)
+PASS: S2 shown, the SUV stops the van short of it (reached z 122.4)
+HIDDEN SUV RESULT: 2/2 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

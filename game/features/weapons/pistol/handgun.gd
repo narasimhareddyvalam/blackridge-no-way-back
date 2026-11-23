@@ -97,7 +97,8 @@ func pull(from: Vector3, toward: Vector3, exclude: Array[RID]) -> Dictionary:
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
 	if hit.is_empty():
 		return {}
-	var man := (hit["collider"] as Node).get_meta("guard", null) as Node
+	var struck := hit["collider"] as Node
+	var man := struck.get_meta("guard") as Node if struck.has_meta("guard") else null
 	if man != null:
 		man.call("shot", hit["position"] as Vector3, from)
 	return hit

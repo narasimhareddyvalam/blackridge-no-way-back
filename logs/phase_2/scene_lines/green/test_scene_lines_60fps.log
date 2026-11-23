@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: L1 spoken through, the gate scene's lines end (ended true, left 0, the script still 11 lines)
+PASS: L2 the end of a scene drops its lines and leaves the script as written
+SCENE LINES RESULT: 2/2 passed; 0 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 8 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

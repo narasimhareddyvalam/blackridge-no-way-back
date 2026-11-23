@@ -219,7 +219,7 @@ func configure(van: CharacterBody3D, config: ConfigFile) -> void:
 	_ensure_convoy()
 	_ensure_encounter()
 	_ensure_family()
-	_lines.clear()
+	_drop_lines()
 	_shown = ""
 	_update_objective()
 
@@ -350,7 +350,7 @@ func _run_gate_scene(delta: float) -> void:
 		driver.call("set_aiming", false)
 	if _scene_started and not bool(cutscene_playing.call()):
 		lines_cleared.emit()
-		_lines.clear()
+		_drop_lines()
 		story = "home"
 		_update_objective()
 
@@ -467,9 +467,15 @@ func _talk(delta: float) -> bool:
 	if _line_next >= _lines.size() and _line_clock > float(last[0]) + float(last[3]):
 		lines_cleared.emit()
 		_maya_play("Idle")
-		_lines.clear()
+		_drop_lines()
 		return true
 	return false
+
+
+## A scene's lines let go: a new empty list, as the scripts (`story_scenes.gd`) are constants and
+## read-only.
+func _drop_lines() -> void:
+	_lines = []
 
 
 ## Maya and her car at the depot (`at_depot`), or out of sight.
@@ -541,7 +547,7 @@ func _run_lines(delta: float) -> bool:
 			_maya_play("Idle")
 	if _scene_started and not bool(cutscene_playing.call()):
 		lines_cleared.emit()
-		_lines.clear()
+		_drop_lines()
 		seat_ethan.emit()
 		return true
 	return false

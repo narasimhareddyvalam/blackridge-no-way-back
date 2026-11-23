@@ -135,9 +135,10 @@ func _on_visibility_changed() -> void:
 	_collision.set_deferred("disabled", not is_visible_in_tree())
 
 
-## Stands it at `at` at once (a reset's).
+## Stands it at `at` at once (a reset's). Its route is let go, not cleared: the routes it is
+## given are often constants, which are read-only.
 func place(at: Transform3D) -> void:
-	route.clear()
+	route = []
 	_leg = 0
 	global_transform = at
 
