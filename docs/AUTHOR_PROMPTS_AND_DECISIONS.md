@@ -5769,6 +5769,18 @@ tag `a5`. Pictures the author approved or rejected are filed in
        Dec 3 milestone (M1 polished, clean-clone rehearsal); the one priced GPU run (#296); then
        Assignment 10 by 2026-12-20.
 
+448. **Videos of Missions 2 and 3; the university cluster?**
+     - **Prompt** (verbatim): "i need videos of mission 2 and mission 3. also northeastern gives us
+       cluster access, should we use that?? can we play our game with cluster gpu?"
+     - **Answered:** the cluster is not for playing (headless batch nodes; remote desktops too slow;
+       the game is built for macOS and Metal); offline renders there possible but uncertain to set
+       up; the M4 renders these films when its screen stays awake. Claude Code also owned a mistake:
+       the 65 screenshots it restored in the clean-up (#410-#411) were the ones the author had asked
+       to delete (#361).
+     - **Asked:** the author chose "Part by part (Recommended)": each mission recorded in parts from
+       checkpoint saves, joined into one video per mission with labelled joins; and "Keep them" for
+       the screenshots.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
