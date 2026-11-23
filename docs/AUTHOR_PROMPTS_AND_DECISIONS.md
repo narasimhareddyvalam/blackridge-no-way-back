@@ -5682,6 +5682,86 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Answered:** Claude Code cannot see Canvas; the author confirms the upload on Canvas's
        submission page. **Done:** PR #2 merged into `main` with a merge commit at the author's word.
 
+433. **Why rebuild?**
+     - **Prompt** (verbatim): "why are you saying you will rebuild?"
+     - **Answered:** only because the Desktop ZIP was deleted at the author's word (#431); a rebuild
+       is needed only if it was not yet on Canvas.
+
+434. **Uploaded**
+     - **Prompt** (verbatim): "it upploaded to canvas"
+     - **Recorded:** Assignment 7 submitted on Canvas by the author (the source ZIP of `a7`).
+
+435. **The walker folders: keep them on the remote, not locally**
+     - **Prompt** (verbatim): "also check my walker folders repo on local and remote and tell me what
+       all i can delete, i want them to be at remote not on my local anymore"
+     - **Asked first:** where the walker folders and their repository are (Claude Code does not search
+       outside the project unasked).
+
+436. **They are on the Desktop**
+     - **Prompt** (verbatim): "they are on desktop"
+     - **Checked (read-only):** `walker-jumpman-narasimha-v` (all commits on GitHub; local-only:
+       ignored film files about 300 MB and caches) and `walker-houseghost-narasimha-v` (one branch,
+       `backup/pre-author-rewrite`, 6 commits not on GitHub; untracked `blender/Van.blend`, 254 MB,
+       over GitHub's 100 MB limit; ignored film files about 700 MB, notes and caches). Nothing
+       deleted; the author decides.
+
+437. **The films are on OneDrive**
+     - **Prompt** (verbatim): "the films are in one drive"
+     - **Done:** `walker-jumpman-narasimha-v` re-checked (local `main` = GitHub's `ea0dcf2`; nothing
+       unpushed, uncommitted or stashed) and moved to the Trash (recoverable until emptied). The
+       houseghost folder waits: its backup branch, `blender/Van.blend` and its notes.
+
+438. **What are the two things only on the Mac?**
+     - **Prompt** (verbatim): "walker-houseghost-narasimha-v (1.2 GB) still has two things that exist
+       only on your Mac: --? what are the two things that exist only on my mac?"
+     - **Answered:** the six unpushed commits on `backup/pre-author-rewrite` (14 October log entries)
+       and the untracked `blender/Van.blend` (254 MB).
+
+439. **Not used, in Blackridge?**
+     - **Prompt** (verbatim): "we arent using any of it [the Van.blend paragraph quoted] in blackridge
+       right"
+     - **Checked:** nothing in Blackridge refers to `Van.blend` and no copy is in the repository. Dated
+       3 November 16:34, the day Run 23 brought in Max's Iveco Daily (Sketchfab, CC BY) through
+       Blender: most likely a Blender working file saved in that folder then. Blackridge uses its own
+       converted van models, in Git; the source model stays downloadable from Sketchfab.
+
+440. **Let the six commits go**
+     - **Prompt** (verbatim): "let them go,"
+     - **Done:** `walker-houseghost-narasimha-v` re-checked (`main` = GitHub's `714b124`; nothing else
+       unpushed; no stash) and moved to the Trash with its unpushed backup branch and
+       `blender/Van.blend`, at the author's word. No walker folder remains on the Desktop.
+
+441. **Empty the Trash**
+     - **Prompt** (verbatim): "empty the trash"
+     - **Asked first:** the Trash holds six items, not two: the two walker folders, `A7-submission`,
+       `Basic Shooter Pack.zip`, `Rifle Idle.fbx` and a lecture PDF; emptying deletes all six. Not
+       emptied yet.
+
+442. **Is the assignment done?**
+     - **Prompt** (verbatim): "our assignment is done right"
+     - **Answered:** yes: submitted on Canvas (#434), `a7` on GitHub, `main` merged, the film on
+       OneDrive; the fresh-clone check was not redone (#428).
+
+443. **Empty the whole Trash**
+     - **Prompt** (verbatim): "empty the whole trash"
+     - **Done:** the Trash emptied (all six items, at the author's word); 0 items left; free space
+       13 GB → 17 GB.
+
+444. **Did we merge to main?**
+     - **Prompt** (verbatim): "did we merge to main"
+     - **Answered:** yes: Blackridge's PR #2 merged into `main` (`d6202ca`, 2026-11-22), game code
+       identical to `a7`; `develop` holds 8 later commits of records only.
+
+445. **Blackridge**
+     - **Prompt** (verbatim): "i am talking about blackridge"
+     - **Answered:** the answer above was Blackridge's repository
+       (`narasimhareddyvalam/blackridge-no-way-back`).
+
+446. **Bring the notes into main**
+     - **Prompt** (verbatim): "alright do it"
+     - **Done:** a pull request `develop` → `main` with the records written after PR #2 (prompt log
+       and HANDOFF only), merged with a merge commit at the author's word.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

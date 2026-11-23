@@ -4305,3 +4305,29 @@ has the engine's "resources still in use at exit" line, as at the Assignment 5 b
   - the motion reading and the seam: no headless run shows them;
   - how the film plays on another screen or after OneDrive re-encodes it;
   - the foot lift at clip 53 in r1, which this camera cannot show.
+
+## 2026-11-22 — Assignment 7 submitted (#405-#434)
+
+- **Submitted on Canvas by the author (#434):** the source ZIP
+  `blackridge-no-way-back-a7-fb6aa82.zip`, a `git archive` of tag `a7` (3.0 GB, 22,062 files, no
+  video, no `.godot` cache), with `SUBMISSION.md` and the note from `~/Desktop/A7-submission/`.
+- **Tag `a7`:** `fb6aa82` on `develop`, pushed. PR #2 merged `develop` into `main` (`d6202ca`); its
+  `game/` is identical to `a7`.
+- **The film:** `Blackridge-Frame-by-Frame-4K.mp4`, SHA-256
+  `9dbfd495e2411014449f8642ac4cce2134889a2a9aea42b0ecb168d4fa3d4ed4`, 442.8 s, on OneDrive.
+  - The direct video link is in the submitted `SUBMISSION.md` and the note.
+  - The repository at `a7` links the OneDrive folder that holds the same file.
+- **Since the last entry:**
+  - the author's look recorded (#417);
+  - the three gaps fixed: the two clocks, Claude against the author, the EnterVan preview scene;
+  - the film's three lines updated and re-exported;
+  - the working tree cleaned (#409-#411): videos ignored, the rest committed, the 65 screenshots
+    restored, six MP4s untracked before the first push (#414);
+  - Claude Code's scratch and the Desktop ZIP deleted to free disk (#431).
+- **Not done:** the handout's fresh-clone check of `a7`. The clone filled the disk and stopped
+  (#428), and it was not redone. The same revision passed every suite locally (81/81, then the
+  smoke check).
+- **Open, the author's when they choose:**
+  - the EnterVan improvement and its observation-driven revision (#417);
+  - CLAUDE.md corrections and FRICTIONAL notes;
+  - a VS Code window reload, to clear the three stale `a7-` repository entries.
