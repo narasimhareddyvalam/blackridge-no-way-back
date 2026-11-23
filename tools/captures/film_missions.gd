@@ -19,6 +19,9 @@ const AWAY_X := 672.0
 var kit: Kit
 var app: Node3D
 var _run_node: Node
+## Mission 3 played only to its stage 2 save at the viewpoint (`-- 3 to_convoy`), the first half
+## of a recording made in two (the second from `-- 3 convoy`).
+var _to_convoy := false
 
 func _seated() -> bool:
 	return bool(kit.van.get("occupied")) and bool(kit.van.get("engine_on"))
@@ -49,6 +52,7 @@ func _run() -> void:
 	if FileAccess.file_exists(progress):
 		DirAccess.remove_absolute(progress)
 	var from_convoy := mission == 3 and args.size() > 1 and args[1] == "convoy"
+	_to_convoy = mission == 3 and args.size() > 1 and args[1] == "to_convoy"
 	if SAVES.has(mission):
 		var file := FileAccess.open(progress, FileAccess.WRITE)
 		file.store_string(SAVES[mission].replace("stage=0", "stage=2") if from_convoy
@@ -197,6 +201,9 @@ func _mission_three() -> void:
 	await kit.until(func() -> bool: return bool(kit.van.get("occupied")), 10.0)
 	await kit.seconds(2.0)
 	_log("reconciled: %s" % kit.objective())
+	if _to_convoy:
+		await kit.seconds(3.0)
+		return
 	await _convoy_onward(run, field)
 
 

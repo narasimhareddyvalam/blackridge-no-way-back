@@ -37,6 +37,8 @@ const PLASTER := "res://features/environments/industrial_loop/polyhaven/textures
 	+ "painted_plaster_wall/painted_plaster_wall_%s_2k.jpg"
 const BRICK := "res://features/environments/industrial_loop/polyhaven/textures/" \
 	+ "painted_brick/painted_brick_%s_2k.jpg"
+const PLANKS := "res://features/environments/industrial_loop/polyhaven/textures/" \
+	+ "weathered_plank_siding/weathered_plank_siding_%s_2k.jpg"
 const SHUTTER := "res://features/environments/depot_yard/polyhaven/textures/" \
 	+ "painted_metal_shutter/painted_metal_shutter_%s_2k.jpg"
 
@@ -290,8 +292,7 @@ func _bench(at: Vector3) -> void:
 	holder.name = "Bench"
 	add_child(holder)
 	holder.position = at
-	var wood := _textured(LOOP_MODELS.get_base_dir().get_base_dir() + "/textures/" \
-		+ "weathered_plank_siding/weathered_plank_siding_%s_2k.jpg", 1.0, Color(0.8, 0.75, 0.7))
+	var wood := _textured(PLANKS, 1.0, Color(0.8, 0.75, 0.7))
 	for end in [-0.8, 0.8]:
 		Build.box(holder, Vector3(end, 0.225, 0.0), Vector3(0.06, 0.45, 0.5), _steel)
 		Build.box(holder, Vector3(end, 0.62, 0.22), Vector3(0.06, 0.8, 0.05), _steel)

@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: T1 every world-mapped surface in the town is textured (untextured: )
+PASS: T2 the bench's 5 slats have the wood's colour and normal textures (5 do)
+TOWN TEXTURES RESULT: 2/2 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
