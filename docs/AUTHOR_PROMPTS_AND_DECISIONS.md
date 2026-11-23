@@ -5747,6 +5747,16 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** the Trash emptied (all six items, at the author's word); 0 items left; free space
        13 GB → 17 GB.
 
+444. **Did we merge to main?**
+     - **Prompt** (verbatim): "did we merge to main"
+     - **Answered:** yes: Blackridge's PR #2 merged into `main` (`d6202ca`, 2026-11-22), game code
+       identical to `a7`; `develop` holds 8 later commits of records only.
+
+445. **Blackridge**
+     - **Prompt** (verbatim): "i am talking about blackridge"
+     - **Answered:** the answer above was Blackridge's repository
+       (`narasimhareddyvalam/blackridge-no-way-back`).
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
