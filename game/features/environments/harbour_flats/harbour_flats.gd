@@ -31,6 +31,14 @@ const RIM_FROM := -318.0
 const RIM_TO := 328.0
 const RIM_STEP := 4.0
 const RIM_ROWS := 8
+## The road's cut through the rim is flat this far either side of the east road (industrial_loop.gd's
+## EAST_CUT half width): the embankment gets a column on the terrain's last flat grid line at each
+## edge (TERRAIN_SPACING, hill_terrain.gd's SPACING: z 148 and 156), so across the road it lies flat
+## at the road's height. On the RIM_STEP grid alone, its columns either side of the road reached up
+## the cut's banks, and the slope between them stood up to 13 cm above the road at the embankment's
+## edge, where a van driving east caught and stopped at x 657 (found filming Mission 3, #448).
+const CUT_FLOOR_HALF := 5.0
+const TERRAIN_SPACING := 2.0
 ## The bluff's trees (the forest's own Pacific Northwest kinds), every BANK_STEP along it.
 const BANK_KINDS: Array[String] = ["mountain_hemlock", "western_red_cedar", "young_fir",
 	"red_alder"]
@@ -113,10 +121,19 @@ func _embankment(terrain: Node3D, ground: Material) -> void:
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var faces := PackedVector3Array()
-	var columns := int((RIM_TO - RIM_FROM) / RIM_STEP)
+	var edges: Array[float] = [ceilf((EAST_ROAD[0].z - CUT_FLOOR_HALF) / TERRAIN_SPACING)
+		* TERRAIN_SPACING, floorf((EAST_ROAD[0].z + CUT_FLOOR_HALF) / TERRAIN_SPACING) * TERRAIN_SPACING]
+	var lines: Array[float] = []
+	for step in range(int((RIM_TO - RIM_FROM) / RIM_STEP) + 1):
+		var along := RIM_FROM + step * RIM_STEP
+		if absf(along - edges[0]) > 0.5 and absf(along - edges[1]) > 0.5:
+			lines.append(along)
+	lines.append_array(edges)
+	lines.sort()
+	var columns := lines.size() - 1
 	var grid: Array[PackedVector3Array] = []
 	for column in range(columns + 1):
-		var z := RIM_FROM + column * RIM_STEP
+		var z := lines[column]
 		var top: float = terrain.call("height_at", RIM_EDGE, z)
 		var line := PackedVector3Array()
 		for row in range(RIM_ROWS + 1):
