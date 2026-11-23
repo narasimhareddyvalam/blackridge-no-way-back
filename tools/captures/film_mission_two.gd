@@ -496,6 +496,8 @@ func _escape() -> void:
 	var door := _flat(left.to_global(Vector3(-1.6, 0.0, -1.3)))
 	await _walk_keys([Vector3(100.0, 0.0, 156.0), Vector3(92.8, 0.0, 145.0), door], true)
 	await kit.press("interact")
+	await kit.seconds(1.5)
+	await kit.get_in()
 	await kit.until(func() -> bool: return bool(van.get("occupied")), 10.0)
 	_log("his van back (gate open %s, Ethan %s, %.2f m from the door, in it %s)" % [
 		yard.call("gate_open"), _flat(driver.global_position).snapped(Vector3.ONE * 0.01),
