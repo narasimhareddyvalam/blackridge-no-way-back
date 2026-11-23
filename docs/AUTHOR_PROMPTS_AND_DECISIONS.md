@@ -5757,6 +5757,11 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Answered:** the answer above was Blackridge's repository
        (`narasimhareddyvalam/blackridge-no-way-back`).
 
+446. **Bring the notes into main**
+     - **Prompt** (verbatim): "alright do it"
+     - **Done:** a pull request `develop` → `main` with the records written after PR #2 (prompt log
+       and HANDOFF only), merged with a merge commit at the author's word.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
