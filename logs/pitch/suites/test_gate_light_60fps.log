@@ -1,0 +1,10 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: G1: a white flood by the gate, 5-10 m up, lights the approach, the stop line, the booth's service window and the leaf (2 lights; dark: [])
+PASS: G2: the gate's pole carries the chosen LED floods (The Street Light Man's model), their LEDs lit, each with its light (2 heads, pole true)
+PASS: G3: the pole solid, off the driveway and clear of the leaf's run (clear true, solid true)
+PASS: G4: rain in the gate's light, over the stop line and the opening, raining with the camera at the stop line (volume 20)
+PASS: G5: rain in the light of each of the compound's yard floods (["Flood1", "Flood2", "Flood3"]; dry: [])
+PASS: G6: the compound's four rains fall from just under their lights, leaning with the wind as all rain does (4 found; wrong: [])
+GATE LIGHT RESULT: 6/6 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

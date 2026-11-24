@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: C1 no tree reaches over the road below 4.5 m: 115 reach within 0.5 m of the verge (worst -7.04 m at (302.4, 10.9, 15.3))
+FAIL: C3 every modelled trunk drawn on its collider: 552 off by over 0.1 m (farthest 6.98 m)
+PASS: C2 the edge keeps its alders and young firs: 996 in the first 4 m
+ROAD CANOPY RESULT: 1/3 passed; 2 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

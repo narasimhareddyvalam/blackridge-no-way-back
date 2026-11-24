@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: H1: left mouse fires (true), right mouse aims (true), R reloads (true)
+PASS: H2: reloaded at stage 3, the van at the service gate (14.0 m), open (true), Maya by her car there (true), MAYA (MAYA)
+PASS: H3: by Maya (E  Talk to Maya) E talks; she hands him the rifle (true), 30 and 30 spare, the HUD 30 / 30; GET INTO THE HANGAR
+PASS: H4: a hit (50 left, he chase), a second puts him down (true), 28 left; down he stays down (down)
+PASS: H5: R reloads (true) to a full magazine from the spare (true); empty, the trigger clicks (1) and nothing fires
+PASS: H6: seen in the open a man shoots (true), his health falls (true, 100); 30 m off and unseen (true), another hears a shot and comes (true)
+PASS: H7: down, all begins again at the service gate (4.0 m), health 100, 30 and 30, every man at his post (true)
+PASS: H8: the van driven onto the airfield, they hear it (true); back at the gate on foot (4.0 m), the van outside it (14.0 m)
+PASS: H9: at the office door (0.95 m wide), stage 4 saved, FIND LILY
+HANGAR RESULT: 9/9 passed; 0 failed
+WARNING: 36 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

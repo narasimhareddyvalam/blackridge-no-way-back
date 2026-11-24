@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: H1 (shed): out of her reach E does nothing; tucked in by the booth it hands the sheet over (far level true refused true, close true)
+PASS: H2 (shed): the sheet held out at the driver's window, her hand on it before it moves (held out true, took true, nearest 0.01 m, moved early false)
+PASS: H3 (shed): she reads it in front of her for 3.0 s, watching it (watched true)
+PASS: H4 (shed): she hands it back to the window and it goes back in (back at the window true, in true)
+PASS: H5 (shed): the gate's check ends only once the sheet is back (ended true, early false)
+PASS: H1 (compound): out of her reach E does nothing; tucked in by the booth it hands the sheet over (far level true refused true, close true)
+PASS: H2 (compound): the sheet held out at the driver's window, her hand on it before it moves (held out true, took true, nearest 0.04 m, moved early false)
+PASS: H3 (compound): she reads it in front of her for 3.0 s, watching it (watched true)
+PASS: H4 (compound): she hands it back to the window and it goes back in (back at the window true, in true)
+PASS: H5 (compound): the gate's check ends only once the sheet is back (ended true, early false)
+HANDOVER RESULT: 10/10 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

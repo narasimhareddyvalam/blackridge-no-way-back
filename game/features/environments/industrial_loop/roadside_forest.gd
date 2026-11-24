@@ -57,6 +57,10 @@ const SPECIES_SHADOW_RANGE := 25.0
 const BREAST := 1.3
 const BREAST_BAND := 0.15
 const TRUNK_SHARE := 0.25
+## No bough over the road (#469): a tree whose branches below the cab's roof (4.5 m) would reach
+## within 0.5 m of the verge is left out, after its draws, so no other tree moves.
+const CAB_TOP := 4.5
+const CANOPY_GAP := 0.5
 
 var tree_count: int = 0
 var roadside_mature: int = 0
@@ -135,7 +139,8 @@ func build(_road_points: PackedVector3Array, clearance: float, clearings: Array[
 				CASTS_NONE)
 			_add_instance(far, centre, 0.0, SPECIES_SHADOW_RANGE, CASTS_ONLY)
 			if conifer:
-				_add_stand_ins(placed, float(model["height"]), far_meshes, centre)
+				_add_stand_ins(placed, float(model["height"]), far_meshes, centre,
+					model["axis"] as Vector3)
 		_add_trunks(data["trunks"])
 	var young_bark := _bark_material()
 	young_bark.albedo_color = YOUNG_BARK_SHADE
@@ -241,6 +246,10 @@ func _place(tiles: Dictionary, x: float, z: float, rng: RandomNumberGenerator,
 			return
 	var placed := Transform3D(lean * turn, Vector3(x - centre.x, ground, z - centre.y))
 	var kind := _kind(x, z)
+	var reach: float = VARIANTS[variant].y if kind.is_empty() \
+		else float(_models[kind][_pick(x, z, (_models[kind] as Array).size())]["reach"])
+	if _terrain.road_clearance(x, z) - reach * size < CANOPY_GAP:
+		return
 	var trunk: Variant = variant
 	if kind.is_empty():
 		tiles[tile]["transforms"][variant].append(placed)
@@ -249,6 +258,7 @@ func _place(tiles: Dictionary, x: float, z: float, rng: RandomNumberGenerator,
 		var models: Array = _models[kind]
 		var model := _pick(x, z, models.size())
 		var key := "%s:%d" % [kind, model]
+		placed.origin -= placed.basis * (models[model]["axis"] as Vector3)
 		if not tiles[tile]["species"].has(key):
 			tiles[tile]["species"][key] = []
 		tiles[tile]["species"][key].append(placed)
@@ -367,14 +377,14 @@ func _deadwood_material() -> ShaderMaterial:
 
 
 func _add_stand_ins(placed: Array, height: float, far_meshes: Array[ArrayMesh],
-		centre: Vector2) -> void:
+		centre: Vector2, axis: Vector3) -> void:
 	var nearest := 0
 	for index in range(VARIANTS.size()):
 		if absf(VARIANTS[index].x - height) < absf(VARIANTS[nearest].x - height):
 			nearest = index
 	var fit := height / VARIANTS[nearest].x
 	var scaled: Array = placed.map(func(at: Transform3D) -> Transform3D:
-		return Transform3D(at.basis.scaled(Vector3.ONE * fit), at.origin))
+		return Transform3D(at.basis.scaled(Vector3.ONE * fit), at.origin + at.basis * axis))
 	var colours: Array = placed.map(func(_at: Transform3D) -> Color: return Color.WHITE)
 	_add_instance(_multimesh(far_meshes[nearest], scaled, colours), centre, SPECIES_RANGE,
 		FAR_RANGE, CASTS_NONE)
@@ -466,7 +476,29 @@ func _model(node: MeshInstance3D, wet: Color) -> Dictionary:
 			mesh.surface_set_material(surface, soaked)
 	reaches.sort()
 	var trunk := reaches[int(reaches.size() * TRUNK_SHARE)] if not reaches.is_empty() else 0.1
-	return {"mesh": mesh, "trunk": trunk, "height": high - minf(low, 0.0)}
+	var axis := _axis(mesh)
+	return {"mesh": mesh, "trunk": trunk, "height": high - minf(low, 0.0), "axis": axis,
+		"reach": _low_reach(mesh, axis)}
+
+
+## How far a model's boughs reach from its trunk below the cab's roof.
+func _low_reach(mesh: ArrayMesh, axis: Vector3) -> float:
+	var reach := 0.0
+	for surface in range(mesh.get_surface_count()):
+		var points: PackedVector3Array = mesh.surface_get_arrays(surface)[Mesh.ARRAY_VERTEX]
+		for point in points:
+			if point.y < CAB_TOP:
+				reach = maxf(reach, Vector2(point.x - axis.x, point.z - axis.z).length())
+	return reach
+
+
+## Where the trunk stands in a model's mesh: the middle of its footprint (its bounds in x and z).
+## A model built off its origin (one of `young_firs.glb`'s, 6.3 m, its bark hidden in its boughs
+## at breast height) is drawn with its trunk on its collider (#469).
+func _axis(mesh: ArrayMesh) -> Vector3:
+	var box := mesh.get_aabb()
+	var middle := box.position + box.size * 0.5
+	return Vector3(middle.x, 0.0, middle.z)
 
 
 func _foliage(used: BaseMaterial3D, height: float) -> ShaderMaterial:

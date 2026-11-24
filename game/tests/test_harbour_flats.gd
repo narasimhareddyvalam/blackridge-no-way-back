@@ -11,8 +11,10 @@ const FROM := Vector3(611.0, 0.0, 151.7)
 const JUNCTION := Vector3(726.0, 0.0, 151.7)
 const COASTAL: Array[Vector3] = [Vector3(726.0, 0.0, 300.0), Vector3(726.0, 0.0, -270.0)]
 const QUAY_EDGE_X := 1000.0
-const TREES := 55432
-const TREE_SUM := Vector3(51045492.0, 0.0, -1398076.0)
+## Less the 72 trees whose boughs reached over the road (#469), left out after their draws; every
+## other tree in place (`test_roadside_trees.gd` T8: the other colliders compared one by one).
+const TREES := 55148
+const TREE_SUM := Vector3(50785788.0, 0.0, -1456964.0)
 const LAMP_EVERY := 45.0
 
 var _checks: int = 0

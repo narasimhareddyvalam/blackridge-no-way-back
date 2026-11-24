@@ -1,0 +1,49 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+OVER young_fir:1 at (-101.3, -0.1, 117.9) clearance 3.27 reach 3.00
+OVER young_fir:0 at (-77.1, -0.2, 158.3) clearance 2.90 reach 3.26
+OVER young_fir:1 at (-20.6, 0.0, 63.6) clearance 2.54 reach 3.16
+OVER fir v1 at (-42.0, -0.2, 161.3) clearance 3.41 reach 3.21
+OVER young_fir:2 at (-35.8, -0.2, 174.1) clearance 2.60 reach 2.21
+OVER fir v2 at (21.9, 55.0, -168.3) clearance 2.66 reach 3.81
+OVER fir v2 at (22.4, 53.9, -156.8) clearance 2.52 reach 2.85
+OVER young_fir:0 at (21.2, 28.6, -80.4) clearance 3.54 reach 3.30
+OVER young_fir:1 at (-5.9, 26.2, -74.3) clearance 3.09 reach 2.71
+OVER young_fir:1 at (33.8, 20.2, -24.5) clearance 2.72 reach 2.69
+OVER young_fir:0 at (-10.1, -0.2, 62.4) clearance 2.89 reach 2.93
+OVER fir v1 at (23.8, -0.2, 72.9) clearance 3.63 reach 3.22
+OVER young_fir:0 at (46.6, 57.8, -191.4) clearance 3.67 reach 3.28
+OVER fir v0 at (52.9, 51.0, -133.7) clearance 2.65 reach 2.50
+OVER young_fir:0 at (43.3, 51.9, -135.6) clearance 3.20 reach 2.80
+OVER fir v0 at (55.6, 18.4, -33.4) clearance 3.00 reach 2.67
+OVER young_fir:1 at (75.6, 33.6, -74.3) clearance 2.76 reach 3.16
+OVER young_fir:1 at (49.7, -0.2, 55.3) clearance 2.76 reach 2.57
+OVER young_fir:1 at (53.0, -0.1, 38.4) clearance 2.70 reach 2.87
+OVER young_fir:1 at (77.3, 1.2, 28.2) clearance 2.62 reach 2.43
+OVER young_fir:0 at (82.5, 1.8, 25.4) clearance 3.09 reach 3.07
+OVER young_fir:2 at (53.4, -0.2, 163.9) clearance 3.01 reach 2.90
+OVER young_fir:1 at (130.3, 63.6, -210.2) clearance 3.21 reach 3.05
+OVER fir v2 at (93.9, 35.6, -91.0) clearance 3.27 reach 3.12
+OVER young_fir:1 at (88.6, 35.1, -89.4) clearance 3.00 reach 2.60
+OVER young_fir:1 at (98.0, 46.8, -123.6) clearance 3.09 reach 3.25
+OVER young_fir:0 at (131.8, 39.0, -97.7) clearance 3.15 reach 2.87
+OVER young_fir:0 at (113.3, 13.0, -26.5) clearance 3.01 reach 3.18
+OVER young_fir:0 at (115.5, 4.9, 13.0) clearance 3.27 reach 3.35
+OVER young_fir:1 at (100.9, 14.1, -27.8) clearance 2.63 reach 2.53
+OVER young_fir:1 at (113.9, 12.7, -13.8) clearance 2.77 reach 2.79
+OVER fir v2 at (152.8, 41.6, -110.5) clearance 3.40 reach 3.28
+OVER fir v2 at (168.2, 40.6, -92.3) clearance 3.88 reach 3.78
+OVER young_fir:2 at (153.8, -0.2, 177.9) clearance 2.52 reach 2.19
+OVER fir v2 at (170.0, 8.400001, 12.6) clearance 3.65 reach 3.79
+OVER young_fir:0 at (140.4, 10.6, -21.8) clearance 3.54 reach 3.27
+OVER young_fir:0 at (156.3, 8.5, 6.1) clearance 2.67 reach 2.52
+OVER young_fir:0 at (195.2, 63.8, -207.0) clearance 2.62 reach 3.00
+OVER young_fir:2 at (185.2, -0.2, 177.8) clearance 2.58 reach 2.36
+OVER young_fir:0 at (192.4, -0.1, 165.1) clearance 3.28 reach 2.79
+FAIL: C1 no tree reaches over the road below 4.5 m: 72 reach within 0.5 m of the verge (worst -1.15 m at (21.9, 55.0, -168.3))
+PASS: C3 every modelled trunk drawn on its collider: 0 off by over 0.1 m (farthest 0.00 m)
+PASS: C2 the edge keeps its alders and young firs: 1047 in the first 4 m
+ROAD CANOPY RESULT: 2/3 passed; 1 failed
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

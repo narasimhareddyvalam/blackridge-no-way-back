@@ -1,0 +1,552 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: R1: stage 4: Lily in the office (true), no man about (0), the van at the service gate (14.0 m), Maya there (true), FIND LILY (FIND LILY)
+PASS: R2: by her (E  Take Lily's hand) E takes her hand: she follows (true); TAKE LILY TO MAYA
+PASS: R3: led out (4.4 m), sprint held he walks at her pace (1.10 m/s), she at his side (0.60 m), her hand in his (0.08 m apart)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _start_reunion (res://features/missions/last_run/last_run.gd:395)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:365)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+PASS: R4: at Maya the scene plays (true), Adrian comes (true), draws (true), one shot (1), black (true), he is down (true), Lily with Maya (true), home (home)
+RESCUE RESULT: 4/4 passed; 0 failed
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: Target and up vectors are colinear. This is not advised as it may cause unwanted rotation around local Z axis.
+     at: looking_at (core/math/basis.cpp:1045)
+     GDScript backtrace (most recent call first):
+         [0] _look (res://features/missions/last_run/story_scenes.gd:96)
+         [1] reunion (res://features/missions/last_run/story_scenes.gd:223)
+         [2] _reunion_seconds (res://features/missions/last_run/last_run.gd:400)
+         [3] _run_ending (res://features/missions/last_run/last_run.gd:372)
+         [4] _story (res://features/missions/last_run/last_run.gd:629)
+         [5] _physics_process (res://features/missions/last_run/last_run.gd:787)
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

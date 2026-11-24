@@ -59,14 +59,17 @@ const GATE_POSE_BACK := 14.0
 const INSIDE_GATE := 4.0
 const TALK_WITHIN := 2.6
 const AT_OFFICE := 1.6
+## Why she hands it over, and his count, the author's call (#469, #470): Adrian's men know her face.
 const MAYA_GUN: Array = [
 	[0.5, "MAYA", "You came.", 1.6],
 	[2.4, "ETHAN", "Where is she?", 1.6],
 	[4.3, "MAYA", "The office, at the back of the hangar. Three of his men outside it.", 3.2],
-	[7.8, "MAYA", "Here. It's Adrian's. It was in the car.", 2.6],
-	[10.7, "ETHAN", "I drive vans, Maya.", 2.0],
-	[13.0, "MAYA", "Then only if they make you. Fifteen in it, and one spare.", 3.0],
-	[16.3, "MAYA", "Leave the van here. They'd hear it. I'll be right here.", 3.0],
+	[7.8, "MAYA", "Take this. It's Adrian's rifle. I took it from his car when I left him.", 3.4],
+	[11.5, "ETHAN", "Why not you?", 1.4],
+	[13.2, "MAYA", "They know my face. One look at me and they'd move her.", 2.8],
+	[16.3, "ETHAN", "I drive vans, Maya.", 1.8],
+	[18.4, "MAYA", "Then only if they make you. Thirty in it, and one spare.", 3.0],
+	[21.7, "MAYA", "Leave the van here. They'd hear it. I'll be right here.", 3.0],
 ]
 ## Where the tail begins (step 5): the coastal road at the east road's end.
 const JUNCTION := Vector3(726.0, 0.0, 151.7)

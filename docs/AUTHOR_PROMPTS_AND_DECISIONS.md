@@ -5952,6 +5952,35 @@ tag `a5`. Pictures the author approved or rejected are filed in
        `a8`, uploading the film, submitting on Canvas, deleting anything outside Claude Code's
        own scratch and the approved `captures/pitch/clips/`.
 
+468. **The video done?**
+     - **Prompt** (verbatim): "the video is done?"
+     - **Answered:** yes: `~/Desktop/Blackridge-Pitch-4K.mp4`, 3 min 38 s, 3840×2160, every gate
+       passed (`1600fbc`, not pushed); left for the author: watch it, the B04/B07 corrections,
+       push, tag `a8`, upload, submit.
+
+469. **The film's notes: trees on the road, the story, Lily's walk, Maya's gun, the epilogue**
+     - **Prompt** (verbatim, with a screenshot of the epilogue's house): "in the video 1:21, theres a
+       tree in the middle of the road. fix it. also the story isnt convinced nicely. make sure you
+       give brief summary of each mission in the video. the way lily is walking isnt realistic. also
+       why is maya giving gun? thats not real as well. wrong cargo? why wrong cargo etc, isnt real.
+       make it clear. also 2:27 theres a tree on the road in the middle of the road. also, these
+       [Image #22] - looks so fake, so already avaialable assets and make it look super realisitic"
+
+     - **Answered:** the trees are not on the asphalt: firs 6-6.5 m from the road's centre (2.6-3 m
+       past the verge), their 3.4 m crowns reaching over the lane at windshield height; Maya giving
+       the rifle is Claude Code's draft (C68 left it open); the film never says why the cargo is
+       wrong. Asked the deadline and the gun.
+     - **Answers:** "Today, by tonight"; "Maya brings Adrian's gun" (keep the handover, the scene
+       explains it).
+     - **Proposed:** trunks at least 5 m past the verge (removed without reshuffling the forest);
+       Maya's new gate lines (why she gives it: Adrian's men know her face; "Thirty in it", the
+       rifle's magazine, not "Fifteen"); one summary per mission in the film; the recap adds "a
+       more lifelike Lily and family home" as a will; re-record Mission 1 and Mission 3 from the
+       gate; Lily's walk and a realistic home after submission.
+
+470. **The plan approved**
+     - **Answer:** "Approve all, start (Recommended)".
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

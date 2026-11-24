@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: G1: his van taken back, in it, white and sealed: DRIVE OUT (DRIVE OUT), marked at road sample 990 (0.0 m off)
+PASS: G2: near the hill road, PULL OVER (PULL OVER)
+PASS: G3: driving past it at speed does not end the mission (passed true, ended false)
+PASS: G4: stopped there, the mission ends as Mission 1's: the HUD gone (true), the engine off (true); the save holds Mission 3's start (last_run, stage 0)
+PASS: G5: then black, and back to the title screen, with no title card on the way (title true)
+GETAWAY RESULT: 5/5 passed; 0 failed
+ERROR: 9 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

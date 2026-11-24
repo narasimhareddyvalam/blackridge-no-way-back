@@ -1,0 +1,5 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: R1: out at once, round the back of the east warehouse and between the warehouses to the trailers (true), waiting 56.7 s for the guard by the cut to walk away east, then through the cut (true): out (true), caught 0 times
+ESCAPE ROUTE RESULT: 1/1 passed; 0 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

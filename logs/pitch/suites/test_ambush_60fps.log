@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: A1: at berth 2 the trap closes in a cutscene (true): two black Suburbans light up (true, true), three men with pistols (true, true), shots crack the windshield (0.45), a phone falls into the cab (true)
+PASS: A2a: after it, GET OUT OF THE TERMINAL (GET OUT OF THE TERMINAL)
+PASS: A2: staying, the SUV blocks the gate (true) and he is caught (18.5 s); back at the berth (true), no cutscene again, the escape on (GET OUT OF THE TERMINAL)
+PASS: A3: through the gate before the SUV, he gets away (true), GET AWAY (GET AWAY)
+PASS: A4: away, CHECK THE PHONE (CHECK THE PHONE, E  Check the phone); E shows the messages from M, Maya's number (A PHONE, NOT YOURS. ITS SCREEN STILL ON. |  | M  (360) 555-0148 |  | M  23:52  BR 048 takes the waterfront job. Berth 2, 01:40. He'll come alone. |    23:55  He trusts the dispatcher? | M  23:58  He trusts me. |  | (360) 555-0148: the number saved in your phone as MAYA.); stage 1 saved
+AMBUSH RESULT: 5/5 passed; 0 failed
+ERROR: 7 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.

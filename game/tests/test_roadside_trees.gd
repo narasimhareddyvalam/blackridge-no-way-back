@@ -32,8 +32,10 @@ const BAND := 8.0
 const LEAST := 20
 const NEEDLES := "res://features/environments/industrial_loop/conifer_needles.gdshader"
 const MOST_TRIANGLES := 30000
-const BASELINE := {"trees": 11551, "saplings": 6482, "colliders": 9566}
-const CENTROID := Vector3(245.8071, 33.18608, -28.99116)
+## Less the 72 trees whose boughs reached over the road (#469, `test_road_canopy.gd`), left out
+## after their draws: the 9,494 other colliders kept their x, y, z and radius (compared one by one).
+const BASELINE := {"trees": 11479, "saplings": 6482, "colliders": 9494}
+const CENTROID := Vector3(245.9321, 33.28983, -29.39846)
 const TRUNK_MATCH := 0.15
 
 var _checks: int = 0
