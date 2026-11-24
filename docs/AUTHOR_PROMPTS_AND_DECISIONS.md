@@ -5825,6 +5825,37 @@ tag `a5`. Pictures the author approved or rejected are filed in
        recorded uncut in a Movie Maker window; and "Yes, delete the raw .avi (Recommended)": each
        temporary .avi in the session's scratch folder deleted once its .mp4 is made and checked.
 
+454. **The videos to watch; OneDrive; Assignment 8 now**
+     - **Prompts** (verbatim): "what happened? whats the problem"; "dont start any videos for now.
+       do we have mission 1,2,3 that i can watch?"; "where can i watch these three missions?";
+       "can i upload the videos to one drive and delete them on my desktop to free up space?";
+       "no its fine old one is fine. after uploading to one drive can i delete that folder? i want
+       to watch them there and free up space so i can work on other things."; "can we do and finish
+       the assignment 8 now?"
+     - **Answered:** the disk had filled during Mission 2's re-record; the three videos are in
+       `~/Desktop/Blackridge missions/` (Mission 2 the first recording, at `b7ece7e`, the bench
+       untextured; the re-record with the bench fixed was made and checked, and the author kept
+       the old one). The folder may be deleted once OneDrive holds all three at full size;
+       Assignment 8 will need them again.
+     - **Asked:** the author chose "Yes, delete them (Recommended)": the seven scratch-folder
+       video leftovers deleted (about 11 GB; the Desktop videos untouched); and "Yes, start step 2
+       (Recommended)": `pitch/PROJECT-BRIEF.md` drafted for the author's review.
+
+455. **The clips first; every skill new**
+     - **Prompts** (verbatim): "i uploaded the videos" (with a screenshot of OneDrive's
+       "Blackridge Missions": the three videos at 444 MB, 1.10 GB, 2.21 GB, private); "cut the clips
+       first, then i'll delete"; "tell me when the clips are done"; "all new to me, i'm mostly
+       learning".
+     - **Done:** 30 clips cut from the three videos into `captures/pitch/clips/` (900 MB, ignored by
+       git), each decoded and its middle frame checked; the author told the Desktop folder may go.
+       The brief's §8 now says every skill in §6 was new to the author.
+
+456. **The brief accepted**
+     - **Asked:** the author chose "Accept, commit, start step 3 (Recommended)": Claude Code's
+       draft lines in `pitch/PROJECT-BRIEF.md` become the author's answers (their marks removed),
+       the brief and this log are committed on `develop`, and step 3, `pitch/beat_sheet.json`,
+       is written for the author's review.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
