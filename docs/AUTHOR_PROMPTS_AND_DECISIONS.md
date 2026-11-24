@@ -5856,6 +5856,31 @@ tag `a5`. Pictures the author approved or rejected are filed in
        the brief and this log are committed on `develop`, and step 3, `pitch/beat_sheet.json`,
        is written for the author's review.
 
+457. **A director's pitch, by Brutalist's rules**
+     - **Prompt** (verbatim, answering whether to approve the script and start step 4): "make sure
+       we are following all best practices, explain our game like a creative movie director. make
+       sure we follow all brutalist best praactices and rules"
+     - **Done:** Brutalist's rules read (`CLAUDE.md`, `DESIGN-PRINCIPLES.md`, `godot-waikthrough`,
+       `riff`, `ai-explainer`'s laws, `your-turn`, `nopunt`'s teaching arc); the beat sheet
+       rewritten in a director's register: cold open on the image, the hesitant-writer summary,
+       a framework beat (exists and will), the three acts as worked examples, the comparables, the
+       reader and first minute, the craft and the habits (a real test run for the film), the risk
+       as its own beat, scope, why, verdict, a "Your turn" prompt with its rubric, the title.
+       Kept from the handout over the toolkit: no instructor persona, handle or locked outro; no
+       reconstructed Claude prompt; the 1280×800 footage labelled. Not yet committed.
+
+458. **Who played it; the game not done**
+     - **Prompt** (verbatim): "change driven by script not by a person to driven by gamer
+       himself(something like that). also end the video the game is still not done, the story
+       needs little improvements."
+     - **Answered:** the footage was played by scripted input, so calling it a person's play would
+       break the handout's honesty rule; asked, the author chose "Softer honest wording
+       (Recommended)": "Every shot is real gameplay, played through the game's own controls by an
+       automated player I set up to test every mission." The on-screen label still says scripted
+       input, not a person.
+     - **Done:** the recap ends "And honestly, the game is not done yet. The story still needs some
+       improvements."; the title card reads "Still in progress".
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
