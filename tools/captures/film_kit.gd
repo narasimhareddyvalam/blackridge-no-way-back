@@ -14,6 +14,8 @@ var hud: CanvasLayer
 var road: PackedVector3Array
 var _last_index := 0
 const LANE := 1.5
+## How many samples either side of the loop's seam count as standing on it.
+const SEAM := 15
 
 
 func _init(scene_tree: SceneTree, game: Node3D) -> void:
@@ -115,8 +117,12 @@ func steer_for(aim: Vector3, speed: float) -> void:
 
 ## Drives the loop road from where the van is, forward, until its nearest sample reaches `to`
 ## (or `limit` seconds pass, or the van is left); slows for bends from `cruise` to `slowest`.
+## A van standing on the loop's seam (its last samples meet its first) drives on from the
+## first: forward from there is the loop's start, not its end (Mission 1's van parks there).
 func drive_road(to: int, cruise: float, slowest: float = 4.5, limit: float = 600.0) -> bool:
 	_last_index = nearest_anywhere(van.global_position)
+	if _last_index >= to and _last_index >= road.size() - SEAM:
+		_last_index = nearest(van.global_position, 0, SEAM)
 	var waited := 0.0
 	var mark := van.global_position
 	var since := 0.0
