@@ -104,3 +104,26 @@ the author's prompts are logged verbatim in `docs/AUTHOR_PROMPTS_AND_DECISIONS.m
   `story_scenes.gd:223` (`reunion`, through `last_run.gd:626` and `:784`). The scene plays; the
   warning is left for the author with a fix proposed after a failing test, because `game/` stays
   at `61cf104`, the revision every take shows.
+
+## 2026-11-24
+
+- **The author watched the film.** Notes (#469): a tree in the middle of the road at 1:21 and
+  2:27; the story not told convincingly, with no summary of each mission and no reason the cargo
+  is "wrong"; Lily's walk not realistic; Maya handing Ethan a gun not believable; the epilogue's
+  house and trees looking fake.
+- **What was found and fixed after this film** (in the game, not in the submitted film): the
+  trees were not on the asphalt; one young-fir model was built 6.3 m off its origin, so it was
+  drawn on the road away from its trunk collider, and firs with 3 m boughs hung over the lane.
+  Fixed test first in `7b54e72` (72 trees left out; every other collider unchanged). Maya's
+  lines at the gate now say why she gives him Adrian's rifle (his men know her face), and her
+  count matches the 30-round magazine (`7b54e72`).
+- **Not done yet:** clearer mission summaries in the narration (drafted and approved, #470, not
+  in this film); a realistic hand-hold for Lily (in progress: both arms now reach one shared
+  grip, the fingers closing); a realistic family home for the ending (planned).
+- **Recording again hit the Mac's limits.** Re-recording at 4K with the author's other apps
+  open, memory ran out and swap filled the disk twice; one cut was lost to a full disk and redone;
+  a laptop sleep interrupted another. Short runs from the game's own checkpoints worked.
+- **The author chose to submit this film** (#476), the one these files describe, built and gated
+  on 2026-11-24 at `1600fbc`. Its last local copies were deleted the same day: Claude Code read the
+  author's "i emptied trash and the old pitch video" as wanting it gone, without asking. The
+  submitted copy is the author's OneDrive upload of `blackridge-pitch.mp4`.
