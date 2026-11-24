@@ -52,11 +52,16 @@ func _run() -> void:
 	if FileAccess.file_exists(progress):
 		DirAccess.remove_absolute(progress)
 	var from_convoy := mission == 3 and args.size() > 1 and args[1] == "convoy"
+	var from_gate := mission == 3 and args.size() > 1 and args[1] == "gate"
 	_to_convoy = mission == 3 and args.size() > 1 and args[1] == "to_convoy"
 	if SAVES.has(mission):
 		var file := FileAccess.open(progress, FileAccess.WRITE)
-		file.store_string(SAVES[mission].replace("stage=0", "stage=2") if from_convoy
-			else SAVES[mission])
+		var text: String = SAVES[mission]
+		if from_convoy:
+			text = text.replace("stage=0", "stage=2")
+		elif from_gate:
+			text = text.replace("stage=0", "stage=3")
+		file.store_string(text)
 		file.close()
 	app = (load("res://app/first_drive.tscn") as PackedScene).instantiate() as Node3D
 	app.get_node("DrivingTrial").checkpoint_path = progress
@@ -73,6 +78,8 @@ func _run() -> void:
 		3:
 			if from_convoy:
 				await _from_convoy()
+			elif from_gate:
+				await _from_gate()
 			else:
 				await _mission_three()
 	_log("done")
@@ -364,6 +371,20 @@ func _from_convoy() -> void:
 	await kit.seconds(1.5)
 	_log("start (stage 2) at %s: %s" % [_at(), kit.objective()])
 	await _convoy_onward(run, field)
+
+
+## Last Run from its stage 3 save, at the service gate with Maya waiting (the game's own
+## checkpoint after the code is keyed): her rifle, the hangar, Lily, home and the epilogue
+## (`-- 3 gate`).
+func _from_gate() -> void:
+	var run := app.get("run") as Node
+	var field := app.get_node("IndustrialLoop").get("harbour_flats").get("airfield") as Node3D
+	await kit.key(KEY_ENTER)
+	await kit.until(_seated, 20.0)
+	await kit.seconds(1.5)
+	_log("start (stage 3) at %s: %s" % [_at(), kit.objective()])
+	await _hangar(run, field)
+	await _home(run, field)
 
 
 func _at() -> Vector3:

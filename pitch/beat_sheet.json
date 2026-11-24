@@ -8,9 +8,8 @@
   "game": "Blackridge: No Way Back",
   "game_project": "game/",
   "game_revisions": {
-   "mission_1": "5ff34f1",
-   "mission_2": "b7ece7e",
-   "mission_3": "6e4ed08",
+   "all_footage": "61cf104",
+   "note": "game/ unchanged since 61cf104; the 4K takes were recorded 2026-11-23 from develop",
    "brief": "8096e4c"
   },
   "engine_godot": "4.7.2 stable, Forward+ (Metal), macOS",
@@ -23,13 +22,12 @@
   "fps": 30,
   "captions": false,
   "palette": "claude",
-  "footage": "30 clips in captures/pitch/clips/ (ignored by git), cut from the three scripted-input recordings; 'clips/...' paths resolve into the reel at build; gameplay plays at real speed, never retimed",
+  "footage": "4K takes recorded for this film by Movie Maker (3840×2160, 30 fps, scripted input) in captures/pitch/takes4k/ (ignored by git); each beat's cut staged by build/build_sheet.py; gameplay plays at real speed, never retimed",
   "overrides": [
    "The handout forbids the instructor's name, persona or credit line: no 'Liam, in for Bear', no @NikBearBrown handle, footer chip or logo bug, and not ClaudeTitleOutro (its handle is hard-coded).",
-   "Standard mode, not walker: no reconstructed Claude prompt (the handout: any Claude response shown is one actually received, with its date).",
-   "Captures are 1280×800 from Movie Maker, not native 4K: shown contained in the 4K frame and labelled."
+   "Standard mode, not walker: no reconstructed Claude prompt (the handout: any Claude response shown is one actually received, with its date)."
   ],
-  "status": "step 3, rewritten per the author (#457): a director's register and Brutalist's rules; for the author's review"
+  "status": "approved by the author (#457-#459); labels updated to the 4K takes' revision (#460)"
  },
  "beats": [
   {
@@ -45,8 +43,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Blackridge: No Way Back",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame",
-      "source": "Mission 1 video 175-215 s · clips/m1_04_rain_lights_wipers.mp4",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+      "source": "",
       "layout": "grid",
       "media": [
        {
@@ -96,8 +94,8 @@
      "pattern": "BrutalistHesitantWriter",
      "props": {
       "text": "Blackridge is a driving game\nset on one rainy night,\nlived from inside the cab.",
-      "triggerWords": "a driving game",
-      "replacementWords": "a crime thriller",
+      "triggerWords": "driving, game",
+      "replacementWords": "crime, thriller",
       "fontSize": 80,
       "mistakeRate": 2,
       "hesitateWithin": 2,
@@ -197,8 +195,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Act one: Night Freight",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame",
-      "source": "Mission 1 video 282-312 s",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+      "source": "",
       "layout": "grid",
       "media": [
        {
@@ -214,7 +212,7 @@
       "cards": [
        {
         "label": "Exists",
-        "text": "Mission 1, playable to its end · 5ff34f1",
+        "text": "Mission 1, playable to its end · 61cf104",
         "tone": "pass",
         "at": "exists",
         "mono": true
@@ -249,15 +247,15 @@
    "role_note": "Act two: the loading as a real procedure, then the turn.",
    "voice": "am_onyx",
    "engine": "kokoro",
-   "narration_text": "Act two, The Wrong Cargo. Watch him back onto bay nine, roll the pallet in and strap it by hand, a real job done properly. Then a container yard, a different van, and cargo he should never have carried.",
+   "narration_text": "Act two, The Wrong Cargo. Watch him at bay nine: he jacks the pallet in by hand and sets it on the lift, a real job done properly. Then a container yard, a different van, and cargo he should never have carried.",
    "shot": {
     "type": "GRAPHIC",
     "remotion": {
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Act two: The Wrong Cargo",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 2 at b7ece7e · 1280×800 shown in the 4K frame",
-      "source": "Mission 2 video 200-240 s, 545-560 s",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 2 at 61cf104, from its film player's load and yard parts · 3840×2160 Movie Maker capture",
+      "source": "",
       "layout": "grid",
       "media": [
        {
@@ -282,7 +280,7 @@
       "cards": [
        {
         "label": "Exists",
-        "text": "Mission 2, playable to its end · b7ece7e",
+        "text": "Mission 2, playable to its end · 61cf104",
         "tone": "pass",
         "at": "never",
         "mono": true
@@ -309,7 +307,15 @@
       "event": "card 'Exists · Mission 2 · b7ece7e' lands"
      }
     ]
-   }
+   },
+   "revisions": [
+    {
+     "date": "2026-11-23",
+     "by": "Claude Code, overnight under #467 (a draft for the author's review)",
+     "was": "Act two, The Wrong Cargo. Watch him back onto bay nine, roll the pallet in and strap it by hand, a real job done properly. Then a container yard, a different van, and cargo he should never have carried.",
+     "why": "the 4K shot (Mission 2's load part) shows the pallet jacked onto the lift, not the backing onto bay 9 or the strapping; 'Watch him' must describe what is on screen"
+    }
+   ]
   },
   {
    "beat_id": "B05",
@@ -324,8 +330,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Act three: Last Run",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 6e4ed08 · 1280×800 shown in the 4K frame",
-      "source": "Mission 3 video 1455-1475 s, 1545-1560 s · fixes 61cf104",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 61cf104, from its service-gate checkpoint · 3840×2160 Movie Maker capture",
+      "source": "fixes 61cf104",
       "layout": "grid",
       "media": [
        {
@@ -350,7 +356,7 @@
       "cards": [
        {
         "label": "Exists",
-        "text": "Mission 3, playable to the title · 6e4ed08",
+        "text": "Mission 3, playable to the title · 61cf104",
         "tone": "pass",
         "at": "cut to black",
         "mono": true
@@ -399,8 +405,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "What makes it different",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame · the comparables are the author's own play",
-      "source": "Mission 1 video 140-170 s · PROJECT-BRIEF.md §2-§4",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture · the comparables are the author's own play",
+      "source": "PROJECT-BRIEF.md §2-§4",
       "layout": "grid",
       "media": [
        {
@@ -469,15 +475,15 @@
    "role_note": "Q3 and Q5: what the player will get; the reader; the first sixty seconds, labelled will.",
    "voice": "am_onyx",
    "engine": "kokoro",
-   "narration_text": "For a player, it will be one grounded night in three acts. For a hiring manager looking for a generalist game developer, which is what I want to be, the first sixty seconds will be: press start, walk to the van, drive. That is a will. My export predates the missions.",
+   "narration_text": "For a player, it will be one grounded night in three acts. For a hiring manager looking for a generalist game developer, which is what I want to be, the first sixty seconds will be: press start, walk to the van, drive. That is a will. My only export is from before missions two and three.",
    "shot": {
     "type": "GRAPHIC",
     "remotion": {
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Who opens it, and the first minute",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame",
-      "source": "Mission 1 video 30-80 s · builds/macos (2026-11-01)",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+      "source": "builds/macos (2026-11-01)",
       "layout": "grid",
       "media": [
        {
@@ -509,9 +515,9 @@
        },
        {
         "label": "Will",
-        "text": "a current macOS export (the one on disk predates the missions)",
+        "text": "a current macOS export (the one on disk, 2026-11-01, predates Missions 2 and 3)",
         "tone": "accent",
-        "at": "will",
+        "at": "is a will",
         "mono": false
        }
       ],
@@ -536,7 +542,15 @@
       "event": "card: the export on disk is from 2026-11-01"
      }
     ]
-   }
+   },
+   "revisions": [
+    {
+     "date": "2026-11-24",
+     "by": "Claude Code, overnight under #467 (a draft for the author's review)",
+     "was": "For a player, it will be one grounded night in three acts. For a hiring manager looking for a generalist game developer, which is what I want to be, the first sixty seconds will be: press start, walk to the van, drive. That is a will. My export predates the missions.",
+     "why": "Mission 1 was added on 2026-10-28, before the export (2026-11-01); the export predates Missions 2 and 3 (added from 2026-11-04), not all three"
+    }
+   ]
   },
   {
    "beat_id": "B08",
@@ -551,7 +565,7 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "What it proves: the craft",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
       "source": "tags a5, a6, a7 · git show a6:CHANGE-BRIEF.md §1",
       "layout": "grid",
       "media": [
@@ -634,7 +648,7 @@
      "props": {
       "title": "What it proves: the habits",
       "label": "recorded output · a test run for this film, its date on screen",
-      "source": "scripts/run-test.sh test_save_rules.gd 60 (run at build) · game/tests/ · PERFORMANCE.md · docs/AUTHOR_PROMPTS_AND_DECISIONS.md",
+      "source": "scripts/run-test.sh test_save_rules.gd 60 run 2026-11-23 20:33, logs/pitch/test_save_rules_60fps.log · game/tests/ · PERFORMANCE.md · docs/AUTHOR_PROMPTS_AND_DECISIONS.md",
       "layout": "cards",
       "media": [],
       "cards": [
@@ -654,14 +668,14 @@
        },
        {
         "label": "Agent",
-        "text": "every prompt logged · docs/AUTHOR_PROMPTS_AND_DECISIONS.md",
+        "text": "every prompt logged · scoped: it never edits game/shaders/ (CLAUDE.md)",
         "tone": "pass",
         "at": "logged",
         "mono": false
        },
        {
         "label": "Run for this film",
-        "text": "the command and its result line, filled in at build",
+        "text": "scripts/run-test.sh test_save_rules.gd 60 · 2026-11-23 20:33\nSAVE RULES RESULT: 29/29 passed; 0 failed",
         "tone": "pass",
         "at": "run for this film",
         "mono": true
@@ -703,7 +717,7 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "What could sink it",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame · numbers from PERFORMANCE.md, MacBook Air M4, 1280×800",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture · frame times from PERFORMANCE.md (MacBook Air M4, game window 1280×800)",
       "source": "PERFORMANCE.md 'Not yet verified' · HANDOFF.md",
       "layout": "grid",
       "media": [
@@ -729,7 +743,7 @@
         "label": "Never measured",
         "text": "an exported build",
         "tone": "fail",
-        "at": "never been measured",
+        "at": "ever been measured",
         "mono": false
        },
        {
@@ -780,8 +794,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "In, out, first",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 5ff34f1 · 1280×800 shown in the 4K frame",
-      "source": "docs/GAME_DESIGN.md · PROJECT-BRIEF.md §7 · Mission 1 video 300-330 s",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+      "source": "docs/GAME_DESIGN.md · PROJECT-BRIEF.md §7",
       "layout": "grid",
       "media": [
        {
@@ -857,8 +871,8 @@
      "pattern": "GodotEngineEvidence",
      "props": {
       "title": "Why this project",
-      "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 6e4ed08 · 1280×800 shown in the 4K frame",
-      "source": "Mission 3 video 1712-1730 s · the author's answer (#455)",
+      "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 61cf104, from its service-gate checkpoint · 3840×2160 Movie Maker capture",
+      "source": "the author's answer (#455)",
       "layout": "grid",
       "media": [
        {
@@ -958,9 +972,9 @@
       "runningText": "paste this into Claude Code…",
       "command": "Check out Blackridge: No Way Back at tag a8. For each item under Exists today in the pitch brief, find its commit and run one test that covers it. Tell me which claims held, which failed, and which only a person playing could check.",
       "output": [
-       "Every claim tied to a commit.",
-       "A real test run.",
-       "Script-proved kept apart from player-only."
+       "Rubric, a good answer: every claim tied to a commit,",
+       "a real test run,",
+       "what a script proved kept apart from what only a player can check."
       ]
      }
     },
@@ -993,7 +1007,7 @@
      "pattern": "TO_CHOOSE_AT_BUILD",
      "props": {
       "title": "Blackridge: No Way Back",
-      "byline": "still in progress · a pitch by Narasimha Reddy Valam"
+      "byline": "still in progress · a pitch by Narasimha Reddy Valam · narration: an AI voice (Kokoro am_onyx) reading the author's approved script"
      }
     },
     "show": [
@@ -1007,7 +1021,11 @@
      }
     ]
    },
-   "tail_silence_s": 1.0
+   "tail_silence_s": 1.0,
+   "qc": {
+    "sparse_by_design": true,
+    "sparse_reason": "The closing card (Brutalist's FormACard, used in place of ClaudeTitleOutro, whose handle is hard-coded): the film's name, 'Still in progress.', the byline and the AI-voice disclosure, centred on dark by design."
+   }
   }
  ]
 }

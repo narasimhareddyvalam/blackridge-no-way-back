@@ -1,0 +1,342 @@
+{
+ "schema_version": 1,
+ "game": {
+  "name": "Blackridge: No Way Back",
+  "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+  "build_id_is": "SHA-256 of `git ls-tree -r 61cf104 game`",
+  "revision": "61cf104"
+ },
+ "observations_by": "Claude Code's reading of the take's frames, 2026-11-23 (not the author's observation)",
+ "captures": {
+  "m1_4k_30_80": {
+   "path": "capture/m1_4k_30_80.mp4",
+   "sha256": "cfc5867c53fde430fa4556d8e83c4a0fdeaf8c04755d2f2312bbc479e3b1b41c",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m1_4k.log",
+   "player": "film_missions.gd -- 1",
+   "run_seconds_from": 30,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m1_4k_95_120": {
+   "path": "capture/m1_4k_95_120.mp4",
+   "sha256": "f2591ffde7d5d55e358478d3b000918dd1ce5c7c55b33a7b634719d661f5e897",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m1_4k.log",
+   "player": "film_missions.gd -- 1",
+   "run_seconds_from": 95,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m1_4k_155_225": {
+   "path": "capture/m1_4k_155_225.mp4",
+   "sha256": "932b4941e3a7bdfad791344212e941cffc3883fd16eef500023e6a2622c0452d",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m1_4k.log",
+   "player": "film_missions.gd -- 1",
+   "run_seconds_from": 155,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m1_4k_235_260": {
+   "path": "capture/m1_4k_235_260.mp4",
+   "sha256": "0f2be5775dad2b84040f837cdcc44e35738efc31b0441bab21c6bfc32c38155c",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m1_4k.log",
+   "player": "film_missions.gd -- 1",
+   "run_seconds_from": 235,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m1_4k_275_312": {
+   "path": "capture/m1_4k_275_312.mp4",
+   "sha256": "4d2f032fb6789c478f4220ee0b33dd8ead5aa99e57bede2658f0d6a9be477c6b",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m1_4k.log",
+   "player": "film_missions.gd -- 1",
+   "run_seconds_from": 275,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m2load_4k_25_50": {
+   "path": "capture/m2load_4k_25_50.mp4",
+   "sha256": "776112dbf6f93b10d562b93ae8ec35fb976ae588e899f4a60e383e379c32a159",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m2load_4k.log",
+   "player": "film_mission_two.gd -- load (its part: a stage 0 save, the van placed backed onto bay 9, doors open, chocked)",
+   "run_seconds_from": 25,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m2yard_4k_95_130": {
+   "path": "capture/m2yard_4k_95_130.mp4",
+   "sha256": "4d6e64b04adfe7d1d2a49da9fd6c0ffc48931483319e81e165c89a8719448127",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m2yard_4k.log",
+   "player": "film_mission_two.gd -- yard (its part: the game's stage 1 save, driven from where that save puts the van)",
+   "run_seconds_from": 95,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m3gate_4k_0_50": {
+   "path": "capture/m3gate_4k_0_50.mp4",
+   "sha256": "d1a667f9961b7c8447a72ad9c82e7f7e81517d5b375bfc96d116cdf0ff095e8a",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m3gate_4k.log",
+   "player": "film_missions.gd -- 3 gate (Last Run from its stage 3 save at the service gate, the game's own checkpoint)",
+   "run_seconds_from": 0,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m3gate_4k_80_135": {
+   "path": "capture/m3gate_4k_80_135.mp4",
+   "sha256": "8adb226b185c19cbefe7abacc320f2d21a52a94bc41ddae506e6e4838dbc9eb0",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m3gate_4k.log",
+   "player": "film_missions.gd -- 3 gate (Last Run from its stage 3 save at the service gate, the game's own checkpoint)",
+   "run_seconds_from": 80,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  },
+  "m3gate_4k_230_300": {
+   "path": "capture/m3gate_4k_230_300.mp4",
+   "sha256": "a8423ea3ccf333bc6e862335574c4d413d0e395adfcc7f14f956dd0e94705a8e",
+   "build_id": "e9d3b4cb2419aeb17af72194fdec7c6fc47ed2600d796e834f9d09eb3514b1d8",
+   "method": "scripted-input",
+   "input_log": "capture/logs/m3gate_4k.log",
+   "player": "film_missions.gd -- 3 gate (Last Run from its stage 3 save at the service gate, the game's own checkpoint)",
+   "run_seconds_from": 230,
+   "recorded": "2026-11-23, Godot 4.7.2 Movie Maker, 3840x2160, 30 fps, scripted input through the real controls (film_kit.gd)"
+  }
+ },
+ "features": [
+  {
+   "id": "night-drive-rain",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_155_225",
+     "beat_id": "B00",
+     "start_s": 11.0,
+     "action_s": 13.0,
+     "end_s": 26.5,
+     "observation": "Cab view on the valley road at night: rain on the windshield, the wipers sweeping it, the headlights on the wet road; the high-beam prompt on screen.",
+     "riff": "Night. Rain on the glass. One delivery van on an empty mountain road."
+    }
+   ]
+  },
+  {
+   "id": "the-hit",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_275_312",
+     "beat_id": "B03",
+     "start_s": 14.0,
+     "action_s": 22.5,
+     "end_s": 26.4,
+     "observation": "A light ahead flares through the wet windshield (about 285-293 s of the run); the road clears, a man is in the headlights and is hit (about 297.5 s); then the shot outside the cab of Ethan gripping the wheel (from about 298 s).",
+     "riff": "Then, on the descent, a man in the headlights. He believes nobody saw. The game gives him one word: drive."
+    }
+   ]
+  },
+  {
+   "id": "dash-phone-call",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_95_120",
+     "beat_id": "B06",
+     "start_s": 3.5,
+     "action_s": 4.5,
+     "end_s": 18.4,
+     "observation": "Maya's call rings on the dash's navigation screen; the prompt 'T Answer the call' holds for about 20 s.",
+     "riff": "The phone on the dash is where the story calls you."
+    }
+   ]
+  },
+  {
+   "id": "opening",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_30_80",
+     "beat_id": "B07",
+     "start_s": 3.0,
+     "action_s": 12.0,
+     "end_s": 17.2,
+     "observation": "The opening: Ethan's face in the rain, the depot through a wet window, the NIGHT FREIGHT / MISSION ONE title.",
+     "riff": "For a player, it will be one grounded night in three acts."
+    }
+   ]
+  },
+  {
+   "id": "walk-to-van",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_30_80",
+     "beat_id": "B07",
+     "start_s": 32.0,
+     "action_s": 34.0,
+     "end_s": 37.1,
+     "observation": "Ethan walks across the depot's yard in the rain to the van; the prompt 'E Get in the van' appears at its door.",
+     "riff": "press start, walk to the van, drive."
+    }
+   ]
+  },
+  {
+   "id": "enter-van",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_30_80",
+     "beat_id": "B08",
+     "start_s": 35.5,
+     "action_s": 36.5,
+     "end_s": 38.9,
+     "observation": "EnterVan: he takes the door, swings it open and climbs in; the screen goes to black and opens in the cab.",
+     "riff": "Getting into the van and the ringing phone are animations with edge tests, at a seven."
+    }
+   ]
+  },
+  {
+   "id": "gauges-wipers-spray",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_155_225",
+     "beat_id": "B08",
+     "start_s": 50.0,
+     "action_s": 52.0,
+     "end_s": 65.6,
+     "observation": "The cab at speed: the night gauge cluster lit, the wipers clearing the rain, spray and rain in the headlights.",
+     "riff": "The windshield and the night gauges use shaders I wrote by hand, at tag a five. The spray off the wipers and the rain in every lamp's light are particle effects, measured, at a six."
+    }
+   ]
+  },
+  {
+   "id": "heavy-scene",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_155_225",
+     "beat_id": "B10",
+     "start_s": 31.0,
+     "action_s": 33.0,
+     "end_s": 46.4,
+     "observation": "The forest stretch: dense trees in the headlights, rain on the glass, the mirrors in frame.",
+     "riff": "Here is what could sink it: the frame rate."
+    }
+   ]
+  },
+  {
+   "id": "checkpoint-saved",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m1_4k_235_260",
+     "beat_id": "B11",
+     "start_s": 5.0,
+     "action_s": 7.0,
+     "end_s": 20.9,
+     "observation": "'Checkpoint saved' appears at the top of the screen (about 242 s of the run) while the van drives on.",
+     "riff": "In: one district, one van, three missions, checkpoints and one fight."
+    }
+   ]
+  },
+  {
+   "id": "pallet-onto-lift",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m2load_4k_25_50",
+     "beat_id": "B04",
+     "start_s": 5.0,
+     "action_s": 7.0,
+     "end_s": 16.8,
+     "observation": "Inside bay 9: Ethan takes the pallet jack, pumps the handle (prompt 'E Pump the handle'), rolls the pallet in and sets it down on the lift; the objective goes from ROLL THE PALLET IN to LOWER THE LIFT.",
+     "riff": "Watch him back onto bay nine, roll the pallet in and strap it by hand, a real job done properly."
+    }
+   ]
+  },
+  {
+   "id": "dark-van-swap",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m2yard_4k_95_130",
+     "beat_id": "B04",
+     "start_s": 18.0,
+     "action_s": 19.5,
+     "end_s": 22.4,
+     "observation": "In the container yard, Ethan walks up to the black van; the prompt 'E Take the dark van', the line 'The dark van is open, its key on the visor', and the objective becomes DRIVE TO THE WAREHOUSE COMPOUND.",
+     "riff": "Then a container yard, a different van, and cargo he should never have carried."
+    }
+   ]
+  },
+  {
+   "id": "rifle-at-the-gate",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m3gate_4k_0_50",
+     "beat_id": "B05",
+     "start_s": 12.0,
+     "action_s": 20.0,
+     "end_s": 24.7,
+     "observation": "At the service gate Maya talks to Ethan ('You came.' 'Where is she?' 'The office, at the back of the hangar. Three of his men outside it.' 'Here. It's Adrian's. It was in the car.'); the HUD then shows the rifle's 30 / 30.",
+     "riff": "Maya hands him a rifle at the service gate."
+    }
+   ]
+  },
+  {
+   "id": "lily-walks-out",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m3gate_4k_80_135",
+     "beat_id": "B05",
+     "start_s": 17.0,
+     "action_s": 19.0,
+     "end_s": 24.7,
+     "observation": "In the hangar's office: 'Checkpoint saved', the objective TAKE LILY TO MAYA, and Lily walks out beside Ethan.",
+     "riff": "her daughter Lily walks out with him."
+    }
+   ]
+  },
+  {
+   "id": "epilogue",
+   "status": "implemented",
+   "evidence": [
+    {
+     "capture": "m3gate_4k_230_300",
+     "beat_id": "B12",
+     "start_s": 21.5,
+     "action_s": 28.5,
+     "end_s": 36.7,
+     "observation": "The game's cards 'HE TOLD THEM EVERYTHING' and 'SIX MONTHS LATER', then a sunny day at a house, the white van in the drive.",
+     "riff": "Six months later, in the game's own ending, the sun comes out."
+    }
+   ]
+  },
+  {
+   "id": "macos-export-measured",
+   "status": "planned",
+   "evidence": [],
+   "reason": "No current export exists; the one on disk (2026-11-01) predates the missions (PROJECT-BRIEF.md 'Will exist')."
+  },
+  {
+   "id": "author-playtest-missions-2-3",
+   "status": "planned",
+   "evidence": [],
+   "reason": "The author has not yet played Missions 2 and 3; every take here is scripted input."
+  },
+  {
+   "id": "story-voices",
+   "status": "planned",
+   "evidence": [],
+   "reason": "The story scenes have no recorded voices yet (PROJECT-BRIEF.md 'Will exist')."
+  }
+ ]
+}

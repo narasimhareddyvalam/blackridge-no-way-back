@@ -1,0 +1,30 @@
+rev 61cf104 tools 05163d9 start Mon Nov 23 23:23:09 2026 args ['m2load_4k', '1500', '25-50', 'film_mission_two.gd', 'load']
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+Movie Maker mode enabled, recording movie in 3840×2160 @ 30 FPS...
+WARNING: Current available space on disk is low (5.43 GiB). MovieWriter will fail during movie recording if the disk runs out of available space.
+     at: begin (servers/movie_writer/movie_writer.cpp:117)
+WARNING: MetalFX temporal upscaling does not support 3D MSAA. Disabling 3D MSAA internally.
+     at: _configure_3d_render_buffers (servers/rendering/renderer_viewport.cpp:196)
+FILM     5.1 s  part load | LOAD THE PALLET
+ERROR: timeout waiting for fence
+   at: wait (drivers/metal/rendering_device_driver_metal3.cpp:54)
+ERROR: timeout waiting for fence
+   at: wait (drivers/metal/rendering_device_driver_metal3.cpp:54)
+FILM    29.5 s  on the dock | LOAD THE PALLET
+FILM    43.8 s  pallet on the lift | LOWER THE LIFT
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 35 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 7 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+--------------------------------------------------------------------------------
+Done recording movie at path: /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/rec4k/m2load_4k/m2load_4k.ogv
+1500 frames at 30 FPS (movie length: 00:00:50:00), recorded in 00:13:10 (6% of real-time speed).
+CPU render time: 11.38 seconds (average: 7.59 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 443.37 seconds (average: 295.58 ms/frame)
+--------------------------------------------------------------------------------
+godot exit 0 at Mon Nov 23 23:36:20 2026

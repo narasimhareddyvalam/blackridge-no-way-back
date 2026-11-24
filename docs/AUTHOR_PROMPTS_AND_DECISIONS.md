@@ -5881,6 +5881,77 @@ tag `a5`. Pictures the author approved or rejected are filed in
      - **Done:** the recap ends "And honestly, the game is not done yet. The story still needs some
        improvements."; the title card reads "Still in progress".
 
+459. **Step 4 begins**
+     - **Prompt** (verbatim): "yes, commit it and start step 4"
+     - **Done:** the beat sheet committed (`172bc68`); the reel folder `youtube/blackridge-pitch/`
+       made (Brutalist's rule: videos travel with their book); the narration voiced by Kokoro
+       `am_onyx`, 16 beats, 214.8 s measured.
+
+460. **Re-record at 4K**
+     - **Asked:** Brutalist's walkthrough check needs native 3840×2160 16:9 captures and the
+       mission videos are 1280×800; the author chose "Re-record at 4K" over keeping them and
+       reporting the check's failure.
+     - **Found:** `project.godot`'s `window_width_override=1280` wins over `--resolution`; a
+       temporary `game/override.cfg` (removed after each run; `project.godot` untouched) gives a
+       true 3840×2160 movie. Raw 4K AVI would need about 28 MB a second, so the movie is Theora
+       `.ogv`; at its default quality the studio card's frames showed green block damage that
+       the 1280×800 recording does not have and the game does not draw; tested next at top quality.
+
+461. **The Desktop videos**
+     - **Prompt** (verbatim): "because we are rerecording at 4k, can i delete the vides on
+       desktop?"
+     - **Answered:** yes: OneDrive holds all three, and the 30 clips in `captures/pitch/clips/`
+       stay as the fallback.
+
+462. **Space, and every requirement**
+     - **Prompts** (verbatim): "tell me when the recordings are done"; "do we have space for it";
+       "make sure we will satisft all assignment requirements"
+     - **Answered:** 11 GB free; Missions 2 and 3 keep only the stretches the film uses, the rest
+       of each raw take deleted once those are checked. The handout checked line by line.
+     - **Done:** the brief tightened to one page (903 to about 600 words, the accepted answers
+       unchanged), with Q5's "playing within a minute without reading anything" (the opening's
+       E to skip, the on-screen key prompts) and Q6's agent scope (`CLAUDE.md`: never
+       `game/shaders/`); the film's agent card names that scope; the closing card says the
+       narration is an AI voice reading the author's approved script.
+     - **For the author:** where the film is stored (the course media storage); approval to push
+       `develop` and the `a8` tag; `sessions/session-1.jsonl`, a committed session transcript
+       (`ea88542`), outside `pitch/`.
+
+463. **Is the van stuck?**
+     - **Prompt** (verbatim, with a screenshot of the 4K Movie Maker window at frame 4916: the van
+       off the road in the trees, 0 km/h, "Recover the van to the last checkpoint"): "is the van
+       stuck?"
+     - **Found:** yes, from the start: parked on the loop's seam, its nearest sample read 1499,
+       past the 1032 it was sent to, so the kit's `drive_road` ended at once; the same headless,
+       so not the 4K. The run stopped, its take deleted, `override.cfg` removed.
+     - **Done:** `05163d9`, the kit's seam fix; headless dry runs of all three missions as before;
+       Mission 1's 4K recording restarted.
+
+464. **Space**
+     - **Prompt** (verbatim): "did you delete the old ones? because we are close on space"
+     - **Answered:** the stuck take (1.26 GB) and the test movies were deleted; 9.8 GB free.
+
+465. **The old clips after the 4K**
+     - **Prompt** (verbatim): "sure make sure the 4k one is done and is working before deleting
+       the old 1280x800 clips"
+     - **Taken as:** `captures/pitch/clips/` (873 MB) deleted only after all three 4K takes are
+       converted and checked.
+
+466. **How long**
+     - **Prompt** (verbatim): "how long"
+     - **Answered:** Mission 1's 4K take at 8,709 of 10,200 frames at 22:13; about 11 minutes to
+       record and 15-20 to convert; 3.7 GB free, tight.
+
+467. **Overnight**
+     - **Prompt** (verbatim): "alright i am going to sleep, make sure you finish the video for me
+       the whole night, get it ready to submit tomorrow for my assigment"
+     - **Prompt** (verbatim): "is that okay"
+     - **Taken as:** Claude Code works through the night without asking at each step: the 4K
+       takes, the film's render and gates, and the `pitch/` files, each choice a draft for the
+       author's review in the morning. Not done without the author: pushing `develop`, tagging
+       `a8`, uploading the film, submitting on Canvas, deleting anything outside Claude Code's
+       own scratch and the approved `captures/pitch/clips/`.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run

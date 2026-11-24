@@ -1,5 +1,39 @@
 # HANDOFF.md
 
+**This run (2026-11-23/24, #450-#467: Assignment 8, the pitch film, built overnight under #467):**
+- **Built:** the film `youtube/blackridge-pitch/exports/landscape/blackridge-pitch.mp4` (not in
+  Git): 3840×2160, 30 fps, 218.5 s, 317,949,575 bytes, SHA-256
+  `96123b97bb4b4b4cdca4bc263ca305562bae491e98a99f97d75669a4ab23c800`; hard-linked as
+  `~/Desktop/Blackridge-Pitch-4K.mp4` for upload. `pitch/`: `README.md`, `PROJECT-BRIEF.md`,
+  `beat_sheet.json`, `SOURCES.md`, `FRICTIONAL.md`, `BUILD-PROMPT.md`, `CHECKS.md`. The reel
+  `youtube/blackridge-pitch/` (sheet, `build/` scripts, `coverage.json`, `capture/logs/`,
+  FACTCHECK, PROMPTS, SCRIPT, SHOTLIST, TYPECHECK, `_qc/`). `tools/captures/film_missions.gd`
+  gained `-- 3 gate` (Last Run from its stage 3 save). Toolkit checkout (not committed there):
+  `GodotEngineEvidence.tsx` `handle` prop; new local `remotion.config.ts` (frame cache 600 MB).
+- **Footage:** ten 4K windows in `captures/pitch/takes4k/` (ignored), from Mission 1 (title on,
+  10,200 frames), Mission 2's `load` and `yard` parts, Mission 3 from its service-gate save; every
+  frame counted; each run's `.ogv` deleted after its windows were checked. The old 1280×800 clips
+  (`captures/pitch/clips/`, 873 MB) deleted after all three 4K sets were checked (#465).
+- **Results (exact):** `./art godot-waikthrough --check`: PASS (14 implemented, 3 planned, 10
+  captures). `./art final ... --height 2160 --fps 30`: GATE T PASS, Gate V 32 frames 0 BLOCKER
+  0 MAJOR. Loudness PASS -24.70 LUFS, tp -2.94 dBTP. Sharpness PASS, median LV 607.5. Visual QC
+  of 48 master frames: 0 BLOCKER, 0 MAJOR (`_qc/VISUAL-QC.md`). `test_save_rules.gd` 29/29
+  (2026-11-23 20:33).
+- **Claude Code's choices overnight, for the author's review:** B04's sentence reworded to what
+  its shot shows (the pallet onto the lift); B07's "My export predates the missions" corrected to
+  "My only export is from before missions two and three" (Mission 1 is older than the export);
+  the brief's §5 and "Exists today" lines made exact; B15's disclosure split into two lines and
+  declared sparse by design; Mission 2 and 3 footage from parts and the gate checkpoint (labelled).
+- **Not done (the author's):** watch the film; push `develop`; tag `a8`; upload the film and add
+  its link to `pitch/README.md`; the Canvas zip
+  (`~/Desktop/Valam_Narasimha_CSYE7270_FinalProjectPitch.zip`, `pitch/` only) and submission.
+- **Found, not fixed:** Mission 3's reunion logs "Target and up vectors are colinear" 13,818
+  times (`story_scenes.gd:223`); the rifle (jeandiz, CC BY) missing from the in-game Credits;
+  Security_Female_01 missing from `characters/ATTRIBUTION.md` and `SOURCES.md`;
+  `sessions/session-1.jsonl` committed outside `pitch/` (`ea88542`).
+- **Unverified:** a person playing any of it (all footage is scripted input); the B13 verdict's
+  lines come in on the component's own stagger, not their spoken cues.
+
 **This run (2026-11-22, #359-#360: Mission 3's step 8; Mission 3 playable to its end):**
 - **Built:** see `docs/PHASE_BRIEF.md`, "Revision 2026-11-22 (Mission 3's step 8 built ...)".
   Files: `game/features/missions/last_run/epilogue.gd` (new), `art/house/` and `art/ATTRIBUTION.md`

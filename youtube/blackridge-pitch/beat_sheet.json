@@ -1,0 +1,1372 @@
+{
+  "metadata": {
+    "title": "Blackridge: No Way Back, the Pitch",
+    "slug": "blackridge-pitch",
+    "kind": "godot-waikthrough",
+    "mode": "standard (no Walker prompt opening)",
+    "assignment": "Assignment 8, the final project pitch",
+    "game": "Blackridge: No Way Back",
+    "game_project": "game/",
+    "game_revisions": {
+      "all_footage": "61cf104",
+      "note": "game/ unchanged since 61cf104; the 4K takes were recorded 2026-11-23 from develop",
+      "brief": "8096e4c"
+    },
+    "engine_godot": "4.7.2 stable, Forward+ (Metal), macOS",
+    "register": "a director's pitch: present tense for what is on screen, 'will' for what is not",
+    "narrator": "the author, first person (AI voice, Kokoro am_onyx, speaking as the author)",
+    "engine": "kokoro",
+    "voice": "am_onyx",
+    "aspect_ratio": "16:9",
+    "fit": "contain",
+    "fps": 30,
+    "captions": false,
+    "palette": "claude",
+    "footage": "4K takes recorded for this film by Movie Maker (3840×2160, 30 fps, scripted input) in captures/pitch/takes4k/ (ignored by git); each beat's cut staged by build/build_sheet.py; gameplay plays at real speed, never retimed",
+    "overrides": [
+      "The handout forbids the instructor's name, persona or credit line: no 'Liam, in for Bear', no @NikBearBrown handle, footer chip or logo bug, and not ClaudeTitleOutro (its handle is hard-coded).",
+      "Standard mode, not walker: no reconstructed Claude prompt (the handout: any Claude response shown is one actually received, with its date)."
+    ],
+    "status": "approved by the author (#457-#459); labels updated to the 4K takes' revision (#460)",
+    "build": {
+      "at": "2026-11-24T02:18:41",
+      "cut": "master",
+      "filled": 16,
+      "of": 16,
+      "slates": [],
+      "skin_warnings": [
+        "B00: palette=claude but the cold open is 'GodotEngineEvidence' — COLD OPEN LAW wants ClaudeComposerAsk",
+        "B15: palette=claude but the outro is 'FormACard' — OUTRO LAW wants ClaudeTitleOutro"
+      ]
+    }
+  },
+  "beats": [
+    {
+      "beat_id": "B00",
+      "act": "COLD OPEN",
+      "role_note": "Hook: the game first, as a director opens on the image. Discloses scripted input at once.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Night. Rain on the glass. One delivery van on an empty mountain road. This is Blackridge: No Way Back, the game I am building in Godot with Claude Code. Every shot is real gameplay, played through the game's own controls by an automated player I set up to test every mission.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Blackridge: No Way Back",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m1_4k_155_225.mp4 +11 s",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B00_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "Mission 1: the valley road at night"
+              }
+            ],
+            "cards": [],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 15.4667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B00.mp4",
+            "at": "2026-11-24T04:35:54Z",
+            "how": "build/render_chunked.py, 90-frame runs, 465 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "Night",
+            "event": "the cab at night: rain on the windshield, the low beams on the road"
+          },
+          {
+            "at": "Rain on the glass",
+            "event": "the wipers sweep"
+          },
+          {
+            "at": "real gameplay",
+            "event": "the label 'automated player (scripted input), not a person' holds"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B00_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B00.mp3",
+      "actual_duration_s": 15.45,
+      "render_duration_s": 15.466666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B00.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B01",
+      "act": "BLUF",
+      "role_note": "EXECUTIVE-SUMMARY LAW. The misconception: that it is a driving game. The writer corrects the phrase to what it is.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Blackridge is a crime thriller set on one rainy night, lived from inside the cab of a van. When it is done, it will be a macOS build: three missions, from the title screen to the end.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "BrutalistHesitantWriter",
+          "props": {
+            "text": "Blackridge is a driving game\nset on one rainy night,\nlived from inside the cab.",
+            "triggerWords": "driving, game",
+            "replacementWords": "crime, thriller",
+            "fontSize": 80,
+            "mistakeRate": 2,
+            "hesitateWithin": 2,
+            "hesitateBetween": 8,
+            "charMs": 30,
+            "seed": "blackridge-pitch",
+            "contextTitle": "Blackridge: No Way Back · the pitch"
+          },
+          "rendered": {
+            "out": "media/B01.mp4",
+            "at": "2026-11-24T04:31:15.831011+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": 0.8,
+            "event": "the writer types 'Blackridge is a driving game'"
+          },
+          {
+            "at": "crime thriller",
+            "event": "deletes 'a driving game', types 'a crime thriller'"
+          }
+        ]
+      },
+      "lead_silence_s": 0.8,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "Hesitant-writer overview, typed token by token."
+      },
+      "audio_file": "mp3/beat-B01.mp3",
+      "actual_duration_s": 11.253,
+      "audio_notes": "lead 0.8 s baked with ffmpeg; 10.45 s -> 11.253 s",
+      "render_duration_s": 11.266666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B01.mp4",
+        "filled_by": "remotion:BrutalistHesitantWriter",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B02",
+      "act": "FRAMEWORK",
+      "role_note": "The framework before the examples: two columns, exists and will, with the honesty rule that decides which column a claim goes in.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "This pitch keeps two columns. Exists: what I can show you running, with the commit it ran at. Will: everything else. If you see it in this film, it exists. If I only say it, it is a will.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Two columns",
+            "label": "the framework · the assignment's honesty rule",
+            "source": "pitch/PROJECT-BRIEF.md, 'Exists today' and 'Will exist'",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "Exists",
+                "text": "shown running, with its commit",
+                "tone": "pass",
+                "at": 1.67,
+                "mono": false
+              },
+              {
+                "label": "Will",
+                "text": "said, not yet shown",
+                "tone": "accent",
+                "at": 4.7,
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 9.9667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B02.mp4",
+            "at": "2026-11-24T04:24:50.887382+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": "Exists",
+            "event": "the Exists column draws on the left"
+          },
+          {
+            "at": "Will",
+            "event": "the Will column draws on the right"
+          },
+          {
+            "at": "see it",
+            "event": "a film frame drops into Exists"
+          },
+          {
+            "at": "only say it",
+            "event": "a spoken line drops into Will"
+          }
+        ],
+        "evidence_media": []
+      },
+      "audio_file": "mp3/beat-B02.mp3",
+      "actual_duration_s": 9.98,
+      "render_duration_s": 10.0,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B02.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B03",
+      "act": "WORKED EXAMPLE",
+      "role_note": "Act one through the framework: footage, then the card lands in Exists with its commit.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Act one, Night Freight. Ethan drives home through the rain, and his sister calls. Then, on the descent, a man in the headlights. He believes nobody saw. The game gives him one word: drive. That exists, at the commit on screen.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Act one: Night Freight",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m1_4k_275_312.mp4 +14 s",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B03_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "the descent and the hit"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Exists",
+                "text": "Mission 1, playable to its end · 61cf104",
+                "tone": "pass",
+                "at": 9.4,
+                "mono": true
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 11.8667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B03.mp4",
+            "at": "2026-11-24T04:38:33Z",
+            "how": "build/render_chunked.py, 90-frame runs, 357 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "descent",
+            "event": "the oncoming lights, the man on the road"
+          },
+          {
+            "at": "drive",
+            "event": "'DRIVE.' on the HUD"
+          },
+          {
+            "at": "exists",
+            "event": "card 'Exists · Mission 1 · 5ff34f1' lands"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B03_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B03.mp3",
+      "actual_duration_s": 11.88,
+      "render_duration_s": 11.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B03.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B04",
+      "act": "WORKED EXAMPLE",
+      "role_note": "Act two: the loading as a real procedure, then the turn.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Act two, The Wrong Cargo. Watch him at bay nine: he jacks the pallet in by hand and sets it on the lift, a real job done properly. Then a container yard, a different van, and cargo he should never have carried.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Act two: The Wrong Cargo",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 2 at 61cf104, from its film player's load and yard parts · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m2load_4k_25_50.mp4 +5 s · takes4k/m2yard_4k_95_130.mp4 +18 s",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B04_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "bay 9: the pallet onto the lift"
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B04_1.mp4",
+                "startFrom": 0.0,
+                "at": 7.73,
+                "row": 1,
+                "aspect": 1.7777777777777777,
+                "caption": "the container yard: the dark van"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Exists",
+                "text": "Mission 2, playable to its end · 61cf104",
+                "tone": "pass",
+                "at": 10.23,
+                "mono": true
+              }
+            ],
+            "rows": [
+              {
+                "label": "bay 9: the pallet onto the lift",
+                "at": 0.0
+              },
+              {
+                "label": "the container yard: the dark van",
+                "at": 7.73
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 11.6667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B04.mp4",
+            "at": "2026-11-24T06:49:19Z",
+            "how": "build/render_chunked.py, 45-frame runs, 351 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "bay nine",
+            "event": "the pallet rolls onto the lift"
+          },
+          {
+            "at": "container yard",
+            "event": "the dark van in the yard"
+          },
+          {
+            "at": "never",
+            "event": "card 'Exists · Mission 2 · b7ece7e' lands"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B04_0.mp4",
+          "blackridge-pitch/B04_1.mp4"
+        ]
+      },
+      "revisions": [
+        {
+          "date": "2026-11-23",
+          "by": "Claude Code, overnight under #467 (a draft for the author's review)",
+          "was": "Act two, The Wrong Cargo. Watch him back onto bay nine, roll the pallet in and strap it by hand, a real job done properly. Then a container yard, a different van, and cargo he should never have carried.",
+          "why": "the 4K shot (Mission 2's load part) shows the pallet jacked onto the lift, not the backing onto bay 9 or the strapping; 'Watch him' must describe what is on screen"
+        }
+      ],
+      "audio_file": "mp3/beat-B04.mp3",
+      "actual_duration_s": 11.65,
+      "render_duration_s": 11.666666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B04.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B05",
+      "act": "WORKED EXAMPLE",
+      "role_note": "Act three, and what recording it found.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Act three, Last Run. Maya hands him a rifle at the service gate. One fight at a hangar, and her daughter Lily walks out with him. It plays to the cut to black. Recording it found three bugs. They are fixed, two with a failing test first.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Act three: Last Run",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 61cf104, from its service-gate checkpoint · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m3gate_4k_0_50.mp4 +12 s · takes4k/m3gate_4k_80_135.mp4 +17 s · fixes 61cf104",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B05_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "the service gate"
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B05_1.mp4",
+                "startFrom": 0.0,
+                "at": 4.97,
+                "row": 1,
+                "aspect": 1.7777777777777777,
+                "caption": "the hangar's office: Lily"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Exists",
+                "text": "Mission 3, playable to the title · 61cf104",
+                "tone": "pass",
+                "at": 6.93,
+                "mono": true
+              },
+              {
+                "label": "Found and fixed · 61cf104",
+                "text": "read-only scene lines · a missing meta · an SUV re-driving its route",
+                "tone": "fail",
+                "at": 8.53,
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "the service gate",
+                "at": 0.0
+              },
+              {
+                "label": "the hangar's office: Lily",
+                "at": 4.97
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 12.2333,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B05.mp4",
+            "at": "2026-11-24T06:51:12Z",
+            "how": "build/render_chunked.py, 45-frame runs, 367 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "service gate",
+            "event": "Maya at the gate with the rifle"
+          },
+          {
+            "at": "Lily",
+            "event": "Lily in the office, her hand in his"
+          },
+          {
+            "at": "three bugs",
+            "event": "card: the three bugs and 61cf104"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B05_0.mp4",
+          "blackridge-pitch/B05_1.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B05.mp3",
+      "actual_duration_s": 12.22,
+      "render_duration_s": 12.233333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B05.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B06",
+      "act": "DIFFERENT",
+      "role_note": "Q2-Q4: why care, what it gives, the author's two comparables and the specific difference. No market claims.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Why would anyone care? I have played GTA Five, where the drive is the space between missions, and Euro Truck Simulator 2, where the cab is home but nothing is at stake. Blackridge puts a thriller inside that cab. The phone on the dash is where the story calls you.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What makes it different",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture · the comparables are the author's own play",
+            "source": "takes4k/m1_4k_95_120.mp4 +3.5 s · PROJECT-BRIEF.md §2-§4",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B06_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "Maya calls on the dash"
+              }
+            ],
+            "cards": [
+              {
+                "label": "GTA V",
+                "text": "the drive between missions",
+                "tone": "neutral",
+                "at": 1.5,
+                "mono": false
+              },
+              {
+                "label": "Euro Truck Simulator 2",
+                "text": "a cab you live in; nothing at stake",
+                "tone": "neutral",
+                "at": 4.73,
+                "mono": false
+              },
+              {
+                "label": "Blackridge",
+                "text": "a thriller inside the cab",
+                "tone": "accent",
+                "at": 10.13,
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 14.4333,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B06.mp4",
+            "at": "2026-11-24T04:41:32Z",
+            "how": "build/render_chunked.py, 90-frame runs, 433 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "GTA Five",
+            "event": "card GTA V"
+          },
+          {
+            "at": "Euro Truck",
+            "event": "card Euro Truck Simulator 2"
+          },
+          {
+            "at": "inside that cab",
+            "event": "card Blackridge, in the accent"
+          },
+          {
+            "at": "phone on the dash",
+            "event": "the dash phone rings"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B06_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B06.mp3",
+      "actual_duration_s": 14.42,
+      "render_duration_s": 14.433333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B06.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B07",
+      "act": "WHO",
+      "role_note": "Q3 and Q5: what the player will get; the reader; the first sixty seconds, labelled will.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "For a player, it will be one grounded night in three acts. For a hiring manager looking for a generalist game developer, which is what I want to be, the first sixty seconds will be: press start, walk to the van, drive. That is a will. My only export is from before missions two and three.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Who opens it, and the first minute",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m1_4k_30_80.mp4 +3 s · takes4k/m1_4k_30_80.mp4 +32 s · builds/macos (2026-11-01)",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B07_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "the opening"
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B07_1.mp4",
+                "startFrom": 0.0,
+                "at": 9.03,
+                "row": 1,
+                "aspect": 1.7777777777777777,
+                "caption": "to the van, and in"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Reader",
+                "text": "a hiring manager · role: generalist game developer",
+                "tone": "neutral",
+                "at": 2.97,
+                "mono": false
+              },
+              {
+                "label": "Will",
+                "text": "a current macOS export (the one on disk, 2026-11-01, predates Missions 2 and 3)",
+                "tone": "accent",
+                "at": 10.57,
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "the opening",
+                "at": 0.0
+              },
+              {
+                "label": "to the van, and in",
+                "at": 9.03
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 14.6,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B07.mp4",
+            "at": "2026-11-24T06:58:57Z",
+            "how": "build/render_chunked.py, 45-frame runs, 438 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "press start",
+            "event": "the opening: the title card, Ethan, the note"
+          },
+          {
+            "at": "walk to the van",
+            "event": "he walks to the van and gets in"
+          },
+          {
+            "at": "will",
+            "event": "card: the export on disk is from 2026-11-01"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B07_0.mp4",
+          "blackridge-pitch/B07_1.mp4"
+        ]
+      },
+      "revisions": [
+        {
+          "date": "2026-11-24",
+          "by": "Claude Code, overnight under #467 (a draft for the author's review)",
+          "was": "For a player, it will be one grounded night in three acts. For a hiring manager looking for a generalist game developer, which is what I want to be, the first sixty seconds will be: press start, walk to the van, drive. That is a will. My export predates the missions.",
+          "why": "Mission 1 was added on 2026-10-28, before the export (2026-11-01); the export predates Missions 2 and 3 (added from 2026-11-04), not all three"
+        }
+      ],
+      "audio_file": "mp3/beat-B07.mp3",
+      "actual_duration_s": 14.59,
+      "render_duration_s": 14.6,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B07.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B08",
+      "act": "PROVES",
+      "role_note": "Q6, the craft, shown on the footage it is in.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "What does it prove? The windshield and the night gauges use shaders I wrote by hand, at tag a five. The spray off the wipers and the rain in every lamp's light are particle effects, measured, at a six. Getting into the van and the ringing phone are animations with edge tests, at a seven.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What it proves: the craft",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m1_4k_155_225.mp4 +50 s · takes4k/m1_4k_30_80.mp4 +35.5 s · tags a5, a6, a7 · git show a6:CHANGE-BRIEF.md §1",
+            "layout": "grid",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B08_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "gauges, wipers, spray"
+              },
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B08_1.mp4",
+                "startFrom": 0.0,
+                "at": 12.2,
+                "row": 1,
+                "aspect": 1.7777777777777777,
+                "caption": "EnterVan"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Shaders · a5",
+                "text": "windshield and night cluster, hand-written",
+                "tone": "pass",
+                "at": 2.37,
+                "mono": false
+              },
+              {
+                "label": "Particles · a6",
+                "text": "wiper flick, roof spill, lamp rain, exhaust",
+                "tone": "pass",
+                "at": 8.0,
+                "mono": false
+              },
+              {
+                "label": "Animation and state · a7",
+                "text": "ring, EnterVan, reload, shock; edge tests",
+                "tone": "pass",
+                "at": 12.2,
+                "mono": false
+              }
+            ],
+            "rows": [
+              {
+                "label": "gauges, wipers, spray",
+                "at": 0.0
+              },
+              {
+                "label": "EnterVan",
+                "at": 12.2
+              }
+            ],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 15.1333,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B08.mp4",
+            "at": "2026-11-24T04:46:56Z",
+            "how": "build/render_chunked.py, 90-frame runs, 454 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "shaders",
+            "event": "the dash's gauges at night; card a5"
+          },
+          {
+            "at": "particle",
+            "event": "the wipers throw spray; card a6"
+          },
+          {
+            "at": "animations",
+            "event": "Ethan gets into the van; card a7"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B08_0.mp4",
+          "blackridge-pitch/B08_1.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B08.mp3",
+      "actual_duration_s": 15.13,
+      "render_duration_s": 15.133333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B08.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B09",
+      "act": "PROVES",
+      "role_note": "Q6, the habits, as executable evidence: a real test run for this film, its command and output on screen.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "And the habits behind it: ninety-four headless tests, bugs fixed only after a failing test, frame times measured on my MacBook Air M4, and every prompt I gave Claude Code logged. Here is one of those tests, run for this film.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What it proves: the habits",
+            "label": "recorded output · a test run for this film, its date on screen",
+            "source": "scripts/run-test.sh test_save_rules.gd 60 run 2026-11-23 20:33, logs/pitch/test_save_rules_60fps.log · game/tests/ · PERFORMANCE.md · docs/AUTHOR_PROMPTS_AND_DECISIONS.md",
+            "layout": "cards",
+            "media": [],
+            "cards": [
+              {
+                "label": "Tests",
+                "text": "94 headless test scripts",
+                "tone": "pass",
+                "at": 1.37,
+                "mono": true
+              },
+              {
+                "label": "Profiling",
+                "text": "frame times on a MacBook Air M4 · PERFORMANCE.md",
+                "tone": "pass",
+                "at": 5.17,
+                "mono": false
+              },
+              {
+                "label": "Agent",
+                "text": "every prompt logged · scoped: it never edits game/shaders/ (CLAUDE.md)",
+                "tone": "pass",
+                "at": 9.53,
+                "mono": false
+              },
+              {
+                "label": "Run for this film",
+                "text": "scripts/run-test.sh test_save_rules.gd 60 · 2026-11-23 20:33\nSAVE RULES RESULT: 29/29 passed; 0 failed",
+                "tone": "pass",
+                "at": 11.83,
+                "mono": true
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 13.4667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B09.mp4",
+            "at": "2026-11-24T04:25:30.384081+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": "ninety-four",
+            "event": "counter to 94 test scripts"
+          },
+          {
+            "at": "logged",
+            "event": "counter to the logged prompts"
+          },
+          {
+            "at": "run for this film",
+            "event": "the real command and its result lines type out"
+          }
+        ],
+        "evidence_media": []
+      },
+      "audio_file": "mp3/beat-B09.mp3",
+      "actual_duration_s": 13.46,
+      "render_duration_s": 13.466666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B09.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B10",
+      "act": "FALSIFIABILITY",
+      "role_note": "The full beat that could break the pitch: the frame-rate risk, measured, and the human checks still open.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Here is what could sink it: the frame rate. On my Air the slowest frames already take seventeen to nineteen milliseconds, over the budget for sixty a second, and no export has ever been measured. And I have not played acts two and three myself. So first I will measure the export, and play it.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "What could sink it",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture · frame times from PERFORMANCE.md (MacBook Air M4, game window 1280×800)",
+            "source": "takes4k/m1_4k_155_225.mp4 +31 s · PERFORMANCE.md 'Not yet verified' · HANDOFF.md",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B10_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "the heavy part: rain, mirrors, forest"
+              }
+            ],
+            "cards": [
+              {
+                "label": "Measured",
+                "text": "slowest 5% of frames: 17-19 ms · budget 16.7 ms",
+                "tone": "fail",
+                "at": 4.43,
+                "mono": true
+              },
+              {
+                "label": "Never measured",
+                "text": "an exported build",
+                "tone": "fail",
+                "at": 8.57,
+                "mono": false
+              },
+              {
+                "label": "Open",
+                "text": "the author's own play of Missions 2 and 3",
+                "tone": "fail",
+                "at": 10.1,
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 14.9,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B10.mp4",
+            "at": "2026-11-24T07:04:04Z",
+            "how": "build/render_chunked.py, 20-frame runs, 447 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "frame rate",
+            "event": "the heavy shot: rain, mirrors, forest"
+          },
+          {
+            "at": "seventeen to nineteen",
+            "event": "the bar rises past the 16.7 ms line"
+          },
+          {
+            "at": "never been measured",
+            "event": "card: no exported build measured"
+          },
+          {
+            "at": "not played",
+            "event": "card: the author's own play, open"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B10_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B10.mp3",
+      "actual_duration_s": 14.89,
+      "render_duration_s": 14.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B10.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B11",
+      "act": "SCOPE",
+      "role_note": "Q7: in, out, first, and how anyone would know it ran.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "In: one district, one van, three missions, checkpoints and one fight. Out: multiplayer, a wanted level, traffic, an open city. First: a fresh macOS export of act one, played by someone else to the first checkpoint. The save file appearing is how we will know it ran.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "In, out, first",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 1 at 61cf104 · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m1_4k_235_260.mp4 +5 s · docs/GAME_DESIGN.md · PROJECT-BRIEF.md §7",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B11_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "'Checkpoint saved'"
+              }
+            ],
+            "cards": [
+              {
+                "label": "In",
+                "text": "one district · one van · three missions · checkpoints · one fight",
+                "tone": "pass",
+                "at": 0.0,
+                "mono": false
+              },
+              {
+                "label": "Out",
+                "text": "multiplayer · a wanted level · traffic · an open city",
+                "tone": "fail",
+                "at": 3.87,
+                "mono": false
+              },
+              {
+                "label": "First",
+                "text": "a fresh macOS export of Mission 1, title to first checkpoint",
+                "tone": "accent",
+                "at": 7.1,
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 15.3667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B11.mp4",
+            "at": "2026-11-24T06:47:29Z",
+            "how": "build/render_chunked.py, 45-frame runs, 462 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "In",
+            "event": "card In"
+          },
+          {
+            "at": "Out",
+            "event": "card Out"
+          },
+          {
+            "at": "First",
+            "event": "card First"
+          },
+          {
+            "at": "save file",
+            "event": "'Checkpoint saved' in the footage"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B11_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B11.mp3",
+      "actual_duration_s": 15.36,
+      "render_duration_s": 15.366666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B11.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B12",
+      "act": "WHY",
+      "role_note": "Q8: why this project, honestly: all of it learning.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Why this project? Mostly learning. Godot, 3D, shaders, particles, animation, profiling, testing and directing an AI agent were all new to me this term. Six months later, in the game's own ending, the sun comes out. What exists is what I learned.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "GodotEngineEvidence",
+          "props": {
+            "title": "Why this project",
+            "label": "real captured play · automated player (scripted input), not a person · Mission 3 at 61cf104, from its service-gate checkpoint · 3840×2160 Movie Maker capture",
+            "source": "takes4k/m3gate_4k_230_300.mp4 +21.5 s · the author's answer (#455)",
+            "layout": "media",
+            "media": [
+              {
+                "kind": "video",
+                "src": "blackridge-pitch/B12_0.mp4",
+                "startFrom": 0.0,
+                "at": 0.0,
+                "row": 0,
+                "aspect": 1.7777777777777777,
+                "caption": "the epilogue: six months later"
+              }
+            ],
+            "cards": [
+              {
+                "label": "New to me",
+                "text": "Godot · 3D · shaders · particles · animation · profiling · testing · directing an agent",
+                "tone": "accent",
+                "at": 0.73,
+                "mono": false
+              }
+            ],
+            "rows": [],
+            "excerpt": "",
+            "documentLabel": "",
+            "ticks": [],
+            "cardColumns": 2,
+            "durationSeconds": 14.6667,
+            "handle": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B12.mp4",
+            "at": "2026-11-24T06:55:35Z",
+            "how": "build/render_chunked.py, 45-frame runs, 441 frames"
+          }
+        },
+        "show": [
+          {
+            "at": "Mostly learning",
+            "event": "card: every skill new"
+          },
+          {
+            "at": "Six months later",
+            "event": "the epilogue: the house in sunlight"
+          }
+        ],
+        "evidence_media": [
+          "blackridge-pitch/B12_0.mp4"
+        ]
+      },
+      "audio_file": "mp3/beat-B12.mp3",
+      "actual_duration_s": 14.66,
+      "render_duration_s": 14.666666666666666,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B12.mp4",
+        "filled_by": "remotion:GodotEngineEvidence",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B13",
+      "act": "VERDICT",
+      "role_note": "Closing block 1: the recap. Bare sentences; the card numbers them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Let me recap. Exists: three missions you can play to the end, recorded by my automated player, and the tagged work behind them. Will: a measured macOS export, my own playtest and its fixes, a report anyone can rerun, and voices. And honestly, the game is not done yet. The story still needs some improvements.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeVerdictArtifact",
+          "props": {
+            "artifactTitle": "Verdict",
+            "artifactHeading": "Blackridge: No Way Back, the pitch",
+            "artifactLines": [
+              "Exists: Missions 1-3 playable to the end, recorded by scripted input.",
+              "Exists: shaders a5, particles a6, animation a7, 94 tests.",
+              "Will: a measured macOS export; the author's playtest and its fixes.",
+              "Not done yet: the story still needs some improvements."
+            ],
+            "brandLabel": "Narasimha Reddy Valam"
+          },
+          "rendered": {
+            "out": "media/B13.mp4",
+            "at": "2026-11-24T04:27:09.080031+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": 0.5,
+            "event": "the verdict page opens"
+          },
+          {
+            "at": "Exists",
+            "event": "line 1"
+          },
+          {
+            "at": "Will",
+            "event": "line 2"
+          },
+          {
+            "at": "not done yet",
+            "event": "line 4 lands"
+          }
+        ]
+      },
+      "lead_silence_s": 0.5,
+      "audio_file": "mp3/beat-B13.mp3",
+      "actual_duration_s": 17.46,
+      "audio_notes": "lead 0.5 s baked with ffmpeg; 16.96 s -> 17.46 s",
+      "render_duration_s": 17.466666666666665,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B13.mp4",
+        "filled_by": "remotion:ClaudeVerdictArtifact",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B14",
+      "act": "YOUR TURN",
+      "role_note": "HANDOFF LAW: a real prompt for the viewer, read aloud verbatim, then a rubric.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Your turn. Paste this into Claude Code: Check out Blackridge: No Way Back at tag a8. For each item under Exists today in the pitch brief, find its commit and run one test that covers it. Tell me which claims held, which failed, and which only a person playing could check. A good answer ties every claim to a commit, runs a real test, and keeps what a script proved apart from what only a player can.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "greeting": "Your turn.",
+            "runningText": "paste this into Claude Code…",
+            "command": "Check out Blackridge: No Way Back at tag a8. For each item under Exists today in the pitch brief, find its commit and run one test that covers it. Tell me which claims held, which failed, and which only a person playing could check.",
+            "output": [
+              "Rubric, a good answer: every claim tied to a commit,",
+              "a real test run,",
+              "what a script proved kept apart from what only a player can check."
+            ],
+            "folderLabel": "Blackridge: No Way Back",
+            "modelLabel": "Claude Code",
+            "topic": "YOUR TURN · BLACKRIDGE",
+            "segment": "Check the pitch"
+          },
+          "rendered": {
+            "out": "media/B14.mp4",
+            "at": "2026-11-24T04:32:41.317041+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": "Your turn",
+            "event": "the composer, greeting 'Your turn.'"
+          },
+          {
+            "at": "Check out",
+            "event": "the prompt types"
+          },
+          {
+            "at": "A good answer",
+            "event": "the three rubric lines land"
+          }
+        ]
+      },
+      "audio_file": "mp3/beat-B14.mp3",
+      "actual_duration_s": 19.78,
+      "render_duration_s": 19.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B14.mp4",
+        "filled_by": "remotion:ClaudeComposerAsk",
+        "at": "2026-11-24T02:18:41"
+      }
+    },
+    {
+      "beat_id": "B15",
+      "act": "OUTRO",
+      "role_note": "Title restate. Not the toolkit's locked card: its @NikBearBrown handle is the instructor's, which the handout forbids. Component chosen at build, library-first.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "narration_text": "Blackridge: No Way Back. Still in progress. A pitch by Narasimha Reddy Valam.",
+      "shot": {
+        "type": "GRAPHIC",
+        "remotion": {
+          "pattern": "FormACard",
+          "props": {
+            "lines": [
+              "Blackridge: No Way Back.",
+              "Still in progress."
+            ],
+            "meta": [
+              "a pitch by Narasimha Reddy Valam",
+              "narration: an AI voice (Kokoro am_onyx)",
+              "reading the author's approved script"
+            ],
+            "dark": true
+          },
+          "rendered": {
+            "out": "media/B15.mp4",
+            "at": "2026-11-24T07:07:34.257330+00:00"
+          }
+        },
+        "show": [
+          {
+            "at": 0.0,
+            "event": "the title, poster-style serif; the author's name beneath"
+          },
+          {
+            "at": "Valam",
+            "event": "1 s silent hold"
+          }
+        ]
+      },
+      "tail_silence_s": 1.0,
+      "qc": {
+        "sparse_by_design": true,
+        "sparse_reason": "The closing card (Brutalist's FormACard, used in place of ClaudeTitleOutro, whose handle is hard-coded): the film's name, 'Still in progress.', the byline and the AI-voice disclosure, centred on dark by design."
+      },
+      "audio_file": "mp3/beat-B15.mp3",
+      "actual_duration_s": 6.141,
+      "audio_notes": "tail 1.0 s baked with ffmpeg; 5.14 s -> 6.141 s",
+      "render_duration_s": 6.166666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B15.mp4",
+        "filled_by": "remotion:FormACard",
+        "at": "2026-11-24T02:18:41"
+      }
+    }
+  ]
+}

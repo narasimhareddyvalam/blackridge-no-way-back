@@ -1,94 +1,61 @@
 # PROJECT-BRIEF: Blackridge: No Way Back
 
-**Status:** written by Claude Code from the author's answers, 2026-11-23; the author's own words
-(#450, #455) are quoted, and the author accepted the rest as their answers (#456).
+Written by Claude Code from the author's answers (#450, #455), accepted by the author (#456);
+tightened to one page (#462). Stack: Godot 4.7.2, GDScript, Forward+ (Metal), macOS desktop
+export, on a MacBook Air M4, with Claude Code.
 
-**Stack:** Godot 4.7.2 stable, GDScript, Forward+ (Metal), macOS desktop export, built on a MacBook
-Air M4 with Claude Code.
+**1. What is it?** A short crime thriller you play from the cab of a delivery van, on one rainy
+night. Done, it will be a **playable macOS desktop build**: one district, title screen to end
+screen, three connected missions with checkpoints and one compact fight, and a test report a
+stranger can rerun.
 
-## 1. What is it?
+**2. Why care?** The driving *is* the story: low and high beams, wipers that clear the rain,
+real mirrors, and a dash phone that rings. The plot reaches you through the job, not around it.
 
-A short, story-driven crime thriller where you play a delivery driver who drives his van from the
-cab, through a rainy night, and three missions take him from one fatal accident to his sister's
-secret. When it is done it will be a **playable macOS desktop build**: one district, title
-screen to end screen, three connected missions with checkpoint saving and one compact combat
-encounter, plus a test report a stranger can rerun.
+**3. What does the player get?** One grounded night in three acts: the dread after the first
+drive, the wrong cargo, and a last run to get a child home. How long a person takes is not yet
+measured; the automated player's three runs total about 54 minutes.
 
-## 2. Why would anyone care?
+**4. What is different?** The author has played GTA V and Euro Truck Simulator 2. GTA V's
+driving is mostly the space between missions; Euro Truck Simulator 2 has a cab you live in but
+no story and nothing at stake. Blackridge puts a crime thriller inside that cab.
 
-The driving *is* the story: you are inside the cab, with low and high beams, wipers that clear the
-rain, real mirrors and a dash phone that rings. The crime plot reaches you through the job, not
-around it.
+**5. Who opens it?** Role: generalist game developer ("i want to be game developer").
+Reader: a hiring manager or a studio lead. First sixty seconds (will): open the app, press
+Start, skip the opening with E, and follow the on-screen key prompts ("Get in the van",
+"press E") to be driving within a minute without reading anything. Not yet tried with a
+stranger; the export on disk (2026-11-01) predates Missions 2 and 3.
 
-## 3. What does it give the player?
+**6. What does it prove?** Shaders: the windshield and night gauge cluster, hand-written by the
+author (`a5`). Particles: four GPU effects, tuned and priced (`a6`). Animation and state: the
+phone ring, EnterVan, the rifle reload and the shock, with edge tests (`a7`). Profiling: frame
+times on the M4 Air (`PERFORMANCE.md`). Verification: 94 headless test scripts, bugs fixed after
+a failing test (`6e4ed08`, `61cf104`), every prompt logged, and the agent scoped by `CLAUDE.md`
+(it never edits `game/shaders/`). A reviewer can fairly conclude the systems run under scripted
+input; the human checks (the author's own play of Missions 2 and 3) are still open.
 
-A grounded night in three parts: the dread after the first drive, the wrong cargo, and a last run
-to get a child home. The three recordings below run 54 minutes together, but they were
-played by a script, not a person; how long a player takes is not measured.
+**7. In, out, first, risk.** In: one district, one van, three missions, checkpoints, one fight.
+Out: multiplayer, a wanted level, traffic, an open city. First: a fresh macOS export of
+Mission 1, played by someone else from the title to its first checkpoint; the save file
+appearing shows it ran. Risk: the frame rate. The slowest 5% of frames already take 17-19 ms
+(budget 16.7 ms) and no export has been measured; I will measure it on power and battery and
+cut the costliest effects first.
 
-## 4. What makes it different?
+**8. Why this project?** "Mostly learning." Every skill above was new to the author in this
+course ("all new to me, i'm mostly learning"); the tags show what was learned. The game is not
+done: the story still needs improvements.
 
-The author has played **GTA V** and **Euro Truck Simulator 2** ("GTA V, Euro Truck Simulator 2").
-- GTA V has crime stories and driving, but the driving is a fast way between missions, seen
-  mostly from outside the car. Blackridge keeps you in one van's cab, and the cab is where the
-  story happens.
-- Euro Truck Simulator 2 has a cab you live in, but no story and nothing at stake. Blackridge
-  puts a crime thriller inside that cab.
+**Exists today**
+- Missions 1-3 played to the end under scripted input: full recordings at `5ff34f1`, `b7ece7e`,
+  `6e4ed08`. At `61cf104` (`game/` unchanged since), 2026-11-23: headless runs of Mission 1 to its
+  end, Mission 2 to its title and Mission 3 from its stage 2 and stage 3 saves to the title
+  screen, and the film's 4K takes.
+- Shaders, particles, animation: tags `a5`, `a6`, `a7`.
+- Tests and frame times: `game/tests/`, `TEST-REPORT.md`, `PERFORMANCE.md`; save rules 29/29 on
+  2026-11-23 (`logs/pitch/test_save_rules_60fps.log`).
 
-## 5. Who opens it, and what do they do?
-
-**Target role:** the author: "i want to be game developer" (a generalist). **Reader:** a hiring
-manager or lead at a studio. **First sixty seconds:** they will open the app, press
-Start on the title screen and be walking to the van in the depot at night, then driving, with the
-controls shown on screen. *(will: the current export is from 2026-11-01, before the missions)*
-
-## 6. What does it prove?
-
-- **Shaders and materials:** the windshield fog and the night gauge cluster, hand-written by the
-  author (`game/shaders/`, tag `a5`).
-- **Particle effects:** four GPU effects with tuning and measured cost (tag `a6`).
-- **Animation and state:** the phone-ring cycle, getting into the van, the rifle reload and
-  Ethan's shock, each with its phase table and edge tests (tag `a7`).
-- **Profiling:** frame times measured on the M4 Air (`PERFORMANCE.md`), e.g. 69.8 FPS parked in
-  the final mirror build (Run 33, 1280×800, vsync off).
-- **Verification and directing an agent:** 94 test scripts run headless (`scripts/run-test.sh`),
-  bugs fixed only after a failing test (e.g. `61cf104`, `6e4ed08`), and 454 logged prompts and
-  decisions (`docs/AUTHOR_PROMPTS_AND_DECISIONS.md`) with ownership rules for the agent
-  (`CLAUDE.md`). The human checks are still open: the author has not yet played Missions 2 and 3.
-
-## 7. In, out, first, and risk
-
-- **In:** one district, one van, three missions, checkpoints, one fight (`docs/GAME_DESIGN.md`).
-- **Out:** no multiplayer, no police wanted level, no traffic simulation, no open city.
-- **First:** a fresh macOS export of Mission 1 that a stranger plays from the title screen to the
-  first checkpoint; someone knows it ran because the save file appears and a recorded play shows it.
- 
-- **Risk:** the frame rate. The rain, mirrors and forest are heavy on Forward+; the slowest 5% of
-  frames (17–19 ms) are already just over 60 FPS's 16.7 ms budget, and an exported build on
-  another Mac has never been measured. What I will do: measure the export on power and on battery,
-  and cut what costs most (mirror rate, shadow distance) before adding anything new.
-
-## 8. Why this project?
-
-"Mostly learning." Every skill in §6 was new to the author in this course: Godot and GDScript,
-3D games, shaders, particle effects, animation, profiling, testing, and directing an AI agent
-("all new to me, i'm mostly learning"). None was an existing skill brought in to show off; what
-exists is what was learned, and the tags `a5`, `a6`, `a7` and the commits above are where each
-can be checked.
-
-## Exists today
-
-| What | Where it can be seen |
-| :-- | :-- |
-| Mission 1, Night Freight, playable to its end | `develop` `5ff34f1`; video recorded by scripted input (6 min 28 s) |
-| Mission 2, The Wrong Cargo, playable to its end | `develop` `b7ece7e`; scripted-input video (16 min 47 s) |
-| Mission 3, Last Run, playable to the title | `develop` `6e4ed08`; scripted-input video (30 min 51 s, two halves joined at a checkpoint); three errors found in it fixed in `61cf104` |
-| Shaders, particles, animation | tags `a5`, `a6`, `a7` |
-| Tests and frame-time measurements | `game/tests/`, `TEST-REPORT.md`, `PERFORMANCE.md` |
-
-## Will exist
-
+**Will exist**
 - A current macOS export, measured on power and battery.
-- The author's own play of Missions 2 and 3, and fixes from it.
-- A test report covering all three missions that a stranger can rerun.
+- The author's own play of Missions 2 and 3, and its fixes; story improvements.
+- A test report for all three missions that a stranger can rerun.
 - Voices for the story scenes.

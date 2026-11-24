@@ -1,0 +1,128 @@
+[
+ {
+  "take": "m1_4k_155_225",
+  "take_sha256": "932b4941e3a7bdfad791344212e941cffc3883fd16eef500023e6a2622c0452d",
+  "start_s": 11.0,
+  "length_s": 15.95,
+  "beat_id": "B00",
+  "media": 0,
+  "staged": "blackridge-pitch/B00_0.mp4"
+ },
+ {
+  "take": "m1_4k_275_312",
+  "take_sha256": "4d2f032fb6789c478f4220ee0b33dd8ead5aa99e57bede2658f0d6a9be477c6b",
+  "start_s": 14.0,
+  "length_s": 12.38,
+  "beat_id": "B03",
+  "media": 0,
+  "staged": "blackridge-pitch/B03_0.mp4"
+ },
+ {
+  "take": "m2load_4k_25_50",
+  "take_sha256": "776112dbf6f93b10d562b93ae8ec35fb976ae588e899f4a60e383e379c32a159",
+  "start_s": 5.0,
+  "length_s": 12.15,
+  "beat_id": "B04",
+  "media": 0,
+  "staged": "blackridge-pitch/B04_0.mp4"
+ },
+ {
+  "take": "m2yard_4k_95_130",
+  "take_sha256": "4d6e64b04adfe7d1d2a49da9fd6c0ffc48931483319e81e165c89a8719448127",
+  "start_s": 18.0,
+  "length_s": 4.42,
+  "beat_id": "B04",
+  "media": 1,
+  "staged": "blackridge-pitch/B04_1.mp4"
+ },
+ {
+  "take": "m3gate_4k_0_50",
+  "take_sha256": "d1a667f9961b7c8447a72ad9c82e7f7e81517d5b375bfc96d116cdf0ff095e8a",
+  "start_s": 12.0,
+  "length_s": 12.72,
+  "beat_id": "B05",
+  "media": 0,
+  "staged": "blackridge-pitch/B05_0.mp4"
+ },
+ {
+  "take": "m3gate_4k_80_135",
+  "take_sha256": "8adb226b185c19cbefe7abacc320f2d21a52a94bc41ddae506e6e4838dbc9eb0",
+  "start_s": 17.0,
+  "length_s": 7.750000000000001,
+  "beat_id": "B05",
+  "media": 1,
+  "staged": "blackridge-pitch/B05_1.mp4"
+ },
+ {
+  "take": "m1_4k_95_120",
+  "take_sha256": "f2591ffde7d5d55e358478d3b000918dd1ce5c7c55b33a7b634719d661f5e897",
+  "start_s": 3.5,
+  "length_s": 14.92,
+  "beat_id": "B06",
+  "media": 0,
+  "staged": "blackridge-pitch/B06_0.mp4"
+ },
+ {
+  "take": "m1_4k_30_80",
+  "take_sha256": "cfc5867c53fde430fa4556d8e83c4a0fdeaf8c04755d2f2312bbc479e3b1b41c",
+  "start_s": 3.0,
+  "length_s": 15.09,
+  "beat_id": "B07",
+  "media": 0,
+  "staged": "blackridge-pitch/B07_0.mp4"
+ },
+ {
+  "take": "m1_4k_30_80",
+  "take_sha256": "cfc5867c53fde430fa4556d8e83c4a0fdeaf8c04755d2f2312bbc479e3b1b41c",
+  "start_s": 32.0,
+  "length_s": 6.0600000000000005,
+  "beat_id": "B07",
+  "media": 1,
+  "staged": "blackridge-pitch/B07_1.mp4"
+ },
+ {
+  "take": "m1_4k_155_225",
+  "take_sha256": "932b4941e3a7bdfad791344212e941cffc3883fd16eef500023e6a2622c0452d",
+  "start_s": 50.0,
+  "length_s": 15.63,
+  "beat_id": "B08",
+  "media": 0,
+  "staged": "blackridge-pitch/B08_0.mp4"
+ },
+ {
+  "take": "m1_4k_30_80",
+  "take_sha256": "cfc5867c53fde430fa4556d8e83c4a0fdeaf8c04755d2f2312bbc479e3b1b41c",
+  "start_s": 35.5,
+  "length_s": 3.4300000000000015,
+  "beat_id": "B08",
+  "media": 1,
+  "staged": "blackridge-pitch/B08_1.mp4"
+ },
+ {
+  "take": "m1_4k_155_225",
+  "take_sha256": "932b4941e3a7bdfad791344212e941cffc3883fd16eef500023e6a2622c0452d",
+  "start_s": 31.0,
+  "length_s": 15.39,
+  "beat_id": "B10",
+  "media": 0,
+  "staged": "blackridge-pitch/B10_0.mp4"
+ },
+ {
+  "take": "m1_4k_235_260",
+  "take_sha256": "0f2be5775dad2b84040f837cdcc44e35738efc31b0441bab21c6bfc32c38155c",
+  "start_s": 5.0,
+  "length_s": 15.86,
+  "beat_id": "B11",
+  "media": 0,
+  "staged": "blackridge-pitch/B11_0.mp4"
+ },
+ {
+  "take": "m3gate_4k_230_300",
+  "take_sha256": "a8423ea3ccf333bc6e862335574c4d413d0e395adfcc7f14f956dd0e94705a8e",
+  "start_s": 21.5,
+  "length_s": 15.16,
+  "beat_id": "B12",
+  "media": 0,
+  "staged": "blackridge-pitch/B12_0.mp4"
+ }
+]

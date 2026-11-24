@@ -1,0 +1,61 @@
+rev 61cf104 start Mon Nov 23 21:09:29 EST 2026
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+Movie Maker mode enabled, recording movie in 3840×2160 @ 30 FPS...
+WARNING: Current available space on disk is low (9.91 GiB). MovieWriter will fail during movie recording if the disk runs out of available space.
+     at: begin (servers/movie_writer/movie_writer.cpp:117)
+WARNING: MetalFX temporal upscaling does not support 3D MSAA. Disabling 3D MSAA internally.
+     at: _configure_3d_render_buffers (servers/rendering/renderer_viewport.cpp:196)
+FILM     4.2 s  new game
+FILM   103.4 s  opening over: SIGN THE RUN SHEET
+FILM   108.2 s  signed: GET IN THE VAN
+FILM   138.9 s  in the van: RETURN TO THE DEPOT
+FILM   171.9 s  encounter false oncoming none pedestrian none off-centre 1.1 locked false
+FILM   171.9 s  pos (448.6, -0.2, 126.7) sample 56 stage 0 fleeing false speed 4.7 held false RETURN TO THE DEPOT
+FILM   202.0 s  encounter false oncoming none pedestrian none off-centre 0.6 locked false
+FILM   202.0 s  pos (396.9, 1.0, 73.4) sample 95 stage 0 fleeing false speed 4.1 held false RETURN TO THE DEPOT
+FILM   232.0 s  encounter false oncoming none pedestrian none off-centre 0.5 locked false
+FILM   232.0 s  pos (307.3, 8.7, 47.1) sample 143 stage 0 fleeing false speed 4.0 held false RETURN TO THE DEPOT
+FILM   262.1 s  encounter false oncoming none pedestrian none off-centre 1.4 locked false
+FILM   262.1 s  pos (333.7, 13.4, 12.3) sample 186 stage 0 fleeing false speed 10.9 held false RETURN TO THE DEPOT
+FILM   292.2 s  encounter false oncoming none pedestrian none off-centre 0.6 locked false
+FILM   292.2 s  pos (458.8, 23.8, -5.6) sample 249 stage 0 fleeing false speed 4.0 held false RETURN TO THE DEPOT
+FILM   322.2 s  encounter false oncoming none pedestrian none off-centre 1.1 locked false
+FILM   322.2 s  pos (447.7, 27.7, -43.9) sample 287 stage 1 fleeing false speed 5.9 held false RETURN TO THE DEPOT
+FILM   352.3 s  encounter false oncoming none pedestrian none off-centre 0.5 locked false
+FILM   352.3 s  pos (361.7, 34.7, -57.9) sample 331 stage 1 fleeing false speed 4.1 held false RETURN TO THE DEPOT
+FILM   382.4 s  encounter false oncoming none pedestrian none off-centre 1.0 locked false
+FILM   382.4 s  pos (420.8, 41.1, -91.7) sample 380 stage 1 fleeing false speed 5.6 held false RETURN TO THE DEPOT
+FILM   412.4 s  encounter false oncoming none pedestrian none off-centre 0.3 locked false
+FILM   412.4 s  pos (451.4, 43.9, -123.6) sample 410 stage 2 fleeing false speed 4.6 held false RETURN TO THE DEPOT
+FILM   442.5 s  encounter false oncoming none pedestrian none off-centre 1.6 locked false
+FILM   442.5 s  pos (339.4, 52.9, -146.0) sample 468 stage 2 fleeing false speed 8.6 held false RETURN TO THE DEPOT
+FILM   472.6 s  encounter false oncoming none pedestrian none off-centre 1.7 locked false
+FILM   472.6 s  pos (218.5, 62.9, -194.4) sample 533 stage 2 fleeing false speed 10.5 held false RETURN TO THE DEPOT
+FILM   502.6 s  encounter false oncoming none pedestrian none off-centre 1.6 locked false
+FILM   502.6 s  pos (89.8, 61.8, -197.2) sample 599 stage 3 fleeing false speed 11.9 held false RETURN TO THE DEPOT
+FILM   532.7 s  encounter false oncoming none pedestrian none off-centre 0.9 locked false
+FILM   532.7 s  pos (24.5, 53.7, -147.9) sample 655 stage 3 fleeing false speed 7.6 held false RETURN TO THE DEPOT
+FILM   562.8 s  encounter false oncoming none pedestrian none off-centre 1.8 locked false
+FILM   562.8 s  pos (155.8, 42.0, -116.0) sample 722 stage 3 fleeing false speed 5.8 held false RETURN TO THE DEPOT
+FILM   592.8 s  encounter true oncoming (121.8, 38.3, -89.1) pedestrian (63.1, 32.7, -81.7) off-centre 1.6 locked false
+FILM   592.8 s  pos (63.3, 32.8, -81.1) sample 785 stage 3 fleeing false speed 11.6 held false RETURN TO THE DEPOT
+FILM   622.9 s  encounter true oncoming none pedestrian (63.1, 32.7, -81.7) off-centre 0.5 locked false
+FILM   622.9 s  pos (-7.0, 26.2, -66.9) sample 821 stage 3 fleeing true speed 5.7 held false DRIVE.
+FILM   653.0 s  encounter true oncoming none pedestrian (63.1, 32.7, -81.7) off-centre 1.5 locked false
+FILM   653.0 s  pos (86.1, 15.8, -21.9) sample 889 stage 4 fleeing true speed 11.6 held false DRIVE.
+WARNING: 7 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 27 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+--------------------------------------------------------------------------------
+Done recording movie at path: /private/tmp/claude-501/-Users-narasimhareddyvalam-Desktop-Blackridge-No-Way-Back/6d179fcb-f42d-4bcc-9794-abf1186d54dc/scratchpad/rec4k/m1_4k/m1_4k.ogv
+10140 frames at 30 FPS (movie length: 00:05:38:00), recorded in 01:15:05 (7% of real-time speed).
+CPU render time: 48.64 seconds (average: 4.80 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 2441.79 seconds (average: 240.81 ms/frame)
+--------------------------------------------------------------------------------
+godot exit 0 at Mon Nov 23 22:24:35 EST 2026

@@ -1,0 +1,59 @@
+{
+ "_note": "Where each beat's footage starts: [take, seconds into that take]. A take is a 4K window cut from a Movie Maker run (captures/pitch/takes4k/<name>_<from>_<to>.mp4, its run's start + <from> s). Read from the 4K proxies' frames (2026-11-23).",
+ "B00_0": [
+  "m1_4k_155_225",
+  11.0
+ ],
+ "B03_0": [
+  "m1_4k_275_312",
+  14.0
+ ],
+ "B06_0": [
+  "m1_4k_95_120",
+  3.5
+ ],
+ "B07_0": [
+  "m1_4k_30_80",
+  3.0
+ ],
+ "B07_1": [
+  "m1_4k_30_80",
+  32.0
+ ],
+ "B08_0": [
+  "m1_4k_155_225",
+  50.0
+ ],
+ "B08_1": [
+  "m1_4k_30_80",
+  35.5
+ ],
+ "B10_0": [
+  "m1_4k_155_225",
+  31.0
+ ],
+ "B11_0": [
+  "m1_4k_235_260",
+  5.0
+ ],
+ "B04_0": [
+  "m2load_4k_25_50",
+  5.0
+ ],
+ "B04_1": [
+  "m2yard_4k_95_130",
+  18.0
+ ],
+ "B05_0": [
+  "m3gate_4k_0_50",
+  12.0
+ ],
+ "B05_1": [
+  "m3gate_4k_80_135",
+  17.0
+ ],
+ "B12_0": [
+  "m3gate_4k_230_300",
+  21.5
+ ]
+}
