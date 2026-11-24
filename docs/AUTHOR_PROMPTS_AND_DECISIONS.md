@@ -5981,6 +5981,43 @@ tag `a5`. Pictures the author approved or rejected are filed in
 470. **The plan approved**
      - **Answer:** "Approve all, start (Recommended)".
 
+471. **Record only what is needed; Brutalist's rules; tell me when it is done**
+     - **Prompts** (verbatim): "why cant you record only scenes that are necessary for us?? why
+       should you record entire mission 1 and 3?"; "also for the video, make sure we are following
+       all brutalist rules"; "tell me when the video is done"
+     - **Answered:** a run can start only at the game's start or a checkpoint, and is played to
+       each moment; Mission 1 from the title to 308 s (its call is before the first checkpoint),
+       Mission 3 from the gate checkpoint; then, because the walkthrough check binds every capture
+       to one build, Mission 3 in full from the gate and both Mission 2 parts again at `7b54e72`.
+
+472. **The old takes deleted**
+     - **Asked:** the disk at 955 MB free (other programs' memory pushing swap to disk), Mission 1's
+       recording needing about 1.3 GB more: delete last night's 4K takes (2.2 GB), which show the
+       tree bug?
+     - **Answer:** "Yes, delete old takes (Recommended)". Deleted, with their links in the reel's
+       `capture/`, and the compiler's regenerable `clips/` (509 MB); 3.5 GB free. The first film
+       (`~/Desktop/Blackridge-Pitch-4K.mp4`) untouched.
+
+473. **How long; the laptop slept**
+     - **Prompts** (verbatim): "how long until the video is done?"; "my laptop went to sleep sorry,
+       turn on caffeine mode till our video is done"; "everything is happening?? or they are
+       stopped because my laptop went to sleep? check"; "i emptied trash and the old pitch video"
+     - **Done:** `caffeinate -dims` on until the video is done. Mission 1's 4K run had finished
+       (9,240 frames, 4.1 GB at 10:39); its cut failed twice when the disk filled (swap while the
+       Mac slept and other programs ran), the raw take kept each time; the queued Mission 3 and 2
+       runs stopped before they started. After the author emptied the Trash and deleted the old
+       film from the Desktop (a hard link: its two other links, in the reel, deleted too, as the
+       author meant the old film gone): 4.8 GB free; Mission 1 cut again, then Mission 3 and 2.
+
+474. **Only the two shots**
+     - **Prompts** (verbatim): "whats the problem?"; "cant you just run those two shots and do it?
+       instead of doing everything in the mission?"
+     - **Answered:** the whole Mission 3 run from the gate ran the Mac out of memory with the
+       author's other apps open (swap filled the disk; the run stopped at 43 s, Maya's gate scene
+       kept from it). Done: `tools/captures/film_pitch_shots.gd` films the two shots alone from
+       Last Run's stage 4 save, set up as `capture_rescue.gd` and `capture_ending.gd` set them up:
+       Lily (25 s) and the ending (80 s); then Mission 2's two parts.
+
 ## Waiting for the author
 
 - The GPU price of the rain rebuild (#354): skipped for now at the author's word, to be run
